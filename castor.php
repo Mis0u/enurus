@@ -64,6 +64,17 @@ function twigcs(): void
     );
 }
 
+#[AsTask(description: 'Execute test with phpunit')]
+function test(): void
+{
+    execute(
+        'PHPUNIT',
+        '✅ Running phpunit tests...',
+        './vendor/bin/phpunit tests',
+        'All the tests passed'
+    );
+}
+
 function execute(string $title, string $section, string $command, string $success): void
 {
     io()->title($title);
@@ -75,6 +86,7 @@ function execute(string $title, string $section, string $command, string $succes
 #[AsTask(description: 'Run all quality checks')]
 function qa(): void
 {
+    test();
     phpstan();
     ecs();
     phpmnd();

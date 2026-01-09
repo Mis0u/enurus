@@ -24,6 +24,9 @@ grumphp:
             ruleset: 'FriendsOfTwig\Twigcs\Ruleset\Official'
             triggered_by: [ twig ]
 
+        phpunit:
+            config_file: 'phpunit.dist.xml'
+
         git_commit_message:
             allow_empty_message: false
             enforce_no_subject_trailing_period: true
