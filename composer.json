@@ -49,7 +49,6 @@
     "config": {
         "allow-plugins": {
             "php-http/discovery": true,
-            "phpro/grumphp": true,
             "phpstan/extension-installer": true,
             "symfony/flex": true,
             "symfony/runtime": true
@@ -100,10 +99,10 @@
         }
     },
     "require-dev": {
+        "captainhook/captainhook": "^5.27",
         "doctrine/doctrine-fixtures-bundle": "^4.3",
         "friendsoftwig/twigcs": "^6.6",
         "jolicode/castor": "^1.1",
-        "phpro/grumphp": "^2.18",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-doctrine": "^2.0",
