@@ -1475,12 +1475,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     postcss_config_file?: scalar|null|Param, // Path to PostCSS config file which is passed to the Tailwind CLI // Default: null
  *     strict_mode?: bool|null|Param, // When enabled, an exception will be thrown if there are no built assets (default: false in `test` env, true otherwise) // Default: null
  * }
- * @psalm-type DamaDoctrineTestConfig = array{
- *     enable_static_connection?: mixed, // Default: true
- *     enable_static_meta_data_cache?: bool|Param, // Default: true
- *     enable_static_query_cache?: bool|Param, // Default: true
- *     connection_keys?: list<mixed>,
- * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1543,7 +1537,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
  *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
- *         dama_doctrine_test?: DamaDoctrineTestConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
