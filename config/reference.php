@@ -645,7 +645,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         }>,
  *     },
  *     uid?: bool|array{ // Uid configuration
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *         default_uuid_version?: 7|6|4|1|Param, // Default: 7
  *         name_based_uuid_version?: 5|3|Param, // Default: 5
  *         name_based_uuid_namespace?: scalar|null|Param,
@@ -1466,6 +1466,21 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     generate_final_classes?: bool|Param, // Default: true
  *     generate_final_entities?: bool|Param, // Default: false
  * }
+ * @psalm-type SymfonycastsTailwindConfig = array{
+ *     input_css?: list<scalar|null|Param>,
+ *     config_file?: scalar|null|Param, // Path to the tailwind.config.js file // Default: "%kernel.project_dir%/tailwind.config.js"
+ *     binary?: scalar|null|Param, // The tailwind binary to use instead of downloading a new one // Default: null
+ *     binary_version?: scalar|null|Param, // Tailwind CLI version to download - null means the latest version // Default: null
+ *     binary_platform?: "auto"|"linux-arm64"|"linux-arm64-musl"|"linux-x64"|"linux-x64-musl"|"macos-arm64"|"macos-x64"|"windows-x64"|Param, // Tailwind CLI platform to download - "auto" will try to detect the platform automatically // Default: "auto"
+ *     postcss_config_file?: scalar|null|Param, // Path to PostCSS config file which is passed to the Tailwind CLI // Default: null
+ *     strict_mode?: bool|null|Param, // When enabled, an exception will be thrown if there are no built assets (default: false in `test` env, true otherwise) // Default: null
+ * }
+ * @psalm-type DamaDoctrineTestConfig = array{
+ *     enable_static_connection?: mixed, // Default: true
+ *     enable_static_meta_data_cache?: bool|Param, // Default: true
+ *     enable_static_query_cache?: bool|Param, // Default: true
+ *     connection_keys?: list<mixed>,
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1479,6 +1494,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     twig_extra?: TwigExtraConfig,
  *     security?: SecurityConfig,
  *     monolog?: MonologConfig,
+ *     symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1495,6 +1511,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
  *         maker?: MakerConfig,
+ *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1509,6 +1526,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
+ *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1524,6 +1542,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
+ *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
+ *         dama_doctrine_test?: DamaDoctrineTestConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
