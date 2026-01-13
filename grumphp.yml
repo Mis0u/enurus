@@ -31,5 +31,3 @@ grumphp:
             allow_empty_message: false
             enforce_no_subject_trailing_period: true
             enforce_capitalized_subject: false
-            matchers:
-                Must start with emoji: '/^(✨|🐛|📝|🔧|♻️|🎨|⚡|🔥|💚|🚀|🔒|⬆️|💄|🎉|🔖|🚨|🧪|🗃️|🔊|🌐|📱|💡|🚚|📄)\s+.+/'

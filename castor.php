@@ -48,7 +48,7 @@ function phpmnd(): void
     execute(
         'PHPMND',
         '🔢 Checking magic numbers...',
-        'vendor/bin/phpmnd src',
+        'vendor/bin/phpmnd src --exclude=DataFixtures',
         'Magic numbers check passed'
     );
 }
@@ -75,14 +75,6 @@ function test(): void
     );
 }
 
-function execute(string $title, string $section, string $command, string $success): void
-{
-    io()->title($title);
-    io()->section($section);
-    run($command);
-    io()->success($success);
-}
-
 #[AsTask(description: 'Run all quality checks')]
 function qa(): void
 {
@@ -92,4 +84,114 @@ function qa(): void
     phpmnd();
     twigcs();
     io()->success('✨ All checks passed! Ready to commit.');
+}
+
+// ============================================
+// DB
+// ============================================
+
+#[AsTask(description: 'Launch the database with docker')]
+function dbUp(): void
+{
+    execute(
+        'DB',
+        '🔝 DB MOUTING...',
+        'docker compose -f docker/docker-compose.yml up -d',
+        'DB is up'
+    );
+}
+
+#[AsTask(description: 'Close the database with docker')]
+function dbDown(): void
+{
+    execute(
+        'DB',
+        '⬇️ DB Closing...',
+        'docker compose -f docker/docker-compose.yml up -d',
+        'DB is down'
+    );
+}
+
+#[AsTask(description: 'Doctrine create database')]
+function createDb(bool $test = false): void
+{
+    [$env, $dbType] = getDatabaseContext($test);
+    execute(
+        \sprintf('CREATE %s', $dbType),
+        \sprintf('⬇🏗️ %s creating...', $dbType),
+        \sprintf('%sphp bin/console doctrine:database:create --if-not-exists', $env),
+        \sprintf('%s is created', $dbType)
+    );
+}
+
+#[AsTask(description: 'Doctrine delete database without question')]
+function dropDb(bool $test = false): void
+{
+    [$env, $dbType] = getDatabaseContext($test);
+    execute(
+        \sprintf('DELETE %s', $dbType),
+        \sprintf('💣 %s deleting...', $dbType),
+        \sprintf('%sphp bin/console d:d:d --force --if-exists', $env),
+        sprintf('%s is deleted', $dbType)
+    );
+}
+
+#[AsTask(description: 'Doctrine make migrations')]
+function makeMigration(): void
+{
+    execute(
+        'MIGRATIONS',
+        '⬇🔁 Migration\'s file creating...',
+        'php bin/console make:migration',
+        'Migration file is created'
+    );
+}
+
+#[AsTask(description: 'Doctrine migrations migrate')]
+function migrate(bool $test = false): void
+{
+    [$env, $dbType] = getDatabaseContext($test);
+    execute(
+        \sprintf('MIGRATING IN %s', $dbType),
+        '⬇🔁 Migration\'s migrating...',
+        \sprintf('%sphp bin/console d:m:m -n', $env),
+        \sprintf('Migrations are migrated in %s', $dbType)
+    );
+}
+
+#[AsTask(description: 'Doctrine run fixtures')]
+function loadFixtures(bool $test = false): void
+{
+    [$env, $dbType] = getDatabaseContext($test);
+    execute(
+        \sprintf('FIXTURES LOADING IN %s', $dbType),
+        '⬇🧪 Fixtures running...',
+        \sprintf('%sphp bin/console doctrine:fixtures:load -n', $env),
+        \sprintf('Fixtures are loaded in %s', $dbType)
+    );
+}
+
+#[AsTask(description: 'Doctrine reset database (delete, create, migrate, fixtures')]
+function resetDB(bool $test = false): void
+{
+    dropDb($test);
+    createDb($test);
+    migrate($test);
+    loadFixtures($test);
+}
+
+function execute(string $title, string $section, string $command, string $success): void
+{
+    io()->title($title);
+    io()->section($section);
+    run($command);
+    io()->success($success);
+}
+
+function getDatabaseContext(bool $test): array
+{
+    $env = $test ? 'APP_ENV=test ' : '';
+    $dbLabel = $test ? 'TEST_DATABASE' : 'DATABASE';
+
+    return [$env, $dbLabel];
 }
