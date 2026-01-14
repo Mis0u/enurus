@@ -1,0 +1,23 @@
+<div class="space-y-2">
+    <label for="username" class="block text-sm font-semibold text-slate-200">
+        {{ 'field.email'|trans({}, 'common') }}
+    </label>
+    <div class="relative">
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+            </svg>
+        </div>
+        <input
+            type="email"
+            value="{{ last_username }}"
+            name="_username"
+            id="username"
+            class="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all backdrop-blur-sm"
+            autocomplete="email"
+            placeholder={{ 'field.email_placeholder'|trans({}, 'common') }}
+            required
+            autofocus
+        >
+    </div>
+</div>
