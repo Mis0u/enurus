@@ -1,0 +1,4 @@
+field:
+    email: Email
+    email_placeholder: votre@email.com
+    password: Mot de passe

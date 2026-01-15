@@ -1,3 +1,2 @@
-app:
-    name: FitTracker
-    baseline: Track, Train, Transform
+name: FitTracker
+baseline: Suivez vos progrès, atteignez vos objectifs

@@ -40,7 +40,7 @@ class SecurityControllerTest extends WebTestCase
         $client->followRedirect();
 
         $this->assertSelectorTextContains(
-            '.alert-danger',
+            '.error-msg',
             'Identifiants invalides.',
             'il n\'y a pas le texte d\'erreur'
         );
