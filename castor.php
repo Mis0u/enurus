@@ -65,12 +65,13 @@ function twigcs(): void
 }
 
 #[AsTask(description: 'Execute test with phpunit')]
-function test(): void
+function test(bool $coverage = false): void
 {
+    $coverageOption = $coverage ? '--coverage-html coverage' : '';
     execute(
         'PHPUNIT',
         '✅ Running phpunit tests...',
-        './vendor/bin/phpunit tests',
+        \sprintf('./vendor/bin/phpunit tests --testdox %s', $coverageOption),
         'All the tests passed'
     );
 }

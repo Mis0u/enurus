@@ -140,6 +140,19 @@ class SecurityControllerTest extends WebTestCase
         $this->assertNull($cookie, 'Le cookie REMEMBERME doit être supprimé au logout');
     }
 
+    public function testClickOnForgotPasswordShouldRedirect(): void
+    {
+        $client = static::createClient();
+        $client->request(Request::METHOD_GET, '/');
+        $client->clickLink('Mot de passe oublié ?');
+        $this->assertRouteSame('app_forgot_password_request');
+
+        $this->assertSelectorExists(
+            'input#reset_password_request_form__token[type="hidden"]',
+            'le champ caché n\'existe pas ou son type est incorrect'
+        );
+    }
+
     private function getCredentials(string $username, string $password, bool $rememberMe = false): KernelBrowser
     {
         $client = static::createClient();
