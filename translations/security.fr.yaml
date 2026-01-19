@@ -5,3 +5,10 @@ login:
     forgot_password: Mot de passe oublié ?
     no_account_yet: Pas encore de compte ?
     remember_me: Se souvenir de moi
+
+reset_password_request:
+    reset_password: Réinitialiser votre mot de passe
+    forgot_password: Mot de passe oublié
+    info_reset_password: Entrez votre adresse email et vous recevrez un lien pour réinitialiser votre mot de passe.
+    send_link: Envoyer le lien de réinitialisation
+    back_to_connexion: Retour à la connexion

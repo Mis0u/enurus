@@ -2,3 +2,8 @@ field:
     email: Email
     email_placeholder: votre@email.com
     password: Mot de passe
+
+sentence:
+    need_help: Besoin d'aide ?
+    info_email_send: Si vous ne recevez pas l'email, vérifiez vos spams.
+
