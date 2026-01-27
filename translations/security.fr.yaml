@@ -5,3 +5,21 @@ login:
     forgot_password: Mot de passe oublié ?
     no_account_yet: Pas encore de compte ?
     remember_me: Se souvenir de moi
+
+reset_password_request:
+    asking_reset: Vous avez demandé la réinitialisation de votre mot de passe. Cliquez sur le bouton ci-dessous pour créer un nouveau mot de passe
+    back_to_connexion: Retour à la connexion
+    email_link: Cliquez sur le lien de réinitialisation
+    expire_link: Ce lien expirera dans
+    forgot_password: Mot de passe oublié
+    identical_password: Mot de passe identique
+    info_email: Vous recevez cet email car une demande de réinitialisation de mot de passe a été effectuée sur votre compte
+    info_link_life: Ce lien expire dans %hour%. Une fois votre mot de passe changé, vous serez redirigé vers la page de connexion.
+    info_reset_password: Entrez votre adresse email et vous recevrez un lien pour réinitialiser votre mot de passe.
+    new_password: Créez votre nouveau mot de passe
+    not_asking_reset: Si vous n'avez pas demandé cette réinitialisation, ignorez cet email. Votre mot de passe actuel reste inchangé.
+    reset_email_password_send: Email de réinitialisation envoyé
+    reset_my_password: Réinitialiser mon mot de passe
+    reset_password: Réinitialiser votre mot de passe
+    reseting_password: Réinitialisation de votre mot de passe
+    send_link: Envoyer le lien de réinitialisation

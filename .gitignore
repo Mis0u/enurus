@@ -7,6 +7,8 @@
 /public/bundles/
 /var/
 /vendor/
+/node_modules/
+/.castor.stub.php
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

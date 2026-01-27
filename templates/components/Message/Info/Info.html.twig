@@ -1,0 +1,17 @@
+<div class="{{ this.classes }}">
+    <div class="flex items-start">
+        {% if icon %}
+            {% include this.svg %}
+        {% endif %}
+        <div>
+            <p class="text-sm text-cyan-200 font-medium mb-1">
+                {{ message }}
+            </p>
+            {% if variable %}
+                <p class="text-xs text-cyan-300">
+                    {{ variable }}
+                </p>
+            {% endif %}
+        </div>
+    </div>
+</div>
