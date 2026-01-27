@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'reset_password_request.reset_password'|trans({}, 'security') }}{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">
+        <div class="max-w-md w-full">
+            {# Logo/Brand Section #}
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-rose-500 to-red-600 rounded-2xl mb-4 shadow-lg shadow-rose-500/30">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18"></path>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold text-white mb-2">{{ 'name'|trans({}, 'brand') }}</h1>
+                <p class="text-slate-400">{{ 'reset_password_request.reset_password'|trans({}, 'security') }}</p>
+            </div>
+
+            <div class="backdrop-blur-xl bg-white/10 rounded-3xl shadow-2xl border border-white/20 p-8">
+                <h2 class="text-2xl font-bold text-white mb-6">{{ 'reset_password_request.forgot_password'|trans({}, 'security') }}</h2>
+
+                <twig:Message:Info:Info message="{{ 'reset_password_request.info_reset_password'|trans({}, 'security') }}" icon="info"/>
+
+                {% include 'reset_password/request/_form_request.html.twig' %}
+
+                <div class="text-center pt-6 mt-6 border-t border-white/10">
+                    <a href="{{ path('app_login') }}" class="inline-flex items-center text-sm text-slate-400 hover:text-cyan-400 transition-colors group">
+                        <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        {{ 'reset_password_request.back_to_connexion'|trans({}, 'security') }}
+                    </a>
+                </div>
+            </div>
+            {% include 'reset_password/request/_additional_help.html.twig' %}
+
+            {% include 'partials/_common/_footer.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

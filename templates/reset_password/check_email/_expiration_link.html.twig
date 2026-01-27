@@ -1,0 +1,12 @@
+<div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-6 backdrop-blur-sm">
+    <div class="flex items-start space-x-3">
+        <svg class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <div>
+            <p class="text-sm text-amber-200 font-medium">{{ 'reset_password_request.expire_link'|trans({}, 'security') }}
+                <span class="text-sm text-amber-300">{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}</span>
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'reset_password_request.reset_email_password_send'|trans({}, 'security') }}{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">
+        <div class="max-w-lg w-full">
+            {# Logo/Brand Section #}
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-rose-500 to-red-600 rounded-2xl mb-4 shadow-lg shadow-rose-500/30">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18"></path>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold text-white mb-2">{{ 'name'|trans({}, 'brand') }}</h1>
+            </div>
+
+            <div class="backdrop-blur-xl bg-white/10 rounded-3xl shadow-2xl border border-white/20 p-8 mb-6">
+                {% include 'reset_password/check_email/_success_icon.html.twig' %}
+
+                <h2 class="text-2xl font-bold text-white text-center mb-4">{{ 'sentence.email.email_send'|trans({}, 'common') }}</h2>
+
+                <div class="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-5 mb-6 backdrop-blur-sm">
+                    <p class="text-slate-200 text-center leading-relaxed">
+                        {{ 'sentence.email.email_exist'|trans({}, 'common') }}
+                    </p>
+                </div>
+                <twig:Message:Warning:Warning
+                    message="{{ 'reset_password_request.expire_link'|trans({}, 'security') }}"
+                    icon="clock"
+                    variable="{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}"
+                />
+
+                {% include 'reset_password/check_email/_next_step.html.twig' %}
+            </div>
+
+            <div class="backdrop-blur-xl bg-white/10 rounded-2xl border border-white/20 p-6 mb-6">
+                {% include 'reset_password/check_email/_help_section.html.twig' %}
+            </div>
+
+            <div class="text-center">
+                {% include 'reset_password/check_email/_back_to_login.html.twig' %}
+            </div>
+
+            {% include 'partials/_common/_footer.html.twig' %}
+        </div>
+    </div>
+
+{% endblock %}
