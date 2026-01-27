@@ -76,6 +76,17 @@ function test(bool $coverage = false): void
     );
 }
 
+#[AsTask(description: 'Execute Eslint')]
+function eslint(): void
+{
+    execute(
+        'ESLINT',
+        '👮 Linting JavaScript...',
+        'npx eslint assets/controllers',
+        'Code style validated'
+    );
+}
+
 #[AsTask(description: 'Run all quality checks')]
 function qa(): void
 {
@@ -84,6 +95,7 @@ function qa(): void
     ecs();
     phpmnd();
     twigcs();
+    eslint();
     io()->success('✨ All checks passed! Ready to commit.');
 }
 
@@ -179,6 +191,18 @@ function resetDB(bool $test = false): void
     createDb($test);
     migrate($test);
     loadFixtures($test);
+}
+
+// MESSENGER
+#[AsTask(description: 'Consuming message for messenger')]
+function consume(): void
+{
+    execute(
+        'MESSAGE CONSUMPTION',
+        'Message consuming',
+        'php bin/console messenger:consume --all',
+        'All messages are consumed'
+    );
 }
 
 function execute(string $title, string $section, string $command, string $success): void
