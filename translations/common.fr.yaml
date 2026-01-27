@@ -1,9 +1,38 @@
 field:
+    confirm_new_password: Confirmer le mot de passe
     email: Email
     email_placeholder: votre@email.com
+    new_password: Nouveau mot de passe
     password: Mot de passe
+    security_password: Choisissez un mot de passe sécurisé
 
 sentence:
+    contact_support: Contactez notre support
+    back_to_login: Retour à la connexion
+    email:
+        email_check: Consultez votre boîte de réception
+        email_correct: Vérifiez que l'adresse email est correcte
+        email_exist: Si un compte correspond à votre adresse email, vous recevrez un email contenant un lien pour réinitialiser votre mot de passe.
+        email_not_received: Vous ne recevez pas l'email ?
+        email_send: Email envoyé avec succès !
+        email_spam: Vérifiez votre dossier spam/courrier indésirable
+        info_email_send: Si vous ne recevez pas l'email, vérifiez vos spams.
+        send_back_email: Renvoyer un email
+        wait: Attendez quelques minutes (le délai peut varier)
     need_help: Besoin d'aide ?
-    info_email_send: Si vous ne recevez pas l'email, vérifiez vos spams.
+    password:
+        security:
+            at_least_number: Au moins un chiffre
+            confirmation: Votre mot de passe a bien été modifié
+            criteria_min_char: Au moins %min% caractères
+            min_char: Minimum %min% caractères avec majuscules, minuscules et chiffres
+            regex: Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial (! ? % $ * &)
+            special_char: Au moins un de ces caractères spéciaux ! ? % $ * &
+            upper_lower: Une majuscule et une minuscule
+            valid_new_password: Valider le nouveau mot de passe
+
+word:
+    hello: Bonjour,
+    important:  ⚠️ Important
+    security: Sécurité
 
