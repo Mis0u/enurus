@@ -1,0 +1,13 @@
+<button
+    class="{{ this.classes }}"
+    type="{{ type }}"
+>
+    {% if icon %}
+        <div class="flex items-center justify-center space-x-2">
+            {% include this.svg %}
+            <span>{{ message }}</span>
+        </div>
+    {% else %}
+        {{ message }}
+    {% endif %}
+</button>
