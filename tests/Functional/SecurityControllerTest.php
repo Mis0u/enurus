@@ -37,6 +37,7 @@ class SecurityControllerTest extends WebTestCase
         $client = $this->getCredentials('toto@test.com', 'Symfony_rocks!');
 
         $this->assertResponseRedirects('/');
+
         $client->followRedirect();
 
         $this->assertSelectorTextContains(
@@ -157,7 +158,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $crawler = $client->request(Request::METHOD_GET, '/');
-        $buttonCrawlerNode = $crawler->selectButton('login-btn');
+        $buttonCrawlerNode = $crawler->selectButton('Se connecter');
         $form = $buttonCrawlerNode->form();
 
         $client->submit($form, [
@@ -180,7 +181,7 @@ class SecurityControllerTest extends WebTestCase
             'le champ password n\'existe pas ou son type est incorrect'
         );
         $this->assertSelectorExists(
-            'button[type="submit"]',
+            'Button[type="submit"]',
             'le bouton n\'existe pas ou son type est incorrect'
         );
     }
