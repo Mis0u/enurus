@@ -4,8 +4,8 @@
     </a>
     <p class="text-sm text-slate-400">
         {{ 'login.no_account_yet'|trans({}, 'security') }}
-        <a href="#" class="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors">
-            {{ 'login.create_account'|trans({}, 'security') }}
+        <a href="{{ path('app_register') }}" class="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors">
+            {{ 'login.create_account'|trans({'%determinant%': 'un'}, 'security') }}
         </a>
     </p>
 </div>

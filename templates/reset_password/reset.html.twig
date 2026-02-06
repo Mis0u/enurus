@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme resetForm 'form/error_theme.html.twig' %}
+
 {% block title %}{{ 'reset_password_request.reset_password'|trans({}, 'security') }}{% endblock %}
 
 {% block body %}
@@ -22,21 +24,15 @@
                 <twig:Message:Info:Info
                     message="{{ 'field.security_password'|trans({}, 'common') }}"
                     icon="info"
-                    variable="{{ 'sentence.password.security.min_char'|trans({'%min%': constant('App\\Form\\ChangePasswordFormType::MIN_LENGTH')}, 'common') }}"
+                    variable="{{ 'sentence.password.security.min_char'|trans({'%min%': enum('App\\Enum\\Password\\PasswordRuleEnum').('MIN_LENGTH').value}, 'common') }}"
                 />
 
                 {{ form_start(resetForm) }}
-                {% if resetForm.plainPassword.first.vars.errors|length > 0 %}
-                    <div class="mt-2 space-y-2">
-                        {% for error in resetForm.plainPassword.first.vars.errors %}
-                            <twig:Message:Error:Error message="{{ error.message }}" icon="red_cross"/>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+                {{ form_errors(resetForm.plainPassword.first) }}
                 {% include 'reset_password/reset/_password_field.html.twig' %}
 
                 {% include 'reset_password/reset/_confirm_password_field.html.twig' %}
-                {% include 'reset_password/reset/_password_strength_indicator.html.twig' %}
+                {% include 'partials/_common/_security/_password_strength_indicator.html.twig' %}
 
                 <twig:Button:Primary:Primary
                     message="{{ 'sentence.password.security.valid_new_password'|trans({}, 'common') }}"

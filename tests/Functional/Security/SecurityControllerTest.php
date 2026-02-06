@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional;
+namespace App\Tests\Functional\Security;
 
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -152,6 +152,16 @@ class SecurityControllerTest extends WebTestCase
             'input#reset_password_request_form__token[type="hidden"]',
             'le champ caché n\'existe pas ou son type est incorrect'
         );
+    }
+
+    public function testClickOnRegistrationShouldRedirect(): void
+    {
+        $client = static::createClient();
+        $client->request(Request::METHOD_GET, '/');
+        $client->clickLink('Créer un compte');
+        $this->assertRouteSame('app_register');
+
+        $this->assertSelectorTextContains('button', 'Créer mon compte', 'Le sélecteur contenant \'Créer mon compte\' est introuvable');
     }
 
     private function getCredentials(string $username, string $password, bool $rememberMe = false): KernelBrowser

@@ -1,0 +1,9 @@
+{% block form_errors %}
+    {% if errors|length > 0 %}
+        <div class="mt-2 space-y-2">
+            {% for error in errors %}
+                <twig:Message:Error:Error message="{{ error.message }}" icon="red_cross"/>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -17,9 +17,6 @@ export default class extends Controller {
         /** @type {string} */
         const password = this.inputPasswordTarget.value;
 
-        /** @type {string} */
-        const repeatedPassword = this.inputRepeatPasswordTarget.value;
-
         /** @type {number} */
         const minLength = parseInt(this.inputPasswordTarget.dataset.minLength);
 
@@ -41,17 +38,22 @@ export default class extends Controller {
         /** @type {boolean} */
         const containsUpperAndLowerCase = containsUpperCase && containsLowerCase;
 
-        /** @type {boolean} */
-        const isPasswordEqualRepeatedPassword = password === repeatedPassword && repeatedPassword.length > 0;
-
         editClasses(isMinLengthValid, this.minLengthRuleTarget);
         editClasses(containsUpperAndLowerCase, this.upperLowerRuleTarget);
         editClasses(containsNumber, this.numberRuleTarget);
         editClasses(hasSpecialChar, this.specialCharRuleTarget);
-        editClasses(isPasswordEqualRepeatedPassword, this.identicalPasswordRuleTarget);
 
-        /** @type {boolean} */
-        const isPasswordValid = isMinLengthValid && containsUpperAndLowerCase && containsNumber && hasSpecialChar && isPasswordEqualRepeatedPassword;
+        let isPasswordValid;
+        if (this.hasInputRepeatPasswordTarget){
+            /** @type {string} */
+            const repeatedPassword = this.inputRepeatPasswordTarget.value;
+            /** @type {boolean} */
+            const isPasswordEqualRepeatedPassword = password === repeatedPassword && repeatedPassword.length > 0;
+            editClasses(isPasswordEqualRepeatedPassword, this.identicalPasswordRuleTarget);
+            isPasswordValid = isMinLengthValid && containsUpperAndLowerCase && containsNumber && hasSpecialChar && isPasswordEqualRepeatedPassword;
+        } else {
+            isPasswordValid = isMinLengthValid && containsUpperAndLowerCase && containsNumber && hasSpecialChar;
+        }
 
         /** @type {boolean} */
         this.submitButtonTarget.disabled = !isPasswordValid;

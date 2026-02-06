@@ -199,9 +199,22 @@ function consume(): void
 {
     execute(
         'MESSAGE CONSUMPTION',
-        'Message consuming',
+        '📨 Consuming messenger messages...',
         'php bin/console messenger:consume --all',
         'All messages are consumed'
+    );
+}
+
+// TAILWIND
+
+#[AsTask(description: 'Build tailwind assets')]
+function tailwindBuild(): void
+{
+    execute(
+        'TAILWIND BUILD',
+        '🎨 Building Tailwind assets...',
+        'php bin/console tailwind:build',
+        'Tailwind assets have been built'
     );
 }
 

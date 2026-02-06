@@ -1,0 +1,31 @@
+<div
+    class="fixed top-4 right-4 z-50 max-w-md"
+    data-controller="flash-message"
+    data-flash-message-duration-value="5000"
+>
+    <div class="rounded-xl p-4 backdrop-blur-sm shadow-lg border
+        {% if type == 'success' %}
+            bg-green-500/10 border-green-500/50
+        {% elseif type == 'error' %}
+            bg-red-500/10 border-red-500/50
+        {% endif %}
+">
+        <div class="flex items-center">
+            {% if type == 'success' %}
+                {% include 'partials/_svg/_check.html.twig' %}
+            {% elseif type == 'error' %}
+                {% include 'partials/_svg/_red_cross.html.twig' %}
+            {% endif %}
+            <p class="text-sm
+            {% if type == 'success' %}
+                text-green-300
+            {% elseif type == 'error' %}
+                text-red-300
+            {% endif %}
+">
+                {{ message }}
+            </p>
+        </div>
+    </div>
+</div>
+
