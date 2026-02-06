@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form;
 
+use App\Enum\Password\PasswordRuleEnum;
 use App\Enum\tailwind_class\form\field\FieldClassEnum;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,24 +17,11 @@ use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @extends AbstractType<array{plainPassword: string}>
+ * @extends AbstractFormSecurityType<null>
  */
-class ChangePasswordFormType extends AbstractType
+class ChangePasswordFormType extends AbstractFormSecurityType
 {
-    public const MIN_LENGTH = 12;
-
-    private const ATTR_FIELD_CLASS = [
-        'class' => FieldClassEnum::ATTRIBUTE_FIELD_CLASS->value,
-        'placeholder' => '••••••••',
-    ];
-
-    private const DATA_PASSWORD = [
-        'data-password-validator-target' => 'inputPassword',
-        'data-action' => 'input->password-validator#validate',
-        'data-min-length' => self::MIN_LENGTH,
-    ];
-
-    private const DATA_REPEAT_PASSWORD = [
+    private const array DATA_REPEAT_PASSWORD = [
         'data-password-validator-target' => 'inputRepeatPassword',
         'data-action' => 'input->password-validator#validate',
     ];
@@ -56,10 +43,10 @@ class ChangePasswordFormType extends AbstractType
                     ],
                     'constraints' => [
                         new NotBlank(),
-                        new Length(min: self::MIN_LENGTH, max: 4096),
+                        new Length(min: (int) PasswordRuleEnum::MIN_LENGTH->value, max: 4096),
                         new NotCompromisedPassword(),
                         new Regex(
-                            pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!?%$*&]).{12,}$/',
+                            pattern: PasswordRuleEnum::REGEX->value,
                             message: $this->translator->trans('sentence.password.security.regex', [], 'common')
                         ),
                     ],
