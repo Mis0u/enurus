@@ -1,9 +1,0 @@
-{% for message in app.flashes('success') %}
-    <div
-        class="fixed top-4 right-4 z-50 max-w-md"
-        data-controller="flash-message"
-        data-flash-message-duration-value="5000"
-    >
-        <twig:Flash:Success:Success message="{{ message }}"/>
-    </div>
-{% endfor %}
