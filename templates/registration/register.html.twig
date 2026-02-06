@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'registration.registration'|trans({}, 'security') }}{% endblock %}
+
+{% form_theme registrationForm 'form/gender_theme.html.twig' 'form/error_theme.html.twig' %}
+
+{% block body %}
+    <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">
+        <div class="max-w-md w-full">
+            {# Logo Section #}
+            <div class="text-center mb-8">
+                <div class="inline-block mb-4">
+                    <img src="{{ asset('images/logo-fittracker.png') }}" alt="FitTracker Logo" class="w-48 h-auto">
+                </div>
+                <p class="text-slate-400">{{ 'starting'|trans({}, 'brand') }}</p>
+            </div>
+
+            <div class="backdrop-blur-xl bg-white/10 rounded-3xl shadow-2xl border border-white/20 p-8">
+                <h2 class="text-2xl font-bold text-white mb-6">{{ 'registration.create_account'|trans({}, 'security') }}</h2>
+
+                {{ form_start(registrationForm) }}
+
+                {{ form_errors(registrationForm.gender) }}
+                {{ form_errors(registrationForm.email) }}
+                {{ form_errors(registrationForm.plainPassword) }}
+
+                <div class="space-y-2">
+                    {{ form_label(registrationForm.gender) }}
+                    {{ form_widget(registrationForm.gender) }}
+                </div>
+                <div class="space-y-2">
+                    {{ form_label(registrationForm.email) }}
+                    {{ form_widget(registrationForm.email) }}
+                </div>
+
+                <div class="space-y-2">
+                    {{ form_label(registrationForm.plainPassword) }}
+                    {{ form_widget(registrationForm.plainPassword) }}
+                </div>
+
+                {% include 'partials/_common/_security/_detect_honey_pot.html.twig' %}
+
+                {% include 'partials/_common/_security/_password_strength_indicator.html.twig' %}
+
+                <twig:Button:Primary:Primary
+                    message="{{ 'login.create_account'|trans({'%determinant%': 'mon'}, 'security') }}"
+                    icon="add_people"
+                    :disabled="true"
+                    data-password-validator-target="submitButton"
+                />
+                {{ form_end(registrationForm) }}
+
+                {% include 'registration/_already_account.html.twig' %}
+            </div>
+
+            {% include 'partials/_common/_footer.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

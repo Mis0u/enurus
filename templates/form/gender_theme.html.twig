@@ -1,0 +1,46 @@
+{% block _registration_form_gender_widget %}
+    <div class="grid grid-cols-2 gap-4">
+        {% for choice in choices %}
+            <label class="relative cursor-pointer group">
+                <input
+                    type="radio"
+                    name="{{ full_name }}"
+                    value="{{ choice.value }}"
+                    class="peer sr-only"
+                    {% if choice.value == value %}checked{% endif %}
+                    {{ required ? 'required' : '' }}
+                >
+                <div class="h-full bg-white/5 border-2 border-white/10 rounded-xl p-4 transition-all duration-200
+                    {% if choice.value == 'male' %}
+                        peer-checked:bg-cyan-500/20 peer-checked:border-cyan-500 peer-checked:shadow-lg peer-checked:shadow-cyan-500/30
+                        group-hover:bg-cyan-500/20 group-hover:border-cyan-500 group-hover:shadow-lg group-hover:shadow-cyan-500/30
+                    {% else %}
+                        peer-checked:bg-rose-500/20 peer-checked:border-rose-500 peer-checked:shadow-lg peer-checked:shadow-rose-500/30
+                        group-hover:bg-rose-500/20 group-hover:border-rose-500 group-hover:shadow-lg group-hover:shadow-rose-500/30
+                    {% endif %}
+                    ">
+                    <div class="flex flex-col items-center space-y-2">
+                        <div class="text-4xl">
+                            {% if choice.value == 'male' %}
+                                🏋️‍♂️
+                            {% else %}
+                                🏋️‍♀️
+                            {% endif %}
+                        </div>
+                        <span class="text-sm font-semibold text-slate-300
+                            {% if choice.value == 'male' %}
+                                peer-checked:text-cyan-200
+                                group-hover:text-cyan-200
+                            {% else %}
+                                peer-checked:text-rose-200
+                                group-hover:text-rose-200
+                            {% endif %}
+                            transition-colors">
+                            {{ choice.label }}
+                        </span>
+                    </div>
+                </div>
+            </label>
+        {% endfor %}
+    </div>
+{% endblock %}
