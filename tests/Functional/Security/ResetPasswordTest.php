@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional;
+namespace App\Tests\Functional\Security;
 
 use App\Entity\ResetPasswordRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -59,6 +59,7 @@ class ResetPasswordTest extends WebTestCase
 
         /** @var InMemoryTransport $transport */
         $transport = $client->getContainer()->get('messenger.transport.async');
+
         $this->assertCount($countMessage, $transport->get());
 
         $this->assertSelectorExists('a[href="/reset-password"]');
