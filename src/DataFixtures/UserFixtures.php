@@ -7,6 +7,7 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use function Symfony\Component\Clock\now;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
@@ -20,7 +21,9 @@ class UserFixtures extends Fixture
     {
         for ($i = 0; 40 > $i; ++$i) {
             $user = new User();
+            $lastLogin = now(\sprintf('+%d day +%d hours', $i, $i));
             $user->setEmail(\sprintf('user-fixture-%s@test.com', $i));
+            $user->setLastLogin($lastLogin);
             if (0 === $i % 5) {
                 $user->setGender('female');
             } else {
