@@ -8,6 +8,8 @@ use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 
 readonly class RateLimiterService
 {
+    private const int HOUR_IN_MINUTE = 60;
+
     /**
      * @return array{accepted: bool, minutes: string}
      */
@@ -24,7 +26,7 @@ readonly class RateLimiterService
         }
 
         $leftTime = $limit->getRetryAfter()->getTimestamp() - time();
-        $minutes = max(1, ceil($leftTime / 60));
+        $minutes = max(1, ceil($leftTime / self::HOUR_IN_MINUTE));
 
         return [
             'accepted' => false,

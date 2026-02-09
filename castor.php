@@ -48,7 +48,7 @@ function phpmnd(): void
     execute(
         'PHPMND',
         '🔢 Checking magic numbers...',
-        'vendor/bin/phpmnd src --exclude=DataFixtures',
+        'vendor/bin/phpmnd src --exclude-path=DataFixtures --extensions=operation',
         'Magic numbers check passed'
     );
 }
