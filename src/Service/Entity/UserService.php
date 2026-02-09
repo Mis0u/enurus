@@ -6,6 +6,7 @@ namespace App\Service\Entity;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use function Symfony\Component\Clock\now;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -24,6 +25,7 @@ readonly class UserService
     public function createUser(User $user, FormInterface $form): User
     {
         $this->hashPassword($user, $form);
+        $user->setLastLogin(now());
         $this->save($user);
 
         return $user;
