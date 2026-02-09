@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
+use function Symfony\Component\Clock\now;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class SecurityControllerTest extends WebTestCase
 {
@@ -213,12 +214,15 @@ class SecurityControllerTest extends WebTestCase
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
 
-        /** @var UserInterface $testUser */
+        /** @var User $testUser */
         $testUser = $userRepository->findOneBy([
             'email' => 'user-fixture-0@test.com',
         ]);
 
         $client->loginUser($testUser);
+
+        $now = now()->format('Y-m-d');
+        $this->assertSame($testUser->getLastLogin()->format('Y-m-d'), $now);
 
         return $client;
     }

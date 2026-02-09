@@ -11,6 +11,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Clock\ClockInterface;
 use Symfony\Component\Clock\MockClock;
+use function Symfony\Component\Clock\now;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -58,6 +59,8 @@ class RegistrationControllerTest extends WebTestCase
     {
         $user = $this->fillField($gender, 'no_bot@test.com', 5, '/dashboard');
         $this->assertNotNull($user);
+        $this->assertInstanceOf(\DateTimeImmutable::class, $user->getLastLogin());
+        $this->assertSame($user->getLastLogin()->format('Y-m-d'), now()->format('Y-m-d'));
         $this->assertSame($user->getGender(), $gender);
     }
 
