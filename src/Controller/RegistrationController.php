@@ -31,7 +31,19 @@ class RegistrationController extends AbstractController
     ) {
     }
 
-    #[Route('/inscription', name: 'app_register')]
+    #[Route(
+        path: [
+            'en' => '/register',
+            'fr' => '/inscription',
+            'it' => '/registrazione',
+            'es' => '/registro',
+            'pt' => '/registo',
+            'de' => '/registrierung',
+            'nl' => '/registratie',
+            'pl' => '/rejestracja',
+        ],
+        name: 'app_register'
+    )]
     public function register(
         Request $request,
         Security $security,
@@ -52,8 +64,7 @@ class RegistrationController extends AbstractController
             if (! $validationResult['passed']) {
                 return $this->handleSecurityFailure($validationResult);
             }
-
-            $registrationService->registerUser($user, $form);
+            $registrationService->registerUser($user, $form, $request->getLocale());
 
             return $security->login($user, 'form_login', 'main')
                 ?? throw new AuthenticationException(
