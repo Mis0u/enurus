@@ -25,7 +25,7 @@ readonly class UserRegistrationService
      */
     public function registerUser(User $user, FormInterface $form, string $locale): User
     {
-        $this->userService->createUser($user, $form);
+        $this->userService->createUser($user, $form, $locale);
 
         $this->sendConfirmationEmail($user, $locale);
 

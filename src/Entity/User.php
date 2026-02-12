@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Entity\Trait\TimestampTrait;
+use App\Enum\Translations\LocaleAllowedEnum;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
@@ -55,6 +56,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $lastLogin;
+
+    #[ORM\Column(type: 'string', length: 5, nullable: false)]
+    private string $locale = LocaleAllowedEnum::EN->value;
 
     /**
      * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
@@ -172,6 +176,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastLogin(\DateTimeImmutable $lastLogin): static
     {
         $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(string $locale): static
+    {
+        $this->locale = $locale;
 
         return $this;
     }

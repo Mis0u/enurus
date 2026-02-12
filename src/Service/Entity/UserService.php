@@ -22,10 +22,11 @@ readonly class UserService
      * @template TData
      * @param FormInterface<TData> $form
      */
-    public function createUser(User $user, FormInterface $form): User
+    public function createUser(User $user, FormInterface $form, string $locale): User
     {
         $this->hashPassword($user, $form);
         $user->setLastLogin(now());
+        $user->setLocale($locale);
         $this->save($user);
 
         return $user;
