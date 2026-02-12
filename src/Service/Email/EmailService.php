@@ -18,27 +18,28 @@ readonly class EmailService
     ) {
     }
 
-    public function createRegistrationConfirmationEmail(User $user): TemplatedEmail
+    public function createRegistrationConfirmationEmail(User $user, string $locale): TemplatedEmail
     {
         return $this->createEmail(
             (string) $user->getEmail(),
-            $this->translator->trans('registration.confirm_email', [], 'security'),
-            'registration/confirmation_email.html.twig'
+            $this->translator->trans('registration.confirm_email', [], 'security', $locale),
+            'registration/confirmation_email.html.twig',
+            $locale
         );
     }
 
-    /**
-     * Crée un email générique
-     */
-    public function createEmail(string $to, string $subject, string $template): TemplatedEmail
+    public function createEmail(string $to, string $subject, string $template, string $locale): TemplatedEmail
     {
         return new TemplatedEmail()
             ->from(new Address(
                 self::FROM_EMAIL,
-                $this->translator->trans('name', [], 'brand')
+                $this->translator->trans('name', [], 'brand', $locale)
             ))
             ->to($to)
             ->subject($subject)
+            ->context([
+                'locale' => $locale,
+            ])
             ->htmlTemplate($template);
     }
 }

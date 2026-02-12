@@ -54,7 +54,8 @@ class ResetPasswordController extends AbstractController
             return $this->processSendingPasswordResetEmail(
                 $email,
                 $mailer,
-                $translator
+                $translator,
+                $request
             );
         }
 
@@ -146,8 +147,12 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
-    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, TranslatorInterface $translator): RedirectResponse
-    {
+    private function processSendingPasswordResetEmail(
+        string $emailFormData,
+        MailerInterface $mailer,
+        TranslatorInterface $translator,
+        Request $request
+    ): RedirectResponse {
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
         ]);
@@ -173,13 +178,16 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_check_email');
         }
 
-        $email = (new TemplatedEmail())
+        $locale = $request->getLocale();
+
+        $email = new TemplatedEmail()
             ->from(new Address('test@gmail.com', 'FitTracker'))
             ->to((string) $user->getEmail())
-            ->subject('Your password reset request')
+            ->subject($this->translator->trans('reset_password_request.reseting_password', [], 'security', $locale))
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
+                'locale' => $locale,
             ])
         ;
 
