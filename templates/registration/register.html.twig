@@ -43,7 +43,7 @@
                 {% include 'partials/_common/_security/_password_strength_indicator.html.twig' %}
 
                 <twig:Button:Primary:Primary
-                    message="{{ 'login.create_account'|trans({'%determinant%': 'mon'}, 'security') }}"
+                    message="{{ 'login.create_my_account'|trans({}, 'security') }}"
                     icon="add_people"
                     :disabled="true"
                     data-password-validator-target="submitButton"

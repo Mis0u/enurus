@@ -1,19 +1,18 @@
-<h2 style="margin: 0 0 24px; font-size: 24px; font-weight: bold; color: #ffffff;">{{ 'reset_password_request.reseting_password'|trans({}, 'security') }}</h2>
+<h2 style="margin: 0 0 24px; font-size: 24px; font-weight: bold; color: #ffffff;">{{ 'reset_password_request.reseting_password'|trans({}, 'security', locale) }}</h2>
 
 <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #cbd5e1;">
-    {{ 'word.hello'|trans({}, 'common') }}
+    {{ 'word.hello'|trans({}, 'common', locale) }}
 </p>
 
 <p style="margin: 0 0 32px; font-size: 16px; line-height: 1.6; color: #cbd5e1;">
-    {{ 'reset_password_request.asking_reset'|trans({}, 'security') }}
+    {{ 'reset_password_request.asking_reset'|trans({}, 'security', locale) }}
 </p>
 
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
     <tr>
         <td align="center" style="padding: 0 0 32px;">
-            <a href="{{ url('app_reset_password', {token: resetToken.token}) }}" style="display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 12px; box-shadow: 0 8px 20px rgba(6, 182, 212, 0.3);">
-                {{ 'reset_password_request.reset_my_password'|trans({}, 'security') }}
+            <a href="{{ url('app_reset_password', {token: resetToken.token, _locale: locale}) }}" style="display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 12px; box-shadow: 0 8px 20px rgba(6, 182, 212, 0.3);">
+                {{ 'reset_password_request.reset_my_password'|trans({}, 'security', locale) }}
             </a>
-        </td>
     </tr>
 </table>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang={{ locale }}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,8 +19,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18"></path>
                             </svg>
                         </div>
-                        <h1 style="margin: 0; font-size: 28px; font-weight: bold; color: #ffffff;">{{ 'name'|trans({}, 'brand') }}</h1>
-                        <p style="margin: 8px 0 0; font-size: 14px; color: #94a3b8;">{{ 'baseline'|trans({}, 'brand') }}</p>
+                        <h1 style="margin: 0; font-size: 28px; font-weight: bold; color: #ffffff;">{{ 'name'|trans({}, 'brand', locale) }}</h1>
+                        <p style="margin: 8px 0 0; font-size: 14px; color: #94a3b8;">{{ 'baseline'|trans({}, 'brand', locale) }}</p>
                     </td>
                 </tr>
 
