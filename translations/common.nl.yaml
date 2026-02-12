@@ -1,0 +1,45 @@
+field:
+    confirm_new_password: Wachtwoord bevestigen
+    email: E-mail
+    email_placeholder: jouw@email.com
+    gender:
+        female: Vrouw
+        male: Man
+        title: Geslacht
+    new_password: Nieuw wachtwoord
+    password: Wachtwoord
+    security_password: Kies een veilig wachtwoord
+
+sentence:
+    contact_support: Neem contact op met onze support
+    back_to_login: Terug naar inloggen
+    email:
+        button_failed: Als de knop niet werkt, kopieer en plak deze link in je browser
+        email_check: Controleer je inbox
+        email_correct: Controleer of het e-mailadres correct is
+        email_exist: Als een account overeenkomt met je e-mailadres, ontvang je een e-mail met een link om je wachtwoord te herstellen.
+        email_not_received: E-mail niet ontvangen?
+        email_received_explanation: Je ontvangt deze e-mail omdat je een account hebt aangemaakt bij %brand%.
+        email_send: E-mail succesvol verzonden!
+        email_spam: Controleer je spam-/ongewenste map
+        info_email_send: Als je de e-mail niet ontvangt, controleer dan je spammap.
+        send_back_email: E-mail opnieuw verzenden
+        wait: Wacht een paar minuten (de duur kan variëren)
+    need_help: Hulp nodig?
+    password:
+        security:
+            at_least_number: Minstens één cijfer
+            confirmation: Je wachtwoord is succesvol gewijzigd
+            criteria_min_char: Minstens %min% tekens
+            min_char: Minimaal %min% tekens met hoofdletters, kleine letters en cijfers
+            regex: Het wachtwoord moet minstens één hoofdletter, één kleine letter, één cijfer en één speciaal teken bevatten (! ? % $ * &)
+            special_char: Minstens één van de volgende speciale tekens ! ? % $ * &
+            upper_lower: Eén hoofdletter en één kleine letter
+            valid_new_password: Nieuw wachtwoord bevestigen
+    ready_to_transform: Klaar om jezelf te transformeren?
+    welcome: Welkom bij je fitness-avontuur!
+
+word:
+    hello: Hallo,
+    important: ⚠️ Belangrijk
+    security: Beveiliging

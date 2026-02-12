@@ -1,0 +1,43 @@
+login:
+    connexion: Iniciar sesión
+    connect: Conectarse
+    create_my_account: Crear mi cuenta
+    create_an_account: Crear una cuenta
+    forgot_password: ¿Olvidaste tu contraseña?
+    no_account_yet: ¿Aún no tienes cuenta?
+    remember_me: Recordarme
+
+registration:
+    email:
+        activate_account: Activar mi cuenta
+        click_activate: ¡Estás a un clic de comenzar tu transformación! Haz clic en el botón de abajo para activar tu cuenta.
+        info_link_life: Este enlace expira en %hour%
+        not_created_account: Si no has creado una cuenta en %brand%, simplemente ignora este correo.
+        registration_confirm: Confirma tu registro en %brand%
+    confirm_email: Confirmación de tu correo electrónico
+    create_account: Crear una cuenta
+    have_an_account: ¿Ya tienes una cuenta?
+    registration: Registro
+    success: ¡Registro exitoso!
+    website: Website
+
+reset_password_request:
+    asking_reset: Has solicitado restablecer tu contraseña. Haz clic en el botón de abajo para crear una nueva contraseña
+    back_to_connexion: Volver al inicio de sesión
+    email_link: Haz clic en el enlace de restablecimiento
+    expire_link: Este enlace expirará en
+    forgot_password: Contraseña olvidada
+    identical_password: Contraseña idéntica
+    info_email: Recibes este correo porque se ha solicitado un restablecimiento de contraseña en tu cuenta
+    info_link_life: Este enlace expira en %hour%. Una vez cambiada tu contraseña, serás redirigido a la página de inicio de sesión.
+    info_reset_password: Introduce tu dirección de correo electrónico y recibirás un enlace para restablecer tu contraseña.
+    new_password: Crea tu nueva contraseña
+    not_asking_reset: Si no has solicitado este restablecimiento, ignora este correo. Tu contraseña actual permanece sin cambios.
+    reset_email_password_send: Correo de restablecimiento enviado
+    reset_my_password: Restablecer mi contraseña
+    reset_password: Restablecer tu contraseña
+    reseting_password: Restablecimiento de tu contraseña
+    send_link: Enviar enlace de restablecimiento
+
+rate_limiter:
+    too_many_attempt: Demasiados intentos. Inténtalo de nuevo en %minutes% minuto(s).

@@ -1,7 +1,8 @@
 login:
     connexion: Connexion
     connect: Se connecter
-    create_account: Créer %determinant% compte
+    create_my_account: Créer mon compte
+    create_an_account: Créer un compte
     forgot_password: Mot de passe oublié ?
     no_account_yet: Pas encore de compte ?
     remember_me: Se souvenir de moi

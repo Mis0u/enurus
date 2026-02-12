@@ -1,0 +1,45 @@
+field:
+    confirm_new_password: Conferma la password
+    email: Email
+    email_placeholder: tua@email.com
+    gender:
+        female: Donna
+        male: Uomo
+        title: Genere
+    new_password: Nuova password
+    password: Password
+    security_password: Scegli una password sicura
+
+sentence:
+    contact_support: Contatta il nostro supporto
+    back_to_login: Torna al login
+    email:
+        button_failed: Se il pulsante non funziona, copia e incolla questo link nel tuo browser
+        email_check: Controlla la tua casella di posta
+        email_correct: Verifica che l'indirizzo email sia corretto
+        email_exist: Se un account corrisponde al tuo indirizzo email, riceverai un'email con un link per ripristinare la tua password.
+        email_not_received: Non hai ricevuto l'email?
+        email_received_explanation: Ricevi questa email perché hai creato un account su %brand%.
+        email_send: Email inviata con successo!
+        email_spam: Controlla la cartella spam/posta indesiderata
+        info_email_send: Se non ricevi l'email, controlla lo spam.
+        send_back_email: Reinvia l'email
+        wait: Attendi qualche minuto (i tempi possono variare)
+    need_help: Hai bisogno di aiuto?
+    password:
+        security:
+            at_least_number: Almeno un numero
+            confirmation: La tua password è stata modificata con successo
+            criteria_min_char: Almeno %min% caratteri
+            min_char: Minimo %min% caratteri con maiuscole, minuscole e numeri
+            regex: La password deve contenere almeno una maiuscola, una minuscola, un numero e un carattere speciale (! ? % $ * &)
+            special_char: Almeno uno dei seguenti caratteri speciali ! ? % $ * &
+            upper_lower: Una maiuscola e una minuscola
+            valid_new_password: Conferma la nuova password
+    ready_to_transform: Pronto a trasformarti?
+    welcome: Benvenuto nella tua avventura fitness!
+
+word:
+    hello: Ciao,
+    important: ⚠️ Importante
+    security: Sicurezza

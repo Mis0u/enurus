@@ -1,0 +1,45 @@
+field:
+    confirm_new_password: Potwierdź hasło
+    email: E-mail
+    email_placeholder: twoj@email.com
+    gender:
+        female: Kobieta
+        male: Mężczyzna
+        title: Płeć
+    new_password: Nowe hasło
+    password: Hasło
+    security_password: Wybierz bezpieczne hasło
+
+sentence:
+    contact_support: Skontaktuj się z naszym wsparciem
+    back_to_login: Powrót do logowania
+    email:
+        button_failed: Jeśli przycisk nie działa, skopiuj i wklej ten link w przeglądarce
+        email_check: Sprawdź swoją skrzynkę odbiorczą
+        email_correct: Upewnij się, że adres e-mail jest poprawny
+        email_exist: Jeśli konto jest powiązane z Twoim adresem e-mail, otrzymasz wiadomość z linkiem do zresetowania hasła.
+        email_not_received: Nie otrzymałeś wiadomości?
+        email_received_explanation: Otrzymujesz tę wiadomość, ponieważ utworzyłeś konto w %brand%.
+        email_send: E-mail wysłany pomyślnie!
+        email_spam: Sprawdź folder spam/niechciane
+        info_email_send: Jeśli nie otrzymasz wiadomości, sprawdź folder spam.
+        send_back_email: Wyślij ponownie e-mail
+        wait: Poczekaj kilka minut (czas może się różnić)
+    need_help: Potrzebujesz pomocy?
+    password:
+        security:
+            at_least_number: Przynajmniej jedna cyfra
+            confirmation: Twoje hasło zostało pomyślnie zmienione
+            criteria_min_char: Przynajmniej %min% znaków
+            min_char: Minimum %min% znaków z wielkimi literami, małymi literami i cyframi
+            regex: Hasło musi zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę i jeden znak specjalny (! ? % $ * &)
+            special_char: Przynajmniej jeden z następujących znaków specjalnych ! ? % $ * &
+            upper_lower: Jedna wielka i jedna mała litera
+            valid_new_password: Potwierdź nowe hasło
+    ready_to_transform: Gotowy na transformację?
+    welcome: Witaj w swojej fitnessowej przygodzie!
+
+word:
+    hello: Cześć,
+    important: ⚠️ Ważne
+    security: Bezpieczeństwo

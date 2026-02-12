@@ -1,0 +1,45 @@
+field:
+    confirm_new_password: Confirm password
+    email: Email
+    email_placeholder: your@email.com
+    gender:
+        female: Female
+        male: Male
+        title: Gender
+    new_password: New password
+    password: Password
+    security_password: Choose a secure password
+
+sentence:
+    contact_support: Contact our support
+    back_to_login: Back to login
+    email:
+        button_failed: If the button doesn't work, copy and paste this link into your browser
+        email_check: Check your inbox
+        email_correct: Make sure the email address is correct
+        email_exist: If an account matches your email address, you will receive an email with a link to reset your password.
+        email_not_received: Didn't receive the email?
+        email_received_explanation: You are receiving this email because you created an account on %brand%.
+        email_send: Email sent successfully!
+        email_spam: Check your spam/junk folder
+        info_email_send: If you don't receive the email, check your spam folder.
+        send_back_email: Resend email
+        wait: Wait a few minutes (delay may vary)
+    need_help: Need help?
+    password:
+        security:
+            at_least_number: At least one number
+            confirmation: Your password has been successfully changed
+            criteria_min_char: At least %min% characters
+            min_char: Minimum %min% characters with uppercase, lowercase and numbers
+            regex: Password must contain at least one uppercase letter, one lowercase letter, one number and one special character (! ? % $ * &)
+            special_char: At least one of the following special characters ! ? % $ * &
+            upper_lower: One uppercase and one lowercase letter
+            valid_new_password: Confirm new password
+    ready_to_transform: Ready to transform yourself?
+    welcome: Welcome to your fitness adventure!
+
+word:
+    hello: Hello,
+    important: ⚠️ Important
+    security: Security
