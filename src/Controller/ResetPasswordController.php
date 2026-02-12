@@ -55,7 +55,7 @@ class ResetPasswordController extends AbstractController
                 $email,
                 $mailer,
                 $translator,
-                $request
+                $request->getLocale()
             );
         }
 
@@ -151,7 +151,7 @@ class ResetPasswordController extends AbstractController
         string $emailFormData,
         MailerInterface $mailer,
         TranslatorInterface $translator,
-        Request $request
+        string $locale
     ): RedirectResponse {
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
@@ -177,8 +177,6 @@ class ResetPasswordController extends AbstractController
 
             return $this->redirectToRoute('app_check_email');
         }
-
-        $locale = $request->getLocale();
 
         $email = new TemplatedEmail()
             ->from(new Address('test@gmail.com', 'FitTracker'))
