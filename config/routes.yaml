@@ -8,4 +8,12 @@
 #   bin/console debug:router
 
 controllers:
-    resource: routing.controllers
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+    prefix: /{_locale}
+    requirements:
+        _locale: fr|en|it|es|pt|de|nl|pl
+    defaults:
+        _locale: en
