@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang={{ locale }}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% set brand_name = 'name'|trans({}, 'brand') %}
-    <title>{{ 'registration.email.registration_confirm'|trans({'%brand%': '- %s'|replace({'%s': brand_name})}, 'security') }}</title>
+    {% set brand_name = 'name'|trans({}, 'brand', locale) %}
+    <title>{{ 'registration.email.registration_confirm'|trans({'%brand%': '- %s'|replace({'%s': brand_name})}, 'security', locale) }}</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #0f172a; color: #e2e8f0;">
 
@@ -22,7 +22,7 @@
                             </svg>
                         </div>
                         <h1 style="margin: 0; font-size: 28px; font-weight: bold; color: #ffffff;">{{ brand_name }}</h1>
-                        <p style="margin: 8px 0 0; font-size: 14px; color: #94a3b8;">{{ 'sentence.welcome'|trans({}, 'common') }}</p>
+                        <p style="margin: 8px 0 0; font-size: 14px; color: #94a3b8;">{{ 'sentence.welcome'|trans({}, 'common', locale) }}</p>
                     </td>
                 </tr>
 
@@ -33,17 +33,17 @@
                             <span style="font-size: 64px;">💪</span>
                         </div>
 
-                        <h2 style="margin: 0 0 24px; font-size: 24px; font-weight: bold; color: #ffffff; text-align: center;">{{ 'registration.email.registration_confirm'|trans({'%brand%': ''}, 'security') }}</h2>
+                        <h2 style="margin: 0 0 24px; font-size: 24px; font-weight: bold; color: #ffffff; text-align: center;">{{ 'registration.email.registration_confirm'|trans({'%brand%': ''}, 'security', locale) }}</h2>
 
                         <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #cbd5e1; text-align: center;">
-                            {{ 'registration.email.click_activate'|trans({}, 'security') }}
+                            {{ 'registration.email.click_activate'|trans({}, 'security', locale) }}
                         </p>
 
                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                             <tr>
                                 <td align="center" style="padding: 0 0 32px;">
                                     <a href="{{ signedUrl|raw }}" style="display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #f43f5e 0%, #dc2626 100%); color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 12px; box-shadow: 0 8px 20px rgba(244, 63, 94, 0.3);">
-                                        ✅ {{ 'registration.email.activate_account'|trans({}, 'security') }}
+                                        ✅ {{ 'registration.email.activate_account'|trans({}, 'security', locale) }}
                                     </a>
                                 </td>
                             </tr>
@@ -51,7 +51,7 @@
 
                         <div style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 16px; margin-bottom: 24px;">
                             <p style="margin: 0 0 8px; font-size: 12px; color: #94a3b8; font-weight: 600;">
-                                {{ 'sentence.email.button_failed'|trans({}, 'common') }} :
+                                {{ 'sentence.email.button_failed'|trans({}, 'common', locale) }} :
                             </p>
                             <p style="margin: 0; font-size: 12px; color: #06b6d4; word-break: break-all;">
                                 <a href="{{ signedUrl|raw }}" style="color: #06b6d4; text-decoration: none;">
@@ -70,7 +70,7 @@
                                     </td>
                                     <td style="padding-left: 12px;">
                                         <p style="margin: 0; font-size: 14px; color: #fbbf24; font-weight: 600;">
-                                            {{ 'registration.email.info_link_life'|trans({'%hour%': expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle')}, 'security') }}
+                                            {{ 'registration.email.info_link_life'|trans({'%hour%': expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle')}, 'security', locale) }}
                                         </p>
                                     </td>
                                 </tr>
@@ -79,10 +79,10 @@
 
                         <div style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(8, 145, 178, 0.1) 100%); border-radius: 12px; padding: 20px; text-align: center;">
                             <p style="margin: 0 0 8px; font-size: 18px; font-weight: bold; color: #22d3ee;">
-                                🎯 {{ 'sentence.ready_to_transform'|trans({}, 'common') }}
+                                🎯 {{ 'sentence.ready_to_transform'|trans({}, 'common', locale) }}
                             </p>
                             <p style="margin: 0; font-size: 14px; color: #67e8f9; line-height: 1.5;">
-                                {{ 'baseline'|trans({}, 'brand') }}
+                                {{ 'baseline'|trans({}, 'brand', locale) }}
                             </p>
                         </div>
 
@@ -92,13 +92,13 @@
                 <tr>
                     <td style="padding: 30px 40px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center;">
                         <p style="margin: 0 0 16px; font-size: 14px; color: #64748b;">
-                            {{ 'sentence.need_help'|trans({}, 'common') }} <a href="#" style="color: #06b6d4; text-decoration: none;">{{ 'sentence.contact_support'|trans({}, 'common') }}</a>
+                            {{ 'sentence.need_help'|trans({}, 'common', locale) }} <a href="#" style="color: #06b6d4; text-decoration: none;">{{ 'sentence.contact_support'|trans({}, 'common', locale) }}</a>
                         </p>
                         <p style="margin: 0 0 8px; font-size: 12px; color: #475569;">
-                            {{ 'sentence.email.email_received_explanation'|trans({'%brand%': brand_name}, 'common') }}
+                            {{ 'sentence.email.email_received_explanation'|trans({'%brand%': brand_name}, 'common', locale) }}
                         </p>
                         <p style="margin: 0; font-size: 12px; color: #475569;">
-                            {{ 'footer.copyright'|trans({'%year%': "now"|date("Y"), '%brand%': brand_name}, 'navigation') }}
+                            {{ 'footer.copyright'|trans({'%year%': "now"|date("Y"), '%brand%': brand_name}, 'navigation', locale) }}
                         </p>
                     </td>
                 </tr>
@@ -109,7 +109,7 @@
                 <tr>
                     <td style="text-align: center; padding: 0 20px;">
                         <p style="margin: 0; font-size: 12px; line-height: 1.5; color: #475569;">
-                            {{ 'registration.email.not_created_account'|trans({'%brand%': brand_name}, 'security') }}
+                            {{ 'registration.email.not_created_account'|trans({'%brand%': brand_name}, 'security', locale) }}
                         </p>
                     </td>
                 </tr>

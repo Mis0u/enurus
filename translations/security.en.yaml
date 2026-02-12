@@ -1,0 +1,43 @@
+login:
+    connexion: Login
+    connect: Sign in
+    create_my_account: Create my account
+    create_an_account: Create an account
+    forgot_password: Forgot your password?
+    no_account_yet: Don't have an account yet?
+    remember_me: Remember me
+
+registration:
+    email:
+        activate_account: Activate my account
+        click_activate: You're one click away from starting your transformation! Click the button below to activate your account.
+        info_link_life: This link expires in %hour%
+        not_created_account: If you didn't create an account on %brand%, simply ignore this email.
+        registration_confirm: Confirm your %brand% registration
+    confirm_email: Email confirmation
+    create_account: Create an account
+    have_an_account: Already have an account?
+    registration: Registration
+    success: Registration successful!
+    website: Website
+
+reset_password_request:
+    asking_reset: You requested a password reset. Click the button below to create a new password
+    back_to_connexion: Back to login
+    email_link: Click the reset link
+    expire_link: This link will expire in
+    forgot_password: Forgot password
+    identical_password: Identical password
+    info_email: You are receiving this email because a password reset was requested for your account
+    info_link_life: This link expires in %hour%. Once your password is changed, you will be redirected to the login page.
+    info_reset_password: Enter your email address and you will receive a link to reset your password.
+    new_password: Create your new password
+    not_asking_reset: If you didn't request this reset, ignore this email. Your current password remains unchanged.
+    reset_email_password_send: Reset email sent
+    reset_my_password: Reset my password
+    reset_password: Reset your password
+    reseting_password: Resetting your password
+    send_link: Send reset link
+
+rate_limiter:
+    too_many_attempt: Too many attempts. Please try again in %minutes% minute(s).

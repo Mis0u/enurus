@@ -8,12 +8,15 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use function Symfony\Component\Clock\now;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
 final readonly class LoginSuccessListener
 {
     public function __construct(
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private UrlGeneratorInterface $urlGenerator
     ) {
     }
 
@@ -27,5 +30,11 @@ final readonly class LoginSuccessListener
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
+        $url = $this->urlGenerator->generate('app_dashboard', [
+            '_locale' => $event->getRequest()->getLocale(),
+        ]);
+
+        $event->setResponse(new RedirectResponse($url));
     }
 }

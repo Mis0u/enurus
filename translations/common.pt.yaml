@@ -1,0 +1,45 @@
+field:
+    confirm_new_password: Confirmar palavra-passe
+    email: Email
+    email_placeholder: seu@email.com
+    gender:
+        female: Mulher
+        male: Homem
+        title: Género
+    new_password: Nova palavra-passe
+    password: Palavra-passe
+    security_password: Escolha uma palavra-passe segura
+
+sentence:
+    contact_support: Contacte o nosso suporte
+    back_to_login: Voltar ao login
+    email:
+        button_failed: Se o botão não funcionar, copie e cole este link no seu navegador
+        email_check: Verifique a sua caixa de entrada
+        email_correct: Verifique se o endereço de email está correto
+        email_exist: Se uma conta corresponder ao seu endereço de email, receberá um email com um link para redefinir a sua palavra-passe.
+        email_not_received: Não recebeu o email?
+        email_received_explanation: Está a receber este email porque criou uma conta no %brand%.
+        email_send: Email enviado com sucesso!
+        email_spam: Verifique a sua pasta de spam/lixo eletrónico
+        info_email_send: Se não receber o email, verifique o spam.
+        send_back_email: Reenviar email
+        wait: Aguarde alguns minutos (o tempo pode variar)
+    need_help: Precisa de ajuda?
+    password:
+        security:
+            at_least_number: Pelo menos um número
+            confirmation: A sua palavra-passe foi alterada com sucesso
+            criteria_min_char: Pelo menos %min% caracteres
+            min_char: Mínimo %min% caracteres com maiúsculas, minúsculas e números
+            regex: A palavra-passe deve conter pelo menos uma maiúscula, uma minúscula, um número e um carácter especial (! ? % $ * &)
+            special_char: Pelo menos um dos seguintes caracteres especiais ! ? % $ * &
+            upper_lower: Uma maiúscula e uma minúscula
+            valid_new_password: Confirmar nova palavra-passe
+    ready_to_transform: Pronto para se transformar?
+    welcome: Bem-vindo à sua aventura fitness!
+
+word:
+    hello: Olá,
+    important: ⚠️ Importante
+    security: Segurança

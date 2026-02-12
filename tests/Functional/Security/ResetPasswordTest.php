@@ -15,7 +15,7 @@ class ResetPasswordTest extends WebTestCase
     public function testRequestPasswordResetPageIsAccessible(): void
     {
         $client = static::createClient();
-        $client->request(Request::METHOD_GET, '/reset-password');
+        $client->request(Request::METHOD_GET, '/fr/reset-password');
         $this->assertResponseIsSuccessful();
 
         $this->assertSelectorExists(
@@ -40,7 +40,7 @@ class ResetPasswordTest extends WebTestCase
 
         /** @var EntityManagerInterface $entityManager */
         $entityManager = $client->getContainer()->get('doctrine');
-        $crawler = $client->request(Request::METHOD_GET, '/reset-password');
+        $crawler = $client->request(Request::METHOD_GET, '/fr/reset-password');
         $buttonCrawlerNode = $crawler->selectButton('Envoyer le lien de réinitialisation');
         $form = $buttonCrawlerNode->form();
 
@@ -52,7 +52,7 @@ class ResetPasswordTest extends WebTestCase
             'reset_password_request_form[email]' => $email,
         ]);
 
-        $this->assertResponseRedirects('/reset-password/check-email');
+        $this->assertResponseRedirects('/fr/reset-password/check-email');
         $client->followRedirect();
 
         $this->assertSame($countRequest, $resetPasswordRequestRepository->count());
@@ -62,6 +62,6 @@ class ResetPasswordTest extends WebTestCase
 
         $this->assertCount($countMessage, $transport->get());
 
-        $this->assertSelectorExists('a[href="/reset-password"]');
+        $this->assertSelectorExists('a[href="/fr/reset-password"]');
     }
 }

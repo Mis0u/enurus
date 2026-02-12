@@ -33,7 +33,7 @@ class RegistrationControllerTest extends WebTestCase
     public function testRegistrationPageIsAccessible(): void
     {
         $client = static::createClient();
-        $client->request(Request::METHOD_GET, '/inscription');
+        $client->request(Request::METHOD_GET, '/fr/inscription');
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains(
             'title',
@@ -44,24 +44,25 @@ class RegistrationControllerTest extends WebTestCase
 
     public function testHoneyPotIsRedirectToLoginPageWithoutPersistInDatabase(): void
     {
-        $user = $this->fillField('male', 'bot@test.com', 5, '/', 'Je suis un bot');
+        $user = $this->fillField('male', 'bot@test.com', 5, '/fr/', 'Je suis un bot');
         $this->assertNull($user);
     }
 
     public function testHoneyPotFormSubmitToFastWithoutPersistInDatabase(): void
     {
-        $user = $this->fillField('male', 'bot@test.com', 1, '/');
+        $user = $this->fillField('male', 'bot@test.com', 1, '/fr/');
         $this->assertNull($user);
     }
 
     #[DataProvider('genderProvider')]
     public function testRegistrationSuccess(string $gender): void
     {
-        $user = $this->fillField($gender, 'no_bot@test.com', 5, '/dashboard');
+        $user = $this->fillField($gender, 'no_bot@test.com', 5, '/fr/dashboard');
         $this->assertNotNull($user);
         $this->assertInstanceOf(\DateTimeImmutable::class, $user->getLastLogin());
         $this->assertSame($user->getLastLogin()->format('Y-m-d'), now()->format('Y-m-d'));
         $this->assertSame($user->getGender(), $gender);
+        $this->assertSame('fr', $user->getLocale());
     }
 
     public function testRedirectToDashboardIfUserIsAuthenticated(): void
@@ -78,8 +79,8 @@ class RegistrationControllerTest extends WebTestCase
 
         $client->loginUser($testUser);
 
-        $client->request(Request::METHOD_GET, '/inscription');
-        $this->assertResponseRedirects('/dashboard');
+        $client->request(Request::METHOD_GET, '/fr/inscription');
+        $this->assertResponseRedirects('/fr/dashboard');
     }
 
     private function fillField(
@@ -96,7 +97,7 @@ class RegistrationControllerTest extends WebTestCase
 
         /** @var EntityManagerInterface $entityManager */
         $entityManager = $client->getContainer()->get('doctrine');
-        $crawler = $client->request(Request::METHOD_GET, '/inscription');
+        $crawler = $client->request(Request::METHOD_GET, '/fr/inscription');
 
         $this->assertSelectorTextContains('button', 'Créer mon compte', 'Le sélecteur contenant \'Créer mon compte\' est introuvable');
         $buttonCrawlerNode = $crawler->selectButton('Créer mon compte');
@@ -113,7 +114,6 @@ class RegistrationControllerTest extends WebTestCase
             'registration_form[plainPassword]' => self::PASSWORD,
             'registration_form[website]' => $honeyPot,
         ]);
-
         $this->assertResponseRedirects($route);
         $client->followRedirect();
 

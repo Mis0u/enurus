@@ -17,7 +17,7 @@ class SecurityControllerTest extends WebTestCase
     public function testLoginPageIsAccessible(): void
     {
         $client = static::createClient();
-        $client->request(Request::METHOD_GET, '/');
+        $client->request(Request::METHOD_GET, '/fr/');
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains(
             'title',
@@ -29,7 +29,7 @@ class SecurityControllerTest extends WebTestCase
     public function testLoginFormContainsRequiredFields(): void
     {
         $client = static::createClient();
-        $client->request(Request::METHOD_GET, '/');
+        $client->request(Request::METHOD_GET, '/fr/');
         $this->selectorExists();
     }
 
@@ -37,7 +37,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->getCredentials('toto@test.com', 'Symfony_rocks!');
 
-        $this->assertResponseRedirects('/');
+        $this->assertResponseRedirects('/fr/');
 
         $client->followRedirect();
 
@@ -52,7 +52,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->getCredentials('user-fixture-0@test.com', 'pass_1234');
 
-        $this->assertResponseRedirects('/dashboard');
+        $this->assertResponseRedirects('/fr/dashboard');
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Hello DashboardController!');
@@ -62,8 +62,8 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->login();
 
-        $client->request(Request::METHOD_GET, '/');
-        $this->assertResponseRedirects('/dashboard');
+        $client->request(Request::METHOD_GET, '/fr/');
+        $this->assertResponseRedirects('/fr/dashboard');
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Hello DashboardController!');
@@ -73,10 +73,10 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->login();
 
-        $client->request(Request::METHOD_GET, '/dashboard');
+        $client->request(Request::METHOD_GET, '/fr/dashboard');
         $this->assertSelectorTextContains('a', 'Logout');
         $client->clickLink('Logout');
-        $this->assertResponseRedirects('/');
+        $this->assertResponseRedirects('/fr/');
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
 
@@ -118,11 +118,11 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->getCredentials('user-fixture-0@test.com', 'pass_1234', true);
 
-        $this->assertResponseRedirects('/dashboard');
+        $this->assertResponseRedirects('/fr/dashboard');
 
         $client->getCookieJar()->expire('PHPSESSID');
 
-        $client->request(Request::METHOD_GET, '/dashboard');
+        $client->request(Request::METHOD_GET, '/fr/dashboard');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Hello DashboardController!');
@@ -132,7 +132,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->getCredentials('user-fixture-0@test.com', 'pass_1234', true);
 
-        $this->assertResponseRedirects('/dashboard');
+        $this->assertResponseRedirects('/fr/dashboard');
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('a', 'Logout');
@@ -145,7 +145,7 @@ class SecurityControllerTest extends WebTestCase
     public function testClickOnForgotPasswordShouldRedirect(): void
     {
         $client = static::createClient();
-        $client->request(Request::METHOD_GET, '/');
+        $client->request(Request::METHOD_GET, '/fr/');
         $client->clickLink('Mot de passe oublié ?');
         $this->assertRouteSame('app_forgot_password_request');
 
@@ -158,7 +158,7 @@ class SecurityControllerTest extends WebTestCase
     public function testClickOnRegistrationShouldRedirect(): void
     {
         $client = static::createClient();
-        $client->request(Request::METHOD_GET, '/');
+        $client->request(Request::METHOD_GET, '/fr/');
         $client->clickLink('Créer un compte');
         $this->assertRouteSame('app_register');
 
@@ -168,7 +168,7 @@ class SecurityControllerTest extends WebTestCase
     private function getCredentials(string $username, string $password, bool $rememberMe = false): KernelBrowser
     {
         $client = static::createClient();
-        $crawler = $client->request(Request::METHOD_GET, '/');
+        $crawler = $client->request(Request::METHOD_GET, '/fr/');
         $buttonCrawlerNode = $crawler->selectButton('Se connecter');
         $form = $buttonCrawlerNode->form();
 
@@ -201,7 +201,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->getCredentials('user-fixture-0@test.com', 'pass_1234', $rememberMe);
 
-        $this->assertResponseRedirects('/dashboard');
+        $this->assertResponseRedirects('/fr/dashboard');
 
         $cookieJar = $client->getCookieJar();
 

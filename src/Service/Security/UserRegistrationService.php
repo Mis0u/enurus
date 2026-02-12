@@ -23,21 +23,21 @@ readonly class UserRegistrationService
      * @template TData
      * @param FormInterface<TData> $form
      */
-    public function registerUser(User $user, FormInterface $form): User
+    public function registerUser(User $user, FormInterface $form, string $locale): User
     {
-        $this->userService->createUser($user, $form);
+        $this->userService->createUser($user, $form, $locale);
 
-        $this->sendConfirmationEmail($user);
+        $this->sendConfirmationEmail($user, $locale);
 
         return $user;
     }
 
-    private function sendConfirmationEmail(User $user): void
+    private function sendConfirmationEmail(User $user, string $locale): void
     {
         $this->emailVerifier->sendEmailConfirmation(
             'app_verify_email',
             $user,
-            $this->emailService->createRegistrationConfirmationEmail($user)
+            $this->emailService->createRegistrationConfirmationEmail($user, $locale)
         );
     }
 }

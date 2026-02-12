@@ -1,0 +1,43 @@
+login:
+    connexion: Logowanie
+    connect: Zaloguj się
+    create_my_account: Utwórz moje konto
+    create_an_account: Utwórz konto
+    forgot_password: Zapomniałeś hasła?
+    no_account_yet: Nie masz jeszcze konta?
+    remember_me: Zapamiętaj mnie
+
+registration:
+    email:
+        activate_account: Aktywuj moje konto
+        click_activate: Jesteś o jedno kliknięcie od rozpoczęcia swojej transformacji! Kliknij przycisk poniżej, aby aktywować swoje konto.
+        info_link_life: Ten link wygasa za %hour%
+        not_created_account: Jeśli nie zakładałeś konta w %brand%, po prostu zignoruj tę wiadomość.
+        registration_confirm: Potwierdź rejestrację w %brand%
+    confirm_email: Potwierdzenie adresu e-mail
+    create_account: Utwórz konto
+    have_an_account: Masz już konto?
+    registration: Rejestracja
+    success: Rejestracja zakończona pomyślnie!
+    website: Website
+
+reset_password_request:
+    asking_reset: Poprosiłeś o zresetowanie hasła. Kliknij przycisk poniżej, aby utworzyć nowe hasło
+    back_to_connexion: Powrót do logowania
+    email_link: Kliknij link resetujący
+    expire_link: Ten link wygaśnie za
+    forgot_password: Zapomniałem hasła
+    identical_password: Identyczne hasło
+    info_email: Otrzymujesz tę wiadomość, ponieważ złożono prośbę o zresetowanie hasła do Twojego konta
+    info_link_life: Ten link wygasa za %hour%. Po zmianie hasła zostaniesz przekierowany na stronę logowania.
+    info_reset_password: Wpisz swój adres e-mail, a otrzymasz link do zresetowania hasła.
+    new_password: Utwórz nowe hasło
+    not_asking_reset: Jeśli nie prosiłeś o zresetowanie hasła, zignoruj tę wiadomość. Twoje obecne hasło pozostaje bez zmian.
+    reset_email_password_send: E-mail z linkiem resetującym wysłany
+    reset_my_password: Zresetuj moje hasło
+    reset_password: Zresetuj swoje hasło
+    reseting_password: Resetowanie hasła
+    send_link: Wyślij link resetujący
+
+rate_limiter:
+    too_many_attempt: Zbyt wiele prób. Spróbuj ponownie za %minutes% minut(ę/y).
