@@ -31,6 +31,8 @@ reset_password_request:
     info_email: Ricevi questa email perché è stata effettuata una richiesta di ripristino della password sul tuo account
     info_link_life: Questo link scade tra %hour%. Una volta modificata la password, verrai reindirizzato alla pagina di accesso.
     info_reset_password: Inserisci il tuo indirizzo email e riceverai un link per ripristinare la tua password.
+    message_problem_handle: Si è verificato un problema durante l'elaborazione della richiesta di ripristino della password
+    message_problem_validate: Si è verificato un problema durante la convalida della richiesta di ripristino della password
     new_password: Crea la tua nuova password
     not_asking_reset: Se non hai richiesto questo ripristino, ignora questa email. La tua password attuale resta invariata.
     reset_email_password_send: Email di ripristino inviata

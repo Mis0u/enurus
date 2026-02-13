@@ -31,6 +31,8 @@ reset_password_request:
     info_email: You are receiving this email because a password reset was requested for your account
     info_link_life: This link expires in %hour%. Once your password is changed, you will be redirected to the login page.
     info_reset_password: Enter your email address and you will receive a link to reset your password.
+    message_problem_handle: There was a problem handling your password reset request
+    message_problem_validate: There was a problem validating your password reset request
     new_password: Create your new password
     not_asking_reset: If you didn't request this reset, ignore this email. Your current password remains unchanged.
     reset_email_password_send: Reset email sent

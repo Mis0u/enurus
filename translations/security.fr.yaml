@@ -31,6 +31,8 @@ reset_password_request:
     info_email: Vous recevez cet email car une demande de réinitialisation de mot de passe a été effectuée sur votre compte
     info_link_life: Ce lien expire dans %hour%. Une fois votre mot de passe changé, vous serez redirigé vers la page de connexion.
     info_reset_password: Entrez votre adresse email et vous recevrez un lien pour réinitialiser votre mot de passe.
+    message_problem_handle: Un problème est survenu lors du traitement de votre demande de réinitialisation de mot de passe
+    message_problem_validate: Un problème est survenu lors de la validation de votre demande de réinitialisation de mot de passe
     new_password: Créez votre nouveau mot de passe
     not_asking_reset: Si vous n'avez pas demandé cette réinitialisation, ignorez cet email. Votre mot de passe actuel reste inchangé.
     reset_email_password_send: Email de réinitialisation envoyé
