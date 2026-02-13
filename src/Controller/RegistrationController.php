@@ -64,7 +64,9 @@ class RegistrationController extends AbstractController
             if (! $validationResult['passed']) {
                 return $this->handleSecurityFailure($validationResult);
             }
-            $registrationService->registerUser($user, $form, $request->getLocale());
+            /** @var string $plainPassword */
+            $plainPassword = $form->get('plainPassword')->getData();
+            $registrationService->registerUser($user, $plainPassword, $request->getLocale());
 
             return $security->login($user, 'form_login', 'main')
                 ?? throw new AuthenticationException(
