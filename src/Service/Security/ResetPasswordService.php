@@ -6,7 +6,7 @@ namespace App\Service\Security;
 
 use App\Entity\User;
 use App\Exception\ResetPassword\UserNotFoundException;
-use App\Service\Email\EmailService;
+use App\Service\Email\SymfonyMailerEmailService;
 use App\Service\Entity\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -21,7 +21,7 @@ readonly class ResetPasswordService
         private ResetPasswordHelperInterface $resetPasswordHelper,
         private EntityManagerInterface $entityManager,
         private UserService $userService,
-        private EmailService $emailService,
+        private SymfonyMailerEmailService $emailService,
         private TranslatorInterface $translator,
     ) {
     }

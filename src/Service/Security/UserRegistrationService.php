@@ -6,14 +6,14 @@ namespace App\Service\Security;
 
 use App\Entity\User;
 use App\Security\EmailVerifier;
-use App\Service\Email\EmailService;
+use App\Service\Email\SymfonyMailerEmailService;
 use App\Service\Entity\UserService;
 
 readonly class UserRegistrationService
 {
     public function __construct(
         private UserService $userService,
-        private EmailService $emailService,
+        private SymfonyMailerEmailService $emailService,
         private EmailVerifier $emailVerifier,
     ) {
     }

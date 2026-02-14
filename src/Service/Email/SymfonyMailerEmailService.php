@@ -9,15 +9,14 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 
-readonly class EmailService
+readonly class SymfonyMailerEmailService implements EmailInterface
 {
     private const string FROM_EMAIL = 'fittracker@gmail.com';
 
     public function __construct(
         private TranslatorInterface $translator,
-        private readonly MailerInterface $mailer,
+        private MailerInterface $mailer,
     ) {
     }
 
@@ -35,7 +34,7 @@ readonly class EmailService
     }
 
     /**
-     *@param array<string, string|ResetPasswordToken> $context
+     *@param array<string, mixed> $context
      */
     public function createEmail(string $to, string $subject, array $context, string $template, string $locale): TemplatedEmail
     {
