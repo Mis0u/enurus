@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
 use App\Service\Security\ResetPasswordService;
@@ -90,12 +91,7 @@ class ResetPasswordController extends AbstractController
         try {
             $user = $this->resetPasswordService->validateToken($token);
         } catch (InvalidResetPasswordTokenException $e) {
-            $this->addFlash('error', sprintf(
-                '%s - %s',
-                $this->translator->trans('reset_password_request.message_problem_validate', [], 'security'),
-                $this->translator->trans($e->getReason(), [], 'ResetPasswordBundle')
-            ));
-            return $this->redirectToRoute('app_forgot_password_request');
+            return $this->flashError($e);
         }
 
         $form = $this->buildForm(ChangePasswordFormType::class, $request);
@@ -103,10 +99,7 @@ class ResetPasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
-            $this->resetPasswordService->resetPassword($token, $plainPassword, $user);
-            $this->cleanSessionAfterReset();
-            $this->addFlash('success', $this->translator->trans('sentence.password.security.confirmation', [], 'common'));
-            return $this->redirectToRoute('app_login');
+            return $this->resetPasswordAndRedirect($token, $plainPassword, $user);
         }
 
         return $this->render('reset_password/reset.html.twig', [
@@ -135,5 +128,23 @@ class ResetPasswordController extends AbstractController
         $form->handleRequest($request);
 
         return $form;
+    }
+
+    private function flashError(InvalidResetPasswordTokenException $e): RedirectResponse
+    {
+        $this->addFlash('error', sprintf(
+            '%s - %s',
+            $this->translator->trans('reset_password_request.message_problem_validate', [], 'security'),
+            $this->translator->trans($e->getReason(), [], 'ResetPasswordBundle')
+        ));
+        return $this->redirectToRoute('app_forgot_password_request');
+    }
+
+    private function resetPasswordAndRedirect(string $token, string $plainPassword, User $user): RedirectResponse
+    {
+        $this->resetPasswordService->resetPassword($token, $plainPassword, $user);
+        $this->cleanSessionAfterReset();
+        $this->addFlash('success', $this->translator->trans('sentence.password.security.confirmation', [], 'common'));
+        return $this->redirectToRoute('app_login');
     }
 }
