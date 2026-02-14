@@ -28,6 +28,8 @@ class RegistrationController extends AbstractController
     public function __construct(
         private readonly EmailVerifier $emailVerifier,
         private readonly TranslatorInterface $translator,
+        private readonly ValidateSecurityService $validator,
+        private readonly UserRegistrationService $registrationService,
     ) {
     }
 
@@ -48,8 +50,6 @@ class RegistrationController extends AbstractController
         Request $request,
         Security $security,
         RateLimiterFactory $registrationLimiter,
-        ValidateSecurityService $validator,
-        UserRegistrationService $registrationService,
     ): Response {
         if (null !== $this->getUser()) {
             return $this->redirectToRoute('app_dashboard');
@@ -59,14 +59,14 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $validationResult = $validator->validate($form, $request, $registrationLimiter);
+            $validationResult = $this->validator->validate($form, $request, $registrationLimiter);
 
             if (! $validationResult['passed']) {
                 return $this->handleSecurityFailure($validationResult);
             }
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
-            $registrationService->registerUser($user, $plainPassword, $request->getLocale());
+            $this->registrationService->registerUser($user, $plainPassword, $request->getLocale());
 
             return $security->login($user, 'form_login', 'main')
                 ?? throw new AuthenticationException(
