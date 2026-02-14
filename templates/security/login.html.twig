@@ -13,12 +13,7 @@
         <div class="max-w-md w-full">
 
             <div class="text-center mb-8">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-rose-500 to-red-600 rounded-2xl mb-4 shadow-lg shadow-rose-500/30">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18"></path>
-                    </svg>
-                </div>
-                <h1 class="text-3xl font-bold text-white mb-2">{{ 'name'|trans({}, 'brand') }}</h1>
+                {% include 'partials/_common/logo.html.twig' %}
                 <p class="text-slate-400">{{ 'baseline'|trans({}, 'brand') }}</p>
             </div>
 
