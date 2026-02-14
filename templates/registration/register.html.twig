@@ -9,9 +9,7 @@
         <div class="max-w-md w-full">
             {# Logo Section #}
             <div class="text-center mb-8">
-                <div class="inline-block mb-4">
-                    <img src="{{ asset('images/logo-fittracker.png') }}" alt="FitTracker Logo" class="w-48 h-auto">
-                </div>
+                {% include 'partials/_common/logo.html.twig' %}
                 <p class="text-slate-400">{{ 'starting'|trans({}, 'brand') }}</p>
             </div>
 
