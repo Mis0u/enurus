@@ -6,15 +6,17 @@ namespace App\Service\Email;
 
 use App\Entity\User;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-readonly class EmailService
+readonly class SymfonyMailerEmailService implements EmailInterface
 {
     private const string FROM_EMAIL = 'fittracker@gmail.com';
 
     public function __construct(
-        private TranslatorInterface $translator
+        private TranslatorInterface $translator,
+        private MailerInterface $mailer,
     ) {
     }
 
@@ -23,12 +25,18 @@ readonly class EmailService
         return $this->createEmail(
             (string) $user->getEmail(),
             $this->translator->trans('registration.confirm_email', [], 'security', $locale),
+            [
+                'locale' => $locale,
+            ],
             'registration/confirmation_email.html.twig',
             $locale
         );
     }
 
-    public function createEmail(string $to, string $subject, string $template, string $locale): TemplatedEmail
+    /**
+     *@param array<string, mixed> $context
+     */
+    public function createEmail(string $to, string $subject, array $context, string $template, string $locale): TemplatedEmail
     {
         return new TemplatedEmail()
             ->from(new Address(
@@ -37,9 +45,12 @@ readonly class EmailService
             ))
             ->to($to)
             ->subject($subject)
-            ->context([
-                'locale' => $locale,
-            ])
+            ->context($context)
             ->htmlTemplate($template);
+    }
+
+    public function sendEmail(TemplatedEmail $templatedEmail): void
+    {
+        $this->mailer->send($templatedEmail);
     }
 }

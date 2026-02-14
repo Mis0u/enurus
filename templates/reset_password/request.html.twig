@@ -3,6 +3,9 @@
 {% block title %}{{ 'reset_password_request.reset_password'|trans({}, 'security') }}{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('error') %}
+        <twig:Flash:Message:Message message="{{ message }}" type="error"/>
+    {% endfor %}
     <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">
         <div class="max-w-md w-full">
             {# Logo/Brand Section #}

@@ -6,26 +6,21 @@ namespace App\Service\Security;
 
 use App\Entity\User;
 use App\Security\EmailVerifier;
-use App\Service\Email\EmailService;
+use App\Service\Email\SymfonyMailerEmailService;
 use App\Service\Entity\UserService;
-use Symfony\Component\Form\FormInterface;
 
 readonly class UserRegistrationService
 {
     public function __construct(
         private UserService $userService,
-        private EmailService $emailService,
+        private SymfonyMailerEmailService $emailService,
         private EmailVerifier $emailVerifier,
     ) {
     }
 
-    /**
-     * @template TData
-     * @param FormInterface<TData> $form
-     */
-    public function registerUser(User $user, FormInterface $form, string $locale): User
+    public function registerUser(User $user, string $plainPassword, string $locale): User
     {
-        $this->userService->createUser($user, $form, $locale);
+        $this->userService->createUser($user, $plainPassword, $locale);
 
         $this->sendConfirmationEmail($user, $locale);
 

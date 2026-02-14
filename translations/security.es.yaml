@@ -31,6 +31,8 @@ reset_password_request:
     info_email: Recibes este correo porque se ha solicitado un restablecimiento de contraseña en tu cuenta
     info_link_life: Este enlace expira en %hour%. Una vez cambiada tu contraseña, serás redirigido a la página de inicio de sesión.
     info_reset_password: Introduce tu dirección de correo electrónico y recibirás un enlace para restablecer tu contraseña.
+    message_problem_handle: Se produjo un problema al procesar la solicitud de restablecimiento de contraseña
+    message_problem_validate: Se produjo un problema al validar la solicitud de restablecimiento de contraseña
     new_password: Crea tu nueva contraseña
     not_asking_reset: Si no has solicitado este restablecimiento, ignora este correo. Tu contraseña actual permanece sin cambios.
     reset_email_password_send: Correo de restablecimiento enviado

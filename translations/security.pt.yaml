@@ -31,6 +31,8 @@ reset_password_request:
     info_email: Está a receber este email porque foi solicitada uma redefinição de palavra-passe na sua conta
     info_link_life: Este link expira em %hour%. Depois de alterar a sua palavra-passe, será redirecionado para a página de login.
     info_reset_password: Introduza o seu endereço de email e receberá um link para redefinir a sua palavra-passe.
+    message_problem_handle: Ocorreu um problema ao processar o pedido de redefinição da palavra-passe
+    message_problem_validate: Ocorreu um problema ao validar o pedido de redefinição da palavra-passe
     new_password: Crie a sua nova palavra-passe
     not_asking_reset: Se não solicitou esta redefinição, ignore este email. A sua palavra-passe atual permanece inalterada.
     reset_email_password_send: Email de redefinição enviado

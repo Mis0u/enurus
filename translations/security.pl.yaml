@@ -31,6 +31,8 @@ reset_password_request:
     info_email: Otrzymujesz tę wiadomość, ponieważ złożono prośbę o zresetowanie hasła do Twojego konta
     info_link_life: Ten link wygasa za %hour%. Po zmianie hasła zostaniesz przekierowany na stronę logowania.
     info_reset_password: Wpisz swój adres e-mail, a otrzymasz link do zresetowania hasła.
+    message_problem_handle: Wystąpił problem podczas przetwarzania prośby o zresetowanie hasła
+    message_problem_validate: Wystąpił problem podczas weryfikacji prośby o zresetowanie hasła
     new_password: Utwórz nowe hasło
     not_asking_reset: Jeśli nie prosiłeś o zresetowanie hasła, zignoruj tę wiadomość. Twoje obecne hasło pozostaje bez zmian.
     reset_email_password_send: E-mail z linkiem resetującym wysłany

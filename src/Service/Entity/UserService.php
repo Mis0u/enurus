@@ -7,7 +7,6 @@ namespace App\Service\Entity;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use function Symfony\Component\Clock\now;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 readonly class UserService
@@ -18,13 +17,9 @@ readonly class UserService
     ) {
     }
 
-    /**
-     * @template TData
-     * @param FormInterface<TData> $form
-     */
-    public function createUser(User $user, FormInterface $form, string $locale): User
+    public function createUser(User $user, string $plainPassword, string $locale): User
     {
-        $this->hashPassword($user, $form);
+        $this->hashPassword($user, $plainPassword);
         $user->setLastLogin(now());
         $user->setLocale($locale);
         $this->save($user);
@@ -38,17 +33,8 @@ readonly class UserService
         $this->entityManager->flush();
     }
 
-    /**
-     * @template TData
-     * @param FormInterface<TData> $form
-     */
-    private function hashPassword(
-        User $user,
-        FormInterface $form
-    ): void {
-        /** @var string $plainPassword */
-        $plainPassword = $form->get('plainPassword')->getData();
-
+    public function hashPassword(User $user, string $plainPassword): void
+    {
         $user->setPassword($this->passwordHasher->hashPassword($user, $plainPassword));
     }
 }
