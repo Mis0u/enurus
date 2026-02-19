@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace App\Service\Security;
 
 use App\Entity\User;
-use App\Security\EmailVerifier;
-use App\Service\Email\SymfonyMailerEmailService;
 use App\Service\Entity\UserService;
 
 readonly class UserRegistrationService
 {
     public function __construct(
         private UserService $userService,
-        private SymfonyMailerEmailService $emailService,
-        private EmailVerifier $emailVerifier,
     ) {
     }
 
@@ -22,17 +18,6 @@ readonly class UserRegistrationService
     {
         $this->userService->createUser($user, $plainPassword, $locale);
 
-        $this->sendConfirmationEmail($user, $locale);
-
         return $user;
-    }
-
-    private function sendConfirmationEmail(User $user, string $locale): void
-    {
-        $this->emailVerifier->sendEmailConfirmation(
-            'app_verify_email',
-            $user,
-            $this->emailService->createRegistrationConfirmationEmail($user, $locale)
-        );
     }
 }
