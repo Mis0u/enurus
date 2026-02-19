@@ -20,7 +20,16 @@ use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\InvalidResetPasswordTokenException;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 
-#[Route('/reset-password')]
+#[Route(path: [
+    'en' => '/reset-password',
+    'fr' => '/reinitialiser-mot-de-passe',
+    'it' => '/reimposta-password',
+    'es' => '/restablecer-contrasena',
+    'pt' => '/redefinir-palavra-passe',
+    'de' => '/passwort-zuruecksetzen',
+    'nl' => '/wachtwoord-herstellen',
+    'pl' => '/resetuj-haslo',
+], )]
 class ResetPasswordController extends AbstractController
 {
     use ResetPasswordControllerTrait;
@@ -60,7 +69,19 @@ class ResetPasswordController extends AbstractController
     /**
      * Confirmation page after a user has requested a password reset.
      */
-    #[Route('/check-email', name: 'app_check_email')]
+    #[Route(
+        path: [
+            'en' => '/check-email',
+            'fr' => '/verifier-email',
+            'it' => '/controlla-email',
+            'es' => '/verificar-email',
+            'pt' => '/verificar-email',
+            'de' => '/email-pruefen',
+            'nl' => '/email-controleren',
+            'pl' => '/sprawdz-email',
+        ],
+        name: 'app_check_email'
+    )]
     public function checkEmail(): Response
     {
         $resetToken = $this->resetPasswordService->resolveResetToken($this->getTokenObjectFromSession());
@@ -73,7 +94,20 @@ class ResetPasswordController extends AbstractController
     /**
      * Validates and process the reset URL that the user clicked in their email.
      */
-    #[Route('/reset/{token}', name: 'app_reset_password')]
+    #[Route(
+        path: [
+            'en' => '/reset/{token}',
+            'fr' => '/reinitialiser/{token}',
+            'it' => '/reimposta/{token}',
+            'es' => '/restablecer/{token}',
+            'pt' => '/redefinir/{token}',
+            'de' => '/zuruecksetzen/{token}',
+            'nl' => '/herstellen/{token}',
+            'pl' => '/resetuj/{token}',
+        ],
+        name: 'app_reset_password'
+    )
+    ]
     public function reset(Request $request, ?string $token = null): Response
     {
         if ($token) {
