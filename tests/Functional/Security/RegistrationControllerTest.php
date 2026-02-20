@@ -110,6 +110,7 @@ class RegistrationControllerTest extends WebTestCase
 
         $client->submit($form, [
             'registration_form[gender]' => $gender,
+            'registration_form[nickname]' => 'Toto',
             'registration_form[email]' => $email,
             'registration_form[plainPassword]' => self::PASSWORD,
             'registration_form[website]' => $honeyPot,

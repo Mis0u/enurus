@@ -20,11 +20,16 @@
 
                 {{ form_errors(registrationForm.gender) }}
                 {{ form_errors(registrationForm.email) }}
+                {{ form_errors(registrationForm.nickname) }}
                 {{ form_errors(registrationForm.plainPassword) }}
 
                 <div class="space-y-2">
                     {{ form_label(registrationForm.gender) }}
                     {{ form_widget(registrationForm.gender) }}
+                </div>
+                <div class="space-y-2">
+                    {{ form_label(registrationForm.nickname) }}
+                    {{ form_widget(registrationForm.nickname) }}
                 </div>
                 <div class="space-y-2">
                     {{ form_label(registrationForm.email) }}

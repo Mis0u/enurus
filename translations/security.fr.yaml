@@ -17,6 +17,9 @@ registration:
     confirm_email: Confirmation de votre email
     create_account: Créer un compte
     have_an_account: Vous avez déjà un compte ?
+    nickname:
+        label: Choisis ton alias
+        placeholder: Sous quel nom veux-tu briller ?
     registration: Inscription
     success: Inscription réussie !
     website: Website

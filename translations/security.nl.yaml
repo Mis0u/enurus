@@ -17,6 +17,9 @@ registration:
     confirm_email: Bevestiging van je e-mail
     create_account: Een account aanmaken
     have_an_account: Heb je al een account?
+    nickname:
+        label: Kies je alias
+        placeholder: Onder welke naam wil je schitteren?
     registration: Registratie
     success: Registratie geslaagd!
     website: Website

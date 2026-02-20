@@ -23,6 +23,7 @@ class UserFixtures extends Fixture
             $user = new User();
             $lastLogin = now(\sprintf('+%d day +%d hours', $i, $i));
             $user->setEmail(\sprintf('user-fixture-%s@test.com', $i));
+            $user->setNickname(\sprintf('user-fixture-%s', $i));
             $user->setLastLogin($lastLogin);
             if (0 === $i % 5) {
                 $user->setGender('female');
