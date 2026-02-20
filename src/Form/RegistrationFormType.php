@@ -51,6 +51,16 @@ class RegistrationFormType extends AbstractFormSecurityType
                 'expanded' => true,
                 'multiple' => false,
             ])
+            ->add('nickname', TextType::class, [
+                'label' => $this->translator->trans('registration.nickname.label', [], 'security'),
+                'label_attr' => [
+                    'class' => FieldClassEnum::LABEL_ATTRIBUTE->value,
+                ],
+                'attr' => [
+                    'class' => FieldClassEnum::ATTRIBUTE_FIELD_CLASS->value,
+                    'placeholder' => $this->translator->trans('registration.nickname.placeholder', [], 'security'),
+                ],
+            ])
             ->add('email', EmailType::class, [
                 'label' => $this->translator->trans('field.email', [], 'common'),
                 'label_attr' => [

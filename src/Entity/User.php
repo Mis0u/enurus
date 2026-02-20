@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -38,8 +39,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Email]
     private string $email;
 
-    #[NotBlank]
     #[ORM\Column(length: 10, nullable: false)]
+    #[NotBlank]
     private string $gender;
 
     /**
@@ -56,6 +57,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 5, nullable: false)]
     private string $locale = LocaleAllowedEnum::EN->value;
+
+    #[ORM\Column(type: 'string', length: 25, nullable: false)]
+    #[NotBlank]
+    #[Length(min: 1, max: 20, maxMessage: 'user.nickname.length.max')]
+    private string $nickname;
 
     /**
      * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
@@ -173,6 +179,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLocale(string $locale): static
     {
         $this->locale = $locale;
+
+        return $this;
+    }
+
+    public function getNickname(): string
+    {
+        return $this->nickname;
+    }
+
+    public function setNickname(string $nickname): static
+    {
+        $this->nickname = $nickname;
 
         return $this;
     }
