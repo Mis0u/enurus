@@ -1,0 +1,4 @@
+user:
+    nickname:
+        length:
+            max: 'O teu alias é demasiado longo. Deve ter no máximo {{ limit }} caracteres'
