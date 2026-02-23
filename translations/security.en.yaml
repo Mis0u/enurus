@@ -8,12 +8,15 @@ login:
     remember_me: Remember me
 
 registration:
+    account_created: Your account is created and ready to go
     email:
         activate_account: Activate my account
         click_activate: You're one click away from starting your transformation! Click the button below to activate your account.
         info_link_life: This link expires in %hour%
         not_created_account: If you didn't create an account on %brand%, simply ignore this email.
+        receive_email: You're receiving this email because you signed up on %brand%
         registration_confirm: Confirm your %brand% registration
+        welcome: Welcome to %brand%! Your first workout is waiting for you
     confirm_email: Email confirmation
     create_account: Create an account
     have_an_account: Already have an account?

@@ -1,5 +1,6 @@
 field:
     confirm_new_password: Confirmer le mot de passe
+    criteria_password: "Critères de sécurité :"
     email: Email
     email_placeholder: votre@email.com
     gender:
@@ -11,6 +12,8 @@ field:
     security_password: Choisissez un mot de passe sécurisé
 
 sentence:
+    add_datas: Renseigne tes exercices, séries et charges
+    advice: "Conseil : Plus tu enregistres tes séance régulièrement, plus tes stats sont précises !"
     contact_support: Contactez notre support
     back_to_login: Retour à la connexion
     email:
@@ -25,7 +28,12 @@ sentence:
         info_email_send: Si vous ne recevez pas l'email, vérifiez vos spams.
         send_back_email: Renvoyer un email
         wait: Attendez quelques minutes (le délai peut varier)
+    enjoy: Regarde ton tableau de bord prendre vie
+    evolution_real_time: Progression en temps réel
+    log_workout: Clique sur "Enregistrer ma séance" dans ton tableau de bord
+    maintain_regularity: Maintiens ta régularité et casse tes records
     need_help: Besoin d'aide ?
+    outline_muscle: Silhouette musculaire
     password:
         security:
             at_least_number: Au moins un chiffre
@@ -36,11 +44,17 @@ sentence:
             special_char: Au moins un des caractères spéciaux suivant ! ? % $ * &
             upper_lower: Une majuscule et une minuscule
             valid_new_password: Valider le nouveau mot de passe
+    ready_to_start: Prêt à démarrer ? Ta progression commence ici
     ready_to_transform: Prêt à vous transformer ?
+    see_datas: Visualise ton tonnage, tes records et ton évolution
+    see_working_muscles: Vois exactement quels muscles tu travailles
     welcome: Bienvenue dans votre aventure fitness !
+    what_next: Ce qui t'attend
+    where_to_start: Par où commencer ?
 
 word:
     hello: Bonjour,
     important:  ⚠️ Important
     security: Sécurité
+    welcome: Bienvenue
 

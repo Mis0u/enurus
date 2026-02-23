@@ -1,5 +1,6 @@
 field:
     confirm_new_password: Wachtwoord bevestigen
+    criteria_password: "Beveiligingscriteria:"
     email: E-mail
     email_placeholder: jouw@email.com
     gender:
@@ -11,6 +12,8 @@ field:
     security_password: Kies een veilig wachtwoord
 
 sentence:
+    add_datas: Voer je oefeningen, sets en gewichten in
+    advice: "Tip: Hoe vaker je je trainingen bijhoudt, hoe nauwkeuriger je statistieken worden!"
     contact_support: Neem contact op met onze support
     back_to_login: Terug naar inloggen
     email:
@@ -25,7 +28,12 @@ sentence:
         info_email_send: Als je de e-mail niet ontvangt, controleer dan je spammap.
         send_back_email: E-mail opnieuw verzenden
         wait: Wacht een paar minuten (de duur kan variëren)
+    enjoy: Zie je dashboard tot leven komen
+    evolution_real_time: Voortgang in realtime
+    log_workout: Klik op "Training vastleggen" in je dashboard
+    maintain_regularity: Blijf consistent en verbreek je records
     need_help: Hulp nodig?
+    outline_muscle: Spiersilhouet
     password:
         security:
             at_least_number: Minstens één cijfer
@@ -36,10 +44,16 @@ sentence:
             special_char: Minstens één van de volgende speciale tekens ! ? % $ * &
             upper_lower: Eén hoofdletter en één kleine letter
             valid_new_password: Nieuw wachtwoord bevestigen
+    ready_to_start: Klaar om te beginnen? Je vooruitgang begint hier
     ready_to_transform: Klaar om jezelf te transformeren?
+    see_datas: Bekijk je tonnage, records en ontwikkeling
+    see_working_muscles: Zie precies welke spieren je traint
     welcome: Welkom bij je fitness-avontuur!
+    what_next: Wat je te wachten staat
+    where_to_start: Waar te beginnen?
 
 word:
     hello: Hallo,
     important: ⚠️ Belangrijk
     security: Beveiliging
+    welcome: Welkom

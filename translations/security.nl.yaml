@@ -8,12 +8,15 @@ login:
     remember_me: Onthoud mij
 
 registration:
+    account_created: Je account is aangemaakt en klaar voor gebruik
     email:
         activate_account: Mijn account activeren
         click_activate: Je bent nog maar één klik verwijderd van je transformatie! Klik op de knop hieronder om je account te activeren.
         info_link_life: Deze link verloopt over %hour%
         not_created_account: Als je geen account hebt aangemaakt bij %brand%, negeer dan deze e-mail.
+        receive_email: Je ontvangt deze e-mail omdat je je hebt geregistreerd bij %brand%
         registration_confirm: Bevestig je registratie bij %brand%
+        welcome: Welkom bij %brand%! Je eerste training wacht op je
     confirm_email: Bevestiging van je e-mail
     create_account: Een account aanmaken
     have_an_account: Heb je al een account?
