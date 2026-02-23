@@ -1,5 +1,6 @@
 field:
     confirm_new_password: Confirm password
+    criteria_password: "Security criteria:"
     email: Email
     email_placeholder: your@email.com
     gender:
@@ -11,6 +12,8 @@ field:
     security_password: Choose a secure password
 
 sentence:
+    add_datas: Enter your exercises, sets and weights
+    advice: "Tip: The more regularly you log your workouts, the more accurate your stats become!"
     contact_support: Contact our support
     back_to_login: Back to login
     email:
@@ -25,7 +28,12 @@ sentence:
         info_email_send: If you don't receive the email, check your spam folder.
         send_back_email: Resend email
         wait: Wait a few minutes (delay may vary)
+    enjoy: Watch your dashboard come to life
+    evolution_real_time: Real-time progress
+    log_workout: Click "Log my workout" on your dashboard
+    maintain_regularity: Stay consistent and smash your records
     need_help: Need help?
+    outline_muscle: Muscle outline
     password:
         security:
             at_least_number: At least one number
@@ -36,10 +44,16 @@ sentence:
             special_char: At least one of the following special characters ! ? % $ * &
             upper_lower: One uppercase and one lowercase letter
             valid_new_password: Confirm new password
+    ready_to_start: Ready to get started? Your progress begins here
     ready_to_transform: Ready to transform yourself?
+    see_datas: Track your tonnage, records and progress
+    see_working_muscles: See exactly which muscles you're working
     welcome: Welcome to your fitness adventure!
+    what_next: What's ahead
+    where_to_start: Where to begin?
 
 word:
     hello: Hello,
     important: ⚠️ Important
     security: Security
+    welcome: Welcome

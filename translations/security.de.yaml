@@ -8,12 +8,15 @@ login:
     remember_me: Angemeldet bleiben
 
 registration:
+    account_created: Dein Konto ist erstellt und einsatzbereit
     email:
         activate_account: Mein Konto aktivieren
         click_activate: Du bist nur einen Klick davon entfernt, deine Transformation zu starten! Klicke auf den Button unten, um dein Konto zu aktivieren.
         info_link_life: Dieser Link läuft in %hour% ab
         not_created_account: Wenn du kein Konto bei %brand% erstellt hast, ignoriere einfach diese E-Mail.
+        receive_email: Du erhältst diese E-Mail, weil du dich bei %brand% registriert hast
         registration_confirm: Bestätige deine Registrierung bei %brand%
+        welcome: Willkommen bei %brand%! Dein erstes Training wartet auf dich
     confirm_email: Bestätigung deiner E-Mail
     create_account: Ein Konto erstellen
     have_an_account: Du hast bereits ein Konto?
