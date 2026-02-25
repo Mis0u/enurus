@@ -4,16 +4,30 @@ declare(strict_types=1);
 
 namespace App\Entity\Trait;
 
+use App\Entity\User;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Clock\Clock;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 trait TimestampTrait
 {
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE)]
+    #[Gedmo\Timestampable(on: 'create')]
     private \DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
+    #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Gedmo\Blameable(on: 'create')]
+    private ?User $createdBy = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Gedmo\Blameable(on: 'update')]
+    private ?User $updatedBy = null;
 
     public function getCreatedAt(): \DateTimeImmutable
     {
@@ -39,15 +53,27 @@ trait TimestampTrait
         return $this;
     }
 
-    #[ORM\PrePersist]
-    public function setCreatedAtValue(): void
+    public function getCreatedBy(): ?User
     {
-        $this->createdAt = Clock::get()->now();
+        return $this->createdBy;
     }
 
-    #[ORM\PreUpdate]
-    public function setUpdatedAtValue(): void
+    public function setCreatedBy(?User $createdBy): static
     {
-        $this->updatedAt = Clock::get()->now();
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getUpdatedBy(): ?User
+    {
+        return $this->updatedBy;
+    }
+
+    public function setUpdatedBy(?User $updatedBy): static
+    {
+        $this->updatedBy = $updatedBy;
+
+        return $this;
     }
 }
