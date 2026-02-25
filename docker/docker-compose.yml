@@ -7,6 +7,10 @@ services:
             POSTGRES_DB: ${POSTGRES_DB}
             POSTGRES_USER: ${POSTGRES_USER}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        command: >
+            postgres
+            -c idle_in_transaction_session_timeout=300000
+            -c statement_timeout=30000
         ports:
             - "${POSTGRES_PORT}:5432"
         volumes:
@@ -18,6 +22,10 @@ services:
             POSTGRES_DB: fittracker
             POSTGRES_USER: fittracker
             POSTGRES_PASSWORD: fittracker_test_password
+        command: >
+            postgres
+            -c idle_in_transaction_session_timeout=300000
+            -c statement_timeout=30000
         ports:
             - "5433:5432"
         tmpfs:
