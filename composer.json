@@ -10,6 +10,7 @@
         "doctrine/doctrine-bundle": "^3.2",
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.6",
+        "gedmo/doctrine-extensions": "^3.22",
         "phpdocumentor/reflection-docblock": "^6.0",
         "phpstan/phpdoc-parser": "^2.3",
         "symfony/asset": "7.4.*",
@@ -103,6 +104,7 @@
         }
     },
     "require-dev": {
+        "ahmed-bhs/doctrine-doctor": "^2.0",
         "captainhook/captainhook": "^5.27",
         "dama/doctrine-test-bundle": "^8.4",
         "doctrine/doctrine-fixtures-bundle": "^4.3",
