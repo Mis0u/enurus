@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+@source "../../templates";
+@source "../../src";
+
+@theme {
+    --color-bg-base:       #080e1a;
+    --color-bg-card:       #0f1928;
+    --color-bg-card-hover: #151f30;
+    --color-rose-ft:       #f43f5e;
+    --color-cyan-ft:       #06b6d4;
+    --color-amber-ft:      #f59e0b;
+    --color-green-ft:      #22c55e;
+
+    --font-rajdhani: 'Rajdhani', sans-serif;
+    --font-dm-sans:  'DM Sans', sans-serif;
+}
+
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-10px); }
