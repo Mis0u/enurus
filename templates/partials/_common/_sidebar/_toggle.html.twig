@@ -1,0 +1,14 @@
+<div data-controller="aside-toggle">
+    <button
+        id="sidebar-toggle"
+        class="hidden md:flex fixed top-[22px] w-7 h-7
+           bg-bg-card border border-white/[0.07] rounded-full
+           cursor-pointer items-center justify-center
+           z-30 transition-ft hover:bg-bg-card-hover
+           shadow-[0_0_0_4px_rgba(255,255,255,0.04)]"
+        data-action="click->aside-toggle#toggleSidebar"
+        title="{{ 'field.reduce'|trans({}, 'common') }}"
+    >
+        {% include 'partials/_svg/_left_arrow.html.twig' %}
+    </button>
+</div>
