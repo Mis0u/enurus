@@ -9,6 +9,7 @@ field:
         title: Płeć
     new_password: Nowe hasło
     password: Hasło
+    reduce: Zwiń
     security_password: Wybierz bezpieczne hasło
 
 sentence:

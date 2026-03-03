@@ -9,6 +9,7 @@ field:
         title: Geslacht
     new_password: Nieuw wachtwoord
     password: Wachtwoord
+    reduce: Inklappen
     security_password: Kies een veilig wachtwoord
 
 sentence:

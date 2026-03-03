@@ -9,6 +9,7 @@ field:
         title: Geschlecht
     new_password: Neues Passwort
     password: Passwort
+    reduce: Einklappen
     security_password: Wähle ein sicheres Passwort
 
 sentence:
@@ -42,8 +43,8 @@ sentence:
     enjoy: Sieh zu, wie deine Übersicht zum Leben erwacht
     evolution_real_time: Fortschritt in Echtzeit
     less_time: Es dauert weniger als 2 Minuten
-    log_first_workout: Erfasse dein erstes Training
     log_workout: Klicke auf „Training erfassen" in deiner Übersicht
+    log_first_workout: Erfasse dein erstes Training
     maintain_regularity: Bleib konstant und knacke deine Rekorde
     need_help: Brauchst du Hilfe?
     outline_muscle: Muskelsilhouette

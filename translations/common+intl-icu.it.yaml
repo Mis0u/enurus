@@ -9,6 +9,7 @@ field:
         title: Genere
     new_password: Nuova password
     password: Password
+    reduce: Riduci
     security_password: Scegli una password sicura
 
 sentence:
