@@ -1,23 +1,7 @@
 {% set is_active = app.current_route == this.route %}
 
-<a href="{{ this.link }}" class="nav-item flex items-center gap-[10px] px-3 py-[10px] rounded-[10px] whitespace-nowrap overflow-hidden relative transition-ft no-underline
-    {{ is_active
-? 'active text-[#f0f4ff] bg-[rgba(244,63,94,0.15)] border border-[rgba(244,63,94,0.4)]'
-: 'text-[#8b9bb4] hover:bg-white/5 hover:text-[#f0f4ff]'
-}}"
-{% if this.route == 'app_logout' %}
-    id="logout"
+{% if this.mobile %}
+    {% include 'components/Navigation/Sidebar/_mobile_format.html.twig' with {'is_active': is_active} %}
+{% else %}
+    {% include 'components/Navigation/Sidebar/_desktop_format.html.twig' with {'is_active': is_active} %}
 {% endif %}
->
-    {% if this.svg %}
-        <span class="min-w-[20px] flex items-center justify-center">
-            {% include this.svg %}
-        </span>
-    {% endif %}
-    <span class="nav-label text-[13.5px] font-medium">{{ this.menu }}</span>
-    {% if this.badge %}
-        <span class="nav-badge ml-auto bg-rose-ft text-white text-[10px] font-bold min-w-[18px] h-[18px] rounded-[9px] flex items-center justify-center px-1 transition-ft">
-            {{ this.totalNotification }}
-        </span>
-    {% endif %}
-</a>

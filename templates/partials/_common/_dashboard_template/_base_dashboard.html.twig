@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'dashboard.title'|trans({}, 'navigation') }} — {{ 'name'|trans({}, 'brand') }}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="flex h-screen w-screen overflow-hidden bg-bg-base text-[#f0f4ff] text-sm leading-relaxed font-dm-sans">
+
+    {% block sidebar %}
+        {% include 'partials/_common/_dashboard_template/_sidebar/_sidebar.html.twig' %}
+    {% endblock %}
+    <main class="flex-1 overflow-hidden flex flex-col relative max-md:pb-20">
+        {% block topbar %}
+            {% include 'partials/_common/_dashboard_template/_topbar/_topbar.html.twig' %}
+        {% endblock %}
+
+        {% block state %}{% endblock %}
+    </main>
+</div>
+    {% include 'partials/_common/_dashboard_template/_sidebar/_nav_mobile.html.twig' %}
+
+{% endblock %}

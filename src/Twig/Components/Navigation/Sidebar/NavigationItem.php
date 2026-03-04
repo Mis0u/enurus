@@ -21,4 +21,6 @@ class NavigationItem
     public bool $badge = false;
 
     public int $totalNotification = 0;
+
+    public bool $mobile = false;
 }

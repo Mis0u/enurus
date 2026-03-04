@@ -1,0 +1,14 @@
+<a href="{{ this.link }}"
+   class="flex flex-col items-center justify-center gap-1 py-2 px-3 {{ is_active ? 'text-rose-ft' : 'text-[#4a5568] hover:text-[#f0f4ff]' }} no-underline transition-ft relative flex-1 max-w-[80px]">
+    {% if this.svg %}
+        <span class="flex items-center justify-center w-6 h-6">
+            {% include this.svg %}
+        </span>
+    {% endif %}
+    <span class="text-[10px] font-medium whitespace-nowrap">{{ this.menu }}</span>
+    {% if this.badge %}
+        <span class="absolute top-[6px] right-2 bg-rose-ft text-white text-[9px] font-bold min-w-[16px] h-4 rounded-full flex items-center justify-center px-1 border-2 border-bg-card">
+            {{ this.totalNotification }}
+        </span>
+    {% endif %}
+</a>

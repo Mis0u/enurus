@@ -1,0 +1,23 @@
+<nav class="md:hidden flex items-center justify-around fixed bottom-0 left-0 right-0 h-[70px] bg-bg-card border-t border-white/[0.07] z-[100] px-2 shadow-[0_-4px_20px_rgba(0,0,0,0.3)]">
+
+    <twig:Navigation:Sidebar:NavigationItem
+        link="{{ path('app_dashboard') }}"
+        route="app_dashboard"
+        menu="{{ 'dashboard.title'|trans({}, 'navigation') }}"
+        icon="house"
+        mobile="true"
+    />
+
+    <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.workout'|trans({}, 'navigation') }}" icon="calendar" mobile="true"/>
+
+    <a href="#"
+       class="bottom-nav-cta flex items-center justify-center relative -top-5 w-16 h-16 bg-gradient-to-br from-rose-ft to-red-600 rounded-full shadow-[0_4px_20px_rgba(244,63,94,0.3)] border-4 border-bg-base no-underline transition-ft">
+        <svg class="w-[26px] h-[26px]" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+        </svg>
+    </a>
+
+    <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.messaging'|trans({}, 'navigation') }}" icon="messaging" badge="true" mobile="true"/>
+
+    <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.profile'|trans({}, 'navigation') }}" icon="profile" mobile="true"/>
+</nav>
