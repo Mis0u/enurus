@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Enum\Translations\LocaleAllowedEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use function Symfony\Component\Clock\now;
@@ -25,6 +26,7 @@ class UserFixtures extends Fixture
             $user->setEmail(\sprintf('user-fixture-%s@test.com', $i))
                 ->setNickname(\sprintf('user-fixture-%s', $i))
                 ->setCreatedBy($user)
+                ->setLocale(LocaleAllowedEnum::FR->value)
                 ->setLastLogin($lastLogin);
             if (0 === $i % 5) {
                 $user->setGender('female');
