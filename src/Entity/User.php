@@ -63,7 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::STRING, length: 25, nullable: false)]
     #[NotBlank]
-    #[Length(min: 1, max: 20, maxMessage: 'user.nickname.length.max')]
+    #[Length(min: 3, max: 20, maxMessage: 'user.nickname.length.max')]
     private string $nickname;
 
     /**
