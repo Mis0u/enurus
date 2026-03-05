@@ -1,10 +1,10 @@
-{% include 'partials/_common/_dashboard_template/_sidebar/_toggle.html.twig' %}
+{% include 'dashboard/_dashboard_template/_sidebar/_toggle.html.twig' %}
 
 <aside class="sidebar hidden md:flex w-[240px] min-w-[240px] h-screen bg-bg-card border-r border-white/[0.07] flex-col overflow-hidden relative z-10 flex-shrink-0" id="sidebar">
 
-    {% include 'partials/_common/_dashboard_template/_sidebar/_logo.html.twig' %}
+    {% include 'dashboard/_dashboard_template/_sidebar/_logo.html.twig' %}
 
-    {% include 'partials/_common/_dashboard_template/_sidebar/_nav.html.twig' %}
+    {% include 'dashboard/_dashboard_template/_sidebar/_nav.html.twig' %}
 
     <div class="px-[10px] py-[10px] border-t border-white/[0.07] flex flex-col gap-[3px]">
         <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.setting'|trans({}, 'navigation') }}" icon="gear"/>

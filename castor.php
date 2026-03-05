@@ -218,6 +218,14 @@ function tailwindBuild(): void
     );
 }
 
+#[AsTask(description: 'Start the project')]
+function start(): void
+{
+    dbUp();
+    resetDB();
+    resetDB(true);
+}
+
 function execute(string $title, string $section, string $command, string $success): void
 {
     io()->title($title);
