@@ -12,11 +12,11 @@ registration:
     email:
         activate_account: Aktywuj moje konto
         click_activate: Jesteś o jedno kliknięcie od rozpoczęcia swojej transformacji! Kliknij przycisk poniżej, aby aktywować swoje konto.
-        info_link_life: Ten link wygasa za %hour%
-        not_created_account: Jeśli nie zakładałeś konta w %brand%, po prostu zignoruj tę wiadomość.
-        receive_email: Otrzymujesz tego e-maila, ponieważ zarejestrowałeś się na %brand%
-        registration_confirm: Potwierdź rejestrację w %brand%
-        welcome: Witaj na %brand%! Twój pierwszy trening na Ciebie czeka
+        info_link_life: Ten link wygasa za {hour}
+        not_created_account: Jeśli nie zakładałeś konta w {brand}, po prostu zignoruj tę wiadomość.
+        receive_email: Otrzymujesz tego e-maila, ponieważ zarejestrowałeś się na {brand}
+        registration_confirm: Potwierdź rejestrację w {brand}
+        welcome: Witaj na {brand}! Twój pierwszy trening na Ciebie czeka
     confirm_email: Potwierdzenie adresu e-mail
     create_account: Utwórz konto
     have_an_account: Masz już konto?
@@ -35,7 +35,7 @@ reset_password_request:
     forgot_password: Zapomniałem hasła
     identical_password: Identyczne hasło
     info_email: Otrzymujesz tę wiadomość, ponieważ złożono prośbę o zresetowanie hasła do Twojego konta
-    info_link_life: Ten link wygasa za %hour%. Po zmianie hasła zostaniesz przekierowany na stronę logowania.
+    info_link_life: Ten link wygasa za {hour}. Po zmianie hasła zostaniesz przekierowany na stronę logowania.
     info_reset_password: Wpisz swój adres e-mail, a otrzymasz link do zresetowania hasła.
     message_problem_handle: Wystąpił problem podczas przetwarzania prośby o zresetowanie hasła
     message_problem_validate: Wystąpił problem podczas weryfikacji prośby o zresetowanie hasła
@@ -48,4 +48,10 @@ reset_password_request:
     send_link: Wyślij link resetujący
 
 rate_limiter:
-    too_many_attempt: Zbyt wiele prób. Spróbuj ponownie za %minutes% minut(ę/y).
+    too_many_attempt: >-
+        {minutes, plural,
+            =1    {Zbyt wiele prób. Spróbuj ponownie za # minutę.}
+            few   {Zbyt wiele prób. Spróbuj ponownie za # minuty.}
+            many  {Zbyt wiele prób. Spróbuj ponownie za # minut.}
+            other {Zbyt wiele prób. Spróbuj ponownie za # minut.}
+        }

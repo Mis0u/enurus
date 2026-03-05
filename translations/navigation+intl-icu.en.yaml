@@ -1,0 +1,14 @@
+dashboard:
+    library: Library
+    logout: Log out
+    messaging: Messages
+    my_workout: My workouts
+    profile: Profile
+    profile_followed: Followed profiles
+    save_first_workout: Log your first workout
+    save_workout: Log your workout
+    setting: Settings
+    title: Dashboard
+    workout: Workouts
+footer:
+    copyright: "© {year} {brand}. All rights reserved."

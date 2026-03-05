@@ -31,7 +31,7 @@ readonly class UserRegistrationService
         $mail = $this->emailService->createEmail(
             (string) $user->getEmail(),
             $this->translator->trans('registration.email.welcome', [
-                '%brand%' => $this->translator->trans('name', [], 'brand'),
+                'brand' => $this->translator->trans('name', [], 'brand'),
             ], 'security'),
             [
                 'user' => $user,

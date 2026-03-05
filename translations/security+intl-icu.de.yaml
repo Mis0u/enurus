@@ -12,11 +12,11 @@ registration:
     email:
         activate_account: Mein Konto aktivieren
         click_activate: Du bist nur einen Klick davon entfernt, deine Transformation zu starten! Klicke auf den Button unten, um dein Konto zu aktivieren.
-        info_link_life: Dieser Link läuft in %hour% ab
-        not_created_account: Wenn du kein Konto bei %brand% erstellt hast, ignoriere einfach diese E-Mail.
-        receive_email: Du erhältst diese E-Mail, weil du dich bei %brand% registriert hast
-        registration_confirm: Bestätige deine Registrierung bei %brand%
-        welcome: Willkommen bei %brand%! Dein erstes Training wartet auf dich
+        info_link_life: Dieser Link läuft in {hour} ab
+        not_created_account: Wenn du kein Konto bei {brand} erstellt hast, ignoriere einfach diese E-Mail.
+        receive_email: Du erhältst diese E-Mail, weil du dich bei {brand} registriert hast
+        registration_confirm: Bestätige deine Registrierung bei {brand}
+        welcome: Willkommen bei {brand}! Dein erstes Training wartet auf dich
     confirm_email: Bestätigung deiner E-Mail
     create_account: Ein Konto erstellen
     have_an_account: Du hast bereits ein Konto?
@@ -35,7 +35,7 @@ reset_password_request:
     forgot_password: Passwort vergessen
     identical_password: Identisches Passwort
     info_email: Du erhältst diese E-Mail, weil eine Passwortzurücksetzung für dein Konto angefordert wurde
-    info_link_life: Dieser Link läuft in %hour% ab. Nach der Änderung deines Passworts wirst du zur Anmeldeseite weitergeleitet.
+    info_link_life: Dieser Link läuft in {hour} ab. Nach der Änderung deines Passworts wirst du zur Anmeldeseite weitergeleitet.
     info_reset_password: Gib deine E-Mail-Adresse ein und du erhältst einen Link zum Zurücksetzen deines Passworts.
     message_problem_handle: Bei der Verarbeitung Ihrer Anfrage zur Passwortzurücksetzung ist ein Problem aufgetreten
     message_problem_validate: Bei der Überprüfung Ihrer Anfrage zur Passwortzurücksetzung ist ein Problem aufgetreten
@@ -48,4 +48,8 @@ reset_password_request:
     send_link: Zurücksetzungslink senden
 
 rate_limiter:
-    too_many_attempt: Zu viele Versuche. Bitte versuche es in %minutes% Minute(n) erneut.
+    too_many_attempt: >-
+        {minutes, plural,
+            =1    {Zu viele Versuche. Bitte versuche es in # Minute erneut.}
+            other {Zu viele Versuche. Bitte versuche es in # Minuten erneut.}
+        }

@@ -1,0 +1,14 @@
+dashboard:
+    library: Bibliotheek
+    logout: Uitloggen
+    messaging: Berichten
+    my_workout: Mijn trainingen
+    profile: Profiel
+    profile_followed: Gevolgde profielen
+    save_first_workout: Registreer je eerste training
+    save_workout: Registreer je training
+    setting: Instellingen
+    title: Overzicht
+    workout: Trainingen
+footer:
+    copyright: "© {year} {brand}. Alle rechten voorbehouden."

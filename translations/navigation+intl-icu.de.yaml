@@ -1,0 +1,14 @@
+dashboard:
+    library: Bibliothek
+    logout: Abmelden
+    messaging: Nachrichten
+    my_workout: Meine Trainings
+    profile: Profil
+    profile_followed: Gefolgte Profile
+    save_first_workout: Erfasse dein erstes Training
+    save_workout: Erfasse dein Training
+    setting: Einstellungen
+    title: Übersicht
+    workout: Trainings
+footer:
+    copyright: "© {year} {brand}. Alle Rechte vorbehalten."

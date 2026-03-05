@@ -1,0 +1,14 @@
+dashboard:
+    library: Biblioteka
+    logout: Wyloguj się
+    messaging: Wiadomości
+    my_workout: Moje treningi
+    profile: Profil
+    profile_followed: Obserwowane profile
+    save_first_workout: Zapisz swój pierwszy trening
+    save_workout: Zapisz swój trening
+    setting: Ustawienia
+    title: Panel
+    workout: Treningi
+footer:
+    copyright: "© {year} {brand}. Wszelkie prawa zastrzeżone."

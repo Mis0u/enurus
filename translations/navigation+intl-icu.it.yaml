@@ -1,0 +1,14 @@
+dashboard:
+    library: Biblioteca
+    logout: Disconnetti
+    messaging: Messaggi
+    my_workout: I miei allenamenti
+    profile: Profilo
+    profile_followed: Profili seguiti
+    save_first_workout: Registra il tuo primo allenamento
+    save_workout: Registra il tuo allenamento
+    setting: Impostazioni
+    title: Cruscotto
+    workout: Allenamenti
+footer:
+    copyright: "© {year} {brand}. Tutti i diritti riservati."

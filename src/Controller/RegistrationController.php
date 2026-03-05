@@ -92,7 +92,7 @@ class RegistrationController extends AbstractController
             $this->addFlash(
                 'error',
                 $this->translator->trans('rate_limiter.too_many_attempt', [
-                    '%minutes%' => $validator['minutes'],
+                    'minutes' => $validator['minutes'],
                 ], 'security')
             );
         }

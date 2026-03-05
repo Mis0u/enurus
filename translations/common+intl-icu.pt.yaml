@@ -1,0 +1,78 @@
+field:
+    confirm_new_password: Confirmar palavra-passe
+    criteria_password: "Critérios de segurança:"
+    email: Email
+    email_placeholder: seu@email.com
+    gender:
+        female: Mulher
+        male: Homem
+        title: Género
+    new_password: Nova palavra-passe
+    password: Palavra-passe
+    security_password: Escolha uma palavra-passe segura
+
+sentence:
+    add_datas: Regista os teus exercícios, séries e cargas
+    advice: "Dica: Quanto mais registares os teus treinos regularmente, mais precisas serão as tuas estatísticas!"
+    after_workout: >-
+        {count, plural,
+            =1    {Depois de # treino}
+            other {Depois de # treinos}
+        }
+    after_weeks: >-
+        {count, plural,
+            =1    {Depois de # semana}
+            other {Depois de # semanas}
+        }
+    contact_support: Contacta o nosso suporte
+    back_to_login: Voltar ao login
+    email:
+        button_failed: Se o botão não funcionar, copia e cola este link no teu navegador
+        email_check: Verifica a tua caixa de entrada
+        email_correct: Verifica se o endereço de email está correto
+        email_exist: Se uma conta corresponder ao teu endereço de email, receberás um email com um link para redefinir a tua palavra-passe.
+        email_not_received: Não recebeste o email?
+        email_received_explanation: Estás a receber este email porque criaste uma conta no {brand}.
+        email_send: Email enviado com sucesso!
+        email_spam: Verifica a tua pasta de spam/lixo eletrónico
+        info_email_send: Se não receberes o email, verifica o spam.
+        send_back_email: Reenviar email
+        wait: Aguarda alguns minutos (o tempo pode variar)
+    empty_dashboard: O teu painel está vazio por agora, mas não por muito tempo. Regista o teu primeiro treino e vê as tuas estatísticas ganharem vida.
+    enjoy: Vê o teu painel ganhar vida
+    evolution_real_time: Progresso em tempo real
+    less_time: Demora menos de 2 minutos
+    log_first_workout: Regista o teu primeiro treino
+    log_workout: Clica em "Registar o meu treino" no teu painel
+    maintain_regularity: Mantém a regularidade e bate os teus recordes
+    need_help: Precisas de ajuda?
+    outline_muscle: Silhueta muscular
+    password:
+        security:
+            at_least_number: Pelo menos um número
+            confirmation: A tua palavra-passe foi alterada com sucesso
+            criteria_min_char: Pelo menos {min} caracteres
+            min_char: Mínimo {min} caracteres com maiúsculas, minúsculas e números
+            regex: A palavra-passe deve conter pelo menos uma maiúscula, uma minúscula, um número e um carácter especial (! ? % $ * &)
+            special_char: Pelo menos um dos seguintes caracteres especiais ! ? % $ * &
+            upper_lower: Uma maiúscula e uma minúscula
+            valid_new_password: Confirmar nova palavra-passe
+    progress_comparaison: Comparativos de progresso · Séries · Recordes
+    ready: Pronto para começar?
+    ready_to_start: Pronto para começar? O teu progresso começa aqui
+    ready_to_transform: Pronto para te transformar?
+    see_datas: Visualiza a tua tonelagem, os teus recordes e a tua evolução
+    see_working_muscles: Vê exatamente quais músculos estás a trabalhar
+    tonnage_curve_weekly_frequency: Curva de tonelagem · Frequência semanal
+    welcome: Bem-vindo à tua aventura fitness!
+    welcome_to: Bem-vindo ao {brand}
+    what_next: O que te espera
+    where_to_start: Por onde começar?
+    workout_resume: Resumo de treino · Silhueta muscular
+
+word:
+    hello: Olá,
+    hi: Olá
+    important: ⚠️ Importante
+    security: Segurança
+    welcome: Bem-vindo

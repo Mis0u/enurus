@@ -14,6 +14,16 @@ field:
 sentence:
     add_datas: Voer je oefeningen, sets en gewichten in
     advice: "Tip: Hoe vaker je je trainingen bijhoudt, hoe nauwkeuriger je statistieken worden!"
+    after_workout: >-
+        {count, plural,
+            =1    {Na # training}
+            other {Na # trainingen}
+        }
+    after_weeks: >-
+        {count, plural,
+            =1    {Na # week}
+            other {Na # weken}
+        }
     contact_support: Neem contact op met onze support
     back_to_login: Terug naar inloggen
     email:
@@ -22,15 +32,18 @@ sentence:
         email_correct: Controleer of het e-mailadres correct is
         email_exist: Als een account overeenkomt met je e-mailadres, ontvang je een e-mail met een link om je wachtwoord te herstellen.
         email_not_received: E-mail niet ontvangen?
-        email_received_explanation: Je ontvangt deze e-mail omdat je een account hebt aangemaakt bij %brand%.
+        email_received_explanation: Je ontvangt deze e-mail omdat je een account hebt aangemaakt bij {brand}.
         email_send: E-mail succesvol verzonden!
         email_spam: Controleer je spam-/ongewenste map
         info_email_send: Als je de e-mail niet ontvangt, controleer dan je spammap.
         send_back_email: E-mail opnieuw verzenden
         wait: Wacht een paar minuten (de duur kan variëren)
-    enjoy: Zie je dashboard tot leven komen
+    empty_dashboard: Je overzicht is nog leeg, maar niet voor lang. Registreer je eerste training en zie je statistieken tot leven komen.
+    enjoy: Zie je overzicht tot leven komen
     evolution_real_time: Voortgang in realtime
-    log_workout: Klik op "Training vastleggen" in je dashboard
+    less_time: Het duurt minder dan 2 minuten
+    log_first_workout: Registreer je eerste training
+    log_workout: Klik op "Training vastleggen" in je overzicht
     maintain_regularity: Blijf consistent en verbreek je records
     need_help: Hulp nodig?
     outline_muscle: Spiersilhouet
@@ -38,22 +51,28 @@ sentence:
         security:
             at_least_number: Minstens één cijfer
             confirmation: Je wachtwoord is succesvol gewijzigd
-            criteria_min_char: Minstens %min% tekens
-            min_char: Minimaal %min% tekens met hoofdletters, kleine letters en cijfers
+            criteria_min_char: Minstens {min} tekens
+            min_char: Minimaal {min} tekens met hoofdletters, kleine letters en cijfers
             regex: Het wachtwoord moet minstens één hoofdletter, één kleine letter, één cijfer en één speciaal teken bevatten (! ? % $ * &)
             special_char: Minstens één van de volgende speciale tekens ! ? % $ * &
             upper_lower: Eén hoofdletter en één kleine letter
             valid_new_password: Nieuw wachtwoord bevestigen
+    progress_comparaison: Voortgangsvergelijking · Sets · Records
+    ready: Klaar om te beginnen?
     ready_to_start: Klaar om te beginnen? Je vooruitgang begint hier
     ready_to_transform: Klaar om jezelf te transformeren?
     see_datas: Bekijk je tonnage, records en ontwikkeling
     see_working_muscles: Zie precies welke spieren je traint
+    tonnage_curve_weekly_frequency: Tonnage-curve · Wekelijkse frequentie
     welcome: Welkom bij je fitness-avontuur!
+    welcome_to: Welkom bij {brand}
     what_next: Wat je te wachten staat
     where_to_start: Waar te beginnen?
+    workout_resume: Trainingsoverzicht · Spiersilhouet
 
 word:
     hello: Hallo,
+    hi: Hallo
     important: ⚠️ Belangrijk
     security: Beveiliging
     welcome: Welkom

@@ -1,0 +1,14 @@
+dashboard:
+    library: Bibliothèque
+    logout: Déconnexion
+    messaging: Messagerie
+    my_workout: Mes séances
+    profile: Profil
+    profile_followed: Profils suivis
+    save_first_workout: Enregistre ta première séance
+    save_workout: Enregistre ta séance
+    setting: Réglages
+    title: Tableau de bord
+    workout: Séances
+footer:
+    copyright: "© {year} {brand}. Tous droits réservés."

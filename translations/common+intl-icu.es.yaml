@@ -14,6 +14,16 @@ field:
 sentence:
     add_datas: Registra tus ejercicios, series y cargas
     advice: "Consejo: ¡Cuanto más registres tus entrenamientos, más precisas serán tus estadísticas!"
+    after_workout: >-
+        {count, plural,
+            =1    {Después de # entrenamiento}
+            other {Después de # entrenamientos}
+        }
+    after_weeks: >-
+        {count, plural,
+            =1    {Después de # semana}
+            other {Después de # semanas}
+        }
     contact_support: Contacta con nuestro soporte
     back_to_login: Volver al inicio de sesión
     email:
@@ -22,15 +32,18 @@ sentence:
         email_correct: Verifica que la dirección de correo sea correcta
         email_exist: Si una cuenta corresponde a tu dirección de correo, recibirás un correo con un enlace para restablecer tu contraseña.
         email_not_received: ¿No has recibido el correo?
-        email_received_explanation: Recibes este correo porque has creado una cuenta en %brand%.
+        email_received_explanation: Recibes este correo porque has creado una cuenta en {brand}.
         email_send: ¡Correo enviado con éxito!
         email_spam: Revisa tu carpeta de spam/correo no deseado
         info_email_send: Si no recibes el correo, revisa tu carpeta de spam.
         send_back_email: Reenviar correo
         wait: Espera unos minutos (el tiempo puede variar)
-    enjoy: Mira cómo tu panel de control cobra vida
+    empty_dashboard: Tu panel está vacío por ahora, pero no por mucho tiempo. Registra tu primer entrenamiento y mira cómo tus estadísticas cobran vida.
+    enjoy: Mira cómo tu panel cobra vida
     evolution_real_time: Progreso en tiempo real
-    log_workout: Haz clic en "Registrar mi entrenamiento" en tu panel de control
+    less_time: Toma menos de 2 minutos
+    log_first_workout: Registra tu primer entrenamiento
+    log_workout: Haz clic en "Registrar mi entrenamiento" en tu panel
     maintain_regularity: Mantén la constancia y rompe tus récords
     need_help: ¿Necesitas ayuda?
     outline_muscle: Silueta muscular
@@ -38,22 +51,28 @@ sentence:
         security:
             at_least_number: Al menos un número
             confirmation: Tu contraseña ha sido modificada con éxito
-            criteria_min_char: Al menos %min% caracteres
-            min_char: Mínimo %min% caracteres con mayúsculas, minúsculas y números
+            criteria_min_char: Al menos {min} caracteres
+            min_char: Mínimo {min} caracteres con mayúsculas, minúsculas y números
             regex: La contraseña debe contener al menos una mayúscula, una minúscula, un número y un carácter especial (! ? % $ * &)
             special_char: Al menos uno de los siguientes caracteres especiales ! ? % $ * &
             upper_lower: Una mayúscula y una minúscula
             valid_new_password: Confirmar nueva contraseña
+    progress_comparaison: Comparativas de progreso · Series · Récords
+    ready: ¿Listo para empezar?
     ready_to_start: ¿Listo para empezar? Tu progreso comienza aquí
     ready_to_transform: ¿Listo para transformarte?
     see_datas: Visualiza tu tonelaje, tus récords y tu evolución
     see_working_muscles: Descubre exactamente qué músculos estás trabajando
+    tonnage_curve_weekly_frequency: Curva de tonelaje · Frecuencia semanal
     welcome: ¡Bienvenido a tu aventura fitness!
+    welcome_to: Bienvenido a {brand}
     what_next: Lo que te espera
     where_to_start: ¿Por dónde empezar?
+    workout_resume: Resumen de entrenamiento · Silueta muscular
 
 word:
     hello: Hola,
+    hi: Hola
     important: ⚠️ Importante
     security: Seguridad
     welcome: Bienvenido

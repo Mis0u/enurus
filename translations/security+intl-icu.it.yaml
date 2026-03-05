@@ -12,11 +12,11 @@ registration:
     email:
         activate_account: Attiva il mio account
         click_activate: Sei a un clic dall'iniziare la tua trasformazione! Clicca il pulsante qui sotto per attivare il tuo account.
-        info_link_life: Questo link scade tra %hour%
-        not_created_account: Se non hai creato un account su %brand%, ignora semplicemente questa email.
-        receive_email: Ricevi questa email perché ti sei iscritto su %brand%
-        registration_confirm: Conferma la tua iscrizione %brand%
-        welcome: Benvenuto su %brand%! Il tuo primo allenamento ti aspetta
+        info_link_life: Questo link scade tra {hour}
+        not_created_account: Se non hai creato un account su {brand}, ignora semplicemente questa email.
+        receive_email: Ricevi questa email perché ti sei iscritto su {brand}
+        registration_confirm: Conferma la tua iscrizione {brand}
+        welcome: Benvenuto su {brand}! Il tuo primo allenamento ti aspetta
     confirm_email: Conferma della tua email
     create_account: Crea un account
     have_an_account: Hai già un account?
@@ -35,7 +35,7 @@ reset_password_request:
     forgot_password: Password dimenticata
     identical_password: Password identica
     info_email: Ricevi questa email perché è stata effettuata una richiesta di ripristino della password sul tuo account
-    info_link_life: Questo link scade tra %hour%. Una volta modificata la password, verrai reindirizzato alla pagina di accesso.
+    info_link_life: Questo link scade tra {hour}. Una volta modificata la password, verrai reindirizzato alla pagina di accesso.
     info_reset_password: Inserisci il tuo indirizzo email e riceverai un link per ripristinare la tua password.
     message_problem_handle: Si è verificato un problema durante l'elaborazione della richiesta di ripristino della password
     message_problem_validate: Si è verificato un problema durante la convalida della richiesta di ripristino della password
@@ -48,4 +48,8 @@ reset_password_request:
     send_link: Invia il link di ripristino
 
 rate_limiter:
-    too_many_attempt: Troppi tentativi. Riprova tra %minutes% minuto(i).
+    too_many_attempt: >-
+        {minutes, plural,
+            =1    {Troppi tentativi. Riprova tra # minuto.}
+            other {Troppi tentativi. Riprova tra # minuti.}
+        }
