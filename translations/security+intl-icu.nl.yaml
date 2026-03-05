@@ -12,11 +12,11 @@ registration:
     email:
         activate_account: Mijn account activeren
         click_activate: Je bent nog maar één klik verwijderd van je transformatie! Klik op de knop hieronder om je account te activeren.
-        info_link_life: Deze link verloopt over %hour%
-        not_created_account: Als je geen account hebt aangemaakt bij %brand%, negeer dan deze e-mail.
-        receive_email: Je ontvangt deze e-mail omdat je je hebt geregistreerd bij %brand%
-        registration_confirm: Bevestig je registratie bij %brand%
-        welcome: Welkom bij %brand%! Je eerste training wacht op je
+        info_link_life: Deze link verloopt over {hour}
+        not_created_account: Als je geen account hebt aangemaakt bij {brand}, negeer dan deze e-mail.
+        receive_email: Je ontvangt deze e-mail omdat je je hebt geregistreerd bij {brand}
+        registration_confirm: Bevestig je registratie bij {brand}
+        welcome: Welkom bij {brand}! Je eerste training wacht op je
     confirm_email: Bevestiging van je e-mail
     create_account: Een account aanmaken
     have_an_account: Heb je al een account?
@@ -35,7 +35,7 @@ reset_password_request:
     forgot_password: Wachtwoord vergeten
     identical_password: Identiek wachtwoord
     info_email: Je ontvangt deze e-mail omdat er een wachtwoordherstel is aangevraagd voor je account
-    info_link_life: Deze link verloopt over %hour%. Na het wijzigen van je wachtwoord word je doorgestuurd naar de inlogpagina.
+    info_link_life: Deze link verloopt over {hour}. Na het wijzigen van je wachtwoord word je doorgestuurd naar de inlogpagina.
     info_reset_password: Voer je e-mailadres in en je ontvangt een link om je wachtwoord te herstellen.
     message_problem_handle: Er is een probleem opgetreden bij het verwerken van uw verzoek om wachtwoordherstel
     message_problem_validate: Er is een probleem opgetreden bij het valideren van uw verzoek om wachtwoordherstel
@@ -48,4 +48,8 @@ reset_password_request:
     send_link: Herstellink verzenden
 
 rate_limiter:
-    too_many_attempt: Te veel pogingen. Probeer het opnieuw over %minutes% minu(u)t(en).
+    too_many_attempt: >-
+        {minutes, plural,
+            =1    {Te veel pogingen. Probeer het opnieuw over # minuut.}
+            other {Te veel pogingen. Probeer het opnieuw over # minuten.}
+        }

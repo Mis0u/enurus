@@ -14,6 +14,16 @@ field:
 sentence:
     add_datas: Enter your exercises, sets and weights
     advice: "Tip: The more regularly you log your workouts, the more accurate your stats become!"
+    after_workout: >-
+        {count, plural,
+            =1    {After # workout}
+            other {After # workouts}
+        }
+    after_weeks: >-
+        {count, plural,
+            =1    {After # week}
+            other {After # weeks}
+        }
     contact_support: Contact our support
     back_to_login: Back to login
     email:
@@ -22,14 +32,17 @@ sentence:
         email_correct: Make sure the email address is correct
         email_exist: If an account matches your email address, you will receive an email with a link to reset your password.
         email_not_received: Didn't receive the email?
-        email_received_explanation: You are receiving this email because you created an account on %brand%.
+        email_received_explanation: You are receiving this email because you created an account on {brand}.
         email_send: Email sent successfully!
         email_spam: Check your spam/junk folder
         info_email_send: If you don't receive the email, check your spam folder.
         send_back_email: Resend email
         wait: Wait a few minutes (delay may vary)
+    empty_dashboard: Your dashboard is empty for now, but not for long. Log your first workout and watch your stats come to life.
     enjoy: Watch your dashboard come to life
     evolution_real_time: Real-time progress
+    less_time: It takes less than 2 minutes
+    log_first_workout: Log your first workout
     log_workout: Click "Log my workout" on your dashboard
     maintain_regularity: Stay consistent and smash your records
     need_help: Need help?
@@ -38,22 +51,28 @@ sentence:
         security:
             at_least_number: At least one number
             confirmation: Your password has been successfully changed
-            criteria_min_char: At least %min% characters
-            min_char: Minimum %min% characters with uppercase, lowercase and numbers
+            criteria_min_char: At least {min} characters
+            min_char: Minimum {min} characters with uppercase, lowercase and numbers
             regex: Password must contain at least one uppercase letter, one lowercase letter, one number and one special character (! ? % $ * &)
             special_char: At least one of the following special characters ! ? % $ * &
             upper_lower: One uppercase and one lowercase letter
             valid_new_password: Confirm new password
+    progress_comparaison: Progress comparison · Sets · Records
+    ready: Ready to get started?
     ready_to_start: Ready to get started? Your progress begins here
     ready_to_transform: Ready to transform yourself?
     see_datas: Track your tonnage, records and progress
     see_working_muscles: See exactly which muscles you're working
+    tonnage_curve_weekly_frequency: Tonnage curve · Weekly frequency
     welcome: Welcome to your fitness adventure!
+    welcome_to: Welcome to {brand}
     what_next: What's ahead
     where_to_start: Where to begin?
+    workout_resume: Workout summary · Muscle outline
 
 word:
     hello: Hello,
+    hi: Hi
     important: ⚠️ Important
     security: Security
     welcome: Welcome

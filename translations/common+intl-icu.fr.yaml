@@ -14,6 +14,16 @@ field:
 sentence:
     add_datas: Renseigne tes exercices, séries et charges
     advice: "Conseil : Plus tu enregistres tes séance régulièrement, plus tes stats sont précises !"
+    after_workout: >-
+        {count, plural,
+            =1    {Après # séance}
+            other {Après # séances}
+        }
+    after_weeks: >-
+        {count, plural,
+            =1    {Après # semaine}
+            other {Après # semaines}
+        }
     contact_support: Contactez notre support
     back_to_login: Retour à la connexion
     email:
@@ -22,14 +32,17 @@ sentence:
         email_correct: Vérifiez que l'adresse email est correcte
         email_exist: Si un compte correspond à votre adresse email, vous recevrez un email contenant un lien pour réinitialiser votre mot de passe.
         email_not_received: Vous ne recevez pas l'email ?
-        email_received_explanation: Vous recevez cet email car vous avez créé un compte sur %brand%.
+        email_received_explanation: Vous recevez cet email car vous avez créé un compte sur {brand}.
         email_send: Email envoyé avec succès !
         email_spam: Vérifiez votre dossier spam/courrier indésirable
         info_email_send: Si vous ne recevez pas l'email, vérifiez vos spams.
         send_back_email: Renvoyer un email
         wait: Attendez quelques minutes (le délai peut varier)
+    empty_dashboard: Ton dashboard est vide pour l'instant mais pas pour longtemps. Enregistre ta première séance et regarde tes stats prendre vie.
     enjoy: Regarde ton tableau de bord prendre vie
     evolution_real_time: Progression en temps réel
+    less_time: Ça prend moins de 2 minutes
+    log_first_workout: Enregistre ta première séance
     log_workout: Clique sur "Enregistrer ma séance" dans ton tableau de bord
     maintain_regularity: Maintiens ta régularité et casse tes records
     need_help: Besoin d'aide ?
@@ -38,23 +51,28 @@ sentence:
         security:
             at_least_number: Au moins un chiffre
             confirmation: Votre mot de passe a bien été modifié
-            criteria_min_char: Au moins %min% caractères
-            min_char: Minimum %min% caractères avec majuscules, minuscules et chiffres
+            criteria_min_char: Au moins {min} caractères
+            min_char: Minimum {min} caractères avec majuscules, minuscules et chiffres
             regex: Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial (! ? % $ * &)
             special_char: Au moins un des caractères spéciaux suivant ! ? % $ * &
             upper_lower: Une majuscule et une minuscule
             valid_new_password: Valider le nouveau mot de passe
+    progress_comparaison: Comparatifs de progression · Séries · Records
+    ready: Prêt à commencer ?
     ready_to_start: Prêt à démarrer ? Ta progression commence ici
     ready_to_transform: Prêt à vous transformer ?
     see_datas: Visualise ton tonnage, tes records et ton évolution
     see_working_muscles: Vois exactement quels muscles tu travailles
+    tonnage_curve_weekly_frequency: Courbe de tonnage · Fréquence hebdomadaire
     welcome: Bienvenue dans votre aventure fitness !
+    welcome_to: Bienvenue sur {brand}
     what_next: Ce qui t'attend
     where_to_start: Par où commencer ?
+    workout_resume: Résumé de séance · Silhouette musculaire
 
 word:
     hello: Bonjour,
-    important:  ⚠️ Important
+    hi: Salut
+    important: ⚠️ Important
     security: Sécurité
     welcome: Bienvenue
-

@@ -14,6 +14,16 @@ field:
 sentence:
     add_datas: Trage deine Übungen, Sätze und Gewichte ein
     advice: "Tipp: Je regelmäßiger du deine Trainings aufzeichnest, desto genauer werden deine Statistiken!"
+    after_workout: >-
+        {count, plural,
+            =1    {Nach # Training}
+            other {Nach # Trainings}
+        }
+    after_weeks: >-
+        {count, plural,
+            =1    {Nach # Woche}
+            other {Nach # Wochen}
+        }
     contact_support: Kontaktiere unseren Support
     back_to_login: Zurück zur Anmeldung
     email:
@@ -22,15 +32,18 @@ sentence:
         email_correct: Stelle sicher, dass die E-Mail-Adresse korrekt ist
         email_exist: Wenn ein Konto mit deiner E-Mail-Adresse übereinstimmt, erhältst du eine E-Mail mit einem Link zum Zurücksetzen deines Passworts.
         email_not_received: E-Mail nicht erhalten?
-        email_received_explanation: Du erhältst diese E-Mail, weil du ein Konto bei %brand% erstellt hast.
+        email_received_explanation: Du erhältst diese E-Mail, weil du ein Konto bei {brand} erstellt hast.
         email_send: E-Mail erfolgreich gesendet!
         email_spam: Überprüfe deinen Spam-/Junk-Ordner
         info_email_send: Wenn du die E-Mail nicht erhältst, überprüfe deinen Spam-Ordner.
         send_back_email: E-Mail erneut senden
         wait: Warte einige Minuten (die Dauer kann variieren)
-    enjoy: Sieh zu, wie dein Dashboard zum Leben erwacht
+    empty_dashboard: Deine Übersicht ist noch leer, aber nicht mehr lange. Erfasse dein erstes Training und sieh zu, wie deine Statistiken zum Leben erwachen.
+    enjoy: Sieh zu, wie deine Übersicht zum Leben erwacht
     evolution_real_time: Fortschritt in Echtzeit
-    log_workout: Klicke auf „Training erfassen" in deinem Dashboard
+    less_time: Es dauert weniger als 2 Minuten
+    log_first_workout: Erfasse dein erstes Training
+    log_workout: Klicke auf „Training erfassen" in deiner Übersicht
     maintain_regularity: Bleib konstant und knacke deine Rekorde
     need_help: Brauchst du Hilfe?
     outline_muscle: Muskelsilhouette
@@ -38,22 +51,28 @@ sentence:
         security:
             at_least_number: Mindestens eine Zahl
             confirmation: Dein Passwort wurde erfolgreich geändert
-            criteria_min_char: Mindestens %min% Zeichen
-            min_char: Mindestens %min% Zeichen mit Groß-, Kleinbuchstaben und Zahlen
+            criteria_min_char: Mindestens {min} Zeichen
+            min_char: Mindestens {min} Zeichen mit Groß-, Kleinbuchstaben und Zahlen
             regex: Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten (! ? % $ * &)
             special_char: Mindestens eines der folgenden Sonderzeichen ! ? % $ * &
             upper_lower: Ein Großbuchstabe und ein Kleinbuchstabe
             valid_new_password: Neues Passwort bestätigen
+    progress_comparaison: Fortschrittsvergleich · Sätze · Rekorde
+    ready: Bereit loszulegen?
     ready_to_start: Bereit loszulegen? Dein Fortschritt beginnt hier
     ready_to_transform: Bereit, dich zu verwandeln?
     see_datas: Verfolge dein Gesamtvolumen, deine Rekorde und deine Entwicklung
     see_working_muscles: Sieh genau, welche Muskeln du trainierst
+    tonnage_curve_weekly_frequency: Volumen-Kurve · Wöchentliche Frequenz
     welcome: Willkommen bei deinem Fitness-Abenteuer!
+    welcome_to: Willkommen bei {brand}
     what_next: Was dich erwartet
     where_to_start: Wo anfangen?
+    workout_resume: Trainingsübersicht · Muskelsilhouette
 
 word:
     hello: Hallo,
+    hi: Hallo
     important: ⚠️ Wichtig
     security: Sicherheit
     welcome: Willkommen

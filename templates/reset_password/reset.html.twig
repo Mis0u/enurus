@@ -18,7 +18,7 @@
                 <twig:Message:Info:Info
                     message="{{ 'field.security_password'|trans({}, 'common') }}"
                     icon="info"
-                    variable="{{ 'sentence.password.security.min_char'|trans({'%min%': enum('App\\Enum\\Password\\PasswordRuleEnum').('MIN_LENGTH').value}, 'common') }}"
+                    variable="{{ 'sentence.password.security.min_char'|trans({'min': enum('App\\Enum\\Password\\PasswordRuleEnum').('MIN_LENGTH').value}, 'common') }}"
                 />
 
                 {{ form_start(resetForm) }}

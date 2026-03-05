@@ -14,6 +14,20 @@ field:
 sentence:
     add_datas: Wprowadź swoje ćwiczenia, serie i obciążenia
     advice: "Wskazówka: Im częściej rejestrujesz swoje treningi, tym dokładniejsze są Twoje statystyki!"
+    after_workout: >-
+        {count, plural,
+            =1    {Po # treningu}
+            few   {Po # treningach}
+            many  {Po # treningach}
+            other {Po # treningów}
+        }
+    after_weeks: >-
+        {count, plural,
+            =1    {Po # tygodniu}
+            few   {Po # tygodniach}
+            many  {Po # tygodniach}
+            other {Po # tygodni}
+        }
     contact_support: Skontaktuj się z naszym wsparciem
     back_to_login: Powrót do logowania
     email:
@@ -22,14 +36,17 @@ sentence:
         email_correct: Upewnij się, że adres e-mail jest poprawny
         email_exist: Jeśli konto jest powiązane z Twoim adresem e-mail, otrzymasz wiadomość z linkiem do zresetowania hasła.
         email_not_received: Nie otrzymałeś wiadomości?
-        email_received_explanation: Otrzymujesz tę wiadomość, ponieważ utworzyłeś konto w %brand%.
+        email_received_explanation: Otrzymujesz tę wiadomość, ponieważ utworzyłeś konto na {brand}.
         email_send: E-mail wysłany pomyślnie!
         email_spam: Sprawdź folder spam/niechciane
         info_email_send: Jeśli nie otrzymasz wiadomości, sprawdź folder spam.
         send_back_email: Wyślij ponownie e-mail
         wait: Poczekaj kilka minut (czas może się różnić)
+    empty_dashboard: Twój panel jest jeszcze pusty, ale nie na długo. Zapisz swój pierwszy trening i zobacz, jak Twoje statystyki ożywają.
     enjoy: Zobacz, jak Twój panel ożywa
     evolution_real_time: Postępy w czasie rzeczywistym
+    less_time: To zajmuje mniej niż 2 minuty
+    log_first_workout: Zapisz swój pierwszy trening
     log_workout: Kliknij „Zapisz mój trening" na swoim panelu
     maintain_regularity: Bądź regularny i bij swoje rekordy
     need_help: Potrzebujesz pomocy?
@@ -38,22 +55,28 @@ sentence:
         security:
             at_least_number: Przynajmniej jedna cyfra
             confirmation: Twoje hasło zostało pomyślnie zmienione
-            criteria_min_char: Przynajmniej %min% znaków
-            min_char: Minimum %min% znaków z wielkimi literami, małymi literami i cyframi
+            criteria_min_char: Przynajmniej {min} znaków
+            min_char: Minimum {min} znaków z wielkimi literami, małymi literami i cyframi
             regex: Hasło musi zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę i jeden znak specjalny (! ? % $ * &)
             special_char: Przynajmniej jeden z następujących znaków specjalnych ! ? % $ * &
             upper_lower: Jedna wielka i jedna mała litera
             valid_new_password: Potwierdź nowe hasło
+    progress_comparaison: Porównanie postępów · Serie · Rekordy
+    ready: Gotowy, żeby zacząć?
     ready_to_start: Gotowy, żeby zacząć? Twoje postępy zaczynają się tutaj
     ready_to_transform: Gotowy na transformację?
     see_datas: Śledź swój tonaż, rekordy i rozwój
     see_working_muscles: Zobacz dokładnie, które mięśnie trenujesz
+    tonnage_curve_weekly_frequency: Krzywa tonażu · Częstotliwość tygodniowa
     welcome: Witaj w swojej fitnessowej przygodzie!
+    welcome_to: Witaj na {brand}
     what_next: Co Cię czeka
     where_to_start: Od czego zacząć?
+    workout_resume: Podsumowanie treningu · Sylwetka mięśniowa
 
 word:
     hello: Cześć,
+    hi: Cześć
     important: ⚠️ Ważne
     security: Bezpieczeństwo
     welcome: Witaj

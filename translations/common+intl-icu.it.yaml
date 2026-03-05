@@ -14,6 +14,16 @@ field:
 sentence:
     add_datas: Inserisci i tuoi esercizi, serie e carichi
     advice: "Consiglio: Più registri regolarmente i tuoi allenamenti, più le tue statistiche saranno precise!"
+    after_workout: >-
+        {count, plural,
+            =1    {Dopo # allenamento}
+            other {Dopo # allenamenti}
+        }
+    after_weeks: >-
+        {count, plural,
+            =1    {Dopo # settimana}
+            other {Dopo # settimane}
+        }
     contact_support: Contatta il nostro supporto
     back_to_login: Torna al login
     email:
@@ -22,15 +32,18 @@ sentence:
         email_correct: Verifica che l'indirizzo email sia corretto
         email_exist: Se un account corrisponde al tuo indirizzo email, riceverai un'email con un link per ripristinare la tua password.
         email_not_received: Non hai ricevuto l'email?
-        email_received_explanation: Ricevi questa email perché hai creato un account su %brand%.
+        email_received_explanation: Ricevi questa email perché hai creato un account su {brand}.
         email_send: Email inviata con successo!
         email_spam: Controlla la cartella spam/posta indesiderata
         info_email_send: Se non ricevi l'email, controlla lo spam.
         send_back_email: Reinvia l'email
         wait: Attendi qualche minuto (i tempi possono variare)
-    enjoy: Guarda la tua dashboard prendere vita
+    empty_dashboard: Il tuo cruscotto è vuoto per ora, ma non per molto. Registra il tuo primo allenamento e guarda le tue statistiche prendere vita.
+    enjoy: Guarda il tuo cruscotto prendere vita
     evolution_real_time: Progressi in tempo reale
-    log_workout: Clicca su "Registra il mio allenamento" nella tua dashboard
+    less_time: Ci vogliono meno di 2 minuti
+    log_first_workout: Registra il tuo primo allenamento
+    log_workout: Clicca su "Registra il mio allenamento" nel tuo cruscotto
     maintain_regularity: Mantieni la costanza e batti i tuoi record
     need_help: Hai bisogno di aiuto?
     outline_muscle: Silhouette muscolare
@@ -38,22 +51,28 @@ sentence:
         security:
             at_least_number: Almeno un numero
             confirmation: La tua password è stata modificata con successo
-            criteria_min_char: Almeno %min% caratteri
-            min_char: Minimo %min% caratteri con maiuscole, minuscole e numeri
+            criteria_min_char: Almeno {min} caratteri
+            min_char: Minimo {min} caratteri con maiuscole, minuscole e numeri
             regex: La password deve contenere almeno una maiuscola, una minuscola, un numero e un carattere speciale (! ? % $ * &)
             special_char: Almeno uno dei seguenti caratteri speciali ! ? % $ * &
             upper_lower: Una maiuscola e una minuscola
             valid_new_password: Conferma la nuova password
+    progress_comparaison: Comparazione progressi · Serie · Record
+    ready: Pronto a iniziare?
     ready_to_start: Pronto a iniziare? I tuoi progressi partono da qui
     ready_to_transform: Pronto a trasformarti?
     see_datas: Visualizza il tuo tonnellaggio, i tuoi record e la tua evoluzione
     see_working_muscles: Scopri esattamente quali muscoli stai allenando
+    tonnage_curve_weekly_frequency: Curva di tonnellaggio · Frequenza settimanale
     welcome: Benvenuto nella tua avventura fitness!
+    welcome_to: Benvenuto su {brand}
     what_next: Cosa ti aspetta
     where_to_start: Da dove cominciare?
+    workout_resume: Riepilogo allenamento · Silhouette muscolare
 
 word:
     hello: Ciao,
+    hi: Ciao
     important: ⚠️ Importante
     security: Sicurezza
     welcome: Benvenuto
