@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Repository\WorkoutRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,14 +27,18 @@ final class DashboardController extends AbstractController
         name: 'app_dashboard'
     )]
     #[IsGranted('ROLE_USER')]
-    public function index(): Response
+    public function index(WorkoutRepository $workoutRepository): Response
     {
+        $user = $this->getUser();
+        //PHPSTAN
+        assert($user instanceof User);
         /*return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
         ]);*/
         return $this->render('dashboard/dashboard-empty-responsive.html.twig', [
             'controller_name' => 'DashboardController',
             'user' => $this->getUser(),
+            'workouts' => $workoutRepository->countByUser($user),
         ]);
     }
 }
