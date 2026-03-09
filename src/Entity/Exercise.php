@@ -73,7 +73,7 @@ class Exercise
     /**
      * @var Collection<int, ExerciseMuscle>
      */
-    #[ORM\OneToMany(targetEntity: ExerciseMuscle::class, mappedBy: 'exercise', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: ExerciseMuscle::class, mappedBy: 'exercise', cascade: ['persist', 'remove'], orphanRemoval: true)]
     public Collection $exerciseMuscles {
         get {
             return $this->exerciseMuscles;

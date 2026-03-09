@@ -25,7 +25,7 @@ class ExerciseMuscle
     }
 
     #[ORM\ManyToOne(targetEntity: Exercise::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     public Exercise $exercise {
         get {
             return $this->exercise;

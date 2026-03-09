@@ -52,7 +52,7 @@ class Routine
     /**
      * @var Collection<int, RoutineExercise>
      */
-    #[ORM\OneToMany(targetEntity: RoutineExercise::class, mappedBy: 'routine', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: RoutineExercise::class, mappedBy: 'routine', cascade: ['persist', 'remove'], orphanRemoval: true)]
     public Collection $routineExercises {
         get {
             return $this->routineExercises;

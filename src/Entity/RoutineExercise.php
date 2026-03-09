@@ -24,7 +24,7 @@ class RoutineExercise
     }
 
     #[ORM\ManyToOne(targetEntity: Routine::class, inversedBy: 'routineExercises')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     public Routine $routine {
         get {
             return $this->routine;
