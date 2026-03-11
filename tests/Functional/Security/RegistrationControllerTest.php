@@ -57,7 +57,7 @@ class RegistrationControllerTest extends WebTestCase
     #[DataProvider('genderProvider')]
     public function testRegistrationSuccess(string $gender): void
     {
-        $user = $this->fillField($gender, 'no_bot@test.com', 5, '/fr/dashboard');
+        $user = $this->fillField($gender, 'no_bot@test.com', 5, '/fr/tableau-de-bord');
         $this->assertNotNull($user);
         $this->assertInstanceOf(\DateTimeImmutable::class, $user->getLastLogin());
         $this->assertSame($user->getLastLogin()->format('Y-m-d'), now()->format('Y-m-d'));
@@ -80,7 +80,7 @@ class RegistrationControllerTest extends WebTestCase
         $client->loginUser($testUser);
 
         $client->request(Request::METHOD_GET, '/fr/inscription');
-        $this->assertResponseRedirects('/fr/dashboard');
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
     }
 
     private function fillField(

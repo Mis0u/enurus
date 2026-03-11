@@ -7,6 +7,8 @@ namespace App\Entity;
 use App\Entity\Trait\TimestampTrait;
 use App\Enum\Translations\LocaleAllowedEnum;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
@@ -34,7 +36,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
-    private ?Uuid $id = null;
+    public ?Uuid $id = null {
+        get {
+            return $this->id;
+        }
+    }
+
+    /**
+     * @var Collection<int, Exercise>
+     */
+    #[ORM\OneToMany(targetEntity: Exercise::class, mappedBy: 'owner')]
+    public Collection $exercises {
+        get {
+            return $this->exercises;
+        }
+    }
+
+    /**
+     * @var Collection<int, Workout>
+     */
+    #[ORM\OneToMany(targetEntity: Workout::class, mappedBy: 'owner')]
+    public Collection $workouts {
+        get {
+            return $this->workouts;
+        }
+    }
+
+    /**
+     * @var Collection<int, Routine>
+     */
+    #[ORM\OneToMany(targetEntity: Routine::class, mappedBy: 'owner')]
+    public Collection $routines {
+        get {
+            return $this->routines;
+        }
+    }
 
     #[ORM\Column(length: 180, nullable: false)]
     #[NotBlank]
@@ -63,8 +99,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::STRING, length: 25, nullable: false)]
     #[NotBlank]
-    #[Length(min: 1, max: 20, maxMessage: 'user.nickname.length.max')]
+    #[Length(min: 3, max: 20, minMessage: 'user.nickname.length.min', maxMessage: 'user.nickname.length.max')]
     private string $nickname;
+
+    public function __construct()
+    {
+        $this->exercises = new ArrayCollection();
+        $this->workouts = new ArrayCollection();
+        $this->routines = new ArrayCollection();
+    }
 
     /**
      * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
@@ -75,11 +118,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
 
         return $data;
-    }
-
-    public function getId(): ?Uuid
-    {
-        return $this->id;
     }
 
     public function getEmail(): ?string

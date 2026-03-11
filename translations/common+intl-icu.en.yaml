@@ -9,6 +9,7 @@ field:
         title: Gender
     new_password: New password
     password: Password
+    reduce: Collapse
     security_password: Choose a secure password
 
 sentence:

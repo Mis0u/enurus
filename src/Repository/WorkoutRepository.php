@@ -1,0 +1,32 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Repository;
+
+use App\Entity\User;
+use App\Entity\Workout;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @extends ServiceEntityRepository<Workout>
+ */
+class WorkoutRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Workout::class);
+    }
+
+    public function countByUser(User $user): int
+    {
+        return (int) $this->createQueryBuilder('w')
+            ->select('count(w.id)')
+            ->andWhere('w.owner = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+}

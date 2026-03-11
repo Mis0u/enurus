@@ -2,6 +2,7 @@ dashboard:
     library: Biblioteka
     logout: Wyloguj się
     messaging: Wiadomości
+    my_routines: Moje programy
     my_workout: Moje treningi
     profile: Profil
     profile_followed: Obserwowane profile

@@ -2,3 +2,4 @@ user:
     nickname:
         length:
             max: 'Ton alias est trop long. Il doit avoir au maximum {{ limit }} caractères'
+            min: 'Ton alias est trop court. Il doit avoir au minimum {{ limit }} caractères'

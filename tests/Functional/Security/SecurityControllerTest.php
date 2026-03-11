@@ -52,10 +52,10 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->getCredentials('user-fixture-0@test.com', 'pass_1234');
 
-        $this->assertResponseRedirects('/fr/dashboard');
-        $client->followRedirect();
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
+        $crawler = $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Hello DashboardController!');
+        $this->assertSame('Tableau de bord | FitTracker', $crawler->filter('title')->text(), 'Le sélecteur title ne contient pas le texte attendu');
     }
 
     public function testAlreadyAuthenticatedUserIsRedirectedFromLogin(): void
@@ -63,19 +63,20 @@ class SecurityControllerTest extends WebTestCase
         $client = $this->login();
 
         $client->request(Request::METHOD_GET, '/fr/');
-        $this->assertResponseRedirects('/fr/dashboard');
-        $client->followRedirect();
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
+        $crawler = $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Hello DashboardController!');
+        $this->assertSame('Tableau de bord | FitTracker', $crawler->filter('title')->text(), 'Le sélecteur title ne contient pas le texte attendu');
+
     }
 
     public function testLogoutAndRedirects(): void
     {
         $client = $this->login();
 
-        $client->request(Request::METHOD_GET, '/fr/dashboard');
-        $this->assertSelectorTextContains('a', 'Logout');
-        $client->clickLink('Logout');
+        $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+        $this->assertSelectorTextContains('#logout', 'Déconnexion');
+        $client->clickLink('Déconnexion');
         $this->assertResponseRedirects('/fr/');
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
@@ -118,25 +119,25 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->getCredentials('user-fixture-0@test.com', 'pass_1234', true);
 
-        $this->assertResponseRedirects('/fr/dashboard');
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
 
         $client->getCookieJar()->expire('PHPSESSID');
 
-        $client->request(Request::METHOD_GET, '/fr/dashboard');
+        $crawler = $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Hello DashboardController!');
+        $this->assertSame('Tableau de bord | FitTracker', $crawler->filter('title')->text());
     }
 
     public function testRememberMeCookieIsDeletedOnLogout(): void
     {
         $client = $this->getCredentials('user-fixture-0@test.com', 'pass_1234', true);
 
-        $this->assertResponseRedirects('/fr/dashboard');
-        $client->followRedirect();
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
+        $crawler = $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('a', 'Logout');
-        $client->clickLink('Logout');
+        $this->assertSame('Tableau de bord | FitTracker', $crawler->filter('title')->text());
+        $client->clickLink('Déconnexion');
 
         $cookie = $client->getCookieJar()->get('REMEMBERME');
         $this->assertNull($cookie, 'Le cookie REMEMBERME doit être supprimé au logout');
@@ -201,7 +202,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->getCredentials('user-fixture-0@test.com', 'pass_1234', $rememberMe);
 
-        $this->assertResponseRedirects('/fr/dashboard');
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
 
         $cookieJar = $client->getCookieJar();
 

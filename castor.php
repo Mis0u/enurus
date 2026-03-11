@@ -193,6 +193,19 @@ function resetDB(bool $test = false): void
     loadFixtures($test);
 }
 
+#[AsTask(description: 'Doctrine reset both database dev and test (delete, create, migrate, fixtures')]
+function resetAllDB(): void
+{
+    dropDb();
+    createDb();
+    migrate();
+    loadFixtures();
+    dropDb(true);
+    createDb(true);
+    migrate(true);
+    loadFixtures(true);
+}
+
 // MESSENGER
 #[AsTask(description: 'Consuming message for messenger')]
 function consume(): void
@@ -216,6 +229,13 @@ function tailwindBuild(): void
         'php bin/console tailwind:build',
         'Tailwind assets have been built'
     );
+}
+
+#[AsTask(description: 'Start the project')]
+function start(): void
+{
+    dbUp();
+    resetAllDB();
 }
 
 function execute(string $title, string $section, string $command, string $success): void

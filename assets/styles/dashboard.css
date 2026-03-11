@@ -1,0 +1,133 @@
+html, body { overflow: hidden; font-family: 'DM Sans', sans-serif; }
+
+/* ---- Sidebar collapse ---- */
+.sidebar {
+    transition: width 0.25s cubic-bezier(0.4,0,0.2,1),
+    min-width 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+.sidebar.collapsed { width: 68px; min-width: 68px; }
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .nav-label,
+.sidebar.collapsed .nav-badge,
+.sidebar.collapsed .sidebar-bottom-label { opacity: 0; pointer-events: none; }
+.sidebar.collapsed .sidebar-toggle { transform: rotate(180deg); }
+
+/* ---- Gradient texts (non supporté en classes Tailwind) ---- */
+.logo-text {
+    background: linear-gradient(90deg, #fff 40%, #f43f5e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+.hero-title span {
+    background: linear-gradient(90deg, #f43f5e, #fb7185);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ---- Barre indicatrice active sidebar (pseudo-élément) ---- */
+.nav-item.active::before {
+    content: '';
+    position: absolute; left: 0; top: 20%; bottom: 20%;
+    width: 3px; background: #f43f5e; border-radius: 0 3px 3px 0;
+}
+
+/* ---- Hero card — lueur rose en pseudo-élément ---- */
+.hero-card { position: relative; overflow: hidden; }
+.hero-card::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 300px; height: 120px;
+    background: radial-gradient(ellipse, rgba(244,63,94,0.2), transparent 70%);
+    pointer-events: none;
+}
+
+/* ---- Ghost vignette — multi-gradient composé ---- */
+.ghost-vignette {
+    background:
+        radial-gradient(ellipse at center, transparent 30%, #080e1a 85%),
+        linear-gradient(to bottom, #080e1a 0%, transparent 15%, transparent 85%, #080e1a 100%),
+        linear-gradient(to right,  #080e1a 0%, transparent 10%, transparent 90%, #080e1a 100%);
+}
+
+/* ---- Lignes await (gradient directionnel) ---- */
+.await-line       { background: linear-gradient(to right, transparent, rgba(255,255,255,0.12)); }
+.await-line.right { background: linear-gradient(to left,  transparent, rgba(255,255,255,0.12)); }
+
+/* ---- Ghost shimmer ---- */
+@keyframes shimmer {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+}
+.ghost-bar { overflow: hidden; }
+.ghost-bar::after {
+    content: '';
+    display: block; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+    animation: shimmer 2.5s ease infinite;
+    animation-delay: var(--delay, 0s);
+}
+
+/* ---- Logo pulse glow ---- */
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(244,63,94,0.3); }
+    50%       { box-shadow: 0 0 20px rgba(244,63,94,0.5); }
+}
+.logo-icon { animation: pulseGlow 3s ease infinite; }
+
+/* ---- Icône hero float ---- */
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-6px); }
+}
+.hero-icon-wrap { animation: iconFloat 4s ease-in-out infinite; }
+
+/* ---- Hero reveal ---- */
+@keyframes heroReveal {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.empty-hero { animation: heroReveal 0.7s cubic-bezier(0.22,1,0.36,1) both; }
+
+/* ---- Staggered fade-in ---- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.anim-fade-1 { opacity: 0; animation: fadeIn 0.5s 0.30s ease forwards; }
+.anim-fade-2 { opacity: 0; animation: fadeIn 0.5s 0.45s ease forwards; }
+.anim-fade-3 { opacity: 0; animation: fadeIn 0.5s 0.60s ease forwards; }
+.anim-fade-4 { opacity: 0; animation: fadeIn 0.4s 1.10s ease forwards; }
+.anim-fade-5 { opacity: 0; animation: fadeIn 0.5s 1.00s ease forwards; }
+.anim-fade-6 { opacity: 0; animation: fadeIn 0.5s 1.40s ease forwards; }
+
+/* ---- CTA pop ---- */
+@keyframes ctaPop {
+    from { opacity: 0; transform: scale(0.88); }
+    to   { opacity: 1; transform: scale(1); }
+}
+.anim-cta { opacity: 0; animation: ctaPop 0.6s 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+
+/* ---- Bottom nav CTA hover ---- */
+.bottom-nav-cta:hover  { box-shadow: 0 6px 24px rgba(244,63,94,0.5); transform: translateY(-22px) scale(1.05); }
+.bottom-nav-cta:active { transform: translateY(-20px) scale(0.95); }
+
+/* ---- Helper transition ---- */
+.transition-ft { transition: all 0.25s cubic-bezier(0.4,0,0.2,1); }
+
+
+#sidebar-toggle {
+    box-shadow:
+        0 0 0 4px rgba(255,255,255,0.03),
+        0 2px 8px rgba(0,0,0,0.4);
+    transition: left 0.3s ease, transform 0.2s ease;
+    left: 227px;
+}
+
+#sidebar-toggle:hover {
+    box-shadow:
+        0 0 0 4px rgba(255,255,255,0.08),
+        0 2px 12px rgba(0,0,0,0.5);
+    transform: scale(1.1);
+}

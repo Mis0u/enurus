@@ -1,0 +1,19 @@
+<nav class="flex-1 px-[10px] py-[16px] flex flex-col gap-[3px] overflow-y-auto overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+
+    <twig:Link:Primary:Primary message="{{ 'dashboard.save_workout'|trans({}, 'navigation') }}" icon="add"/>
+
+    <twig:Navigation:Sidebar:NavigationItem
+        link="{{ path('app_dashboard') }}"
+        route="app_dashboard"
+        menu="{{ 'dashboard.title'|trans({}, 'navigation') }}"
+        icon="house"
+    />
+    <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.my_workout'|trans({}, 'navigation') }}" icon="calendar"/>
+    <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.library'|trans({}, 'navigation') }}" icon="library"/>
+    <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.my_routines'|trans({}, 'navigation') }}" icon="repeat"/>
+
+    <div class="h-px bg-white/[0.07] my-2 mx-1"></div>
+
+    <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.profile_followed'|trans({}, 'navigation') }}" icon="connect_to"/>
+    <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.messaging'|trans({}, 'navigation') }}" icon="messaging" badge="true"/>
+</nav>

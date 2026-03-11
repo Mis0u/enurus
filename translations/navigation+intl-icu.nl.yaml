@@ -2,6 +2,7 @@ dashboard:
     library: Bibliotheek
     logout: Uitloggen
     messaging: Berichten
+    my_routines: Mijn routines
     my_workout: Mijn trainingen
     profile: Profiel
     profile_followed: Gevolgde profielen
