@@ -2,6 +2,7 @@ dashboard:
     library: Library
     logout: Log out
     messaging: Messages
+    my_routines: My routines
     my_workout: My workouts
     profile: Profile
     profile_followed: Followed profiles

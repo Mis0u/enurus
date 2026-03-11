@@ -2,6 +2,7 @@ dashboard:
     library: Bibliothèque
     logout: Déconnexion
     messaging: Messagerie
+    my_routines: Mes routines
     my_workout: Mes séances
     profile: Profil
     profile_followed: Profils suivis
