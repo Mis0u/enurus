@@ -1,0 +1,315 @@
+ab_wheel_rollout:
+    description: In ginocchio, far rotolare la ruota per addominali in avanti mantenendo la schiena dritta, poi tornare alla posizione iniziale.
+    name: Ab wheel (rollout)
+
+abduction_machine:
+    description: Seduti sulla macchina, aprire le cosce contro la resistenza per lavorare gli abduttori e il medio gluteo.
+    name: Abduzioni alla macchina
+
+adduction_machine:
+    description: Seduti sulla macchina, chiudere le cosce l'una verso l'altra contro la resistenza per colpire gli adduttori.
+    name: Adduzioni alla macchina
+
+arnold_press:
+    description: Seduti, partire con i manubri davanti al viso con i palmi verso di sé, effettuare una rotazione spingendo verso l'alto.
+    name: Arnold press
+
+barbell_curl_standing:
+    description: In piedi, bilanciere in mano con i palmi verso l'alto, flettere i gomiti per portare il bilanciere verso le spalle senza muovere il busto.
+    name: Curl con bilanciere (in piedi)
+
+barbell_front_squat:
+    description: Bilanciere appoggiato sui deltoidi anteriori, scendere in squat. La posizione frontale sollecita maggiormente quadricipiti e addominali.
+    name: Front squat
+
+barbell_row:
+    description: Piegati in avanti, tirare il bilanciere verso l'ombelico stringendo le scapole, poi scendere in modo controllato.
+    name: Rematore con bilanciere
+
+barbell_shrug:
+    description: In piedi, bilanciere in mano a braccia tese, alzare le spalle il più in alto possibile poi scendere in modo controllato.
+    name: Scrollate con bilanciere
+
+barbell_squat:
+    description: Bilanciere sui trapezi, flettere ginocchia e anche per scendere in posizione seduta poi risalire spingendo sui talloni.
+    name: Squat con bilanciere
+
+bench_press_bar:
+    description: Sdraiati su una panca piana, abbassare il bilanciere fino al petto poi spingere verso l'alto a braccia tese.
+    name: Panca piana (bilanciere)
+
+bench_press_dumbbell:
+    description: Sdraiati su una panca piana, spingere i manubri verso l'alto avvicinando le mani alla fine del movimento.
+    name: Panca piana con manubri
+
+cable_crunch:
+    description: In ginocchio di fronte a una puleggia alta, corda dietro la testa, arrotolare il busto verso il pavimento contraendo gli addominali.
+    name: Crunch ai cavi
+
+cable_curl:
+    description: Di fronte a una puleggia bassa, flettere i gomiti per portare la barra verso le spalle. La tensione è costante per tutto il movimento.
+    name: Curl ai cavi bassi
+
+cable_fly:
+    description: In piedi tra due pulegge alte, portare le mani davanti a sé ad arco contraendo i pettorali.
+    name: Croci ai cavi
+
+cable_lateral_raise:
+    description: Piegati in avanti di fronte a una puleggia bassa, tirare il cavo verso l'esterno mirando la parte posteriore della spalla.
+    name: Aperture posteriori ai cavi
+
+cable_row:
+    description: Seduti di fronte a una puleggia bassa, tirare l'impugnatura verso il ventre mantenendo la schiena dritta e stringendo le scapole.
+    name: Rematore ai cavi bassi
+
+cable_woodchop:
+    description: In piedi di profilo alla puleggia, tirare il cavo in diagonale con una rotazione del busto dall'alto verso il basso o viceversa.
+    name: Woodchop ai cavi
+
+calf_raise_machine_seated:
+    description: Seduti sulla macchina, salire sulla punta dei piedi. La posizione seduta colpisce maggiormente il soleo.
+    name: Calf raise seduto (macchina)
+
+calf_raise_machine_standing:
+    description: In piedi sulla macchina, salire sulla punta dei piedi spingendo il carico poi scendere lentamente.
+    name: Calf raise in piedi (macchina)
+
+calf_raise_press:
+    description: Sulla pressa, piedi in basso sulla piattaforma, spingere con la punta dei piedi.
+    name: Calf raise alla pressa
+
+chin_up:
+    description: Appesi a una sbarra, palmi verso di sé, tirare il corpo verso l'alto. La presa supina sollecita maggiormente i bicipiti.
+    name: Trazioni supine
+
+concentration_curl:
+    description: Seduti, gomito in appoggio sull'interno della coscia, flettere il braccio con un manubrio contraendo al massimo il bicipite.
+    name: Curl concentrato
+
+crunch:
+    description: Sdraiati al suolo, ginocchia piegate, arrotolare il busto in avanti contraendo gli addominali senza sollevare la parte bassa della schiena.
+    name: Crunch
+
+deadlift:
+    description: In piedi di fronte a un bilanciere a terra, sollevare il carico spingendo le gambe e mantenendo la schiena dritta fino all'estensione completa.
+    name: Stacco da terra
+
+decline_bench_press_bar:
+    description: Panca piana su panca declinata per colpire la parte bassa dei pettorali.
+    name: Panca declinata (bilanciere)
+
+dips_chest:
+    description: Alle parallele, busto inclinato in avanti, scendere poi spingere per risalire mirando i pettorali.
+    name: Dip (pettorali)
+
+dips_triceps:
+    description: Alle parallele, busto dritto e verticale, scendere poi spingere mirando i tricipiti.
+    name: Dip (tricipiti)
+
+dumbbell_alternating_curl:
+    description: In piedi, alternare la flessione di un braccio poi l'altro con una rotazione del polso alla fine del movimento.
+    name: Curl alternato con manubri
+
+dumbbell_curl_standing:
+    description: In piedi, manubri in mano, flettere entrambi i gomiti simultaneamente per portare i manubri verso le spalle.
+    name: Curl con manubri (in piedi)
+
+dumbbell_fly_flat:
+    description: Sdraiati su una panca piana, aprire le braccia ad arco con i manubri poi riportarle sopra il petto.
+    name: Croci con manubri (panca piana)
+
+dumbbell_fly_incline:
+    description: Croci su panca inclinata per colpire la parte alta dei pettorali con un movimento di apertura.
+    name: Croci su panca inclinata
+
+dumbbell_overhead_triceps_extension:
+    description: Seduti o in piedi, un manubrio tenuto a due mani dietro la testa, estendere le braccia verso l'alto.
+    name: Estensione manubrio sopra la testa
+
+dumbbell_row:
+    description: Un ginocchio e una mano in appoggio su una panca, tirare il manubrio verso l'anca stringendo la scapola.
+    name: Rematore con manubrio (un braccio)
+
+dumbbell_shrug:
+    description: In piedi, manubri in mano a braccia tese lungo il corpo, alzare le spalle verso le orecchie.
+    name: Scrollate con manubri
+
+ez_bar_curl:
+    description: In piedi con un bilanciere EZ, flettere i gomiti. La barra angolata riduce la tensione sui polsi.
+    name: Curl con bilanciere EZ
+
+face_pull:
+    description: Di fronte a una puleggia alta con corda, tirare verso il viso aprendo i gomiti verso l'esterno e stringendo le scapole.
+    name: Face pull
+
+farmer_walk:
+    description: In piedi, afferrare manubri pesanti e camminare mantenendo una postura eretta e una presa salda.
+    name: Farmer walk
+
+front_raise:
+    description: In piedi, manubri davanti alle cosce, sollevare le braccia in avanti fino all'altezza delle spalle.
+    name: Alzate frontali
+
+glute_bridge:
+    description: Sdraiati al suolo, piedi a terra, spingere i fianchi verso l'alto contraendo i glutei. Versione a terra dell'hip thrust.
+    name: Ponte glutei (glute bridge)
+
+glute_kickback_cable:
+    description: In piedi di fronte a una puleggia bassa, cavo attaccato alla caviglia, spingere la gamba all'indietro contraendo il gluteo.
+    name: Kickback glutei (cavi)
+
+good_morning:
+    description: Bilanciere sui trapezi, piegare il busto in avanti spingendo i fianchi all'indietro, gambe leggermente piegate.
+    name: Good morning
+
+hack_squat:
+    description: Sulla macchina hack squat, schiena in appoggio, scendere in squat e spingere per risalire. Meno stress sulla parte bassa della schiena.
+    name: Hack squat
+
+hammer_curl:
+    description: In piedi, manubri in presa neutra (palmi uno di fronte all'altro), flettere i gomiti. Colpisce il brachiale e il brachioradiale.
+    name: Curl a martello
+
+hip_thrust_bar:
+    description: Schiena in appoggio su una panca, bilanciere sui fianchi, spingere i fianchi verso l'alto contraendo al massimo i glutei.
+    name: Hip thrust (bilanciere)
+
+hip_thrust_machine:
+    description: Stesso movimento dell'hip thrust con bilanciere ma su una macchina dedicata per maggiore stabilità.
+    name: Hip thrust macchina
+
+horizontal_cable_row:
+    description: Seduti di fronte a una puleggia, tirare l'impugnatura verso il ventre mantenendo i gomiti vicini al corpo.
+    name: Rematore orizzontale ai cavi
+
+hyperextension:
+    description: Su una panca a 45°, abbassare il busto verso il pavimento poi risalire contraendo lombari e glutei.
+    name: Iperestensioni (panca a 45°)
+
+incline_bench_press_bar:
+    description: Stesso movimento della panca piana ma su panca inclinata a 30-45° per colpire la parte alta dei pettorali.
+    name: Panca inclinata (bilanciere)
+
+incline_bench_press_dumbbell:
+    description: Distensioni con manubri su panca inclinata a 30-45° per colpire la parte alta dei pettorali con maggiore ampiezza.
+    name: Panca inclinata con manubri
+
+lat_pulldown:
+    description: Seduti di fronte a una puleggia alta, tirare la barra verso la parte alta del petto contraendo la schiena.
+    name: Lat machine
+
+lateral_raise:
+    description: In piedi, manubri lungo il corpo, sollevare le braccia lateralmente fino all'altezza delle spalle mantenendo una leggera flessione del gomito.
+    name: Alzate laterali
+
+leg_curl_lying:
+    description: Sdraiati a pancia in giù sulla panca, flettere le gambe per portare i talloni verso i glutei.
+    name: Leg curl sdraiato
+
+leg_curl_seated:
+    description: Seduti sulla macchina, flettere le gambe sotto il cuscinetto contraendo gli ischiocrurali.
+    name: Leg curl seduto
+
+leg_extension:
+    description: Seduti sulla macchina, estendere le gambe in avanti contraendo i quadricipiti. Esercizio di isolamento.
+    name: Leg extension
+
+leg_press:
+    description: Seduti sulla macchina, piedi sulla piattaforma, spingere il carico estendendo le gambe senza bloccare le ginocchia.
+    name: Pressa
+
+lunge:
+    description: In piedi, fare un grande passo avanti e flettere entrambe le ginocchia a 90° poi tornare in posizione iniziale.
+    name: Affondi (bilanciere o manubri)
+
+military_press_bar:
+    description: In piedi o seduti, spingere il bilanciere sopra la testa dalle spalle fino all'estensione completa delle braccia.
+    name: Military press (bilanciere)
+
+military_press_machine:
+    description: Seduti su una macchina per spalle, spingere le impugnature verso l'alto fino all'estensione delle braccia.
+    name: Military press macchina
+
+overhead_cable_triceps_extension_bar:
+    description: Di fronte a una puleggia alta con barra dritta, estendere le braccia verso il basso mantenendo i gomiti fissi al corpo.
+    name: Push down ai cavi (barra)
+
+overhead_cable_triceps_extension_rope:
+    description: Di fronte a una puleggia alta con corda, estendere le braccia verso il basso aprendo le estremità della corda alla fine del movimento.
+    name: Push down ai cavi (corda)
+
+plank:
+    description: In appoggio sugli avambracci e sulle punte dei piedi, mantenere il corpo allineato contraendo addominali e glutei.
+    name: Plank
+
+preacher_curl:
+    description: Braccia in appoggio su un leggio inclinato, flettere il gomito con un bilanciere o un manubrio. Isola il bicipite eliminando lo slancio.
+    name: Curl alla panca Scott
+
+pull_up:
+    description: Appesi a una sbarra, palmi in avanti, tirare il corpo verso l'alto finché il mento supera la sbarra.
+    name: Trazioni prone
+
+pullover:
+    description: Sdraiati su una panca, abbassare un manubrio dietro la testa a braccia quasi tese poi riportarlo sopra il petto.
+    name: Pullover
+
+push_up:
+    description: A terra, mani alla larghezza delle spalle, abbassare il petto verso il pavimento poi spingere per tornare in posizione alta.
+    name: Flessioni
+
+push_up_diamond:
+    description: Flessioni con le mani ravvicinate a formare un diamante sotto il petto per colpire i tricipiti.
+    name: Flessioni a diamante
+
+rear_delt_fly:
+    description: Piegati in avanti, sollevare i manubri lateralmente stringendo le scapole per colpire la parte posteriore delle spalle.
+    name: Aperture posteriori
+
+reverse_wrist_curl:
+    description: Seduti, avambracci in appoggio sulle cosce palmi verso il basso, sollevare i polsi con un bilanciere.
+    name: Curl dei polsi inverso
+
+romanian_deadlift:
+    description: Simile allo stacco a gambe tese ma con una leggera flessione delle ginocchia mantenuta per tutto il movimento.
+    name: Stacco rumeno
+
+russian_twist:
+    description: Seduti a terra, busto inclinato all'indietro, piedi sollevati, effettuare rotazioni del busto da sinistra a destra con o senza carico.
+    name: Russian twist
+
+sissy_squat:
+    description: In piedi, inclinarsi all'indietro flettendo le ginocchia, talloni sollevati, per isolare i quadricipiti.
+    name: Sissy squat
+
+skull_crusher:
+    description: Sdraiati su una panca, abbassare il bilanciere verso la fronte flettendo i gomiti poi estendere le braccia.
+    name: Skull crusher
+
+stiff_leg_deadlift:
+    description: In piedi, abbassare il bilanciere lungo le gambe mantenendo le gambe quasi tese, spingendo i fianchi all'indietro.
+    name: Stacco a gambe tese
+
+sumo_squat:
+    description: Squat con posizione dei piedi molto ampia e punte verso l'esterno per colpire gli adduttori.
+    name: Sumo squat
+
+superman:
+    description: Sdraiati a pancia in giù, sollevare simultaneamente braccia e gambe contraendo lombari e glutei.
+    name: Superman
+
+suspended_leg_raise:
+    description: Appesi a una sbarra, sollevare le gambe davanti a sé contraendo gli addominali. Più le gambe sono tese, più è intenso.
+    name: Sollevamento gambe alla sbarra
+
+triceps_kickback:
+    description: Piegati in avanti, gomito fisso al corpo, estendere il braccio all'indietro contraendo il tricipite.
+    name: Kickback con manubrio
+
+walking_lunge:
+    description: Eseguire affondi consecutivi avanzando ad ogni ripetizione, alternando gamba sinistra e destra.
+    name: Affondi in camminata
+
+wrist_curl:
+    description: Seduti, avambracci in appoggio sulle cosce palmi verso l'alto, flettere i polsi con un bilanciere.
+    name: Curl dei polsi

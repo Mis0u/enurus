@@ -1,0 +1,315 @@
+ab_wheel_rollout:
+    description: À genoux, rouler la roue abdominale vers l'avant en gardant le dos droit puis revenir à la position initiale.
+    name: Ab wheel (rollout)
+
+abduction_machine:
+    description: Assis sur la machine, écarter les cuisses contre la résistance pour travailler les abducteurs et le moyen fessier.
+    name: Abductions machine
+
+adduction_machine:
+    description: Assis sur la machine, serrer les cuisses l''une vers l'autre contre la résistance pour cibler les adducteurs.
+    name: Adductions machine
+
+arnold_press:
+    description: Assis, démarrer haltères devant le visage paumes vers soi, effectuer une rotation en poussant vers le haut.
+    name: Développé haltères (Arnold press)
+
+barbell_curl_standing:
+    description: Debout, barre en main paumes vers le haut, fléchir les coudes pour amener la barre vers les épaules sans bouger le buste.
+    name: Curl barre (debout)
+
+barbell_front_squat:
+    description: Barre posée sur les deltoïdes avant, descendre en squat. La position avant sollicite davantage les quadriceps et les abdominaux.
+    name: Squat avant (front squat)
+
+barbell_row:
+    description: Penché en avant, tirer la barre vers le nombril en serrant les omoplates puis redescendre contrôlé.
+    name: Rowing barre
+
+barbell_shrug:
+    description: Debout, barre en main bras tendus, hausser les épaules le plus haut possible puis redescendre contrôlé.
+    name: Shrugs (barre)
+
+barbell_squat:
+    description: Barre sur les trapèzes, fléchir les genoux et les hanches pour descendre en position assise puis remonter en poussant sur les talons.
+    name: Squat (barre)
+
+bench_press_bar:
+    description: Allongé sur un banc plat, descendre la barre jusqu'à la poitrine puis pousser vers le haut bras tendus.
+    name: Développé couché (barre)
+
+bench_press_dumbbell:
+    description: Allongé sur un banc plat, pousser les haltères vers le haut en rapprochant les mains en fin de mouvement.
+    name: Développé couché haltères
+
+cable_crunch:
+    description: À genoux face à une poulie haute, corde derrière la tête, enrouler le buste vers le sol en contractant les abdominaux.
+    name: Crunchs poulie haute
+
+cable_curl:
+    description: Face à une poulie basse, fléchir les coudes pour amener la barre vers les épaules. La tension est constante tout au long du mouvement.
+    name: Curl poulie basse
+
+cable_fly:
+    description: Debout entre deux poulies hautes, ramener les mains devant soi en arc de cercle en contractant les pectoraux.
+    name: Écartés poulie vis-à-vis
+
+cable_lateral_raise:
+    description: Penché en avant face à une poulie basse, tirer le câble vers l'extérieur en ciblant l'arrière de l''épaule.
+    name: Oiseau poulie
+
+cable_row:
+    description: Assis face à une poulie basse, tirer la poignée vers le ventre en gardant le dos droit et en serrant les omoplates.
+    name: Rowing poulie basse
+
+cable_woodchop:
+    description: Debout de profil à une poulie, tirer le câble en diagonale avec une rotation du buste de haut en bas ou inversement.
+    name: Rotation poulie (Woodchop)
+
+calf_raise_machine_seated:
+    description: Assis sur la machine, monter sur la pointe des pieds. La position assise cible davantage le soléaire.
+    name: Mollets assis (machine)
+
+calf_raise_machine_standing:
+    description: Debout sur la machine, monter sur la pointe des pieds en poussant la charge puis redescendre lentement.
+    name: Mollets debout (machine)
+
+calf_raise_press:
+    description: Sur la presse à cuisses, pieds en bas de la plateforme, pousser avec la pointe des pieds.
+    name: Mollets à la presse
+
+chin_up:
+    description: Suspendu à une barre, paumes vers soi, tirer le corps vers le haut. La prise supination sollicite davantage les biceps.
+    name: Tractions supination
+
+concentration_curl:
+    description: Assis, coude en appui sur l'intérieur de la cuisse, fléchir le bras avec un haltère en contractant le biceps au maximum.
+    name: Curl concentré
+
+crunch:
+    description: Allongé au sol, genoux fléchis, enrouler le buste vers l'avant en contractant les abdominaux sans décoller le bas du dos.
+    name: Crunchs
+
+deadlift:
+    description: Debout face à une barre au sol, soulever la charge en poussant les jambes et en gardant le dos droit jusqu'à extension complète.
+    name: Soulevé de terre
+
+decline_bench_press_bar:
+    description: Développé couché sur un banc décliné pour cibler la partie basse des pectoraux.
+    name: Développé décliné (barre)
+
+dips_chest:
+    description: Aux barres parallèles, buste penché en avant, descendre le corps puis pousser pour remonter en ciblant les pectoraux.
+    name: Dips (pectoraux)
+
+dips_triceps:
+    description: Aux barres parallèles, buste droit et vertical, descendre le corps puis pousser en ciblant les triceps.
+    name: Dips (triceps)
+
+dumbbell_alternating_curl:
+    description: Debout, alterner la flexion d'un bras puis l'autre avec une rotation du poignet en fin de mouvement.
+    name: Curl haltères alternés
+
+dumbbell_curl_standing:
+    description: Debout, haltères en main, fléchir les deux coudes simultanément pour amener les haltères vers les épaules.
+    name: Curl haltères (debout)
+
+dumbbell_fly_flat:
+    description: Allongé sur un banc plat, ouvrir les bras en arc de cercle avec les haltères puis les ramener au-dessus de la poitrine.
+    name: Écartés haltères (plat)
+
+dumbbell_fly_incline:
+    description: Écartés sur banc incliné pour cibler la partie haute des pectoraux avec un mouvement d'ouverture.
+    name: Écartés incliné haltères
+
+dumbbell_overhead_triceps_extension:
+    description: Assis ou debout, un haltère tenu à deux mains derrière la tête, tendre les bras vers le haut.
+    name: Extension haltère au-dessus de la tête
+
+dumbbell_row:
+    description: Un genou et une main en appui sur un banc, tirer l'haltère vers la hanche en serrant l'omoplate.
+    name: Rowing haltère (un bras)
+
+dumbbell_shrug:
+    description: Debout, haltères en main bras tendus le long du corps, hausser les épaules vers les oreilles.
+    name: Shrugs (haltères)
+
+ez_bar_curl:
+    description: Debout avec une barre EZ, fléchir les coudes. La barre coudée réduit la tension sur les poignets.
+    name: Curl barre EZ
+
+face_pull:
+    description: Face à une poulie haute avec corde, tirer vers le visage en ouvrant les coudes vers l'extérieur et en serrant les omoplates.
+    name: Face pull
+
+farmer_walk:
+    description: Debout, saisir des haltères lourds et marcher en maintenant une posture droite et une prise ferme.
+    name: Farmer walk
+
+front_raise:
+    description: Debout, haltères devant les cuisses, lever les bras vers l'avant jusqu'à hauteur d''épaules.
+    name: Élévations frontales
+
+glute_bridge:
+    description: Allongé au sol, pieds à plat, pousser les hanches vers le haut en contractant les fessiers. Version au sol du hip thrust.
+    name: Pont fessier (glute bridge)
+
+glute_kickback_cable:
+    description: Debout face à une poulie basse, câble attaché à la cheville, pousser la jambe vers l'arrière en contractant le fessier.
+    name: Kickback fessier (poulie)
+
+good_morning:
+    description: Barre sur les trapèzes, fléchir le buste vers l'avant en poussant les hanches vers l'arrière, jambes légèrement fléchies.
+    name: Good morning
+
+hack_squat:
+    description: Sur la machine hack squat, dos en appui, descendre en squat et pousser pour remonter. Moins de stress sur le bas du dos.
+    name: Hack squat
+
+hammer_curl:
+    description: Debout, haltères en prise neutre (paumes face à face), fléchir les coudes. Cible le brachial et le long supinateur.
+    name: Curl marteau
+
+hip_thrust_bar:
+    description: Dos en appui sur un banc, barre sur les hanches, pousser les hanches vers le haut en contractant les fessiers au maximum.
+    name: Hip thrust (barre)
+
+hip_thrust_machine:
+    description: Même mouvement que le hip thrust barre mais sur une machine dédiée pour plus de stabilité.
+    name: Hip thrust machine
+
+horizontal_cable_row:
+    description: Assis face à une poulie, tirer la poignée vers le ventre en gardant les coudes proches du corps.
+    name: Tirage horizontal poulie
+
+hyperextension:
+    description: Sur un banc à 45°, descendre le buste vers le sol puis remonter en contractant les lombaires et les fessiers.
+    name: Extensions lombaires (banc à 45°)
+
+incline_bench_press_bar:
+    description: Même mouvement que le développé couché mais sur un banc incliné à 30-45° pour cibler le haut des pectoraux.
+    name: Développé incliné (barre)
+
+incline_bench_press_dumbbell:
+    description: Développé aux haltères sur banc incliné à 30-45° pour cibler le haut des pectoraux avec une plus grande amplitude.
+    name: Développé incliné haltères
+
+lat_pulldown:
+    description: Assis face à une poulie haute, tirer la barre vers le haut de la poitrine en contractant le dos.
+    name: Tirage vertical poulie haute
+
+lateral_raise:
+    description: Debout, haltères le long du corps, lever les bras sur les côtés jusqu'à hauteur d'épaules en gardant une légère flexion du coude.
+    name: Élévations latérales
+
+leg_curl_lying:
+    description: Allongé face contre le banc, fléchir les jambes pour amener les talons vers les fessiers.
+    name: Leg curl couché
+
+leg_curl_seated:
+    description: Assis sur la machine, fléchir les jambes sous le coussin en contractant les ischio-jambiers.
+    name: Leg curl assis
+
+leg_extension:
+    description: Assis sur la machine, tendre les jambes vers l'avant en contractant les quadriceps. Exercice d''isolation.
+    name: Leg extension
+
+leg_press:
+    description: Assis sur la machine, pieds sur la plateforme, pousser la charge en tendant les jambes sans verrouiller les genoux.
+    name: Presse à cuisses
+
+lunge:
+    description: Debout, faire un grand pas en avant et fléchir les deux genoux à 90° puis revenir en position initiale.
+    name: Fentes (barre ou haltères)
+
+military_press_bar:
+    description: Debout ou assis, pousser la barre au-dessus de la tête depuis les épaules jusqu'à extension complète des bras.
+    name: Développé militaire (barre)
+
+military_press_machine:
+    description: Assis sur une machine à épaules, pousser les poignées vers le haut jusqu'à extension des bras.
+    name: Développé militaire machine
+
+overhead_cable_triceps_extension_bar:
+    description: Face à une poulie haute avec barre droite, tendre les bras vers le bas en gardant les coudes fixes au corps.
+    name: Extensions poulie haute (barre)
+
+overhead_cable_triceps_extension_rope:
+    description: Face à une poulie haute avec corde, tendre les bras vers le bas en écartant les extrémités de la corde en fin de mouvement.
+    name: Extensions poulie haute (corde)
+
+plank:
+    description: En appui sur les avant-bras et les pointes de pieds, maintenir le corps aligné en contractant abdominaux et fessiers.
+    name: Gainage planche
+
+preacher_curl:
+    description: Bras en appui sur un pupitre incliné, fléchir le coude avec une barre ou un haltère. Isole le biceps en supprimant l'élan.
+    name: Curl pupitre (Larry Scott)
+
+pull_up:
+    description: Suspendu à une barre, paumes vers l'avant, tirer le corps vers le haut jusqu''à ce que le menton dépasse la barre.
+    name: Tractions pronation
+
+pullover:
+    description: Allongé sur un banc, descendre un haltère derrière la tête bras quasi tendus puis le ramener au-dessus de la poitrine.
+    name: Pull-over
+
+push_up:
+    description: Au sol, mains écartées largeur d'épaules, descendre la poitrine vers le sol puis pousser pour revenir en position haute.
+    name: Pompes
+
+push_up_diamond:
+    description: Pompes avec les mains rapprochées formant un losange sous la poitrine pour cibler les triceps.
+    name: Pompes diamant
+
+rear_delt_fly:
+    description: Penché en avant, lever les haltères sur les côtés en serrant les omoplates pour cibler l'arrière des épaules.
+    name: Oiseau (élévations postérieures)
+
+reverse_wrist_curl:
+    description: Assis, avant-bras en appui sur les cuisses paumes vers le bas, lever les poignets avec une barre.
+    name: Curl poignets inversé
+
+romanian_deadlift:
+    description: Similaire au jambes tendues mais avec une légère flexion des genoux maintenue tout au long du mouvement.
+    name: Soulevé de terre roumain
+
+russian_twist:
+    description: Assis au sol, buste incliné en arrière, pieds décollés, effectuer des rotations du buste de gauche à droite avec ou sans charge.
+    name: Russian twist
+
+sissy_squat:
+    description: Debout, se pencher en arrière en fléchissant les genoux, talons décollés, pour isoler les quadriceps.
+    name: Sissy squat
+
+skull_crusher:
+    description: Allongé sur un banc, descendre la barre vers le front en fléchissant les coudes puis tendre les bras.
+    name: Barre au front (skull crusher)
+
+stiff_leg_deadlift:
+    description: Debout, descendre la barre le long des jambes en gardant les jambes quasi tendues, en poussant les hanches vers l'arrière.
+    name: Soulevé de terre jambes tendues
+
+sumo_squat:
+    description: Squat avec une position des pieds très écartée et pointes vers l'extérieur pour cibler les adducteurs.
+    name: Squat sumo
+
+superman:
+    description: Allongé face au sol, lever simultanément les bras et les jambes en contractant les lombaires et les fessiers.
+    name: Superman
+
+suspended_leg_raise:
+    description: Suspendu à une barre, lever les jambes devant soi en contractant les abdominaux. Plus les jambes sont tendues, plus c'est intense.
+    name: Relevé de jambes suspendu
+
+triceps_kickback:
+    description: Penché en avant, coude fixe au corps, tendre le bras vers l'arrière en contractant le triceps.
+    name: Kickback haltère
+
+walking_lunge:
+    description: Enchaîner des fentes en avançant à chaque répétition, alternant jambe gauche et droite.
+    name: Fentes marchées
+
+wrist_curl:
+    description: Assis, avant-bras en appui sur les cuisses paumes vers le haut, fléchir les poignets avec une barre.
+    name: Curl poignets (barre)

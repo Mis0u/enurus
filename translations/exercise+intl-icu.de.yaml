@@ -1,0 +1,315 @@
+ab_wheel_rollout:
+    description: Kniend das Ab-Wheel nach vorne rollen, dabei den Rücken gerade halten, dann in die Ausgangsposition zurückkehren.
+    name: Ab Wheel Rollout
+
+abduction_machine:
+    description: Sitzend an der Maschine, die Oberschenkel gegen den Widerstand spreizen, um Abduktoren und mittleren Gesäßmuskel zu trainieren.
+    name: Abduktionen an der Maschine
+
+adduction_machine:
+    description: Sitzend an der Maschine, die Oberschenkel gegen den Widerstand zusammendrücken, um die Adduktoren zu trainieren.
+    name: Adduktionen an der Maschine
+
+arnold_press:
+    description: Sitzend, Kurzhanteln vor dem Gesicht mit Handflächen zu sich starten, beim Hochdrücken eine Rotation ausführen.
+    name: Arnold Press
+
+barbell_curl_standing:
+    description: Stehend, Langhantel mit Untergriff halten, Ellbogen beugen und die Hantel zu den Schultern führen, ohne den Oberkörper zu bewegen.
+    name: Langhantel-Curl (stehend)
+
+barbell_front_squat:
+    description: Langhantel auf den vorderen Deltamuskeln, in die Kniebeuge gehen. Die Frontposition beansprucht Quadrizeps und Bauchmuskeln stärker.
+    name: Front Squat
+
+barbell_row:
+    description: Vorgebeugt, die Langhantel zum Bauchnabel ziehen und die Schulterblätter zusammendrücken, dann kontrolliert absenken.
+    name: Langhantel-Rudern
+
+barbell_shrug:
+    description: Stehend, Langhantel mit gestreckten Armen halten, die Schultern so hoch wie möglich heben und kontrolliert absenken.
+    name: Langhantel-Shrugs
+
+barbell_squat:
+    description: Langhantel auf dem Trapezmuskel, Knie und Hüfte beugen, um in die Sitzposition zu gehen, dann durch die Fersen hochdrücken.
+    name: Kniebeuge (Langhantel)
+
+bench_press_bar:
+    description: Auf einer Flachbank liegend, die Langhantel zur Brust absenken und nach oben drücken bis die Arme gestreckt sind.
+    name: Bankdrücken (Langhantel)
+
+bench_press_dumbbell:
+    description: Auf einer Flachbank liegend, Kurzhanteln nach oben drücken und die Hände am Ende der Bewegung zusammenführen.
+    name: Kurzhantel-Bankdrücken
+
+cable_crunch:
+    description: Kniend vor einem hohen Kabelzug, Seil hinter dem Kopf, den Oberkörper zum Boden einrollen und die Bauchmuskeln anspannen.
+    name: Kabel-Crunch
+
+cable_curl:
+    description: Vor einem tiefen Kabelzug, die Ellbogen beugen und die Stange zu den Schultern führen. Die Spannung bleibt während der gesamten Bewegung konstant.
+    name: Kabel-Curl
+
+cable_fly:
+    description: Stehend zwischen zwei hohen Kabelzügen, die Hände bogenförmig vor sich zusammenführen und die Brustmuskeln anspannen.
+    name: Kabel-Flys
+
+cable_lateral_raise:
+    description: Vorgebeugt vor einem tiefen Kabelzug, das Kabel nach außen ziehen und die hintere Schulter anvisieren.
+    name: Kabel-Reverse-Flys
+
+cable_row:
+    description: Sitzend vor einem tiefen Kabelzug, den Griff zum Bauch ziehen, dabei den Rücken gerade halten und die Schulterblätter zusammendrücken.
+    name: Kabel-Rudern (sitzend)
+
+cable_woodchop:
+    description: Seitlich zum Kabelzug stehend, das Kabel diagonal mit einer Oberkörperrotation von oben nach unten oder umgekehrt ziehen.
+    name: Kabel-Woodchop
+
+calf_raise_machine_seated:
+    description: Sitzend an der Maschine, auf die Zehenspitzen drücken. Die sitzende Position beansprucht den Schollenmuskel stärker.
+    name: Wadenheben sitzend (Maschine)
+
+calf_raise_machine_standing:
+    description: Stehend an der Maschine, auf die Zehenspitzen drücken und das Gewicht hochschieben, dann langsam absenken.
+    name: Wadenheben stehend (Maschine)
+
+calf_raise_press:
+    description: An der Beinpresse, Füße am unteren Rand der Plattform, mit den Zehenspitzen drücken.
+    name: Wadenheben an der Beinpresse
+
+chin_up:
+    description: An einer Stange hängend, Handflächen zu sich, den Körper nach oben ziehen. Der Untergriff beansprucht die Bizeps stärker.
+    name: Klimmzüge (Untergriff)
+
+concentration_curl:
+    description: Sitzend, Ellbogen an der Innenseite des Oberschenkels abgestützt, den Arm mit einer Kurzhantel beugen und den Bizeps maximal anspannen.
+    name: Konzentrations-Curl
+
+crunch:
+    description: Auf dem Rücken liegend, Knie gebeugt, den Oberkörper nach vorne einrollen und die Bauchmuskeln anspannen, ohne den unteren Rücken anzuheben.
+    name: Crunch
+
+deadlift:
+    description: Stehend vor einer Langhantel am Boden, das Gewicht hochheben, indem man die Beine streckt und den Rücken gerade hält bis zur vollen Streckung.
+    name: Kreuzheben
+
+decline_bench_press_bar:
+    description: Bankdrücken auf einer Schrägbank (negativ) für die untere Brustmuskulatur.
+    name: Negativ-Bankdrücken (Langhantel)
+
+dips_chest:
+    description: Am Barren, Oberkörper nach vorne geneigt, den Körper absenken und hochdrücken, um die Brustmuskeln anzuvisieren.
+    name: Dips (Brust)
+
+dips_triceps:
+    description: Am Barren, Oberkörper aufrecht und vertikal, den Körper absenken und hochdrücken, um den Trizeps anzuvisieren.
+    name: Dips (Trizeps)
+
+dumbbell_alternating_curl:
+    description: Stehend, abwechselnd einen Arm und dann den anderen beugen, mit einer Handgelenkrotation am Ende der Bewegung.
+    name: Kurzhantel-Curl alternierend
+
+dumbbell_curl_standing:
+    description: Stehend, Kurzhanteln in der Hand, beide Ellbogen gleichzeitig beugen und die Hanteln zu den Schultern führen.
+    name: Kurzhantel-Curl (stehend)
+
+dumbbell_fly_flat:
+    description: Auf einer Flachbank liegend, die Arme mit Kurzhanteln bogenförmig öffnen und über der Brust zusammenführen.
+    name: Kurzhantel-Flys (flach)
+
+dumbbell_fly_incline:
+    description: Flys auf einer Schrägbank für die obere Brustmuskulatur mit einer Öffnungsbewegung.
+    name: Kurzhantel-Flys (Schrägbank)
+
+dumbbell_overhead_triceps_extension:
+    description: Sitzend oder stehend, eine Kurzhantel mit beiden Händen hinter dem Kopf halten und die Arme nach oben strecken.
+    name: Kurzhantel-Trizepsdrücken über Kopf
+
+dumbbell_row:
+    description: Ein Knie und eine Hand auf einer Bank abgestützt, die Kurzhantel zur Hüfte ziehen und das Schulterblatt zusammendrücken.
+    name: Kurzhantel-Rudern (einarmig)
+
+dumbbell_shrug:
+    description: Stehend, Kurzhanteln mit gestreckten Armen seitlich am Körper, die Schultern zu den Ohren hochziehen.
+    name: Kurzhantel-Shrugs
+
+ez_bar_curl:
+    description: Stehend mit einer SZ-Stange, die Ellbogen beugen. Die gebogene Stange reduziert die Belastung der Handgelenke.
+    name: SZ-Stangen-Curl
+
+face_pull:
+    description: Vor einem hohen Kabelzug mit Seil, zum Gesicht ziehen, dabei die Ellbogen nach außen öffnen und die Schulterblätter zusammendrücken.
+    name: Face Pull
+
+farmer_walk:
+    description: Stehend, schwere Kurzhanteln greifen und gehen, dabei eine aufrechte Haltung und einen festen Griff beibehalten.
+    name: Farmer Walk
+
+front_raise:
+    description: Stehend, Kurzhanteln vor den Oberschenkeln, die Arme nach vorne bis auf Schulterhöhe heben.
+    name: Frontheben
+
+glute_bridge:
+    description: Auf dem Rücken liegend, Füße flach auf dem Boden, die Hüfte nach oben drücken und die Gesäßmuskeln anspannen. Bodenversion des Hip Thrust.
+    name: Glute Bridge
+
+glute_kickback_cable:
+    description: Stehend vor einem tiefen Kabelzug, Kabel am Knöchel befestigt, das Bein nach hinten drücken und den Gesäßmuskel anspannen.
+    name: Kabel-Kickback (Gesäß)
+
+good_morning:
+    description: Langhantel auf dem Trapezmuskel, den Oberkörper nach vorne beugen und die Hüfte nach hinten schieben, Beine leicht gebeugt.
+    name: Good Morning
+
+hack_squat:
+    description: An der Hack-Squat-Maschine, Rücken abgestützt, in die Kniebeuge gehen und hochdrücken. Weniger Belastung für den unteren Rücken.
+    name: Hack Squat
+
+hammer_curl:
+    description: Stehend, Kurzhanteln im Neutralgriff (Handflächen zueinander), die Ellbogen beugen. Trainiert den Brachialis und Brachioradialis.
+    name: Hammer-Curl
+
+hip_thrust_bar:
+    description: Rücken auf einer Bank abgestützt, Langhantel auf der Hüfte, die Hüfte nach oben drücken und die Gesäßmuskeln maximal anspannen.
+    name: Hip Thrust (Langhantel)
+
+hip_thrust_machine:
+    description: Gleiche Bewegung wie der Langhantel-Hip-Thrust, aber an einer speziellen Maschine für mehr Stabilität.
+    name: Hip Thrust Maschine
+
+horizontal_cable_row:
+    description: Sitzend vor einem Kabelzug, den Griff zum Bauch ziehen und die Ellbogen nah am Körper halten.
+    name: Horizontales Kabel-Rudern
+
+hyperextension:
+    description: Auf einer 45°-Bank den Oberkörper zum Boden absenken und durch Anspannen der Lendenmuskulatur und Gesäßmuskeln wieder anheben.
+    name: Hyperextensions (45°-Bank)
+
+incline_bench_press_bar:
+    description: Gleiche Bewegung wie Bankdrücken, aber auf einer 30-45° Schrägbank für die obere Brustmuskulatur.
+    name: Schrägbankdrücken (Langhantel)
+
+incline_bench_press_dumbbell:
+    description: Kurzhantel-Drücken auf einer 30-45° Schrägbank für die obere Brustmuskulatur mit größerem Bewegungsumfang.
+    name: Schrägbankdrücken (Kurzhanteln)
+
+lat_pulldown:
+    description: Sitzend vor einem hohen Kabelzug, die Stange zur oberen Brust ziehen und den Rücken anspannen.
+    name: Latzug
+
+lateral_raise:
+    description: Stehend, Kurzhanteln seitlich am Körper, die Arme seitlich bis auf Schulterhöhe heben, dabei eine leichte Ellbogenbeugung beibehalten.
+    name: Seitheben
+
+leg_curl_lying:
+    description: Bäuchlings auf der Bank liegend, die Beine beugen und die Fersen zu den Gesäßmuskeln führen.
+    name: Beinbeuger liegend
+
+leg_curl_seated:
+    description: Sitzend an der Maschine, die Beine unter dem Polster beugen und die Oberschenkelrückseite anspannen.
+    name: Beinbeuger sitzend
+
+leg_extension:
+    description: Sitzend an der Maschine, die Beine nach vorne strecken und den Quadrizeps anspannen. Isolationsübung.
+    name: Beinstrecken
+
+leg_press:
+    description: Sitzend an der Maschine, Füße auf der Plattform, das Gewicht durch Strecken der Beine drücken, ohne die Knie durchzudrücken.
+    name: Beinpresse
+
+lunge:
+    description: Stehend, einen großen Schritt nach vorne machen und beide Knie auf 90° beugen, dann in die Ausgangsposition zurückkehren.
+    name: Ausfallschritte (Langhantel oder Kurzhanteln)
+
+military_press_bar:
+    description: Stehend oder sitzend, die Langhantel von den Schultern über den Kopf drücken bis zur vollen Armstreckung.
+    name: Military Press (Langhantel)
+
+military_press_machine:
+    description: Sitzend an einer Schultermaschine, die Griffe nach oben drücken bis zur Armstreckung.
+    name: Schulterdrücken Maschine
+
+overhead_cable_triceps_extension_bar:
+    description: Vor einem hohen Kabelzug mit gerader Stange, die Arme nach unten strecken und die Ellbogen fest am Körper halten.
+    name: Kabel-Trizepsdrücken (Stange)
+
+overhead_cable_triceps_extension_rope:
+    description: Vor einem hohen Kabelzug mit Seil, die Arme nach unten strecken und die Seilenden am Ende der Bewegung auseinanderziehen.
+    name: Kabel-Trizepsdrücken (Seil)
+
+plank:
+    description: Auf Unterarmen und Zehenspitzen gestützt, den Körper gerade halten und Bauchmuskeln sowie Gesäß anspannen.
+    name: Plank
+
+preacher_curl:
+    description: Arme auf einem schrägen Polster abgestützt, den Ellbogen mit einer Stange oder Kurzhantel beugen. Isoliert den Bizeps ohne Schwung.
+    name: Preacher Curl (Scott-Curl)
+
+pull_up:
+    description: An einer Stange hängend, Handflächen nach vorne, den Körper nach oben ziehen bis das Kinn über der Stange ist.
+    name: Klimmzüge (Obergriff)
+
+pullover:
+    description: Auf einer Bank liegend, eine Kurzhantel mit fast gestreckten Armen hinter den Kopf absenken und über die Brust zurückführen.
+    name: Pullover
+
+push_up:
+    description: Am Boden, Hände schulterbreit, die Brust zum Boden absenken und in die obere Position hochdrücken.
+    name: Liegestütze
+
+push_up_diamond:
+    description: Liegestütze mit eng zusammengeführten Händen in Diamantform unter der Brust, um den Trizeps anzuvisieren.
+    name: Diamant-Liegestütze
+
+rear_delt_fly:
+    description: Vorgebeugt, die Kurzhanteln seitlich anheben und die Schulterblätter zusammendrücken, um die hintere Schulter zu trainieren.
+    name: Reverse Flys
+
+reverse_wrist_curl:
+    description: Sitzend, Unterarme auf den Oberschenkeln abgestützt mit Handflächen nach unten, die Handgelenke mit einer Stange anheben.
+    name: Reverse Handgelenk-Curl
+
+romanian_deadlift:
+    description: Ähnlich wie Kreuzheben mit gestreckten Beinen, aber mit einer leichten Kniebeugung, die während der gesamten Bewegung beibehalten wird.
+    name: Rumänisches Kreuzheben
+
+russian_twist:
+    description: Am Boden sitzend, Oberkörper nach hinten geneigt, Füße angehoben, den Oberkörper mit oder ohne Gewicht von links nach rechts rotieren.
+    name: Russian Twist
+
+sissy_squat:
+    description: Stehend, sich nach hinten lehnen und die Knie beugen, Fersen angehoben, um den Quadrizeps zu isolieren.
+    name: Sissy Squat
+
+skull_crusher:
+    description: Auf einer Bank liegend, die Stange durch Beugen der Ellbogen zur Stirn absenken und dann die Arme strecken.
+    name: Skull Crusher
+
+stiff_leg_deadlift:
+    description: Stehend, die Stange entlang der Beine absenken, dabei die Beine fast gestreckt halten und die Hüfte nach hinten schieben.
+    name: Kreuzheben mit gestreckten Beinen
+
+sumo_squat:
+    description: Kniebeuge mit sehr weiter Fußstellung und nach außen gedrehten Fußspitzen, um die Adduktoren zu trainieren.
+    name: Sumo-Kniebeuge
+
+superman:
+    description: Bäuchlings liegend, gleichzeitig Arme und Beine anheben und dabei Lendenmuskulatur und Gesäß anspannen.
+    name: Superman
+
+suspended_leg_raise:
+    description: An einer Stange hängend, die Beine vor sich anheben und die Bauchmuskeln anspannen. Je gestreckter die Beine, desto intensiver.
+    name: Hängendes Beinheben
+
+triceps_kickback:
+    description: Vorgebeugt, Ellbogen fest am Körper, den Arm nach hinten strecken und den Trizeps anspannen.
+    name: Trizeps-Kickback
+
+walking_lunge:
+    description: Aufeinanderfolgende Ausfallschritte nach vorne, dabei bei jeder Wiederholung zwischen linkem und rechtem Bein wechseln.
+    name: Walking Lunges
+
+wrist_curl:
+    description: Sitzend, Unterarme auf den Oberschenkeln abgestützt mit Handflächen nach oben, die Handgelenke mit einer Stange beugen.
+    name: Handgelenk-Curl

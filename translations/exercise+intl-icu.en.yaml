@@ -1,0 +1,315 @@
+ab_wheel_rollout:
+    description: Kneeling, roll the ab wheel forward while keeping your back straight, then return to the starting position.
+    name: Ab wheel rollout
+
+abduction_machine:
+    description: Seated on the machine, push your thighs apart against resistance to work the abductors and glute medius.
+    name: Machine abductions
+
+adduction_machine:
+    description: Seated on the machine, squeeze your thighs together against resistance to target the adductors.
+    name: Machine adductions
+
+arnold_press:
+    description: Seated, start with dumbbells in front of your face palms facing you, rotate while pressing upward.
+    name: Arnold press
+
+barbell_curl_standing:
+    description: Standing, bar in hand palms up, curl the bar toward your shoulders without moving your torso.
+    name: Barbell curl (standing)
+
+barbell_front_squat:
+    description: Bar resting on the front deltoids, squat down. The front position places more emphasis on quads and abs.
+    name: Front squat
+
+barbell_row:
+    description: Bent over, pull the bar toward your navel while squeezing your shoulder blades, then lower with control.
+    name: Barbell row
+
+barbell_shrug:
+    description: Standing, bar in hand with arms extended, shrug your shoulders as high as possible then lower with control.
+    name: Barbell shrugs
+
+barbell_squat:
+    description: Bar on the traps, bend your knees and hips to lower into a seated position, then push back up through your heels.
+    name: Barbell squat
+
+bench_press_bar:
+    description: Lying on a flat bench, lower the bar to your chest then press upward to full arm extension.
+    name: Bench press (barbell)
+
+bench_press_dumbbell:
+    description: Lying on a flat bench, press the dumbbells upward while bringing your hands closer together at the top.
+    name: Dumbbell bench press
+
+cable_crunch:
+    description: Kneeling facing a high pulley, rope behind your head, curl your torso toward the floor by contracting your abs.
+    name: Cable crunch
+
+cable_curl:
+    description: Facing a low pulley, curl the bar toward your shoulders. The tension remains constant throughout the movement.
+    name: Cable curl
+
+cable_fly:
+    description: Standing between two high pulleys, bring your hands together in front of you in an arc while squeezing your chest.
+    name: Cable fly
+
+cable_lateral_raise:
+    description: Bent forward facing a low pulley, pull the cable outward targeting the rear shoulder.
+    name: Cable rear delt fly
+
+cable_row:
+    description: Seated facing a low pulley, pull the handle toward your stomach while keeping your back straight and squeezing your shoulder blades.
+    name: Seated cable row
+
+cable_woodchop:
+    description: Standing sideways to a pulley, pull the cable diagonally with a torso rotation from high to low or vice versa.
+    name: Cable woodchop
+
+calf_raise_machine_seated:
+    description: Seated on the machine, rise onto your toes. The seated position targets the soleus more.
+    name: Seated calf raise (machine)
+
+calf_raise_machine_standing:
+    description: Standing on the machine, rise onto your toes while pushing the load, then lower slowly.
+    name: Standing calf raise (machine)
+
+calf_raise_press:
+    description: On the leg press, feet at the bottom of the platform, push with your toes.
+    name: Calf raise on leg press
+
+chin_up:
+    description: Hanging from a bar, palms facing you, pull your body upward. The supinated grip engages the biceps more.
+    name: Chin-up
+
+concentration_curl:
+    description: Seated, elbow braced against the inner thigh, curl a dumbbell while maximally contracting the bicep.
+    name: Concentration curl
+
+crunch:
+    description: Lying on the floor, knees bent, curl your torso forward by contracting your abs without lifting your lower back.
+    name: Crunch
+
+deadlift:
+    description: Standing facing a barbell on the floor, lift the load by driving your legs and keeping your back straight to full extension.
+    name: Deadlift
+
+decline_bench_press_bar:
+    description: Bench press on a decline bench to target the lower portion of the chest.
+    name: Decline bench press (barbell)
+
+dips_chest:
+    description: On parallel bars, torso leaning forward, lower your body then push back up targeting the chest.
+    name: Dips (chest)
+
+dips_triceps:
+    description: On parallel bars, torso upright and vertical, lower your body then push back up targeting the triceps.
+    name: Dips (triceps)
+
+dumbbell_alternating_curl:
+    description: Standing, alternate curling one arm then the other with a wrist rotation at the top of the movement.
+    name: Alternating dumbbell curl
+
+dumbbell_curl_standing:
+    description: Standing, dumbbells in hand, curl both arms simultaneously toward your shoulders.
+    name: Dumbbell curl (standing)
+
+dumbbell_fly_flat:
+    description: Lying on a flat bench, open your arms in an arc with dumbbells then bring them back above your chest.
+    name: Dumbbell fly (flat)
+
+dumbbell_fly_incline:
+    description: Fly on an incline bench to target the upper chest with an opening movement.
+    name: Incline dumbbell fly
+
+dumbbell_overhead_triceps_extension:
+    description: Seated or standing, hold one dumbbell with both hands behind your head, extend your arms upward.
+    name: Overhead dumbbell triceps extension
+
+dumbbell_row:
+    description: One knee and one hand on a bench, pull the dumbbell toward your hip while squeezing your shoulder blade.
+    name: Single-arm dumbbell row
+
+dumbbell_shrug:
+    description: Standing, dumbbells in hand with arms extended along your body, shrug your shoulders toward your ears.
+    name: Dumbbell shrugs
+
+ez_bar_curl:
+    description: Standing with an EZ bar, curl your elbows. The angled bar reduces wrist strain.
+    name: EZ bar curl
+
+face_pull:
+    description: Facing a high pulley with a rope, pull toward your face while flaring your elbows outward and squeezing your shoulder blades.
+    name: Face pull
+
+farmer_walk:
+    description: Standing, grab heavy dumbbells and walk while maintaining an upright posture and firm grip.
+    name: Farmer walk
+
+front_raise:
+    description: Standing, dumbbells in front of your thighs, raise your arms forward to shoulder height.
+    name: Front raise
+
+glute_bridge:
+    description: Lying on the floor, feet flat, push your hips upward while contracting your glutes. Floor version of the hip thrust.
+    name: Glute bridge
+
+glute_kickback_cable:
+    description: Standing facing a low pulley, cable attached to your ankle, push your leg backward while contracting the glute.
+    name: Cable glute kickback
+
+good_morning:
+    description: Bar on the traps, hinge your torso forward while pushing your hips back, legs slightly bent.
+    name: Good morning
+
+hack_squat:
+    description: On the hack squat machine, back supported, squat down and push back up. Less stress on the lower back.
+    name: Hack squat
+
+hammer_curl:
+    description: Standing, dumbbells in neutral grip (palms facing each other), curl your elbows. Targets the brachialis and brachioradialis.
+    name: Hammer curl
+
+hip_thrust_bar:
+    description: Back resting on a bench, barbell on your hips, push your hips upward while maximally contracting your glutes.
+    name: Hip thrust (barbell)
+
+hip_thrust_machine:
+    description: Same movement as the barbell hip thrust but on a dedicated machine for more stability.
+    name: Hip thrust machine
+
+horizontal_cable_row:
+    description: Seated facing a pulley, pull the handle toward your stomach while keeping your elbows close to your body.
+    name: Horizontal cable row
+
+hyperextension:
+    description: On a 45° bench, lower your torso toward the floor then raise it by contracting your lower back and glutes.
+    name: Hyperextension (45° bench)
+
+incline_bench_press_bar:
+    description: Same movement as the bench press but on a 30-45° incline bench to target the upper chest.
+    name: Incline bench press (barbell)
+
+incline_bench_press_dumbbell:
+    description: Dumbbell press on a 30-45° incline bench to target the upper chest with greater range of motion.
+    name: Incline dumbbell bench press
+
+lat_pulldown:
+    description: Seated facing a high pulley, pull the bar to the top of your chest while contracting your back.
+    name: Lat pulldown
+
+lateral_raise:
+    description: Standing, dumbbells at your sides, raise your arms out to the sides to shoulder height while keeping a slight elbow bend.
+    name: Lateral raise
+
+leg_curl_lying:
+    description: Lying face down on the bench, curl your legs to bring your heels toward your glutes.
+    name: Lying leg curl
+
+leg_curl_seated:
+    description: Seated on the machine, curl your legs under the pad while contracting your hamstrings.
+    name: Seated leg curl
+
+leg_extension:
+    description: Seated on the machine, extend your legs forward while contracting your quads. An isolation exercise.
+    name: Leg extension
+
+leg_press:
+    description: Seated on the machine, feet on the platform, push the load by extending your legs without locking your knees.
+    name: Leg press
+
+lunge:
+    description: Standing, take a large step forward and bend both knees to 90° then return to starting position.
+    name: Lunges (barbell or dumbbells)
+
+military_press_bar:
+    description: Standing or seated, press the bar overhead from the shoulders to full arm extension.
+    name: Military press (barbell)
+
+military_press_machine:
+    description: Seated on a shoulder press machine, push the handles upward to full arm extension.
+    name: Machine shoulder press
+
+overhead_cable_triceps_extension_bar:
+    description: Facing a high pulley with a straight bar, extend your arms downward while keeping your elbows locked to your body.
+    name: Cable triceps pushdown (bar)
+
+overhead_cable_triceps_extension_rope:
+    description: Facing a high pulley with a rope, extend your arms downward while spreading the rope ends at the bottom of the movement.
+    name: Cable triceps pushdown (rope)
+
+plank:
+    description: Supported on your forearms and toes, keep your body aligned while contracting your abs and glutes.
+    name: Plank
+
+preacher_curl:
+    description: Arms resting on an inclined pad, curl with a bar or dumbbell. Isolates the bicep by eliminating momentum.
+    name: Preacher curl
+
+pull_up:
+    description: Hanging from a bar, palms facing away, pull your body upward until your chin clears the bar.
+    name: Pull-up
+
+pullover:
+    description: Lying on a bench, lower a dumbbell behind your head with nearly straight arms then bring it back above your chest.
+    name: Pullover
+
+push_up:
+    description: On the floor, hands shoulder-width apart, lower your chest to the floor then push back up to the top position.
+    name: Push-up
+
+push_up_diamond:
+    description: Push-ups with hands close together forming a diamond shape under the chest to target the triceps.
+    name: Diamond push-up
+
+rear_delt_fly:
+    description: Bent forward, raise the dumbbells out to the sides while squeezing your shoulder blades to target the rear delts.
+    name: Rear delt fly
+
+reverse_wrist_curl:
+    description: Seated, forearms resting on your thighs palms down, raise your wrists with a bar.
+    name: Reverse wrist curl
+
+romanian_deadlift:
+    description: Similar to the stiff-leg deadlift but with a slight knee bend maintained throughout the movement.
+    name: Romanian deadlift
+
+russian_twist:
+    description: Seated on the floor, torso leaning back, feet off the ground, rotate your torso side to side with or without weight.
+    name: Russian twist
+
+sissy_squat:
+    description: Standing, lean back while bending your knees, heels raised, to isolate the quads.
+    name: Sissy squat
+
+skull_crusher:
+    description: Lying on a bench, lower the bar toward your forehead by bending your elbows then extend your arms.
+    name: Skull crusher
+
+stiff_leg_deadlift:
+    description: Standing, lower the bar along your legs while keeping your legs nearly straight, pushing your hips back.
+    name: Stiff-leg deadlift
+
+sumo_squat:
+    description: Squat with a very wide foot stance and toes pointed outward to target the adductors.
+    name: Sumo squat
+
+superman:
+    description: Lying face down, simultaneously raise your arms and legs while contracting your lower back and glutes.
+    name: Superman
+
+suspended_leg_raise:
+    description: Hanging from a bar, raise your legs in front of you by contracting your abs. The straighter the legs, the more intense.
+    name: Hanging leg raise
+
+triceps_kickback:
+    description: Bent forward, elbow locked to your body, extend your arm backward while contracting the tricep.
+    name: Triceps kickback
+
+walking_lunge:
+    description: Perform consecutive lunges stepping forward with each rep, alternating left and right legs.
+    name: Walking lunges
+
+wrist_curl:
+    description: Seated, forearms resting on your thighs palms up, curl your wrists with a bar.
+    name: Wrist curl
