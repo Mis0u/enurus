@@ -29,7 +29,7 @@ readonly class UserRegistrationService
     private function sendRegistrationEmail(User $user, string $locale): void
     {
         $mail = $this->emailService->createEmail(
-            (string) $user->getEmail(),
+            $user->email,
             $this->translator->trans('registration.email.welcome', [
                 'brand' => $this->translator->trans('name', [], 'brand'),
             ], 'security'),

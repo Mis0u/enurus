@@ -59,10 +59,10 @@ class RegistrationControllerTest extends WebTestCase
     {
         $user = $this->fillField($gender, 'no_bot@test.com', 5, '/fr/tableau-de-bord');
         $this->assertNotNull($user);
-        $this->assertInstanceOf(\DateTimeImmutable::class, $user->getLastLogin());
-        $this->assertSame($user->getLastLogin()->format('Y-m-d'), now()->format('Y-m-d'));
-        $this->assertSame($user->getGender(), $gender);
-        $this->assertSame('fr', $user->getLocale());
+        $this->assertInstanceOf(\DateTimeImmutable::class, $user->lastLogin);
+        $this->assertSame($user->lastLogin->format('Y-m-d'), now()->format('Y-m-d'));
+        $this->assertSame($user->gender, $gender);
+        $this->assertSame('fr', $user->locale);
     }
 
     public function testRedirectToDashboardIfUserIsAuthenticated(): void

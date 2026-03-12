@@ -75,11 +75,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, nullable: false)]
     #[NotBlank]
     #[Email]
-    private string $email;
+    public string $email {
+        get {
+            return $this->email;
+        }
+        set(string $email) {
+            $this->email = $email;
+        }
+    }
 
     #[ORM\Column(length: 10, nullable: false)]
     #[NotBlank]
-    private string $gender;
+    public string $gender {
+        get {
+            return $this->gender;
+        }
+        set(string $gender) {
+            $this->gender = $gender;
+        }
+    }
+
+    #[ORM\Column]
+    #[Ignore]
+    public string $password {
+        set(#[\SensitiveParameter] string $password) {
+            $this->password = $password;
+        }
+    }
+
+    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE)]
+    public \DateTimeImmutable $lastLogin {
+        get {
+            return $this->lastLogin;
+        }
+        set(\DateTimeImmutable $lastLogin) {
+            $this->lastLogin = $lastLogin;
+        }
+    }
+
+    #[ORM\Column(type: Types::STRING, length: 5, nullable: false)]
+    public string $locale {
+        get {
+            return $this->locale;
+        }
+        set(string $locale) {
+            $this->locale = $locale;
+        }
+    }
+
+    #[ORM\Column(type: Types::STRING, length: 25, nullable: false)]
+    #[NotBlank]
+    #[Length(min: 3, max: 20, minMessage: 'user.nickname.length.min', maxMessage: 'user.nickname.length.max')]
+    public string $nickname {
+        get {
+            return $this->nickname;
+        }
+        set(string $nickname) {
+            $this->nickname = $nickname;
+        }
+    }
 
     /**
      * @var string[] $roles
@@ -87,26 +141,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\Column]
-    #[Ignore]
-    private string $password;
-
-    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE)]
-    private \DateTimeImmutable $lastLogin;
-
-    #[ORM\Column(type: Types::STRING, length: 5, nullable: false)]
-    private string $locale = LocaleAllowedEnum::EN->value;
-
-    #[ORM\Column(type: Types::STRING, length: 25, nullable: false)]
-    #[NotBlank]
-    #[Length(min: 3, max: 20, minMessage: 'user.nickname.length.min', maxMessage: 'user.nickname.length.max')]
-    private string $nickname;
-
     public function __construct()
     {
         $this->exercises = new ArrayCollection();
         $this->workouts = new ArrayCollection();
         $this->routines = new ArrayCollection();
+        $this->locale = LocaleAllowedEnum::EN->value;
     }
 
     /**
@@ -118,18 +158,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
 
         return $data;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
     }
 
     /**
@@ -167,72 +195,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(#[\SensitiveParameter] string $password): static
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
     #[\Deprecated]
     public function eraseCredentials(): void
     {
         // @deprecated, to be removed when upgrading to Symfony 8
     }
 
-    public function getGender(): string
+    public function getPassword(): ?string
     {
-        return $this->gender;
-    }
-
-    public function setGender(string $gender): static
-    {
-        $this->gender = $gender;
-
-        return $this;
-    }
-
-    public function getLastLogin(): \DateTimeImmutable
-    {
-        return $this->lastLogin;
-    }
-
-    public function setLastLogin(\DateTimeImmutable $lastLogin): static
-    {
-        $this->lastLogin = $lastLogin;
-
-        return $this;
-    }
-
-    public function getLocale(): string
-    {
-        return $this->locale;
-    }
-
-    public function setLocale(string $locale): static
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    public function getNickname(): string
-    {
-        return $this->nickname;
-    }
-
-    public function setNickname(string $nickname): static
-    {
-        $this->nickname = $nickname;
-
-        return $this;
+        return $this->password;
     }
 }

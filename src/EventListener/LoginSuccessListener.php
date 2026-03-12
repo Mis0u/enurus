@@ -33,7 +33,7 @@ final readonly class LoginSuccessListener
         /** @var User $user */
         $user = $event->getUser();
 
-        $user->setLastLogin(now());
+        $user->lastLogin = now();
         $this->userService->save($user);
     }
 
