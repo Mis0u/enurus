@@ -1,0 +1,867 @@
+[
+  {
+    "name": "bench_press_bar.name",
+    "description": "bench_press_bar.description",
+    "isPublic": true,
+    "primary": [
+      "name.chest"
+    ],
+    "secondary": [
+      "name.triceps",
+      "name.anterior_deltoid"
+    ]
+  },
+  {
+    "name": "incline_bench_press_bar.name",
+    "description": "incline_bench_press_bar.description",
+    "isPublic": true,
+    "primary": [
+      "name.chest"
+    ],
+    "secondary": [
+      "name.triceps",
+      "name.anterior_deltoid"
+    ]
+  },
+  {
+    "name": "decline_bench_press_bar.name",
+    "description": "decline_bench_press_bar.description",
+    "isPublic": true,
+    "primary": [
+      "name.chest"
+    ],
+    "secondary": [
+      "name.triceps"
+    ]
+  },
+  {
+    "name": "bench_press_dumbbell.name",
+    "description": "bench_press_dumbbell.description",
+    "isPublic": true,
+    "primary": [
+      "name.chest"
+    ],
+    "secondary": [
+      "name.triceps",
+      "name.anterior_deltoid"
+    ]
+  },
+  {
+    "name": "incline_bench_press_dumbbell.name",
+    "description": "incline_bench_press_dumbbell.description",
+    "isPublic": true,
+    "primary": [
+      "name.chest"
+    ],
+    "secondary": [
+      "name.triceps",
+      "name.anterior_deltoid"
+    ]
+  },
+  {
+    "name": "dumbbell_fly_flat.name",
+    "description": "dumbbell_fly_flat.description",
+    "isPublic": true,
+    "primary": [
+      "name.chest"
+    ],
+    "secondary": [
+      "name.anterior_deltoid"
+    ]
+  },
+  {
+    "name": "dumbbell_fly_incline.name",
+    "description": "dumbbell_fly_incline.description",
+    "isPublic": true,
+    "primary": [
+      "name.chest"
+    ],
+    "secondary": [
+      "name.anterior_deltoid"
+    ]
+  },
+  {
+    "name": "cable_fly.name",
+    "description": "cable_fly.description",
+    "isPublic": true,
+    "primary": [
+      "name.chest"
+    ],
+    "secondary": [
+      "name.anterior_deltoid"
+    ]
+  },
+  {
+    "name": "dips_chest.name",
+    "description": "dips_chest.description",
+    "isPublic": true,
+    "primary": [
+      "name.chest"
+    ],
+    "secondary": [
+      "name.triceps",
+      "name.anterior_deltoid"
+    ]
+  },
+  {
+    "name": "push_up.name",
+    "description": "push_up.description",
+    "isPublic": true,
+    "primary": [
+      "name.chest"
+    ],
+    "secondary": [
+      "name.triceps",
+      "name.anterior_deltoid"
+    ]
+  },
+  {
+    "name": "pullover.name",
+    "description": "pullover.description",
+    "isPublic": true,
+    "primary": [
+      "name.chest"
+    ],
+    "secondary": [
+      "name.lats",
+      "name.triceps"
+    ]
+  },
+  {
+    "name": "pull_up.name",
+    "description": "pull_up.description",
+    "isPublic": true,
+    "primary": [
+      "name.lats"
+    ],
+    "secondary": [
+      "name.biceps",
+      "name.rhomboids"
+    ]
+  },
+  {
+    "name": "chin_up.name",
+    "description": "chin_up.description",
+    "isPublic": true,
+    "primary": [
+      "name.lats"
+    ],
+    "secondary": [
+      "name.biceps"
+    ]
+  },
+  {
+    "name": "barbell_row.name",
+    "description": "barbell_row.description",
+    "isPublic": true,
+    "primary": [
+      "name.lats"
+    ],
+    "secondary": [
+      "name.biceps",
+      "name.rhomboids",
+      "name.traps"
+    ]
+  },
+  {
+    "name": "dumbbell_row.name",
+    "description": "dumbbell_row.description",
+    "isPublic": true,
+    "primary": [
+      "name.lats"
+    ],
+    "secondary": [
+      "name.biceps",
+      "name.rhomboids"
+    ]
+  },
+  {
+    "name": "cable_row.name",
+    "description": "cable_row.description",
+    "isPublic": true,
+    "primary": [
+      "name.lats"
+    ],
+    "secondary": [
+      "name.biceps",
+      "name.rhomboids"
+    ]
+  },
+  {
+    "name": "lat_pulldown.name",
+    "description": "lat_pulldown.description",
+    "isPublic": true,
+    "primary": [
+      "name.lats"
+    ],
+    "secondary": [
+      "name.biceps"
+    ]
+  },
+  {
+    "name": "horizontal_cable_row.name",
+    "description": "horizontal_cable_row.description",
+    "isPublic": true,
+    "primary": [
+      "name.lats"
+    ],
+    "secondary": [
+      "name.biceps",
+      "name.rhomboids"
+    ]
+  },
+  {
+    "name": "deadlift.name",
+    "description": "deadlift.description",
+    "isPublic": true,
+    "primary": [
+      "name.lats",
+      "name.lower_back"
+    ],
+    "secondary": [
+      "name.glutes",
+      "name.hamstrings",
+      "name.traps"
+    ]
+  },
+  {
+    "name": "barbell_shrug.name",
+    "description": "barbell_shrug.description",
+    "isPublic": true,
+    "primary": [
+      "name.traps"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "dumbbell_shrug.name",
+    "description": "dumbbell_shrug.description",
+    "isPublic": true,
+    "primary": [
+      "name.traps"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "face_pull.name",
+    "description": "face_pull.description",
+    "isPublic": true,
+    "primary": [
+      "name.posterior_deltoid",
+      "name.traps"
+    ],
+    "secondary": [
+      "name.rhomboids"
+    ]
+  },
+  {
+    "name": "military_press_bar.name",
+    "description": "military_press_bar.description",
+    "isPublic": true,
+    "primary": [
+      "name.anterior_deltoid",
+      "name.lateral_deltoid"
+    ],
+    "secondary": [
+      "name.triceps"
+    ]
+  },
+  {
+    "name": "arnold_press.name",
+    "description": "arnold_press.description",
+    "isPublic": true,
+    "primary": [
+      "name.anterior_deltoid",
+      "name.lateral_deltoid"
+    ],
+    "secondary": [
+      "name.triceps"
+    ]
+  },
+  {
+    "name": "lateral_raise.name",
+    "description": "lateral_raise.description",
+    "isPublic": true,
+    "primary": [
+      "name.lateral_deltoid"
+    ],
+    "secondary": [
+      "name.traps"
+    ]
+  },
+  {
+    "name": "front_raise.name",
+    "description": "front_raise.description",
+    "isPublic": true,
+    "primary": [
+      "name.anterior_deltoid"
+    ],
+    "secondary": [
+      "name.chest"
+    ]
+  },
+  {
+    "name": "rear_delt_fly.name",
+    "description": "rear_delt_fly.description",
+    "isPublic": true,
+    "primary": [
+      "name.posterior_deltoid"
+    ],
+    "secondary": [
+      "name.rhomboids",
+      "name.traps"
+    ]
+  },
+  {
+    "name": "cable_lateral_raise.name",
+    "description": "cable_lateral_raise.description",
+    "isPublic": true,
+    "primary": [
+      "name.posterior_deltoid"
+    ],
+    "secondary": [
+      "name.rhomboids"
+    ]
+  },
+  {
+    "name": "military_press_machine.name",
+    "description": "military_press_machine.description",
+    "isPublic": true,
+    "primary": [
+      "name.anterior_deltoid",
+      "name.lateral_deltoid"
+    ],
+    "secondary": [
+      "name.triceps"
+    ]
+  },
+  {
+    "name": "barbell_curl_standing.name",
+    "description": "barbell_curl_standing.description",
+    "isPublic": true,
+    "primary": [
+      "name.biceps"
+    ],
+    "secondary": [
+      "name.forearms"
+    ]
+  },
+  {
+    "name": "dumbbell_curl_standing.name",
+    "description": "dumbbell_curl_standing.description",
+    "isPublic": true,
+    "primary": [
+      "name.biceps"
+    ],
+    "secondary": [
+      "name.forearms"
+    ]
+  },
+  {
+    "name": "dumbbell_alternating_curl.name",
+    "description": "dumbbell_alternating_curl.description",
+    "isPublic": true,
+    "primary": [
+      "name.biceps"
+    ],
+    "secondary": [
+      "name.forearms"
+    ]
+  },
+  {
+    "name": "hammer_curl.name",
+    "description": "hammer_curl.description",
+    "isPublic": true,
+    "primary": [
+      "name.biceps"
+    ],
+    "secondary": [
+      "name.forearms"
+    ]
+  },
+  {
+    "name": "ez_bar_curl.name",
+    "description": "ez_bar_curl.description",
+    "isPublic": true,
+    "primary": [
+      "name.biceps"
+    ],
+    "secondary": [
+      "name.forearms"
+    ]
+  },
+  {
+    "name": "concentration_curl.name",
+    "description": "concentration_curl.description",
+    "isPublic": true,
+    "primary": [
+      "name.biceps"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "preacher_curl.name",
+    "description": "preacher_curl.description",
+    "isPublic": true,
+    "primary": [
+      "name.biceps"
+    ],
+    "secondary": [
+      "name.forearms"
+    ]
+  },
+  {
+    "name": "cable_curl.name",
+    "description": "cable_curl.description",
+    "isPublic": true,
+    "primary": [
+      "name.biceps"
+    ],
+    "secondary": [
+      "name.forearms"
+    ]
+  },
+  {
+    "name": "dips_triceps.name",
+    "description": "dips_triceps.description",
+    "isPublic": true,
+    "primary": [
+      "name.triceps"
+    ],
+    "secondary": [
+      "name.chest",
+      "name.anterior_deltoid"
+    ]
+  },
+  {
+    "name": "overhead_cable_triceps_extension_rope.name",
+    "description": "overhead_cable_triceps_extension_rope.description",
+    "isPublic": true,
+    "primary": [
+      "name.triceps"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "overhead_cable_triceps_extension_bar.name",
+    "description": "overhead_cable_triceps_extension_bar.description",
+    "isPublic": true,
+    "primary": [
+      "name.triceps"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "skull_crusher.name",
+    "description": "skull_crusher.description",
+    "isPublic": true,
+    "primary": [
+      "name.triceps"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "triceps_kickback.name",
+    "description": "triceps_kickback.description",
+    "isPublic": true,
+    "primary": [
+      "name.triceps"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "dumbbell_overhead_triceps_extension.name",
+    "description": "dumbbell_overhead_triceps_extension.description",
+    "isPublic": true,
+    "primary": [
+      "name.triceps"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "push_up_diamond.name",
+    "description": "push_up_diamond.description",
+    "isPublic": true,
+    "primary": [
+      "name.triceps"
+    ],
+    "secondary": [
+      "name.chest"
+    ]
+  },
+  {
+    "name": "wrist_curl.name",
+    "description": "wrist_curl.description",
+    "isPublic": true,
+    "primary": [
+      "name.forearms"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "reverse_wrist_curl.name",
+    "description": "reverse_wrist_curl.description",
+    "isPublic": true,
+    "primary": [
+      "name.forearms"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "farmer_walk.name",
+    "description": "farmer_walk.description",
+    "isPublic": true,
+    "primary": [
+      "name.forearms"
+    ],
+    "secondary": [
+      "name.traps",
+      "name.abs"
+    ]
+  },
+  {
+    "name": "barbell_squat.name",
+    "description": "barbell_squat.description",
+    "isPublic": true,
+    "primary": [
+      "name.quads"
+    ],
+    "secondary": [
+      "name.glutes",
+      "name.hamstrings",
+      "name.lower_back"
+    ]
+  },
+  {
+    "name": "barbell_front_squat.name",
+    "description": "barbell_front_squat.description",
+    "isPublic": true,
+    "primary": [
+      "name.quads"
+    ],
+    "secondary": [
+      "name.glutes",
+      "name.abs"
+    ]
+  },
+  {
+    "name": "leg_press.name",
+    "description": "leg_press.description",
+    "isPublic": true,
+    "primary": [
+      "name.quads"
+    ],
+    "secondary": [
+      "name.glutes"
+    ]
+  },
+  {
+    "name": "leg_extension.name",
+    "description": "leg_extension.description",
+    "isPublic": true,
+    "primary": [
+      "name.quads"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "lunge.name",
+    "description": "lunge.description",
+    "isPublic": true,
+    "primary": [
+      "name.quads"
+    ],
+    "secondary": [
+      "name.glutes",
+      "name.hamstrings"
+    ]
+  },
+  {
+    "name": "walking_lunge.name",
+    "description": "walking_lunge.description",
+    "isPublic": true,
+    "primary": [
+      "name.quads"
+    ],
+    "secondary": [
+      "name.glutes",
+      "name.hamstrings"
+    ]
+  },
+  {
+    "name": "hack_squat.name",
+    "description": "hack_squat.description",
+    "isPublic": true,
+    "primary": [
+      "name.quads"
+    ],
+    "secondary": [
+      "name.glutes"
+    ]
+  },
+  {
+    "name": "sissy_squat.name",
+    "description": "sissy_squat.description",
+    "isPublic": true,
+    "primary": [
+      "name.quads"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "leg_curl_lying.name",
+    "description": "leg_curl_lying.description",
+    "isPublic": true,
+    "primary": [
+      "name.hamstrings"
+    ],
+    "secondary": [
+      "name.calves"
+    ]
+  },
+  {
+    "name": "leg_curl_seated.name",
+    "description": "leg_curl_seated.description",
+    "isPublic": true,
+    "primary": [
+      "name.hamstrings"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "stiff_leg_deadlift.name",
+    "description": "stiff_leg_deadlift.description",
+    "isPublic": true,
+    "primary": [
+      "name.hamstrings"
+    ],
+    "secondary": [
+      "name.glutes",
+      "name.lower_back"
+    ]
+  },
+  {
+    "name": "romanian_deadlift.name",
+    "description": "romanian_deadlift.description",
+    "isPublic": true,
+    "primary": [
+      "name.hamstrings"
+    ],
+    "secondary": [
+      "name.glutes",
+      "name.lower_back"
+    ]
+  },
+  {
+    "name": "good_morning.name",
+    "description": "good_morning.description",
+    "isPublic": true,
+    "primary": [
+      "name.hamstrings"
+    ],
+    "secondary": [
+      "name.lower_back",
+      "name.glutes"
+    ]
+  },
+  {
+    "name": "hip_thrust_bar.name",
+    "description": "hip_thrust_bar.description",
+    "isPublic": true,
+    "primary": [
+      "name.glutes"
+    ],
+    "secondary": [
+      "name.hamstrings"
+    ]
+  },
+  {
+    "name": "hip_thrust_machine.name",
+    "description": "hip_thrust_machine.description",
+    "isPublic": true,
+    "primary": [
+      "name.glutes"
+    ],
+    "secondary": [
+      "name.hamstrings"
+    ]
+  },
+  {
+    "name": "glute_bridge.name",
+    "description": "glute_bridge.description",
+    "isPublic": true,
+    "primary": [
+      "name.glutes"
+    ],
+    "secondary": [
+      "name.hamstrings"
+    ]
+  },
+  {
+    "name": "glute_kickback_cable.name",
+    "description": "glute_kickback_cable.description",
+    "isPublic": true,
+    "primary": [
+      "name.glutes"
+    ],
+    "secondary": [
+      "name.hamstrings"
+    ]
+  },
+  {
+    "name": "abduction_machine.name",
+    "description": "abduction_machine.description",
+    "isPublic": true,
+    "primary": [
+      "name.abductors"
+    ],
+    "secondary": [
+      "name.glutes"
+    ]
+  },
+  {
+    "name": "adduction_machine.name",
+    "description": "adduction_machine.description",
+    "isPublic": true,
+    "primary": [
+      "name.adductors"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "sumo_squat.name",
+    "description": "sumo_squat.description",
+    "isPublic": true,
+    "primary": [
+      "name.adductors"
+    ],
+    "secondary": [
+      "name.quads",
+      "name.glutes"
+    ]
+  },
+  {
+    "name": "calf_raise_machine_standing.name",
+    "description": "calf_raise_machine_standing.description",
+    "isPublic": true,
+    "primary": [
+      "name.calves"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "calf_raise_machine_seated.name",
+    "description": "calf_raise_machine_seated.description",
+    "isPublic": true,
+    "primary": [
+      "name.calves"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "calf_raise_press.name",
+    "description": "calf_raise_press.description",
+    "isPublic": true,
+    "primary": [
+      "name.calves"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "crunch.name",
+    "description": "crunch.description",
+    "isPublic": true,
+    "primary": [
+      "name.abs"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "cable_crunch.name",
+    "description": "cable_crunch.description",
+    "isPublic": true,
+    "primary": [
+      "name.abs"
+    ],
+    "secondary": []
+  },
+  {
+    "name": "suspended_leg_raise.name",
+    "description": "suspended_leg_raise.description",
+    "isPublic": true,
+    "primary": [
+      "name.abs"
+    ],
+    "secondary": [
+      "name.obliques"
+    ]
+  },
+  {
+    "name": "plank.name",
+    "description": "plank.description",
+    "isPublic": true,
+    "primary": [
+      "name.abs"
+    ],
+    "secondary": [
+      "name.lower_back",
+      "name.obliques"
+    ]
+  },
+  {
+    "name": "russian_twist.name",
+    "description": "russian_twist.description",
+    "isPublic": true,
+    "primary": [
+      "name.obliques"
+    ],
+    "secondary": [
+      "name.abs"
+    ]
+  },
+  {
+    "name": "cable_woodchop.name",
+    "description": "cable_woodchop.description",
+    "isPublic": true,
+    "primary": [
+      "name.obliques"
+    ],
+    "secondary": [
+      "name.abs"
+    ]
+  },
+  {
+    "name": "ab_wheel_rollout.name",
+    "description": "ab_wheel_rollout.description",
+    "isPublic": true,
+    "primary": [
+      "name.abs"
+    ],
+    "secondary": [
+      "name.lower_back"
+    ]
+  },
+  {
+    "name": "hyperextension.name",
+    "description": "hyperextension.description",
+    "isPublic": true,
+    "primary": [
+      "name.lower_back"
+    ],
+    "secondary": [
+      "name.glutes",
+      "name.hamstrings"
+    ]
+  },
+  {
+    "name": "superman.name",
+    "description": "superman.description",
+    "isPublic": true,
+    "primary": [
+      "name.lower_back"
+    ],
+    "secondary": [
+      "name.glutes"
+    ]
+  }
+]

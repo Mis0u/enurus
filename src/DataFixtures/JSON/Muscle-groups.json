@@ -1,0 +1,21 @@
+[
+    { "name": "name.chest",               "position": 1  },
+    { "name": "name.lats",                "position": 2  },
+    { "name": "name.traps",               "position": 3  },
+    { "name": "name.rhomboids",           "position": 4  },
+    { "name": "name.lower_back",          "position": 5  },
+    { "name": "name.anterior_deltoid",    "position": 6  },
+    { "name": "name.lateral_deltoid",     "position": 7  },
+    { "name": "name.posterior_deltoid",   "position": 8  },
+    { "name": "name.biceps",              "position": 9  },
+    { "name": "name.triceps",             "position": 10 },
+    { "name": "name.forearms",            "position": 11 },
+    { "name": "name.abs",                 "position": 12 },
+    { "name": "name.obliques",            "position": 13 },
+    { "name": "name.glutes",              "position": 14 },
+    { "name": "name.quads",               "position": 15 },
+    { "name": "name.hamstrings",          "position": 16 },
+    { "name": "name.adductors",           "position": 17 },
+    { "name": "name.abductors",           "position": 18 },
+    { "name": "name.calves",              "position": 19 }
+]

@@ -23,18 +23,18 @@ class UserFixtures extends Fixture
         for ($i = 0; 40 > $i; ++$i) {
             $user = new User();
             $lastLogin = now(\sprintf('+%d day +%d hours', $i, $i));
-            $user->setEmail(\sprintf('user-fixture-%s@test.com', $i))
-                ->setNickname(\sprintf('user-fixture-%s', $i))
-                ->setCreatedBy($user)
-                ->setLocale(LocaleAllowedEnum::FR->value)
-                ->setLastLogin($lastLogin);
+            $user->email = \sprintf('user-fixture-%s@test.com', $i);
+            $user->nickname = \sprintf('user-fixture-%s', $i);
+            $user->createdBy = $user;
+            $user->locale = LocaleAllowedEnum::FR->value;
+            $user->lastLogin = $lastLogin;
             if (0 === $i % 5) {
-                $user->setGender('female');
+                $user->gender = 'female';
             } else {
-                $user->setGender('male');
+                $user->gender = 'male';
             }
             $password = $this->passwordHasher->hashPassword($user, 'pass_1234');
-            $user->setPassword($password);
+            $user->password = $password;
             $manager->persist($user);
         }
 
