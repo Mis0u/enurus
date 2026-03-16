@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'dashboard.title'|trans({}, 'navigation') }} — {{ 'name'|trans({}, 'brand') }}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
@@ -14,7 +13,7 @@
     {% endblock %}
     <main class="flex-1 overflow-hidden flex flex-col relative max-md:pb-20">
         {% block topbar %}
-            {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' %}
+            {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {'title': 'dashboard.title'|trans({}, 'navigation'), 'subtitle': user.nickname|formatInitials} %}
         {% endblock %}
 
         {% block state %}{% endblock %}

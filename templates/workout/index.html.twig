@@ -1,0 +1,21 @@
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/workout.css') }}">
+{% endblock %}
+
+{% block title %}{{ 'workout.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {'title': 'workout.title'|trans({}, 'navigation'), 'subtitle': user.nickname|formatInitials} %}
+{% endblock %}
+{% block state %}
+    <div class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]">
+        {{ form_start(form) }}
+        {% include 'workout/_config-bar.html.twig' %}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
