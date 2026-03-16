@@ -1,0 +1,4 @@
+.session-type-btn.active {
+    background-color: var(--color-rose-ft);
+    color: white;
+}
