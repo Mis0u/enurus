@@ -11,5 +11,19 @@ dashboard:
     setting: Settings
     title: Dashboard
     workout: Workouts
+
+workout:
+    date: Date
+    duration_optional: Duration (Optional)
+    duration_placeholder: Duration (min)
+    routine:
+        select: Choose your routine
+        title: Routine
+    title: Log your workout
+    type:
+        free: Free workout
+        routine: Choose a routine
+        title: Workout type
+
 footer:
     copyright: "© {year} {brand}. All rights reserved."

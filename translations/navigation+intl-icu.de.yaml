@@ -11,5 +11,19 @@ dashboard:
     setting: Einstellungen
     title: Übersicht
     workout: Trainings
+
+workout:
+    date: Datum
+    duration_optional: Dauer (Optional)
+    duration_placeholder: Dauer (Min)
+    routine:
+        select: Wähle deine Routine
+        title: Routine
+    title: Erfasse dein Training
+    type:
+        free: Freies Training
+        routine: Routine wählen
+        title: Trainingsart
+
 footer:
     copyright: "© {year} {brand}. Alle Rechte vorbehalten."

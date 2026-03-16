@@ -11,5 +11,19 @@ dashboard:
     setting: Definições
     title: Painel
     workout: Treinos
+
+workout:
+    date: Data
+    duration_optional: Duração (Opcional)
+    duration_placeholder: Duração (min)
+    routine:
+        select: Escolhe a tua rotina
+        title: Rotina
+    title: Regista o teu treino
+    type:
+        free: Treino livre
+        routine: Escolher uma rotina
+        title: Tipo de treino
+
 footer:
     copyright: "© {year} {brand}. Todos os direitos reservados."

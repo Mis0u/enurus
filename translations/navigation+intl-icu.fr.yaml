@@ -11,5 +11,19 @@ dashboard:
     setting: Réglages
     title: Tableau de bord
     workout: Séances
+
+workout:
+    date: Date
+    duration_optional: Durée (Optionnel)
+    duration_placeholder: Durée (min)
+    routine:
+        select: Choisissez votre routine
+        title: Routine
+    title: Enregistre ta séance
+    type:
+        free: Séance libre
+        routine: Choisir une routine
+        title: Type de séance
+
 footer:
     copyright: "© {year} {brand}. Tous droits réservés."

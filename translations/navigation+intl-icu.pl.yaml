@@ -11,5 +11,19 @@ dashboard:
     setting: Ustawienia
     title: Panel
     workout: Treningi
+
+workout:
+    date: Data
+    duration_optional: Czas trwania (Opcjonalnie)
+    duration_placeholder: Czas trwania (min)
+    routine:
+        select: Wybierz swoją rutynę
+        title: Rutyna
+    title: Zapisz swój trening
+    type:
+        free: Trening dowolny
+        routine: Wybierz rutynę
+        title: Rodzaj treningu
+
 footer:
     copyright: "© {year} {brand}. Wszelkie prawa zastrzeżone."

@@ -11,5 +11,19 @@ dashboard:
     setting: Instellingen
     title: Overzicht
     workout: Trainingen
+
+workout:
+    date: Datum
+    duration_optional: Duur (Optioneel)
+    duration_placeholder: Duur (min)
+    routine:
+        select: Kies je routine
+        title: Routine
+    title: Registreer je training
+    type:
+        free: Vrije training
+        routine: Kies een routine
+        title: Trainingstype
+
 footer:
     copyright: "© {year} {brand}. Alle rechten voorbehouden."

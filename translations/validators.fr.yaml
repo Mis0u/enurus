@@ -3,3 +3,6 @@ user:
         length:
             max: 'Ton alias est trop long. Il doit avoir au maximum {{ limit }} caractères'
             min: 'Ton alias est trop court. Il doit avoir au minimum {{ limit }} caractères'
+workout:
+    performed_at:
+        today: La date ne peut pas être dans le futur

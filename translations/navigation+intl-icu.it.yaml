@@ -11,5 +11,19 @@ dashboard:
     setting: Impostazioni
     title: Cruscotto
     workout: Allenamenti
+
+workout:
+    date: Data
+    duration_optional: Durata (Facoltativo)
+    duration_placeholder: Durata (min)
+    routine:
+        select: Scegli la tua routine
+        title: Routine
+    title: Registra il tuo allenamento
+    type:
+        free: Allenamento libero
+        routine: Scegli una routine
+        title: Tipo di allenamento
+
 footer:
     copyright: "© {year} {brand}. Tutti i diritti riservati."
