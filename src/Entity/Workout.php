@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: WorkoutRepository::class)]
 class Workout
@@ -48,6 +49,8 @@ class Workout
     }
 
     #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank]
+    #[Assert\LessThanOrEqual('today', message: 'workout.performed_at.today')]
     public \DateTimeInterface $performedAt {
         get {
             return $this->performedAt;
@@ -58,6 +61,8 @@ class Workout
     }
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Positive()]
+    #[Assert\LessThanOrEqual('1', message: 'workout.performed_at.today')]
     public ?int $duration = null {
         get {
             return $this->duration;
