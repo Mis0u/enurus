@@ -13,12 +13,16 @@ dashboard:
     workout: Trainingen
 
 workout:
+    add: Oefening toevoegen
     date: Datum
     duration_optional: Duur (Optioneel)
     duration_placeholder: Duur (min)
     routine:
         select: Kies je routine
         title: Routine
+    search_exercise:
+        placeholder: Naam van de oefening...
+        title: Zoek een oefening
     title: Registreer je training
     type:
         free: Vrije training

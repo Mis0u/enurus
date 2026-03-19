@@ -13,12 +13,16 @@ dashboard:
     workout: Workouts
 
 workout:
+    add: Add an exercise
     date: Date
     duration_optional: Duration (Optional)
     duration_placeholder: Duration (min)
     routine:
         select: Choose your routine
         title: Routine
+    search_exercise:
+        placeholder: Exercise name...
+        title: Search for an exercise
     title: Log your workout
     type:
         free: Free workout

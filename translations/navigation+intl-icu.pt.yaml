@@ -13,12 +13,16 @@ dashboard:
     workout: Treinos
 
 workout:
+    add: Adicionar um exercício
     date: Data
     duration_optional: Duração (Opcional)
     duration_placeholder: Duração (min)
     routine:
         select: Escolhe a tua rotina
         title: Rotina
+    search_exercise:
+        placeholder: Nome do exercício...
+        title: Procurar um exercício
     title: Regista o teu treino
     type:
         free: Treino livre

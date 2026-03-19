@@ -13,12 +13,16 @@ dashboard:
     workout: Séances
 
 workout:
+    add: Ajouter un exercice
     date: Date
     duration_optional: Durée (Optionnel)
     duration_placeholder: Durée (min)
     routine:
         select: Choisissez votre routine
         title: Routine
+    search_exercise:
+        placeholder: Nom de l'exercice...
+        title: Rechercher un exercice
     title: Enregistre ta séance
     type:
         free: Séance libre
