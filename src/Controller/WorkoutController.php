@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\WorkoutType;
+use App\Repository\ExerciseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,15 +26,19 @@ class WorkoutController extends AbstractController
         'pl' => '/zapisz-trening',
     ], name: 'app_workout')]
     #[IsGranted('ROLE_USER')]
-    public function index(Request $request): Response
+    public function index(Request $request, ExerciseRepository $exerciseRepository): Response
     {
+        /** @var User $user */
         $user = $this->getUser();
         $form = $this->createForm(WorkoutType::class);
         $form->handleRequest($request);
 
+        $exercises = $exerciseRepository->findAvailableForUser($user);
+
         return $this->render('workout/index.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'exercises' => $exercises,
         ]);
     }
 }
