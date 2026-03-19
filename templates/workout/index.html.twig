@@ -14,8 +14,17 @@
 {% block state %}
     <div class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]">
         {{ form_start(form) }}
-        {% include 'workout/_config-bar.html.twig' %}
+            {% include 'workout/_config-bar.html.twig' %}
+            <div data-controller="search-modal">
+                <twig:Button:Dotted:Dotted
+                    type="button"
+                    message="{{ 'workout.add'|trans({}, 'navigation') }}"
+                    icon="add"
+                    data="data-action=click->search-modal#showModal"
+                />
+            </div>
         {{ form_end(form) }}
     </div>
+    {% include 'workout/component/modal/_add_exercice.html.twig' %}
 {% endblock %}
 
