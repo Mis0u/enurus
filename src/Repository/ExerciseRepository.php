@@ -32,6 +32,7 @@ class ExerciseRepository extends ServiceEntityRepository
             ->where('e.isPublic = true')
             ->orWhere('(e.owner = :user AND e.isPublic = false)')
             ->setParameter('user', $user)
+            ->orderBy('e.name', 'ASC')
             ->getQuery()
             ->getResult();
 
