@@ -20,4 +20,5 @@ return [
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
     SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle::class => ['all' => true],
     AhmedBhs\DoctrineDoctor\DoctrineDoctorBundle::class => ['dev' => true, 'test' => true],
+    Symfony\UX\LiveComponent\LiveComponentBundle::class => ['all' => true],
 ];
