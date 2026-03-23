@@ -21,6 +21,7 @@ workout:
         select: Kies je routine
         title: Routine
     search_exercise:
+        no_result: Geen oefening gevonden !
         placeholder: Naam van de oefening...
         title: Zoek een oefening
     title: Registreer je training

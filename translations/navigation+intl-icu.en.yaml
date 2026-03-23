@@ -21,6 +21,7 @@ workout:
         select: Choose your routine
         title: Routine
     search_exercise:
+        no_result: No exercise found !
         placeholder: Exercise name...
         title: Search for an exercise
     title: Log your workout

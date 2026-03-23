@@ -21,6 +21,7 @@ workout:
         select: Wähle deine Routine
         title: Routine
     search_exercise:
+        no_result: Keine Übung gefunden !
         placeholder: Name der Übung...
         title: Übung suchen
     title: Erfasse dein Training

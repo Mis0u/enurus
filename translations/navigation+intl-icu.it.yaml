@@ -21,6 +21,7 @@ workout:
         select: Scegli la tua routine
         title: Routine
     search_exercise:
+        no_result: Nessun esercizio trovato !
         placeholder: Nome dell'esercizio...
         title: Cerca un esercizio
     title: Registra il tuo allenamento
