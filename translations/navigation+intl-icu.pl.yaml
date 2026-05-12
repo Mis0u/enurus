@@ -13,10 +13,29 @@ dashboard:
     workout: Treningi
 
 workout:
-    add: Dodaj ćwiczenie
+    add:
+        exercice: Dodaj ćwiczenie
+        serie: Dodaj serię
+    check_date:
+        message: >-
+            {count, plural,
+                =1    {Masz już # trening zapisany na tę datę.}
+                few   {Masz już # treningi zapisane na tę datę.}
+                many  {Masz już # treningów zapisanych na tę datę.}
+                other {Masz już # treningów zapisanych na tę datę.}
+            }
+        confirm: OK, rozumiem!
+    created: Twój trening został zapisany
     date: Data
     duration_optional: Czas trwania (Opcjonalnie)
     duration_placeholder: Czas trwania (min)
+    error:
+        no_exercise:
+            title: Brak ćwiczenia
+            text: Dodaj przynajmniej jedno ćwiczenie przed zatwierdzeniem treningu
+        required_weight: Waga jest wymagana
+        required_reps: Powtórzenia są wymagane
+    reps: Powtórzenia
     routine:
         select: Wybierz swoją rutynę
         title: Rutyna
@@ -24,11 +43,13 @@ workout:
         no_result: Nie znaleziono żadnego ćwiczenia !
         placeholder: Nazwa ćwiczenia...
         title: Wyszukaj ćwiczenie
+    series: Serie
     title: Zapisz swój trening
     type:
         free: Trening dowolny
         routine: Wybierz rutynę
         title: Rodzaj treningu
+    weight: Waga
 
 footer:
     copyright: "© {year} {brand}. Wszelkie prawa zastrzeżone."

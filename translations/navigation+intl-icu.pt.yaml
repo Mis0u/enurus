@@ -13,10 +13,27 @@ dashboard:
     workout: Treinos
 
 workout:
-    add: Adicionar um exercício
+    add:
+        exercice: Adicionar um exercício
+        serie: Adicionar uma série
+    check_date:
+        message: >-
+            {count, plural,
+                =1    {Já tens # treino registado nesta data.}
+                other {Já tens # treinos registados nesta data.}
+            }
+        confirm: OK, entendido!
+    created: O teu treino foi registado
     date: Data
     duration_optional: Duração (Opcional)
     duration_placeholder: Duração (min)
+    error:
+        no_exercise:
+            title: Nenhum exercício
+            text: Adiciona pelo menos um exercício antes de validar o teu treino
+        required_weight: O peso é obrigatório
+        required_reps: As repetições são obrigatórias
+    reps: Repetições
     routine:
         select: Escolhe a tua rotina
         title: Rotina
@@ -24,11 +41,13 @@ workout:
         no_result: Nenhum exercício encontrado !
         placeholder: Nome do exercício...
         title: Procurar um exercício
+    series: Séries
     title: Regista o teu treino
     type:
         free: Treino livre
         routine: Escolher uma rotina
         title: Tipo de treino
+    weight: Peso
 
 footer:
     copyright: "© {year} {brand}. Todos os direitos reservados."

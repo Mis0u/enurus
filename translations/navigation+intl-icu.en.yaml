@@ -13,10 +13,27 @@ dashboard:
     workout: Workouts
 
 workout:
-    add: Add an exercise
+    add:
+        exercice: Add an exercise
+        serie: Add a set
+    check_date:
+        message: >-
+            {count, plural,
+                =1    {You already have # workout logged on this date.}
+                other {You already have # workouts logged on this date.}
+            }
+        confirm: OK, got it!
+    created: Your workout has been saved
     date: Date
     duration_optional: Duration (Optional)
     duration_placeholder: Duration (min)
+    error:
+        no_exercise:
+            title: No exercise
+            text: Add at least one exercise before submitting your workout
+        required_weight: Weight is required
+        required_reps: Reps are required
+    reps: Reps
     routine:
         select: Choose your routine
         title: Routine
@@ -24,11 +41,13 @@ workout:
         no_result: No exercise found !
         placeholder: Exercise name...
         title: Search for an exercise
+    series: Sets
     title: Log your workout
     type:
         free: Free workout
         routine: Choose a routine
         title: Workout type
+    weight: Weight
 
 footer:
     copyright: "© {year} {brand}. All rights reserved."

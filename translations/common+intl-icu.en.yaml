@@ -3,6 +3,9 @@ field:
     criteria_password: "Security criteria:"
     email: Email
     email_placeholder: your@email.com
+    form:
+        button:
+            validate: Submit
     gender:
         female: Female
         male: Male

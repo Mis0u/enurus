@@ -13,10 +13,27 @@ dashboard:
     workout: Séances
 
 workout:
-    add: Ajouter un exercice
+    add:
+        exercice: Ajouter un exercice
+        serie: Ajouter une série
+    check_date:
+        message: >-
+            {count, plural,
+                =1    {Tu as déjà # séance enregistrée à ce jour.}
+                other {Tu as déjà # séances enregistrées à ce jour.}
+            }
+        confirm: OK, noté !
+    created: Votre séance a bien été enregistrée
     date: Date
     duration_optional: Durée (Optionnel)
     duration_placeholder: Durée (min)
+    error:
+        no_exercise:
+            title: Aucun exercice
+            text: Ajoute au moins un exercice avant de valider ta séance
+        required_weight: Le poids est requis
+        required_reps: Les répétitions sont requises
+    reps: Répétitions
     routine:
         select: Choisissez votre routine
         title: Routine
@@ -24,11 +41,13 @@ workout:
         no_result: Aucun exercice trouvé !
         placeholder: Nom de l'exercice...
         title: Rechercher un exercice
+    series: Séries
     title: Enregistre ta séance
     type:
         free: Séance libre
         routine: Choisir une routine
         title: Type de séance
+    weight: Poids
 
 footer:
     copyright: "© {year} {brand}. Tous droits réservés."

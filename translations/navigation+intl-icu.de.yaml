@@ -13,10 +13,27 @@ dashboard:
     workout: Trainings
 
 workout:
-    add: Übung hinzufügen
+    add:
+        exercice: Übung hinzufügen
+        serie: Satz hinzufügen
+    check_date:
+        message: >-
+            {count, plural,
+                =1    {Du hast bereits # Training an diesem Datum gespeichert.}
+                other {Du hast bereits # Trainings an diesem Datum gespeichert.}
+            }
+        confirm: OK, verstanden!
+    created: Dein Training wurde gespeichert
     date: Datum
     duration_optional: Dauer (Optional)
     duration_placeholder: Dauer (Min)
+    error:
+        no_exercise:
+            title: Keine Übung
+            text: Füge mindestens eine Übung hinzu, bevor du dein Training bestätigst
+        required_weight: Das Gewicht ist erforderlich
+        required_reps: Die Wiederholungen sind erforderlich
+    reps: Wiederholungen
     routine:
         select: Wähle deine Routine
         title: Routine
@@ -24,11 +41,13 @@ workout:
         no_result: Keine Übung gefunden !
         placeholder: Name der Übung...
         title: Übung suchen
+    series: Sätze
     title: Erfasse dein Training
     type:
         free: Freies Training
         routine: Routine wählen
         title: Trainingsart
+    weight: Gewicht
 
 footer:
     copyright: "© {year} {brand}. Alle Rechte vorbehalten."
