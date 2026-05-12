@@ -1,6 +1,6 @@
 <div {{ attributes }}>
     <twig:Button:Dotted:Dotted
-        message="{{ 'workout.add'|trans({}, 'navigation') }}"
+        message="{{ 'workout.add.exercice'|trans({}, 'navigation') }}"
         type="button"
         data="data-action=live#action data-live-action-param=open"
     />
@@ -19,12 +19,6 @@
 
                 <div class="max-h-[400px] overflow-y-auto mb-4 scrollbar-thin scrollbar-thumb-white/[0.07] scrollbar-track-transparent">
                     {% include 'components/LiveComponent/ExerciseSelectorComponent/_result.html.twig' %}
-                </div>
-                <div
-                    class="flex items-center justify-center gap-1.5 px-3 py-3 text-[#06b6d4] text-[13px] font-semibold cursor-pointer transition-colors duration-250 hover:text-[#22d3ee]"
-                >
-                    {% include 'partials/_svg/_add.html.twig' %}
-                    {{ 'workout.create_custom_exercise'|trans({}, 'navigation') }}
                 </div>
                 <div class="flex gap-2.5 mt-4">
                     <twig:Button:Basic:Basic

@@ -8,17 +8,19 @@ use App\Entity\Exercise;
 use App\Entity\User;
 use App\Repository\ExerciseRepository;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent('LiveComponent:ExerciseSelectorComponent:ExerciseSelectorComponent')]
 class ExerciseSelectorComponent
 {
     use DefaultActionTrait;
+    use ComponentToolsTrait;
 
     #[LiveProp(writable: true)]
     public ?int $selectedExerciseId = null;
@@ -50,11 +52,14 @@ class ExerciseSelectorComponent
     }
 
     #[LiveAction]
-    public function selectExercise(#[MapRequestPayload] int $id): void
+    public function selectExercise(#[LiveArg] string $id): void
     {
-        $this->selectedExerciseId = $id;
+        $this->selectedExerciseId = (int) $id;
         $this->search = '';
         $this->isOpen = false;
+        $this->dispatchBrowserEvent('exercise:selected', [
+            'id' => $id,
+        ]);
     }
 
     public function getCurrentExercise(): ?Exercise
