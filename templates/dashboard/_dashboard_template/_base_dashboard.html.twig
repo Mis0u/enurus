@@ -6,6 +6,9 @@
 {% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <twig:Flash:Message:Message message="{{ message }}" type="success"/>
+    {% endfor %}
 <div class="flex h-screen w-screen overflow-hidden bg-bg-base text-[#f0f4ff] text-sm leading-relaxed font-dm-sans">
 
     {% block sidebar %}

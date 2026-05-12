@@ -1,0 +1,19 @@
+<div class="flex items-center justify-between mb-3">
+    <div class="flex items-center gap-3">
+            <span class="drag-handle cursor-grab text-[#4a5568] hover:text-[#8b9bb4] transition-colors duration-250">
+                {% include 'partials/_svg/_drag_handle.html.twig' %}
+            </span>
+        <h4 class="font-rajdhani font-bold text-[18px] text-[#f0f4ff]">
+            {% if exercise.isPublic %}
+                {{ exercise.name|trans({}, 'exercise') }}
+            {% else %}
+                {{ exercise.name }}
+            {% endif %}
+        </h4>
+    </div>
+    <button type="button"
+            data-action="click->exercise#deleteExercise"
+            class="text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250 cursor-pointer">
+        {% include 'partials/_svg/_trash.html.twig' %}
+    </button>
+</div>
