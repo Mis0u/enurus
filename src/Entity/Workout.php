@@ -55,14 +55,16 @@ class Workout
         get {
             return $this->performedAt;
         }
-        set(\DateTimeInterface $performedAt) {
+        set(?\DateTimeInterface $performedAt) {
+            if (null === $performedAt) {
+                return;
+            }
             $this->performedAt = $performedAt;
         }
     }
 
     #[ORM\Column(nullable: true)]
     #[Assert\Positive()]
-    #[Assert\LessThanOrEqual('1', message: 'workout.performed_at.today')]
     public ?int $duration = null {
         get {
             return $this->duration;
@@ -75,7 +77,8 @@ class Workout
     /**
      * @var Collection<int, WorkoutExercise>
      */
-    #[ORM\OneToMany(targetEntity: WorkoutExercise::class, mappedBy: 'session', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Assert\Valid]
+    #[ORM\OneToMany(targetEntity: WorkoutExercise::class, mappedBy: 'workout', cascade: ['persist', 'remove'], orphanRemoval: true)]
     public Collection $workoutExercises {
         get {
             return $this->workoutExercises;
@@ -85,5 +88,19 @@ class Workout
     public function __construct()
     {
         $this->workoutExercises = new ArrayCollection();
+        $this->performedAt = new \DateTimeImmutable();
+    }
+
+    public function addWorkoutExercise(WorkoutExercise $workoutExercise): void
+    {
+        if (! $this->workoutExercises->contains($workoutExercise)) {
+            $this->workoutExercises->add($workoutExercise);
+            $workoutExercise->workout = $this;
+        }
+    }
+
+    public function removeWorkoutExercise(WorkoutExercise $workoutExercise): void
+    {
+        $this->workoutExercises->removeElement($workoutExercise);
     }
 }

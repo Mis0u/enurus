@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExerciseSetRepository::class)]
 class ExerciseSet
@@ -35,6 +36,7 @@ class ExerciseSet
     }
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero]
     public int $position {
         get {
             return $this->position;
@@ -44,6 +46,8 @@ class ExerciseSet
         }
     }
 
+    #[Assert\Positive()]
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'float')]
     public float $weight {
         get {
@@ -54,6 +58,8 @@ class ExerciseSet
         }
     }
 
+    #[Assert\Positive()]
+    #[Assert\NotBlank]
     #[ORM\Column]
     public int $reps {
         get {

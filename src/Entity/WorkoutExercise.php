@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: WorkoutExerciseRepository::class)]
 class WorkoutExercise
@@ -48,6 +49,7 @@ class WorkoutExercise
     }
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero]
     public int $position {
         get {
             return $this->position;
@@ -60,6 +62,7 @@ class WorkoutExercise
     /**
      * @var Collection<int, ExerciseSet>
      */
+    #[Assert\Valid]
     #[ORM\OneToMany(targetEntity: ExerciseSet::class, mappedBy: 'workoutExercise', cascade: ['persist', 'remove'], orphanRemoval: true)]
     public Collection $exerciseSets {
         get {
@@ -70,5 +73,18 @@ class WorkoutExercise
     public function __construct()
     {
         $this->exerciseSets = new ArrayCollection();
+    }
+
+    public function addExerciseSet(ExerciseSet $exerciseSet): void
+    {
+        if (! $this->exerciseSets->contains($exerciseSet)) {
+            $this->exerciseSets->add($exerciseSet);
+            $exerciseSet->workoutExercise = $this;
+        }
+    }
+
+    public function removeExerciseSet(ExerciseSet $exerciseSet): void
+    {
+        $this->exerciseSets->removeElement($exerciseSet);
     }
 }
