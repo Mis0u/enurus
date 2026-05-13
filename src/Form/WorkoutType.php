@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -76,6 +77,14 @@ class WorkoutType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
                 'label' => false,
+            ])
+            ->add('note', HiddenType::class, [
+                'required' => false,
+                'label' => false,
+                'attr' => [
+                    'id' => 'workout-note',
+                    'rows' => 4,
+                ],
             ])
         ;
 

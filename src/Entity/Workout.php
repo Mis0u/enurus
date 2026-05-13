@@ -85,6 +85,16 @@ class Workout
         }
     }
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    public ?string $note = null {
+        get {
+            return $this->note;
+        }
+        set(?string $note) {
+            $this->note = $note;
+        }
+    }
+
     public function __construct()
     {
         $this->workoutExercises = new ArrayCollection();
