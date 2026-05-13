@@ -33,6 +33,14 @@ workout:
             text: Voeg minstens één oefening toe voordat je je training bevestigt
         required_weight: Het gewicht is verplicht
         required_reps: De herhalingen zijn verplicht
+        validation: Er is een fout opgetreden bij het verzenden van je gegevens
+    note:
+        title: Hoe ging je training?
+        subtitle: Voeg je gevoel, observaties of alles wat je is opgevallen tijdens deze training toe. Deze notitie is optioneel.
+        placeholder: Je training ging goed, heb je een record gebroken?...
+        back: Terug naar training
+        submit_without: Bevestigen zonder notitie
+        submit_with: Mijn training bevestigen
     reps: Herhalingen
     routine:
         select: Kies je routine

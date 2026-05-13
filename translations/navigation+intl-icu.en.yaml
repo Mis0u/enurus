@@ -33,6 +33,14 @@ workout:
             text: Add at least one exercise before submitting your workout
         required_weight: Weight is required
         required_reps: Reps are required
+        validation: An error occurred while submitting your data
+    note:
+        title: How did your workout go?
+        subtitle: Add your thoughts, observations or anything that stood out during this workout. This note is optional.
+        placeholder: Your workout went well, did you beat a record?...
+        back: Back to workout
+        submit_without: Submit without note
+        submit_with: Submit my workout
     reps: Reps
     routine:
         select: Choose your routine

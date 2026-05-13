@@ -33,6 +33,14 @@ workout:
             text: Adiciona pelo menos um exercício antes de validar o teu treino
         required_weight: O peso é obrigatório
         required_reps: As repetições são obrigatórias
+        validation: Ocorreu um erro ao submeter os teus dados
+    note:
+        title: Como correu o teu treino?
+        subtitle: Adiciona as tuas sensações, observações ou qualquer coisa que te tenha marcado durante este treino. Esta nota é facultativa.
+        placeholder: O teu treino correu bem, bateste algum recorde?...
+        back: Voltar ao treino
+        submit_without: Confirmar sem nota
+        submit_with: Confirmar o meu treino
     reps: Repetições
     routine:
         select: Escolhe a tua rotina

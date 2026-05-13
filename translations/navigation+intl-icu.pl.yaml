@@ -35,6 +35,14 @@ workout:
             text: Dodaj przynajmniej jedno ćwiczenie przed zatwierdzeniem treningu
         required_weight: Waga jest wymagana
         required_reps: Powtórzenia są wymagane
+        validation: Wystąpił błąd podczas przesyłania danych
+    note:
+        title: Jak poszedł Twój trening?
+        subtitle: Dodaj swoje odczucia, obserwacje lub cokolwiek, co Cię zaskoczyło podczas tego treningu. Ta notatka jest opcjonalna.
+        placeholder: Twój trening poszedł dobrze, pobiłeś rekord?...
+        back: Powrót do treningu
+        submit_without: Zatwierdź bez notatki
+        submit_with: Zatwierdź mój trening
     reps: Powtórzenia
     routine:
         select: Wybierz swoją rutynę

@@ -33,6 +33,14 @@ workout:
             text: Füge mindestens eine Übung hinzu, bevor du dein Training bestätigst
         required_weight: Das Gewicht ist erforderlich
         required_reps: Die Wiederholungen sind erforderlich
+        validation: Beim Absenden deiner Daten ist ein Fehler aufgetreten
+    note:
+        title: Wie lief dein Training?
+        subtitle: Füge dein Gefühl, Beobachtungen oder alles hinzu, was dir während dieses Trainings aufgefallen ist. Diese Notiz ist optional.
+        placeholder: Dein Training lief gut, hast du einen Rekord gebrochen?...
+        back: Zurück zum Training
+        submit_without: Ohne Notiz bestätigen
+        submit_with: Mein Training bestätigen
     reps: Wiederholungen
     routine:
         select: Wähle deine Routine

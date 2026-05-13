@@ -33,6 +33,14 @@ workout:
             text: Ajoute au moins un exercice avant de valider ta séance
         required_weight: Le poids est requis
         required_reps: Les répétitions sont requises
+        validation: Une erreur est survenue lors de la saisie de vos données
+    note:
+        title: Comment s'est déroulé ta séance ?
+        subtitle: Ajoute un ressenti, des observations ou tout ce qui t'a marqué pendant cette séance. Cette note est facultative.
+        placeholder: Ta séance s'est bien passée, tu as battu un record ?...
+        back: Retour à la séance
+        submit_without: Valider sans note
+        submit_with: Valider ma séance
     reps: Répétitions
     routine:
         select: Choisissez votre routine
