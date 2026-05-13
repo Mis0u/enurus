@@ -1,14 +1,1 @@
-<button
-    class="{{ this.classes }}"
-    type="{{ type }}"
-    {% if data %}
-        {{ data }}
-    {% endif %}
->
-    {% if icon %}
-        {% include this.svg %}
-        <span>{{ message }}</span>
-    {% else %}
-        {{ message }}
-    {% endif %}
-</button>
+{% include 'components/Button/base.html.twig' %}

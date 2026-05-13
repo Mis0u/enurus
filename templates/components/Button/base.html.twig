@@ -1,0 +1,21 @@
+<button
+    {% if disabled %}disabled{% endif %}
+    {% if class is null %}
+        class="{{ this.classes }}"
+    {% else %}
+        class="{{ class }}"
+    {% endif %}
+    type="{{ type }}"
+    {% if data is not null %}
+        {{ data }}
+    {% endif %}
+>
+    {% if icon %}
+        <div class="flex items-center justify-center space-x-2">
+            {% include this.svg %}
+            <span>{{ message }}</span>
+        </div>
+    {% else %}
+        {{ message }}
+    {% endif %}
+</button>
