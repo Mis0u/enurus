@@ -47,6 +47,7 @@ class WorkoutController extends AbstractController
         }
 
         if ($form->isSubmitted() && ! $form->isValid()) {
+            $this->addFlash('error', $translator->trans('workout.error.validation', [], 'navigation'));
             return $this->redirectToRoute('app_workout');
         }
 
