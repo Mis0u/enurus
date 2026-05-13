@@ -445,6 +445,143 @@ class WorkoutControllerTest extends WebTestCase
         $this->assertGreaterThan(0, $crawler->filter('.muscle-tag, span[class*="text-[#f43f5e]"], span[class*="text-[#f97316]"]')->count());
     }
 
+    //DÉBUT NOTE
+    public function testWorkoutWithNoteIsPersisted(): void
+    {
+        $note = 'Super séance, nouveau record sur le développé couché !';
+        $client = $this->login(self::USER);
+        $this->submitWorkout($client, [
+            'workout' => [
+                'note' => $note,
+            ],
+        ]);
+
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
+
+        /** @var WorkoutRepository $workoutRepository */
+        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
+
+        /** @var Workout $workout */
+        $workout = $workoutRepository->findOneBy([], [
+            'performedAt' => 'DESC',
+        ]);
+
+        $this->assertSame($note, $workout->note);
+    }
+
+    public function testWorkoutWithoutNoteHasNullNote(): void
+    {
+        $client = $this->login(self::USER);
+        $this->submitWorkout($client);
+
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
+
+        /** @var WorkoutRepository $workoutRepository */
+        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
+
+        /** @var Workout $workout */
+        $workout = $workoutRepository->findOneBy([], [
+            'performedAt' => 'DESC',
+        ]);
+
+        $this->assertNull($workout->note);
+    }
+    //FIN NOTE
+
+    //DÉBUT WORKOUT DATE
+
+    public function testCheckDateReturnsExistsWhenWorkoutExists(): void
+    {
+        $client = $this->login(self::USER);
+        $this->submitWorkout($client);
+
+        $client->request(
+            Request::METHOD_GET,
+            '/fr/workout/check-date',
+            [
+                'date' => new \DateTime('today')->format('Y-m-d'),
+            ]
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $content = $client->getResponse()->getContent();
+        assert(is_string($content));
+
+        $data = json_decode($content, true);
+        assert(is_array($data));
+
+        $this->assertTrue($data['exists']);
+        $this->assertSame(1, $data['count']);
+    }
+
+    public function testCheckDateReturnsNotExistsWhenNoWorkout(): void
+    {
+        $client = $this->login(self::USER);
+
+        $client->request(
+            Request::METHOD_GET,
+            '/fr/workout/check-date',
+            [
+                'date' => new \DateTime('+1 day')->format('Y-m-d'),
+            ]
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $content = $client->getResponse()->getContent();
+        assert(is_string($content));
+
+        $data = json_decode($content, true);
+        assert(is_array($data));
+
+        $this->assertFalse($data['exists']);
+        $this->assertSame(0, $data['count']);
+    }
+
+    public function testCheckDateIsNotAccessibleWhenNotLogged(): void
+    {
+        $client = static::createClient();
+
+        $client->request(
+            Request::METHOD_GET,
+            '/fr/workout/check-date',
+            [
+                'date' => new \DateTime('today')->format('Y-m-d'),
+            ]
+        );
+
+        $this->assertResponseRedirects('/fr/');
+    }
+
+    public function testCheckDateReturnsCorrectCount(): void
+    {
+        $client = $this->login(self::USER);
+
+        // Crée 2 séances le même jour
+        $this->submitWorkout($client);
+        $this->submitWorkout($client);
+
+        $client->request(
+            Request::METHOD_GET,
+            '/fr/workout/check-date',
+            [
+                'date' => new \DateTime('today')->format('Y-m-d'),
+            ]
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $content = $client->getResponse()->getContent();
+        assert(is_string($content));
+
+        $data = json_decode($content, true);
+        assert(is_array($data));
+
+        $this->assertTrue($data['exists']);
+        $this->assertSame(2, $data['count']);
+    }
+
     /**
      * @param array<string, mixed> $overrides
      */
@@ -496,6 +633,9 @@ class WorkoutControllerTest extends WebTestCase
         return (string) $exercise->id;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function workoutDatas(string|int $weight = '', string|int $reps = '', int $position = 0): array
     {
         return [
