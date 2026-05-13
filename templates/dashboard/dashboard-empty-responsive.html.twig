@@ -1,6 +1,6 @@
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
 
-{% block title %}{{ 'dashboard.title'|trans({}, 'navigation') }} | {{ 'name'|trans({}, 'brand') }}{% endblock %}
+{% block title %}{{ 'dashboard.title'|trans({}, 'navigation')|format_title }}{% endblock %}
 
 {% block body %}
     {{ parent() }}

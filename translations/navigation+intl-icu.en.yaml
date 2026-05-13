@@ -11,5 +11,51 @@ dashboard:
     setting: Settings
     title: Dashboard
     workout: Workouts
+
+workout:
+    add:
+        exercice: Add an exercise
+        serie: Add a set
+    check_date:
+        message: >-
+            {count, plural,
+                =1    {You already have # workout logged on this date.}
+                other {You already have # workouts logged on this date.}
+            }
+        confirm: OK, got it!
+    created: Your workout has been saved
+    date: Date
+    duration_optional: Duration (Optional)
+    duration_placeholder: Duration (min)
+    error:
+        no_exercise:
+            title: No exercise
+            text: Add at least one exercise before submitting your workout
+        required_weight: Weight is required
+        required_reps: Reps are required
+        validation: An error occurred while submitting your data
+    note:
+        title: How did your workout go?
+        subtitle: Add your thoughts, observations or anything that stood out during this workout. This note is optional.
+        placeholder: Your workout went well, did you beat a record?...
+        back: Back to workout
+        submit_without: Submit without note
+        submit_with: Submit my workout
+    reps: Reps
+    routine:
+        select: Choose your routine
+        title: Routine
+    search_exercise:
+        no_result: No exercise found !
+        placeholder: Exercise name...
+        title: Search for an exercise
+    series: Sets
+    title: Log your workout
+    type:
+        free: Free workout
+        routine: Choose a routine
+        title: Workout type
+    weight: Weight
+
 footer:
     copyright: "© {year} {brand}. All rights reserved."

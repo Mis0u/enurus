@@ -223,7 +223,7 @@ class SecurityControllerTest extends WebTestCase
         $client->loginUser($testUser);
 
         $now = now()->format('Y-m-d');
-        $this->assertSame($testUser->getLastLogin()->format('Y-m-d'), $now);
+        $this->assertSame($testUser->lastLogin->format('Y-m-d'), $now);
 
         return $client;
     }

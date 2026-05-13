@@ -11,5 +11,51 @@ dashboard:
     setting: Impostazioni
     title: Cruscotto
     workout: Allenamenti
+
+workout:
+    add:
+        exercice: Aggiungi un esercizio
+        serie: Aggiungi una serie
+    check_date:
+        message: >-
+            {count, plural,
+                =1    {Hai già # allenamento registrato in questa data.}
+                other {Hai già # allenamenti registrati in questa data.}
+            }
+        confirm: OK, capito!
+    created: Il tuo allenamento è stato registrato
+    date: Data
+    duration_optional: Durata (Facoltativo)
+    duration_placeholder: Durata (min)
+    error:
+        no_exercise:
+            title: Nessun esercizio
+            text: Aggiungi almeno un esercizio prima di convalidare il tuo allenamento
+        required_weight: Il peso è obbligatorio
+        required_reps: Le ripetizioni sono obbligatorie
+        validation: Si è verificato un errore durante l'inserimento dei dati
+    note:
+        title: Come è andato il tuo allenamento?
+        subtitle: Aggiungi le tue sensazioni, osservazioni o qualsiasi cosa ti abbia colpito durante questo allenamento. Questa nota è facoltativa.
+        placeholder: Il tuo allenamento è andato bene, hai battuto un record?...
+        back: Torna all'allenamento
+        submit_without: Conferma senza nota
+        submit_with: Conferma il mio allenamento
+    reps: Ripetizioni
+    routine:
+        select: Scegli la tua routine
+        title: Routine
+    search_exercise:
+        no_result: Nessun esercizio trovato !
+        placeholder: Nome dell'esercizio...
+        title: Cerca un esercizio
+    series: Serie
+    title: Registra il tuo allenamento
+    type:
+        free: Allenamento libero
+        routine: Scegli una routine
+        title: Tipo di allenamento
+    weight: Peso
+
 footer:
     copyright: "© {year} {brand}. Tutti i diritti riservati."

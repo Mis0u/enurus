@@ -11,5 +11,51 @@ dashboard:
     setting: Ajustes
     title: Panel
     workout: Entrenamientos
+
+workout:
+    add:
+        exercice: Añadir un ejercicio
+        serie: Añadir una serie
+    check_date:
+        message: >-
+            {count, plural,
+                =1    {Ya tienes # entrenamiento registrado en esta fecha.}
+                other {Ya tienes # entrenamientos registrados en esta fecha.}
+            }
+        confirm: ¡OK, entendido!
+    created: Tu entrenamiento ha sido registrado
+    date: Fecha
+    duration_optional: Duración (Opcional)
+    duration_placeholder: Duración (min)
+    error:
+        no_exercise:
+            title: Ningún ejercicio
+            text: Añade al menos un ejercicio antes de validar tu entrenamiento
+        required_weight: El peso es obligatorio
+        required_reps: Las repeticiones son obligatorias
+        validation: Se produjo un error al enviar tus datos
+    note:
+        title: ¿Cómo fue tu entrenamiento?
+        subtitle: Añade tus sensaciones, observaciones o cualquier cosa que te haya llamado la atención durante este entrenamiento. Esta nota es opcional.
+        placeholder: Tu entrenamiento fue bien, ¿batiste algún récord?...
+        back: Volver al entrenamiento
+        submit_without: Validar sin nota
+        submit_with: Validar mi entrenamiento
+    reps: Repeticiones
+    routine:
+        select: Elige tu rutina
+        title: Rutina
+    search_exercise:
+        no_result: ¡Ningún ejercicio encontrado !
+        placeholder: Nombre del ejercicio...
+        title: Buscar un ejercicio
+    series: Series
+    title: Registra tu entrenamiento
+    type:
+        free: Entrenamiento libre
+        routine: Elegir una rutina
+        title: Tipo de entrenamiento
+    weight: Peso
+
 footer:
     copyright: "© {year} {brand}. Todos los derechos reservados."

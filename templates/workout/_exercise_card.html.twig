@@ -1,0 +1,22 @@
+<div class="bg-[#0f1928] border border-white/[0.07] rounded-[14px] px-4 py-4 relative transition-all duration-250 hover:border-white/[0.12] mb-4"
+     data-exercise-index="{{ index }}">
+
+    <input type="hidden" name="workout[workoutExercises][{{ index }}][exercise]" value="{{ exercise.id }}">
+    <input type="hidden" name="workout[workoutExercises][{{ index }}][position]" value="{{ index }}" class="js-position-input">
+
+    {% include 'workout/_card.html.twig' %}
+
+    {% if exercise.exerciseMuscles is not empty %}
+        {% include 'workout/_muscle_target.html.twig' %}
+    {% endif %}
+
+    {% include 'workout/_table.html.twig' %}
+
+    {% include 'workout/_template.html.twig' %}
+
+    <button type="button"
+            data-action="click->exercise#addSet"
+            class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white/[0.03] border border-white/[0.07] rounded-lg text-[#8b9bb4] text-[12.5px] font-medium cursor-pointer transition-all duration-250 hover:bg-white/[0.06] hover:text-[#f0f4ff] hover:border-white/[0.12]">
+        + {{ 'workout.add.serie'|trans({}, 'navigation') }}
+    </button>
+</div>

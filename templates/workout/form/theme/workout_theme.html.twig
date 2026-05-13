@@ -1,0 +1,47 @@
+{% block date_widget %}
+    <input
+        type="date"
+        {{ block('widget_attributes') }}
+        class="px-3.5 py-2.25 bg-white/[0.03] border border-white/[0.07] rounded-lg text-[#f0f4ff] text-[13.5px] outline-none transition-colors duration-250 min-w-[140px] max-md:w-full max-md:min-w-0 focus:border-[rgba(244,63,94,0.4)]"
+        {% if value is not empty %}value="{{ value }}"{% endif %}
+    >
+{% endblock %}
+
+{% block integer_widget %}
+    <input
+        type="number"
+        {{ block('widget_attributes') }}
+        class="px-3.5 py-2.25 bg-white/[0.03] border border-white/[0.07] rounded-lg text-[#f0f4ff] text-[13.5px] outline-none transition-colors duration-250 min-w-[140px] max-md:w-full max-md:min-w-0 focus:border-[rgba(244,63,94,0.4)] placeholder:text-[#4a5568]"
+        {% if value is not empty %}value="{{ value }}"{% endif %}
+    >
+{% endblock %}
+
+{% block choice_widget_collapsed %}
+    <select {{ block('widget_attributes') }} class="px-3.5 py-2.25 bg-white/[0.03] border border-white/[0.07] rounded-lg text-[#f0f4ff] text-[13.5px] outline-none transition-colors duration-250 cursor-pointer max-md:w-full focus:border-[rgba(244,63,94,0.4)]">
+        {% if placeholder is not none %}
+            <option value="">{{ placeholder }}</option>
+        {% endif %}
+        {% for choice in choices %}
+            <option value="{{ choice.value }}" {% if choice.value == value %}selected{% endif %}>{{ choice.label }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}
+
+{% block form_label %}
+    {% if label is not same as(false) %}
+        <label
+            {% if id is defined %}for="{{ id }}"{% endif %}
+            class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#4a5568]"
+        >
+            {{ label|trans({}, translation_domain) }}
+        </label>
+    {% endif %}
+{% endblock %}
+
+{% block form_row %}
+    <div class="flex flex-col gap-1.5 max-md:w-full">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}

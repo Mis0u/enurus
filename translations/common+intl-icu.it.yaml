@@ -3,6 +3,9 @@ field:
     criteria_password: "Criteri di sicurezza:"
     email: Email
     email_placeholder: tua@email.com
+    form:
+        button:
+            validate: Conferma
     gender:
         female: Donna
         male: Uomo
@@ -72,6 +75,7 @@ sentence:
     workout_resume: Riepilogo allenamento · Silhouette muscolare
 
 word:
+    close: Chiudi
     hello: Ciao,
     hi: Ciao
     important: ⚠️ Importante

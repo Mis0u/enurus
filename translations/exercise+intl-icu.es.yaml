@@ -1,0 +1,315 @@
+ab_wheel_rollout:
+    description: De rodillas, hacer rodar la rueda abdominal hacia adelante manteniendo la espalda recta y volver a la posición inicial.
+    name: Ab wheel (rollout)
+
+abduction_machine:
+    description: Sentado en la máquina, separar los muslos contra la resistencia para trabajar los abductores y el glúteo medio.
+    name: Abducciones en máquina
+
+adduction_machine:
+    description: Sentado en la máquina, juntar los muslos contra la resistencia para trabajar los aductores.
+    name: Aducciones en máquina
+
+arnold_press:
+    description: Sentado, empezar con las mancuernas frente al rostro con las palmas hacia ti, rotar mientras empujas hacia arriba.
+    name: Arnold press
+
+barbell_curl_standing:
+    description: De pie, barra en mano con las palmas hacia arriba, flexionar los codos para llevar la barra hacia los hombros sin mover el torso.
+    name: Curl con barra (de pie)
+
+barbell_front_squat:
+    description: Barra apoyada en los deltoides anteriores, bajar en sentadilla. La posición frontal solicita más los cuádriceps y abdominales.
+    name: Sentadilla frontal (front squat)
+
+barbell_row:
+    description: Inclinado hacia adelante, tirar la barra hacia el ombligo apretando las escápulas y bajar de forma controlada.
+    name: Remo con barra
+
+barbell_shrug:
+    description: De pie, barra en mano con los brazos extendidos, encoger los hombros lo más alto posible y bajar de forma controlada.
+    name: Encogimientos con barra
+
+barbell_squat:
+    description: Barra sobre los trapecios, flexionar rodillas y caderas para bajar en posición sentada y subir empujando con los talones.
+    name: Sentadilla con barra
+
+bench_press_bar:
+    description: Tumbado en un banco plano, bajar la barra hasta el pecho y empujar hacia arriba con los brazos extendidos.
+    name: Press de banca (barra)
+
+bench_press_dumbbell:
+    description: Tumbado en un banco plano, empujar las mancuernas hacia arriba acercando las manos al final del movimiento.
+    name: Press de banca con mancuernas
+
+cable_crunch:
+    description: De rodillas frente a una polea alta, cuerda detrás de la cabeza, enrollar el torso hacia el suelo contrayendo los abdominales.
+    name: Crunch en polea alta
+
+cable_curl:
+    description: Frente a una polea baja, flexionar los codos para llevar la barra hacia los hombros. La tensión es constante durante todo el movimiento.
+    name: Curl en polea baja
+
+cable_fly:
+    description: De pie entre dos poleas altas, juntar las manos frente a ti en arco contrayendo los pectorales.
+    name: Aperturas en polea
+
+cable_lateral_raise:
+    description: Inclinado hacia adelante frente a una polea baja, tirar el cable hacia afuera apuntando a la parte trasera del hombro.
+    name: Elevaciones posteriores en polea
+
+cable_row:
+    description: Sentado frente a una polea baja, tirar del agarre hacia el abdomen manteniendo la espalda recta y apretando las escápulas.
+    name: Remo en polea baja
+
+cable_woodchop:
+    description: De pie de perfil a una polea, tirar del cable en diagonal con una rotación del torso de arriba a abajo o viceversa.
+    name: Woodchop en polea
+
+calf_raise_machine_seated:
+    description: Sentado en la máquina, subir sobre las puntas de los pies. La posición sentada trabaja más el sóleo.
+    name: Elevación de gemelos sentado (máquina)
+
+calf_raise_machine_standing:
+    description: De pie en la máquina, subir sobre las puntas de los pies empujando la carga y bajar lentamente.
+    name: Elevación de gemelos de pie (máquina)
+
+calf_raise_press:
+    description: En la prensa de piernas, pies en la parte baja de la plataforma, empujar con las puntas de los pies.
+    name: Gemelos en prensa
+
+chin_up:
+    description: Colgado de una barra, palmas hacia ti, tirar el cuerpo hacia arriba. El agarre supino solicita más los bíceps.
+    name: Dominadas supinas
+
+concentration_curl:
+    description: Sentado, codo apoyado en el interior del muslo, flexionar el brazo con una mancuerna contrayendo al máximo el bíceps.
+    name: Curl concentrado
+
+crunch:
+    description: Tumbado en el suelo, rodillas flexionadas, enrollar el torso hacia adelante contrayendo los abdominales sin levantar la espalda baja.
+    name: Crunch
+
+deadlift:
+    description: De pie frente a una barra en el suelo, levantar la carga empujando las piernas y manteniendo la espalda recta hasta la extensión completa.
+    name: Peso muerto
+
+decline_bench_press_bar:
+    description: Press de banca en banco declinado para trabajar la parte baja de los pectorales.
+    name: Press declinado (barra)
+
+dips_chest:
+    description: En barras paralelas, torso inclinado hacia adelante, bajar el cuerpo y empujar para subir apuntando a los pectorales.
+    name: Fondos (pectorales)
+
+dips_triceps:
+    description: En barras paralelas, torso recto y vertical, bajar el cuerpo y empujar apuntando a los tríceps.
+    name: Fondos (tríceps)
+
+dumbbell_alternating_curl:
+    description: De pie, alternar la flexión de un brazo y luego el otro con una rotación de la muñeca al final del movimiento.
+    name: Curl alterno con mancuernas
+
+dumbbell_curl_standing:
+    description: De pie, mancuernas en mano, flexionar ambos codos simultáneamente para llevar las mancuernas hacia los hombros.
+    name: Curl con mancuernas (de pie)
+
+dumbbell_fly_flat:
+    description: Tumbado en un banco plano, abrir los brazos en arco con las mancuernas y juntarlas por encima del pecho.
+    name: Aperturas con mancuernas (plano)
+
+dumbbell_fly_incline:
+    description: Aperturas en banco inclinado para trabajar la parte alta de los pectorales con un movimiento de apertura.
+    name: Aperturas inclinadas con mancuernas
+
+dumbbell_overhead_triceps_extension:
+    description: Sentado o de pie, una mancuerna sujeta con ambas manos detrás de la cabeza, extender los brazos hacia arriba.
+    name: Extensión de tríceps con mancuerna sobre la cabeza
+
+dumbbell_row:
+    description: Una rodilla y una mano apoyadas en un banco, tirar la mancuerna hacia la cadera apretando la escápula.
+    name: Remo con mancuerna (un brazo)
+
+dumbbell_shrug:
+    description: De pie, mancuernas en mano con los brazos extendidos a lo largo del cuerpo, encoger los hombros hacia las orejas.
+    name: Encogimientos con mancuernas
+
+ez_bar_curl:
+    description: De pie con una barra EZ, flexionar los codos. La barra angulada reduce la tensión en las muñecas.
+    name: Curl con barra EZ
+
+face_pull:
+    description: Frente a una polea alta con cuerda, tirar hacia el rostro abriendo los codos hacia afuera y apretando las escápulas.
+    name: Face pull
+
+farmer_walk:
+    description: De pie, agarrar mancuernas pesadas y caminar manteniendo una postura erguida y un agarre firme.
+    name: Farmer walk
+
+front_raise:
+    description: De pie, mancuernas frente a los muslos, levantar los brazos hacia adelante hasta la altura de los hombros.
+    name: Elevaciones frontales
+
+glute_bridge:
+    description: Tumbado en el suelo, pies apoyados, empujar las caderas hacia arriba contrayendo los glúteos. Versión en el suelo del hip thrust.
+    name: Puente de glúteos
+
+glute_kickback_cable:
+    description: De pie frente a una polea baja, cable enganchado al tobillo, empujar la pierna hacia atrás contrayendo el glúteo.
+    name: Patada de glúteo en polea
+
+good_morning:
+    description: Barra sobre los trapecios, inclinar el torso hacia adelante empujando las caderas hacia atrás, piernas ligeramente flexionadas.
+    name: Good morning
+
+hack_squat:
+    description: En la máquina hack squat, espalda apoyada, bajar en sentadilla y empujar para subir. Menos estrés en la espalda baja.
+    name: Hack squat
+
+hammer_curl:
+    description: De pie, mancuernas en agarre neutro (palmas enfrentadas), flexionar los codos. Trabaja el braquial y el braquiorradial.
+    name: Curl martillo
+
+hip_thrust_bar:
+    description: Espalda apoyada en un banco, barra sobre las caderas, empujar las caderas hacia arriba contrayendo al máximo los glúteos.
+    name: Hip thrust (barra)
+
+hip_thrust_machine:
+    description: Mismo movimiento que el hip thrust con barra pero en una máquina dedicada para mayor estabilidad.
+    name: Hip thrust en máquina
+
+horizontal_cable_row:
+    description: Sentado frente a una polea, tirar del agarre hacia el abdomen manteniendo los codos cerca del cuerpo.
+    name: Remo horizontal en polea
+
+hyperextension:
+    description: En un banco a 45°, bajar el torso hacia el suelo y subir contrayendo los lumbares y los glúteos.
+    name: Hiperextensiones (banco a 45°)
+
+incline_bench_press_bar:
+    description: Mismo movimiento que el press de banca pero en banco inclinado a 30-45° para trabajar la parte alta de los pectorales.
+    name: Press inclinado (barra)
+
+incline_bench_press_dumbbell:
+    description: Press con mancuernas en banco inclinado a 30-45° para trabajar la parte alta de los pectorales con mayor amplitud.
+    name: Press inclinado con mancuernas
+
+lat_pulldown:
+    description: Sentado frente a una polea alta, tirar la barra hacia la parte superior del pecho contrayendo la espalda.
+    name: Jalón al pecho
+
+lateral_raise:
+    description: De pie, mancuernas a los lados del cuerpo, levantar los brazos lateralmente hasta la altura de los hombros con una ligera flexión del codo.
+    name: Elevaciones laterales
+
+leg_curl_lying:
+    description: Tumbado boca abajo en el banco, flexionar las piernas para llevar los talones hacia los glúteos.
+    name: Curl de pierna tumbado
+
+leg_curl_seated:
+    description: Sentado en la máquina, flexionar las piernas bajo la almohadilla contrayendo los isquiotibiales.
+    name: Curl de pierna sentado
+
+leg_extension:
+    description: Sentado en la máquina, extender las piernas hacia adelante contrayendo los cuádriceps. Ejercicio de aislamiento.
+    name: Extensión de piernas
+
+leg_press:
+    description: Sentado en la máquina, pies en la plataforma, empujar la carga extendiendo las piernas sin bloquear las rodillas.
+    name: Prensa de piernas
+
+lunge:
+    description: De pie, dar un gran paso adelante y flexionar ambas rodillas a 90° y volver a la posición inicial.
+    name: Zancadas (barra o mancuernas)
+
+military_press_bar:
+    description: De pie o sentado, empujar la barra por encima de la cabeza desde los hombros hasta la extensión completa de los brazos.
+    name: Press militar (barra)
+
+military_press_machine:
+    description: Sentado en una máquina de hombros, empujar los agarres hacia arriba hasta la extensión de los brazos.
+    name: Press de hombros en máquina
+
+overhead_cable_triceps_extension_bar:
+    description: Frente a una polea alta con barra recta, extender los brazos hacia abajo manteniendo los codos fijos al cuerpo.
+    name: Extensión de tríceps en polea (barra)
+
+overhead_cable_triceps_extension_rope:
+    description: Frente a una polea alta con cuerda, extender los brazos hacia abajo separando los extremos de la cuerda al final del movimiento.
+    name: Extensión de tríceps en polea (cuerda)
+
+plank:
+    description: Apoyado sobre los antebrazos y las puntas de los pies, mantener el cuerpo alineado contrayendo abdominales y glúteos.
+    name: Plancha
+
+preacher_curl:
+    description: Brazos apoyados en un púlpito inclinado, flexionar el codo con una barra o mancuerna. Aísla el bíceps eliminando el impulso.
+    name: Curl en banco Scott
+
+pull_up:
+    description: Colgado de una barra, palmas hacia adelante, tirar el cuerpo hacia arriba hasta que la barbilla supere la barra.
+    name: Dominadas pronas
+
+pullover:
+    description: Tumbado en un banco, bajar una mancuerna detrás de la cabeza con los brazos casi extendidos y llevarla de vuelta sobre el pecho.
+    name: Pullover
+
+push_up:
+    description: En el suelo, manos separadas al ancho de los hombros, bajar el pecho hacia el suelo y empujar para volver a la posición alta.
+    name: Flexiones
+
+push_up_diamond:
+    description: Flexiones con las manos juntas formando un diamante bajo el pecho para trabajar los tríceps.
+    name: Flexiones diamante
+
+rear_delt_fly:
+    description: Inclinado hacia adelante, levantar las mancuernas lateralmente apretando las escápulas para trabajar la parte trasera de los hombros.
+    name: Elevaciones posteriores
+
+reverse_wrist_curl:
+    description: Sentado, antebrazos apoyados en los muslos con las palmas hacia abajo, levantar las muñecas con una barra.
+    name: Curl de muñeca inverso
+
+romanian_deadlift:
+    description: Similar al peso muerto con piernas rígidas pero con una ligera flexión de rodillas mantenida durante todo el movimiento.
+    name: Peso muerto rumano
+
+russian_twist:
+    description: Sentado en el suelo, torso inclinado hacia atrás, pies elevados, rotar el torso de izquierda a derecha con o sin carga.
+    name: Russian twist
+
+sissy_squat:
+    description: De pie, inclinarse hacia atrás flexionando las rodillas, talones elevados, para aislar los cuádriceps.
+    name: Sissy squat
+
+skull_crusher:
+    description: Tumbado en un banco, bajar la barra hacia la frente flexionando los codos y extender los brazos.
+    name: Skull crusher
+
+stiff_leg_deadlift:
+    description: De pie, bajar la barra a lo largo de las piernas manteniendo las piernas casi extendidas, empujando las caderas hacia atrás.
+    name: Peso muerto con piernas rígidas
+
+sumo_squat:
+    description: Sentadilla con posición de pies muy abierta y puntas hacia afuera para trabajar los aductores.
+    name: Sentadilla sumo
+
+superman:
+    description: Tumbado boca abajo, levantar simultáneamente los brazos y las piernas contrayendo los lumbares y los glúteos.
+    name: Superman
+
+suspended_leg_raise:
+    description: Colgado de una barra, levantar las piernas frente a ti contrayendo los abdominales. Cuanto más rectas las piernas, más intenso.
+    name: Elevación de piernas colgado
+
+triceps_kickback:
+    description: Inclinado hacia adelante, codo fijo al cuerpo, extender el brazo hacia atrás contrayendo el tríceps.
+    name: Patada de tríceps
+
+walking_lunge:
+    description: Realizar zancadas consecutivas avanzando en cada repetición, alternando pierna izquierda y derecha.
+    name: Zancadas caminando
+
+wrist_curl:
+    description: Sentado, antebrazos apoyados en los muslos con las palmas hacia arriba, flexionar las muñecas con una barra.
+    name: Curl de muñeca

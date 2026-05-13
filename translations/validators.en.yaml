@@ -2,3 +2,6 @@ user:
     nickname:
         length:
             max: 'Your alias is too long. It must be {{ limit }} characters or less'
+workout:
+    performed_at:
+        today: The date cannot be in the future

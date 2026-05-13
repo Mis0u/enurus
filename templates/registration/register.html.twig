@@ -2,7 +2,7 @@
 
 {% block title %}{{ 'registration.registration'|trans({}, 'security') }}{% endblock %}
 
-{% form_theme registrationForm 'form/gender_theme.html.twig' 'form/error_theme.html.twig' %}
+{% form_theme registrationForm 'registration/theme/gender_theme.html.twig' 'registration/theme/error_theme.html.twig' %}
 
 {% block body %}
     <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">

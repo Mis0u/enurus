@@ -11,5 +11,51 @@ dashboard:
     setting: Instellingen
     title: Overzicht
     workout: Trainingen
+
+workout:
+    add:
+        exercice: Oefening toevoegen
+        serie: Set toevoegen
+    check_date:
+        message: >-
+            {count, plural,
+                =1    {Je hebt al # training op deze datum geregistreerd.}
+                other {Je hebt al # trainingen op deze datum geregistreerd.}
+            }
+        confirm: OK, begrepen!
+    created: Je training is opgeslagen
+    date: Datum
+    duration_optional: Duur (Optioneel)
+    duration_placeholder: Duur (min)
+    error:
+        no_exercise:
+            title: Geen oefening
+            text: Voeg minstens één oefening toe voordat je je training bevestigt
+        required_weight: Het gewicht is verplicht
+        required_reps: De herhalingen zijn verplicht
+        validation: Er is een fout opgetreden bij het verzenden van je gegevens
+    note:
+        title: Hoe ging je training?
+        subtitle: Voeg je gevoel, observaties of alles wat je is opgevallen tijdens deze training toe. Deze notitie is optioneel.
+        placeholder: Je training ging goed, heb je een record gebroken?...
+        back: Terug naar training
+        submit_without: Bevestigen zonder notitie
+        submit_with: Mijn training bevestigen
+    reps: Herhalingen
+    routine:
+        select: Kies je routine
+        title: Routine
+    search_exercise:
+        no_result: Geen oefening gevonden !
+        placeholder: Naam van de oefening...
+        title: Zoek een oefening
+    series: Sets
+    title: Registreer je training
+    type:
+        free: Vrije training
+        routine: Kies een routine
+        title: Trainingstype
+    weight: Gewicht
+
 footer:
     copyright: "© {year} {brand}. Alle rechten voorbehouden."

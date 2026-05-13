@@ -33,14 +33,19 @@ final readonly class LoginSuccessListener
         /** @var User $user */
         $user = $event->getUser();
 
-        $user->setLastLogin(now());
+        $user->lastLogin = now();
         $this->userService->save($user);
     }
 
     private function redirectTo(LoginSuccessEvent $event): void
     {
+        /** @var User $user */
+        $user = $event->getUser();
+
+        $locale = $user->locale ?? $event->getRequest()->getLocale();
+
         $url = $this->urlGenerator->generate('app_dashboard', [
-            '_locale' => $event->getRequest()->getLocale(),
+            '_locale' => $locale,
         ]);
 
         $event->setResponse(new RedirectResponse($url));

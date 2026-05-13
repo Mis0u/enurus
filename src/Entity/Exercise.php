@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExerciseRepository::class)]
 class Exercise
@@ -30,6 +31,7 @@ class Exercise
     }
 
     #[ORM\Column(length: 150)]
+    #[Assert\NotBlank]
     public string $name {
         get {
             return $this->name;
@@ -83,5 +85,10 @@ class Exercise
     public function __construct()
     {
         $this->exerciseMuscles = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

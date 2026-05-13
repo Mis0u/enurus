@@ -1,0 +1,315 @@
+ab_wheel_rollout:
+    description: Klęcząc, toczyć kółko do przodu utrzymując proste plecy, następnie wrócić do pozycji wyjściowej.
+    name: Ab wheel (rollout)
+
+abduction_machine:
+    description: Siedząc na maszynie, rozchylać uda przeciwko oporowi, aby trenować odwodziciele i mięsień pośladkowy średni.
+    name: Odwodzenie na maszynie
+
+adduction_machine:
+    description: Siedząc na maszynie, ściskać uda przeciwko oporowi, aby trenować przywodziciele.
+    name: Przywodzenie na maszynie
+
+arnold_press:
+    description: Siedząc, zaczynać z hantlami przed twarzą dłońmi do siebie, wykonywać rotację wypychając do góry.
+    name: Arnold press
+
+barbell_curl_standing:
+    description: Stojąc, sztanga w dłoniach chwytem podchwytowym, zginać łokcie prowadząc sztangę ku ramionom bez ruszania tułowia.
+    name: Uginanie ramion ze sztangą (stojąc)
+
+barbell_front_squat:
+    description: Sztanga oparta na przednich deltoidach, schodzić w przysiad. Pozycja przednia bardziej angażuje czworogłowe i brzuch.
+    name: Przysiad przedni (front squat)
+
+barbell_row:
+    description: Pochylony do przodu, ciągnąć sztangę do pępka ściskając łopatki, następnie kontrolowanie opuścić.
+    name: Wiosłowanie sztangą
+
+barbell_shrug:
+    description: Stojąc, sztanga w dłoniach z wyprostowanymi ramionami, wznosić barki jak najwyżej i kontrolowanie opuszczać.
+    name: Szragi ze sztangą
+
+barbell_squat:
+    description: Sztanga na trapezach, zginać kolana i biodra schodząc w pozycję siedzącą, następnie wstawać wypychając przez pięty.
+    name: Przysiad ze sztangą
+
+bench_press_bar:
+    description: Leżąc na ławce płaskiej, opuścić sztangę do klatki piersiowej i wypchnąć do góry aż do wyprostu ramion.
+    name: Wyciskanie na ławce (sztanga)
+
+bench_press_dumbbell:
+    description: Leżąc na ławce płaskiej, wypychać hantle do góry zbliżając dłonie na końcu ruchu.
+    name: Wyciskanie hantli na ławce
+
+cable_crunch:
+    description: Klęcząc przodem do wyciągu górnego, lina za głową, zwijać tułów ku podłodze napinając mięśnie brzucha.
+    name: Spięcia na wyciągu górnym
+
+cable_curl:
+    description: Przodem do wyciągu dolnego, zginać łokcie prowadząc drążek ku ramionom. Napięcie jest stałe przez cały ruch.
+    name: Uginanie na wyciągu dolnym
+
+cable_fly:
+    description: Stojąc między dwoma wyciągami górnymi, zbliżać dłonie łukiem przed sobą napinając klatkę piersiową.
+    name: Rozpiętki na wyciągach
+
+cable_lateral_raise:
+    description: Pochylony do przodu przed wyciągiem dolnym, ciągnąć linkę na zewnątrz celując w tylną część barku.
+    name: Odwodzenie na wyciągu
+
+cable_row:
+    description: Siedząc przodem do wyciągu dolnego, ciągnąć uchwyt ku brzuchowi utrzymując proste plecy i ściskając łopatki.
+    name: Wiosłowanie na wyciągu dolnym
+
+cable_woodchop:
+    description: Stojąc bokiem do wyciągu, ciągnąć linkę po skosie z rotacją tułowia z góry na dół lub odwrotnie.
+    name: Woodchop na wyciągu
+
+calf_raise_machine_seated:
+    description: Siedząc na maszynie, wspinać się na palce. Pozycja siedząca bardziej angażuje mięsień płaszczkowaty.
+    name: Wspięcia na łydki siedząc (maszyna)
+
+calf_raise_machine_standing:
+    description: Stojąc na maszynie, wspinać się na palce wypychając ciężar, następnie powoli opuszczać.
+    name: Wspięcia na łydki stojąc (maszyna)
+
+calf_raise_press:
+    description: Na prasie do nóg, stopy na dole platformy, wypychać palcami stóp.
+    name: Łydki na prasie
+
+chin_up:
+    description: Wisząc na drążku, dłonie do siebie, ciągnąć ciało do góry. Chwyt podchwytowy bardziej angażuje biceps.
+    name: Podciąganie podchwytem
+
+concentration_curl:
+    description: Siedząc, łokieć oparty o wewnętrzną stronę uda, zginać ramię z hantlem maksymalnie napinając biceps.
+    name: Curl koncentrowany
+
+crunch:
+    description: Leżąc na plecach, kolana zgięte, zwijać tułów do przodu napinając mięśnie brzucha bez odrywania dolnej części pleców.
+    name: Spięcia brzucha
+
+deadlift:
+    description: Stojąc przed sztangą na podłodze, podnosić ciężar wypychając nogi i utrzymując proste plecy do pełnego wyprostu.
+    name: Martwy ciąg
+
+decline_bench_press_bar:
+    description: Wyciskanie na ławce skośnej ujemnej dla dolnej części klatki piersiowej.
+    name: Wyciskanie na ławce ujemnej (sztanga)
+
+dips_chest:
+    description: Na poręczach, tułów pochylony do przodu, opuszczać ciało i wypychać do góry celując w klatkę piersiową.
+    name: Dipy (klatka piersiowa)
+
+dips_triceps:
+    description: Na poręczach, tułów prosty i pionowy, opuszczać ciało i wypychać celując w triceps.
+    name: Dipy (triceps)
+
+dumbbell_alternating_curl:
+    description: Stojąc, naprzemiennie zginać jedno ramię, potem drugie, z rotacją nadgarstka na końcu ruchu.
+    name: Uginanie hantli naprzemiennie
+
+dumbbell_curl_standing:
+    description: Stojąc, hantle w dłoniach, jednocześnie zginać oba łokcie prowadząc hantle ku ramionom.
+    name: Uginanie hantli (stojąc)
+
+dumbbell_fly_flat:
+    description: Leżąc na ławce płaskiej, rozchylać ramiona łukiem z hantlami, następnie zbliżać nad klatką piersiową.
+    name: Rozpiętki hantlami (płasko)
+
+dumbbell_fly_incline:
+    description: Rozpiętki na ławce skośnej dla górnej części klatki piersiowej z ruchem rozchylenia.
+    name: Rozpiętki hantlami (skośnie)
+
+dumbbell_overhead_triceps_extension:
+    description: Siedząc lub stojąc, hantel trzymany obiema rękami za głową, wyprostować ramiona do góry.
+    name: Francuskie wyciskanie hantlem
+
+dumbbell_row:
+    description: Jedno kolano i jedna dłoń oparte na ławce, ciągnąć hantel ku biodrowi ściskając łopatkę.
+    name: Wiosłowanie hantlem (jednorącz)
+
+dumbbell_shrug:
+    description: Stojąc, hantle w dłoniach z wyprostowanymi ramionami wzdłuż ciała, wznosić barki ku uszom.
+    name: Szragi z hantlami
+
+ez_bar_curl:
+    description: Stojąc z gryfem łamanym, zginać łokcie. Zakrzywiony gryf zmniejsza obciążenie nadgarstków.
+    name: Uginanie z gryfem łamanym
+
+face_pull:
+    description: Przodem do wyciągu górnego z liną, ciągnąć ku twarzy rozchylając łokcie na zewnątrz i ściskając łopatki.
+    name: Face pull
+
+farmer_walk:
+    description: Stojąc, chwycić ciężkie hantle i iść utrzymując prostą postawę i mocny chwyt.
+    name: Farmer walk
+
+front_raise:
+    description: Stojąc, hantle przed udami, unosić ramiona do przodu do wysokości barków.
+    name: Unoszenie ramion przed siebie
+
+glute_bridge:
+    description: Leżąc na plecach, stopy płasko na podłodze, wypychać biodra do góry napinając pośladki. Wersja podłogowa hip thrusta.
+    name: Mostek pośladkowy
+
+glute_kickback_cable:
+    description: Stojąc przodem do wyciągu dolnego, linka przymocowana do kostki, odpychać nogę do tyłu napinając pośladek.
+    name: Odwodzenie nogi na wyciągu
+
+good_morning:
+    description: Sztanga na trapezach, pochylać tułów do przodu odpychając biodra do tyłu, nogi lekko ugięte.
+    name: Good morning
+
+hack_squat:
+    description: Na maszynie hack squat, plecy oparte, schodzić w przysiad i wypychać do góry. Mniej obciążenia dla dolnych pleców.
+    name: Hack squat
+
+hammer_curl:
+    description: Stojąc, hantle chwytem młotkowym (dłonie do siebie), zginać łokcie. Trenuje mięsień ramienny i ramienno-promieniowy.
+    name: Uginanie młotkowe
+
+hip_thrust_bar:
+    description: Plecy oparte o ławkę, sztanga na biodrach, wypychać biodra do góry maksymalnie napinając pośladki.
+    name: Hip thrust (sztanga)
+
+hip_thrust_machine:
+    description: Ten sam ruch co hip thrust ze sztangą, ale na dedykowanej maszynie dla większej stabilności.
+    name: Hip thrust na maszynie
+
+horizontal_cable_row:
+    description: Siedząc przodem do wyciągu, ciągnąć uchwyt ku brzuchowi utrzymując łokcie blisko ciała.
+    name: Wiosłowanie poziome na wyciągu
+
+hyperextension:
+    description: Na ławce pod kątem 45°, opuszczać tułów ku podłodze i podnosić napinając mięśnie lędźwiowe i pośladki.
+    name: Hyperekstensje (ławka 45°)
+
+incline_bench_press_bar:
+    description: Ten sam ruch co wyciskanie na ławce, ale na ławce skośnej 30-45° dla górnej części klatki piersiowej.
+    name: Wyciskanie na ławce skośnej (sztanga)
+
+incline_bench_press_dumbbell:
+    description: Wyciskanie hantli na ławce skośnej 30-45° dla górnej części klatki piersiowej z większym zakresem ruchu.
+    name: Wyciskanie hantli na ławce skośnej
+
+lat_pulldown:
+    description: Siedząc przodem do wyciągu górnego, ciągnąć drążek do górnej części klatki piersiowej napinając plecy.
+    name: Ściąganie drążka wyciągu górnego
+
+lateral_raise:
+    description: Stojąc, hantle wzdłuż ciała, unosić ramiona na boki do wysokości barków utrzymując lekkie ugięcie łokcia.
+    name: Unoszenie ramion na boki
+
+leg_curl_lying:
+    description: Leżąc twarzą do dołu na ławce, zginać nogi prowadząc pięty ku pośladkom.
+    name: Uginanie nóg leżąc
+
+leg_curl_seated:
+    description: Siedząc na maszynie, zginać nogi pod poduszką napinając mięśnie dwugłowe uda.
+    name: Uginanie nóg siedząc
+
+leg_extension:
+    description: Siedząc na maszynie, prostować nogi do przodu napinając czworogłowe uda. Ćwiczenie izolowane.
+    name: Prostowanie nóg
+
+leg_press:
+    description: Siedząc na maszynie, stopy na platformie, wypychać ciężar prostując nogi bez blokowania kolan.
+    name: Prasa do nóg
+
+lunge:
+    description: Stojąc, zrobić duży krok do przodu i zgiąć oba kolana do 90°, następnie wrócić do pozycji wyjściowej.
+    name: Wykroki (sztanga lub hantle)
+
+military_press_bar:
+    description: Stojąc lub siedząc, wypychać sztangę nad głowę z barków do pełnego wyprostu ramion.
+    name: Wyciskanie nad głowę (sztanga)
+
+military_press_machine:
+    description: Siedząc na maszynie do barków, wypychać uchwyty do góry do wyprostu ramion.
+    name: Wyciskanie na maszynie
+
+overhead_cable_triceps_extension_bar:
+    description: Przodem do wyciągu górnego z prostym drążkiem, prostować ramiona w dół utrzymując łokcie przy ciele.
+    name: Prostowanie na wyciągu górnym (drążek)
+
+overhead_cable_triceps_extension_rope:
+    description: Przodem do wyciągu górnego z liną, prostować ramiona w dół rozchylając końce liny na końcu ruchu.
+    name: Prostowanie na wyciągu górnym (lina)
+
+plank:
+    description: Opierając się na przedramionach i palcach stóp, utrzymywać ciało w linii prostej napinając mięśnie brzucha i pośladki.
+    name: Deska (plank)
+
+preacher_curl:
+    description: Ramiona oparte na skośnej poduszce, zginać łokieć ze sztangą lub hantlem. Izoluje biceps eliminując impet.
+    name: Uginanie na modlitewniku
+
+pull_up:
+    description: Wisząc na drążku, dłonie od siebie, ciągnąć ciało do góry aż broda znajdzie się nad drążkiem.
+    name: Podciąganie nachwytem
+
+pullover:
+    description: Leżąc na ławce, opuszczać hantel za głowę z prawie wyprostowanymi ramionami, następnie wracać nad klatkę piersiową.
+    name: Pullover
+
+push_up:
+    description: Na podłodze, dłonie na szerokość barków, opuszczać klatkę ku podłodze i wypychać do pozycji górnej.
+    name: Pompki
+
+push_up_diamond:
+    description: Pompki z dłońmi blisko siebie tworzącymi diament pod klatką piersiową, aby celować w triceps.
+    name: Pompki diamentowe
+
+rear_delt_fly:
+    description: Pochylony do przodu, unosić hantle na boki ściskając łopatki, aby trenować tylne partie barków.
+    name: Odwodzenie ramion w opadzie
+
+reverse_wrist_curl:
+    description: Siedząc, przedramiona oparte na udach dłońmi w dół, unosić nadgarstki ze sztangą.
+    name: Odwracany curl nadgarstków
+
+romanian_deadlift:
+    description: Podobny do martwego ciągu na prostych nogach, ale z lekkim ugięciem kolan utrzymywanym przez cały ruch.
+    name: Martwy ciąg rumuński
+
+russian_twist:
+    description: Siedząc na podłodze, tułów odchylony do tyłu, stopy uniesione, wykonywać rotacje tułowia z boku na bok z obciążeniem lub bez.
+    name: Russian twist
+
+sissy_squat:
+    description: Stojąc, odchylać się do tyłu zginając kolana, pięty uniesione, aby izolować czworogłowe uda.
+    name: Sissy squat
+
+skull_crusher:
+    description: Leżąc na ławce, opuszczać sztangę ku czołu zginając łokcie, następnie prostować ramiona.
+    name: Skull crusher
+
+stiff_leg_deadlift:
+    description: Stojąc, opuszczać sztangę wzdłuż nóg utrzymując nogi prawie wyprostowane, odpychając biodra do tyłu.
+    name: Martwy ciąg na prostych nogach
+
+sumo_squat:
+    description: Przysiad z bardzo szerokim rozstawem stóp i palcami skierowanymi na zewnątrz, aby trenować przywodziciele.
+    name: Przysiad sumo
+
+superman:
+    description: Leżąc twarzą do dołu, jednocześnie unosić ramiona i nogi napinając mięśnie lędźwiowe i pośladki.
+    name: Superman
+
+suspended_leg_raise:
+    description: Wisząc na drążku, unosić nogi przed siebie napinając mięśnie brzucha. Im bardziej wyprostowane nogi, tym intensywniej.
+    name: Unoszenie nóg w zwisie
+
+triceps_kickback:
+    description: Pochylony do przodu, łokieć przy ciele, prostować ramię do tyłu napinając triceps.
+    name: Odrzuty na triceps
+
+walking_lunge:
+    description: Wykonywać kolejne wykroki idąc do przodu z każdym powtórzeniem, naprzemiennie lewą i prawą nogą.
+    name: Wykroki w marszu
+
+wrist_curl:
+    description: Siedząc, przedramiona oparte na udach dłońmi do góry, zginać nadgarstki ze sztangą.
+    name: Curl nadgarstków

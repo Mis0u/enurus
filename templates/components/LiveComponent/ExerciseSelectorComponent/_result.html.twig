@@ -1,0 +1,33 @@
+{% set results = this.filteredExercises %}
+
+{% if results is not empty %}
+    {% for exercise in results %}
+        <div
+            class="px-3.5 py-3 bg-white/[0.02] border border-white/[0.07] rounded-[10px] mb-2 cursor-pointer transition-all duration-250 hover:bg-white/[0.06] hover:border-white/[0.12]"
+            data-action="click->live#action"
+            data-live-action-param="selectExercise"
+            data-live-id-param="{{ exercise.id }}"
+        >
+            <div class="text-[15px] font-semibold text-[#f0f4ff] mb-1.5">
+                {{ exercise.isPublic ? exercise.name|trans({}, 'exercise') : exercise.name }}
+            </div>
+            <div class="flex items-center gap-1.5 flex-wrap">
+                {% for exercise_muscle in exercise.exerciseMuscles %}
+                    {% if exercise_muscle.type.value == enum('App\\Enum\\Entity\\ExerciceMuscle\\MuscleTypeEnum').PRIMARY.value %}
+                        <span class="px-2.5 py-0.75 bg-[rgba(244,63,94,0.15)] border border-[rgba(244,63,94,0.3)] rounded-md text-[11px] font-medium text-[#f43f5e]">
+                            {{ exercise_muscle.muscleGroup.name|trans({}, 'muscle') }}
+                        </span>
+                    {% else %}
+                        <span class="px-2.5 py-0.75 bg-[rgba(249,115,22,0.15)] border border-[rgba(249,115,22,0.3)] rounded-md text-[11px] font-medium text-[#f97316]">
+                            {{ exercise_muscle.muscleGroup.name|trans({}, 'muscle') }}
+                        </span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p class="text-center text-white/40 text-[14px] py-6">
+        {{ 'workout.search_exercise.no_result'|trans({}, 'navigation') }}
+    </p>
+{% endif %}

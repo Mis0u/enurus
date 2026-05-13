@@ -19,6 +19,14 @@ class ResetPasswordRequest implements ResetPasswordRequestInterface
 {
     use ResetPasswordRequestTrait;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    public User $user {
+        get {
+            return $this->user;
+        }
+    }
+
     /**
      * @var DateTimeImmutable $requestedAt
      */
@@ -35,25 +43,15 @@ class ResetPasswordRequest implements ResetPasswordRequestInterface
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
-    private ?Uuid $id = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private User $user;
+    private ?Uuid $id = null {
+        get {
+            return $this->id;
+        }
+    }
 
     public function __construct(User $user, \DateTimeInterface $expiresAt, string $selector, #[\SensitiveParameter] string $hashedToken)
     {
         $this->user = $user;
         $this->initialize($expiresAt, $selector, $hashedToken);
-    }
-
-    public function getId(): ?Uuid
-    {
-        return $this->id;
-    }
-
-    public function getUser(): User
-    {
-        return $this->user;
     }
 }

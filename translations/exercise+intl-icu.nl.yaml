@@ -1,0 +1,315 @@
+ab_wheel_rollout:
+    description: Knielend het ab-wheel naar voren rollen terwijl je rug recht blijft, dan terugkeren naar de startpositie.
+    name: Ab wheel rollout
+
+abduction_machine:
+    description: Zittend op de machine, de bovenbenen tegen de weerstand spreiden om de abductoren en de middelste bilspier te trainen.
+    name: Abducties op de machine
+
+adduction_machine:
+    description: Zittend op de machine, de bovenbenen tegen de weerstand samendrukken om de adductoren te trainen.
+    name: Adducties op de machine
+
+arnold_press:
+    description: Zittend, dumbbells voor het gezicht met handpalmen naar je toe, roteren terwijl je omhoog drukt.
+    name: Arnold press
+
+barbell_curl_standing:
+    description: Staand, halter in de handen met handpalmen omhoog, de ellebogen buigen om de halter naar de schouders te brengen zonder het bovenlichaam te bewegen.
+    name: Halter curl (staand)
+
+barbell_front_squat:
+    description: Halter op de voorste schouderkoppen, zakken in een squat. De frontpositie belast de quadriceps en buikspieren meer.
+    name: Front squat
+
+barbell_row:
+    description: Voorovergebogen, de halter naar de navel trekken terwijl je de schouderbladen samendrukt, dan gecontroleerd laten zakken.
+    name: Halter roeien
+
+barbell_shrug:
+    description: Staand, halter in de handen met gestrekte armen, de schouders zo hoog mogelijk optrekken en gecontroleerd laten zakken.
+    name: Halter shrugs
+
+barbell_squat:
+    description: Halter op de trapezius, knieën en heupen buigen om in zitpositie te zakken, dan omhoog duwen door de hakken.
+    name: Squat (halter)
+
+bench_press_bar:
+    description: Liggend op een vlakke bank, de halter naar de borst laten zakken en omhoog duwen tot de armen gestrekt zijn.
+    name: Bankdrukken (halter)
+
+bench_press_dumbbell:
+    description: Liggend op een vlakke bank, dumbbells omhoog duwen terwijl de handen aan het eind van de beweging naar elkaar toe komen.
+    name: Dumbbell bankdrukken
+
+cable_crunch:
+    description: Knielend voor een hoge kabel, touw achter het hoofd, het bovenlichaam naar de grond oprollen door de buikspieren aan te spannen.
+    name: Kabel crunch
+
+cable_curl:
+    description: Met het gezicht naar een lage kabel, de ellebogen buigen om de stang naar de schouders te brengen. De spanning blijft constant gedurende de hele beweging.
+    name: Kabel curl
+
+cable_fly:
+    description: Staand tussen twee hoge kabels, de handen boogvormig voor je samenvoegen terwijl je de borstspieren aanspant.
+    name: Kabel fly
+
+cable_lateral_raise:
+    description: Voorovergebogen voor een lage kabel, de kabel naar buiten trekken gericht op de achterste schouder.
+    name: Kabel reverse fly
+
+cable_row:
+    description: Zittend voor een lage kabel, de greep naar de buik trekken terwijl je de rug recht houdt en de schouderbladen samendrukt.
+    name: Kabel roeien (zittend)
+
+cable_woodchop:
+    description: Zijwaarts naar een kabel staand, de kabel diagonaal trekken met een rotatie van het bovenlichaam van hoog naar laag of omgekeerd.
+    name: Kabel woodchop
+
+calf_raise_machine_seated:
+    description: Zittend op de machine, op de tenen drukken. De zittende positie belast de soleus meer.
+    name: Kuitheffen zittend (machine)
+
+calf_raise_machine_standing:
+    description: Staand op de machine, op de tenen drukken terwijl je het gewicht omhoog duwt, dan langzaam laten zakken.
+    name: Kuitheffen staand (machine)
+
+calf_raise_press:
+    description: Op de beenpers, voeten onderaan het platform, met de tenen drukken.
+    name: Kuitheffen op de beenpers
+
+chin_up:
+    description: Hangend aan een stang, handpalmen naar je toe, het lichaam omhoog trekken. De ondergreep belast de biceps meer.
+    name: Chin-up
+
+concentration_curl:
+    description: Zittend, elleboog tegen de binnenkant van de dij, de arm buigen met een dumbbell terwijl je de biceps maximaal aanspant.
+    name: Concentratie curl
+
+crunch:
+    description: Op de rug liggend, knieën gebogen, het bovenlichaam naar voren oprollen door de buikspieren aan te spannen zonder de onderrug op te tillen.
+    name: Crunch
+
+deadlift:
+    description: Staand voor een halter op de grond, het gewicht optillen door de benen te strekken en de rug recht te houden tot volledige strekking.
+    name: Deadlift
+
+decline_bench_press_bar:
+    description: Bankdrukken op een dalende bank om het onderste deel van de borstspieren te trainen.
+    name: Decline bankdrukken (halter)
+
+dips_chest:
+    description: Aan de parallelle barren, bovenlichaam naar voren geleund, het lichaam laten zakken en omhoog duwen gericht op de borstspieren.
+    name: Dips (borst)
+
+dips_triceps:
+    description: Aan de parallelle barren, bovenlichaam recht en verticaal, het lichaam laten zakken en omhoog duwen gericht op de triceps.
+    name: Dips (triceps)
+
+dumbbell_alternating_curl:
+    description: Staand, afwisselend de ene arm en dan de andere buigen met een polsrotatie aan het einde van de beweging.
+    name: Afwisselende dumbbell curl
+
+dumbbell_curl_standing:
+    description: Staand, dumbbells in de hand, beide ellebogen tegelijk buigen om de dumbbells naar de schouders te brengen.
+    name: Dumbbell curl (staand)
+
+dumbbell_fly_flat:
+    description: Liggend op een vlakke bank, de armen boogvormig openen met dumbbells en weer boven de borst samenvoegen.
+    name: Dumbbell fly (vlak)
+
+dumbbell_fly_incline:
+    description: Fly op een schuine bank om het bovenste deel van de borstspieren te trainen met een openingsbeweging.
+    name: Dumbbell fly (schuin)
+
+dumbbell_overhead_triceps_extension:
+    description: Zittend of staand, een dumbbell met beide handen achter het hoofd vasthouden en de armen omhoog strekken.
+    name: Dumbbell triceps extensie boven het hoofd
+
+dumbbell_row:
+    description: Eén knie en één hand op een bank, de dumbbell naar de heup trekken terwijl je het schouderblad samendrukt.
+    name: Dumbbell roeien (eenarmig)
+
+dumbbell_shrug:
+    description: Staand, dumbbells in de handen met gestrekte armen langs het lichaam, de schouders naar de oren optrekken.
+    name: Dumbbell shrugs
+
+ez_bar_curl:
+    description: Staand met een EZ-stang, de ellebogen buigen. De gebogen stang vermindert de belasting op de polsen.
+    name: EZ-stang curl
+
+face_pull:
+    description: Met het gezicht naar een hoge kabel met touw, naar het gezicht trekken terwijl je de ellebogen naar buiten opent en de schouderbladen samendrukt.
+    name: Face pull
+
+farmer_walk:
+    description: Staand, zware dumbbells pakken en lopen terwijl je een rechte houding en stevige grip behoudt.
+    name: Farmer walk
+
+front_raise:
+    description: Staand, dumbbells voor de bovenbenen, de armen naar voren heffen tot schouderhoogte.
+    name: Front raise
+
+glute_bridge:
+    description: Op de rug liggend, voeten plat op de grond, de heupen omhoog duwen terwijl je de bilspieren aanspant. Grondversie van de hip thrust.
+    name: Glute bridge
+
+glute_kickback_cable:
+    description: Staand voor een lage kabel, kabel aan de enkel bevestigd, het been naar achteren duwen terwijl je de bilspier aanspant.
+    name: Kabel kickback (bilspieren)
+
+good_morning:
+    description: Halter op de trapezius, het bovenlichaam naar voren buigen terwijl je de heupen naar achteren duwt, benen licht gebogen.
+    name: Good morning
+
+hack_squat:
+    description: Op de hack squat machine, rug gesteund, in squat zakken en omhoog duwen. Minder belasting op de onderrug.
+    name: Hack squat
+
+hammer_curl:
+    description: Staand, dumbbells in neutrale greep (handpalmen naar elkaar), de ellebogen buigen. Traint de brachialis en brachioradialis.
+    name: Hammer curl
+
+hip_thrust_bar:
+    description: Rug op een bank gesteund, halter op de heupen, de heupen omhoog duwen terwijl je de bilspieren maximaal aanspant.
+    name: Hip thrust (halter)
+
+hip_thrust_machine:
+    description: Dezelfde beweging als de halter hip thrust maar op een speciale machine voor meer stabiliteit.
+    name: Hip thrust machine
+
+horizontal_cable_row:
+    description: Zittend voor een kabel, de greep naar de buik trekken terwijl je de ellebogen dicht bij het lichaam houdt.
+    name: Horizontaal kabel roeien
+
+hyperextension:
+    description: Op een 45°-bank het bovenlichaam naar de grond laten zakken en weer omhoog komen door de onderrug en bilspieren aan te spannen.
+    name: Hyperextensies (45°-bank)
+
+incline_bench_press_bar:
+    description: Dezelfde beweging als bankdrukken maar op een 30-45° schuine bank voor het bovenste deel van de borstspieren.
+    name: Schuin bankdrukken (halter)
+
+incline_bench_press_dumbbell:
+    description: Dumbbell drukken op een 30-45° schuine bank voor het bovenste deel van de borstspieren met een groter bewegingsbereik.
+    name: Schuin bankdrukken (dumbbells)
+
+lat_pulldown:
+    description: Zittend voor een hoge kabel, de stang naar het bovenste deel van de borst trekken terwijl je de rug aanspant.
+    name: Lat pulldown
+
+lateral_raise:
+    description: Staand, dumbbells langs het lichaam, de armen zijwaarts heffen tot schouderhoogte terwijl je een lichte elleboogbuiging behoudt.
+    name: Zijwaarts heffen
+
+leg_curl_lying:
+    description: Op de buik liggend op de bank, de benen buigen om de hakken naar de bilspieren te brengen.
+    name: Leg curl liggend
+
+leg_curl_seated:
+    description: Zittend op de machine, de benen onder het kussen buigen terwijl je de hamstrings aanspant.
+    name: Leg curl zittend
+
+leg_extension:
+    description: Zittend op de machine, de benen naar voren strekken terwijl je de quadriceps aanspant. Isolatie-oefening.
+    name: Leg extension
+
+leg_press:
+    description: Zittend op de machine, voeten op het platform, het gewicht duwen door de benen te strekken zonder de knieën te vergrendelen.
+    name: Beenpers
+
+lunge:
+    description: Staand, een grote stap naar voren maken en beide knieën tot 90° buigen, dan terugkeren naar de startpositie.
+    name: Lunges (halter of dumbbells)
+
+military_press_bar:
+    description: Staand of zittend, de halter van de schouders boven het hoofd duwen tot volledige armstrekking.
+    name: Military press (halter)
+
+military_press_machine:
+    description: Zittend aan een schoudermachine, de grepen omhoog duwen tot armstrekking.
+    name: Schouderpers machine
+
+overhead_cable_triceps_extension_bar:
+    description: Voor een hoge kabel met rechte stang, de armen naar beneden strekken terwijl je de ellebogen vast tegen het lichaam houdt.
+    name: Kabel triceps pushdown (stang)
+
+overhead_cable_triceps_extension_rope:
+    description: Voor een hoge kabel met touw, de armen naar beneden strekken terwijl je de touweinden aan het einde van de beweging spreidt.
+    name: Kabel triceps pushdown (touw)
+
+plank:
+    description: Op de onderarmen en tenen gesteund, het lichaam recht houden terwijl je buikspieren en bilspieren aanspant.
+    name: Plank
+
+preacher_curl:
+    description: Armen op een schuin kussen gesteund, de elleboog buigen met een stang of dumbbell. Isoleert de biceps door het zwaaien te elimineren.
+    name: Preacher curl
+
+pull_up:
+    description: Hangend aan een stang, handpalmen naar voren, het lichaam omhoog trekken tot de kin boven de stang is.
+    name: Pull-up
+
+pullover:
+    description: Liggend op een bank, een dumbbell met bijna gestrekte armen achter het hoofd laten zakken en weer boven de borst terugbrengen.
+    name: Pullover
+
+push_up:
+    description: Op de grond, handen op schouderbreedte, de borst naar de grond laten zakken en omhoog duwen naar de bovenste positie.
+    name: Push-up
+
+push_up_diamond:
+    description: Push-ups met de handen dicht bij elkaar in een diamantvorm onder de borst om de triceps te trainen.
+    name: Diamant push-up
+
+rear_delt_fly:
+    description: Voorovergebogen, de dumbbells zijwaarts heffen terwijl je de schouderbladen samendrukt om de achterste schouderspieren te trainen.
+    name: Reverse fly
+
+reverse_wrist_curl:
+    description: Zittend, onderarmen op de bovenbenen met handpalmen naar beneden, de polsen optillen met een stang.
+    name: Reverse polscurl
+
+romanian_deadlift:
+    description: Vergelijkbaar met de stiff-leg deadlift maar met een lichte kniebuiging die gedurende de hele beweging wordt aangehouden.
+    name: Roemeense deadlift
+
+russian_twist:
+    description: Zittend op de grond, bovenlichaam achterover geleund, voeten van de grond, het bovenlichaam van links naar rechts roteren met of zonder gewicht.
+    name: Russian twist
+
+sissy_squat:
+    description: Staand, achterover leunen terwijl je de knieën buigt, hakken omhoog, om de quadriceps te isoleren.
+    name: Sissy squat
+
+skull_crusher:
+    description: Liggend op een bank, de stang naar het voorhoofd laten zakken door de ellebogen te buigen en dan de armen strekken.
+    name: Skull crusher
+
+stiff_leg_deadlift:
+    description: Staand, de stang langs de benen laten zakken terwijl je de benen bijna gestrekt houdt en de heupen naar achteren duwt.
+    name: Stiff-leg deadlift
+
+sumo_squat:
+    description: Squat met een zeer brede voetpositie en tenen naar buiten gericht om de adductoren te trainen.
+    name: Sumo squat
+
+superman:
+    description: Op de buik liggend, gelijktijdig de armen en benen optillen terwijl je de onderrug en bilspieren aanspant.
+    name: Superman
+
+suspended_leg_raise:
+    description: Hangend aan een stang, de benen voor je optillen door de buikspieren aan te spannen. Hoe rechter de benen, hoe intensiever.
+    name: Hangend beenheffen
+
+triceps_kickback:
+    description: Voorovergebogen, elleboog vast tegen het lichaam, de arm naar achteren strekken terwijl je de triceps aanspant.
+    name: Triceps kickback
+
+walking_lunge:
+    description: Opeenvolgende lunges uitvoeren terwijl je bij elke herhaling vooruit stapt, afwisselend links en rechts.
+    name: Walking lunges
+
+wrist_curl:
+    description: Zittend, onderarmen op de bovenbenen met handpalmen omhoog, de polsen buigen met een stang.
+    name: Polscurl

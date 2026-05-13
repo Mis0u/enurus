@@ -3,6 +3,9 @@ field:
     criteria_password: "Critérios de segurança:"
     email: Email
     email_placeholder: seu@email.com
+    form:
+        button:
+            validate: Confirmar
     gender:
         female: Mulher
         male: Homem
@@ -71,6 +74,7 @@ sentence:
     workout_resume: Resumo de treino · Silhueta muscular
 
 word:
+    close: Fechar
     hello: Olá,
     hi: Olá
     important: ⚠️ Importante

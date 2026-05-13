@@ -3,6 +3,9 @@ field:
     criteria_password: "Sicherheitskriterien:"
     email: E-Mail
     email_placeholder: deine@email.com
+    form:
+        button:
+            validate: Bestätigen
     gender:
         female: Frau
         male: Mann
@@ -72,6 +75,7 @@ sentence:
     workout_resume: Trainingsübersicht · Muskelsilhouette
 
 word:
+    close: Schließen
     hello: Hallo,
     hi: Hallo
     important: ⚠️ Wichtig

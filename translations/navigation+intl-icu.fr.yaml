@@ -11,5 +11,51 @@ dashboard:
     setting: Réglages
     title: Tableau de bord
     workout: Séances
+
+workout:
+    add:
+        exercice: Ajouter un exercice
+        serie: Ajouter une série
+    check_date:
+        message: >-
+            {count, plural,
+                =1    {Tu as déjà # séance enregistrée à ce jour.}
+                other {Tu as déjà # séances enregistrées à ce jour.}
+            }
+        confirm: OK, noté !
+    created: Votre séance a bien été enregistrée
+    date: Date
+    duration_optional: Durée (Optionnel)
+    duration_placeholder: Durée (min)
+    error:
+        no_exercise:
+            title: Aucun exercice
+            text: Ajoute au moins un exercice avant de valider ta séance
+        required_weight: Le poids est requis
+        required_reps: Les répétitions sont requises
+        validation: Une erreur est survenue lors de la saisie de vos données
+    note:
+        title: Comment s'est déroulé ta séance ?
+        subtitle: Ajoute un ressenti, des observations ou tout ce qui t'a marqué pendant cette séance. Cette note est facultative.
+        placeholder: Ta séance s'est bien passée, tu as battu un record ?...
+        back: Retour à la séance
+        submit_without: Valider sans note
+        submit_with: Valider ma séance
+    reps: Répétitions
+    routine:
+        select: Choisissez votre routine
+        title: Routine
+    search_exercise:
+        no_result: Aucun exercice trouvé !
+        placeholder: Nom de l'exercice...
+        title: Rechercher un exercice
+    series: Séries
+    title: Enregistre ta séance
+    type:
+        free: Séance libre
+        routine: Choisir une routine
+        title: Type de séance
+    weight: Poids
+
 footer:
     copyright: "© {year} {brand}. Tous droits réservés."

@@ -20,8 +20,8 @@ readonly class UserService
     public function createUser(User $user, string $plainPassword, string $locale): User
     {
         $this->hashPassword($user, $plainPassword);
-        $user->setLastLogin(now());
-        $user->setLocale($locale);
+        $user->lastLogin = now();
+        $user->locale = $locale;
         $this->save($user);
 
         return $user;
@@ -35,6 +35,6 @@ readonly class UserService
 
     public function hashPassword(User $user, string $plainPassword): void
     {
-        $user->setPassword($this->passwordHasher->hashPassword($user, $plainPassword));
+        $user->password = $this->passwordHasher->hashPassword($user, $plainPassword);
     }
 }

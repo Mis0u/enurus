@@ -3,6 +3,9 @@ field:
     criteria_password: "Beveiligingscriteria:"
     email: E-mail
     email_placeholder: jouw@email.com
+    form:
+        button:
+            validate: Bevestigen
     gender:
         female: Vrouw
         male: Man
@@ -72,6 +75,7 @@ sentence:
     workout_resume: Trainingsoverzicht · Spiersilhouet
 
 word:
+    close: Sluiten
     hello: Hallo,
     hi: Hallo
     important: ⚠️ Belangrijk

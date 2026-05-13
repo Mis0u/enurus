@@ -1,12 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'dashboard.title'|trans({}, 'navigation') }} — {{ 'name'|trans({}, 'brand') }}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
 {% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <twig:Flash:Message:Message message="{{ message }}" type="success"/>
+    {% endfor %}
+
+    {% for message in app.flashes('error') %}
+        <twig:Flash:Message:Message message="{{ message }}" type="error"/>
+    {% endfor %}
 <div class="flex h-screen w-screen overflow-hidden bg-bg-base text-[#f0f4ff] text-sm leading-relaxed font-dm-sans">
 
     {% block sidebar %}
@@ -14,7 +20,7 @@
     {% endblock %}
     <main class="flex-1 overflow-hidden flex flex-col relative max-md:pb-20">
         {% block topbar %}
-            {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' %}
+            {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {'title': 'dashboard.title'|trans({}, 'navigation'), 'subtitle': user.nickname|formatInitials} %}
         {% endblock %}
 
         {% block state %}{% endblock %}

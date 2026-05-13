@@ -13,67 +13,47 @@ trait TimestampTrait
 {
     #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
-    private \DateTimeImmutable $createdAt;
+    public \DateTimeImmutable $createdAt {
+        get {
+            return $this->createdAt;
+        }
+        set(\DateTimeImmutable $createdAt) {
+            $this->createdAt = $createdAt;
+        }
+    }
 
     #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeImmutable $updatedAt = null;
+    public ?\DateTimeImmutable $updatedAt = null {
+        get {
+            return $this->updatedAt;
+        }
+        set(?\DateTimeImmutable $updatedAt) {
+            $this->updatedAt = $updatedAt;
+        }
+    }
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: true)]
     #[Gedmo\Blameable(on: 'create')]
-    private ?User $createdBy = null;
+    public ?User $createdBy = null {
+        get {
+            return $this->createdBy;
+        }
+        set(?User $createdBy) {
+            $this->createdBy = $createdBy;
+        }
+    }
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: true)]
     #[Gedmo\Blameable(on: 'update')]
-    private ?User $updatedBy = null;
-
-    public function getCreatedAt(): \DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getCreatedBy(): ?User
-    {
-        return $this->createdBy;
-    }
-
-    public function setCreatedBy(?User $createdBy): static
-    {
-        $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
-    public function getUpdatedBy(): ?User
-    {
-        return $this->updatedBy;
-    }
-
-    public function setUpdatedBy(?User $updatedBy): static
-    {
-        $this->updatedBy = $updatedBy;
-
-        return $this;
+    public ?User $updatedBy = null {
+        get {
+            return $this->updatedBy;
+        }
+        set(?User $updatedBy) {
+            $this->updatedBy = $updatedBy;
+        }
     }
 }

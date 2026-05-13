@@ -2,3 +2,6 @@ user:
     nickname:
         length:
             max: 'Dein Alias ist zu lang. Er darf maximal {{ limit }} Zeichen haben'
+workout:
+    performed_at:
+        today: Das Datum darf nicht in der Zukunft liegen

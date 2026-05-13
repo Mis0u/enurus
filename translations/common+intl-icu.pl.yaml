@@ -3,6 +3,9 @@ field:
     criteria_password: "Kryteria bezpieczeństwa:"
     email: E-mail
     email_placeholder: twoj@email.com
+    form:
+        button:
+            validate: Zatwierdź
     gender:
         female: Kobieta
         male: Mężczyzna
@@ -76,6 +79,7 @@ sentence:
     workout_resume: Podsumowanie treningu · Sylwetka mięśniowa
 
 word:
+    close: Zamknij
     hello: Cześć,
     hi: Cześć
     important: ⚠️ Ważne

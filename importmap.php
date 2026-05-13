@@ -25,4 +25,13 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    '@symfony/ux-live-component' => [
+        'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
+    ],
+    'sweetalert2' => [
+        'version' => '11.26.24',
+    ],
+    'sortablejs' => [
+        'version' => '1.15.7',
+    ],
 ];

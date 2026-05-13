@@ -29,4 +29,18 @@ class WorkoutRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
         ;
     }
+
+    public function countByUserAndDate(User $user, \DateTimeImmutable $start, \DateTimeImmutable $end): int
+    {
+        return (int) $this->createQueryBuilder('w')
+            ->select('COUNT(w.id)')
+            ->andWhere('w.owner = :user')
+            ->andWhere('w.performedAt >= :start')
+            ->andWhere('w.performedAt <= :end')
+            ->setParameter('user', $user)
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

@@ -18,5 +18,7 @@ abstract class AbstractButton
 
     public ?string $data = null;
 
+    public ?string $class = null;
+
     abstract public function getClasses(): string;
 }

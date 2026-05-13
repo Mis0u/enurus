@@ -1,0 +1,315 @@
+ab_wheel_rollout:
+    description: De joelhos, rolar a roda abdominal para a frente mantendo as costas direitas e voltar à posição inicial.
+    name: Ab wheel (rollout)
+
+abduction_machine:
+    description: Sentado na máquina, afastar as coxas contra a resistência para trabalhar os abdutores e o glúteo médio.
+    name: Abduções na máquina
+
+adduction_machine:
+    description: Sentado na máquina, juntar as coxas contra a resistência para trabalhar os adutores.
+    name: Aduções na máquina
+
+arnold_press:
+    description: Sentado, começar com os halteres à frente do rosto com as palmas viradas para si, rodar enquanto empurra para cima.
+    name: Arnold press
+
+barbell_curl_standing:
+    description: De pé, barra na mão com as palmas para cima, fletir os cotovelos para levar a barra até aos ombros sem mover o tronco.
+    name: Curl com barra (de pé)
+
+barbell_front_squat:
+    description: Barra apoiada nos deltoides anteriores, descer em agachamento. A posição frontal solicita mais os quadríceps e abdominais.
+    name: Agachamento frontal (front squat)
+
+barbell_row:
+    description: Inclinado para a frente, puxar a barra em direção ao umbigo apertando as omoplatas e descer de forma controlada.
+    name: Remada com barra
+
+barbell_shrug:
+    description: De pé, barra na mão com os braços estendidos, encolher os ombros o mais alto possível e descer de forma controlada.
+    name: Encolhimentos com barra
+
+barbell_squat:
+    description: Barra nos trapézios, fletir joelhos e ancas para descer em posição sentada e subir empurrando com os calcanhares.
+    name: Agachamento com barra
+
+bench_press_bar:
+    description: Deitado num banco plano, descer a barra até ao peito e empurrar para cima com os braços estendidos.
+    name: Supino reto (barra)
+
+bench_press_dumbbell:
+    description: Deitado num banco plano, empurrar os halteres para cima aproximando as mãos no final do movimento.
+    name: Supino reto com halteres
+
+cable_crunch:
+    description: De joelhos frente a uma polia alta, corda atrás da cabeça, enrolar o tronco em direção ao chão contraindo os abdominais.
+    name: Crunch na polia alta
+
+cable_curl:
+    description: De frente para uma polia baixa, fletir os cotovelos para levar a barra até aos ombros. A tensão é constante ao longo do movimento.
+    name: Curl na polia baixa
+
+cable_fly:
+    description: De pé entre duas polias altas, juntar as mãos à frente em arco contraindo os peitorais.
+    name: Cruzamento de cabos
+
+cable_lateral_raise:
+    description: Inclinado para a frente frente a uma polia baixa, puxar o cabo para fora visando a parte posterior do ombro.
+    name: Elevações posteriores na polia
+
+cable_row:
+    description: Sentado frente a uma polia baixa, puxar a pega em direção ao abdómen mantendo as costas direitas e apertando as omoplatas.
+    name: Remada na polia baixa
+
+cable_woodchop:
+    description: De pé de perfil para uma polia, puxar o cabo na diagonal com uma rotação do tronco de cima para baixo ou vice-versa.
+    name: Woodchop na polia
+
+calf_raise_machine_seated:
+    description: Sentado na máquina, subir nas pontas dos pés. A posição sentada trabalha mais o sóleo.
+    name: Elevação de gémeos sentado (máquina)
+
+calf_raise_machine_standing:
+    description: De pé na máquina, subir nas pontas dos pés empurrando a carga e descer lentamente.
+    name: Elevação de gémeos de pé (máquina)
+
+calf_raise_press:
+    description: Na prensa de pernas, pés na parte inferior da plataforma, empurrar com as pontas dos pés.
+    name: Gémeos na prensa
+
+chin_up:
+    description: Pendurado numa barra, palmas viradas para si, puxar o corpo para cima. A pega supinada solicita mais os bíceps.
+    name: Elevações supinadas
+
+concentration_curl:
+    description: Sentado, cotovelo apoiado no interior da coxa, fletir o braço com um haltere contraindo ao máximo o bíceps.
+    name: Curl concentrado
+
+crunch:
+    description: Deitado no chão, joelhos fletidos, enrolar o tronco para a frente contraindo os abdominais sem levantar a parte inferior das costas.
+    name: Crunch
+
+deadlift:
+    description: De pé frente a uma barra no chão, levantar a carga empurrando as pernas e mantendo as costas direitas até à extensão completa.
+    name: Levantamento terra
+
+decline_bench_press_bar:
+    description: Supino em banco declinado para trabalhar a parte inferior dos peitorais.
+    name: Supino declinado (barra)
+
+dips_chest:
+    description: Nas barras paralelas, tronco inclinado para a frente, descer o corpo e empurrar para subir visando os peitorais.
+    name: Mergulhos (peitorais)
+
+dips_triceps:
+    description: Nas barras paralelas, tronco direito e vertical, descer o corpo e empurrar visando os tríceps.
+    name: Mergulhos (tríceps)
+
+dumbbell_alternating_curl:
+    description: De pé, alternar a flexão de um braço e depois o outro com uma rotação do pulso no final do movimento.
+    name: Curl alternado com halteres
+
+dumbbell_curl_standing:
+    description: De pé, halteres na mão, fletir ambos os cotovelos simultaneamente para levar os halteres até aos ombros.
+    name: Curl com halteres (de pé)
+
+dumbbell_fly_flat:
+    description: Deitado num banco plano, abrir os braços em arco com os halteres e juntar acima do peito.
+    name: Aberturas com halteres (plano)
+
+dumbbell_fly_incline:
+    description: Aberturas em banco inclinado para trabalhar a parte superior dos peitorais com um movimento de abertura.
+    name: Aberturas inclinadas com halteres
+
+dumbbell_overhead_triceps_extension:
+    description: Sentado ou de pé, um haltere segurado com ambas as mãos atrás da cabeça, estender os braços para cima.
+    name: Extensão de tríceps com haltere acima da cabeça
+
+dumbbell_row:
+    description: Um joelho e uma mão apoiados num banco, puxar o haltere em direção à anca apertando a omoplata.
+    name: Remada com haltere (um braço)
+
+dumbbell_shrug:
+    description: De pé, halteres na mão com os braços estendidos ao longo do corpo, encolher os ombros em direção às orelhas.
+    name: Encolhimentos com halteres
+
+ez_bar_curl:
+    description: De pé com uma barra EZ, fletir os cotovelos. A barra angulada reduz a tensão nos pulsos.
+    name: Curl com barra EZ
+
+face_pull:
+    description: De frente para uma polia alta com corda, puxar em direção ao rosto abrindo os cotovelos para fora e apertando as omoplatas.
+    name: Face pull
+
+farmer_walk:
+    description: De pé, agarrar halteres pesados e caminhar mantendo uma postura ereta e uma pega firme.
+    name: Farmer walk
+
+front_raise:
+    description: De pé, halteres à frente das coxas, levantar os braços para a frente até à altura dos ombros.
+    name: Elevações frontais
+
+glute_bridge:
+    description: Deitado no chão, pés apoiados, empurrar as ancas para cima contraindo os glúteos. Versão no chão do hip thrust.
+    name: Ponte de glúteos
+
+glute_kickback_cable:
+    description: De pé frente a uma polia baixa, cabo preso ao tornozelo, empurrar a perna para trás contraindo o glúteo.
+    name: Kickback de glúteo na polia
+
+good_morning:
+    description: Barra nos trapézios, inclinar o tronco para a frente empurrando as ancas para trás, pernas ligeiramente fletidas.
+    name: Good morning
+
+hack_squat:
+    description: Na máquina hack squat, costas apoiadas, descer em agachamento e empurrar para subir. Menos stress na parte inferior das costas.
+    name: Hack squat
+
+hammer_curl:
+    description: De pé, halteres em pega neutra (palmas viradas uma para a outra), fletir os cotovelos. Trabalha o braquial e o braquiorradial.
+    name: Curl martelo
+
+hip_thrust_bar:
+    description: Costas apoiadas num banco, barra nas ancas, empurrar as ancas para cima contraindo ao máximo os glúteos.
+    name: Hip thrust (barra)
+
+hip_thrust_machine:
+    description: Mesmo movimento do hip thrust com barra mas numa máquina dedicada para maior estabilidade.
+    name: Hip thrust na máquina
+
+horizontal_cable_row:
+    description: Sentado frente a uma polia, puxar a pega em direção ao abdómen mantendo os cotovelos junto ao corpo.
+    name: Remada horizontal na polia
+
+hyperextension:
+    description: Num banco a 45°, descer o tronco em direção ao chão e subir contraindo os lombares e os glúteos.
+    name: Hiperextensões (banco a 45°)
+
+incline_bench_press_bar:
+    description: Mesmo movimento do supino reto mas em banco inclinado a 30-45° para trabalhar a parte superior dos peitorais.
+    name: Supino inclinado (barra)
+
+incline_bench_press_dumbbell:
+    description: Supino com halteres em banco inclinado a 30-45° para trabalhar a parte superior dos peitorais com maior amplitude.
+    name: Supino inclinado com halteres
+
+lat_pulldown:
+    description: Sentado frente a uma polia alta, puxar a barra até à parte superior do peito contraindo as costas.
+    name: Puxada na polia alta
+
+lateral_raise:
+    description: De pé, halteres ao longo do corpo, levantar os braços lateralmente até à altura dos ombros mantendo uma ligeira flexão do cotovelo.
+    name: Elevações laterais
+
+leg_curl_lying:
+    description: Deitado de barriga para baixo no banco, fletir as pernas para levar os calcanhares até aos glúteos.
+    name: Curl de perna deitado
+
+leg_curl_seated:
+    description: Sentado na máquina, fletir as pernas sob a almofada contraindo os isquiotibiais.
+    name: Curl de perna sentado
+
+leg_extension:
+    description: Sentado na máquina, estender as pernas para a frente contraindo os quadríceps. Exercício de isolamento.
+    name: Extensão de pernas
+
+leg_press:
+    description: Sentado na máquina, pés na plataforma, empurrar a carga estendendo as pernas sem bloquear os joelhos.
+    name: Prensa de pernas
+
+lunge:
+    description: De pé, dar um grande passo à frente e fletir ambos os joelhos a 90° e voltar à posição inicial.
+    name: Afundos (barra ou halteres)
+
+military_press_bar:
+    description: De pé ou sentado, empurrar a barra acima da cabeça desde os ombros até à extensão completa dos braços.
+    name: Press militar (barra)
+
+military_press_machine:
+    description: Sentado numa máquina de ombros, empurrar as pegas para cima até à extensão dos braços.
+    name: Press de ombros na máquina
+
+overhead_cable_triceps_extension_bar:
+    description: De frente para uma polia alta com barra reta, estender os braços para baixo mantendo os cotovelos fixos ao corpo.
+    name: Extensão de tríceps na polia (barra)
+
+overhead_cable_triceps_extension_rope:
+    description: De frente para uma polia alta com corda, estender os braços para baixo afastando as extremidades da corda no final do movimento.
+    name: Extensão de tríceps na polia (corda)
+
+plank:
+    description: Apoiado nos antebraços e nas pontas dos pés, manter o corpo alinhado contraindo abdominais e glúteos.
+    name: Prancha
+
+preacher_curl:
+    description: Braços apoiados num púlpito inclinado, fletir o cotovelo com uma barra ou haltere. Isola o bíceps eliminando o impulso.
+    name: Curl no banco Scott
+
+pull_up:
+    description: Pendurado numa barra, palmas viradas para a frente, puxar o corpo para cima até o queixo ultrapassar a barra.
+    name: Elevações pronadas
+
+pullover:
+    description: Deitado num banco, descer um haltere atrás da cabeça com os braços quase estendidos e trazê-lo de volta acima do peito.
+    name: Pullover
+
+push_up:
+    description: No chão, mãos à largura dos ombros, descer o peito até ao chão e empurrar para voltar à posição alta.
+    name: Flexões
+
+push_up_diamond:
+    description: Flexões com as mãos juntas formando um losango sob o peito para trabalhar os tríceps.
+    name: Flexões diamante
+
+rear_delt_fly:
+    description: Inclinado para a frente, levantar os halteres lateralmente apertando as omoplatas para trabalhar a parte posterior dos ombros.
+    name: Elevações posteriores
+
+reverse_wrist_curl:
+    description: Sentado, antebraços apoiados nas coxas com as palmas para baixo, levantar os pulsos com uma barra.
+    name: Curl de pulso inverso
+
+romanian_deadlift:
+    description: Similar ao levantamento terra com pernas rígidas mas com uma ligeira flexão dos joelhos mantida ao longo do movimento.
+    name: Levantamento terra romeno
+
+russian_twist:
+    description: Sentado no chão, tronco inclinado para trás, pés levantados, efetuar rotações do tronco da esquerda para a direita com ou sem carga.
+    name: Russian twist
+
+sissy_squat:
+    description: De pé, inclinar-se para trás fletindo os joelhos, calcanhares levantados, para isolar os quadríceps.
+    name: Sissy squat
+
+skull_crusher:
+    description: Deitado num banco, descer a barra em direção à testa fletindo os cotovelos e estender os braços.
+    name: Skull crusher
+
+stiff_leg_deadlift:
+    description: De pé, descer a barra ao longo das pernas mantendo as pernas quase estendidas, empurrando as ancas para trás.
+    name: Levantamento terra com pernas rígidas
+
+sumo_squat:
+    description: Agachamento com posição dos pés muito afastada e pontas para fora para trabalhar os adutores.
+    name: Agachamento sumo
+
+superman:
+    description: Deitado de barriga para baixo, levantar simultaneamente os braços e as pernas contraindo os lombares e os glúteos.
+    name: Superman
+
+suspended_leg_raise:
+    description: Pendurado numa barra, levantar as pernas à frente contraindo os abdominais. Quanto mais esticadas as pernas, mais intenso.
+    name: Elevação de pernas pendurado
+
+triceps_kickback:
+    description: Inclinado para a frente, cotovelo fixo ao corpo, estender o braço para trás contraindo o tríceps.
+    name: Kickback de tríceps
+
+walking_lunge:
+    description: Realizar afundos consecutivos avançando a cada repetição, alternando perna esquerda e direita.
+    name: Afundos a caminhar
+
+wrist_curl:
+    description: Sentado, antebraços apoiados nas coxas com as palmas para cima, fletir os pulsos com uma barra.
+    name: Curl de pulso
