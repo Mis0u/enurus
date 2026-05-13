@@ -9,6 +9,10 @@
     {% for message in app.flashes('success') %}
         <twig:Flash:Message:Message message="{{ message }}" type="success"/>
     {% endfor %}
+
+    {% for message in app.flashes('error') %}
+        <twig:Flash:Message:Message message="{{ message }}" type="error"/>
+    {% endfor %}
 <div class="flex h-screen w-screen overflow-hidden bg-bg-base text-[#f0f4ff] text-sm leading-relaxed font-dm-sans">
 
     {% block sidebar %}
