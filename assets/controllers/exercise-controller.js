@@ -11,6 +11,8 @@ export default class extends Controller {
         blockUrl: String,
         noExerciseTitle: String,
         noExerciseText: String,
+        noteSubmitWithout: String,
+        noteSubmitWith: String,
     };
 
     connect() {
@@ -99,11 +101,12 @@ export default class extends Controller {
         }
 
         let valid = handleErrorField(this.exerciseListTarget);
-        
+
         if (!valid) {
             return;
         }
-        event.target.closest('form').requestSubmit();
+
+        this.openNoteModal();
     }
 
     updatePositions() {
@@ -112,6 +115,48 @@ export default class extends Controller {
             if (positionInput) {
                 positionInput.value = index;
             }
+        });
+    }
+
+    openNoteModal() {
+        const modal = document.getElementById('note-modal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        const textarea = document.getElementById('workout-note-input');
+        const submitBtn = document.getElementById('note-modal-submit');
+        const backBtn = document.getElementById('note-modal-back');
+
+        // Textes traduits via data-values
+        const submitWithout = this.noteSubmitWithoutValue;
+        const submitWith = this.noteSubmitWithValue;
+
+        // Reset
+        textarea.value = '';
+        submitBtn.textContent = submitWithout;
+
+        // Bouton change de texte selon la note
+        textarea.addEventListener('input', () => {
+            submitBtn.textContent = textarea.value.trim()
+                ? submitWith
+                : submitWithout;
+        });
+
+        // Retour à la séance
+        backBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        });
+
+        // Soumission
+        submitBtn.addEventListener('click', () => {
+            const noteInput = document.getElementById('workout_note');
+            if (noteInput) {
+                noteInput.value = textarea.value.trim();
+            }
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.querySelector('form').requestSubmit();
         });
     }
 }
