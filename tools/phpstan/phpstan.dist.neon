@@ -6,3 +6,11 @@ parameters:
     excludePaths:
         - ../../tests/bootstrap.php
         - ../../tools/
+    ignoreErrors:
+        - '#^Unused .*?::__construct$#'
+        - message: '#^Property .* is never (read|written)$#'
+          path: ../../src/Twig/Components/*
+        - message: '#^Unused .*?::getClasses$#'
+          path: ../../src/Twig/Components/*
+        - message: '#^Unused .*#'
+          path: ../../src/Twig/Components/*
