@@ -41,6 +41,7 @@ class WorkoutType extends AbstractType
             ->add('performedAt', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => true,
+                'input' => 'datetime_immutable',
                 'label' => $this->translator->trans('workout.date', [], 'navigation'),
                 'attr' => [
                     'max' => $today->format('Y-m-d'),

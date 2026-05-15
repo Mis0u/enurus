@@ -48,14 +48,14 @@ class Workout
         }
     }
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\NotBlank]
     #[Assert\LessThanOrEqual('today', message: 'workout.performed_at.today')]
-    public \DateTimeInterface $performedAt {
+    public \DateTimeImmutable $performedAt {
         get {
             return $this->performedAt;
         }
-        set(?\DateTimeInterface $performedAt) {
+        set(?\DateTimeImmutable $performedAt) {
             if (null === $performedAt) {
                 return;
             }
