@@ -1,0 +1,14 @@
+<div class="flex items-center gap-4 text-[12px]">
+    {% if tonnage is not null and tonnage > 0 %}
+        <span class="flex items-center gap-1.5 text-[#8b9bb4]">
+                    {% include 'partials/_svg/_lightning.html.twig' %}
+                    <span class="font-semibold text-[#f0f4ff]">{{ tonnage|number_format(0, ',', ' ') }}</span>
+                    {{ 'workout.history.kg'|trans({}, 'navigation') }}
+                </span>
+    {% endif %}
+    <span class="flex items-center gap-1.5 text-[#8b9bb4]">
+                {% include 'partials/_svg/_list.html.twig' %}
+                <span class="font-semibold text-[#f0f4ff]">{{ workout.workoutExercises|length }}</span>
+                {{ 'workout.history.exercises'|trans({}, 'navigation') }}
+            </span>
+</div>

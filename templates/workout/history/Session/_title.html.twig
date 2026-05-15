@@ -1,0 +1,11 @@
+<div class="flex items-center gap-2">
+    {% if workout.routine is not null %}
+        <span class="font-rajdhani text-[18px] font-bold text-[#f0f4ff] leading-tight">
+                    {{ workout.routine.name }}
+                </span>
+    {% else %}
+        <span class="font-rajdhani text-[18px] font-semibold text-[#8b9bb4] italic leading-tight">
+                    {{ 'workout.history.free_session'|trans({}, 'navigation') }}
+                </span>
+    {% endif %}
+</div>
