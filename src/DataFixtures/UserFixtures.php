@@ -13,14 +13,40 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
+    public const string REFERENCE_PREFIX = 'user_';
+
+    /**
+     * @var array<int, array{email: string, nickname: string, count: int, spreadDays: int}>
+     */
+    public const array WORKOUT_USERS = [
+        [
+            'email' => 'user-fixture-11-workout@test.com',
+            'nickname' => 'user-fixture-11-workout',
+            'count' => 11,
+            'spreadDays' => 42,
+        ],
+        [
+            'email' => 'user-fixture-26-workout@test.com',
+            'nickname' => 'user-fixture-26-workout',
+            'count' => 26,
+            'spreadDays' => 90,
+        ],
+        [
+            'email' => 'user-fixture-51-workout@test.com',
+            'nickname' => 'user-fixture-51-workout',
+            'count' => 51,
+            'spreadDays' => 180,
+        ],
+    ];
+
     private const array USERS_ETHNIES = [
-        'en' => 'user-english@test.com',
-        'es' => 'user-spanish@test.com',
-        'de' => 'user-german@test.com',
-        'pt' => 'user-portuguese@test.com',
-        'pl' => 'user-polish@test.com',
-        'nl' => 'user-dutch@test.com',
-        'it' => 'user-italian@test.com',
+        'en' => 'user-fixture-english@test.com',
+        'es' => 'user-fixture-spanish@test.com',
+        'de' => 'user-fixture-german@test.com',
+        'pt' => 'user-fixture-portuguese@test.com',
+        'pl' => 'user-fixture-polish@test.com',
+        'nl' => 'user-fixture-dutch@test.com',
+        'it' => 'user-fixture-italian@test.com',
     ];
 
     public function __construct(
@@ -29,6 +55,15 @@ class UserFixtures extends Fixture
     }
 
     public function load(ObjectManager $manager): void
+    {
+        $this->loadLocaleUsers($manager);
+        $this->loadIndexedUsers($manager);
+        $this->loadWorkoutUsers($manager);
+
+        $manager->flush();
+    }
+
+    private function loadLocaleUsers(ObjectManager $manager): void
     {
         foreach (self::USERS_ETHNIES as $key => $userEmail) {
             $user = new User();
@@ -39,12 +74,15 @@ class UserFixtures extends Fixture
             $user->locale = $key;
             $user->lastLogin = $lastLogin;
             $user->gender = 'male';
-            $password = $this->passwordHasher->hashPassword($user, 'pass_1234');
-            $user->password = $password;
+            $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
 
             $manager->persist($user);
         }
-        for ($i = 0; 40 > $i; ++$i) {
+    }
+
+    private function loadIndexedUsers(ObjectManager $manager): void
+    {
+        for ($i = 0; 10 > $i; ++$i) {
             $user = new User();
             $lastLogin = now(\sprintf('+%d day +%d hours', $i, $i));
             $user->email = \sprintf('user-fixture-%s@test.com', $i);
@@ -52,16 +90,31 @@ class UserFixtures extends Fixture
             $user->createdBy = $user;
             $user->locale = LocaleAllowedEnum::FR->value;
             $user->lastLogin = $lastLogin;
-            if (0 === $i % 5) {
-                $user->gender = 'female';
-            } else {
-                $user->gender = 'male';
-            }
-            $password = $this->passwordHasher->hashPassword($user, 'pass_1234');
-            $user->password = $password;
+            $user->gender = 0 === $i % 5 ? 'female' : 'male';
+            $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+
             $manager->persist($user);
         }
+    }
 
-        $manager->flush();
+    private function loadWorkoutUsers(ObjectManager $manager): void
+    {
+        foreach (self::WORKOUT_USERS as $userData) {
+            $user = new User();
+            $user->email = $userData['email'];
+            $user->nickname = $userData['nickname'];
+            $user->createdBy = $user;
+            $user->locale = LocaleAllowedEnum::FR->value;
+            $user->gender = 'male';
+            $user->lastLogin = new \DateTimeImmutable();
+            $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+
+            $manager->persist($user);
+
+            $this->addReference(
+                \sprintf('%s%s', self::REFERENCE_PREFIX, $userData['email']),
+                $user
+            );
+        }
     }
 }
