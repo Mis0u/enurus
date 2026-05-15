@@ -3,7 +3,7 @@ dashboard:
     logout: Abmelden
     messaging: Nachrichten
     my_routines: Meine Routinen
-    my_workout: Meine Trainings
+    my_workouts: Meine Trainings
     profile: Profil
     profile_followed: Gefolgte Profile
     save_first_workout: Erfasse dein erstes Training
@@ -34,6 +34,34 @@ workout:
         required_weight: Das Gewicht ist erforderlich
         required_reps: Die Wiederholungen sind erforderlich
         validation: Beim Absenden deiner Daten ist ein Fehler aufgetreten
+    history:
+        delete:
+            cancel: Abbrechen
+            confirm: Löschen
+            message: Bist du sicher, dass du dieses Training löschen möchtest? Diese Aktion ist unwiderruflich.
+            title: Dieses Training löschen?
+        duration_unit: Min
+        edit: Training bearbeiten
+        empty: Kein Training gefunden
+        exercises: Übungen
+        filter:
+            clear: Datum löschen
+            month: Dieser Monat
+            reset: Zurücksetzen
+            week: Diese Woche
+        free_session: Freies Training
+        kg: kg
+        pagination:
+            next: Weiter
+            per_page: Anzeigen
+            previous: Zurück
+            results: Ergebnisse
+        title: Meine Trainings
+        total: >-
+            {count, plural,
+                =1    {# Training}
+                other {# Trainings}
+            }
     note:
         title: Wie lief dein Training?
         subtitle: Füge dein Gefühl, Beobachtungen oder alles hinzu, was dir während dieses Trainings aufgefallen ist. Diese Notiz ist optional.

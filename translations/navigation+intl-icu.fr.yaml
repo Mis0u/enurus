@@ -3,7 +3,7 @@ dashboard:
     logout: Déconnexion
     messaging: Messagerie
     my_routines: Mes routines
-    my_workout: Mes séances
+    my_workouts: Mes séances
     profile: Profil
     profile_followed: Profils suivis
     save_first_workout: Enregistre ta première séance
@@ -34,6 +34,34 @@ workout:
         required_weight: Le poids est requis
         required_reps: Les répétitions sont requises
         validation: Une erreur est survenue lors de la saisie de vos données
+    history:
+        delete:
+            cancel: Annuler
+            confirm: Supprimer
+            message: Es-tu sûr de vouloir supprimer cette séance ? Cette action est irréversible.
+            title: Supprimer cette séance ?
+        duration_unit: min
+        edit: Modifier la séance
+        empty: Aucune séance trouvée
+        exercises: exercices
+        filter:
+            clear: Effacer la date
+            month: Ce mois
+            reset: Réinitialiser
+            week: Cette semaine
+        free_session: Séance libre
+        kg: kg
+        pagination:
+            next: Suivant
+            per_page: Afficher
+            previous: Précédent
+            results: Résultats
+        title: Mes séances
+        total: >-
+            {count, plural,
+                =1    {# séance}
+                other {# séances}
+            }
     note:
         title: Comment s'est déroulé ta séance ?
         subtitle: Ajoute un ressenti, des observations ou tout ce qui t'a marqué pendant cette séance. Cette note est facultative.

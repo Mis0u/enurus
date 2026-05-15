@@ -3,7 +3,7 @@ dashboard:
     logout: Wyloguj się
     messaging: Wiadomości
     my_routines: Moje programy
-    my_workout: Moje treningi
+    my_workouts: Moje treningi
     profile: Profil
     profile_followed: Obserwowane profile
     save_first_workout: Zapisz swój pierwszy trening
@@ -36,6 +36,36 @@ workout:
         required_weight: Waga jest wymagana
         required_reps: Powtórzenia są wymagane
         validation: Wystąpił błąd podczas przesyłania danych
+    history:
+        delete:
+            cancel: Anuluj
+            confirm: Usuń
+            message: Czy na pewno chcesz usunąć ten trening? Tej akcji nie można cofnąć.
+            title: Usunąć ten trening?
+        duration_unit: min
+        edit: Edytuj trening
+        empty: Nie znaleziono żadnego treningu
+        exercises: ćwiczenia
+        filter:
+            clear: Wyczyść datę
+            month: Ten miesiąc
+            reset: Resetuj
+            week: Ten tydzień
+        free_session: Trening dowolny
+        kg: kg
+        pagination:
+            next: Następny
+            per_page: Wyświetl
+            previous: Poprzedni
+            results: Wyniki
+        title: Moje treningi
+        total: >-
+            {count, plural,
+                =1    {# trening}
+                few   {# treningi}
+                many  {# treningów}
+                other {# treningów}
+            }
     note:
         title: Jak poszedł Twój trening?
         subtitle: Dodaj swoje odczucia, obserwacje lub cokolwiek, co Cię zaskoczyło podczas tego treningu. Ta notatka jest opcjonalna.
