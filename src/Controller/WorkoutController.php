@@ -28,7 +28,7 @@ class WorkoutController extends AbstractController
         'pl' => '/zapisz-trening',
     ], name: 'app_workout')]
     #[IsGranted('ROLE_USER')]
-    public function index(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
+    public function create(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         /** @var User $user */
         $user = $this->getUser();
