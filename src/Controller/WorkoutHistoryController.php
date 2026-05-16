@@ -52,6 +52,7 @@ class WorkoutHistoryController extends AbstractController
         $musclesMap = $workoutRepository->findMusclesByWorkoutIds($workoutIds);
 
         $hiddenCountMap = $this->computeHiddenMuscleCountMap($musclesMap);
+        $exerciseCountMap = $workoutRepository->findExerciseCountByWorkoutIds($workoutIds);
 
         return $this->render('workout/history/index.html.twig', [
             'user' => $user,
@@ -62,6 +63,7 @@ class WorkoutHistoryController extends AbstractController
             'filterType' => $filterType,
             'filterDate' => $filterDate,
             'limitAllowed' => self::DISPLAY_LIMIT_ALLOWED,
+            'exerciseCountMap' => $exerciseCountMap,
         ]);
     }
 

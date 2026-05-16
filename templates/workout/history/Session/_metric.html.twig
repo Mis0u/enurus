@@ -8,7 +8,7 @@
     {% endif %}
     <span class="flex items-center gap-1.5 text-[#8b9bb4]">
                 {% include 'partials/_svg/_list.html.twig' %}
-                <span class="font-semibold text-[#f0f4ff]">{{ workout.workoutExercises|length }}</span>
+                <span class="font-semibold text-[#f0f4ff]">{{ exerciseCount }}</span>
                 {{ 'workout.history.exercises'|trans({}, 'navigation') }}
             </span>
 </div>

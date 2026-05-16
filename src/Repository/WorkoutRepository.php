@@ -80,12 +80,16 @@ class WorkoutRepository extends ServiceEntityRepository
 
         /** @var array<int, array{workoutId: mixed, tonnage: mixed}> $rows */
         $rows = $this->createQueryBuilder('w')
-            ->select('w.id as workoutId, SUM(s.weight * s.reps) as tonnage')
-            ->join('w.workoutExercises', 'we')
-            ->join('we.exerciseSets', 's')
+            ->select('w.id as workoutId')
+            ->addSelect(
+                '(SELECT SUM(s.weight * s.reps)
+              FROM App\Entity\ExerciseSet s
+              JOIN s.workoutExercise we2
+              WHERE we2.workout = w
+            ) as tonnage'
+            )
             ->andWhere('w.id IN (:ids)')
             ->setParameter('ids', $workoutIds)
-            ->groupBy('w.id')
             ->getQuery()
             ->getResult();
 
@@ -93,10 +97,10 @@ class WorkoutRepository extends ServiceEntityRepository
         foreach ($rows as $row) {
             /** @var string|\Stringable $workoutId */
             $workoutId = $row['workoutId'];
-            /** @var numeric $tonnage */
+            /** @var numeric|null $tonnage */
             $tonnage = $row['tonnage'];
 
-            $result[(string) $workoutId] = (float) $tonnage;
+            $result[(string) $workoutId] = null !== $tonnage ? (float) $tonnage : 0.0;
         }
 
         return $result;
@@ -116,6 +120,45 @@ class WorkoutRepository extends ServiceEntityRepository
         $grouped = $this->deduplicateMuscles($rows);
 
         return $this->sortMusclesByType($grouped);
+    }
+
+    /**
+     * @param string[] $workoutIds
+     * @return array<string, int>
+     */
+    public function findExerciseCountByWorkoutIds(array $workoutIds): array
+    {
+        if (empty($workoutIds)) {
+            return [];
+        }
+
+        $placeholders = implode(',', array_fill(0, \count($workoutIds), '?'));
+
+        $sql = \sprintf(
+            'SELECT w.id as workout_id, COUNT(we.id) as exercise_count
+         FROM workout w
+         INNER JOIN workout_exercise we ON we.workout_id = w.id
+         WHERE w.id IN (%s)
+         GROUP BY w.id',
+            $placeholders
+        );
+
+        $result = [];
+        $rows = $this->getEntityManager()
+            ->getConnection()
+            ->executeQuery($sql, array_values($workoutIds))
+            ->fetchAllAssociative();
+
+        foreach ($rows as $row) {
+            /** @var string $workoutId */
+            $workoutId = $row['workout_id'];
+            /** @var numeric $exerciseCount */
+            $exerciseCount = $row['exercise_count'];
+
+            $result[$workoutId] = (int) $exerciseCount;
+        }
+
+        return $result;
     }
 
     /**

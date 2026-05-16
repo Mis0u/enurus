@@ -30,6 +30,7 @@
                         tonnage: tonnageMap[workout.id] ?? null,
                         muscles: musclesMap[workout.id] ?? [],
                         hiddenCount: hiddenCountMap[workout.id] ?? 0,
+                        exerciseCount: exerciseCountMap[workout.id ~ ''] ?? 0
                     } %}
                 {% endfor %}
             </div>
