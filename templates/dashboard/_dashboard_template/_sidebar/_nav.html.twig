@@ -8,7 +8,12 @@
         menu="{{ 'dashboard.title'|trans({}, 'navigation') }}"
         icon="house"
     />
-    <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.my_workout'|trans({}, 'navigation') }}" icon="calendar"/>
+    <twig:Navigation:Sidebar:NavigationItem
+        link="{{ path('app_workout_history') }}"
+        route="app_workout_history"
+        menu="{{ 'dashboard.my_workouts'|trans({}, 'navigation') }}"
+        icon="calendar"
+    />
     <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.library'|trans({}, 'navigation') }}" icon="library"/>
     <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.my_routines'|trans({}, 'navigation') }}" icon="repeat"/>
 

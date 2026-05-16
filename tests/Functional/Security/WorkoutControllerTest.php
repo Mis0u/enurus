@@ -6,9 +6,11 @@ namespace App\Tests\Functional\Security;
 
 use App\Entity\Exercise;
 use App\Entity\ExerciseSet;
+use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
 use App\Repository\ExerciseRepository;
+use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -40,11 +42,23 @@ class WorkoutControllerTest extends WebTestCase
 
         $this->assertResponseRedirects('/fr/tableau-de-bord');
 
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        /** @var User $user */
+        $user = $userRepository->findOneBy([
+            'email' => self::USER,
+        ]);
+
         /** @var WorkoutRepository $workoutRepository */
         $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-        $workout = $workoutRepository->findOneBy([], [
-            'performedAt' => 'DESC',
-        ]);
+        $workout = $workoutRepository->findOneBy(
+            [
+                'owner' => $user,
+            ],
+            [
+                'performedAt' => 'DESC',
+            ]
+        );
 
         $this->assertNotNull($workout);
         $this->assertCount(1, $workout->workoutExercises);
@@ -97,13 +111,24 @@ class WorkoutControllerTest extends WebTestCase
         $client = $this->login(self::USER);
         $this->submitWorkout($client);
 
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        /** @var User $user */
+        $user = $userRepository->findOneBy([
+            'email' => self::USER,
+        ]);
+
         /** @var WorkoutRepository $workoutRepository */
         $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-
         /** @var Workout $workout */
-        $workout = $workoutRepository->findOneBy([], [
-            'performedAt' => 'DESC',
-        ]);
+        $workout = $workoutRepository->findOneBy(
+            [
+                'owner' => $user,
+            ],
+            [
+                'performedAt' => 'DESC',
+            ]
+        );
 
         $this->assertSame(self::USER, $workout->owner->email);
     }
@@ -455,16 +480,26 @@ class WorkoutControllerTest extends WebTestCase
                 'note' => $note,
             ],
         ]);
-
         $this->assertResponseRedirects('/fr/tableau-de-bord');
+
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        /** @var User $user */
+        $user = $userRepository->findOneBy([
+            'email' => self::USER,
+        ]);
 
         /** @var WorkoutRepository $workoutRepository */
         $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-
         /** @var Workout $workout */
-        $workout = $workoutRepository->findOneBy([], [
-            'performedAt' => 'DESC',
-        ]);
+        $workout = $workoutRepository->findOneBy(
+            [
+                'owner' => $user,
+            ],
+            [
+                'performedAt' => 'DESC',
+            ]
+        );
 
         $this->assertSame($note, $workout->note);
     }

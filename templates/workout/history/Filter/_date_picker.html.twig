@@ -1,0 +1,27 @@
+<label class="flex items-center gap-2 px-3.5 py-2 bg-[#0f1928] border rounded-lg cursor-pointer transition-colors duration-250
+        {% if filterDate is not null and filterDate != '' %}
+            border-[rgba(244,63,94,0.4)]
+        {% else %}
+            border-white/[0.07] hover:border-white/[0.15]
+        {% endif %}
+    ">
+
+    <input
+        type="date"
+        data-workout--history--workout-filters-target="dateInput"="dateInput"
+    data-action="change->workout--history--workout-filters#onDateChange"
+    value="{{ filterDate ?? '' }}"
+    max="{{ 'now'|date('Y-m-d') }}"
+    class="bg-transparent border-none text-[#f0f4ff] text-[13px] font-medium outline-none w-[130px] cursor-pointer [color-scheme:dark]"
+    >
+    {% if filterDate is not null and filterDate != '' %}
+        <button
+            type="button"
+            data-action="click->workout--history--workout-filters#clearDate"
+            class="ml-1 text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250"
+            title="{{ 'workout.history.filter.clear'|trans({}, 'navigation') }}"
+        >
+            {% include 'partials/_svg/_cross.html.twig' %}
+        </button>
+    {% endif %}
+</label>

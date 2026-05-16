@@ -1,0 +1,23 @@
+{% if muscles|length > 0 %}
+    <div class="flex flex-wrap gap-1.5">
+        {% for muscle in muscles %}
+            <span class="
+                        {% if loop.index > 5 %}hidden sm:inline-flex{% else %}inline-flex{% endif %}
+                        px-2.5 py-0.75 rounded-md text-[10.5px] font-medium
+                        {% if muscle.type == enum('App\\Enum\\Entity\\ExerciceMuscle\\MuscleTypeEnum').PRIMARY.value %}
+                            bg-[rgba(244,63,94,0.15)] border border-[rgba(244,63,94,0.3)] text-[#f43f5e]
+                        {% else %}
+                            bg-[rgba(249,115,22,0.15)] border border-[rgba(249,115,22,0.3)] text-[#f97316]
+                        {% endif %}
+                    ">
+                        {{ muscle.name|trans({}, 'muscle') }}
+                    </span>
+        {% endfor %}
+
+        {% if hiddenCount > 0 %}
+            <span class="sm:hidden inline-flex px-2.5 py-0.75 bg-white/[0.04] border border-white/[0.07] rounded-md text-[10.5px] font-medium text-[#4a5568]">
+                        +{{ hiddenCount }}
+                    </span>
+        {% endif %}
+    </div>
+{% endif %}

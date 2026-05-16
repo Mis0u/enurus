@@ -3,7 +3,7 @@ dashboard:
     logout: Cerrar sesión
     messaging: Mensajes
     my_routines: Mis rutinas
-    my_workout: Mis entrenamientos
+    my_workouts: Mis entrenamientos
     profile: Perfil
     profile_followed: Perfiles seguidos
     save_first_workout: Registra tu primer entrenamiento
@@ -34,6 +34,34 @@ workout:
         required_weight: El peso es obligatorio
         required_reps: Las repeticiones son obligatorias
         validation: Se produjo un error al enviar tus datos
+    history:
+        delete:
+            cancel: Cancelar
+            confirm: Eliminar
+            message: ¿Estás seguro de que quieres eliminar este entrenamiento? Esta acción es irreversible.
+            title: ¿Eliminar este entrenamiento?
+        duration_unit: min
+        edit: Modificar entrenamiento
+        empty: Ningún entrenamiento encontrado
+        exercises: ejercicios
+        filter:
+            clear: Borrar fecha
+            month: Este mes
+            reset: Reiniciar
+            week: Esta semana
+        free_session: Entrenamiento libre
+        kg: kg
+        pagination:
+            next: Siguiente
+            per_page: Mostrar
+            previous: Anterior
+            results: Resultados
+        title: Mis entrenamientos
+        total: >-
+            {count, plural,
+                =1    {# entrenamiento}
+                other {# entrenamientos}
+            }
     note:
         title: ¿Cómo fue tu entrenamiento?
         subtitle: Añade tus sensaciones, observaciones o cualquier cosa que te haya llamado la atención durante este entrenamiento. Esta nota es opcional.

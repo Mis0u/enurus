@@ -16,6 +16,8 @@ use Doctrine\Persistence\ObjectManager;
 
 class ExerciseFixtures extends Fixture implements DependentFixtureInterface
 {
+    public const string REFERENCE_PREFIX = 'exercise_';
+
     public function __construct(
         private readonly FileService $fileService,
         private readonly TypeService $typeService
@@ -25,6 +27,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $exercicesArray = $this->fileService->loadJsonFile('Exercises.json');
+        $index = 0;
 
         foreach ($exercicesArray as $data) {
             $exercise = new Exercise();
@@ -36,6 +39,9 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             $this->addMuscleToExercise($data, $exercise, MuscleTypeEnum::SECONDARY);
 
             $manager->persist($exercise);
+
+            $this->addReference(\sprintf('%s%d', self::REFERENCE_PREFIX, $index), $exercise);
+            ++$index;
         }
 
         $manager->flush();
@@ -54,6 +60,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
     private function addMuscleToExercise(array $data, Exercise $exercise, MuscleTypeEnum $muscleType): void
     {
         $muscleNames = $this->typeService->getStringArray($data, $muscleType->value);
+
         foreach ($muscleNames as $muscleName) {
             $exerciseMuscle = $this->createExerciseMuscle($exercise, $muscleName, $muscleType);
             if (null !== $exerciseMuscle) {

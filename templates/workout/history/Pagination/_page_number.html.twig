@@ -1,0 +1,26 @@
+{% for page in 1..total_pages %}
+    {% set is_near_current = page >= current_page - 1 and page <= current_page + 1 %}
+    {% set is_boundary = page == 1 or page == total_pages %}
+    {% set show_ellipsis = (page == 2 and current_page > 3) or (page == total_pages - 1 and current_page < total_pages - 2) %}
+
+    {% if show_ellipsis %}
+        <span class="px-2 py-1.5 text-[12px] text-[#4a5568]">…</span>
+    {% elseif is_near_current or is_boundary %}
+        {% if page == current_page %}
+            <span class="min-w-[32px] h-8 px-2.5 flex items-center justify-center rounded-lg bg-[#f43f5e] text-white text-[12.5px] font-semibold border border-[#f43f5e]">
+                        {{ page }}
+                    </span>
+        {% else %}
+            <a
+                href="{{ path('app_workout_history', {
+                    '_locale': app.request.locale,
+                    'page': page,
+                    'filter': filterType,
+                    'date': filterDate,
+                    'limit': per_page,
+                }) }}"
+                class="min-w-[32px] h-8 px-2.5 flex items-center justify-center rounded-lg border border-white/[0.07] bg-white/[0.03] text-[12.5px] font-medium text-[#8b9bb4] hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-[#f0f4ff] transition-all duration-250"
+            >{{ page }}</a>
+        {% endif %}
+    {% endif %}
+{% endfor %}
