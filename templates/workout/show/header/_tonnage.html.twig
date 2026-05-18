@@ -1,0 +1,6 @@
+<div class="show-metric-tonnage flex flex-col gap-1 p-3.5 rounded-xl text-center border">
+            <span class="metric-value font-['Rajdhani'] text-[22px] font-bold">
+                {{ totalTonnage|number_format(0, ',', ' ') }} {{ unit.label() }}
+            </span>
+    <span class="metric-label text-[11px]">{{ 'workout.show.metrics.tonnage'|trans({}, 'navigation') }}</span>
+</div>

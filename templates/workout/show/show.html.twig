@@ -1,0 +1,26 @@
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/workout_show.css') }}">
+{% endblock %}
+
+{% block title %}{{ 'workout.show.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        'title': workout.routine is not null ? workout.routine.name : 'workout.history.free_session'|trans({}, 'navigation'),
+        'subtitle': user.nickname|formatInitials,
+    } %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-[108px] pb-[120px] max-md:px-4 max-md:pt-[68px] max-md:pb-[160px]">
+        {% include 'workout/show/_secondary_nav.html.twig' %}
+        <div class="pt-6 max-md:pt-4">
+            {% include 'workout/show/_header.html.twig' %}
+            {% include 'workout/show/_muscles.html.twig' %}
+            {% include 'workout/show/_exercises_list.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

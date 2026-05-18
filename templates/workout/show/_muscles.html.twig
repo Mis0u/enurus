@@ -1,0 +1,33 @@
+<div class="show-muscles-card border border-white/[0.07] rounded-2xl px-6 py-4 mb-5 max-md:px-5 max-md:py-3">
+
+    <h3 class="flex items-center gap-2.5 font-['Rajdhani'] text-[18px] font-bold text-[var(--text-primary)] mb-4">
+        <svg class="show-muscles-title w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+        </svg>
+        {{ 'workout.show.muscles_title'|trans({}, 'navigation') }}
+    </h3>
+
+    <div class="svg-body-container flex items-center justify-center gap-10 mb-2 max-md:flex-col max-md:gap-5"
+         data-controller="workout--show--muscles"
+         data-workout--show--muscles-primary-value='{{ allPrimarySvgIds|json_encode }}'
+         data-workout--show--muscles-secondary-value='{{ allSecondarySvgIds|json_encode }}'>
+        <div class="w-[160px] max-md:w-[130px] [&_svg]:!h-auto [&_svg]:max-h-[300px]">
+            {% include 'SVG_BODY/' ~ user.gender ~ '/front.html.twig' %}
+        </div>
+        <div class="w-[160px] max-md:w-[130px] [&_svg]:!h-auto [&_svg]:max-h-[300px]">
+            {% include 'SVG_BODY/' ~ user.gender ~ '/back.html.twig' %}
+        </div>
+    </div>
+
+    <div class="flex items-center justify-center gap-6 text-xs max-md:flex-col max-md:gap-2">
+        <div class="flex items-center gap-2">
+            <span class="show-muscles-dot-primary w-2.5 h-2.5 rounded-full shrink-0"></span>
+            <span class="show-muscles-legend-text">{{ 'workout.show.muscles_primary'|trans({}, 'navigation') }}</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="show-muscles-dot-secondary w-2.5 h-2.5 rounded-full shrink-0"></span>
+            <span class="show-muscles-legend-text">{{ 'workout.show.muscles_secondary'|trans({}, 'navigation') }}</span>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,26 @@
+<div class="flex-1">
+    <div class="show-position-badge inline-block font-['Rajdhani'] text-sm font-bold px-2.5 py-1 rounded-md mb-2">
+        {{ position < 10 ? '0' ~ position : position }}
+    </div>
+
+    <h4 class="font-['Rajdhani'] text-[20px] font-bold text-[var(--text-primary)] mb-2 max-md:text-[18px]">
+        {{ exercise.name|trans({}, 'exercise') }}
+    </h4>
+
+    <div class="flex flex-wrap gap-1.5">
+        {% for em in item.muscles %}
+            <span class="{{ em.type.value == 'primary' ? 'show-muscle-tag-primary' : 'show-muscle-tag-secondary' }} px-2 py-0.5 rounded-md text-[10.5px] border">
+                        {{ em.muscleGroup.name|trans({}, 'muscle') }}
+                    </span>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="text-right max-md:text-left">
+    <div class="show-exercise-tonnage-value font-['Rajdhani'] text-[18px] font-bold">
+        {{ item.tonnage|number_format(0, ',', ' ') }} {{ unit.label() }}
+    </div>
+    <div class="show-exercise-tonnage-label text-[10px]">
+        {{ 'workout.show.metrics.tonnage'|trans({}, 'navigation') }}
+    </div>
+</div>

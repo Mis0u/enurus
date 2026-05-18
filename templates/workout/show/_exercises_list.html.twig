@@ -1,0 +1,9 @@
+<div class="flex flex-col gap-4">
+    {% for item in exerciseData %}
+        {% include 'workout/show/_exercise_card.html.twig' with {
+            'item': item,
+            'position': loop.index,
+            'unit': unit,
+        } %}
+    {% endfor %}
+</div>
