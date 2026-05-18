@@ -1,5 +1,4 @@
 name:
-    abductors: Abducteurs
     abs: Abdominaux
     adductors: Adducteurs
     anterior_deltoid: Deltoïdes antérieurs
@@ -15,6 +14,6 @@ name:
     obliques: Obliques
     posterior_deltoid: Deltoïdes postérieurs
     quads: Quadriceps
-    rhomboids: Rhomboïdes
     traps: Trapèzes
+    traps_middle: Trapèzes moyens
     triceps: Triceps
