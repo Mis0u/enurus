@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Repository\WorkoutRepository;
+use App\Service\Utils\WeightConverterService;
 use DateTimeImmutable;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -35,8 +36,12 @@ class WorkoutHistoryController extends AbstractController
         'pl' => '/moje-treningi',
     ], name: 'app_workout_history')]
     #[IsGranted('ROLE_USER')]
-    public function index(Request $request, WorkoutRepository $workoutRepository, PaginatorInterface $paginator): Response
-    {
+    public function index(
+        Request $request,
+        WorkoutRepository $workoutRepository,
+        PaginatorInterface $paginator,
+        WeightConverterService $weightConverter
+    ): Response {
         /** @var User $user */
         $user = $this->getUser();
 
@@ -50,6 +55,11 @@ class WorkoutHistoryController extends AbstractController
 
         $tonnageMap = $workoutRepository->findTonnageByWorkoutIds($workoutIds);
         $musclesMap = $workoutRepository->findMusclesByWorkoutIds($workoutIds);
+
+        $tonnageMap = array_map(
+            fn (float $tonnage) => $weightConverter->convertToLbs($tonnage, $user->unitOfMeasure),
+            $tonnageMap
+        );
 
         $hiddenCountMap = $this->computeHiddenMuscleCountMap($musclesMap);
         $exerciseCountMap = $workoutRepository->findExerciseCountByWorkoutIds($workoutIds);

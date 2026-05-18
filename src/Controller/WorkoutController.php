@@ -6,7 +6,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Workout;
+use App\Enum\Entity\User\UnitOfMeasureEnum;
 use App\Form\WorkoutType;
+use App\Service\Utils\WeightConverterService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +19,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WorkoutController extends AbstractController
 {
+    public function __construct(
+        private readonly WeightConverterService $weightConverterService
+    ) {
+    }
+
     #[Route(path: [
         'fr' => '/enregistre-seance',
         'en' => '/log-workout',
@@ -28,8 +35,11 @@ class WorkoutController extends AbstractController
         'pl' => '/zapisz-trening',
     ], name: 'app_workout')]
     #[IsGranted('ROLE_USER')]
-    public function create(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
-    {
+    public function create(
+        Request $request,
+        EntityManagerInterface $em,
+        TranslatorInterface $translator,
+    ): Response {
         /** @var User $user */
         $user = $this->getUser();
 
@@ -40,6 +50,9 @@ class WorkoutController extends AbstractController
             /** @var Workout $workout */
             $workout = $form->getData();
             $workout->owner = $user;
+            if (UnitOfMeasureEnum::LBS === $user->unitOfMeasure) {
+                $this->convertLbs($workout, $user);
+            }
             $em->persist($workout);
             $em->flush();
             $this->addFlash('success', $translator->trans('workout.created', [], 'navigation'));
@@ -55,5 +68,14 @@ class WorkoutController extends AbstractController
             'user' => $user,
             'form' => $form->createView(),
         ]);
+    }
+
+    private function convertLbs(Workout $workout, User $user): void
+    {
+        foreach ($workout->workoutExercises as $we) {
+            foreach ($we->exerciseSets as $set) {
+                $set->weight = $this->weightConverterService->convertToKg($set->weight, $user->unitOfMeasure);
+            }
+        }
     }
 }
