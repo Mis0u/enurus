@@ -27,17 +27,17 @@ trait FunctionalTestTrait
         return $client;
     }
 
-    private function assertPageIsAccessibleWhenLogged(string $email, string $url, string $titlePage): void
+    private function assertPageIsAccessibleWhenLogged(string $email, string $url, string $titlePage, ?KernelBrowser $client = null): void
     {
-        $client = $this->login($email);
+        $client = $client ?? $this->login($email);
         $crawler = $client->request(Request::METHOD_GET, $url);
         $this->assertResponseIsSuccessful();
         $this->assertSame($titlePage, $crawler->filter('title')->text(), 'Le sélecteur title ne contient pas le texte attendu');
     }
 
-    private function assertPageIsRedirectToLoginWhenNotLogged(string $url): void
+    private function assertPageIsRedirectToLoginWhenNotLogged(string $url, ?KernelBrowser $client = null): void
     {
-        $client = static::createClient();
+        $client = $client ?? static::createClient();
         $client->request(Request::METHOD_GET, $url);
         $this->assertResponseRedirects('/fr/');
         $client->followRedirect();
