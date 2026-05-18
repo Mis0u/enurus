@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Entity\Trait\TimestampTrait;
+use App\Enum\Entity\User\UnitOfMeasureEnum;
 use App\Enum\Translations\LocaleAllowedEnum;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,6 +23,7 @@ use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
@@ -132,6 +134,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         set(string $nickname) {
             $this->nickname = $nickname;
+        }
+    }
+
+    #[NotNull]
+    #[ORM\Column(type: 'string', length: 3, nullable: false, enumType: UnitOfMeasureEnum::class)]
+    public UnitOfMeasureEnum $unitOfMeasure = UnitOfMeasureEnum::KG {
+        get {
+            return $this->unitOfMeasure;
+        }
+        set(UnitOfMeasureEnum $unitOfMeasure) {
+            $this->unitOfMeasure = $unitOfMeasure;
         }
     }
 
