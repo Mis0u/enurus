@@ -52,7 +52,8 @@ workout:
             reset: Resetuj
             week: Ten tydzień
         free_session: Trening dowolny
-        kg: kg
+        kg: Kg
+        lbs: Lbs
         pagination:
             next: Następny
             per_page: Wyświetl
@@ -73,6 +74,7 @@ workout:
         back: Powrót do treningu
         submit_without: Zatwierdź bez notatki
         submit_with: Zatwierdź mój trening
+    reps_abbreviate: Powt
     reps: Powtórzenia
     routine:
         select: Wybierz swoją rutynę
@@ -82,6 +84,23 @@ workout:
         placeholder: Nazwa ćwiczenia...
         title: Wyszukaj ćwiczenie
     series: Serie
+    show:
+        back: Powrót do moich treningów
+        routine_badge: Rutyna
+        muscles_title: Trenowane mięśnie
+        muscles_primary: Mięśnie główne
+        muscles_secondary: Mięśnie wspomagające
+        metrics:
+            tonnage: Tonaż
+            duration: Czas trwania
+            exercises: Ćwiczenia
+            sets: Serie
+        sets_table:
+            weight: Waga
+            reps: Powt
+            tonnage: Tonaż
+        pr_badge: PR
+        title: Mój trening
     title: Zapisz swój trening
     type:
         free: Trening dowolny

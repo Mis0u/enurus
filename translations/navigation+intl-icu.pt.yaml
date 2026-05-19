@@ -50,7 +50,8 @@ workout:
             reset: Reiniciar
             week: Esta semana
         free_session: Treino livre
-        kg: kg
+        kg: Kg
+        lbs: Lbs
         pagination:
             next: Seguinte
             per_page: Mostrar
@@ -69,6 +70,7 @@ workout:
         back: Voltar ao treino
         submit_without: Confirmar sem nota
         submit_with: Confirmar o meu treino
+    reps_abbreviate: Reps
     reps: Repetições
     routine:
         select: Escolhe a tua rotina
@@ -78,6 +80,23 @@ workout:
         placeholder: Nome do exercício...
         title: Procurar um exercício
     series: Séries
+    show:
+        back: Voltar aos meus treinos
+        routine_badge: Rotina
+        muscles_title: Músculos trabalhados
+        muscles_primary: Músculos primários
+        muscles_secondary: Músculos secundários
+        metrics:
+            tonnage: Tonelagem
+            duration: Duração
+            exercises: Exercícios
+            sets: Séries
+        sets_table:
+            weight: Peso
+            reps: Reps
+            tonnage: Tonelagem
+        pr_badge: PR
+        title: O meu treino
     title: Regista o teu treino
     type:
         free: Treino livre

@@ -50,6 +50,7 @@ workout:
             reset: Zurücksetzen
             week: Diese Woche
         free_session: Freies Training
+        lbs: Lbs
         kg: kg
         pagination:
             next: Weiter
@@ -69,6 +70,7 @@ workout:
         back: Zurück zum Training
         submit_without: Ohne Notiz bestätigen
         submit_with: Mein Training bestätigen
+    reps_abbreviate: Wdh
     reps: Wiederholungen
     routine:
         select: Wähle deine Routine
@@ -78,6 +80,23 @@ workout:
         placeholder: Name der Übung...
         title: Übung suchen
     series: Sätze
+    show:
+        back: Zurück zu meinen Trainings
+        routine_badge: Routine
+        muscles_title: Trainierte Muskeln
+        muscles_primary: Primäre Muskeln
+        muscles_secondary: Sekundäre Muskeln
+        metrics:
+            tonnage: Tonnage
+            duration: Dauer
+            exercises: Übungen
+            sets: Sätze
+        sets_table:
+            weight: Gewicht
+            reps: Wdh
+            tonnage: Tonnage
+        pr_badge: PR
+        title: Mein Training
     title: Erfasse dein Training
     type:
         free: Freies Training
