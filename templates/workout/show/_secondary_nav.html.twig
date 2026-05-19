@@ -1,0 +1,21 @@
+<div class="show-secondary-nav fixed top-[85px] left-[240px] right-0 max-md:left-0 max-md:top-[45px] z-[4] backdrop-blur-md border-b border-white/[0.07] px-7 py-3 max-md:px-4 flex items-center justify-between gap-4">
+    <a href="{{ path('app_workout_history') }}"
+       class="show-back-btn inline-flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium">
+        {% include 'partials/_svg/_inferior.html.twig' with{'width': 4, 'height': 4} %}
+        {{ 'workout.show.back'|trans({}, 'navigation') }}
+    </a>
+
+    <div class="flex items-center gap-2 max-md:gap-1.5">
+        {% if workout.duration is not null %}
+            <div class="show-chip-duration inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border max-md:px-2 max-md:text-[11px]">
+                {% include 'partials/_svg/_time.html.twig' with{'width': 3.5, 'height': 3.5} %}
+                {{ workout.duration|format_hour }}
+            </div>
+        {% endif %}
+
+        <div class="show-chip-tonnage inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border max-md:px-2 max-md:text-[11px]">
+            {% include 'partials/_svg/_lightning.html.twig' %}
+            {{ totalTonnage|number_format(0, ',', ' ') }} {{ unit.label() }}
+        </div>
+    </div>
+</div>

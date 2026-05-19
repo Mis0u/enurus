@@ -50,7 +50,8 @@ workout:
             reset: Resetten
             week: Deze week
         free_session: Vrije training
-        kg: kg
+        kg: Kg
+        lbs: Lbs
         pagination:
             next: Volgende
             per_page: Tonen
@@ -69,6 +70,7 @@ workout:
         back: Terug naar training
         submit_without: Bevestigen zonder notitie
         submit_with: Mijn training bevestigen
+    reps_abbreviate: Reps
     reps: Herhalingen
     routine:
         select: Kies je routine
@@ -78,6 +80,23 @@ workout:
         placeholder: Naam van de oefening...
         title: Zoek een oefening
     series: Sets
+    show:
+        back: Terug naar mijn trainingen
+        routine_badge: Routine
+        muscles_title: Getrainde spieren
+        muscles_primary: Primaire spieren
+        muscles_secondary: Secundaire spieren
+        metrics:
+            tonnage: Tonnage
+            duration: Duur
+            exercises: Oefeningen
+            sets: Sets
+        sets_table:
+            weight: Gewicht
+            reps: Reps
+            tonnage: Tonnage
+        pr_badge: PR
+        title: Mijn training
     title: Registreer je training
     type:
         free: Vrije training

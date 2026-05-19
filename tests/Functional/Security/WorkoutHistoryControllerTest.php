@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Workout;
+namespace App\Tests\Functional\Security;
 
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -238,6 +238,32 @@ class WorkoutHistoryControllerTest extends WebTestCase
         $this->assertGreaterThan(
             0,
             $crawler->filter('circle[cx="12"][cy="12"][r="10"]')->count()
+        );
+    }
+
+    public function testTonnageIsDisplayedInLbsForLbsUser(): void
+    {
+        $client = $this->login(self::USER_51);
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertStringContainsString(
+            'lbs',
+            $crawler->filter('.session-tonnage')->text(),
+            'Le tonnage doit être affiché en lbs pour un user lbs'
+        );
+    }
+
+    public function testTonnageIsDisplayedInKgForKgUser(): void
+    {
+        $client = $this->login(self::USER_11);
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertStringContainsString(
+            'kg',
+            $crawler->filter('.session-tonnage')->text(),
+            'Le tonnage doit être affiché en kg pour un user kg'
         );
     }
 }

@@ -28,6 +28,7 @@ class MuscleGroupFixtures extends Fixture
             $muscleGroup = new MuscleGroup();
             $muscleGroup->name = $this->typeService->getString($data, 'name');
             $muscleGroup->position = $this->typeService->getInt($data, 'position');
+            $muscleGroup->svgIds = $this->typeService->getStringArray($data, 'svgIds');
             $manager->persist($muscleGroup);
             $this->addReference(\sprintf('%s%s', self::REFERENCE_PREFIX, $muscleGroup->name), $muscleGroup);
         }

@@ -1,0 +1,177 @@
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Header card */
+.show-header-card {
+    background: #0f1928;
+}
+
+/* Badge routine */
+.show-routine-badge {
+    background: rgba(244, 63, 94, 0.15);
+    border-color: rgba(244, 63, 94, 0.3);
+    color: #f43f5e;
+}
+
+/* Métriques */
+.show-metric-tonnage {
+    background: rgba(6, 182, 212, 0.12);
+    border-color: rgba(6, 182, 212, 0.3);
+}
+.show-metric-tonnage .metric-value { color: #06b6d4; }
+
+.show-metric-duration {
+    background: rgba(34, 197, 94, 0.12);
+    border-color: rgba(34, 197, 94, 0.25);
+}
+.show-metric-duration .metric-value { color: #22c55e; }
+
+.show-metric-neutral {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.07);
+}
+.show-metric-neutral .metric-value { color: #f0f4ff; }
+
+.metric-label { color: #ffffff; }
+
+/* Note */
+.show-note {
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 3px solid rgba(255, 255, 255, 0.07);
+}
+.show-note p  { color: #8b9bb4; }
+.show-note svg { color: #4a5568; }
+
+/* Muscles card */
+.show-muscles-card { background: #0f1928; }
+
+/* Exercise card */
+.show-exercise-card { background: #0f1928; }
+.show-exercise-tonnage { color: #06b6d4; }
+.show-exercise-tonnage-label { color: #ffffff; }
+.show-pr-badge {
+    background: linear-gradient(135deg, rgba(244,63,94,0.2), rgba(220,38,38,0.15));
+    border-color: rgba(244, 63, 94, 0.4);
+    color: #f43f5e;
+}
+
+/* Secondary nav */
+.show-secondary-nav { background: rgba(8, 14, 26, 0.92); }
+.show-chip-duration {
+    background: rgba(34, 197, 94, 0.12);
+    border-color: rgba(34, 197, 94, 0.25);
+    color: #22c55e;
+}
+.show-chip-tonnage {
+    background: rgba(6, 182, 212, 0.12);
+    border-color: rgba(6, 182, 212, 0.25);
+    color: #06b6d4;
+}
+
+/* Exercise card */
+.show-exercise-card {
+    background: #0f1928;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.show-exercise-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Position badge */
+.show-position-badge {
+    background: rgba(244, 63, 94, 0.15);
+    color: #4a5568;
+}
+
+/* Muscle tags */
+.show-muscle-tag-primary {
+    background: rgba(244, 63, 94, 0.15);
+    border-color: rgba(244, 63, 94, 0.3);
+    color: #f43f5e;
+}
+.show-muscle-tag-secondary {
+    background: rgba(249, 115, 22, 0.15);
+    border-color: rgba(249, 115, 22, 0.3);
+    color: #f97316;
+}
+
+/* Tonnage exercice */
+.show-exercise-tonnage-value { color: #06b6d4; }
+.show-exercise-tonnage-label {
+    color: #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Table headers */
+.show-table-th {
+    color: #4a5568;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Table rows */
+.show-table-td-muted  { color: #4a5568; }
+.show-table-td-value  { color: #f0f4ff; }
+.show-table-td-secondary { color: #8b9bb4; }
+.show-table-row { border-bottom: 1px solid rgba(255, 255, 255, 0.02); }
+.show-table-row:last-child { border-bottom: none; }
+
+/* PR badge */
+.show-pr-badge {
+    background: linear-gradient(135deg, rgba(244,63,94,0.2), rgba(220,38,38,0.15));
+    border-color: rgba(244, 63, 94, 0.4);
+    color: #f43f5e;
+}
+
+/* Secondary nav */
+.show-secondary-nav {
+    background: rgba(8, 14, 26, 0.92);
+}
+
+.show-back-btn {
+    color: #8b9bb4;
+    border-color: rgba(255, 255, 255, 0.07);
+    transition: border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.show-back-btn:hover {
+    border-color: rgba(244, 63, 94, 0.4);
+    color: #f43f5e;
+}
+
+.show-chip-duration {
+    background: rgba(34, 197, 94, 0.12);
+    border-color: rgba(34, 197, 94, 0.25);
+    color: #22c55e;
+}
+
+.show-chip-tonnage {
+    background: rgba(6, 182, 212, 0.12);
+    border-color: rgba(6, 182, 212, 0.25);
+    color: #06b6d4;
+}
+
+/* Muscles card */
+.show-muscles-card {
+    background: #0f1928;
+}
+
+.show-muscles-title {
+    color: #f43f5e;
+}
+
+.show-muscles-legend-text {
+    color: #8b9bb4;
+}
+
+.show-muscles-dot-primary {
+    background: #f43f5e;
+}
+
+.show-muscles-dot-secondary {
+    background: #f97316;
+}

@@ -25,6 +25,8 @@ class WorkoutControllerTest extends WebTestCase
 
     private const string USER = 'user-fixture-0@test.com';
 
+    private const string USER_LBS = 'user-fixture-51-workout@test.com';
+
     public function testIsAccessibleWhenLogged(): void
     {
         $this->assertPageIsAccessibleWhenLogged(self::USER, '/fr/enregistre-seance', 'Enregistre ta séance | FitTracker');
@@ -615,6 +617,67 @@ class WorkoutControllerTest extends WebTestCase
 
         $this->assertTrue($data['exists']);
         $this->assertSame(2, $data['count']);
+    }
+
+    public function testWeightIsConvertedToKgOnSubmissionForLbsUser(): void
+    {
+        $client = $this->login(self::USER_LBS);
+
+        $crawler = $client->request(Request::METHOD_GET, '/fr/enregistre-seance');
+        $csrfToken = $crawler->filter('input[name="workout[_token]"]')->attr('value');
+
+        // L'user saisit 200 lbs
+        $client->request(Request::METHOD_POST, '/fr/enregistre-seance', [
+            'workout' => [
+                '_token' => $csrfToken,
+                'performedAt' => new \DateTime('today')->format('Y-m-d'),
+                'duration' => 60,
+                'routine' => '',
+                'workoutExercises' => [
+                    0 => [
+                        'exercise' => $this->getExerciseId(),
+                        'position' => 0,
+                        'exerciseSets' => [
+                            0 => [
+                                'weight' => 200,
+                                'reps' => 10,
+                                'position' => 0,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
+
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        /** @var User $user */
+        $user = $userRepository->findOneBy([
+            'email' => self::USER_LBS,
+        ]);
+
+        /** @var WorkoutRepository $workoutRepository */
+        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
+        /** @var Workout $workout */
+        $workout = $workoutRepository->findOneBy(
+            [
+                'owner' => $user,
+            ],
+            [
+                'performedAt' => 'DESC',
+            ]
+        );
+
+        /** @var WorkoutExercise $firstExercise */
+        $firstExercise = $workout->workoutExercises->first();
+
+        /** @var ExerciseSet $firstSet */
+        $firstSet = $firstExercise->exerciseSets->first();
+
+        // 200 lbs / 2.20462 = ~90.72 kg
+        $this->assertEqualsWithDelta(90.72, $firstSet->weight, 0.1, 'Le poids doit être converti en kg en base');
     }
 
     /**

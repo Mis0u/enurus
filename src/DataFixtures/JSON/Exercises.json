@@ -136,7 +136,7 @@
     ],
     "secondary": [
       "name.biceps",
-      "name.rhomboids"
+      "name.traps_middle"
     ]
   },
   {
@@ -159,7 +159,7 @@
     ],
     "secondary": [
       "name.biceps",
-      "name.rhomboids",
+      "name.traps_middle",
       "name.traps"
     ]
   },
@@ -172,7 +172,7 @@
     ],
     "secondary": [
       "name.biceps",
-      "name.rhomboids"
+      "name.traps_middle"
     ]
   },
   {
@@ -184,7 +184,7 @@
     ],
     "secondary": [
       "name.biceps",
-      "name.rhomboids"
+      "name.traps_middle"
     ]
   },
   {
@@ -207,7 +207,7 @@
     ],
     "secondary": [
       "name.biceps",
-      "name.rhomboids"
+      "name.traps_middle"
     ]
   },
   {
@@ -251,7 +251,7 @@
       "name.traps"
     ],
     "secondary": [
-      "name.rhomboids"
+      "name.traps_middle"
     ]
   },
   {
@@ -308,7 +308,7 @@
       "name.posterior_deltoid"
     ],
     "secondary": [
-      "name.rhomboids",
+      "name.traps_middle",
       "name.traps"
     ]
   },
@@ -320,7 +320,7 @@
       "name.posterior_deltoid"
     ],
     "secondary": [
-      "name.rhomboids"
+      "name.traps_middle"
     ]
   },
   {
@@ -706,17 +706,6 @@
     ],
     "secondary": [
       "name.hamstrings"
-    ]
-  },
-  {
-    "name": "abduction_machine.name",
-    "description": "abduction_machine.description",
-    "isPublic": true,
-    "primary": [
-      "name.abductors"
-    ],
-    "secondary": [
-      "name.glutes"
     ]
   },
   {

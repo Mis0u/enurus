@@ -50,7 +50,8 @@ workout:
             reset: Réinitialiser
             week: Cette semaine
         free_session: Séance libre
-        kg: kg
+        kg: Kg
+        lbs: Lbs
         pagination:
             next: Suivant
             per_page: Afficher
@@ -69,6 +70,7 @@ workout:
         back: Retour à la séance
         submit_without: Valider sans note
         submit_with: Valider ma séance
+    reps_abbreviate: Reps
     reps: Répétitions
     routine:
         select: Choisissez votre routine
@@ -78,6 +80,23 @@ workout:
         placeholder: Nom de l'exercice...
         title: Rechercher un exercice
     series: Séries
+    show:
+        back: Retour à mes séances
+        routine_badge: Routine
+        muscles_title: Muscles travaillés
+        muscles_primary: Muscles primaires
+        muscles_secondary: Muscles secondaires
+        metrics:
+            tonnage: Tonnage
+            duration: Durée
+            exercises: Exercices
+            sets: Séries
+        sets_table:
+            weight: Poids
+            reps: Reps
+            tonnage: Tonnage
+        pr_badge: PR
+        title: Ma séance
     title: Enregistre ta séance
     type:
         free: Séance libre

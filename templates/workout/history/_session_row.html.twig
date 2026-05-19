@@ -1,6 +1,7 @@
 <div
     class="group bg-[#0f1928] border border-white/[0.07] rounded-xl px-5 py-4 grid grid-cols-[180px_1fr_auto] max-md:grid-cols-1 gap-5 max-md:gap-3 items-center cursor-pointer relative overflow-hidden transition-all duration-250 hover:border-white/[0.12] hover:bg-[#151f30] hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
     style="animation: fadeUp 0.3s ease both;"
+    onclick="window.location.href='{{ path('app_workout_show', {'id': workout.id}) }}'"
 >
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(244,63,94,0.03),transparent_60%)] pointer-events-none"></div>
 

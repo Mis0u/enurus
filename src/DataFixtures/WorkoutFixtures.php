@@ -90,6 +90,9 @@ class WorkoutFixtures extends Fixture implements DependentFixtureInterface
 
         foreach ($dates as $date) {
             $workout = new Workout();
+            if ('user-fixture-26-workout@test.com' === $user->email) {
+                $workout->note = 'Bonne séance, PR au développé couché. Fatigue sur les dips en fin de séance.';
+            }
             $workout->owner = $user;
             $workout->performedAt = $date;
             $workout->duration = $this->randomDuration();

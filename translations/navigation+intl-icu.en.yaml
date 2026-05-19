@@ -50,7 +50,8 @@ workout:
             reset: Reset
             week: This week
         free_session: Free workout
-        kg: kg
+        kg: Kg
+        lbs: Lbs
         pagination:
             next: Next
             per_page: Show
@@ -69,6 +70,7 @@ workout:
         back: Back to workout
         submit_without: Submit without note
         submit_with: Submit my workout
+    reps_abbreviate: Reps
     reps: Reps
     routine:
         select: Choose your routine
@@ -78,6 +80,23 @@ workout:
         placeholder: Exercise name...
         title: Search for an exercise
     series: Sets
+    show:
+        back: Back to my workouts
+        routine_badge: Routine
+        muscles_title: Muscles worked
+        muscles_primary: Primary muscles
+        muscles_secondary: Secondary muscles
+        metrics:
+            tonnage: Tonnage
+            duration: Duration
+            exercises: Exercises
+            sets: Sets
+        sets_table:
+            weight: Weight
+            reps: Reps
+            tonnage: Tonnage
+        pr_badge: PR
+        title: My workout
     title: Log your workout
     type:
         free: Free workout

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Enum\Entity\User\GenderEnum;
+use App\Enum\Entity\User\UnitOfMeasureEnum;
 use App\Enum\Translations\LocaleAllowedEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -73,7 +75,7 @@ class UserFixtures extends Fixture
             $user->createdBy = $user;
             $user->locale = $key;
             $user->lastLogin = $lastLogin;
-            $user->gender = 'male';
+            $user->gender = GenderEnum::MALE->value;
             $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
 
             $manager->persist($user);
@@ -90,7 +92,7 @@ class UserFixtures extends Fixture
             $user->createdBy = $user;
             $user->locale = LocaleAllowedEnum::FR->value;
             $user->lastLogin = $lastLogin;
-            $user->gender = 0 === $i % 5 ? 'female' : 'male';
+            $user->gender = 0 === $i % 5 ? GenderEnum::FEMALE->value : GenderEnum::MALE->value;
             $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
 
             $manager->persist($user);
@@ -105,9 +107,12 @@ class UserFixtures extends Fixture
             $user->nickname = $userData['nickname'];
             $user->createdBy = $user;
             $user->locale = LocaleAllowedEnum::FR->value;
-            $user->gender = 'male';
+            $user->gender = 'user-fixture-26-workout@test.com' === $userData['email'] ? GenderEnum::FEMALE->value : GenderEnum::MALE->value;
             $user->lastLogin = new \DateTimeImmutable();
             $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+            if ('user-fixture-51-workout@test.com' === $userData['email']) {
+                $user->unitOfMeasure = UnitOfMeasureEnum::LBS;
+            }
 
             $manager->persist($user);
 

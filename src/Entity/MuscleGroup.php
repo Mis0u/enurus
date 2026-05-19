@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MuscleGroupRepository::class)]
 class MuscleGroup
@@ -43,6 +44,30 @@ class MuscleGroup
         }
         set(int $position) {
             $this->position = $position;
+        }
+    }
+
+    /**
+     * @var array<int, string>
+     */
+    #[Assert\NotNull]
+    #[Assert\All([
+        new Assert\Type('string'),
+        new Assert\NotBlank(),
+        new Assert\Regex(
+            pattern: '/^[a-z0-9\-]+$/',
+            message: 'Each SVG ID must contain only lowercase letters, numbers and hyphens.'
+        ),
+    ])]
+    #[ORM\Column(type: 'json', nullable: false, options: [
+        'default' => '[]',
+    ])]
+    public array $svgIds = [] {
+        get {
+            return $this->svgIds;
+        }
+        set(array $svgIds) {
+            $this->svgIds = $svgIds;
         }
     }
 }

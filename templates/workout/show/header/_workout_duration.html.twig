@@ -1,0 +1,13 @@
+{% if workout.duration is not null %}
+    <div class="show-metric-duration flex flex-col gap-1 p-3.5 rounded-xl text-center border">
+                <span class="metric-value font-['Rajdhani'] text-[22px] font-bold">
+                    {{ workout.duration|format_hour }}
+                </span>
+        <span class="metric-label text-[11px]">{{ 'workout.show.metrics.duration'|trans({}, 'navigation') }}</span>
+    </div>
+{% else %}
+    <div class="show-metric-neutral flex flex-col gap-1 p-3.5 rounded-xl text-center border">
+        <span class="metric-value font-['Rajdhani'] text-[22px] font-bold">—</span>
+        <span class="metric-label text-[11px]">{{ 'workout.show.metrics.duration'|trans({}, 'navigation') }}</span>
+    </div>
+{% endif %}
