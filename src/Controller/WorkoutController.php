@@ -50,9 +50,8 @@ class WorkoutController extends AbstractController
             /** @var Workout $workout */
             $workout = $form->getData();
             $workout->owner = $user;
-            if (UnitOfMeasureEnum::LBS === $user->unitOfMeasure) {
-                $this->convertLbs($workout, $user);
-            }
+            $this->weightConverterService->convertWorkoutSetsToKg($workout, $user->unitOfMeasure);
+
             $em->persist($workout);
             $em->flush();
             $this->addFlash('success', $translator->trans('workout.created', [], 'navigation'));
@@ -61,7 +60,7 @@ class WorkoutController extends AbstractController
 
         if ($form->isSubmitted() && ! $form->isValid()) {
             $this->addFlash('error', $translator->trans('workout.error.validation', [], 'navigation'));
-            return $this->redirectToRoute('app_workout');
+            return $this->redirectToRoute('app_workout', ['_locale' => $request->getLocale()]);
         }
 
         return $this->render('workout/index.html.twig', [

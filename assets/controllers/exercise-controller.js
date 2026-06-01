@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 import Sortable from 'sortablejs';
 import { numerate } from './workout/create/number_series.js';
 import { swalError } from './swal/error/_error.js';
-import { handleErrorField } from './workout/create/_error_form.js';
+import { handleErrorField } from './workout/_error_form.js';
 
 export default class extends Controller {
     static targets = ['exerciseList', 'form'];

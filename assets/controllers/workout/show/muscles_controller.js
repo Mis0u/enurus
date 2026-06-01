@@ -7,8 +7,6 @@ export default class extends Controller {
     };
 
     connect() {
-        console.log('primary:', this.primaryValue);
-        console.log('secondary:', this.secondaryValue);
         this.applyColors();
     }
 
