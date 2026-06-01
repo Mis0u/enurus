@@ -12,7 +12,7 @@
         </h4>
     </div>
     <button type="button"
-            data-action="click->exercise#deleteExercise"
+            data-action="click->{{ controllerName|default('exercise') }}#deleteExercise"
             class="text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250 cursor-pointer">
         {% include 'partials/_svg/_trash.html.twig' %}
     </button>

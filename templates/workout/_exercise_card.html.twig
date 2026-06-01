@@ -2,7 +2,7 @@
      data-exercise-index="{{ index }}">
     <input type="hidden" name="workout[workoutExercises][{{ index }}][exercise]" value="{{ exercise.id }}">
     <input type="hidden" name="workout[workoutExercises][{{ index }}][position]" value="{{ index }}" class="js-position-input">
-    {% include 'workout/_card.html.twig' %}
+    {% include 'workout/_card.html.twig' with {'controllerName': controllerName|default('exercise')} %}
     {% if exercise.exerciseMuscles is not empty %}
         {% include 'workout/_muscle_target.html.twig' %}
     {% endif %}
