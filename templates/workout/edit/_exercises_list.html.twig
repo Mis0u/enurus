@@ -1,0 +1,30 @@
+<div
+    data-controller="workout--edit--exercise"
+    data-workout--edit--exercise-block-url-value="{{ path('workout_edit_exercise_block') }}"
+    data-workout--edit--exercise-no-exercise-title-value="{{ 'workout.error.no_exercise.title'|trans({}, 'navigation') }}"
+    data-workout--edit--exercise-no-exercise-text-value="{{ 'workout.error.no_exercise.text'|trans({}, 'navigation') }}"
+>
+    <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center gap-2.5 mb-5">
+            {% include 'partials/_svg/_filter.html.twig' %}
+            <h3 class="font-rajdhani text-xl font-bold text-[#f0f4ff]">
+                {{ 'workout.edit.exercises_title'|trans({}, 'navigation') }}
+            </h3>
+        </div>
+    </div>
+
+    <div
+        id="exercises-list"
+        data-workout--edit--exercise-target="exerciseList"
+    >
+        {% for index, item in exerciseData %}
+            {% include 'workout/_exercise_card.html.twig' with {
+                'exercise': item.workoutExercise.exercise,
+                'index': index,
+                'controllerName': 'workout--edit--exercise',
+                'existingSets': item.sets,
+            } %}
+        {% endfor %}
+    </div>
+
+</div>

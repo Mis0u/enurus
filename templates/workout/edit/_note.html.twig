@@ -1,0 +1,17 @@
+<div class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-6 mb-5">
+
+    <div class="flex items-center gap-2.5 mb-1.5">
+        {% include 'partials/_svg/_pen.html.twig' with {'width': 5, 'height': 5} %}
+        <h3 class="font-rajdhani text-lg font-bold text-[#f0f4ff]">
+            {{ 'workout.edit.note_title'|trans({}, 'navigation') }}
+        </h3>
+    </div>
+
+    <p class="text-[13px] text-slate-400 mb-3.5">
+        {{ 'workout.note.subtitle'|trans({}, 'navigation') }}
+    </p>
+
+    {{ form_row(form.note) }}
+    {% do form.note.setRendered %}
+
+</div>

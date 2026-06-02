@@ -1,0 +1,43 @@
+<div class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-6 mb-5 mt-[60px]">
+
+    <h3 class="font-rajdhani text-[13px] font-bold text-slate-500 uppercase tracking-widest mb-4">
+        {{ 'workout.edit.config_title'|trans({}, 'navigation') }}
+    </h3>
+
+    <div class="grid grid-cols-3 gap-4 max-md:grid-cols-1">
+
+        {{ form_row(form.performedAt) }}
+
+        <div class="flex flex-col">
+            <div class="relative">
+                {{ form_row(form.duration) }}
+                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-[13px] pointer-events-none">
+                    {{ 'workout.history.duration_unit'|trans({}, 'navigation') }}
+                </span>
+            </div>
+        </div>
+
+        <div class="flex flex-col">
+            <label class="block text-xs font-semibold text-slate-500 mb-2">
+                {{ 'workout.type.title'|trans({}, 'navigation') }}
+            </label>
+            {% if workout.routine %}
+                <div class="inline-flex items-center gap-1.5 px-3.5 py-3 bg-[rgba(244,63,94,0.15)] border border-[rgba(244,63,94,0.3)] rounded-xl text-[13px] font-semibold text-[#f43f5e] w-fit">
+                    <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                    {{ workout.routine.name }}
+                </div>
+            {% else %}
+                <div class="inline-flex items-center gap-1.5 px-3.5 py-3 bg-white/[0.04] border border-white/[0.07] rounded-xl text-[13px] font-medium text-slate-400 w-fit">
+                    {% include 'partials/_svg/_lightning.html.twig' %}
+                    {{ 'workout.type.free'|trans({}, 'navigation') }}
+                </div>
+            {% endif %}
+            <p class="text-[11px] text-slate-600 italic mt-1.5">
+                {{ 'workout.edit.type_readonly'|trans({}, 'navigation') }}
+            </p>
+        </div>
+
+    </div>
+</div>
