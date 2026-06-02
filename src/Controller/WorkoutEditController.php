@@ -53,7 +53,9 @@ class WorkoutEditController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        $form = $this->createForm(WorkoutType::class, $workout);
+        $form = $this->createForm(WorkoutType::class, $workout, [
+            'is_edit' => true,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
