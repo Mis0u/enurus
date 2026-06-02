@@ -27,6 +27,21 @@ workout:
     date: Date
     duration_optional: Durée (Optionnel)
     duration_placeholder: Durée (min)
+    edit:
+        title: Modifier la séance
+        topbar_title: Édition de séance
+        back: Retour à la séance
+        cancel: Annuler
+        submit: Enregistrer les modifications
+        config_title: Configuration
+        type_readonly: Le type de séance ne peut pas être modifié
+        note_title: Ma note
+        photo_title: Photo de séance
+        photo_soon: Bientôt disponible
+        photo_add: Ajouter une photo
+        photo_constraints: JPEG ou PNG · 2 Mo max · 1 photo par séance
+        photo_select: Sélectionner une photo
+        exercises_title: Exercices
     error:
         no_exercise:
             title: Aucun exercice

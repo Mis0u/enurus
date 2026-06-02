@@ -27,6 +27,21 @@ workout:
     date: Datum
     duration_optional: Duur (Optioneel)
     duration_placeholder: Duur (min)
+    edit:
+        title: Training bewerken
+        topbar_title: Training bewerken
+        back: Terug naar training
+        cancel: Annuleren
+        submit: Wijzigingen opslaan
+        config_title: Configuratie
+        type_readonly: Het trainingstype kan niet worden gewijzigd
+        note_title: Mijn notitie
+        photo_title: Trainingsfoto
+        photo_soon: Binnenkort beschikbaar
+        photo_add: Foto toevoegen
+        photo_constraints: JPEG of PNG · max. 2 MB · 1 foto per training
+        photo_select: Foto selecteren
+        exercises_title: Oefeningen
     error:
         no_exercise:
             title: Geen oefening
