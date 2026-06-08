@@ -1,0 +1,62 @@
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block title %}{{ 'workout.edit.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/workout_edit.css') }}">
+{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        'title': 'workout.edit.topbar_title'|trans({}, 'navigation'),
+        'subtitle': user.nickname|formatInitials ,
+    } %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[160px] max-md:px-4 max-md:pb-[200px]">
+
+        {% include 'workout/edit/_secondary_nav.html.twig' %}
+
+        {{ form_start(form, {'attr': {'id': 'workout-edit-form'}}) }}
+
+        {% include 'workout/edit/_config_bar.html.twig' %}
+
+        {% include 'workout/edit/_note.html.twig' %}
+
+        {% include 'workout/edit/_upload_placeholder.html.twig' %}
+
+        {% include 'workout/edit/_exercises_list.html.twig' %}
+
+        {{ form_row(form._token) }}
+
+        {{ form_end(form, {'render_rest': false}) }}
+
+        <div
+            class="fixed bottom-0 left-[240px] right-0 z-20 max-md:left-0 max-md:bottom-[70px]"
+        >
+            <div class="bg-[rgba(8,14,26,0.95)] backdrop-blur border-t border-white/[0.07] px-7 py-4 flex items-center justify-end gap-3 max-md:flex-col max-md:px-4">
+                <a
+                    href="{{ path('app_workout_show', {'id': workout.id, '_locale': app.request.locale}) }}"
+                    class="inline-flex items-center gap-2 px-6 py-3.5 bg-transparent border border-white/[0.07] rounded-xl text-slate-400 text-sm font-medium hover:text-[#f0f4ff] hover:border-[rgba(244,63,94,0.4)] transition-all max-md:w-full max-md:justify-center"
+                >
+                {{ 'workout.edit.cancel'|trans({}, 'navigation') }}
+                </a>
+                <button
+                    type="button"
+                    id="workout-edit-submit-btn"
+                    class="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-br from-[#f43f5e] to-red-600 border-none rounded-xl text-white font-rajdhani text-[15px] font-bold tracking-wide shadow-[0_4px_20px_rgba(244,63,94,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(244,63,94,0.5)] transition-all max-md:w-full max-md:justify-center"
+                >
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    {{ 'workout.edit.submit'|trans({}, 'navigation') }}
+                </button>
+            </div>
+        </div>
+
+        {{ component('LiveComponent:ExerciseSelectorComponent:ExerciseSelectorComponent') }}
+
+    </div>
+{% endblock %}

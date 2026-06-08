@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Utils;
 
+use App\Entity\Workout;
 use App\Enum\Entity\User\UnitOfMeasureEnum;
 
 class WeightConverterService
@@ -28,5 +29,22 @@ class WeightConverterService
     {
         $weight = $this->convertToLbs($weightKg, $unit);
         return \sprintf('%s %s', $weight, $unit->label());
+    }
+
+    /**
+     * Reconvertit in-place tous les ExerciseSet du Workout : lbs → kg avant persist.
+     * Sans effet si l'unité est déjà KG.
+     */
+    public function convertWorkoutSetsToKg(Workout $workout, UnitOfMeasureEnum $unit): void
+    {
+        if (UnitOfMeasureEnum::KG === $unit) {
+            return;
+        }
+
+        foreach ($workout->workoutExercises as $workoutExercise) {
+            foreach ($workoutExercise->exerciseSets as $set) {
+                $set->weight = $this->convertToKg($set->weight, $unit);
+            }
+        }
     }
 }

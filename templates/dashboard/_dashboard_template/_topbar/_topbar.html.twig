@@ -2,7 +2,7 @@
     <div>
         <h1 class="font-rajdhani text-lg md:text-[22px] font-bold">{{ title }}</h1>
         <p class="hidden md:block text-[12.5px] text-[#8b9bb4] mt-px">
-            {{ 'now'|format_datetime(pattern: "EEEE d MMMM Y", locale: user.locale)|capitalize }}
+            {{ 'now'|format_datetime(pattern: "EEEE d MMMM Y", locale: app.user.locale)|capitalize }}
         </p>
     </div>
     <div class="flex items-center gap-2 md:gap-3">

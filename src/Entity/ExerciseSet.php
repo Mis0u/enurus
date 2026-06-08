@@ -49,24 +49,24 @@ class ExerciseSet
     #[Assert\Positive()]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'float')]
-    public float $weight {
+    public float $weight = 0.0 {
         get {
             return $this->weight;
         }
-        set(float $weight) {
-            $this->weight = $weight;
+        set(?float $weight) {
+            $this->weight = $weight ?? $this->weight;
         }
     }
 
     #[Assert\Positive()]
     #[Assert\NotBlank]
     #[ORM\Column]
-    public int $reps {
+    public int $reps = 0 {
         get {
             return $this->reps;
         }
-        set(int $reps) {
-            $this->reps = $reps;
+        set(?int $reps) {
+            $this->reps = $reps ?? $this->reps;
         }
     }
 }

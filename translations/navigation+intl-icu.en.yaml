@@ -27,6 +27,21 @@ workout:
     date: Date
     duration_optional: Duration (Optional)
     duration_placeholder: Duration (min)
+    edit:
+        title: Edit workout
+        topbar_title: Workout editing
+        back: Back to workout
+        cancel: Cancel
+        submit: Save changes
+        config_title: Configuration
+        type_readonly: Workout type cannot be changed
+        note_title: My note
+        photo_title: Workout photo
+        photo_soon: Coming soon
+        photo_add: Add a photo
+        photo_constraints: JPEG or PNG · 2 MB max · 1 photo per workout
+        photo_select: Select a photo
+        exercises_title: Exercises
     error:
         no_exercise:
             title: No exercise

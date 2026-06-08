@@ -27,6 +27,21 @@ workout:
     date: Datum
     duration_optional: Dauer (Optional)
     duration_placeholder: Dauer (Min)
+    edit:
+        title: Training bearbeiten
+        topbar_title: Training bearbeiten
+        back: Zurück zum Training
+        cancel: Abbrechen
+        submit: Änderungen speichern
+        config_title: Konfiguration
+        type_readonly: Die Trainingsart kann nicht geändert werden
+        note_title: Meine Notiz
+        photo_title: Trainingsfoto
+        photo_soon: Demnächst verfügbar
+        photo_add: Foto hinzufügen
+        photo_constraints: JPEG oder PNG · max. 2 MB · 1 Foto pro Training
+        photo_select: Foto auswählen
+        exercises_title: Übungen
     error:
         no_exercise:
             title: Keine Übung
