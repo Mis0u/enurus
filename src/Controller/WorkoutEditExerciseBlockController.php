@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Uid\Uuid;
 
 #[IsGranted('ROLE_USER')]
 class WorkoutEditExerciseBlockController extends AbstractController
@@ -23,7 +24,13 @@ class WorkoutEditExerciseBlockController extends AbstractController
         Request $request,
         ExerciseRepository $exerciseRepository,
     ): Response {
-        $exercise = $exerciseRepository->find($request->query->get('exerciseId'));
+        $exerciseId = $request->query->get('exerciseId');
+
+        if (! $exerciseId || ! Uuid::isValid($exerciseId)) {
+            return new Response('', Response::HTTP_NOT_FOUND);
+        }
+
+        $exercise = $exerciseRepository->find($exerciseId);
         $index = $request->query->getInt('index', 0);
 
         if (null === $exercise) {
