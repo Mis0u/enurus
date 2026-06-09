@@ -41,5 +41,7 @@ services:
     App\:
         resource: '../src/'
 
+    League\Flysystem\FilesystemOperator $defaultStorage: '@default.storage'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
