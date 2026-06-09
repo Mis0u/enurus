@@ -87,6 +87,7 @@ workout:
     photo:
         alt: Trainingsfoto
         click_to_preview: Klik om te vergroten
+        has_photo: Trainingsfoto
         label: Trainingsfoto (optioneel)
         label_visible: Trainingsfoto
         drag_or: Sleep een foto of

@@ -87,6 +87,7 @@ workout:
     photo:
         alt: Photo de la séance
         click_to_preview: Cliquer pour agrandir
+        has_photo: Photo de séance
         label: Photo de séance (optionnelle)
         label_visible: Photo de la séance
         drag_or: Glisse une photo ou

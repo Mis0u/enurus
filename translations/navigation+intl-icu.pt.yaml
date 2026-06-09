@@ -87,6 +87,7 @@ workout:
     photo:
         alt: Foto do treino
         click_to_preview: Clica para ampliar
+        has_photo: Foto do treino
         label: Foto do treino (opcional)
         label_visible: Foto do treino
         drag_or: Arrasta uma foto ou
