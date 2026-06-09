@@ -9,8 +9,8 @@
          data-action="dragover->workout--photo-upload#onDragOver dragleave->workout--photo-upload#onDragLeave drop->workout--photo-upload#onDrop"
          class="relative border border-dashed border-white/[0.1] rounded-xl p-4 text-center transition-all duration-250 hover:border-rose-500/40 [&.drag-over]:border-rose-500/60 [&.drag-over]:bg-rose-500/5 [&.uploading]:opacity-60 [&.uploading]:pointer-events-none">
 
-        {% include 'workout/_note_modal/_photo_placeholder.html.twig' %}
-        {% include 'workout/_note_modal/_photo_preview.html.twig' %}
+        {% include 'workout/create/_note_modal/_photo_placeholder.html.twig' %}
+        {% include 'workout/create/_note_modal/_photo_preview.html.twig' %}
     </div>
 
     <p data-workout--photo-upload-target="error"

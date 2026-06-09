@@ -17,9 +17,9 @@
 {% block state %}
     <div class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]">
         {{ form_start(form) }}
-        {% include 'workout/_config-bar.html.twig' %}
-        {% include 'workout/_exercise_list.html.twig' %}
-        {% include 'workout/_note_modal.html.twig' %}
+        {% include 'workout/create/_config-bar.html.twig' %}
+        {% include 'workout/create/_exercise_list.html.twig' %}
+        {% include 'workout/create/_note_modal.html.twig' %}
         {{ component('LiveComponent:ExerciseSelectorComponent:ExerciseSelectorComponent') }}
         {{ form_end(form) }}
     </div>
