@@ -1,0 +1,21 @@
+<div class="hidden" data-workout--photo-upload-target="previewWrapper">
+    <div class="flex items-center gap-3 p-2 bg-white/[0.03] border border-white/[0.07] rounded-lg max-w-sm mx-auto">
+        <img src=""
+             alt=""
+             data-workout--photo-upload-target="preview"
+             data-action="click->workout--photo-upload#openLightbox"
+             class="w-16 h-16 object-cover rounded-md cursor-pointer hover:opacity-80 transition-opacity duration-200 flex-shrink-0">
+        <div class="flex-1 min-w-0">
+            <span data-workout--photo-upload-target="filename"
+                  class="text-[#f0f4ff] text-[13px] truncate block"></span>
+            <span class="text-[#4a5568] text-[11px]">
+                {{ 'workout.photo.click_to_preview'|trans({}, 'navigation') }}
+            </span>
+        </div>
+        <button type="button"
+                data-action="click->workout--photo-upload#onRemove"
+                class="text-[#8b9bb4] hover:text-rose-400 text-[12px] transition-colors duration-200 flex-shrink-0">
+            {{ 'workout.photo.remove'|trans({}, 'navigation') }}
+        </button>
+    </div>
+</div>

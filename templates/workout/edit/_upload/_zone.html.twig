@@ -1,0 +1,9 @@
+<div data-workout--photo-upload-target="zone"
+     data-error-type="{{ 'workout.photo.invalid_type'|trans({}, 'navigation') }}"
+     data-error-size="{{ 'workout.photo.too_large'|trans({}, 'navigation') }}"
+     data-action="dragover->workout--photo-upload#onDragOver dragleave->workout--photo-upload#onDragLeave drop->workout--photo-upload#onDrop"
+     class="border-2 border-dashed border-white/[0.1] rounded-xl py-10 px-5 text-center transition-all duration-250 hover:border-rose-500/40 [&.drag-over]:border-rose-500/60 [&.drag-over]:bg-rose-500/5 [&.uploading]:opacity-60 [&.uploading]:pointer-events-none">
+
+    {% include 'workout/edit/_upload/_placeholder.html.twig' %}
+    {% include 'workout/edit/_upload/_preview.html.twig' %}
+</div>
