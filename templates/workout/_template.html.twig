@@ -5,7 +5,11 @@
         <td>
             <input type="number"
                    name="workout[workoutExercises][__EXERCISE_INDEX__][exerciseSets][__SET_INDEX__][weight]"
-                   step="0.5" placeholder="kg"
+                   data-error-message="{{ 'workout.error.required_weight'|trans({}, 'navigation') }}"
+                   required
+                   min="0.1"
+                   step="0.1"
+                   placeholder="{{ app.user.unitOfMeasure.value }}"
                    class="w-20 max-md:w-16 px-3 py-2 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
             <input type="hidden"
                    name="workout[workoutExercises][__EXERCISE_INDEX__][exerciseSets][__SET_INDEX__][position]"
@@ -14,7 +18,10 @@
         <td>
             <input type="number"
                    name="workout[workoutExercises][__EXERCISE_INDEX__][exerciseSets][__SET_INDEX__][reps]"
-                   min="1" placeholder="reps"
+                   data-error-message="{{ 'workout.error.required_reps'|trans({}, 'navigation') }}"
+                   required
+                   min="1"
+                   placeholder="{{ 'workout.reps_abbreviate'|trans({}, 'navigation')|lower }}"
                    class="w-20 max-md:w-16 px-3 py-2 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
         </td>
         <td class="text-center">
