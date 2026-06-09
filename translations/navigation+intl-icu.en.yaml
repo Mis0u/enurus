@@ -28,20 +28,20 @@ workout:
     duration_optional: Duration (Optional)
     duration_placeholder: Duration (min)
     edit:
-        title: Edit workout
-        topbar_title: Workout editing
         back: Back to workout
         cancel: Cancel
-        submit: Save changes
         config_title: Configuration
-        type_readonly: Workout type cannot be changed
+        exercises_title: Exercises
         note_title: My note
-        photo_title: Workout photo
-        photo_soon: Coming soon
         photo_add: Add a photo
         photo_constraints: JPEG or PNG · 2 MB max · 1 photo per workout
+        photo_replace: Replace current photo
         photo_select: Select a photo
-        exercises_title: Exercises
+        photo_title: Workout photo
+        submit: Save changes
+        title: Edit workout
+        topbar_title: Workout editing
+        type_readonly: Workout type cannot be changed
     error:
         no_exercise:
             title: No exercise
@@ -79,12 +79,22 @@ workout:
                 other {# workouts}
             }
     note:
-        title: How did your workout go?
-        subtitle: Add your thoughts, observations or anything that stood out during this workout. This note is optional.
-        placeholder: Your workout went well, did you beat a record?...
         back: Back to workout
-        submit_without: Submit without note
-        submit_with: Submit my workout
+        placeholder: Your workout went well, did you beat a record?...
+        submit: Validate
+        subtitle: Add your thoughts, observations or anything that stood out during this workout. This note is optional.
+        title: How did your workout go?
+    photo:
+        alt: Workout photo
+        click_to_preview: Click to enlarge
+        label: Workout photo (optional)
+        label_visible: Workout photo
+        drag_or: Drag a photo or
+        select: Select
+        constraints: JPEG, PNG or WebP · 5 MB max
+        invalid_type: The file must be a JPEG, PNG or WebP image.
+        too_large: The photo must not exceed 5 MB.
+        remove: Remove
     reps_abbreviate: Reps
     reps: Reps
     routine:

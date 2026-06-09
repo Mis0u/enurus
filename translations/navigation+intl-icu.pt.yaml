@@ -28,20 +28,20 @@ workout:
     duration_optional: Duração (Opcional)
     duration_placeholder: Duração (min)
     edit:
-        title: Modificar treino
-        topbar_title: Edição do treino
         back: Voltar ao treino
         cancel: Cancelar
-        submit: Guardar alterações
         config_title: Configuração
-        type_readonly: O tipo de treino não pode ser modificado
+        exercises_title: Exercícios
         note_title: A minha nota
-        photo_title: Foto do treino
-        photo_soon: Brevemente disponível
         photo_add: Adicionar uma foto
         photo_constraints: JPEG ou PNG · 2 MB máx · 1 foto por treino
+        photo_replace: Substituir a foto atual
         photo_select: Selecionar uma foto
-        exercises_title: Exercícios
+        photo_title: Foto do treino
+        submit: Guardar alterações
+        title: Modificar treino
+        topbar_title: Edição do treino
+        type_readonly: O tipo de treino não pode ser modificado
     error:
         no_exercise:
             title: Nenhum exercício
@@ -79,12 +79,22 @@ workout:
                 other {# treinos}
             }
     note:
-        title: Como correu o teu treino?
-        subtitle: Adiciona as tuas sensações, observações ou qualquer coisa que te tenha marcado durante este treino. Esta nota é facultativa.
-        placeholder: O teu treino correu bem, bateste algum recorde?...
         back: Voltar ao treino
-        submit_without: Confirmar sem nota
-        submit_with: Confirmar o meu treino
+        placeholder: O teu treino correu bem, bateste algum recorde?...
+        submit: Validar
+        subtitle: Adiciona as tuas sensações, observações ou qualquer coisa que te tenha marcado durante este treino. Esta nota é facultativa.
+        title: Como correu o teu treino?
+    photo:
+        alt: Foto do treino
+        click_to_preview: Clica para ampliar
+        label: Foto do treino (opcional)
+        label_visible: Foto do treino
+        drag_or: Arrasta uma foto ou
+        select: Selecionar
+        constraints: JPEG, PNG ou WebP · 5 MB máx
+        invalid_type: O ficheiro deve ser uma imagem JPEG, PNG ou WebP.
+        too_large: A foto não deve ultrapassar 5 MB.
+        remove: Eliminar
     reps_abbreviate: Reps
     reps: Repetições
     routine:

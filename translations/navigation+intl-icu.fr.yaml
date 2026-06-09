@@ -28,20 +28,20 @@ workout:
     duration_optional: Durée (Optionnel)
     duration_placeholder: Durée (min)
     edit:
-        title: Modifier la séance
-        topbar_title: Édition de séance
         back: Retour à la séance
         cancel: Annuler
-        submit: Enregistrer les modifications
         config_title: Configuration
-        type_readonly: Le type de séance ne peut pas être modifié
+        exercises_title: Exercices
         note_title: Ma note
-        photo_title: Photo de séance
-        photo_soon: Bientôt disponible
         photo_add: Ajouter une photo
         photo_constraints: JPEG ou PNG · 2 Mo max · 1 photo par séance
+        photo_replace: Remplacer la photo actuelle
         photo_select: Sélectionner une photo
-        exercises_title: Exercices
+        photo_title: Photo de séance
+        submit: Enregistrer les modifications
+        title: Modifier la séance
+        topbar_title: Édition de séance
+        type_readonly: Le type de séance ne peut pas être modifié
     error:
         no_exercise:
             title: Aucun exercice
@@ -79,12 +79,22 @@ workout:
                 other {# séances}
             }
     note:
-        title: Comment s'est déroulé ta séance ?
-        subtitle: Ajoute un ressenti, des observations ou tout ce qui t'a marqué pendant cette séance. Cette note est facultative.
-        placeholder: Ta séance s'est bien passée, tu as battu un record ?...
         back: Retour à la séance
-        submit_without: Valider sans note
-        submit_with: Valider ma séance
+        placeholder: Ta séance s'est bien passée, tu as battu un record ?...
+        submit: Valider
+        subtitle: Ajoute un ressenti, des observations ou tout ce qui t'a marqué pendant cette séance. Cette note est facultative.
+        title: Comment s'est déroulé ta séance ?
+    photo:
+        alt: Photo de la séance
+        click_to_preview: Cliquer pour agrandir
+        label: Photo de séance (optionnelle)
+        label_visible: Photo de la séance
+        drag_or: Glisse une photo ou
+        select: Sélectionner
+        constraints: JPEG, PNG ou WebP · 5 Mo max
+        invalid_type: Le fichier doit être une image JPEG, PNG ou WebP.
+        too_large: La photo ne doit pas dépasser 5 Mo.
+        remove: Supprimer
     reps_abbreviate: Reps
     reps: Répétitions
     routine:
