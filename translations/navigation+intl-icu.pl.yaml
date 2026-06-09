@@ -30,20 +30,20 @@ workout:
     duration_optional: Czas trwania (Opcjonalnie)
     duration_placeholder: Czas trwania (min)
     edit:
-        title: Edytuj trening
-        topbar_title: Edycja treningu
         back: Powrót do treningu
         cancel: Anuluj
-        submit: Zapisz zmiany
         config_title: Konfiguracja
-        type_readonly: Rodzaj treningu nie może być zmieniony
+        exercises_title: Ćwiczenia
         note_title: Moja notatka
-        photo_title: Zdjęcie treningu
-        photo_soon: Wkrótce dostępne
         photo_add: Dodaj zdjęcie
         photo_constraints: JPEG lub PNG · maks. 2 MB · 1 zdjęcie na trening
+        photo_replace: Zastąp aktualne zdjęcie
         photo_select: Wybierz zdjęcie
-        exercises_title: Ćwiczenia
+        photo_title: Zdjęcie treningu
+        submit: Zapisz zmiany
+        title: Edytuj trening
+        topbar_title: Edycja treningu
+        type_readonly: Rodzaj treningu nie może być zmieniony
     error:
         no_exercise:
             title: Brak ćwiczenia
@@ -83,12 +83,23 @@ workout:
                 other {# treningów}
             }
     note:
-        title: Jak poszedł Twój trening?
-        subtitle: Dodaj swoje odczucia, obserwacje lub cokolwiek, co Cię zaskoczyło podczas tego treningu. Ta notatka jest opcjonalna.
-        placeholder: Twój trening poszedł dobrze, pobiłeś rekord?...
         back: Powrót do treningu
-        submit_without: Zatwierdź bez notatki
-        submit_with: Zatwierdź mój trening
+        placeholder: Twój trening poszedł dobrze, pobiłeś rekord?...
+        submit: Zatwierdź
+        subtitle: Dodaj swoje odczucia, obserwacje lub cokolwiek, co Cię zaskoczyło podczas tego treningu. Ta notatka jest opcjonalna.
+        title: Jak poszedł Twój trening?
+    photo:
+        alt: Zdjęcie treningu
+        click_to_preview: Kliknij, aby powiększyć
+        has_photo: Zdjęcie treningu
+        label: Zdjęcie treningu (opcjonalne)
+        label_visible: Zdjęcie treningu
+        drag_or: Przeciągnij zdjęcie lub
+        select: Wybierz
+        constraints: JPEG, PNG lub WebP · maks. 5 MB
+        invalid_type: Plik musi być obrazem JPEG, PNG lub WebP.
+        too_large: Zdjęcie nie może przekraczać 5 MB.
+        remove: Usuń
     reps_abbreviate: Powt
     reps: Powtórzenia
     routine:

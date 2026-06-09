@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Workout;
 use App\Security\Voter\WorkoutVoter;
+use App\Service\Entity\WorkoutPhotoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,8 +17,14 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
-class WorkoutDeleteController extends AbstractController
+final class WorkoutDeleteController extends AbstractController
 {
+    public function __construct(
+        private readonly WorkoutPhotoService $workoutPhotoService,
+        private readonly EntityManagerInterface $em,
+    ) {
+    }
+
     #[Route(
         path: '/workout/{id}/delete',
         name: 'app_workout_delete',
@@ -28,10 +35,8 @@ class WorkoutDeleteController extends AbstractController
             'id' => 'id',
         ])]
         Workout $workout,
-        EntityManagerInterface $em,
         Request $request,
     ): JsonResponse {
-        // Vérifie que c'est bien une requête AJAX
         if (! $request->isXmlHttpRequest()) {
             return $this->json(
                 [
@@ -40,10 +45,15 @@ class WorkoutDeleteController extends AbstractController
                 Response::HTTP_BAD_REQUEST,
             );
         }
+
         $this->denyAccessUnlessGranted(WorkoutVoter::DELETE, $workout);
 
-        $em->remove($workout);
-        $em->flush();
+        // Supprime la photo du storage avant de supprimer l'entité —
+        // si le flush échoue, la photo est conservée (pas de perte de données)
+        $this->workoutPhotoService->deletePhoto($workout);
+
+        $this->em->remove($workout);
+        $this->em->flush();
 
         return $this->json([
             'success' => true,

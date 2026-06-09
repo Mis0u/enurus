@@ -5,3 +5,7 @@ user:
 workout:
     performed_at:
         today: La fecha no puede ser en el futuro
+    photo:
+        invalid_type: El archivo debe ser una imagen JPEG, PNG o WebP.
+        too_large: La foto no debe superar los 5 MB.
+

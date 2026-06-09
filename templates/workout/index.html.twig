@@ -7,34 +7,20 @@
 
 {% block title %}{{ 'workout.title'|trans({}, 'navigation')|format_title }}{% endblock %}
 
-
 {% block topbar %}
-    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {'title': 'workout.title'|trans({}, 'navigation'), 'subtitle': user.nickname|formatInitials} %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        'title': 'workout.title'|trans({}, 'navigation'),
+        'subtitle': user.nickname|formatInitials,
+    } %}
 {% endblock %}
+
 {% block state %}
     <div class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]">
         {{ form_start(form) }}
-            {% include 'workout/_config-bar.html.twig' %}
-        <div data-controller="exercise"
-             data-exercise-block-url-value="{{ path('workout_exercise_block') }}"
-             data-exercise-no-exercise-title-value="{{ 'workout.error.no_exercise.title'|trans({}, 'navigation') }}"
-             data-exercise-no-exercise-text-value="{{ 'workout.error.no_exercise.text'|trans({}, 'navigation') }}"
-             data-exercise-note-submit-without-value="{{ 'workout.note.submit_without'|trans({}, 'navigation') }}"
-             data-exercise-note-submit-with-value="{{ 'workout.note.submit_with'|trans({}, 'navigation') }}"
-        >
-                <div data-exercise-target="exerciseList"
-                     id="exercises-list">
-                </div>
-
-                <div class="fixed bottom-0 left-[240px] right-0 max-md:left-0 max-md:bottom-[70px] px-7 py-4 max-md:px-4 bg-gradient-to-t from-[#080e1a] to-transparent pointer-events-none z-10">
-                    <div class="pointer-events-auto max-w-[600px] mx-auto">
-                        <twig:Button:Primary:Primary data="data-action=click->exercise#validateAndSubmit" message="{{ 'field.form.button.validate'|trans({}, 'common') }}"/>
-                    </div>
-                </div>
-            </div>
+        {% include 'workout/_config-bar.html.twig' %}
+        {% include 'workout/_exercise_list.html.twig' %}
         {% include 'workout/_note_modal.html.twig' %}
         {{ component('LiveComponent:ExerciseSelectorComponent:ExerciseSelectorComponent') }}
         {{ form_end(form) }}
     </div>
 {% endblock %}
-

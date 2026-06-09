@@ -3,21 +3,28 @@ import Sortable from 'sortablejs';
 import { numerate } from './workout/create/number_series.js';
 import { swalError } from './swal/error/_error.js';
 import { handleErrorField } from './workout/_error_form.js';
+import { NoteModalManager } from './workout/create/note_modal_manager.js';
 
 export default class extends Controller {
-    static targets = ['exerciseList', 'form'];
+    static targets = ['exerciseList'];
 
     static values = {
         blockUrl: String,
         noExerciseTitle: String,
         noExerciseText: String,
-        noteSubmitWithout: String,
-        noteSubmitWith: String,
+        uploadPhotoUrl: String,
     };
+
+    #noteModalManager = null;
 
     connect() {
         this.boundHandler = this.onExerciseSelected.bind(this);
         window.addEventListener('exercise:selected', this.boundHandler);
+
+        this.#noteModalManager = new NoteModalManager(
+            this.application,
+            this.uploadPhotoUrlValue
+        );
 
         this.sortable = new Sortable(this.exerciseListTarget, {
             animation: 250,
@@ -25,15 +32,10 @@ export default class extends Controller {
             ghostClass: 'opacity-30',
             chosenClass: 'opacity-50',
             easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-            onEnd: () => this.updatePositions(),
+            onEnd: () => this.#updatePositions(),
         });
 
-        this.element.addEventListener('input', (e) => {
-            if (e.target.matches('input[required]') && e.target.value) {
-                e.target.classList.remove('!border-[rgba(244,63,94,0.6)]');
-                e.target.nextElementSibling?.classList.contains('js-error-message') && e.target.nextElementSibling.remove();
-            }
-        });
+        this.element.addEventListener('input', (e) => this.#clearFieldError(e));
     }
 
     disconnect() {
@@ -41,14 +43,13 @@ export default class extends Controller {
         this.sortable?.destroy();
     }
 
+    // ─── Actions publiques ────────────────────────────────────────
+
     async onExerciseSelected(event) {
         const { id } = event.detail;
         const index = this.exerciseListTarget.children.length;
 
-        const response = await fetch(
-            `${this.blockUrlValue}?exerciseId=${id}&index=${index}`
-        );
-
+        const response = await fetch(`${this.blockUrlValue}?exerciseId=${id}&index=${index}`);
         if (!response.ok) {
             return;
         }
@@ -82,7 +83,6 @@ export default class extends Controller {
         }
 
         row.remove();
-
         numerate(tbody);
     }
 
@@ -96,20 +96,20 @@ export default class extends Controller {
         event.stopPropagation();
 
         if (this.exerciseListTarget.children.length === 0) {
-            swalError(this.noExerciseTitleValue, this.noExerciseTextValue, '#0f1928','#f0f4ff','#f43f5e');
+            swalError(this.noExerciseTitleValue, this.noExerciseTextValue, '#0f1928', '#f0f4ff', '#f43f5e');
             return;
         }
 
-        let valid = handleErrorField(this.exerciseListTarget);
-
-        if (!valid) {
+        if (!handleErrorField(this.exerciseListTarget)) {
             return;
         }
 
-        this.openNoteModal();
+        this.#noteModalManager.open();
     }
 
-    updatePositions() {
+    // ─── Privé ───────────────────────────────────────────────────
+
+    #updatePositions() {
         this.exerciseListTarget.querySelectorAll('[data-exercise-index]').forEach((card, index) => {
             const positionInput = card.querySelector('.js-position-input');
             if (positionInput) {
@@ -118,45 +118,10 @@ export default class extends Controller {
         });
     }
 
-    openNoteModal() {
-        const modal = document.getElementById('note-modal');
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-
-        const textarea = document.getElementById('workout-note-input');
-        const submitBtn = document.getElementById('note-modal-submit');
-        const backBtn = document.getElementById('note-modal-back');
-
-        // Textes traduits via data-values
-        const submitWithout = this.noteSubmitWithoutValue;
-        const submitWith = this.noteSubmitWithValue;
-
-        // Reset
-        textarea.value = '';
-        submitBtn.textContent = submitWithout;
-
-        // Bouton change de texte selon la note
-        textarea.addEventListener('input', () => {
-            submitBtn.textContent = textarea.value.trim()
-                ? submitWith
-                : submitWithout;
-        });
-
-        // Retour à la séance
-        backBtn.addEventListener('click', () => {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        });
-
-        // Soumission
-        submitBtn.addEventListener('click', () => {
-            const noteInput = document.getElementById('workout_note');
-            if (noteInput) {
-                noteInput.value = textarea.value.trim();
-            }
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            document.querySelector('form').requestSubmit();
-        });
+    #clearFieldError(e) {
+        if (e.target.matches('input[required]') && e.target.value) {
+            e.target.classList.remove('!border-[rgba(244,63,94,0.6)]');
+            e.target.nextElementSibling?.classList.contains('js-error-message') && e.target.nextElementSibling.remove();
+        }
     }
 }

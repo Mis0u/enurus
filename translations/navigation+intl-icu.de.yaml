@@ -28,20 +28,20 @@ workout:
     duration_optional: Dauer (Optional)
     duration_placeholder: Dauer (Min)
     edit:
-        title: Training bearbeiten
-        topbar_title: Training bearbeiten
         back: Zurück zum Training
         cancel: Abbrechen
-        submit: Änderungen speichern
         config_title: Konfiguration
-        type_readonly: Die Trainingsart kann nicht geändert werden
+        exercises_title: Übungen
         note_title: Meine Notiz
-        photo_title: Trainingsfoto
-        photo_soon: Demnächst verfügbar
         photo_add: Foto hinzufügen
         photo_constraints: JPEG oder PNG · max. 2 MB · 1 Foto pro Training
+        photo_replace: Aktuelles Foto ersetzen
         photo_select: Foto auswählen
-        exercises_title: Übungen
+        photo_title: Trainingsfoto
+        submit: Änderungen speichern
+        title: Training bearbeiten
+        topbar_title: Training bearbeiten
+        type_readonly: Die Trainingsart kann nicht geändert werden
     error:
         no_exercise:
             title: Keine Übung
@@ -79,12 +79,23 @@ workout:
                 other {# Trainings}
             }
     note:
-        title: Wie lief dein Training?
-        subtitle: Füge dein Gefühl, Beobachtungen oder alles hinzu, was dir während dieses Trainings aufgefallen ist. Diese Notiz ist optional.
-        placeholder: Dein Training lief gut, hast du einen Rekord gebrochen?...
         back: Zurück zum Training
-        submit_without: Ohne Notiz bestätigen
-        submit_with: Mein Training bestätigen
+        placeholder: Dein Training lief gut, hast du einen Rekord gebrochen?...
+        submit: Bestätigen
+        subtitle: Füge dein Gefühl, Beobachtungen oder alles hinzu, was dir während dieses Trainings aufgefallen ist. Diese Notiz ist optional.
+        title: Wie lief dein Training?
+    photo:
+        alt: Trainingsfoto
+        click_to_preview: Klicken zum Vergrößern
+        has_photo: Trainingsfoto
+        label: Trainingsfoto (optional)
+        label_visible: Trainingsfoto
+        drag_or: Foto hierhin ziehen oder
+        select: Auswählen
+        constraints: JPEG, PNG oder WebP · max. 5 MB
+        invalid_type: Die Datei muss ein JPEG-, PNG- oder WebP-Bild sein.
+        too_large: Das Foto darf 5 MB nicht überschreiten.
+        remove: Entfernen
     reps_abbreviate: Wdh
     reps: Wiederholungen
     routine:

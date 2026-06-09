@@ -28,20 +28,20 @@ workout:
     duration_optional: Duur (Optioneel)
     duration_placeholder: Duur (min)
     edit:
-        title: Training bewerken
-        topbar_title: Training bewerken
         back: Terug naar training
         cancel: Annuleren
-        submit: Wijzigingen opslaan
         config_title: Configuratie
-        type_readonly: Het trainingstype kan niet worden gewijzigd
+        exercises_title: Oefeningen
         note_title: Mijn notitie
-        photo_title: Trainingsfoto
-        photo_soon: Binnenkort beschikbaar
         photo_add: Foto toevoegen
         photo_constraints: JPEG of PNG · max. 2 MB · 1 foto per training
+        photo_replace: Huidige foto vervangen
         photo_select: Foto selecteren
-        exercises_title: Oefeningen
+        photo_title: Trainingsfoto
+        submit: Wijzigingen opslaan
+        title: Training bewerken
+        topbar_title: Training bewerken
+        type_readonly: Het trainingstype kan niet worden gewijzigd
     error:
         no_exercise:
             title: Geen oefening
@@ -79,12 +79,23 @@ workout:
                 other {# trainingen}
             }
     note:
-        title: Hoe ging je training?
-        subtitle: Voeg je gevoel, observaties of alles wat je is opgevallen tijdens deze training toe. Deze notitie is optioneel.
-        placeholder: Je training ging goed, heb je een record gebroken?...
         back: Terug naar training
-        submit_without: Bevestigen zonder notitie
-        submit_with: Mijn training bevestigen
+        placeholder: Je training ging goed, heb je een record gebroken?...
+        submit: Bevestigen
+        subtitle: Voeg je gevoel, observaties of alles wat je is opgevallen tijdens deze training toe. Deze notitie is optioneel.
+        title: Hoe ging je training?
+    photo:
+        alt: Trainingsfoto
+        click_to_preview: Klik om te vergroten
+        has_photo: Trainingsfoto
+        label: Trainingsfoto (optioneel)
+        label_visible: Trainingsfoto
+        drag_or: Sleep een foto of
+        select: Selecteren
+        constraints: JPEG, PNG of WebP · max. 5 MB
+        invalid_type: Het bestand moet een JPEG-, PNG- of WebP-afbeelding zijn.
+        too_large: De foto mag niet groter zijn dan 5 MB.
+        remove: Verwijderen
     reps_abbreviate: Reps
     reps: Herhalingen
     routine:

@@ -95,6 +95,16 @@ class Workout
         }
     }
 
+    #[ORM\Column(length: 255, nullable: true)]
+    public ?string $photoPath {
+        get {
+            return $this->photoPath;
+        }
+        set(?string $photoPath) {
+            $this->photoPath = $photoPath;
+        }
+    }
+
     public function __construct()
     {
         $this->workoutExercises = new ArrayCollection();

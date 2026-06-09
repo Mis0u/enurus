@@ -28,20 +28,20 @@ workout:
     duration_optional: Durata (Facoltativo)
     duration_placeholder: Durata (min)
     edit:
-        title: Modifica allenamento
-        topbar_title: Modifica dell'allenamento
         back: Torna all'allenamento
         cancel: Annulla
-        submit: Salva le modifiche
         config_title: Configurazione
-        type_readonly: Il tipo di allenamento non può essere modificato
+        exercises_title: Esercizi
         note_title: La mia nota
-        photo_title: Foto dell'allenamento
-        photo_soon: Disponibile a breve
         photo_add: Aggiungi una foto
         photo_constraints: JPEG o PNG · 2 MB max · 1 foto per allenamento
+        photo_replace: Sostituisci la foto attuale
         photo_select: Seleziona una foto
-        exercises_title: Esercizi
+        photo_title: Foto dell'allenamento
+        submit: Salva le modifiche
+        title: Modifica allenamento
+        topbar_title: Modifica dell'allenamento
+        type_readonly: Il tipo di allenamento non può essere modificato
     error:
         no_exercise:
             title: Nessun esercizio
@@ -79,12 +79,23 @@ workout:
                 other {# allenamenti}
             }
     note:
-        title: Come è andato il tuo allenamento?
-        subtitle: Aggiungi le tue sensazioni, osservazioni o qualsiasi cosa ti abbia colpito durante questo allenamento. Questa nota è facoltativa.
-        placeholder: Il tuo allenamento è andato bene, hai battuto un record?...
         back: Torna all'allenamento
-        submit_without: Conferma senza nota
-        submit_with: Conferma il mio allenamento
+        placeholder: Il tuo allenamento è andato bene, hai battuto un record?...
+        submit: Conferma
+        subtitle: Aggiungi le tue sensazioni, osservazioni o qualsiasi cosa ti abbia colpito durante questo allenamento. Questa nota è facoltativa.
+        title: Come è andato il tuo allenamento?
+    photo:
+        alt: Foto dell'allenamento
+        click_to_preview: Clicca per ingrandire
+        has_photo: Foto dell'allenamento
+        label: Foto dell'allenamento (facoltativa)
+        label_visible: Foto dell'allenamento
+        drag_or: Trascina una foto o
+        select: Seleziona
+        constraints: JPEG, PNG o WebP · 5 MB max
+        invalid_type: Il file deve essere un'immagine JPEG, PNG o WebP.
+        too_large: La foto non deve superare 5 MB.
+        remove: Elimina
     reps_abbreviate: Rip
     reps: Ripetizioni
     routine:

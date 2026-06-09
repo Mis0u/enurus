@@ -1,0 +1,13 @@
+<div data-controller="exercise"
+     data-exercise-block-url-value="{{ path('workout_exercise_block') }}"
+     data-exercise-no-exercise-title-value="{{ 'workout.error.no_exercise.title'|trans({}, 'navigation') }}"
+     data-exercise-no-exercise-text-value="{{ 'workout.error.no_exercise.text'|trans({}, 'navigation') }}"
+     data-exercise-upload-photo-url-value="{{ path('workout_upload_photo', {
+         '_locale': app.request.locale,
+         'id': '__ID__'
+     }) }}">
+
+    <div data-exercise-target="exerciseList" id="exercises-list"></div>
+
+    {% include 'workout/_submit_bar.html.twig' %}
+</div>
