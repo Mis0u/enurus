@@ -18,7 +18,7 @@
         data-workout--edit--exercise-target="exerciseList"
     >
         {% for index, item in exerciseData %}
-            {% include 'workout/_exercise_card.html.twig' with {
+            {% include 'workout/create/_exercise_card.html.twig' with {
                 'exercise': item.workoutExercise.exercise,
                 'index': index,
                 'controllerName': 'workout--edit--exercise',

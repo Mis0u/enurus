@@ -56,7 +56,7 @@ final class WorkoutController extends AbstractController
             return $this->handleInvalidForm($request);
         }
 
-        return $this->render('workout/index.html.twig', [
+        return $this->render('workout/create/index.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);

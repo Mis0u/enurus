@@ -26,7 +26,7 @@ class ExerciseBlockController extends AbstractController
             return new Response('', Response::HTTP_NOT_FOUND);
         }
 
-        return $this->render('workout/_exercise_card.html.twig', [
+        return $this->render('workout/create/_exercise_card.html.twig', [
             'exercise' => $exercise,
             'index' => $index,
         ]);
