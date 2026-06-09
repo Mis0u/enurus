@@ -10,16 +10,20 @@ use App\Form\WorkoutType;
 use App\Service\Utils\WeightConverterService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class WorkoutController extends AbstractController
+#[IsGranted('ROLE_USER')]
+final class WorkoutController extends AbstractController
 {
     public function __construct(
-        private readonly WeightConverterService $weightConverterService
+        private readonly WeightConverterService $weightConverterService,
+        private readonly EntityManagerInterface $em,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -33,11 +37,8 @@ class WorkoutController extends AbstractController
         'nl' => '/training-vastleggen',
         'pl' => '/zapisz-trening',
     ], name: 'app_workout')]
-    #[IsGranted('ROLE_USER')]
-    public function create(
+    public function __invoke(
         Request $request,
-        EntityManagerInterface $em,
-        TranslatorInterface $translator,
     ): Response {
         /** @var User $user */
         $user = $this->getUser();
@@ -48,25 +49,71 @@ class WorkoutController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Workout $workout */
             $workout = $form->getData();
-            $workout->owner = $user;
-            $this->weightConverterService->convertWorkoutSetsToKg($workout, $user->unitOfMeasure);
-
-            $em->persist($workout);
-            $em->flush();
-            $this->addFlash('success', $translator->trans('workout.created', [], 'navigation'));
-            return $this->redirectToRoute('app_dashboard');
+            return $this->handleValidForm($workout, $user, $request);
         }
 
         if ($form->isSubmitted() && ! $form->isValid()) {
-            $this->addFlash('error', $translator->trans('workout.error.validation', [], 'navigation'));
-            return $this->redirectToRoute('app_workout', [
-                '_locale' => $request->getLocale(),
-            ]);
+            return $this->handleInvalidForm($request);
         }
 
         return $this->render('workout/index.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+        ]);
+    }
+
+    private function handleValidForm(
+        Workout $workout,
+        User $user,
+        Request $request,
+    ): Response {
+        $workout->owner = $user;
+        $this->weightConverterService->convertWorkoutSetsToKg($workout, $user->unitOfMeasure);
+
+        $this->em->persist($workout);
+        $this->em->flush();
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->jsonSuccessResponse($workout, $request);
+        }
+
+        $this->addFlash('success', $this->translator->trans('workout.created', [], 'navigation'));
+
+        return $this->redirectToRoute('app_dashboard');
+    }
+
+    private function handleInvalidForm(Request $request): Response
+    {
+        $errorMessage = $this->translator->trans('workout.error.validation', [], 'navigation');
+
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(
+                [
+                    'error' => $errorMessage,
+                ],
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+            );
+        }
+
+        $this->addFlash('error', $errorMessage);
+
+        return $this->redirectToRoute('app_workout', [
+            '_locale' => $request->getLocale(),
+        ]);
+    }
+
+    private function jsonSuccessResponse(Workout $workout, Request $request): JsonResponse
+    {
+        if (null === $workout->id) {
+            throw new \LogicException('Workout id cannot be null after persist.');
+        }
+
+        return new JsonResponse([
+            'id' => $workout->id->toRfc4122(),
+            'redirectUrl' => $this->generateUrl('app_workout_show', [
+                '_locale' => $request->getLocale(),
+                'id' => $workout->id->toRfc4122(),
+            ]),
         ]);
     }
 }

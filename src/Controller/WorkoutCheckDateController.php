@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\WorkoutRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,9 +27,8 @@ class WorkoutCheckDateController extends AbstractController
                 'count' => 0,
             ]);
         }
-
+        /** @var User $user */
         $user = $this->getUser();
-        assert($user instanceof \App\Entity\User);
 
         $start = new \DateTimeImmutable($date . ' 00:00:00');
         $end = new \DateTimeImmutable($date . ' 23:59:59');
