@@ -8,3 +8,6 @@ workout:
     photo:
         invalid_type: O ficheiro deve ser uma imagem JPEG, PNG ou WebP.
         too_large: A foto não deve exceder 5 MB.
+exercise:
+    muscle_primary_required: É necessário pelo menos um músculo primário.
+    name_not_blank: É necessário indicar um nome

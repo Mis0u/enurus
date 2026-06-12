@@ -12,6 +12,34 @@ dashboard:
     title: Overzicht
     workout: Trainingen
 
+exercise:
+    alert:
+        duplicate_custom: "Je hebt al een oefening \"%name%\" aangemaakt op %date%."
+        duplicate_public: "Een vergelijkbare oefening \"%name%\" bestaat al in de bibliotheek."
+    create:
+        breadcrumb: Nieuwe oefening
+        submit: Oefening aanmaken
+        subtitle: Pas je bibliotheek aan
+        title: Oefening aanmaken
+    library:
+        title: Bibliotheek
+    flash:
+        created: Oefening succesvol aangemaakt.
+    form:
+        description_placeholder: Beschrijf de technische punten, houding, fouten om te vermijden…
+        description_toggle: Beschrijving toevoegen
+        legend_primary: Primaire spieren
+        legend_secondary: Secundaire spieren
+        muscles_hint: Klik om toe te wijzen (primair → secundair → geen)
+        muscles_label: Getrainde spieren
+        name_label: Naam van de oefening
+        name_placeholder: "Bijv.: Bankdrukken nauwe greep"
+        none: Geen
+        optional: Optioneel
+        preview_label: Voorbeeld
+        primary_muscles: Primaire
+        secondary_muscles: Secundaire
+
 workout:
     add:
         exercice: Oefening toevoegen

@@ -5,6 +5,7 @@ field:
     email_placeholder: twoj@email.com
     form:
         button:
+            cancel: Anuluj
             validate: Zatwierdź
     gender:
         female: Kobieta

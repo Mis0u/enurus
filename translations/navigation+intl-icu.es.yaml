@@ -12,6 +12,34 @@ dashboard:
     title: Panel
     workout: Entrenamientos
 
+exercise:
+    alert:
+        duplicate_custom: "Ya tienes un ejercicio \"%name%\" creado el %date%."
+        duplicate_public: "Un ejercicio similar \"%name%\" ya existe en la biblioteca."
+    create:
+        breadcrumb: Nuevo ejercicio
+        submit: Crear el ejercicio
+        subtitle: Personaliza tu biblioteca
+        title: Crear un ejercicio
+    library:
+        title: Biblioteca
+    flash:
+        created: Ejercicio creado con éxito.
+    form:
+        description_placeholder: Describe los puntos técnicos, la postura, los errores a evitar…
+        description_toggle: Añadir una descripción
+        legend_primary: Músculos primarios
+        legend_secondary: Músculos secundarios
+        muscles_hint: Haz clic para asignar (primario → secundario → ninguno)
+        muscles_label: Músculos trabajados
+        name_label: Nombre del ejercicio
+        name_placeholder: "Ej: Press de banca agarre cerrado"
+        none: Ninguno
+        optional: Opcional
+        preview_label: Vista previa
+        primary_muscles: Primarios
+        secondary_muscles: Secundarios
+
 workout:
     add:
         exercice: Añadir un ejercicio

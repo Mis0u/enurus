@@ -5,6 +5,7 @@ field:
     email_placeholder: tua@email.com
     form:
         button:
+            cancel: Annulla
             validate: Conferma
     gender:
         female: Donna

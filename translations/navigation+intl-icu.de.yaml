@@ -12,6 +12,34 @@ dashboard:
     title: Übersicht
     workout: Trainings
 
+exercise:
+    alert:
+        duplicate_custom: "Du hast bereits eine Übung \"%name%\" erstellt am %date%."
+        duplicate_public: "Eine ähnliche Übung \"%name%\" existiert bereits in der Bibliothek."
+    create:
+        breadcrumb: Neue Übung
+        submit: Übung erstellen
+        subtitle: Passe deine Bibliothek an
+        title: Übung erstellen
+    library:
+        title: Bibliothek
+    flash:
+        created: Übung erfolgreich erstellt.
+    form:
+        description_placeholder: Beschreibe die technischen Punkte, Haltung, zu vermeidende Fehler…
+        description_toggle: Beschreibung hinzufügen
+        legend_primary: Primäre Muskeln
+        legend_secondary: Sekundäre Muskeln
+        muscles_hint: Klicken zum Zuweisen (primär → sekundär → keine)
+        muscles_label: Trainierte Muskeln
+        name_label: Name der Übung
+        name_placeholder: "Z.B.: Bankdrücken enger Griff"
+        none: Keine
+        optional: Optional
+        preview_label: Vorschau
+        primary_muscles: Primäre
+        secondary_muscles: Sekundäre
+
 workout:
     add:
         exercice: Übung hinzufügen

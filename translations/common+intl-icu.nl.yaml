@@ -5,6 +5,7 @@ field:
     email_placeholder: jouw@email.com
     form:
         button:
+            cancel: Annuleren
             validate: Bevestigen
     gender:
         female: Vrouw
