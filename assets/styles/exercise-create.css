@@ -1,0 +1,55 @@
+/* =============================================================
+   exercise-create.css
+   Only styles Tailwind JIT cannot handle:
+   - Dynamic pill states
+   - Recap pills injected via JS innerHTML
+   - Accordion chevron rotation
+   SVG base colors are already handled by workout_show.css
+   via .svg-body-container g selector — no duplication needed.
+   ============================================================= */
+
+/* ── Pills états dynamiques ──────────────────────────────────── */
+.exercise-pill.pill--primary {
+    background: rgba(244, 63, 94, 0.12);
+    border-color: rgba(244, 63, 94, 0.3);
+    color: #f43f5e;
+}
+
+.exercise-pill.pill--primary [data-role="dot"] { background: #f43f5e; }
+.exercise-pill.pill--primary [data-role="badge"] { background: #f43f5e; color: #fff; }
+
+.exercise-pill.pill--secondary {
+    background: rgba(249, 115, 22, 0.12);
+    border-color: rgba(249, 115, 22, 0.3);
+    color: #f97316;
+}
+
+.exercise-pill.pill--secondary [data-role="dot"] { background: #f97316; }
+.exercise-pill.pill--secondary [data-role="badge"] { background: #f97316; color: #fff; }
+
+/* ── Recap pills (injectés via JS) ───────────────────────────── */
+.recap-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.recap-pill--primary {
+    background: rgba(244, 63, 94, 0.12);
+    border: 1px solid rgba(244, 63, 94, 0.3);
+    color: #f43f5e;
+}
+
+.recap-pill--secondary {
+    background: rgba(249, 115, 22, 0.12);
+    border: 1px solid rgba(249, 115, 22, 0.3);
+    color: #f97316;
+}
+
+/* ── Accordéon chevron ───────────────────────────────────────── */
+#description-accordion.open .exercise-accordion-chevron {
+    transform: rotate(180deg);
+}
