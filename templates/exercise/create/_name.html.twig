@@ -1,0 +1,28 @@
+<div class="bg-[#111827] border border-white/[0.07] rounded-xl p-6">
+    <label class="block font-rajdhani text-[13px] font-semibold text-[#64748b] uppercase tracking-[0.3px] mb-2"
+           for="{{ form.name.vars.id }}">
+        {{ 'exercise.form.name_label'|trans({}, 'navigation') }}
+        <span class="text-[#f43f5e] ml-0.5" aria-hidden="true">*</span>
+    </label>
+
+    {{ form_widget(form.name, {
+        attr: {
+            'data-exercise--create-target': 'nameInput',
+            'data-action': 'input->exercise--create#clearNameError blur->exercise--create#checkDuplicate',
+        }
+    }) }}
+
+    <p
+        class="mt-1.5 text-[12.5px] text-[#f43f5e]"
+        data-exercise--create-target="nameError"
+        hidden
+    >
+        {{ 'exercise.name_not_blank'|trans({}, 'validators') }}
+    </p>
+
+    {% if form.name.vars.errors|length > 0 %}
+        {% for error in form.name.vars.errors %}
+            <p class="mt-1.5 text-[12.5px] text-[#f43f5e]">{{ error.message }}</p>
+        {% endfor %}
+    {% endif %}
+</div>

@@ -1,0 +1,56 @@
+<div class="bg-[#111827] border border-white/[0.07] rounded-xl p-6">
+    <h2 class="font-rajdhani text-[17px] font-bold text-[#f1f5f9] mb-1">
+        {{ 'exercise.form.muscles_label'|trans({}, 'navigation') }}
+    </h2>
+    <p class="text-[13px] text-[#64748b] mb-4">{{ 'exercise.form.muscles_hint'|trans({}, 'navigation') }}</p>
+
+    {{ form_widget(form.muscles, {
+        attr: {'data-exercise--create-target': 'musclesInput'}
+    }) }}
+
+    <p
+        class="mb-3 text-[12.5px] text-[#f43f5e]"
+        data-exercise--create-target="musclesError"
+        hidden
+    >
+        {{ 'exercise.muscle_primary_required'|trans({}, 'validators') }}
+    </p>
+
+    <div class="flex flex-wrap gap-2 mb-5">
+        {% for muscle_group in muscleGroups %}
+            <button
+                type="button"
+                class="exercise-pill inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[13px] font-medium font-dm-sans border border-white/[0.07] bg-transparent text-[#64748b] transition-all duration-200 hover:border-white/[0.12] hover:text-[#f1f5f9] cursor-pointer select-none"
+                data-state="none"
+                data-muscle-id="{{ muscle_group.id }}"
+                data-muscle-label="{{ muscle_group.name|trans({}, 'muscle') }}"
+                data-svg-ids="{{ muscle_group.svgIds|json_encode }}"
+                data-exercise--create-target="pill"
+                data-action="click->exercise--create#cyclePill"
+            >
+                <span data-role="dot" class="w-1.5 h-1.5 rounded-full shrink-0" hidden></span>
+                {{ muscle_group.name|trans({}, 'muscle') }}
+                <span data-role="badge" class="text-[10px] font-bold rounded px-1 py-px leading-snug" hidden></span>
+            </button>
+        {% endfor %}
+    </div>
+
+    <div class="border-t border-white/[0.07] pt-4 flex flex-col gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-rajdhani text-[12px] font-semibold text-[#64748b] uppercase tracking-[0.3px] min-w-[90px] shrink-0">
+                {{ 'exercise.form.primary_muscles'|trans({}, 'navigation') }} :
+            </span>
+            <div data-exercise--create-target="recapPrimary">
+                <span class="text-[12px] text-[#334155] italic">{{ 'exercise.form.none'|trans({}, 'navigation') }}</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-rajdhani text-[12px] font-semibold text-[#64748b] uppercase tracking-[0.3px] min-w-[90px] shrink-0">
+                {{ 'exercise.form.secondary_muscles'|trans({}, 'navigation') }} :
+            </span>
+            <div data-exercise--create-target="recapSecondary">
+                <span class="text-[12px] text-[#334155] italic">{{ 'exercise.form.none'|trans({}, 'navigation') }}</span>
+            </div>
+        </div>
+    </div>
+</div>
