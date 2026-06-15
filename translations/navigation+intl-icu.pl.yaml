@@ -12,6 +12,34 @@ dashboard:
     title: Panel
     workout: Treningi
 
+exercise:
+    alert:
+        duplicate_custom: "Masz już ćwiczenie \"%name%\" utworzone %date%."
+        duplicate_public: "Podobne ćwiczenie \"%name%\" już istnieje w bibliotece."
+    create:
+        breadcrumb: Nowe ćwiczenie
+        submit: Utwórz ćwiczenie
+        subtitle: Dostosuj swoją bibliotekę
+        title: Utwórz ćwiczenie
+    library:
+        title: Biblioteka
+    flash:
+        created: Ćwiczenie utworzone pomyślnie.
+    form:
+        description_placeholder: Opisz kluczowe punkty, postawę, błędy do unikania…
+        description_toggle: Dodaj opis
+        legend_primary: Mięśnie główne
+        legend_secondary: Mięśnie wspomagające
+        muscles_hint: Kliknij, aby przypisać (główny → wspomagający → brak)
+        muscles_label: Trenowane mięśnie
+        name_label: Nazwa ćwiczenia
+        name_placeholder: "Np.: Wyciskanie wąskim chwytem"
+        none: Brak
+        optional: Opcjonalne
+        preview_label: Podgląd
+        primary_muscles: Główne
+        secondary_muscles: Wspomagające
+
 workout:
     add:
         exercice: Dodaj ćwiczenie

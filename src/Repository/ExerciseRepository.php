@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<Exercise>
  */
-class ExerciseRepository extends ServiceEntityRepository
+final class ExerciseRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -20,22 +20,54 @@ class ExerciseRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Exercise[]
+     * Returns all public exercises.
+     * No SQL ordering — names are translation keys, sorting must happen
+     * after translation in memory.
+     *
+     * @return list<Exercise>
+     */
+    public function findPublicExercises(): array
+    {
+        /** @var list<Exercise> */
+        return $this->createQueryBuilder('e')
+            ->where('e.isPublic = :public')
+            ->setParameter('public', true)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Returns all custom exercises created by a specific user.
+     *
+     * @return list<Exercise>
+     */
+    public function findCustomExercisesByUser(User $user): array
+    {
+        /** @var list<Exercise> */
+        return $this->createQueryBuilder('e')
+            ->where('e.isPublic = :public')
+            ->andWhere('e.owner = :owner')
+            ->setParameter('public', false)
+            ->setParameter('owner', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Returns all exercises available for a user:
+     * public exercises + the user's own custom exercises.
+     *
+     * @return list<Exercise>
      */
     public function findAvailableForUser(User $user): array
     {
-        /** @var Exercise[] $result */
-        $result = $this->createQueryBuilder('e')
-            ->addSelect('em', 'mg')
-            ->leftJoin('e.exerciseMuscles', 'em')
-            ->leftJoin('em.muscleGroup', 'mg')
-            ->where('e.isPublic = true')
-            ->orWhere('(e.owner = :user AND e.isPublic = false)')
-            ->setParameter('user', $user)
-            ->orderBy('e.name', 'ASC')
+        /** @var list<Exercise> */
+        return $this->createQueryBuilder('e')
+            ->where('e.isPublic = :public')
+            ->orWhere('e.owner = :owner')
+            ->setParameter('public', true)
+            ->setParameter('owner', $user)
             ->getQuery()
             ->getResult();
-
-        return $result;
     }
 }

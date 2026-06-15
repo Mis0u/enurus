@@ -1,0 +1,20 @@
+<div class="flex items-center justify-end gap-3 mt-6 max-md:flex-col-reverse max-md:items-stretch">
+    <a
+        href="#" {#{{ path('app_exercise_library', {_locale: app.request.locale}) }}#}
+        class="inline-flex items-center justify-center px-6 py-3 bg-transparent border border-white/[0.07] rounded-lg text-[#64748b] text-sm font-medium font-dm-sans transition-all duration-200 hover:border-white/[0.12] hover:text-[#f1f5f9]"
+    >
+        {{ 'field.form.button.cancel'|trans({}, 'common') }}
+    </a>
+
+    <button
+        type="submit"
+        class="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-lg font-rajdhani text-[15px] font-bold tracking-[0.4px] text-white transition-all duration-200 hover:-translate-y-px"
+        style="background: linear-gradient(135deg, #f43f5e, #e11d48); box-shadow: 0 4px 16px rgba(244,63,94,0.3);"
+    >
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+        </svg>
+        {% include 'partials/_svg/_check_mark.html.twig' %}
+        {{ 'exercise.create.submit'|trans({}, 'navigation') }}
+    </button>
+</div>

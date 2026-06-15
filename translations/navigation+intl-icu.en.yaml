@@ -12,6 +12,34 @@ dashboard:
     title: Dashboard
     workout: Workouts
 
+exercise:
+    alert:
+        duplicate_custom: "You already have an exercise \"%name%\" created on %date%."
+        duplicate_public: "A similar exercise \"%name%\" already exists in the library."
+    create:
+        breadcrumb: New exercise
+        submit: Create exercise
+        subtitle: Customise your library
+        title: Create an exercise
+    library:
+        title: Library
+    flash:
+        created: Exercise created successfully.
+    form:
+        description_placeholder: Describe the key points, posture, mistakes to avoid…
+        description_toggle: Add a description
+        legend_primary: Primary muscles
+        legend_secondary: Secondary muscles
+        muscles_hint: Click to assign (primary → secondary → none)
+        muscles_label: Muscles worked
+        name_label: Exercise name
+        name_placeholder: "E.g.: Close-grip bench press"
+        none: None
+        optional: Optional
+        preview_label: Preview
+        primary_muscles: Primary
+        secondary_muscles: Secondary
+
 workout:
     add:
         exercice: Add an exercise

@@ -12,6 +12,34 @@ dashboard:
     title: Cruscotto
     workout: Allenamenti
 
+exercise:
+    alert:
+        duplicate_custom: "Hai già un esercizio \"%name%\" creato il %date%."
+        duplicate_public: "Un esercizio simile \"%name%\" esiste già nella biblioteca."
+    create:
+        breadcrumb: Nuovo esercizio
+        submit: Crea l'esercizio
+        subtitle: Personalizza la tua biblioteca
+        title: Crea un esercizio
+    library:
+        title: Biblioteca
+    flash:
+        created: Esercizio creato con successo.
+    form:
+        description_placeholder: Descrivi i punti tecnici, la postura, gli errori da evitare…
+        description_toggle: Aggiungi una descrizione
+        legend_primary: Muscoli primari
+        legend_secondary: Muscoli secondari
+        muscles_hint: Clicca per assegnare (primario → secondario → nessuno)
+        muscles_label: Muscoli allenati
+        name_label: Nome dell'esercizio
+        name_placeholder: "Es: Panca piana presa stretta"
+        none: Nessuno
+        optional: Facoltativo
+        preview_label: Anteprima
+        primary_muscles: Primari
+        secondary_muscles: Secondari
+
 workout:
     add:
         exercice: Aggiungi un esercizio

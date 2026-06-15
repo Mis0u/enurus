@@ -5,6 +5,7 @@ field:
     email_placeholder: seu@email.com
     form:
         button:
+            cancel: Cancelar
             validate: Confirmar
     gender:
         female: Mulher

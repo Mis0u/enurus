@@ -12,6 +12,34 @@ dashboard:
     title: Painel
     workout: Treinos
 
+exercise:
+    alert:
+        duplicate_custom: "Já tens um exercício \"%name%\" criado em %date%."
+        duplicate_public: "Um exercício semelhante \"%name%\" já existe na biblioteca."
+    create:
+        breadcrumb: Novo exercício
+        submit: Criar o exercício
+        subtitle: Personaliza a tua biblioteca
+        title: Criar um exercício
+    library:
+        title: Biblioteca
+    flash:
+        created: Exercício criado com sucesso.
+    form:
+        description_placeholder: Descreve os pontos técnicos, a postura, os erros a evitar…
+        description_toggle: Adicionar uma descrição
+        legend_primary: Músculos primários
+        legend_secondary: Músculos secundários
+        muscles_hint: Clica para atribuir (primário → secundário → nenhum)
+        muscles_label: Músculos trabalhados
+        name_label: Nome do exercício
+        name_placeholder: "Ex: Supino reto pegada fechada"
+        none: Nenhum
+        optional: Opcional
+        preview_label: Pré-visualização
+        primary_muscles: Primários
+        secondary_muscles: Secundários
+
 workout:
     add:
         exercice: Adicionar um exercício

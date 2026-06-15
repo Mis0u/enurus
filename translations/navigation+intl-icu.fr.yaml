@@ -12,6 +12,33 @@ dashboard:
     title: Tableau de bord
     workout: Séances
 
+exercise:
+    alert:
+        duplicate_custom: "Tu as déjà un exercice \"%name%\" créé le %date%."
+        duplicate_public: "Un exercice similaire \"%name%\" existe déjà dans la bibliothèque."
+    create:
+        breadcrumb: Nouvel exercice
+        submit: Créer l'exercice
+        subtitle: Personnalisez votre bibliothèque
+        title: Créer un exercice
+    library:
+        title: Bibliothèque
+    flash:
+        created: Exercice créé avec succès.
+    form:
+        description_placeholder: Décrivez les points techniques, la posture, les erreurs à éviter…
+        description_toggle: Ajouter une description
+        legend_primary: Muscles primaires
+        legend_secondary: Muscles secondaires
+        muscles_hint: Cliquez pour assigner (primaire → secondaire → aucun)
+        muscles_label: Muscles travaillés
+        name_label: Nom de l'exercice
+        name_placeholder: "Ex: Développé couché prise serrée"
+        none: Aucun
+        optional: Optionnel
+        preview_label: Aperçu
+        primary_muscles: Primaires
+        secondary_muscles: Secondaires
 workout:
     add:
         exercice: Ajouter un exercice
