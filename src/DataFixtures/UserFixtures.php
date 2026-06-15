@@ -41,6 +41,10 @@ class UserFixtures extends Fixture
         ],
     ];
 
+    public const string USER_REVERSE_FLY = 'user-fixture-exercise-reverse-fly@test.com';
+
+    public const string USER_TIRAGE_SUPINATION = 'user-fixture-exercise-tirage-supination@test.com';
+
     private const array USERS_ETHNIES = [
         'en' => 'user-fixture-english@test.com',
         'es' => 'user-fixture-spanish@test.com',
@@ -61,6 +65,7 @@ class UserFixtures extends Fixture
         $this->loadLocaleUsers($manager);
         $this->loadIndexedUsers($manager);
         $this->loadWorkoutUsers($manager);
+        $this->loadExerciseUsers($manager);
 
         $manager->flush();
     }
@@ -121,5 +126,43 @@ class UserFixtures extends Fixture
                 $user
             );
         }
+    }
+
+    private function loadExerciseUsers(ObjectManager $manager): void
+    {
+        foreach ($this->exerciseUsers() as $userData) {
+            $user = new User();
+            $user->email = $userData['email'];
+            $user->nickname = $userData['nickname'];
+            $user->createdBy = $user;
+            $user->locale = LocaleAllowedEnum::FR->value;
+            $user->gender = GenderEnum::MALE->value;
+            $user->lastLogin = new \DateTimeImmutable();
+            $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+
+            $manager->persist($user);
+
+            $this->addReference(
+                \sprintf('%s%s', self::REFERENCE_PREFIX, $userData['email']),
+                $user
+            );
+        }
+    }
+
+    /**
+     * @return array<int, array{email: string, nickname: string}>
+     */
+    private function exerciseUsers(): array
+    {
+        return [
+            [
+                'email' => self::USER_REVERSE_FLY,
+                'nickname' => 'user-reverse-fly',
+            ],
+            [
+                'email' => self::USER_TIRAGE_SUPINATION,
+                'nickname' => 'user-tirage-supination',
+            ],
+        ];
     }
 }
