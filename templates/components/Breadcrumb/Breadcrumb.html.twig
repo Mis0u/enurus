@@ -8,11 +8,11 @@
 <nav class="flex items-center gap-2 text-[12.5px] text-[#64748b] mb-5" aria-label="breadcrumb">
     {% for item in items %}
         {% if not loop.last %}
-            <a href="{{ item.url }}" class="hover:text-[#f1f5f9] transition-colors duration-200">
+            <a href="{{ path(item.url) }}" class="hover:text-[#f1f5f9] transition-colors duration-200">
                 {{ item.label }}
             </a>
             <svg class="w-3.5 h-3.5 text-[#334155] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
             </svg>
         {% else %}
             <span class="text-[#f1f5f9] font-medium">{{ item.label }}</span>

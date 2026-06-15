@@ -63,6 +63,10 @@ final class ExerciseRepository extends ServiceEntityRepository
     {
         /** @var list<Exercise> */
         return $this->createQueryBuilder('e')
+            ->leftJoin('e.exerciseMuscles', 'em')
+            ->addSelect('em')
+            ->leftJoin('em.muscleGroup', 'mg')
+            ->addSelect('mg')
             ->where('e.isPublic = :public')
             ->orWhere('e.owner = :owner')
             ->setParameter('public', true)

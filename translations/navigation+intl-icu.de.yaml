@@ -39,7 +39,41 @@ exercise:
         preview_label: Vorschau
         primary_muscles: Primäre
         secondary_muscles: Sekundäre
-
+    history:
+        actions:
+            edit: Bearbeiten
+            delete: Löschen
+        badge:
+            base: Standard
+            mine: Meine Übung
+        create_btn: Übung erstellen
+        empty:
+            title: Keine Übung gefunden
+            subtitle: Ändere deine Suche oder setze die Filter zurück.
+            reset: Filter zurücksetzen
+        filter:
+            search_placeholder: Übung suchen…
+            base: Standard
+            mine: Meine Übungen
+            reset: Filter zurücksetzen
+            count: >-
+                {count, plural,
+                    =1    {# Übung}
+                    other {# Übungen}
+                }
+        pagination:
+            navigation: Seitennavigation
+            next: Weiter
+            per_page: Anzeigen
+            previous: Zurück
+            results: Ergebnisse
+            show: Anzeigen
+        subtitle: >-
+            {count, plural,
+                =1    {# Übung verfügbar}
+                other {# Übungen verfügbar}
+            }
+        title: Bibliothek
 workout:
     add:
         exercice: Übung hinzufügen
