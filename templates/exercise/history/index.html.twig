@@ -1,0 +1,46 @@
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/exercise-history.css') }}">
+{% endblock %}
+
+{% block title %}{{ 'exercise.history.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        title: 'exercise.history.title'|trans({}, 'navigation'),
+        subtitle: app.user.nickname|formatInitials,
+        action: {
+            label: 'exercise.history.create_btn'|trans({}, 'navigation'),
+            url: path('app_exercise_create'),
+        },
+    } %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 overflow-y-auto">
+        <div
+            class="p-6 md:p-7 flex flex-col gap-6"
+            data-controller="exercise--history"
+            data-exercise--history-total-count-value="{{ totalCount }}"
+        >
+
+            {% include 'exercise/history/_filters.html.twig' %}
+
+            {% include 'exercise/history/_empty_state.html.twig' %}
+
+            <div
+                class="exercise-history-grid"
+                id="exerciseGrid"
+                data-exercise--history-target="grid"
+            >
+                {% for exercise in exercises %}
+                    {% include 'exercise/history/_exercise_card.html.twig' with {exercise: exercise} %}
+                {% endfor %}
+            </div>
+
+            {% include 'exercise/history/_pagination.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
