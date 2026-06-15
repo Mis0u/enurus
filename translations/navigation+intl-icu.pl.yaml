@@ -39,6 +39,45 @@ exercise:
         preview_label: Podgląd
         primary_muscles: Główne
         secondary_muscles: Wspomagające
+    history:
+        actions:
+            edit: Edytuj
+            delete: Usuń
+        badge:
+            base: Bazowe
+            mine: Moje ćwiczenie
+        create_btn: Utwórz ćwiczenie
+        empty:
+            title: Nie znaleziono żadnego ćwiczenia
+            subtitle: Zmień wyszukiwanie lub zresetuj filtry.
+            reset: Zresetuj filtry
+        filter:
+            search_placeholder: Wyszukaj ćwiczenie…
+            base: Bazowe
+            mine: Moje ćwiczenia
+            reset: Zresetuj filtry
+            count: >-
+                {count, plural,
+                    =1    {# ćwiczenie}
+                    few   {# ćwiczenia}
+                    many  {# ćwiczeń}
+                    other {# ćwiczeń}
+                }
+        pagination:
+            navigation: Nawigacja stron
+            next: Następny
+            per_page: Wyświetl
+            previous: Poprzedni
+            results: Wyniki
+            show: Wyświetl
+        subtitle: >-
+            {count, plural,
+                =1    {# ćwiczenie dostępne}
+                few   {# ćwiczenia dostępne}
+                many  {# ćwiczeń dostępnych}
+                other {# ćwiczeń dostępnych}
+            }
+        title: Biblioteka
 
 workout:
     add:

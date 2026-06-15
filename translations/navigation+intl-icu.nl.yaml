@@ -39,6 +39,41 @@ exercise:
         preview_label: Voorbeeld
         primary_muscles: Primaire
         secondary_muscles: Secundaire
+    history:
+        actions:
+            edit: Bewerken
+            delete: Verwijderen
+        badge:
+            base: Standaard
+            mine: Mijn oefening
+        create_btn: Oefening aanmaken
+        empty:
+            title: Geen oefening gevonden
+            subtitle: Wijzig je zoekopdracht of reset de filters.
+            reset: Filters resetten
+        filter:
+            search_placeholder: Zoek een oefening…
+            base: Standaard
+            mine: Mijn oefeningen
+            reset: Filters resetten
+            count: >-
+                {count, plural,
+                    =1    {# oefening}
+                    other {# oefeningen}
+                }
+        pagination:
+            navigation: Paginanavigatie
+            next: Volgende
+            per_page: Tonen
+            previous: Vorige
+            results: Resultaten
+            show: Tonen
+        subtitle: >-
+            {count, plural,
+                =1    {# oefening beschikbaar}
+                other {# oefeningen beschikbaar}
+            }
+        title: Bibliotheek
 
 workout:
     add:

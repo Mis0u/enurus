@@ -39,7 +39,41 @@ exercise:
         preview_label: Vista previa
         primary_muscles: Primarios
         secondary_muscles: Secundarios
-
+    history:
+        actions:
+            edit: Modificar
+            delete: Eliminar
+        badge:
+            base: Base
+            mine: Mi ejercicio
+        create_btn: Crear un ejercicio
+        empty:
+            title: Ningún ejercicio encontrado
+            subtitle: Modifica tu búsqueda o reinicia los filtros.
+            reset: Reiniciar filtros
+        filter:
+            search_placeholder: Buscar un ejercicio…
+            base: Base
+            mine: Mis ejercicios
+            reset: Reiniciar filtros
+            count: >-
+                {count, plural,
+                    =1    {# ejercicio}
+                    other {# ejercicios}
+                }
+        pagination:
+            navigation: Navegación de páginas
+            next: Siguiente
+            per_page: Mostrar
+            previous: Anterior
+            results: Resultados
+            show: Mostrar
+        subtitle: >-
+            {count, plural,
+                =1    {# ejercicio disponible}
+                other {# ejercicios disponibles}
+            }
+        title: Biblioteca
 workout:
     add:
         exercice: Añadir un ejercicio

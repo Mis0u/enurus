@@ -39,6 +39,41 @@ exercise:
         preview_label: Preview
         primary_muscles: Primary
         secondary_muscles: Secondary
+    history:
+        actions:
+            edit: Edit
+            delete: Delete
+        badge:
+            base: Default
+            mine: My exercise
+        create_btn: Create an exercise
+        empty:
+            title: No exercise found
+            subtitle: Change your search or reset the filters.
+            reset: Reset filters
+        filter:
+            search_placeholder: Search for an exercise…
+            base: Default
+            mine: My exercises
+            reset: Reset filters
+            count: >-
+                {count, plural,
+                    =1    {# exercise}
+                    other {# exercises}
+                }
+        pagination:
+            navigation: Page navigation
+            next: Next
+            per_page: Show
+            previous: Previous
+            results: Results
+            show: Show
+        subtitle: >-
+            {count, plural,
+                =1    {# exercise available}
+                other {# exercises available}
+            }
+        title: Library
 
 workout:
     add:
