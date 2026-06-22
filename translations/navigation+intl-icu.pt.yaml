@@ -21,6 +21,12 @@ exercise:
         submit: Criar o exercício
         subtitle: Personaliza a tua biblioteca
         title: Criar um exercício
+    delete:
+        cancel_button: Cancelar
+        confirm_button: Eliminar
+        confirm_text: Tens a certeza de que queres eliminar « {name} »? Esta ação é irreversível.
+        confirm_title: Eliminar o exercício
+        error_text: Ocorreu um erro durante a eliminação. Tenta novamente.
     edit:
         submit: Guardar
         subtitle: Modifica as informações do teu exercício
