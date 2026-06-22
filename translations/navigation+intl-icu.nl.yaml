@@ -21,6 +21,12 @@ exercise:
         submit: Oefening aanmaken
         subtitle: Pas je bibliotheek aan
         title: Oefening aanmaken
+    delete:
+        cancel_button: Annuleren
+        confirm_button: Verwijderen
+        confirm_text: Weet je zeker dat je « {name} » wilt verwijderen? Deze actie is onomkeerbaar.
+        confirm_title: Oefening verwijderen
+        error_text: Er is een fout opgetreden bij het verwijderen. Probeer het opnieuw.
     edit:
         submit: Opslaan
         subtitle: Bewerk de informatie van je oefening

@@ -21,6 +21,12 @@ exercise:
         submit: Utwórz ćwiczenie
         subtitle: Dostosuj swoją bibliotekę
         title: Utwórz ćwiczenie
+    delete:
+        cancel_button: Anuluj
+        confirm_button: Usuń
+        confirm_text: Czy na pewno chcesz usunąć « {name} »? Tej akcji nie można cofnąć.
+        confirm_title: Usuń ćwiczenie
+        error_text: Wystąpił błąd podczas usuwania. Spróbuj ponownie.
     edit:
         submit: Zapisz
         subtitle: Zmień informacje o swoim ćwiczeniu

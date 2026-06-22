@@ -21,6 +21,12 @@ exercise:
         submit: Übung erstellen
         subtitle: Passe deine Bibliothek an
         title: Übung erstellen
+    delete:
+        cancel_button: Abbrechen
+        confirm_button: Löschen
+        confirm_text: Bist du sicher, dass du « {name} » löschen möchtest? Diese Aktion ist unwiderruflich.
+        confirm_title: Übung löschen
+        error_text: Beim Löschen ist ein Fehler aufgetreten. Bitte versuche es erneut.
     edit:
         submit: Speichern
         subtitle: Bearbeite die Informationen deiner Übung

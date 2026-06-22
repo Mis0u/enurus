@@ -21,6 +21,12 @@ exercise:
         submit: Create exercise
         subtitle: Customise your library
         title: Create an exercise
+    delete:
+        cancel_button: Cancel
+        confirm_button: Delete
+        confirm_text: Are you sure you want to delete "{name}"? This action is irreversible.
+        confirm_title: Delete exercise
+        error_text: An error occurred while deleting. Please try again.
     edit:
         submit: Save
         subtitle: Edit your exercise information
