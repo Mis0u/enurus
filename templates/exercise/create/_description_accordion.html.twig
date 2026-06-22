@@ -1,10 +1,13 @@
+{# Params: form, controllerName #}
+{% set toggle_action = 'click->%s#toggleAccordion'|format(controllerName) %}
+
 <div class="bg-[#111827] border border-white/[0.07] rounded-xl p-6">
-    <div id="description-accordion" data-exercise--create-target="accordion">
+    <div id="description-accordion" data-{{ controllerName }}-target="accordion">
 
         <button
             type="button"
             class="flex items-center justify-between w-full bg-transparent border-none cursor-pointer p-0 text-left group"
-            data-action="click->exercise--create#toggleAccordion"
+            data-action="{{ toggle_action }}"
             aria-expanded="false"
             aria-controls="description-body"
         >
@@ -23,7 +26,7 @@
 
         <div
             id="description-body"
-            data-exercise--create-target="accordionBody"
+            data-{{ controllerName }}-target="accordionBody"
             style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;"
         >
             {{ form_widget(form.description) }}
