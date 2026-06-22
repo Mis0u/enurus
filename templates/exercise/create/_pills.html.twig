@@ -1,16 +1,17 @@
+{# Params: form, muscleGroups, controllerName #}
+{% set pill_action = 'click->%s#cyclePill'|format(controllerName) %}
+
 <div class="bg-[#111827] border border-white/[0.07] rounded-xl p-6">
     <h2 class="font-rajdhani text-[17px] font-bold text-[#f1f5f9] mb-1">
         {{ 'exercise.form.muscles_label'|trans({}, 'navigation') }}
     </h2>
     <p class="text-[13px] text-[#64748b] mb-4">{{ 'exercise.form.muscles_hint'|trans({}, 'navigation') }}</p>
 
-    {{ form_widget(form.muscles, {
-        attr: {'data-exercise--create-target': 'musclesInput'}
-    }) }}
+    {{ form_widget(form.muscles) }}
 
     <p
         class="mb-3 text-[12.5px] text-[#f43f5e]"
-        data-exercise--create-target="musclesError"
+        data-{{ controllerName }}-target="musclesError"
         hidden
     >
         {{ 'exercise.muscle_primary_required'|trans({}, 'validators') }}
@@ -25,8 +26,8 @@
                 data-muscle-id="{{ muscle_group.id }}"
                 data-muscle-label="{{ muscle_group.name|trans({}, 'muscle') }}"
                 data-svg-ids="{{ muscle_group.svgIds|json_encode }}"
-                data-exercise--create-target="pill"
-                data-action="click->exercise--create#cyclePill"
+                data-{{ controllerName }}-target="pill"
+                data-action="{{ pill_action }}"
             >
                 <span data-role="dot" class="w-1.5 h-1.5 rounded-full shrink-0" hidden></span>
                 {{ muscle_group.name|trans({}, 'muscle') }}
@@ -40,7 +41,7 @@
             <span class="font-rajdhani text-[12px] font-semibold text-[#64748b] uppercase tracking-[0.3px] min-w-[90px] shrink-0">
                 {{ 'exercise.form.primary_muscles'|trans({}, 'navigation') }} :
             </span>
-            <div data-exercise--create-target="recapPrimary">
+            <div data-{{ controllerName }}-target="recapPrimary">
                 <span class="text-[12px] text-[#334155] italic">{{ 'exercise.form.none'|trans({}, 'navigation') }}</span>
             </div>
         </div>
@@ -48,7 +49,7 @@
             <span class="font-rajdhani text-[12px] font-semibold text-[#64748b] uppercase tracking-[0.3px] min-w-[90px] shrink-0">
                 {{ 'exercise.form.secondary_muscles'|trans({}, 'navigation') }} :
             </span>
-            <div data-exercise--create-target="recapSecondary">
+            <div data-{{ controllerName }}-target="recapSecondary">
                 <span class="text-[12px] text-[#334155] italic">{{ 'exercise.form.none'|trans({}, 'navigation') }}</span>
             </div>
         </div>

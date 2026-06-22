@@ -21,6 +21,10 @@ exercise:
         submit: Create exercise
         subtitle: Customise your library
         title: Create an exercise
+    edit:
+        submit: Save
+        subtitle: Edit your exercise information
+        title: Edit exercise
     library:
         title: Library
     flash:
@@ -48,19 +52,19 @@ exercise:
             mine: My exercise
         create_btn: Create an exercise
         empty:
-            title: No exercise found
+            reset: Reset filters
             subtitle: Change your search or reset the filters.
-            reset: Reset filters
+            title: No exercise found
         filter:
-            search_placeholder: Search for an exercise…
             base: Default
-            mine: My exercises
-            reset: Reset filters
             count: >-
                 {count, plural,
                     =1    {# exercise}
                     other {# exercises}
                 }
+            mine: My exercises
+            reset: Reset filters
+            search_placeholder: Search for an exercise…
         pagination:
             navigation: Page navigation
             next: Next
@@ -74,18 +78,17 @@ exercise:
                 other {# exercises available}
             }
         title: Library
-
 workout:
     add:
         exercice: Add an exercise
         serie: Add a set
     check_date:
+        confirm: OK, got it!
         message: >-
             {count, plural,
                 =1    {You already have # workout logged on this date.}
                 other {You already have # workouts logged on this date.}
             }
-        confirm: OK, got it!
     created: Your workout has been saved
     date: Date
     duration_optional: Duration (Optional)

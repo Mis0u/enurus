@@ -5,11 +5,11 @@
     <link rel="stylesheet" href="{{ asset('styles/exercise-create.css') }}">
 {% endblock %}
 
-{% block title %}{{ 'exercise.create.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+{% block title %}{{ 'exercise.edit.title'|trans({}, 'navigation')|format_title }}{% endblock %}
 
 {% block topbar %}
     {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
-        title: 'exercise.create.title'|trans({}, 'navigation'),
+        title: 'exercise.edit.title'|trans({}, 'navigation'),
         subtitle: app.user.nickname|formatInitials,
     } %}
 {% endblock %}
@@ -17,42 +17,42 @@
 {% block state %}
     <div
         class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]"
-        data-controller="exercise--create"
-        data-exercise--create-label-none-value="{{ 'exercise.form.none'|trans({}, 'navigation') }}"
-        data-exercise--create-check-duplicate-url-value="{{ path('app_exercise_check_duplicate') }}"
-        data-exercise--create-duplicate-custom-message-value="{{ 'exercise.alert.duplicate_custom'|trans({}, 'navigation') }}"
-        data-exercise--create-duplicate-public-message-value="{{ 'exercise.alert.duplicate_public'|trans({}, 'navigation') }}"
+        data-controller="exercise--edit"
+        data-exercise--edit-label-none-value="{{ 'exercise.form.none'|trans({}, 'navigation') }}"
+        data-exercise--edit-check-duplicate-url-value="{{ path('app_exercise_check_duplicate') }}"
+        data-exercise--edit-duplicate-custom-message-value="{{ 'exercise.alert.duplicate_custom'|trans({}, 'navigation') }}"
+        data-exercise--edit-duplicate-public-message-value="{{ 'exercise.alert.duplicate_public'|trans({}, 'navigation') }}"
     >
         <div class="max-w-[720px] mx-auto">
 
             {{ component('Breadcrumb:Breadcrumb', {
                 items: [
                     {label: 'exercise.library.title'|trans({}, 'navigation'), url: 'app_exercise_history'},
-                    {label: 'exercise.create.breadcrumb'|trans({}, 'navigation'), url: 'app_exercise_history'},
+                    {label: exercise.name, url: null},
                 ]
             }) }}
 
             <header class="mb-7">
                 <h1 class="font-rajdhani text-[28px] font-bold text-[#f1f5f9] mb-1">
-                    {{ 'exercise.create.title'|trans({}, 'navigation') }}
+                    {{ 'exercise.edit.title'|trans({}, 'navigation') }}
                 </h1>
-                <p class="text-sm text-[#64748b]">{{ 'exercise.create.subtitle'|trans({}, 'navigation') }}</p>
+                <p class="text-sm text-[#64748b]">{{ 'exercise.edit.subtitle'|trans({}, 'navigation') }}</p>
             </header>
 
             {{ form_start(form, {
                 attr: {
                     novalidate: 'novalidate',
                     class: 'flex flex-col gap-4',
-                    'data-action': 'submit->exercise--create#submitForm',
+                    'data-action': 'submit->exercise--edit#submitForm',
                 }
             }) }}
-            {% include 'exercise/create/_name.html.twig' with {form: form, controllerName: 'exercise--create'} only %}
-            {% include 'exercise/create/_pills.html.twig' with {form: form, muscleGroups: muscleGroups, controllerName: 'exercise--create'} only %}
+            {% include 'exercise/create/_name.html.twig' with {form: form, controllerName: 'exercise--edit'} only %}
+            {% include 'exercise/create/_pills.html.twig' with {form: form, muscleGroups: muscleGroups, controllerName: 'exercise--edit'} only %}
             {% include 'exercise/create/_svg_preview.html.twig' with {gender: gender} only %}
-            {% include 'exercise/create/_description_accordion.html.twig' with {form: form, controllerName: 'exercise--create'} only %}
+            {% include 'exercise/create/_description_accordion.html.twig' with {form: form, controllerName: 'exercise--edit'} only %}
             {% include 'exercise/create/_form_actions.html.twig' with {
                 cancelUrl: path('app_exercise_history'),
-                submitLabel: 'exercise.create.submit'|trans({}, 'navigation'),
+                submitLabel: 'exercise.edit.submit'|trans({}, 'navigation'),
             } only %}
             {{ form_row(form._token) }}
             {{ form_end(form, {render_rest: false}) }}

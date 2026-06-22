@@ -1,3 +1,7 @@
+{# Params: form, controllerName #}
+{% set target_attr = 'data-%s-target'|format(controllerName) %}
+{% set action_attr = 'input->%s#clearNameError blur->%s#checkDuplicate'|format(controllerName, controllerName) %}
+
 <div class="bg-[#111827] border border-white/[0.07] rounded-xl p-6">
     <label class="block font-rajdhani text-[13px] font-semibold text-[#64748b] uppercase tracking-[0.3px] mb-2"
            for="{{ form.name.vars.id }}">
@@ -7,14 +11,14 @@
 
     {{ form_widget(form.name, {
         attr: {
-            'data-exercise--create-target': 'nameInput',
-            'data-action': 'input->exercise--create#clearNameError blur->exercise--create#checkDuplicate',
+            (target_attr): 'nameInput',
+            'data-action': action_attr,
         }
     }) }}
 
     <p
         class="mt-1.5 text-[12.5px] text-[#f43f5e]"
-        data-exercise--create-target="nameError"
+        data-{{ controllerName }}-target="nameError"
         hidden
     >
         {{ 'exercise.name_not_blank'|trans({}, 'validators') }}

@@ -38,6 +38,10 @@ final class ExerciseType extends AbstractType
             ->add('muscles', ExerciseMusclesType::class, [
                 'label' => false,
                 'mapped' => false,
+                'attr' => [
+                    'data-exercise--create-target' => 'musclesInput',
+                    'data-exercise--edit-target' => 'musclesInput',
+                ],
             ])
             ->add('description', TextareaType::class, [
                 'label' => false,

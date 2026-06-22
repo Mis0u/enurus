@@ -36,8 +36,8 @@ class Exercise
         get {
             return $this->name;
         }
-        set(string $name) {
-            $this->name = $name;
+        set(?string $name) {
+            $this->name = trim($name ?? '');
         }
     }
 

@@ -21,6 +21,10 @@ exercise:
         submit: Crea l'esercizio
         subtitle: Personalizza la tua biblioteca
         title: Crea un esercizio
+    edit:
+        submit: Salva
+        subtitle: Modifica le informazioni del tuo esercizio
+        title: Modifica l'esercizio
     library:
         title: Biblioteca
     flash:
@@ -48,19 +52,19 @@ exercise:
             mine: Mio esercizio
         create_btn: Crea un esercizio
         empty:
-            title: Nessun esercizio trovato
+            reset: Reimposta i filtri
             subtitle: Modifica la ricerca o reimposta i filtri.
-            reset: Reimposta i filtri
+            title: Nessun esercizio trovato
         filter:
-            search_placeholder: Cerca un esercizio…
             base: Base
-            mine: I miei esercizi
-            reset: Reimposta i filtri
             count: >-
                 {count, plural,
                     =1    {# esercizio}
                     other {# esercizi}
                 }
+            mine: I miei esercizi
+            reset: Reimposta i filtri
+            search_placeholder: Cerca un esercizio…
         pagination:
             navigation: Navigazione pagine
             next: Successivo
@@ -79,12 +83,12 @@ workout:
         exercice: Aggiungi un esercizio
         serie: Aggiungi una serie
     check_date:
+        confirm: OK, capito!
         message: >-
             {count, plural,
                 =1    {Hai già # allenamento registrato in questa data.}
                 other {Hai già # allenamenti registrati in questa data.}
             }
-        confirm: OK, capito!
     created: Il tuo allenamento è stato registrato
     date: Data
     duration_optional: Durata (Facoltativo)
