@@ -21,6 +21,10 @@ exercise:
         submit: Oefening aanmaken
         subtitle: Pas je bibliotheek aan
         title: Oefening aanmaken
+    edit:
+        submit: Opslaan
+        subtitle: Bewerk de informatie van je oefening
+        title: Oefening bewerken
     library:
         title: Bibliotheek
     flash:
@@ -48,19 +52,19 @@ exercise:
             mine: Mijn oefening
         create_btn: Oefening aanmaken
         empty:
-            title: Geen oefening gevonden
+            reset: Filters resetten
             subtitle: Wijzig je zoekopdracht of reset de filters.
-            reset: Filters resetten
+            title: Geen oefening gevonden
         filter:
-            search_placeholder: Zoek een oefening…
             base: Standaard
-            mine: Mijn oefeningen
-            reset: Filters resetten
             count: >-
                 {count, plural,
                     =1    {# oefening}
                     other {# oefeningen}
                 }
+            mine: Mijn oefeningen
+            reset: Filters resetten
+            search_placeholder: Zoek een oefening…
         pagination:
             navigation: Paginanavigatie
             next: Volgende
@@ -80,12 +84,12 @@ workout:
         exercice: Oefening toevoegen
         serie: Set toevoegen
     check_date:
+        confirm: OK, begrepen!
         message: >-
             {count, plural,
                 =1    {Je hebt al # training op deze datum geregistreerd.}
                 other {Je hebt al # trainingen op deze datum geregistreerd.}
             }
-        confirm: OK, begrepen!
     created: Je training is opgeslagen
     date: Datum
     duration_optional: Duur (Optioneel)

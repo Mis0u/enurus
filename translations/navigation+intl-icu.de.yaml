@@ -21,6 +21,10 @@ exercise:
         submit: Übung erstellen
         subtitle: Passe deine Bibliothek an
         title: Übung erstellen
+    edit:
+        submit: Speichern
+        subtitle: Bearbeite die Informationen deiner Übung
+        title: Übung bearbeiten
     library:
         title: Bibliothek
     flash:
@@ -48,19 +52,19 @@ exercise:
             mine: Meine Übung
         create_btn: Übung erstellen
         empty:
-            title: Keine Übung gefunden
+            reset: Filter zurücksetzen
             subtitle: Ändere deine Suche oder setze die Filter zurück.
-            reset: Filter zurücksetzen
+            title: Keine Übung gefunden
         filter:
-            search_placeholder: Übung suchen…
             base: Standard
-            mine: Meine Übungen
-            reset: Filter zurücksetzen
             count: >-
                 {count, plural,
                     =1    {# Übung}
                     other {# Übungen}
                 }
+            mine: Meine Übungen
+            reset: Filter zurücksetzen
+            search_placeholder: Übung suchen…
         pagination:
             navigation: Seitennavigation
             next: Weiter
@@ -79,12 +83,12 @@ workout:
         exercice: Übung hinzufügen
         serie: Satz hinzufügen
     check_date:
+        confirm: OK, verstanden!
         message: >-
             {count, plural,
                 =1    {Du hast bereits # Training an diesem Datum gespeichert.}
                 other {Du hast bereits # Trainings an diesem Datum gespeichert.}
             }
-        confirm: OK, verstanden!
     created: Dein Training wurde gespeichert
     date: Datum
     duration_optional: Dauer (Optional)

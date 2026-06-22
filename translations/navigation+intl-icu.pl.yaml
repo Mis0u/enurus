@@ -21,6 +21,10 @@ exercise:
         submit: Utwórz ćwiczenie
         subtitle: Dostosuj swoją bibliotekę
         title: Utwórz ćwiczenie
+    edit:
+        submit: Zapisz
+        subtitle: Zmień informacje o swoim ćwiczeniu
+        title: Edytuj ćwiczenie
     library:
         title: Biblioteka
     flash:
@@ -48,14 +52,11 @@ exercise:
             mine: Moje ćwiczenie
         create_btn: Utwórz ćwiczenie
         empty:
-            title: Nie znaleziono żadnego ćwiczenia
+            reset: Zresetuj filtry
             subtitle: Zmień wyszukiwanie lub zresetuj filtry.
-            reset: Zresetuj filtry
+            title: Nie znaleziono żadnego ćwiczenia
         filter:
-            search_placeholder: Wyszukaj ćwiczenie…
             base: Bazowe
-            mine: Moje ćwiczenia
-            reset: Zresetuj filtry
             count: >-
                 {count, plural,
                     =1    {# ćwiczenie}
@@ -63,6 +64,9 @@ exercise:
                     many  {# ćwiczeń}
                     other {# ćwiczeń}
                 }
+            mine: Moje ćwiczenia
+            reset: Zresetuj filtry
+            search_placeholder: Wyszukaj ćwiczenie…
         pagination:
             navigation: Nawigacja stron
             next: Następny
@@ -84,6 +88,7 @@ workout:
         exercice: Dodaj ćwiczenie
         serie: Dodaj serię
     check_date:
+        confirm: OK, rozumiem!
         message: >-
             {count, plural,
                 =1    {Masz już # trening zapisany na tę datę.}
@@ -91,7 +96,6 @@ workout:
                 many  {Masz już # treningów zapisanych na tę datę.}
                 other {Masz już # treningów zapisanych na tę datę.}
             }
-        confirm: OK, rozumiem!
     created: Twój trening został zapisany
     date: Data
     duration_optional: Czas trwania (Opcjonalnie)
