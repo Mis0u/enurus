@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RoutineRepository::class)]
 class Routine
@@ -40,12 +41,24 @@ class Routine
     }
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'routine.error.name_required')]
+    #[Assert\Length(max: 100, maxMessage: 'routine.error.name_too_long')]
     public string $name {
         get {
             return $this->name;
         }
         set(string $name) {
             $this->name = $name;
+        }
+    }
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    public ?string $description = null {
+        get {
+            return $this->description;
+        }
+        set(?string $description) {
+            $this->description = null !== $description ? trim($description) : null;
         }
     }
 

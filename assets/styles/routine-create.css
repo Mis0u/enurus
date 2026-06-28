@@ -1,0 +1,138 @@
+/*
+ * routine-create.css
+ *
+ * Ce fichier contient uniquement les règles CSS impossibles à exprimer
+ * en Tailwind utility classes :
+ *   - Animations keyframes
+ *   - Pseudo-éléments complexes (::before glow)
+ *   - Scrollbar custom webkit
+ *   - États SortableJS (.sortable-ghost, .sortable-drag)
+ *   - Sidebar active indicator (::before barre verticale)
+ *   - Transitions sur propriétés non supportées (min-width)
+ *   - Styles de la liste d'exercices scrollable (scrollbar-color Firefox)
+ *
+ * Tout le reste est géré par Tailwind dans les templates Twig.
+ */
+
+/* ------------------------------------------------------------------
+   ANIMATIONS
+------------------------------------------------------------------ */
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(244, 63, 94, 0.3); }
+    50%       { box-shadow: 0 0 20px rgba(244, 63, 94, 0.5); }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------------------------------------------------------
+   SIDEBAR — indicateur actif (barre verticale gauche)
+------------------------------------------------------------------ */
+.sidebar-nav-item-active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 3px;
+    background: #f43f5e;
+    border-radius: 0 3px 3px 0;
+}
+
+/* ------------------------------------------------------------------
+   SIDEBAR — logo glow animé
+------------------------------------------------------------------ */
+.logo-icon-glow {
+    animation: pulseGlow 3s ease infinite;
+}
+
+/* ------------------------------------------------------------------
+   SCROLLBARS CUSTOM
+------------------------------------------------------------------ */
+.exercise-list-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.07) transparent;
+}
+
+.exercise-list-scroll::-webkit-scrollbar { width: 4px; }
+.exercise-list-scroll::-webkit-scrollbar-track { background: transparent; }
+.exercise-list-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 4px;
+}
+
+.muscle-pills-scroll {
+    scrollbar-width: none;
+}
+.muscle-pills-scroll::-webkit-scrollbar { display: none; }
+
+.sidebar-nav-scroll {
+    scrollbar-width: none;
+}
+.sidebar-nav-scroll::-webkit-scrollbar { display: none; }
+
+/* ------------------------------------------------------------------
+   SORTABLEJS — états drag
+------------------------------------------------------------------ */
+.sortable-ghost {
+    opacity: 0.35;
+    border: 1px dashed rgba(244, 63, 94, 0.5) !important;
+}
+
+.sortable-drag {
+    opacity: 0.9;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transform: scale(1.01);
+}
+
+/* ------------------------------------------------------------------
+   EXERCICE SÉLECTIONNÉ — animation d'apparition
+------------------------------------------------------------------ */
+.routine-selected-item-enter {
+    animation: fadeUp 0.2s ease both;
+}
+
+/* ------------------------------------------------------------------
+   ACCORDÉON — hauteur animée (max-height trick)
+------------------------------------------------------------------ */
+.accordion-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-body > div {
+    overflow: hidden;
+}
+
+.accordion-body.open {
+    grid-template-rows: 1fr;
+}
+
+.accordion-chevron {
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-chevron.open {
+    transform: rotate(180deg);
+}
+
+/* ------------------------------------------------------------------
+   SIDEBAR — transition sur min-width (non supporté par Tailwind)
+------------------------------------------------------------------ */
+.sidebar-transition {
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                min-width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.muscle-pills-wrapper {
+    overflow-x: auto;
+    overflow-y: visible;
+    scrollbar-width: none;
+}
+
+.muscle-pills-wrapper::-webkit-scrollbar {
+    display: none;
+}

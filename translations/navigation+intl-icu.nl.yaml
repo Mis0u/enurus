@@ -85,6 +85,37 @@ exercise:
             }
         title: Bibliotheek
 
+routine:
+    badge:
+        base: Standaard
+        mine: Mijn oefening
+    create:
+        breadcrumb: Nieuwe routine
+        heading: Nieuwe routine
+        submit: Routine aanmaken
+        subtitle: Stel je standaard training in
+        title: Routine aanmaken
+    error:
+        forbidden_exercise: Je hebt geen toegang tot een of meer geselecteerde oefeningen.
+        name_required: De naam van de routine is verplicht.
+        no_exercise: Je moet minstens één oefening selecteren.
+    flash:
+        created: De routine "{name}" is succesvol aangemaakt.
+    form:
+        description_label: Beschrijving toevoegen
+        description_placeholder: Beschrijf het doel van deze routine, rusttijden, doelintensiteit…
+        empty_selection: Voeg minstens één oefening toe
+        exercise_count_plural: oefeningen
+        exercise_count_singular: oefening
+        exercises_label: Oefeningen
+        name: Naam van de routine
+        name_placeholder: "Bijv.: Push Day, Full Body A…"
+        optional: Optioneel
+        search_placeholder: Zoek een oefening…
+        your_routine: Jouw routine
+    list:
+        title: Mijn routines
+
 workout:
     add:
         exercice: Oefening toevoegen

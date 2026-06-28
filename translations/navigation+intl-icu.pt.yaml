@@ -84,6 +84,38 @@ exercise:
                 other {# exercícios disponíveis}
             }
         title: Biblioteca
+
+routine:
+    badge:
+        base: Base
+        mine: Meu exercício
+    create:
+        breadcrumb: Nova rotina
+        heading: Nova rotina
+        submit: Criar a rotina
+        subtitle: Configura o teu treino tipo
+        title: Criar uma rotina
+    error:
+        forbidden_exercise: Não tens acesso a um ou mais exercícios selecionados.
+        name_required: O nome da rotina é obrigatório.
+        no_exercise: Deves selecionar pelo menos um exercício.
+    flash:
+        created: A rotina "{name}" foi criada com sucesso.
+    form:
+        description_label: Adicionar uma descrição
+        description_placeholder: Descreve a intenção desta rotina, os tempos de descanso, a intensidade alvo…
+        empty_selection: Adiciona pelo menos um exercício
+        exercise_count_plural: exercícios
+        exercise_count_singular: exercício
+        exercises_label: Exercícios
+        name: Nome da rotina
+        name_placeholder: "Ex: Push Day, Full Body A…"
+        optional: Opcional
+        search_placeholder: Procurar um exercício…
+        your_routine: A tua rotina
+    list:
+        title: As minhas rotinas
+
 workout:
     add:
         exercice: Adicionar um exercício

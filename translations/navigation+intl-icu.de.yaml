@@ -84,6 +84,38 @@ exercise:
                 other {# Übungen verfügbar}
             }
         title: Bibliothek
+
+routine:
+    badge:
+        base: Standard
+        mine: Meine Übung
+    create:
+        breadcrumb: Neue Routine
+        heading: Neue Routine
+        submit: Routine erstellen
+        subtitle: Richte dein Standard-Training ein
+        title: Routine erstellen
+    error:
+        forbidden_exercise: Du hast keinen Zugriff auf eine oder mehrere ausgewählte Übungen.
+        name_required: Der Routinename ist erforderlich.
+        no_exercise: Du musst mindestens eine Übung auswählen.
+    flash:
+        created: Die Routine „{name}" wurde erfolgreich erstellt.
+    form:
+        description_label: Beschreibung hinzufügen
+        description_placeholder: Beschreibe die Absicht dieser Routine, Pausenzeiten, Zielintensität…
+        empty_selection: Füge mindestens eine Übung hinzu
+        exercise_count_plural: Übungen
+        exercise_count_singular: Übung
+        exercises_label: Übungen
+        name: Name der Routine
+        name_placeholder: "Z.B.: Push Day, Full Body A…"
+        optional: Optional
+        search_placeholder: Übung suchen…
+        your_routine: Deine Routine
+    list:
+        title: Meine Routinen
+
 workout:
     add:
         exercice: Übung hinzufügen

@@ -89,6 +89,37 @@ exercise:
             }
         title: Biblioteka
 
+routine:
+    badge:
+        base: Bazowe
+        mine: Moje ćwiczenie
+    create:
+        breadcrumb: Nowa rutyna
+        heading: Nowa rutyna
+        submit: Utwórz rutynę
+        subtitle: Skonfiguruj swój typowy trening
+        title: Utwórz rutynę
+    error:
+        forbidden_exercise: Nie masz dostępu do jednego lub więcej wybranych ćwiczeń.
+        name_required: Nazwa rutyny jest wymagana.
+        no_exercise: Musisz wybrać przynajmniej jedno ćwiczenie.
+    flash:
+        created: Rutyna „{name}" została utworzona pomyślnie.
+    form:
+        description_label: Dodaj opis
+        description_placeholder: Opisz cel tej rutyny, czas odpoczynku, docelową intensywność…
+        empty_selection: Dodaj przynajmniej jedno ćwiczenie
+        exercise_count_plural: ćwiczenia
+        exercise_count_singular: ćwiczenie
+        exercises_label: Ćwiczenia
+        name: Nazwa rutyny
+        name_placeholder: "Np.: Push Day, Full Body A…"
+        optional: Opcjonalne
+        search_placeholder: Wyszukaj ćwiczenie…
+        your_routine: Twoja rutyna
+    list:
+        title: Moje programy
+
 workout:
     add:
         exercice: Dodaj ćwiczenie
