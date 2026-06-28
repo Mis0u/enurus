@@ -96,8 +96,9 @@ routine:
         subtitle: Richte dein Standard-Training ein
         title: Routine erstellen
     error:
-        no_exercise: Du musst mindestens eine Übung auswählen.
+        forbidden_exercise: Du hast keinen Zugriff auf eine oder mehrere ausgewählte Übungen.
         name_required: Der Routinename ist erforderlich.
+        no_exercise: Du musst mindestens eine Übung auswählen.
     flash:
         created: Die Routine „{name}" wurde erfolgreich erstellt.
     form:

@@ -5,18 +5,23 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\Exercise;
+use App\Entity\ExerciseMuscle;
+use App\Entity\MuscleGroup;
 use App\Entity\Routine;
 use App\Entity\RoutineExercise;
 use App\Entity\User;
+use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 final class RoutineFixtures extends Fixture implements DependentFixtureInterface
 {
-    public const string ROUTINE_PUSH_DAY = 'routine-push-day';
+    public const string EXERCISE_OTHER_USER = 'routine-other-user-exercise';
 
     public const string ROUTINE_OTHER_USER = 'routine-other-user';
+
+    public const string ROUTINE_PUSH_DAY = 'routine-push-day';
 
     public function load(ObjectManager $manager): void
     {
@@ -64,6 +69,7 @@ final class RoutineFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->persist($otherRoutine);
         $this->addReference(self::ROUTINE_OTHER_USER, $otherRoutine);
+        $this->loadOtherUserExercise($manager, $otherUser);
 
         $manager->flush();
     }
@@ -74,5 +80,28 @@ final class RoutineFixtures extends Fixture implements DependentFixtureInterface
             UserFixtures::class,
             ExerciseFixtures::class,
         ];
+    }
+
+    private function loadOtherUserExercise(ObjectManager $manager, User $otherUser): void
+    {
+        /** @var MuscleGroup $muscleGroup */
+        $muscleGroup = $this->getReference(
+            \sprintf('%s%s', MuscleGroupFixtures::REFERENCE_PREFIX, 'name.chest'),
+            MuscleGroup::class,
+        );
+
+        $exercise = new Exercise();
+        $exercise->name = self::EXERCISE_OTHER_USER;
+        $exercise->isPublic = false;
+        $exercise->owner = $otherUser;
+
+        $exerciseMuscle = new ExerciseMuscle();
+        $exerciseMuscle->exercise = $exercise;
+        $exerciseMuscle->muscleGroup = $muscleGroup;
+        $exerciseMuscle->type = MuscleTypeEnum::PRIMARY;
+        $exercise->exerciseMuscles->add($exerciseMuscle);
+
+        $manager->persist($exercise);
+        $this->addReference(self::EXERCISE_OTHER_USER, $exercise);
     }
 }

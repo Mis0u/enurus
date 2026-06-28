@@ -96,8 +96,9 @@ routine:
         subtitle: Stel je standaard training in
         title: Routine aanmaken
     error:
-        no_exercise: Je moet minstens één oefening selecteren.
+        forbidden_exercise: Je hebt geen toegang tot een of meer geselecteerde oefeningen.
         name_required: De naam van de routine is verplicht.
+        no_exercise: Je moet minstens één oefening selecteren.
     flash:
         created: De routine "{name}" is succesvol aangemaakt.
     form:

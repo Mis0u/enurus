@@ -96,8 +96,9 @@ routine:
         subtitle: Configura o teu treino tipo
         title: Criar uma rotina
     error:
-        no_exercise: Deves selecionar pelo menos um exercício.
+        forbidden_exercise: Não tens acesso a um ou mais exercícios selecionados.
         name_required: O nome da rotina é obrigatório.
+        no_exercise: Deves selecionar pelo menos um exercício.
     flash:
         created: A rotina "{name}" foi criada com sucesso.
     form:

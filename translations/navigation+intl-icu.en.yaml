@@ -85,35 +85,36 @@ exercise:
             }
         title: Library
 
-    routine:
-        badge:
-            base: Default
-            mine: My exercise
-        create:
-            breadcrumb: New routine
-            heading: New routine
-            submit: Create routine
-            subtitle: Set up your go-to workout
-            title: Create a routine
-        error:
-            no_exercise: You must select at least one exercise.
-            name_required: The routine name is required.
-        flash:
-            created: The routine "{name}" has been created successfully.
-        form:
-            description_label: Add a description
-            description_placeholder: Describe the intent of this routine, rest times, target intensity…
-            empty_selection: Add at least one exercise
-            exercise_count_plural: exercises
-            exercise_count_singular: exercise
-            exercises_label: Exercises
-            name: Routine name
-            name_placeholder: "E.g.: Push Day, Full Body A…"
-            optional: Optional
-            search_placeholder: Search for an exercise…
-            your_routine: Your routine
-        list:
-            title: My routines
+routine:
+    badge:
+        base: Default
+        mine: My exercise
+    create:
+        breadcrumb: New routine
+        heading: New routine
+        submit: Create routine
+        subtitle: Set up your go-to workout
+        title: Create a routine
+    error:
+        forbidden_exercise: You don't have access to one or more selected exercises.
+        name_required: The routine name is required.
+        no_exercise: You must select at least one exercise.
+    flash:
+        created: The routine "{name}" has been created successfully.
+    form:
+        description_label: Add a description
+        description_placeholder: Describe the intent of this routine, rest times, target intensity…
+        empty_selection: Add at least one exercise
+        exercise_count_plural: exercises
+        exercise_count_singular: exercise
+        exercises_label: Exercises
+        name: Routine name
+        name_placeholder: "E.g.: Push Day, Full Body A…"
+        optional: Optional
+        search_placeholder: Search for an exercise…
+        your_routine: Your routine
+    list:
+        title: My routines
 
 workout:
     add:

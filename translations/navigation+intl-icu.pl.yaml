@@ -100,8 +100,9 @@ routine:
         subtitle: Skonfiguruj swój typowy trening
         title: Utwórz rutynę
     error:
-        no_exercise: Musisz wybrać przynajmniej jedno ćwiczenie.
+        forbidden_exercise: Nie masz dostępu do jednego lub więcej wybranych ćwiczeń.
         name_required: Nazwa rutyny jest wymagana.
+        no_exercise: Musisz wybrać przynajmniej jedno ćwiczenie.
     flash:
         created: Rutyna „{name}" została utworzona pomyślnie.
     form:

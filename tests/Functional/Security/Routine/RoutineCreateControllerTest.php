@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security\Routine;
 
+use App\DataFixtures\RoutineFixtures;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Routine;
 use App\Repository\ExerciseRepository;
@@ -51,9 +52,7 @@ final class RoutineCreateControllerTest extends WebTestCase
         $this->submitCreate($client, 'Push Day A', $this->buildExercisesJson(1));
 
         self::assertResponseRedirects('/fr/mes-routines');
-
-        $routine = $this->findRoutine('Push Day A');
-        self::assertNotNull($routine);
+        self::assertNotNull($this->findRoutine('Push Day A'));
     }
 
     public function testRoutineOwnerIsCurrentUser(): void
@@ -86,17 +85,18 @@ final class RoutineCreateControllerTest extends WebTestCase
     public function testRoutineExercisesHaveCorrectPositions(): void
     {
         $client = $this->login(self::OWNER);
-        $this->submitCreate($client, 'Full Body', $this->buildExercisesJson(2));
+        $this->submitCreate($client, 'Full Body', $this->buildExercisesJson(3));
 
         $routine = $this->findRoutine('Full Body');
         self::assertNotNull($routine);
 
-        $positions = $routine->routineExercises->map(
-            static fn ($re) => $re->position
-        )->toArray();
+        $positions = $routine->routineExercises
+            ->map(static fn ($re) => $re->position)
+            ->toArray();
 
-        self::assertContains(1, $positions);
-        self::assertContains(2, $positions);
+        sort($positions);
+
+        self::assertSame([1, 2, 3], $positions);
     }
 
     public function testRoutineWithDescriptionIsPersisted(): void
@@ -132,6 +132,16 @@ final class RoutineCreateControllerTest extends WebTestCase
         self::assertNull($this->findRoutine(''));
     }
 
+    public function testNameTooLongIsRejected(): void
+    {
+        $client = $this->login(self::OWNER);
+        $longName = str_repeat('a', 101);
+        $this->submitCreate($client, $longName, $this->buildExercisesJson(1));
+
+        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+        self::assertNull($this->findRoutine($longName));
+    }
+
     public function testEmptyExercisesIsRejected(): void
     {
         $client = $this->login(self::OWNER);
@@ -148,6 +158,27 @@ final class RoutineCreateControllerTest extends WebTestCase
 
         self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
         self::assertNull($this->findRoutine('Bad Json Routine'));
+    }
+
+    public function testExerciseNotOwnedByUserAndNotPublicIsRejected(): void
+    {
+        $client = $this->login(self::OWNER);
+
+        /** @var ExerciseRepository $exerciseRepo */
+        $exerciseRepo = static::getContainer()->get(ExerciseRepository::class);
+        $foreignExercise = $exerciseRepo->findOneBy([
+            'name' => RoutineFixtures::EXERCISE_OTHER_USER,
+        ]);
+        self::assertNotNull($foreignExercise);
+
+        $json = json_encode([[
+            'id' => (string) $foreignExercise->id,
+            'position' => 1,
+        ]], JSON_THROW_ON_ERROR);
+
+        $this->submitCreate($client, 'Foreign Exercise Routine', $json);
+
+        self::assertNull($this->findRoutine('Foreign Exercise Routine'));
     }
 
     // -------------------------------------------------------------------------

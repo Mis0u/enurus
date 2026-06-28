@@ -68,12 +68,16 @@ final class RoutineCreateController extends AbstractController
 
         if (! $exercises instanceof Collection || $exercises->isEmpty()) {
             $this->addFlash('error', $this->translator->trans('routine.error.no_exercise', [], 'navigation'));
-
             return $this->redirectToRoute('app_routine_create');
         }
 
         /** @var User $user */
         $user = $this->getUser();
+
+        if (! $this->allExercisesAreAccessible($exercises, $user)) {
+            $this->addFlash('error', $this->translator->trans('routine.error.forbidden_exercise', [], 'navigation'));
+            return $this->redirectToRoute('app_routine_create');
+        }
 
         /** @var Collection<int, RoutineExercise> $exercises */
         $this->routineCreateService->create($routine, $user, $exercises);
@@ -90,11 +94,26 @@ final class RoutineCreateController extends AbstractController
     }
 
     /**
+     * @param Collection<int, RoutineExercise> $routineExercises
+     */
+    private function allExercisesAreAccessible(Collection $routineExercises, User $user): bool
+    {
+        foreach ($routineExercises as $routineExercise) {
+            $exercise = $routineExercise->exercise;
+            if (! $exercise->isPublic && $exercise->owner !== $user) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @param FormInterface<Routine> $form
      */
     private function renderCreateForm(FormInterface $form, string $locale): Response
     {
-        /** @var \App\Entity\User $user */
+        /** @var User $user */
         $user = $this->getUser();
         $exercises = $this->exerciseRepository->findAvailableForUser($user);
 
