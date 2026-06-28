@@ -1,0 +1,93 @@
+{#
+    templates/routine/create/_selected_exercises.html.twig
+
+    Colonne droite — exercices sélectionnés (SortableJS) + boutons.
+    Réutilisée en création ET en édition via controllerName.
+
+    Paramètres :
+      - form           : FormView
+      - controllerName : string
+      - cancelUrl      : string
+#}
+<div class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-[22px] flex flex-col">
+
+    {# Header dynamique : nom + pill compteur #}
+    <div class="flex items-center justify-between gap-3 mb-4">
+        <h2 class="font-rajdhani text-base font-bold text-[#f0f4ff]">
+            {{ 'routine.form.your_routine'|trans({}, 'navigation') }}
+        </h2>
+        <div class="flex items-center gap-2 min-w-0">
+            {# Nom de la routine — mis à jour par Stimulus #}
+            <span
+                class="text-[12px] text-[#8b9bb4] font-medium truncate max-w-[120px]"
+                data-{{ controllerName }}-target="summaryName"
+            ></span>
+            {# Pill compteur d'exercices #}
+            <span
+                class="flex-shrink-0 inline-flex items-center px-2 py-[2px] rounded-[6px] text-[11px] font-semibold bg-white/[0.06] border border-white/[0.10] text-[#8b9bb4]"
+                data-{{ controllerName }}-target="summaryCount"
+            ></span>
+        </div>
+    </div>
+
+    {# Input hidden — JSON des exercices ordonnés #}
+    {{ form_widget(form.exercises) }}
+
+    {# État vide — visible par défaut, masqué par Stimulus dès qu'un exercice est ajouté #}
+    <div
+        class="flex flex-col items-center justify-center gap-2 py-8 text-[13px] text-[#4a5568] italic text-center border border-dashed border-white/[0.08] rounded-[10px]"
+        data-{{ controllerName }}-target="emptyState"
+    >
+        <svg class="w-7 h-7 opacity-40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+        </svg>
+        <span>{{ 'routine.form.empty_selection'|trans({}, 'navigation') }}</span>
+    </div>
+
+    {#
+        Liste triable SortableJS.
+        Les items sont injectés dynamiquement par Stimulus (create_controller.js).
+        En édition, ils seront pré-rendus via une boucle Twig.
+    #}
+    <div
+        class="flex flex-col gap-2"
+        data-{{ controllerName }}-target="selectedList"
+        data-sortable-animation-value="150"
+        data-sortable-handle-value=".routine-drag-handle"
+        data-sortable-ghost-class-value="sortable-ghost"
+        data-sortable-drag-class-value="sortable-drag"
+        data-action="sortable:end->{{ controllerName }}#onSortEnd"
+    >
+        {#
+            En édition uniquement :
+            {% for routineExercise in routine.routineExercises %}
+                {% include 'routine/create/_selected_exercise_item.html.twig' with {
+                    routineExercise: routineExercise,
+                    position: loop.index,
+                    controllerName: controllerName,
+                } only %}
+            {% endfor %}
+        #}
+    </div>
+
+    <div class="h-px bg-white/[0.05] my-4"></div>
+
+    <div class="flex flex-col sm:flex-row gap-2.5 justify-center">
+       <a href="{{ cancelUrl }}"
+        class="inline-flex items-center justify-center px-5 py-[11px] bg-transparent border border-white/[0.07] rounded-[10px] text-[#8b9bb4] font-dm-sans text-[13.5px] font-medium no-underline transition-all duration-200 hover:border-white/[0.15] hover:text-[#f0f4ff] whitespace-nowrap"
+        >
+        {{ 'field.form.button.cancel'|trans({}, 'common') }}
+        </a>
+        <button
+            type="submit"
+            class="cursor-pointer inline-flex items-center justify-center gap-2 py-[11px] px-5 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white text-[13.5px] font-bold rounded-[10px] shadow-lg shadow-rose-500/30 hover:shadow-rose-500/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
+            data-{{ controllerName }}-target="submitBtn"
+        >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+            </svg>
+            {{ 'routine.create.submit'|trans({}, 'navigation') }}
+        </button>
+    </div>
+
+</div>

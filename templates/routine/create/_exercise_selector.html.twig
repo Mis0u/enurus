@@ -1,0 +1,93 @@
+{#
+    templates/routine/create/_exercise_selector.html.twig
+
+    Paramètres :
+      - controllerName : string
+      - muscleGroups   : list<MuscleGroup>
+      - exercises      : list<Exercise>
+#}
+{% set exercise_name = exercise.isPublic ? (exercise.name|trans({}, 'exercise')) : exercise.name %}
+<div class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-[22px] flex flex-col min-w-0 overflow-visible">
+
+    <div class="flex items-center gap-2.5 mb-4">
+        <h2 class="font-rajdhani text-base font-bold text-[#f0f4ff]">
+            {{ 'routine.form.exercises_label'|trans({}, 'navigation') }}
+        </h2>
+    </div>
+
+    {# Barre de recherche #}
+    <div class="relative mb-3.5">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4a5568] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input
+            type="text"
+            class="w-full bg-[#080e1a] border border-white/[0.07] rounded-[10px] pl-[38px] pr-4 py-3 text-[#f0f4ff] font-dm-sans text-sm outline-none transition-all duration-200 placeholder:text-[#4a5568] focus:border-rose-500/50 focus:shadow-[0_0_0_3px_rgba(244,63,94,0.08)]"
+            placeholder="{{ 'routine.form.search_placeholder'|trans({}, 'navigation') }}"
+            data-{{ controllerName }}-target="searchInput"
+            data-action="input->{{ controllerName }}#filterExercises"
+        >
+    </div>
+
+    {# Liste d'exercices scrollable #}
+    <div
+        class="flex flex-col gap-2 overflow-y-auto"
+        style="max-height: 380px; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.07) transparent;"
+        data-{{ controllerName }}-target="exerciseList"
+    >
+        {% for exercise in exercises %}
+            <div
+                class="flex items-center gap-3 bg-[#080e1a] border border-white/[0.07] rounded-[10px] px-3.5 py-[11px] transition-all duration-200"
+                data-{{ controllerName }}-target="exerciseItem"
+                data-exercise-id="{{ exercise.id }}"
+                data-exercise-name="{{ exercise_name }}"
+                data-muscle-ids="{{ exercise.exerciseMuscles|filter(em => em.type.value == 'primary')|map(em => em.muscleGroup.id)|join(',') }}"
+            >
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="text-[13.5px] font-medium text-[#f0f4ff] truncate">
+                            {{ exercise_name }}
+                        </span>
+                        {% if exercise.isPublic %}
+                            <span class="inline-flex px-1.5 py-[2px] rounded text-[10px] font-semibold bg-cyan-500/[0.12] border border-cyan-500/25 text-cyan-400 whitespace-nowrap flex-shrink-0">
+                                {{ 'routine.badge.base'|trans({}, 'navigation') }}
+                            </span>
+                        {% else %}
+                            <span class="inline-flex px-1.5 py-[2px] rounded text-[10px] font-semibold bg-rose-500/[0.15] border border-rose-500/25 text-rose-500 whitespace-nowrap flex-shrink-0">
+                                {{ 'routine.badge.mine'|trans({}, 'navigation') }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    {# data-muscle-type permet au JS de récupérer les labels sans parsing CSS #}
+                    <div class="flex gap-1 flex-wrap">
+                        {% for em in exercise.exerciseMuscles %}
+                            {% if em.type.value == 'primary' %}
+                                <span
+                                    data-muscle-type="primary"
+                                    class="inline-flex px-[7px] py-[2px] rounded-[5px] text-[10.5px] font-medium bg-rose-500/[0.10] border border-rose-500/20 text-rose-400"
+                                >{{ em.muscleGroup.name|trans({}, 'muscle') }}</span>
+                            {% else %}
+                                <span
+                                    data-muscle-type="secondary"
+                                    class="inline-flex px-[7px] py-[2px] rounded-[5px] text-[10.5px] font-medium bg-orange-500/[0.10] border border-orange-500/20 text-orange-400"
+                                >{{ em.muscleGroup.name|trans({}, 'muscle') }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <button
+                    type="button"
+                    class="w-7 h-7 rounded-[7px] border border-white/[0.07] bg-white/[0.04] text-[#8b9bb4] flex items-center justify-center flex-shrink-0 cursor-pointer transition-all duration-200 hover:bg-rose-500/[0.15] hover:border-rose-500/40 hover:text-rose-500 hover:scale-[1.06]"
+                    data-{{ controllerName }}-target="addButton"
+                    data-action="click->{{ controllerName }}#toggleExercise"
+                    data-exercise-id="{{ exercise.id }}"
+                >
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                    </svg>
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>

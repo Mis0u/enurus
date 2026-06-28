@@ -1,0 +1,70 @@
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/routine-create.css') }}">
+{% endblock %}
+
+{% block title %}{{ 'routine.create.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        title: 'routine.create.title'|trans({}, 'navigation'),
+        subtitle: app.user.nickname|formatInitials,
+    } %}
+{% endblock %}
+
+{% block state %}
+    <div
+        class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]"
+        data-controller="routine--create"
+        data-routine--create-error-name-value="{{ 'routine.error.name_required'|trans({}, 'navigation') }}"
+        data-routine--create-error-exercise-value="{{ 'routine.error.no_exercise'|trans({}, 'navigation') }}"
+        data-routine--create-label-singular-value="{{ 'routine.form.exercise_count_singular'|trans({}, 'navigation') }}"
+        data-routine--create-label-plural-value="{{ 'routine.form.exercise_count_plural'|trans({}, 'navigation') }}"
+    >
+        {{ component('Breadcrumb:Breadcrumb', {
+            items: [
+                {label: 'routine.list.title'|trans({}, 'navigation'), url: 'app_routine_list'},
+                {label: 'routine.create.breadcrumb'|trans({}, 'navigation'), url: 'app_routine_create'},
+            ]
+        }) }}
+
+        <header class="mb-7">
+            <h1 class="font-rajdhani text-[28px] font-bold text-[#f1f5f9] mb-1">
+                {{ 'routine.create.title'|trans({}, 'navigation') }}
+            </h1>
+            <p class="text-sm text-[#64748b]">{{ 'routine.create.subtitle'|trans({}, 'navigation') }}</p>
+        </header>
+
+        {{ form_start(form) }}
+
+        {# Zone 1 — Nom + description (full-width) #}
+        {% include 'routine/create/_form_info.html.twig' with {
+            form: form,
+            controllerName: 'routine--create',
+        } only %}
+
+        {# Zone 2 — Deux colonnes 50/50 #}
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+            <div class="min-w-0">
+                {% include 'routine/create/_exercise_selector.html.twig' with {
+                    controllerName: 'routine--create',
+                    muscleGroups: muscleGroups,
+                    exercises: exercises,
+                } only %}
+            </div>
+            <div class="min-w-0">
+                {% include 'routine/create/_selected_exercises.html.twig' with {
+                    form: form,
+                    controllerName: 'routine--create',
+                    cancelUrl: cancelUrl,
+                } only %}
+            </div>
+        </div>
+
+        {{ form_row(form._token) }}
+        {{ form_end(form, {render_rest: false}) }}
+
+    </div>
+{% endblock %}
