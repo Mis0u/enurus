@@ -84,6 +84,37 @@ exercise:
                 other {# ejercicios disponibles}
             }
         title: Biblioteca
+
+routine:
+    badge:
+        base: Base
+        mine: Mi ejercicio
+    create:
+        breadcrumb: Nueva rutina
+        heading: Nueva rutina
+        submit: Crear la rutina
+        subtitle: Configura tu entrenamiento tipo
+        title: Crear una rutina
+    error:
+        no_exercise: Debes seleccionar al menos un ejercicio.
+        name_required: El nombre de la rutina es obligatorio.
+    flash:
+        created: La rutina "{name}" ha sido creada con éxito.
+    form:
+        description_label: Añadir una descripción
+        description_placeholder: Describe la intención de esta rutina, los tiempos de descanso, la intensidad objetivo…
+        empty_selection: Añade al menos un ejercicio
+        exercise_count_plural: ejercicios
+        exercise_count_singular: ejercicio
+        exercises_label: Ejercicios
+        name: Nombre de la rutina
+        name_placeholder: "Ej: Push Day, Full Body A…"
+        optional: Opcional
+        search_placeholder: Buscar un ejercicio…
+        your_routine: Tu rutina
+    list:
+        title: Mis rutinas
+
 workout:
     add:
         exercice: Añadir un ejercicio

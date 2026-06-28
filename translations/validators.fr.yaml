@@ -1,3 +1,12 @@
+exercise:
+    muscle_primary_required: Au moins un muscle primaire est requis.
+    name_not_blank: Un nom doit être renseigné
+
+routine:
+    name_not_blank: Le nom de la routine est obligatoire.
+    name_too_long: Le nom ne peut pas dépasser {{ limit }} caractères.
+    no_exercise: Tu dois sélectionner au moins un exercice.
+
 user:
     nickname:
         length:
@@ -9,7 +18,3 @@ workout:
     photo:
         invalid_type: Le fichier doit être une image JPEG, PNG ou WebP.
         too_large: La photo ne doit pas dépasser 5 Mo.
-
-exercise:
-    muscle_primary_required: Au moins un muscle primaire est requis.
-    name_not_blank: Un nom doit être renseigné

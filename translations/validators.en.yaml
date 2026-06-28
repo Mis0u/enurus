@@ -1,3 +1,6 @@
+exercise:
+    muscle_primary_required: At least one primary muscle is required.
+    name_not_blank: A name must be provided
 user:
     nickname:
         length:
@@ -8,6 +11,3 @@ workout:
     photo:
         invalid_type: The file must be a JPEG, PNG or WebP image.
         too_large: The photo must not exceed 5 MB.
-exercise:
-    muscle_primary_required: At least one primary muscle is required.
-    name_not_blank: A name must be provided

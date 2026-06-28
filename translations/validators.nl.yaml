@@ -1,3 +1,6 @@
+exercise:
+    muscle_primary_required: Minstens één primaire spier is vereist.
+    name_not_blank: Er moet een naam worden opgegeven
 user:
     nickname:
         length:
@@ -8,6 +11,3 @@ workout:
     photo:
         invalid_type: Het bestand moet een JPEG-, PNG- of WebP-afbeelding zijn.
         too_large: De foto mag niet groter zijn dan 5 MB.
-exercise:
-    muscle_primary_required: Minstens één primaire spier is vereist.
-    name_not_blank: Er moet een naam worden opgegeven

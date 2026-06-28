@@ -1,3 +1,7 @@
+exercise:
+    muscle_primary_required: Mindestens ein primärer Muskel ist erforderlich.
+    name_not_blank: Ein Name muss angegeben werden
+
 user:
     nickname:
         length:
@@ -8,7 +12,3 @@ workout:
     photo:
         invalid_type: Die Datei muss ein JPEG-, PNG- oder WebP-Bild sein.
         too_large: Das Foto darf 5 MB nicht überschreiten.
-
-exercise:
-    muscle_primary_required: Mindestens ein primärer Muskel ist erforderlich.
-    name_not_blank: Ein Name muss angegeben werden
