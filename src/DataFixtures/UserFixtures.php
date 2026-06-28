@@ -45,6 +45,10 @@ class UserFixtures extends Fixture
 
     public const string USER_TIRAGE_SUPINATION = 'user-fixture-exercise-tirage-supination@test.com';
 
+    public const string USER_ROUTINE_OWNER = 'user-fixture-routine-owner@test.com';
+
+    public const string USER_ROUTINE_OTHER = 'user-fixture-routine-other@test.com';
+
     private const array USERS_ETHNIES = [
         'en' => 'user-fixture-english@test.com',
         'es' => 'user-fixture-spanish@test.com',
@@ -56,7 +60,7 @@ class UserFixtures extends Fixture
     ];
 
     public function __construct(
-        private readonly UserPasswordHasherInterface $passwordHasher
+        private readonly UserPasswordHasherInterface $passwordHasher,
     ) {
     }
 
@@ -66,6 +70,7 @@ class UserFixtures extends Fixture
         $this->loadIndexedUsers($manager);
         $this->loadWorkoutUsers($manager);
         $this->loadExerciseUsers($manager);
+        $this->loadRoutineUsers($manager);
 
         $manager->flush();
     }
@@ -112,9 +117,12 @@ class UserFixtures extends Fixture
             $user->nickname = $userData['nickname'];
             $user->createdBy = $user;
             $user->locale = LocaleAllowedEnum::FR->value;
-            $user->gender = 'user-fixture-26-workout@test.com' === $userData['email'] ? GenderEnum::FEMALE->value : GenderEnum::MALE->value;
+            $user->gender = 'user-fixture-26-workout@test.com' === $userData['email']
+                ? GenderEnum::FEMALE->value
+                : GenderEnum::MALE->value;
             $user->lastLogin = new \DateTimeImmutable();
             $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+
             if ('user-fixture-51-workout@test.com' === $userData['email']) {
                 $user->unitOfMeasure = UnitOfMeasureEnum::LBS;
             }
@@ -123,7 +131,7 @@ class UserFixtures extends Fixture
 
             $this->addReference(
                 \sprintf('%s%s', self::REFERENCE_PREFIX, $userData['email']),
-                $user
+                $user,
             );
         }
     }
@@ -144,7 +152,28 @@ class UserFixtures extends Fixture
 
             $this->addReference(
                 \sprintf('%s%s', self::REFERENCE_PREFIX, $userData['email']),
-                $user
+                $user,
+            );
+        }
+    }
+
+    private function loadRoutineUsers(ObjectManager $manager): void
+    {
+        foreach ($this->routineUsers() as $userData) {
+            $user = new User();
+            $user->email = $userData['email'];
+            $user->nickname = $userData['nickname'];
+            $user->createdBy = $user;
+            $user->locale = LocaleAllowedEnum::FR->value;
+            $user->gender = GenderEnum::MALE->value;
+            $user->lastLogin = new \DateTimeImmutable();
+            $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+
+            $manager->persist($user);
+
+            $this->addReference(
+                \sprintf('%s%s', self::REFERENCE_PREFIX, $userData['email']),
+                $user,
             );
         }
     }
@@ -162,6 +191,23 @@ class UserFixtures extends Fixture
             [
                 'email' => self::USER_TIRAGE_SUPINATION,
                 'nickname' => 'user-tirage-supination',
+            ],
+        ];
+    }
+
+    /**
+     * @return array<int, array{email: string, nickname: string}>
+     */
+    private function routineUsers(): array
+    {
+        return [
+            [
+                'email' => self::USER_ROUTINE_OWNER,
+                'nickname' => 'user-routine-owner',
+            ],
+            [
+                'email' => self::USER_ROUTINE_OTHER,
+                'nickname' => 'user-routine-other',
             ],
         ];
     }
