@@ -95,12 +95,18 @@ routine:
         submit: Create routine
         subtitle: Set up your go-to workout
         title: Create a routine
+    edit:
+        breadcrumb: Edit
+        submit: Save changes
+        title: Edit routine
     error:
         forbidden_exercise: You don't have access to one or more selected exercises.
+        name_exists: You already have a routine with this name.
         name_required: The routine name is required.
         no_exercise: You must select at least one exercise.
     flash:
         created: The routine "{name}" has been created successfully.
+        updated: The routine "{name}" has been updated successfully.
     form:
         description_label: Add a description
         description_placeholder: Describe the intent of this routine, rest times, target intensity…

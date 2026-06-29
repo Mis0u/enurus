@@ -99,12 +99,18 @@ routine:
         submit: Utwórz rutynę
         subtitle: Skonfiguruj swój typowy trening
         title: Utwórz rutynę
+    edit:
+        breadcrumb: Edytuj
+        submit: Zapisz zmiany
+        title: Edytuj rutynę
     error:
         forbidden_exercise: Nie masz dostępu do jednego lub więcej wybranych ćwiczeń.
+        name_exists: Masz już rutynę o tej nazwie.
         name_required: Nazwa rutyny jest wymagana.
         no_exercise: Musisz wybrać przynajmniej jedno ćwiczenie.
     flash:
-        created: Rutyna „{name}" została utworzona pomyślnie.
+        created: Rutyna "{name}" została utworzona pomyślnie.
+        updated: Rutyna "{name}" została zmieniona pomyślnie.
     form:
         description_label: Dodaj opis
         description_placeholder: Opisz cel tej rutyny, czas odpoczynku, docelową intensywność…

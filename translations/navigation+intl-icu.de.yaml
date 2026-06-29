@@ -95,12 +95,18 @@ routine:
         submit: Routine erstellen
         subtitle: Richte dein Standard-Training ein
         title: Routine erstellen
+    edit:
+        breadcrumb: Bearbeiten
+        submit: Änderungen speichern
+        title: Routine bearbeiten
     error:
         forbidden_exercise: Du hast keinen Zugriff auf eine oder mehrere ausgewählte Übungen.
+        name_exists: Du hast bereits eine Routine mit diesem Namen.
         name_required: Der Routinename ist erforderlich.
         no_exercise: Du musst mindestens eine Übung auswählen.
     flash:
-        created: Die Routine „{name}" wurde erfolgreich erstellt.
+        created: Die Routine "{name}" wurde erfolgreich erstellt.
+        updated: Die Routine "{name}" wurde erfolgreich geändert.
     form:
         description_label: Beschreibung hinzufügen
         description_placeholder: Beschreibe die Absicht dieser Routine, Pausenzeiten, Zielintensität…

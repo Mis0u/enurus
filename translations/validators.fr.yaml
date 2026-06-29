@@ -3,6 +3,7 @@ exercise:
     name_not_blank: Un nom doit être renseigné
 
 routine:
+    name_exists: Tu as déjà une routine avec ce nom.
     name_not_blank: Le nom de la routine est obligatoire.
     name_too_long: Le nom ne peut pas dépasser {{ limit }} caractères.
     no_exercise: Tu dois sélectionner au moins un exercice.
