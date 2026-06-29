@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Exercise;
 use App\Entity\Routine;
 use App\Entity\RoutineExercise;
 use App\Entity\User;
@@ -13,7 +12,8 @@ use App\Repository\ExerciseRepository;
 use App\Repository\MuscleGroupRepository;
 use App\Repository\RoutineRepository;
 use App\Security\Voter\RoutineVoter;
-use App\Service\Entity\RoutineCreateService;
+use App\Service\Entity\ExerciseSorterService;
+use App\Service\Entity\RoutineEditService;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -26,39 +26,40 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[IsGranted('ROLE_USER')]
 #[Route(path: [
-    'fr' => '/mes-routines/creer',
-    'en' => '/my-routines/create',
-    'it' => '/le-mie-routine/crea',
-    'es' => '/mis-rutinas/crear',
-    'pt' => '/as-minhas-rotinas/criar',
-    'de' => '/meine-routinen/erstellen',
-    'nl' => '/mijn-routines/aanmaken',
-    'pl' => '/moje-plany/utworz',
-], name: 'app_routine_create', methods: ['GET', 'POST'])]
-final class RoutineCreateController extends AbstractController
+    'fr' => '/mes-routines/{id}/modifier',
+    'en' => '/my-routines/{id}/edit',
+    'it' => '/le-mie-routine/{id}/modifica',
+    'es' => '/mis-rutinas/{id}/editar',
+    'pt' => '/as-minhas-rotinas/{id}/editar',
+    'de' => '/meine-routinen/{id}/bearbeiten',
+    'nl' => '/mijn-routines/{id}/bewerken',
+    'pl' => '/moje-plany/{id}/edytuj',
+], name: 'app_routine_edit', methods: ['GET', 'POST'])]
+final class RoutineEditController extends AbstractController
 {
     public function __construct(
-        private readonly RoutineCreateService $routineCreateService,
+        private readonly RoutineEditService $routineEditService,
         private readonly MuscleGroupRepository $muscleGroupRepository,
         private readonly ExerciseRepository $exerciseRepository,
+        private readonly ExerciseSorterService $exerciseSorterService,
         private readonly TranslatorInterface $translator,
         private readonly RoutineRepository $routineRepository,
     ) {
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request, Routine $routine): Response
     {
-        $this->denyAccessUnlessGranted(RoutineVoter::CREATE);
+        $this->denyAccessUnlessGranted(RoutineVoter::EDIT, $routine);
 
-        $routine = new Routine();
         $form = $this->createForm(RoutineType::class, $routine);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->handleValidForm($form, $routine);
         }
 
-        return $this->renderCreateForm($form, $request->getLocale());
+        return $this->renderEditForm($form, $routine, $request->getLocale());
     }
 
     /**
@@ -70,7 +71,10 @@ final class RoutineCreateController extends AbstractController
 
         if (! $exercises instanceof Collection || $exercises->isEmpty()) {
             $this->addFlash('error', $this->translator->trans('routine.error.no_exercise', [], 'navigation'));
-            return $this->redirectToRoute('app_routine_create');
+
+            return $this->redirectToRoute('app_routine_edit', [
+                'id' => $routine->id,
+            ]);
         }
 
         /** @var User $user */
@@ -88,14 +92,17 @@ final class RoutineCreateController extends AbstractController
 
         if (! $this->allExercisesAreAccessible($exercises, $user)) {
             $this->addFlash('error', $this->translator->trans('routine.error.forbidden_exercise', [], 'navigation'));
-            return $this->redirectToRoute('app_routine_create');
+
+            return $this->redirectToRoute('app_routine_edit', [
+                'id' => $routine->id,
+            ]);
         }
 
         /** @var Collection<int, RoutineExercise> $exercises */
-        $this->routineCreateService->create($routine, $user, $exercises);
+        $this->routineEditService->update($routine, $exercises);
 
         $this->addFlash('success', $this->translator->trans(
-            'routine.flash.created',
+            'routine.flash.updated',
             [
                 '{name}' => $routine->name,
             ],
@@ -103,6 +110,24 @@ final class RoutineCreateController extends AbstractController
         ));
 
         return $this->redirectToRoute('app_routine_list');
+    }
+
+    /**
+     * @param FormInterface<Routine> $form
+     */
+    private function renderEditForm(FormInterface $form, Routine $routine, string $locale): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $exercises = $this->exerciseRepository->findAvailableForUser($user);
+
+        return $this->render('routine/edit/index.html.twig', [
+            'form' => $form,
+            'routine' => $routine,
+            'muscleGroups' => $this->muscleGroupRepository->findAllOrderedByPosition(),
+            'exercises' => $this->exerciseSorterService->sortByName($exercises, $locale),
+            'cancelUrl' => $this->generateUrl('app_routine_list'),
+        ]);
     }
 
     /**
@@ -118,31 +143,5 @@ final class RoutineCreateController extends AbstractController
         }
 
         return true;
-    }
-
-    /**
-     * @param FormInterface<Routine> $form
-     */
-    private function renderCreateForm(FormInterface $form, string $locale): Response
-    {
-        /** @var User $user */
-        $user = $this->getUser();
-        $exercises = $this->exerciseRepository->findAvailableForUser($user);
-
-        $collator = \Collator::create($locale);
-
-        usort($exercises, function (Exercise $a, Exercise $b) use ($collator): int {
-            $nameA = $a->isPublic ? $this->translator->trans($a->name, [], 'exercise') : $a->name;
-            $nameB = $b->isPublic ? $this->translator->trans($b->name, [], 'exercise') : $b->name;
-
-            return (int) $collator->compare($nameA, $nameB);
-        });
-
-        return $this->render('routine/create/index.html.twig', [
-            'form' => $form,
-            'muscleGroups' => $this->muscleGroupRepository->findAllOrderedByPosition(),
-            'exercises' => $exercises,
-            'cancelUrl' => $this->generateUrl('app_routine_list'),
-        ]);
     }
 }

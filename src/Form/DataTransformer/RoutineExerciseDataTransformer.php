@@ -13,7 +13,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
- * @implements DataTransformerInterface<Collection<int, RoutineExercise>, string>
+ * @implements DataTransformerInterface<mixed, string>
  */
 final readonly class RoutineExerciseDataTransformer implements DataTransformerInterface
 {
@@ -22,20 +22,33 @@ final readonly class RoutineExerciseDataTransformer implements DataTransformerIn
     ) {
     }
 
-    /**
-     * @param Collection<int, RoutineExercise>|null $value
-     */
     public function transform(mixed $value): string
     {
-        if (null === $value || $value->isEmpty()) {
+        if (null === $value || '' === $value) {
             return '';
         }
 
+        if (is_string($value)) {
+            return $value;
+        }
+
+        if (! $value instanceof Collection) {
+            return '';
+        }
+
+        if ($value->isEmpty()) {
+            return '';
+        }
         $data = $value->map(
-            static fn (RoutineExercise $re): array => [
-                'id' => (string) $re->exercise->id,
-                'position' => $re->position,
-            ]
+            static function (mixed $re): array {
+                if (! $re instanceof RoutineExercise) {
+                    throw new \LogicException(sprintf('Expected %s, got %s.', RoutineExercise::class, get_debug_type($re)));
+                }
+                return [
+                    'id' => (string) $re->exercise->id,
+                    'position' => $re->position,
+                ];
+            }
         )->getValues();
 
         return json_encode($data, JSON_THROW_ON_ERROR);

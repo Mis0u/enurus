@@ -40,7 +40,6 @@ final class RoutineType extends AbstractType
             'attr' => [
                 'novalidate' => 'novalidate',
                 'class' => 'flex flex-col gap-6',
-                'data-action' => 'submit->routine--create#submitForm',
             ],
         ]);
     }

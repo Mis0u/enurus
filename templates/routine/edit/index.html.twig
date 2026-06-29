@@ -1,0 +1,96 @@
+{#
+    templates/routine/edit/index.html.twig
+
+    Page d'édition d'une routine.
+    Controller : RoutineEditController (GET/POST /{_locale}/mes-routines/{id}/modifier)
+
+    Variables passées par le controller :
+      - form         : FormView (RoutineType)
+      - routine      : Routine
+      - muscleGroups : list<MuscleGroup>
+      - exercises    : list<Exercise>
+      - cancelUrl    : string
+#}
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/routine-create.css') }}">
+{% endblock %}
+
+{% block title %}{{ 'routine.edit.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        title: 'routine.edit.title'|trans({}, 'navigation'),
+        subtitle: app.user.nickname|formatInitials,
+    } %}
+{% endblock %}
+
+{% block state %}
+    <div
+        class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]"
+        data-controller="routine--edit"
+        data-routine--edit-error-name-value="{{ 'routine.error.name_required'|trans({}, 'navigation') }}"
+        data-routine--edit-error-exercise-value="{{ 'routine.error.no_exercise'|trans({}, 'navigation') }}"
+        data-routine--edit-label-singular-value="{{ 'routine.form.exercise_count_singular'|trans({}, 'navigation') }}"
+        data-routine--edit-label-plural-value="{{ 'routine.form.exercise_count_plural'|trans({}, 'navigation') }}"
+        data-routine--edit-check-name-url-value="{{ path('app_routine_check_name') }}"
+        data-routine--edit-error-name-exists-value="{{ 'routine.error.name_exists'|trans({}, 'navigation') }}"
+        data-routine--edit-exclude-id-value="{{ routine.id }}"
+    >
+        {{ component('Breadcrumb:Breadcrumb', {
+            items: [
+                {label: 'routine.list.title'|trans({}, 'navigation'), url: 'app_routine_list'},
+                {label: 'routine.edit.breadcrumb'|trans({}, 'navigation'), url: 'app_routine_edit', urlParams: {id: routine.id}},
+            ]
+        }) }}
+
+        <header class="mb-7">
+            <h1 class="font-rajdhani text-[28px] font-bold text-[#f1f5f9] mb-1">
+                {{ 'routine.edit.title'|trans({}, 'navigation') }}
+            </h1>
+            <p class="text-sm text-[#64748b]">{{ routine.name }}</p>
+        </header>
+
+        {{ form_start(form, {
+            attr: {
+                'data-action': 'submit->routine--edit#submitForm',
+            }
+        }) }}
+
+        {# Zone 1 — Nom + description (full-width) — partial partagé avec create #}
+        {% include 'routine/create/_form_info.html.twig' with {
+            form: form,
+            controllerName: 'routine--edit',
+        } only %}
+
+        {# Zone 2 — Deux colonnes 50/50 #}
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+
+            {# Colonne gauche — Sélecteur d'exercices — partial partagé avec create #}
+            <div class="min-w-0">
+                {% include 'routine/create/_exercise_selector.html.twig' with {
+                    controllerName: 'routine--edit',
+                    muscleGroups: muscleGroups,
+                    exercises: exercises,
+                } only %}
+            </div>
+
+            {# Colonne droite — Exercices sélectionnés + actions #}
+            <div class="min-w-0">
+                {% include 'routine/edit/_selected_exercises.html.twig' with {
+                    form: form,
+                    controllerName: 'routine--edit',
+                    cancelUrl: cancelUrl,
+                    routine: routine,
+                } only %}
+            </div>
+
+        </div>
+
+        {{ form_row(form._token) }}
+        {{ form_end(form, {render_rest: false}) }}
+
+    </div>
+{% endblock %}

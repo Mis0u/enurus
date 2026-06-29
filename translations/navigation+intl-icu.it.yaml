@@ -95,12 +95,18 @@ routine:
         submit: Crea la routine
         subtitle: Configura il tuo allenamento tipo
         title: Crea una routine
+    edit:
+        breadcrumb: Modifica
+        submit: Salva le modifiche
+        title: Modifica la routine
     error:
         forbidden_exercise: Non hai accesso a uno o più esercizi selezionati.
+        name_exists: Hai già una routine con questo nome.
         name_required: Il nome della routine è obbligatorio.
         no_exercise: Devi selezionare almeno un esercizio.
     flash:
         created: La routine "{name}" è stata creata con successo.
+        updated: La routine "{name}" è stata modificata con successo.
     form:
         description_label: Aggiungi una descrizione
         description_placeholder: Descrivi l'obiettivo di questa routine, i tempi di recupero, l'intensità target…

@@ -95,12 +95,18 @@ routine:
         submit: Routine aanmaken
         subtitle: Stel je standaard training in
         title: Routine aanmaken
+    edit:
+        breadcrumb: Bewerken
+        submit: Wijzigingen opslaan
+        title: Routine bewerken
     error:
         forbidden_exercise: Je hebt geen toegang tot een of meer geselecteerde oefeningen.
+        name_exists: Je hebt al een routine met deze naam.
         name_required: De naam van de routine is verplicht.
         no_exercise: Je moet minstens één oefening selecteren.
     flash:
         created: De routine "{name}" is succesvol aangemaakt.
+        updated: De routine "{name}" is succesvol gewijzigd.
     form:
         description_label: Beschrijving toevoegen
         description_placeholder: Beschrijf het doel van deze routine, rusttijden, doelintensiteit…
