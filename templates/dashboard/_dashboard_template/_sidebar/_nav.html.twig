@@ -20,7 +20,12 @@
         menu="{{ 'dashboard.library'|trans({}, 'navigation') }}"
         icon="library"
     />
-    <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.my_routines'|trans({}, 'navigation') }}" icon="repeat"/>
+    <twig:Navigation:Sidebar:NavigationItem
+        link="{{ path('app_routine_list') }}"
+        route="app_routine_list"
+        menu="{{ 'dashboard.my_routines'|trans({}, 'navigation') }}"
+        icon="repeat"
+    />
 
     <div class="h-px bg-white/[0.07] my-2 mx-1"></div>
 
