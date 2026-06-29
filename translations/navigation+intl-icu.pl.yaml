@@ -124,6 +124,33 @@ routine:
         search_placeholder: Wyszukaj ćwiczenie…
         your_routine: Twoja rutyna
     list:
+        count: >-
+            {count, plural,
+                =0    {Brak rutyn}
+                one   {# rutyna}
+                few   {# rutyny}
+                many  {# rutyn}
+                other {# rutyn}
+            }
+        created_at: Utworzona {date}
+        create_btn: Nowa rutyna
+        empty_cta: Utwórz moją pierwszą rutynę
+        empty_subtitle: Utwórz swoją pierwszą rutynę, aby wstępnie skonfigurować treningi i zaoszczędzić czas.
+        empty_title: Brak rutyn na razie
+        exercise_count: >-
+            {count, plural,
+                one   {# ćwiczenie}
+                few   {# ćwiczenia}
+                many  {# ćwiczeń}
+                other {# ćwiczeń}
+            }
+        more_exercises: >-
+            {count, plural,
+                one   {i # inne ćwiczenie…}
+                few   {i # inne ćwiczenia…}
+                many  {i # innych ćwiczeń…}
+                other {i # innych ćwiczeń…}
+            }
         title: Moje programy
 
 workout:

@@ -6,6 +6,8 @@ field:
     form:
         button:
             cancel: Cancel
+            delete: Delete
+            edit: Edit
             validate: Submit
     gender:
         female: Female

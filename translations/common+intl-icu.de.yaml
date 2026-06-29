@@ -6,6 +6,8 @@ field:
     form:
         button:
             cancel: Abbrechen
+            delete: Löschen
+            edit: Bearbeiten
             validate: Bestätigen
     gender:
         female: Frau

@@ -120,6 +120,27 @@ routine:
         search_placeholder: Übung suchen…
         your_routine: Deine Routine
     list:
+        count: >-
+            {count, plural,
+                =0    {Keine Routinen}
+                one   {# Routine}
+                other {# Routinen}
+            }
+        created_at: Erstellt am {date}
+        create_btn: Neue Routine
+        empty_cta: Meine erste Routine erstellen
+        empty_subtitle: Erstelle deine erste Routine, um deine Trainings vorzukonfigurieren und Zeit zu sparen.
+        empty_title: Noch keine Routinen
+        exercise_count: >-
+            {count, plural,
+                one   {# Übung}
+                other {# Übungen}
+            }
+        more_exercises: >-
+            {count, plural,
+                one   {und # weitere Übung…}
+                other {und # weitere Übungen…}
+            }
         title: Meine Routinen
 
 workout:

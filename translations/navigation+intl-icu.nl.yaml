@@ -120,6 +120,27 @@ routine:
         search_placeholder: Zoek een oefening…
         your_routine: Jouw routine
     list:
+        count: >-
+            {count, plural,
+                =0    {Geen routines}
+                one   {# routine}
+                other {# routines}
+            }
+        created_at: Aangemaakt op {date}
+        create_btn: Nieuwe routine
+        empty_cta: Mijn eerste routine aanmaken
+        empty_subtitle: Maak je eerste routine om je trainingen voor te configureren en tijd te besparen.
+        empty_title: Nog geen routines
+        exercise_count: >-
+            {count, plural,
+                one   {# oefening}
+                other {# oefeningen}
+            }
+        more_exercises: >-
+            {count, plural,
+                one   {en # andere oefening…}
+                other {en # andere oefeningen…}
+            }
         title: Mijn routines
 
 workout:
