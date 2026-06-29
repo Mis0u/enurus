@@ -231,6 +231,19 @@ function tailwindBuild(): void
     );
 }
 
+// IMPORTMAP
+
+#[AsTask(description: 'Compile importmap')]
+function assetMapCompile(): void
+{
+    execute(
+        'COMPILE ASSET MAP',
+        '⚙️ Compile...',
+        'php bin/console asset-map:compile',
+        'Asset map has been compiled'
+    );
+}
+
 #[AsTask(description: 'Start the project')]
 function start(): void
 {
