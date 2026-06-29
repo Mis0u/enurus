@@ -41,4 +41,20 @@ final class RoutineRepository extends ServiceEntityRepository
 
         return null !== $qb->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @return list<Routine>
+     */
+    public function findByOwnerOrderedByDate(User $user): array
+    {
+        /** @var list<Routine> $result */
+        $result = $this->createQueryBuilder('r')
+            ->where('r.owner = :user')
+            ->setParameter('user', $user)
+            ->orderBy('r.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return $result;
+    }
 }

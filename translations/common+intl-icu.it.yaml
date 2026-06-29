@@ -6,6 +6,8 @@ field:
     form:
         button:
             cancel: Annulla
+            delete: Elimina
+            edit: Modifica
             validate: Conferma
     gender:
         female: Donna

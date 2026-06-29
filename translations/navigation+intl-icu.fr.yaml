@@ -119,6 +119,27 @@ routine:
         search_placeholder: Rechercher un exercice…
         your_routine: Ta routine
     list:
+        count: >-
+            {count, plural,
+                =0    {Aucune routine}
+                one   {# routine}
+                other {# routines}
+            }
+        created_at: Créée le {date}
+        create_btn: Nouvelle routine
+        empty_cta: Créer ma première routine
+        empty_subtitle: Crée ta première routine pour pré-configurer tes séances et gagner du temps.
+        empty_title: Aucune routine pour l'instant
+        exercise_count: >-
+            {count, plural,
+                one   {# exercice}
+                other {# exercices}
+            }
+        more_exercises: >-
+            {count, plural,
+                one   {et # autre exercice…}
+                other {et # autres exercices…}
+            }
         title: Mes routines
 workout:
     add:
@@ -239,4 +260,4 @@ workout:
     weight: Poids
 
 footer:
-    copyright: "© {year} {brand}. Tous droits réservés."
+    copyright: © {year} {brand}. Tous droits réservés.
