@@ -1,0 +1,238 @@
+/* assets/styles/routine-list.css
+ * Styles spécifiques à la page Mes Routines (routine/history/index.html.twig)
+ * Les variables CSS sont définies dans le layout global.
+ * ============================================================ */
+
+/* ------------------------------------------------------------------
+   GRILLE
+------------------------------------------------------------------ */
+.routines-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 1024px) {
+    .routines-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .routines-grid { grid-template-columns: 1fr; }
+}
+
+/* ------------------------------------------------------------------
+   ROUTINE CARD
+------------------------------------------------------------------ */
+.routine-card {
+    background: #0f1928;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s cubic-bezier(0.4,0,0.2,1),
+                background   0.25s cubic-bezier(0.4,0,0.2,1),
+                transform    0.25s cubic-bezier(0.4,0,0.2,1),
+                box-shadow   0.25s cubic-bezier(0.4,0,0.2,1);
+    animation: routineCardFadeUp 0.3s ease both;
+}
+
+.routine-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top left, rgba(244,63,94,0.03), transparent 60%);
+    pointer-events: none;
+}
+
+.routine-card:hover {
+    border-color: rgba(244,63,94,0.25);
+    background: #151f30;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+}
+
+.routine-card:nth-child(1) { animation-delay: 0.04s; }
+.routine-card:nth-child(2) { animation-delay: 0.08s; }
+.routine-card:nth-child(3) { animation-delay: 0.12s; }
+.routine-card:nth-child(4) { animation-delay: 0.16s; }
+.routine-card:nth-child(5) { animation-delay: 0.20s; }
+.routine-card:nth-child(6) { animation-delay: 0.24s; }
+
+/* ------------------------------------------------------------------
+   CARD HEADER
+------------------------------------------------------------------ */
+.routine-card__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.routine-card__meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.routine-card__name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: #f0f4ff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 6px;
+}
+
+.routine-card__count {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #8b9bb4;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
+    padding: 3px 8px;
+}
+
+.routine-card__count svg { width: 12px; height: 12px; }
+
+/* ------------------------------------------------------------------
+   CARD ACTIONS
+------------------------------------------------------------------ */
+.routine-card__actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.routine-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #8b9bb4;
+    transition: background 0.25s cubic-bezier(0.4,0,0.2,1),
+                border-color 0.25s cubic-bezier(0.4,0,0.2,1),
+                color 0.25s cubic-bezier(0.4,0,0.2,1),
+                transform 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+
+.routine-action-btn:hover { transform: scale(1.06); }
+
+.routine-action-btn.edit:hover {
+    background: rgba(6,182,212,0.15);
+    border-color: rgba(6,182,212,0.4);
+    color: #06b6d4;
+}
+
+.routine-action-btn.delete:hover {
+    background: rgba(244,63,94,0.15);
+    border-color: rgba(244,63,94,0.4);
+    color: #f43f5e;
+}
+
+.routine-action-btn svg { width: 15px; height: 15px; }
+
+/* ------------------------------------------------------------------
+   CARD EXERCICES
+------------------------------------------------------------------ */
+.routine-card__exercises {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.routine-card__exercises li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #8b9bb4;
+}
+
+.routine-card__exercises li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    min-width: 6px;
+    border-radius: 50%;
+    background: rgba(244,63,94,0.6);
+    flex-shrink: 0;
+}
+
+.routine-card__more {
+    font-size: 12px;
+    color: #4a5568;
+    font-style: italic;
+    margin-bottom: 12px;
+}
+
+/* ------------------------------------------------------------------
+   CARD FOOTER
+------------------------------------------------------------------ */
+.routine-card__divider {
+    height: 1px;
+    background: rgba(255,255,255,0.05);
+    margin-bottom: 12px;
+}
+
+.routine-card__date {
+    font-size: 11.5px;
+    color: #4a5568;
+}
+
+/* ------------------------------------------------------------------
+   ÉTAT VIDE
+------------------------------------------------------------------ */
+.routine-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    gap: 20px;
+    padding: 24px;
+}
+
+.routine-empty-state__icon {
+    color: #4a5568;
+    width: 80px;
+    height: 80px;
+}
+
+.routine-empty-state__title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #f0f4ff;
+    margin-bottom: 6px;
+}
+
+.routine-empty-state__subtitle {
+    font-size: 14px;
+    color: #8b9bb4;
+    max-width: 360px;
+    line-height: 1.6;
+}
+
+/* ------------------------------------------------------------------
+   ANIMATIONS
+------------------------------------------------------------------ */
+@keyframes routineCardFadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
