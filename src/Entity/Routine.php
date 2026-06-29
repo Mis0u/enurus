@@ -11,10 +11,16 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RoutineRepository::class)]
+#[UniqueEntity(
+    fields: ['name', 'owner'],
+    message: 'routine.name_exists',
+    errorPath: 'name',
+)]
 class Routine
 {
     use TimestampTrait;
