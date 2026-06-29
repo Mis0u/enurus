@@ -1,4 +1,4 @@
-// assets/controllers/routine/create_controller.js
+// assets/controllers/routine/edit_controller.js
 
 import { Controller } from '@hotwired/stimulus';
 import Sortable from 'sortablejs';
@@ -25,6 +25,7 @@ export default class extends Controller {
         errorExercise:   String,
         errorNameExists: String,
         checkNameUrl:    String,
+        excludeId:       String,
         labelSingular:   String,
         labelPlural:     String,
     };
@@ -37,6 +38,7 @@ export default class extends Controller {
 
     connect() {
         this.#buildExerciseDataMap();
+        this.#initFromExistingData();
         this.#initSortable();
         this.#updateUI();
         initNameChecker(this);
@@ -74,6 +76,24 @@ export default class extends Controller {
     #readMuscleTags(item, type) {
         return Array.from(item.querySelectorAll(`[data-muscle-type="${type}"]`))
             .map(s => s.textContent.trim());
+    }
+
+    #initFromExistingData() {
+        const items = this.selectedListTarget.querySelectorAll(':scope > [data-exercise-id]');
+
+        items.forEach(item => {
+            const id = item.dataset.exerciseId;
+            this.#selectedIds.push(id);
+
+            const leftItem = this.exerciseItemTargets.find(el => el.dataset.exerciseId === id);
+            const btn      = leftItem?.querySelector('[data-action*="toggleExercise"]');
+
+            if (leftItem && btn) {
+                this.#setItemAdded(leftItem, btn);
+            }
+        });
+
+        this.#syncHiddenInput();
     }
 
     #initSortable() {
@@ -255,7 +275,7 @@ export default class extends Controller {
     }
 
     // -------------------------------------------------------------------------
-    // Injection item colonne droite
+    // Injection item colonne droite (nouveaux exercices ajoutés)
     // -------------------------------------------------------------------------
 
     #appendToSelectedList(id) {
@@ -263,7 +283,7 @@ export default class extends Controller {
         const position = this.#selectedIds.length;
 
         this.selectedListTarget.appendChild(
-            buildSelectedItem(id, data, position, 'routine--create', str => this.#escape(str))
+            buildSelectedItem(id, data, position, 'routine--edit', str => this.#escape(str))
         );
     }
 
@@ -273,7 +293,7 @@ export default class extends Controller {
 
     #renumberPositions() {
         this.selectedListTarget
-            .querySelectorAll('[data-routine--create-target="itemPosition"]')
+            .querySelectorAll('[data-routine--edit-target="itemPosition"]')
             .forEach((el, i) => { el.textContent = `#${i + 1}`; });
     }
 
