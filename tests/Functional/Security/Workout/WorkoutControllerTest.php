@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security\Workout;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\Exercise;
 use App\Entity\ExerciseSet;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
 use App\Repository\ExerciseRepository;
+use App\Repository\RoutineRepository;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
@@ -26,6 +28,10 @@ class WorkoutControllerTest extends WebTestCase
     private const string USER = 'user-fixture-0@test.com';
 
     private const string USER_LBS = 'user-fixture-51-workout@test.com';
+
+    private const string ROUTINE_OWNER = UserFixtures::USER_ROUTINE_OWNER;
+
+    private const string ROUTINE_OTHER = UserFixtures::USER_ROUTINE_OTHER;
 
     public function testIsAccessibleWhenLogged(): void
     {
@@ -678,6 +684,220 @@ class WorkoutControllerTest extends WebTestCase
 
         // 200 lbs / 2.20462 = ~90.72 kg
         $this->assertEqualsWithDelta(90.72, $firstSet->weight, 0.1, 'Le poids doit être converti en kg en base');
+    }
+
+    public function testRoutineSelectOnlyContainsOwnerRoutines(): void
+    {
+        $client = $this->login(self::ROUTINE_OWNER);
+        $crawler = $client->request(Request::METHOD_GET, '/fr/enregistre-seance');
+
+        $this->assertResponseIsSuccessful();
+
+        $options = $crawler->filter('select#workout_routine option')->each(
+            fn ($node) => trim($node->text())
+        );
+
+        $this->assertContains('Push Day', $options);
+    }
+
+    public function testRoutineSelectDoesNotContainOtherUserRoutines(): void
+    {
+        $client = $this->login(self::ROUTINE_OWNER);
+        $crawler = $client->request(Request::METHOD_GET, '/fr/enregistre-seance');
+
+        $this->assertResponseIsSuccessful();
+
+        $options = $crawler->filter('select#workout_routine option')->each(
+            fn ($node) => trim($node->text())
+        );
+
+        $this->assertNotContains('Other User Routine', $options);
+    }
+
+    public function testRoutineSelectIsEmptyWhenUserHasNoRoutine(): void
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, '/fr/enregistre-seance');
+
+        $this->assertResponseIsSuccessful();
+
+        $options = $crawler->filter('select#workout_routine option');
+
+        // Seul le placeholder ("Choisissez votre routine") doit être présent
+        $this->assertCount(1, $options);
+    }
+
+    // -------------------------------------------------------------------------
+    // RoutineExercisesBlockController
+    // -------------------------------------------------------------------------
+
+    public function testRoutineExercisesBlockRedirectsToLoginWhenNotLogged(): void
+    {
+        $client = static::createClient();
+
+        $client->request(
+            Request::METHOD_GET,
+            '/fr/workout/routine-exercises-block',
+            [
+                'routineId' => '019f0000-0000-7000-8000-000000000000',
+            ]
+        );
+
+        $this->assertResponseRedirects('/fr/');
+    }
+
+    public function testRoutineExercisesBlockReturns400WhenRoutineIdMissing(): void
+    {
+        $client = $this->login(self::ROUTINE_OWNER);
+
+        $client->request(Request::METHOD_GET, '/fr/workout/routine-exercises-block');
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+    }
+
+    public function testRoutineExercisesBlockReturns404WhenRoutineNotFound(): void
+    {
+        $client = $this->login(self::ROUTINE_OWNER);
+
+        $client->request(
+            Request::METHOD_GET,
+            '/fr/workout/routine-exercises-block',
+            [
+                'routineId' => '019f0000-0000-7000-8000-000000000000',
+            ]
+        );
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+    }
+
+    public function testRoutineExercisesBlockReturns403WhenRoutineBelongsToOtherUser(): void
+    {
+        $client = $this->login(self::ROUTINE_OWNER);
+        $routineId = $this->getOtherUserRoutineId();
+
+        $client->request(
+            Request::METHOD_GET,
+            '/fr/workout/routine-exercises-block',
+            [
+                'routineId' => $routineId,
+            ]
+        );
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
+
+    public function testRoutineExercisesBlockReturnsExercisesForOwnRoutine(): void
+    {
+        $client = $this->login(self::ROUTINE_OWNER);
+        $routineId = $this->getOwnerRoutineId($client);
+
+        $client->request(
+            Request::METHOD_GET,
+            '/fr/workout/routine-exercises-block',
+            [
+                'routineId' => $routineId,
+            ]
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $this->assertStringContainsString('data-exercise-index', $content);
+    }
+
+    public function testRoutineExercisesBlockUsesStartIndex(): void
+    {
+        $client = $this->login(self::ROUTINE_OWNER);
+        $routineId = $this->getOwnerRoutineId($client);
+
+        $client->request(
+            Request::METHOD_GET,
+            '/fr/workout/routine-exercises-block',
+            [
+                'routineId' => $routineId,
+                'startIndex' => 5,
+            ]
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $this->assertStringContainsString('workout[workoutExercises][5][exercise]', $content);
+    }
+
+    public function testRoutineExercisesBlockReturnsCorrectExerciseCount(): void
+    {
+        $client = $this->login(self::ROUTINE_OWNER);
+        $routineId = $this->getOwnerRoutineId($client);
+
+        $client->request(
+            Request::METHOD_GET,
+            '/fr/workout/routine-exercises-block',
+            [
+                'routineId' => $routineId,
+            ]
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        /** @var RoutineRepository $routineRepository */
+        $routineRepository = static::getContainer()->get(RoutineRepository::class);
+        $routine = $routineRepository->find($routineId);
+        $this->assertNotNull($routine);
+
+        $expectedCount = $routine->routineExercises->count();
+
+        $crawler = $client->getCrawler();
+        $blocks = $crawler->filter('[data-exercise-index]');
+
+        $this->assertCount($expectedCount, $blocks);
+    }
+
+    // -------------------------------------------------------------------------
+    // HELPERS PRIVÉS — à ajouter avec les autres helpers privés
+    // -------------------------------------------------------------------------
+
+    private function getOwnerRoutineId(KernelBrowser $client): string
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $owner = $userRepository->findOneBy([
+            'email' => self::ROUTINE_OWNER,
+        ]);
+        $this->assertNotNull($owner);
+
+        /** @var RoutineRepository $routineRepository */
+        $routineRepository = static::getContainer()->get(RoutineRepository::class);
+        $routine = $routineRepository->findOneBy([
+            'owner' => $owner,
+            'name' => 'Push Day',
+        ]);
+        $this->assertNotNull($routine);
+        $this->assertNotNull($routine->id);
+
+        return $routine->id->toRfc4122();
+    }
+
+    private function getOtherUserRoutineId(): string
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $otherUser = $userRepository->findOneBy([
+            'email' => self::ROUTINE_OTHER,
+        ]);
+        $this->assertNotNull($otherUser);
+
+        /** @var RoutineRepository $routineRepository */
+        $routineRepository = static::getContainer()->get(RoutineRepository::class);
+        $routine = $routineRepository->findOneBy([
+            'owner' => $otherUser,
+        ]);
+        $this->assertNotNull($routine);
+        $this->assertNotNull($routine->id);
+
+        return $routine->id->toRfc4122();
     }
 
     /**

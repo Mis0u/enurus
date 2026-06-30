@@ -236,6 +236,9 @@ workout:
     reps_abbreviate: Reps
     reps: Repetições
     routine:
+        change_confirm: Continuar
+        change_warning_text: Mudar de rotina apagará os exercícios já adicionados ao teu treino. Queres continuar?
+        change_warning_title: Mudar de rotina?
         select: Escolhe a tua rotina
         title: Rotina
     search_exercise:

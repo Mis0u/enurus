@@ -1,0 +1,20 @@
+/* assets/styles/routine-loader.css
+ * Spinner pour le chargement des exercices d'une routine
+ * dans la page "Enregistre ta séance".
+ * ============================================================ */
+
+.routine-loader-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+    vertical-align: middle;
+    border: 2px solid rgba(244, 63, 94, 0.2);
+    border-top-color: #f43f5e;
+    border-radius: 50%;
+    animation: routineLoaderSpin 0.7s linear infinite;
+}
+
+@keyframes routineLoaderSpin {
+    to { transform: rotate(360deg); }
+}

@@ -1,0 +1,17 @@
+{#
+    templates/workout/create/_routine_exercises_block.html.twig
+
+    Boucle sur les RoutineExercise d'une routine pour générer
+    autant de blocs _exercise_card.html.twig qu'il y a d'exercices,
+    avec un index continu qui démarre à startIndex.
+
+    Paramètres :
+      - routineExercises : Collection<int, RoutineExercise>
+      - startIndex       : int
+#}
+{% for routine_exercise in routineExercises %}
+    {% include 'workout/create/_exercise_card.html.twig' with {
+        exercise: routine_exercise.exercise,
+        index: startIndex + loop.index0,
+    } only %}
+{% endfor %}

@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\Routine;
+use App\Entity\User;
 use App\Entity\Workout;
 use App\EventListener\Form\WorkoutFormListener;
+use App\Repository\RoutineRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -38,6 +42,7 @@ class WorkoutType extends AbstractType
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly Security $security,
     ) {
     }
 
@@ -146,10 +151,24 @@ class WorkoutType extends AbstractType
             'choice_label' => 'name',
             'required' => false,
             'placeholder' => $this->translator->trans('workout.routine.select', [], 'navigation'),
+            'query_builder' => fn (RoutineRepository $repository): QueryBuilder => $this->routinesForCurrentUserQueryBuilder($repository),
             'attr' => [
                 'id' => 'workout-routine',
+                'data-action' => 'change->workout--routine-loader#onChange',
+                'data-workout--routine-loader-target' => 'select',
             ],
         ];
+    }
+
+    private function routinesForCurrentUserQueryBuilder(RoutineRepository $repository): QueryBuilder
+    {
+        /** @var User $user */
+        $user = $this->security->getUser();
+
+        return $repository->createQueryBuilder('r')
+            ->where('r.owner = :user')
+            ->setParameter('user', $user)
+            ->orderBy('r.name', 'ASC');
     }
 
     /**

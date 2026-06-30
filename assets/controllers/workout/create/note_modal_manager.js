@@ -52,13 +52,18 @@ export class NoteModalManager {
     async #handleSubmit() {
         this.#injectNote();
 
+        const form = document.querySelector('form');
+
+        if (!form.reportValidity()) {
+            this.#closeModal();
+            return;
+        }
+
         const { workoutId, redirectUrl } = await this.#submitForm();
         if (!workoutId || !redirectUrl) {
             return;
         }
-
         await this.#uploadPhotoIfSelected(workoutId);
-
         window.location.href = redirectUrl;
     }
 

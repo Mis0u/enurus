@@ -236,6 +236,9 @@ workout:
     reps_abbreviate: Reps
     reps: Reps
     routine:
+        change_confirm: Continue
+        change_warning_text: Changing the routine will remove the exercises already added to your workout. Do you want to continue?
+        change_warning_title: Change routine?
         select: Choose your routine
         title: Routine
     search_exercise:

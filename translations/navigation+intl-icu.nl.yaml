@@ -236,6 +236,9 @@ workout:
     reps_abbreviate: Reps
     reps: Herhalingen
     routine:
+        change_confirm: Doorgaan
+        change_warning_text: Het wijzigen van de routine verwijdert de oefeningen die al aan je training zijn toegevoegd. Wil je doorgaan?
+        change_warning_title: Routine wijzigen?
         select: Kies je routine
         title: Routine
     search_exercise:
