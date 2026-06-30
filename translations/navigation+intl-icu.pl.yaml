@@ -250,6 +250,9 @@ workout:
     reps_abbreviate: Powt
     reps: Powtórzenia
     routine:
+        change_confirm: Kontynuuj
+        change_warning_text: Zmiana rutyny usunie ćwiczenia już dodane do Twojego treningu. Chcesz kontynuować?
+        change_warning_title: Zmienić rutynę?
         select: Wybierz swoją rutynę
         title: Rutyna
     search_exercise:

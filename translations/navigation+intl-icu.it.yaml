@@ -236,6 +236,9 @@ workout:
     reps_abbreviate: Rip
     reps: Ripetizioni
     routine:
+        change_confirm: Continua
+        change_warning_text: Cambiare routine cancellerà gli esercizi già aggiunti al tuo allenamento. Vuoi continuare?
+        change_warning_title: Cambiare routine?
         select: Scegli la tua routine
         title: Routine
     search_exercise:

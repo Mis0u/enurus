@@ -236,6 +236,9 @@ workout:
     reps_abbreviate: Wdh
     reps: Wiederholungen
     routine:
+        change_confirm: Weiter
+        change_warning_text: Ein Routinenwechsel löscht die bereits zu deinem Training hinzugefügten Übungen. Möchtest du fortfahren?
+        change_warning_title: Routine wechseln?
         select: Wähle deine Routine
         title: Routine
     search_exercise:
