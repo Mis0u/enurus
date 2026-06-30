@@ -11,6 +11,12 @@
     <div
         id="routine-selector"
         class="flex flex-col gap-1.5 flex-1 max-md:w-full {{ workout.routine is not defined or workout.routine is null ? 'hidden' : '' }}"
+        data-controller="workout--routine-loader"
+        data-workout--routine-loader-block-url-value="{{ path('workout_routine_exercises_block') }}"
+        data-workout--routine-loader-warning-title-value="{{ 'workout.routine.change_warning_title'|trans({}, 'navigation') }}"
+        data-workout--routine-loader-warning-text-value="{{ 'workout.routine.change_warning_text'|trans({}, 'navigation') }}"
+        data-workout--routine-loader-confirm-button-value="{{ 'workout.routine.change_confirm'|trans({}, 'navigation') }}"
+        data-workout--routine-loader-cancel-button-value="{{ 'common.cancel'|trans({}, 'navigation') }}"
     >
         {{ form_row(form.routine) }}
     </div>
