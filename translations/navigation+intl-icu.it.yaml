@@ -95,6 +95,12 @@ routine:
         submit: Crea la routine
         subtitle: Configura il tuo allenamento tipo
         title: Crea una routine
+    delete:
+        cancel_button: Annulla
+        confirm_button: Elimina
+        confirm_text: Sei sicuro di voler eliminare {name}? Questa azione è irreversibile.
+        confirm_title: Elimina la routine
+        error_text: Si è verificato un errore durante l'eliminazione.
     edit:
         breadcrumb: Modifica
         submit: Salva le modifiche

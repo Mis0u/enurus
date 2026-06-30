@@ -99,6 +99,12 @@ routine:
         submit: Utwórz rutynę
         subtitle: Skonfiguruj swój typowy trening
         title: Utwórz rutynę
+    delete:
+        cancel_button: Anuluj
+        confirm_button: Usuń
+        confirm_text: Czy na pewno chcesz usunąć {name}? Tej akcji nie można cofnąć.
+        confirm_title: Usuń rutynę
+        error_text: Wystąpił błąd podczas usuwania.
     edit:
         breadcrumb: Edytuj
         submit: Zapisz zmiany
