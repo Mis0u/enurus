@@ -35,6 +35,8 @@ exercise:
         title: Biblioteca
     flash:
         created: Ejercicio creado con éxito.
+        deleted: Ejercicio eliminado con éxito.
+        updated: EEjercicio modificado con éxito.
     form:
         description_placeholder: Describe los puntos técnicos, la postura, los errores a evitar…
         description_toggle: Añadir una descripción
@@ -112,6 +114,7 @@ routine:
         no_exercise: Debes seleccionar al menos un ejercicio.
     flash:
         created: La rutina "{name}" ha sido creada con éxito.
+        deleted: La rutina "{name}" ha sido eliminada con éxito.
         updated: La rutina "{name}" ha sido modificada con éxito.
     form:
         description_label: Añadir una descripción
@@ -186,6 +189,10 @@ workout:
         required_weight: El peso es obligatorio
         required_reps: Las repeticiones son obligatorias
         validation: Se produjo un error al enviar tus datos
+    flash:
+        created: Tu entrenamiento ha sido registrado
+        deleted: Tu entrenamiento ha sido eliminado
+        updated: Tu entrenamiento ha sido modificado
     history:
         delete:
             cancel: Cancelar

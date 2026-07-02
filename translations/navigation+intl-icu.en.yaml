@@ -35,6 +35,8 @@ exercise:
         title: Library
     flash:
         created: Exercise created successfully.
+        deleted: Exercise deleted successfully.
+        updated: Exercise updated successfully.
     form:
         description_placeholder: Describe the key points, posture, mistakes to avoid…
         description_toggle: Add a description
@@ -111,6 +113,7 @@ routine:
         name_required: The routine name is required.
         no_exercise: You must select at least one exercise.
     flash:
+        deleted: The routine "{name}" has been deleted successfully.
         created: The routine "{name}" has been created successfully.
         updated: The routine "{name}" has been updated successfully.
     form:
@@ -186,6 +189,10 @@ workout:
         required_weight: Weight is required
         required_reps: Reps are required
         validation: An error occurred while submitting your data
+    flash:
+        created: Your workout has been saved
+        deleted: Your workout has been deleted
+        updated: Your workout has been updated
     history:
         delete:
             cancel: Cancel

@@ -35,6 +35,8 @@ exercise:
         title: Biblioteka
     flash:
         created: Ćwiczenie utworzone pomyślnie.
+        deleted: Ćwiczenie usunięte pomyślnie.
+        updated: Ćwiczenie zmienione pomyślnie.
     form:
         description_placeholder: Opisz kluczowe punkty, postawę, błędy do unikania…
         description_toggle: Dodaj opis
@@ -116,6 +118,7 @@ routine:
         no_exercise: Musisz wybrać przynajmniej jedno ćwiczenie.
     flash:
         created: Rutyna "{name}" została utworzona pomyślnie.
+        deleted: Rutyna "{name}" została usunięta pomyślnie.
         updated: Rutyna "{name}" została zmieniona pomyślnie.
     form:
         description_label: Dodaj opis
@@ -198,6 +201,10 @@ workout:
         required_weight: Waga jest wymagana
         required_reps: Powtórzenia są wymagane
         validation: Wystąpił błąd podczas przesyłania danych
+    flash:
+        created: Twój trening został zapisany
+        deleted: Twój trening został usunięty
+        updated: Twój trening został zmieniony
     history:
         delete:
             cancel: Anuluj

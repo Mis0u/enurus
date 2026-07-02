@@ -35,6 +35,8 @@ exercise:
         title: Bibliothek
     flash:
         created: Übung erfolgreich erstellt.
+        deleted: Übung erfolgreich gelöscht.
+        updated: Übung erfolgreich geändert.
     form:
         description_placeholder: Beschreibe die technischen Punkte, Haltung, zu vermeidende Fehler…
         description_toggle: Beschreibung hinzufügen
@@ -112,6 +114,7 @@ routine:
         no_exercise: Du musst mindestens eine Übung auswählen.
     flash:
         created: Die Routine "{name}" wurde erfolgreich erstellt.
+        deleted: Die Routine "{name}" wurde erfolgreich gelöscht.
         updated: Die Routine "{name}" wurde erfolgreich geändert.
     form:
         description_label: Beschreibung hinzufügen
@@ -186,6 +189,10 @@ workout:
         required_weight: Das Gewicht ist erforderlich
         required_reps: Die Wiederholungen sind erforderlich
         validation: Beim Absenden deiner Daten ist ein Fehler aufgetreten
+    flash:
+        created: Dein Training wurde gespeichert
+        deleted: Dein Training wurde gelöscht
+        updated: Dein Training wurde geändert
     history:
         delete:
             cancel: Abbrechen
