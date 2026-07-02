@@ -42,7 +42,7 @@ class ExerciseCreateControllerTest extends WebTestCase
         $client = $this->login(self::USER);
         $this->submitExercise($client);
 
-        $this->assertResponseRedirects(self::URL);
+        $this->assertResponseRedirects('/fr/bibliotheque');
 
         $exercise = $this->findExercise(self::USER, 'Test Exercise');
 
