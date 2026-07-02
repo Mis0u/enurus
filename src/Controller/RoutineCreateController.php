@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Exercise;
 use App\Entity\Routine;
 use App\Entity\RoutineExercise;
 use App\Entity\User;
