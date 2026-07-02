@@ -7,6 +7,7 @@ namespace App\Twig\Components\LiveComponent;
 use App\Entity\Exercise;
 use App\Entity\User;
 use App\Repository\ExerciseRepository;
+use App\Service\Entity\ExerciseSorterService;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -35,6 +36,7 @@ class ExerciseSelectorComponent
         private readonly ExerciseRepository $exerciseRepository,
         private readonly Security $security,
         private readonly TranslatorInterface $translator,
+        private readonly ExerciseSorterService $exerciseSorter,
     ) {
     }
 
@@ -81,12 +83,12 @@ class ExerciseSelectorComponent
         }
 
         $exercises = $this->exerciseRepository->findAvailableForUser($this->getUser());
+        $sorted = $this->exerciseSorter->sortByName($exercises, $this->getUser()->locale);
 
         if ('' === $this->search) {
-            return $exercises;
+            return $sorted;
         }
-
-        return $this->filterByTranslatedName($exercises);
+        return $this->filterByTranslatedName($sorted);
     }
 
     private function getUser(): User

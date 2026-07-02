@@ -11,10 +11,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * Responsabilité unique : trier une liste d'exercices alphabétiquement
  * selon la locale courante, en tenant compte des exercices traduits (publics).
  */
-final class ExerciseSorterService
+final readonly class ExerciseSorterService
 {
     public function __construct(
-        private readonly TranslatorInterface $translator,
+        private TranslatorInterface $translator,
     ) {
     }
 
