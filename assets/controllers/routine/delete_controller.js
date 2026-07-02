@@ -40,7 +40,6 @@ export default class extends Controller {
 
     async #sendDeleteRequest() {
         let response;
-
         try {
             response = await fetch(this.urlValue, {
                 method:  'DELETE',
@@ -53,19 +52,32 @@ export default class extends Controller {
             this.#showError();
             return;
         }
-
         if (!response.ok) {
             this.#showError();
             return;
         }
-
         const data = await response.json();
-
         if (data.success) {
+            this.#showSuccessToast(data.message);
             this.#removeCard();
         } else {
             this.#showError();
         }
+    }
+
+    #showSuccessToast(message) {
+        Swal.fire({
+            toast:              true,
+            position:            'top-end',
+            icon:                'success',
+            title:               message,
+            showConfirmButton:   false,
+            timer:               3000,
+            timerProgressBar:    true,
+            background:          '#0f1928',
+            color:               '#f0f4ff',
+            iconColor:           '#22c55e',
+        });
     }
 
     /**
@@ -76,16 +88,12 @@ export default class extends Controller {
     #removeCard() {
         const grid = document.querySelector('.routines-grid');
         const card = this.element.closest('.routine-card');
-
         card?.remove();
-
         const remainingCards = grid?.querySelectorAll('.routine-card').length ?? 0;
-
         if (remainingCards === 0) {
-            window.location.reload();
+            setTimeout(() => window.location.reload(), 1200);
             return;
         }
-
         this.#decrementCounter();
     }
 

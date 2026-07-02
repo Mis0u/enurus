@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: [
     'fr' => '/bibliotheque/exercice/{id}/modifier',
@@ -32,6 +33,7 @@ final class ExerciseEditController extends AbstractController
     public function __construct(
         private readonly ExerciseEditService $exerciseEditService,
         private readonly MuscleGroupRepository $muscleGroupRepository,
+        private readonly TranslatorInterface $translator
     ) {
     }
 
@@ -67,7 +69,7 @@ final class ExerciseEditController extends AbstractController
 
         $this->exerciseEditService->edit($exercise, $muscles);
 
-        $this->addFlash('success', 'exercise.edit.success');
+        $this->addFlash('success', $this->translator->trans('exercise.flash.updated', [], 'navigation'));
 
         return $this->redirectToRoute('app_exercise_history');
     }

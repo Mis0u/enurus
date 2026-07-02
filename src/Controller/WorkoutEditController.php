@@ -59,7 +59,7 @@ class WorkoutEditController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', $translator->trans('workout.created', [], 'navigation'));
+            $this->addFlash('success', $translator->trans('workout.flash.updated', [], 'navigation'));
             $weightConverter->convertWorkoutSetsToKg($workout, $user->unitOfMeasure);
             $em->flush();
 
