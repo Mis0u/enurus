@@ -1,6 +1,18 @@
 exercise:
     muscle_primary_required: Se requiere al menos un músculo primario.
     name_not_blank: Se debe indicar un nombre
+
+routine:
+    name_exists: Ya tienes una rutina con este nombre.
+    name_not_blank: El nombre de la rutina es obligatorio.
+    name_too_long: El nombre no puede superar {{ limit }} caracteres.
+    no_exercise: Debes seleccionar al menos un ejercicio.
+
+settings:
+    avatar:
+        invalid_type: El archivo debe estar en formato JPEG, PNG o WebP
+        too_large: El archivo supera el tamaño máximo permitido de {{ limit }} MB
+
 user:
     nickname:
         length:

@@ -152,6 +152,36 @@ routine:
             }
         title: Meine Routinen
 
+settings:
+    avatar:
+        change: Foto ändern
+        hint: JPEG, PNG oder WebP · max. 5 MB
+    danger_zone:
+        coming_soon: Demnächst verfügbar
+        title: Gefahrenzone
+    email:
+        label: E-Mail
+        not_editable: Nicht änderbar
+    feedback:
+        success: Änderung gespeichert
+    gender:
+        female: Frau
+        label: Geschlecht
+        male: Mann
+    language:
+        label: Sprache
+    nickname:
+        label: Alias
+    password:
+        coming_soon: Demnächst verfügbar
+        title: Passwort
+    profile:
+        subtitle: Deine persönlichen Informationen
+        title: Profil
+    title: Einstellungen
+    weight_unit:
+        label: Gewichtseinheit
+
 workout:
     add:
         exercice: Übung hinzufügen
