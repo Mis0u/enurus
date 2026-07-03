@@ -35,6 +35,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampTrait;
 
+    public const int NICKNAME_MIN_LENGTH = 3;
+
+    public const int NICKNAME_MAX_LENGTH = 20;
+
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
@@ -138,7 +142,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::STRING, length: 25, nullable: false)]
     #[NotBlank]
-    #[Length(min: 3, max: 20, minMessage: 'user.nickname.length.min', maxMessage: 'user.nickname.length.max')]
+    #[Length(
+        min: self::NICKNAME_MIN_LENGTH,
+        max: self::NICKNAME_MAX_LENGTH,
+        minMessage: 'user.nickname.length.min',
+        maxMessage: 'user.nickname.length.max',
+    )]
     public string $nickname {
         get {
             return $this->nickname;
