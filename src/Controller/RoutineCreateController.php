@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Exercise;
 use App\Entity\Routine;
 use App\Entity\RoutineExercise;
 use App\Entity\User;
@@ -13,6 +12,7 @@ use App\Repository\ExerciseRepository;
 use App\Repository\MuscleGroupRepository;
 use App\Repository\RoutineRepository;
 use App\Security\Voter\RoutineVoter;
+use App\Service\Entity\ExerciseSorterService;
 use App\Service\Entity\RoutineCreateService;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,6 +43,7 @@ final class RoutineCreateController extends AbstractController
         private readonly ExerciseRepository $exerciseRepository,
         private readonly TranslatorInterface $translator,
         private readonly RoutineRepository $routineRepository,
+        private readonly ExerciseSorterService $exerciseSorter,
     ) {
     }
 
@@ -129,19 +130,12 @@ final class RoutineCreateController extends AbstractController
         $user = $this->getUser();
         $exercises = $this->exerciseRepository->findAvailableForUser($user);
 
-        $collator = \Collator::create($locale);
-
-        usort($exercises, function (Exercise $a, Exercise $b) use ($collator): int {
-            $nameA = $a->isPublic ? $this->translator->trans($a->name, [], 'exercise') : $a->name;
-            $nameB = $b->isPublic ? $this->translator->trans($b->name, [], 'exercise') : $b->name;
-
-            return (int) $collator->compare($nameA, $nameB);
-        });
+        $sortedExercises = $this->exerciseSorter->sortByName($exercises, $locale);
 
         return $this->render('routine/create/index.html.twig', [
             'form' => $form,
             'muscleGroups' => $this->muscleGroupRepository->findAllOrderedByPosition(),
-            'exercises' => $exercises,
+            'exercises' => $sortedExercises,
             'cancelUrl' => $this->generateUrl('app_routine_list'),
         ]);
     }

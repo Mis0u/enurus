@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[IsGranted('ROLE_USER')]
 final class WorkoutDeleteController extends AbstractController
@@ -22,6 +23,7 @@ final class WorkoutDeleteController extends AbstractController
     public function __construct(
         private readonly WorkoutPhotoService $workoutPhotoService,
         private readonly EntityManagerInterface $em,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -57,6 +59,7 @@ final class WorkoutDeleteController extends AbstractController
 
         return $this->json([
             'success' => true,
+            'message' => $this->translator->trans('workout.flash.deleted', [], 'navigation'),
         ], Response::HTTP_OK);
     }
 }

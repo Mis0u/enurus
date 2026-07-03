@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[IsGranted('ROLE_USER')]
 #[Route(path: [
@@ -36,6 +37,7 @@ final class ExerciseCreateController extends AbstractController
     public function __construct(
         private readonly ExerciseCreateService $exerciseCreateService,
         private readonly MuscleGroupRepository $muscleGroupRepository,
+        private readonly TranslatorInterface $translator
     ) {
     }
 
@@ -68,9 +70,9 @@ final class ExerciseCreateController extends AbstractController
 
         $this->exerciseCreateService->create($exercise, $user, $muscles);
 
-        $this->addFlash('success', 'exercise.flash.created');
+        $this->addFlash('success', $this->translator->trans('exercise.flash.created', [], 'navigation'));
 
-        return $this->redirectToRoute('app_exercise_create');
+        return $this->redirectToRoute('app_exercise_history');
     }
 
     /**

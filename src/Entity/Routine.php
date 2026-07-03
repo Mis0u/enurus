@@ -47,8 +47,8 @@ class Routine
     }
 
     #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: 'routine.error.name_required')]
-    #[Assert\Length(max: 100, maxMessage: 'routine.error.name_too_long')]
+    #[Assert\NotBlank(message: 'routine.name_not_blank')]
+    #[Assert\Length(max: 100, maxMessage: 'routine.name_too_long')]
     public string $name {
         get {
             return $this->name;

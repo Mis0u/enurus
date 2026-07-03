@@ -35,7 +35,22 @@ export default class extends Controller {
             })
                 .then((response) => {
                     if (!response.ok) throw new Error('Erreur lors de la suppression');
-                    window.location.reload();
+                    return response.json();
+                })
+                .then((data) => {
+                    Swal.fire({
+                        toast:             true,
+                        position:           'top-end',
+                        icon:               'success',
+                        title:              data.message,
+                        showConfirmButton:  false,
+                        timer:              1200,
+                        timerProgressBar:   true,
+                        background:         '#0f1928',
+                        color:              '#f0f4ff',
+                        iconColor:          '#22c55e',
+                    });
+                    setTimeout(() => window.location.reload(), 1200);
                 })
                 .catch(() => {
                     Swal.fire({

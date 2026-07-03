@@ -73,11 +73,11 @@ final class WorkoutController extends AbstractController
         $this->em->persist($workout);
         $this->em->flush();
 
+        $this->addFlash('success', $this->translator->trans('workout.flash.created', [], 'navigation'));
+
         if ($request->isXmlHttpRequest()) {
             return $this->jsonSuccessResponse($workout, $request);
         }
-
-        $this->addFlash('success', $this->translator->trans('workout.created', [], 'navigation'));
 
         return $this->redirectToRoute('app_dashboard');
     }

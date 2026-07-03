@@ -81,15 +81,13 @@ export default class extends Controller {
                     'X-CSRF-Token':     this.csrfTokenValue,
                 },
             });
-
             if (!response.ok) {
                 this.#showError();
                 return;
             }
-
             const data = await response.json();
-
             if (data.success) {
+                this.#showSuccessToast(data.message);
                 this.#removeCard();
             } else {
                 this.#showError();
@@ -97,6 +95,24 @@ export default class extends Controller {
         } catch {
             this.#showError();
         }
+    }
+
+    #showSuccessToast(message) {
+        if (typeof Swal === 'undefined') {
+            return;
+        }
+        Swal.fire({
+            toast:             true,
+            position:           'top-end',
+            icon:               'success',
+            title:              message,
+            showConfirmButton:  false,
+            timer:              3000,
+            timerProgressBar:   true,
+            background:         '#111827',
+            color:              '#f1f5f9',
+            iconColor:          '#22c55e',
+        });
     }
 
     #removeCard() {

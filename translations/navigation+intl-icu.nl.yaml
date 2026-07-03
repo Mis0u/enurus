@@ -35,6 +35,8 @@ exercise:
         title: Bibliotheek
     flash:
         created: Oefening succesvol aangemaakt.
+        deleted: Oefening succesvol verwijderd.
+        updated: Oefening succesvol gewijzigd.
     form:
         description_placeholder: Beschrijf de technische punten, houding, fouten om te vermijden…
         description_toggle: Beschrijving toevoegen
@@ -112,6 +114,7 @@ routine:
         no_exercise: Je moet minstens één oefening selecteren.
     flash:
         created: De routine "{name}" is succesvol aangemaakt.
+        deleted: De routine "{name}" is succesvol verwijderd.
         updated: De routine "{name}" is succesvol gewijzigd.
     form:
         description_label: Beschrijving toevoegen
@@ -186,6 +189,10 @@ workout:
         required_weight: Het gewicht is verplicht
         required_reps: De herhalingen zijn verplicht
         validation: Er is een fout opgetreden bij het verzenden van je gegevens
+    flash:
+        created: Je training is opgeslagen
+        deleted: Je training is verwijderd
+        updated: Je training is gewijzigd
     history:
         delete:
             cancel: Annuleren

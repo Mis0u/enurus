@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[IsGranted('ROLE_USER')]
 #[Route(path: [
@@ -29,6 +30,7 @@ final class ExerciseDeleteController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -47,6 +49,7 @@ final class ExerciseDeleteController extends AbstractController
 
         return $this->json([
             'success' => true,
+            'message' => $this->translator->trans('exercise.flash.deleted', [], 'navigation'),
         ]);
     }
 }

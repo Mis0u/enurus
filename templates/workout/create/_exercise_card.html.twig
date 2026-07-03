@@ -4,7 +4,9 @@
     <input type="hidden" name="workout[workoutExercises][{{ index }}][position]" value="{{ index }}" class="js-position-input">
     {% include 'workout/create/_card.html.twig' with {'controllerName': controllerName|default('exercise')} %}
     {% if exercise.exerciseMuscles is not empty %}
-        {% include 'workout/create/_muscle_target.html.twig' %}
+        <div class="flex flex-wrap gap-1.5 mb-4">
+            {{ component('MuscleTags', {exercise: exercise}) }}
+        </div>
     {% endif %}
     {% include 'workout/create/_table.html.twig' with {
         'controllerName': controllerName|default('exercise'),

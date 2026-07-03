@@ -1,5 +1,4 @@
 {% set results = this.filteredExercises %}
-
 {% if results is not empty %}
     {% for exercise in results %}
         <div
@@ -12,17 +11,7 @@
                 {{ exercise.isPublic ? exercise.name|trans({}, 'exercise') : exercise.name }}
             </div>
             <div class="flex items-center gap-1.5 flex-wrap">
-                {% for exercise_muscle in exercise.exerciseMuscles %}
-                    {% if exercise_muscle.type.value == enum('App\\Enum\\Entity\\ExerciceMuscle\\MuscleTypeEnum').PRIMARY.value %}
-                        <span class="px-2.5 py-0.75 bg-[rgba(244,63,94,0.15)] border border-[rgba(244,63,94,0.3)] rounded-md text-[11px] font-medium text-[#f43f5e]">
-                            {{ exercise_muscle.muscleGroup.name|trans({}, 'muscle') }}
-                        </span>
-                    {% else %}
-                        <span class="px-2.5 py-0.75 bg-[rgba(249,115,22,0.15)] border border-[rgba(249,115,22,0.3)] rounded-md text-[11px] font-medium text-[#f97316]">
-                            {{ exercise_muscle.muscleGroup.name|trans({}, 'muscle') }}
-                        </span>
-                    {% endif %}
-                {% endfor %}
+                {{ component('MuscleTags', {exercise: exercise}) }}
             </div>
         </div>
     {% endfor %}
