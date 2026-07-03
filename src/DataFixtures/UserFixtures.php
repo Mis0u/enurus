@@ -85,7 +85,7 @@ class UserFixtures extends Fixture
             $user->createdBy = $user;
             $user->locale = $key;
             $user->lastLogin = $lastLogin;
-            $user->gender = GenderEnum::MALE->value;
+            $user->gender = GenderEnum::MALE;
             $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
 
             $manager->persist($user);
@@ -102,7 +102,7 @@ class UserFixtures extends Fixture
             $user->createdBy = $user;
             $user->locale = LocaleAllowedEnum::FR->value;
             $user->lastLogin = $lastLogin;
-            $user->gender = 0 === $i % 5 ? GenderEnum::FEMALE->value : GenderEnum::MALE->value;
+            $user->gender = 0 === $i % 5 ? GenderEnum::FEMALE : GenderEnum::MALE;
             $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
 
             $manager->persist($user);
@@ -118,8 +118,8 @@ class UserFixtures extends Fixture
             $user->createdBy = $user;
             $user->locale = LocaleAllowedEnum::FR->value;
             $user->gender = 'user-fixture-26-workout@test.com' === $userData['email']
-                ? GenderEnum::FEMALE->value
-                : GenderEnum::MALE->value;
+                ? GenderEnum::FEMALE
+                : GenderEnum::MALE;
             $user->lastLogin = new \DateTimeImmutable();
             $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
 
@@ -144,7 +144,7 @@ class UserFixtures extends Fixture
             $user->nickname = $userData['nickname'];
             $user->createdBy = $user;
             $user->locale = LocaleAllowedEnum::FR->value;
-            $user->gender = GenderEnum::MALE->value;
+            $user->gender = GenderEnum::MALE;
             $user->lastLogin = new \DateTimeImmutable();
             $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
 
@@ -165,7 +165,7 @@ class UserFixtures extends Fixture
             $user->nickname = $userData['nickname'];
             $user->createdBy = $user;
             $user->locale = LocaleAllowedEnum::FR->value;
-            $user->gender = GenderEnum::MALE->value;
+            $user->gender = GenderEnum::MALE;
             $user->lastLogin = new \DateTimeImmutable();
             $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
 

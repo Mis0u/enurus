@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Security;
 
 use App\Entity\User;
+use App\Enum\Entity\User\GenderEnum;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -61,7 +62,7 @@ class RegistrationControllerTest extends WebTestCase
         $this->assertNotNull($user);
         $this->assertInstanceOf(\DateTimeImmutable::class, $user->lastLogin);
         $this->assertSame($user->lastLogin->format('Y-m-d'), now()->format('Y-m-d'));
-        $this->assertSame($user->gender, $gender);
+        $this->assertSame(GenderEnum::from($gender), $user->gender);
         $this->assertSame('fr', $user->locale);
     }
 

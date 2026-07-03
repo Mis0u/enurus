@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Entity\Trait\TimestampTrait;
+use App\Enum\Entity\User\GenderEnum;
 use App\Enum\Entity\User\UnitOfMeasureEnum;
 use App\Enum\Translations\LocaleAllowedEnum;
 use App\Repository\UserRepository;
@@ -86,14 +87,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
     }
 
-    #[ORM\Column(length: 10, nullable: false)]
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: false, enumType: GenderEnum::class)]
     #[NotBlank]
-    public string $gender {
+    public GenderEnum $gender = GenderEnum::MALE {
         get {
             return $this->gender;
         }
-        set(string $gender) {
+        set(GenderEnum $gender) {
             $this->gender = $gender;
+        }
+    }
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    public ?string $avatarPath = null {
+        get {
+            return $this->avatarPath;
+        }
+        set(?string $avatarPath) {
+            $this->avatarPath = $avatarPath;
         }
     }
 

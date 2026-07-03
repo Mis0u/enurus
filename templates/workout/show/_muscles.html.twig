@@ -12,10 +12,10 @@
          data-workout--show--muscles-primary-value='{{ allPrimarySvgIds|json_encode }}'
          data-workout--show--muscles-secondary-value='{{ allSecondarySvgIds|json_encode }}'>
         <div class="w-[160px] max-md:w-[130px] [&_svg]:!h-auto [&_svg]:max-h-[300px]">
-            {% include 'SVG_BODY/' ~ user.gender ~ '/front.html.twig' %}
+            {% include 'SVG_BODY/' ~ user.gender.value ~ '/front.html.twig' %}
         </div>
         <div class="w-[160px] max-md:w-[130px] [&_svg]:!h-auto [&_svg]:max-h-[300px]">
-            {% include 'SVG_BODY/' ~ user.gender ~ '/back.html.twig' %}
+            {% include 'SVG_BODY/' ~ user.gender.value ~ '/back.html.twig' %}
         </div>
     </div>
 
