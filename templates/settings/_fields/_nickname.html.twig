@@ -1,0 +1,20 @@
+<div class="mb-4.5"
+     data-controller="settings--nickname"
+     data-settings--nickname-url-value="{{ path('app_settings_nickname_update') }}"
+     data-settings--nickname-csrf-token-value="{{ csrf_token('settings_nickname') }}"
+     data-settings--nickname-min-length-value="{{ nicknameMinLength }}"
+     data-settings--nickname-max-length-value="{{ nicknameMaxLength }}"
+     data-settings--nickname-min-error-value="{{ 'user.nickname.length.min'|trans({'{{ limit }}': nicknameMinLength}, 'validators') }}"
+     data-settings--nickname-max-error-value="{{ 'user.nickname.length.max'|trans({'{{ limit }}': nicknameMaxLength}, 'validators') }}"
+     data-settings--nickname-success-message-value="{{ 'settings.feedback.success'|trans({}, 'navigation') }}">
+    <label for="fieldNickname" class="block font-['Rajdhani'] text-xs font-semibold uppercase tracking-wide text-[#4a5568] mb-2">
+        {{ 'settings.nickname.label'|trans({}, 'navigation') }}
+    </label>
+    <input type="text"
+           id="fieldNickname"
+           value="{{ user.nickname }}"
+           data-settings--nickname-target="input"
+           data-action="blur->settings--nickname#save"
+           class="w-full min-h-11 px-3.5 py-3 rounded-lg bg-[#080e1a] border border-white/[0.07] text-[#f0f4ff] text-sm outline-none focus:border-[rgba(244,63,94,0.5)] focus:ring-4 focus:ring-[rgba(244,63,94,0.08)] transition-colors">
+    <p data-settings--nickname-target="error" class="hidden mt-1.5 text-xs text-[#f43f5e]"></p>
+</div>
