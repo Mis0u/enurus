@@ -22,7 +22,7 @@
             } only %}
 
             <div class="space-y-6">
-                {% include 'settings/_password_card.html.twig' only %}
+                {% include 'settings/_password_card.html.twig' with {passwordForm: passwordForm} only %}
                 {% include 'settings/_danger_zone_card.html.twig' only %}
             </div>
 
