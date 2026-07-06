@@ -16,13 +16,21 @@
                        transition-all duration-200 whitespace-nowrap"
             >
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
                 </svg>
                 {{ action.label }}
             </a>
         {% endif %}
-        <div class="hidden md:flex w-9 h-9 rounded-full bg-gradient-to-br from-rose-ft to-cyan-ft items-center justify-center font-rajdhani font-bold text-[15px] border-2 border-[rgba(244,63,94,0.4)]">
-            {{ subtitle }}
+        <div class="hidden md:flex w-9 h-9 rounded-full bg-gradient-to-br from-rose-ft to-cyan-ft items-center justify-center font-rajdhani font-bold text-[15px] border-2 border-[rgba(244,63,94,0.4)] overflow-hidden"
+             data-controller="dashboard--topbar--avatar">
+            <span data-dashboard--topbar--avatar-target="initials"
+                  class="{% if app.user.avatarPath %}hidden{% endif %}">
+                {{ subtitle }}
+            </span>
+            <img data-dashboard--topbar--avatar-target="image"
+                 src="{% if app.user.avatarPath %}/uploads/{{ app.user.avatarPath }}{% endif %}"
+                 alt=""
+                 class="w-full h-full object-cover {% if not app.user.avatarPath %}hidden{% endif %}">
         </div>
     </div>
 </div>

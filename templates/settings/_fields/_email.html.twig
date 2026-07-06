@@ -1,0 +1,12 @@
+<div class="mb-4.5">
+    <div class="flex items-center justify-between mb-2">
+        <label class="block font-['Rajdhani'] text-xs font-semibold uppercase tracking-wide text-[#4a5568]">
+            {{ 'settings.email.label'|trans({}, 'navigation') }}
+        </label>
+        <span class="text-[11px] italic text-[#4a5568]">{{ 'settings.email.not_editable'|trans({}, 'navigation') }}</span>
+    </div>
+    <input type="email"
+           value="{{ user.email }}"
+           disabled
+           class="w-full min-h-11 px-3.5 py-3 rounded-lg bg-white/[0.02] border border-white/[0.07] text-[#4a5568] text-sm cursor-not-allowed">
+</div>

@@ -162,6 +162,39 @@ routine:
             }
         title: Moje programy
 
+settings:
+    avatar:
+        change: Zmień zdjęcie
+        hint: JPEG, PNG lub WebP · maks. 5 MB
+    danger_zone:
+        coming_soon: Wkrótce dostępne
+        title: Strefa zagrożenia
+    email:
+        label: E-mail
+        not_editable: Nie można edytować
+    feedback:
+        success: Zmiana zapisana
+    gender:
+        female: Kobieta
+        label: Płeć
+        male: Mężczyzna
+    language:
+        label: Język
+    nickname:
+        label: Alias
+    password:
+        coming_soon: Wkrótce dostępne
+        current_password: Aktualne hasło
+        current_password_invalid: Aktualne hasło jest nieprawidłowe
+        edit_password: Zmień hasło
+        title: Hasło
+    profile:
+        subtitle: Twoje dane osobowe
+        title: Profil
+    title: Ustawienia
+    weight_unit:
+        label: Jednostka wagi
+
 workout:
     add:
         exercice: Dodaj ćwiczenie

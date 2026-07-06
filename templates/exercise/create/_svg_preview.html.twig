@@ -6,10 +6,10 @@
 
     <div class="svg-body-container flex items-center justify-center gap-10 mb-4 max-md:gap-5">
         <div class="w-[160px] max-md:w-[120px] [&_svg]:!h-auto [&_svg]:max-h-[300px]">
-            {% include 'SVG_BODY/' ~ gender ~ '/front.html.twig' %}
+            {% include 'SVG_BODY/' ~ gender.value ~ '/front.html.twig' %}
         </div>
         <div class="w-[160px] max-md:w-[120px] [&_svg]:!h-auto [&_svg]:max-h-[300px]">
-            {% include 'SVG_BODY/' ~ gender ~ '/back.html.twig' %}
+            {% include 'SVG_BODY/' ~ gender.value ~ '/back.html.twig' %}
         </div>
     </div>
 

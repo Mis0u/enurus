@@ -1,10 +1,23 @@
 exercise:
     muscle_primary_required: È richiesto almeno un muscolo primario.
     name_not_blank: È necessario inserire un nome
+
+routine:
+    name_exists: Hai già una routine con questo nome.
+    name_not_blank: Il nome della routine è obbligatorio.
+    name_too_long: Il nome non può superare {{ limit }} caratteri.
+    no_exercise: Devi selezionare almeno un esercizio.
+
+settings:
+    avatar:
+        invalid_type: Il file deve essere in formato JPEG, PNG o WebP
+        too_large: Il file supera la dimensione massima consentita di {{ limit }} MB
+
 user:
     nickname:
         length:
-            max: 'Il tuo alias è troppo lungo. Deve avere al massimo {{ limit }} caratteri'
+            max: Il tuo alias è troppo lungo. Deve avere al massimo {{ limit }} caratteri
+
 workout:
     performed_at:
         today: La data non può essere nel futuro

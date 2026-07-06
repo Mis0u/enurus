@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Constraint\ImageConstraints;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Security\Voter\WorkoutVoter;
@@ -40,8 +41,8 @@ final class WorkoutUploadPhotoController extends AbstractController
         #[MapUploadedFile(
             constraints: [
                 new File(
-                    maxSize: '5M',
-                    mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+                    maxSize: ImageConstraints::MAX_SIZE_WEIGHT,
+                    mimeTypes: ImageConstraints::ALLOWED_MIME_TYPES,
                     maxSizeMessage: 'workout.photo.too_large',
                     mimeTypesMessage: 'workout.photo.invalid_type',
                 ),

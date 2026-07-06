@@ -24,5 +24,6 @@ abstract class AbstractFormSecurityType extends AbstractType
         'data-password-validator-target' => 'inputPassword',
         'data-action' => 'input->password-validator#validate',
         'data-min-length' => PasswordRuleEnum::MIN_LENGTH->value,
+        'data-special-chars' => PasswordRuleEnum::SPECIAL_CHARS->value,
     ];
 }

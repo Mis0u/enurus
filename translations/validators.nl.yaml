@@ -1,10 +1,23 @@
 exercise:
     muscle_primary_required: Minstens één primaire spier is vereist.
     name_not_blank: Er moet een naam worden opgegeven
+
+routine:
+    name_exists: Je hebt al een routine met deze naam.
+    name_not_blank: De naam van de routine is verplicht.
+    name_too_long: De naam mag niet meer dan {{ limit }} tekens bevatten.
+    no_exercise: Je moet minstens één oefening selecteren.
+
+
+settings:
+    avatar:
+        invalid_type: Het bestand moet in JPEG-, PNG- of WebP-formaat zijn
+        too_large: Het bestand overschrijdt de maximaal toegestane grootte van {{ limit }} MB
+
 user:
     nickname:
         length:
-            max: 'Je alias is te lang. Het mag maximaal {{ limit }} tekens bevatten'
+            max: Je alias is te lang. Het mag maximaal {{ limit }} tekens bevatten
 workout:
     performed_at:
         today: De datum mag niet in de toekomst liggen

@@ -150,6 +150,38 @@ routine:
                 other {et # autres exercices…}
             }
         title: Mes routines
+settings:
+    avatar:
+        change: Changer la photo
+        hint: JPEG, PNG ou WebP · 5 Mo max
+    danger_zone:
+        coming_soon: Bientôt disponible
+        title: Zone de danger
+    email:
+        label: Email
+        not_editable: Non modifiable
+    feedback:
+        success: Changement effectué
+    gender:
+        female: Femme
+        label: Genre
+        male: Homme
+    language:
+        label: Langue
+    nickname:
+        label: Alias
+    password:
+        coming_soon: Bientôt disponible
+        current_password: Mot de passe actuel
+        current_password_invalid: Le mot de passe actuel n'est pas correct
+        edit_password: Modifier le mot de passe
+        title: Mot de passe
+    profile:
+        subtitle: Tes informations personnelles
+        title: Profil
+    title: Réglages
+    weight_unit:
+        label: Unité de poids
 workout:
     add:
         exercice: Ajouter un exercice

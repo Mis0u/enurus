@@ -152,6 +152,39 @@ routine:
             }
         title: Mijn routines
 
+settings:
+    avatar:
+        change: Foto wijzigen
+        hint: JPEG, PNG of WebP · max. 5 MB
+    danger_zone:
+        coming_soon: Binnenkort beschikbaar
+        title: Gevarenzone
+    email:
+        label: E-mail
+        not_editable: Niet bewerkbaar
+    feedback:
+        success: Wijziging opgeslagen
+    gender:
+        female: Vrouw
+        label: Geslacht
+        male: Man
+    language:
+        label: Taal
+    nickname:
+        label: Alias
+    password:
+        coming_soon: Binnenkort beschikbaar
+        current_password: Huidig wachtwoord
+        current_password_invalid: Het huidige wachtwoord is niet correct
+        edit_password: Wachtwoord wijzigen
+        title: Wachtwoord
+    profile:
+        subtitle: Je persoonlijke informatie
+        title: Profiel
+    title: Instellingen
+    weight_unit:
+        label: Gewichtseenheid
+
 workout:
     add:
         exercice: Oefening toevoegen

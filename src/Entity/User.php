@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Entity\Trait\TimestampTrait;
+use App\Enum\Entity\User\GenderEnum;
 use App\Enum\Entity\User\UnitOfMeasureEnum;
 use App\Enum\Translations\LocaleAllowedEnum;
 use App\Repository\UserRepository;
@@ -33,6 +34,10 @@ use Symfony\Component\Validator\Constraints\NotNull;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampTrait;
+
+    public const int NICKNAME_MIN_LENGTH = 3;
+
+    public const int NICKNAME_MAX_LENGTH = 20;
 
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true)]
@@ -86,14 +91,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
     }
 
-    #[ORM\Column(length: 10, nullable: false)]
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: false, enumType: GenderEnum::class)]
     #[NotBlank]
-    public string $gender {
+    public GenderEnum $gender = GenderEnum::MALE {
         get {
             return $this->gender;
         }
-        set(string $gender) {
+        set(GenderEnum $gender) {
             $this->gender = $gender;
+        }
+    }
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    public ?string $avatarPath = null {
+        get {
+            return $this->avatarPath;
+        }
+        set(?string $avatarPath) {
+            $this->avatarPath = $avatarPath;
         }
     }
 
@@ -127,7 +142,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::STRING, length: 25, nullable: false)]
     #[NotBlank]
-    #[Length(min: 3, max: 20, minMessage: 'user.nickname.length.min', maxMessage: 'user.nickname.length.max')]
+    #[Length(
+        min: self::NICKNAME_MIN_LENGTH,
+        max: self::NICKNAME_MAX_LENGTH,
+        minMessage: 'user.nickname.length.min',
+        maxMessage: 'user.nickname.length.max',
+    )]
     public string $nickname {
         get {
             return $this->nickname;

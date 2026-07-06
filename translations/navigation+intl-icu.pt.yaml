@@ -152,6 +152,39 @@ routine:
             }
         title: As minhas rotinas
 
+settings:
+    avatar:
+        change: Alterar foto
+        hint: JPEG, PNG ou WebP · 5 MB máx
+    danger_zone:
+        coming_soon: Brevemente disponível
+        title: Zona de perigo
+    email:
+        label: Email
+        not_editable: Não modificável
+    feedback:
+        success: Alteração efetuada
+    gender:
+        female: Mulher
+        label: Género
+        male: Homem
+    language:
+        label: Língua
+    nickname:
+        label: Alias
+    password:
+        coming_soon: Brevemente disponível
+        current_password: Palavra-passe atual
+        current_password_invalid: A palavra-passe atual não está correta
+        edit_password: Alterar palavra-passe
+        title: Palavra-passe
+    profile:
+        subtitle: As tuas informações pessoais
+        title: Perfil
+    title: Definições
+    weight_unit:
+        label: Unidade de peso
+
 workout:
     add:
         exercice: Adicionar um exercício

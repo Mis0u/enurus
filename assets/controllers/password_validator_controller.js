@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import { editClasses } from './passwordRule/_editClasses.js';
+
 export default class extends Controller {
-    /** @type {string[]} */
     static targets = [
         'inputPassword',
         'inputRepeatPassword',
@@ -14,48 +14,61 @@ export default class extends Controller {
     ];
 
     validate() {
-        /** @type {string} */
+        const rules = this.#evaluateRules();
+        this.#updateRuleIndicators(rules);
+        this.submitButtonTarget.disabled = !this.#isFormValid(rules);
+    }
+
+    #evaluateRules() {
         const password = this.inputPasswordTarget.value;
+        const minLength = parseInt(this.inputPasswordTarget.dataset.minLength, 10);
+        const specialChars = this.inputPasswordTarget.dataset.specialChars ?? '';
+        const specialCharPattern = new RegExp(`[${this.#escapeForCharClass(specialChars)}]`);
 
-        /** @type {number} */
-        const minLength = parseInt(this.inputPasswordTarget.dataset.minLength);
+        return {
+            isMinLengthValid: password.length >= minLength,
+            hasUpperAndLowerCase: /[A-Z]/.test(password) && /[a-z]/.test(password),
+            hasNumber: /[0-9]/.test(password),
+            hasSpecialChar: specialCharPattern.test(password),
+            isRepeatedPasswordIdentical: this.#isRepeatedPasswordIdentical(password),
+        };
+    }
 
-        /** @type {boolean} */
-        const isMinLengthValid = password.length >= minLength;
-
-        /** @type {boolean} */
-        const containsUpperCase = /[A-Z]/.test(password);
-
-        /** @type {boolean} */
-        const containsLowerCase = /[a-z]/.test(password);
-
-        /** @type {boolean} */
-        const containsNumber = /[0-9]/.test(password);
-
-        /** @type {boolean} */
-        const hasSpecialChar = /[!?%$*&]/.test(password);
-
-        /** @type {boolean} */
-        const containsUpperAndLowerCase = containsUpperCase && containsLowerCase;
-
-        editClasses(isMinLengthValid, this.minLengthRuleTarget);
-        editClasses(containsUpperAndLowerCase, this.upperLowerRuleTarget);
-        editClasses(containsNumber, this.numberRuleTarget);
-        editClasses(hasSpecialChar, this.specialCharRuleTarget);
-
-        let isPasswordValid;
-        if (this.hasInputRepeatPasswordTarget){
-            /** @type {string} */
-            const repeatedPassword = this.inputRepeatPasswordTarget.value;
-            /** @type {boolean} */
-            const isPasswordEqualRepeatedPassword = password === repeatedPassword && repeatedPassword.length > 0;
-            editClasses(isPasswordEqualRepeatedPassword, this.identicalPasswordRuleTarget);
-            isPasswordValid = isMinLengthValid && containsUpperAndLowerCase && containsNumber && hasSpecialChar && isPasswordEqualRepeatedPassword;
-        } else {
-            isPasswordValid = isMinLengthValid && containsUpperAndLowerCase && containsNumber && hasSpecialChar;
+    #isRepeatedPasswordIdentical(password) {
+        if (!this.hasInputRepeatPasswordTarget) {
+            return null;
         }
 
-        /** @type {boolean} */
-        this.submitButtonTarget.disabled = !isPasswordValid;
+        const repeatedPassword = this.inputRepeatPasswordTarget.value;
+
+        return password === repeatedPassword && repeatedPassword.length > 0;
+    }
+
+    #updateRuleIndicators(rules) {
+        editClasses(rules.isMinLengthValid, this.minLengthRuleTarget);
+        editClasses(rules.hasUpperAndLowerCase, this.upperLowerRuleTarget);
+        editClasses(rules.hasNumber, this.numberRuleTarget);
+        editClasses(rules.hasSpecialChar, this.specialCharRuleTarget);
+
+        if (this.hasInputRepeatPasswordTarget) {
+            editClasses(rules.isRepeatedPasswordIdentical, this.identicalPasswordRuleTarget);
+        }
+    }
+
+    #isFormValid(rules) {
+        const baseRulesValid = rules.isMinLengthValid
+            && rules.hasUpperAndLowerCase
+            && rules.hasNumber
+            && rules.hasSpecialChar;
+
+        if (this.hasInputRepeatPasswordTarget) {
+            return baseRulesValid && rules.isRepeatedPasswordIdentical;
+        }
+
+        return baseRulesValid;
+    }
+
+    #escapeForCharClass(chars) {
+        return chars.replace(/[\]\\^-]/g, '\\$&');
     }
 }

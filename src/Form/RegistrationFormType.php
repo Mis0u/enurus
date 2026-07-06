@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\User;
+use App\Enum\Entity\User\GenderEnum;
 use App\Enum\Password\PasswordRuleEnum;
 use App\Enum\tailwind_class\form\field\FieldClassEnum;
 use Symfony\Component\Clock\ClockInterface;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -39,11 +40,12 @@ class RegistrationFormType extends AbstractFormSecurityType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('gender', ChoiceType::class, [
-                'choices' => [
-                    $this->translator->trans('field.gender.male', [], 'common') => 'male',
-                    $this->translator->trans('field.gender.female', [], 'common') => 'female',
-                ],
+            ->add('gender', EnumType::class, [
+                'class' => GenderEnum::class,
+                'choice_label' => fn (GenderEnum $gender): string => match ($gender) {
+                    GenderEnum::MALE => $this->translator->trans('field.gender.male', [], 'common'),
+                    GenderEnum::FEMALE => $this->translator->trans('field.gender.female', [], 'common'),
+                },
                 'label' => $this->translator->trans('field.gender.title', [], 'common'),
                 'label_attr' => [
                     'class' => 'block text-sm font-semibold text-slate-200 mb-3',

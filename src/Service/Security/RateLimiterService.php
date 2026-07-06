@@ -13,9 +13,9 @@ readonly class RateLimiterService
     /**
      * @return array{accepted: bool, minutes: string}
      */
-    public function checkLimit(RateLimiterFactoryInterface $rateLimiterFactory, string $ipAddress): array
+    public function checkLimit(RateLimiterFactoryInterface $rateLimiterFactory, string $key): array
     {
-        $limiter = $rateLimiterFactory->create($ipAddress);
+        $limiter = $rateLimiterFactory->create($key);
         $limit = $limiter->consume();
 
         if ($limit->isAccepted()) {

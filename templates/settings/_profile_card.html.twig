@@ -1,0 +1,28 @@
+<section class="min-w-0 bg-[#0f1928] border border-white/[0.07] rounded-2xl p-6">
+    <div class="flex items-center gap-2.5 mb-6">
+        <div class="w-8.5 h-8.5 rounded-lg bg-[rgba(244,63,94,0.15)] border border-[rgba(244,63,94,0.3)] flex items-center justify-center shrink-0">
+            <svg class="w-4.5 h-4.5 text-[#f43f5e]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+        </div>
+        <div>
+            <h2 class="font-['Rajdhani'] text-lg font-bold text-[#f0f4ff]">{{ 'settings.profile.title'|trans({}, 'navigation') }}</h2>
+            <p class="text-xs text-[#4a5568]">{{ 'settings.profile.subtitle'|trans({}, 'navigation') }}</p>
+        </div>
+    </div>
+
+    {% include 'settings/_fields/_avatar.html.twig' with {
+        user: user,
+        avatarMaxSizeBytes: avatarMaxSizeBytes,
+        avatarAllowedMimeTypes: avatarAllowedMimeTypes,
+    } only %}
+    {% include 'settings/_fields/_email.html.twig' with {user: user} only %}
+    {% include 'settings/_fields/_nickname.html.twig' with {
+        user: user,
+        nicknameMinLength: nicknameMinLength,
+        nicknameMaxLength: nicknameMaxLength,
+    } only %}
+    {% include 'settings/_fields/_gender.html.twig' with {user: user} only %}
+    {% include 'settings/_fields/_language.html.twig' with {user: user} only %}
+    {% include 'settings/_fields/_weight_unit.html.twig' with {user: user} only %}
+</section>

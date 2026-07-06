@@ -1,0 +1,26 @@
+<div data-controller="settings--select-field"
+     data-settings--select-field-url-value="{{ path('app_settings_weight_unit_update') }}"
+     data-settings--select-field-csrf-token-value="{{ csrf_token('settings_weight_unit') }}"
+     data-settings--select-field-param-name-value="unit"
+     data-settings--select-field-success-message-value="{{ 'settings.feedback.success'|trans({}, 'navigation') }}">
+    <label class="block font-['Rajdhani'] text-xs font-semibold uppercase tracking-wide text-[#4a5568] mb-2">
+        {{ 'settings.weight_unit.label'|trans({}, 'navigation') }}
+    </label>
+    <div role="group" aria-label="{{ 'settings.weight_unit.label'|trans({}, 'navigation') }}"
+         class="inline-flex gap-0.5 bg-white/[0.04] rounded-lg p-1">
+        <button type="button"
+                data-settings--select-field-option
+                data-action="click->settings--select-field#choose"
+                data-settings--select-field-value-param="kg"
+                class="px-5 py-2 min-h-9.5 rounded-md text-sm font-semibold transition-colors {% if user.unitOfMeasure.value == 'kg' %}bg-[#f43f5e] text-white{% else %}text-[#4a5568]{% endif %}">
+            kg
+        </button>
+        <button type="button"
+                data-settings--select-field-option
+                data-action="click->settings--select-field#choose"
+                data-settings--select-field-value-param="lbs"
+                class="px-5 py-2 min-h-9.5 rounded-md text-sm font-semibold transition-colors {% if user.unitOfMeasure.value == 'lbs' %}bg-[#f43f5e] text-white{% else %}text-[#4a5568]{% endif %}">
+            lbs
+        </button>
+    </div>
+</div>
