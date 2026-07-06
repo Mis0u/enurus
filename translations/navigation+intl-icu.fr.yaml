@@ -172,6 +172,9 @@ settings:
         label: Alias
     password:
         coming_soon: Bientôt disponible
+        current_password: Mot de passe actuel
+        current_password_invalid: Le mot de passe actuel n'est pas correct
+        edit_password: Modifier le mot de passe
         title: Mot de passe
     profile:
         subtitle: Tes informations personnelles

@@ -184,6 +184,9 @@ settings:
         label: Alias
     password:
         coming_soon: Wkrótce dostępne
+        current_password: Aktualne hasło
+        current_password_invalid: Aktualne hasło jest nieprawidłowe
+        edit_password: Zmień hasło
         title: Hasło
     profile:
         subtitle: Twoje dane osobowe
