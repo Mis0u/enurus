@@ -37,4 +37,16 @@ readonly class UserService
     {
         $user->password = $this->passwordHasher->hashPassword($user, $plainPassword);
     }
+
+    public function changePassword(User $user, string $currentPassword, string $newPassword): bool
+    {
+        if (! $this->passwordHasher->isPasswordValid($user, $currentPassword)) {
+            return false;
+        }
+
+        $this->hashPassword($user, $newPassword);
+        $this->save($user);
+
+        return true;
+    }
 }
