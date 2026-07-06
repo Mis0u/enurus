@@ -10,41 +10,58 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @extends AbstractFormSecurityType<null>
  */
-class ChangePasswordFormType extends AbstractFormSecurityType
+final class ChangePasswordFormType extends AbstractFormSecurityType
 {
     private const array DATA_REPEAT_PASSWORD = [
         'data-password-validator-target' => 'inputRepeatPassword',
         'data-action' => 'input->password-validator#validate',
     ];
 
+    private const array LABEL_ATTR = [
+        'class' => FieldClassEnum::LABEL_ATTRIBUTE->value,
+    ];
+
     public function __construct(
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
+        private readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('currentPassword', PasswordType::class, [
+                'label' => $this->translator->trans('settings.password.current_password', [], 'navigation'),
+                'label_attr' => [
+                    'class' => self::LABEL_ATTR['class'],
+                ],
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'attr' => array_merge(self::ATTR_FIELD_CLASS, [
+                    'autocomplete' => 'current-password',
+                ]),
+                'mapped' => false,
+            ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
                     'label' => $this->translator->trans('field.new_password', [], 'common'),
                     'label_attr' => [
-                        'class' => FieldClassEnum::LABEL_ATTRIBUTE->value,
+                        'class' => self::LABEL_ATTR['class'],
                     ],
                     'constraints' => [
                         new NotBlank(),
                         new Length(min: (int) PasswordRuleEnum::MIN_LENGTH->value, max: 4096),
-                        new NotCompromisedPassword(),
                         new Regex(
                             pattern: PasswordRuleEnum::REGEX->value,
                             message: $this->translator->trans('sentence.password.security.regex', [], 'common')
@@ -55,7 +72,7 @@ class ChangePasswordFormType extends AbstractFormSecurityType
                 'second_options' => [
                     'label' => $this->translator->trans('field.confirm_new_password', [], 'common'),
                     'label_attr' => [
-                        'class' => FieldClassEnum::LABEL_ATTRIBUTE->value,
+                        'class' => self::LABEL_ATTR['class'],
                     ],
                     'attr' => array_merge(self::ATTR_FIELD_CLASS, self::DATA_REPEAT_PASSWORD),
                 ],
@@ -66,11 +83,18 @@ class ChangePasswordFormType extends AbstractFormSecurityType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        $updateUrl = $this->urlGenerator->generate('app_settings_password_update');
+
         $resolver->setDefaults([
             'attr' => [
                 'class' => 'space-y-6',
-                'data-controller' => 'password-validator',
+                'data-controller' => 'password-validator settings--password-submit',
+                'data-action' => 'submit->settings--password-submit#submit',
+                'data-settings--password-submit-url-value' => $updateUrl,
+                'data-settings--password-submit-success-message-value' => $this->translator->trans('settings.feedback.success', [], 'navigation'),
             ],
+            'csrf_token_id' => 'change_password',
+            'action' => $updateUrl,
         ]);
     }
 }

@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Settings;
 
 use App\Constraint\ImageConstraints;
 use App\Entity\User;
+use App\Form\ChangePasswordFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,6 +41,7 @@ final class SettingsIndexController extends AbstractController
             'nicknameMaxLength' => User::NICKNAME_MAX_LENGTH,
             'avatarMaxSizeBytes' => ImageConstraints::MAX_SIZE_BYTES,
             'avatarAllowedMimeTypes' => ImageConstraints::ALLOWED_MIME_TYPES,
+            'passwordForm' => $this->createForm(ChangePasswordFormType::class)->createView(),
         ]);
     }
 }
