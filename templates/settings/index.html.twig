@@ -11,20 +11,23 @@
 
 {% block state %}
     <div class="flex-1 overflow-y-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6 max-w-[1100px] mx-auto px-4 lg:px-8 py-6 items-start">
+        <div class="max-w-[1100px] mx-auto px-4 lg:px-8 py-6 space-y-6">
 
-            {% include 'settings/_profile_card.html.twig' with {
-                user: user,
-                nicknameMinLength: nicknameMinLength,
-                nicknameMaxLength: nicknameMaxLength,
-                avatarMaxSizeBytes: avatarMaxSizeBytes,
-                avatarAllowedMimeTypes: avatarAllowedMimeTypes,
-            } only %}
+            {# ============ LIGNE 1 — PROFIL + MOT DE PASSE ============ #}
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
+                {% include 'settings/_profile_card.html.twig' with {
+                    user: user,
+                    nicknameMinLength: nicknameMinLength,
+                    nicknameMaxLength: nicknameMaxLength,
+                    avatarMaxSizeBytes: avatarMaxSizeBytes,
+                    avatarAllowedMimeTypes: avatarAllowedMimeTypes,
+                } only %}
 
-            <div class="space-y-6">
                 {% include 'settings/_password_card.html.twig' with {passwordForm: passwordForm} only %}
-                {% include 'settings/_danger_zone_card.html.twig' only %}
             </div>
+
+            {# ============ LIGNE 2 — SUPPRESSION, PLEINE LARGEUR ============ #}
+            {% include 'settings/_danger_zone_card.html.twig' with {user: user} only %}
 
         </div>
     </div>

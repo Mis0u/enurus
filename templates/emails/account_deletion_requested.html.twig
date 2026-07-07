@@ -1,0 +1,23 @@
+{% extends 'emails/_base.html.twig' %}
+
+{% block title %}{{ 'settings.account_deletion.requested.subject'|trans({}, 'navigation', locale) }}{% endblock %}
+
+{% block content %}
+    <div style="text-align: center; margin-bottom: 24px;">
+        <span style="font-size: 64px;">⏳</span>
+    </div>
+
+    <h2 style="margin: 0 0 16px; font-size: 24px; font-weight: bold; color: #ffffff; text-align: center;">
+        {{ 'settings.account_deletion.requested.title'|trans({}, 'navigation', locale) }}
+    </h2>
+
+    <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #cbd5e1; text-align: center;">
+        {{ 'settings.account_deletion.requested.body'|trans({'nickname': user.nickname, 'deadline': deadline|format_datetime(pattern: 'd MMMM Y', locale: locale)}, 'navigation', locale) }}
+    </p>
+
+    <div style="background-color: rgba(245, 158, 11, 0.1); border-left: 4px solid #f59e0b; border-radius: 8px; padding: 20px; margin-bottom: 28px;">
+        <p style="margin: 0; font-size: 14px; color: #fbbf24; text-align: center;">
+            {{ 'settings.account_deletion.requested.cancel_hint'|trans({}, 'navigation', locale) }}
+        </p>
+    </div>
+{% endblock %}

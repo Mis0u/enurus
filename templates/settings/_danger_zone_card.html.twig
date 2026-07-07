@@ -1,5 +1,17 @@
-{# _danger_zone_card.html.twig #}
-<section class="bg-[#0f1928] border border-[rgba(244,63,94,0.2)] rounded-2xl p-6">
+<section id="suppression"
+         class="bg-[#0f1928] border border-[rgba(244,63,94,0.2)] rounded-2xl p-6"
+         data-controller="settings--account-deletion"
+         data-settings--account-deletion-url-value="{{ path('app_settings_account_deletion_request') }}"
+         data-settings--account-deletion-csrf-token-value="{{ csrf_token('account_deletion') }}"
+         data-settings--account-deletion-nickname-value="{{ user.nickname }}"
+         data-settings--account-deletion-title-value="{{ 'settings.danger_zone.modal.title'|trans({}, 'navigation') }}"
+         data-settings--account-deletion-body-value="{{ 'settings.danger_zone.modal.body'|trans({}, 'navigation') }}"
+         data-settings--account-deletion-placeholder-value="{{ 'settings.danger_zone.modal.placeholder'|trans({}, 'navigation') }}"
+         data-settings--account-deletion-mismatch-error-value="{{ 'settings.danger_zone.modal.mismatch'|trans({}, 'navigation') }}"
+         data-settings--account-deletion-confirm-label-value="{{ 'settings.danger_zone.modal.confirm'|trans({}, 'navigation') }}"
+         data-settings--account-deletion-cancel-label-value="{{ 'settings.danger_zone.modal.cancel'|trans({}, 'navigation') }}"
+         data-settings--account-deletion-request-error-value="{{ 'settings.danger_zone.request_error'|trans({}, 'navigation') }}">
+
     <div class="flex items-center gap-2.5 mb-2">
         <div class="w-8.5 h-8.5 rounded-lg bg-[rgba(244,63,94,0.15)] border border-[rgba(244,63,94,0.3)] flex items-center justify-center shrink-0">
             <svg class="w-4.5 h-4.5 text-[#f43f5e]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -8,5 +20,17 @@
         </div>
         <h2 class="font-['Rajdhani'] text-lg font-bold text-[#f0f4ff]">{{ 'settings.danger_zone.title'|trans({}, 'navigation') }}</h2>
     </div>
-    <p class="text-sm text-[#4a5568]">{{ 'settings.danger_zone.coming_soon'|trans({}, 'navigation') }}</p>
+
+    <p class="text-sm text-[#8b9bb4] mb-5 leading-relaxed">
+        {{ 'settings.danger_zone.explanation'|trans({}, 'navigation') }}
+    </p>
+
+    <button type="button"
+            data-action="click->settings--account-deletion#openModal"
+            class="cursor-pointer inline-flex items-center gap-1.5 px-4 py-2.5 min-h-11 rounded-lg border border-[rgba(244,63,94,0.3)] text-sm font-medium text-[#f43f5e] hover:bg-[rgba(244,63,94,0.15)] transition-colors">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+        </svg>
+        {{ 'settings.danger_zone.button'|trans({}, 'navigation') }}
+    </button>
 </section>
