@@ -163,12 +163,35 @@ routine:
         title: Moje programy
 
 settings:
+    account_deletion:
+        requested:
+            subject: Twoja prośba o usunięcie konta została zarejestrowana
+            title: Usuwanie konta w toku
+            body: Cześć {nickname}, Twoja prośba o usunięcie konta została zarejestrowana. Twoje konto zostanie trwale usunięte {deadline}, jeśli nie zalogujesz się ponownie przed tą datą.
+            cancel_hint: Aby anulować to usunięcie, po prostu zaloguj się ponownie przed tą datą — żadne inne działanie nie jest wymagane.
+        cancelled:
+            subject: Usunięcie Twojego konta zostało anulowane
+            title: Witaj z powrotem!
+            body: Cześć {nickname}, zalogowałeś się ponownie na swoje konto. Twoja prośba o usunięcie została automatycznie anulowana, a Twoje konto pozostaje aktywne.
+        deleted:
+            subject: Twoje konto zostało trwale usunięte
+            title: Konto usunięte
+            body: Cześć {nickname}, zgodnie z Twoją prośbą, Twoje konto FitTracker i wszystkie powiązane dane (treningi, rutyny, niestandardowe ćwiczenia) zostały trwale usunięte. Dziękujemy za korzystanie z FitTracker.
     avatar:
         change: Zmień zdjęcie
         hint: JPEG, PNG lub WebP · maks. 5 MB
     danger_zone:
-        coming_soon: Wkrótce dostępne
-        title: Strefa zagrożenia
+        button: Usuń moje konto
+        explanation: Twoje konto zostanie dezaktywowane, a następnie trwale usunięte po 30 dniach. Ponowne zalogowanie się przed upływem terminu automatycznie anuluje usunięcie.
+        modal:
+            title: Czy na pewno?
+            body: Aby potwierdzić, wpisz swój alias poniżej.
+            placeholder: Twój alias
+            mismatch: Alias nie pasuje
+            confirm: Usuń na stałe
+            cancel: Anuluj
+        request_error: Wystąpił błąd, spróbuj ponownie później
+        title: Usunięcie konta
     email:
         label: E-mail
         not_editable: Nie można edytować

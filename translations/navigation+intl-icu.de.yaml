@@ -153,12 +153,35 @@ routine:
         title: Meine Routinen
 
 settings:
+    account_deletion:
+        requested:
+            subject: Deine Anfrage zur Kontolöschung wurde registriert
+            title: Kontolöschung in Bearbeitung
+            body: Hallo {nickname}, deine Anfrage zur Kontolöschung wurde registriert. Dein Konto wird am {deadline} endgültig gelöscht, wenn du dich nicht vorher erneut anmeldest.
+            cancel_hint: Um diese Löschung abzubrechen, melde dich einfach vor diesem Datum erneut an — keine weitere Aktion erforderlich.
+        cancelled:
+            subject: Deine Kontolöschung wurde abgebrochen
+            title: Willkommen zurück!
+            body: Hallo {nickname}, du hast dich erneut in dein Konto eingeloggt. Deine Löschanfrage wurde automatisch abgebrochen und dein Konto bleibt wie gewohnt aktiv.
+        deleted:
+            subject: Dein Konto wurde endgültig gelöscht
+            title: Konto gelöscht
+            body: Hallo {nickname}, gemäß deiner Anfrage wurden dein FitTracker-Konto und alle zugehörigen Daten (Trainings, Routinen, benutzerdefinierte Übungen) endgültig gelöscht. Vielen Dank, dass du FitTracker genutzt hast.
     avatar:
         change: Foto ändern
         hint: JPEG, PNG oder WebP · max. 5 MB
     danger_zone:
-        coming_soon: Demnächst verfügbar
-        title: Gefahrenzone
+        button: Mein Konto löschen
+        explanation: Dein Konto wird deaktiviert und nach 30 Tagen endgültig gelöscht. Eine erneute Anmeldung vor Ablauf der Frist bricht die Löschung automatisch ab.
+        modal:
+            title: Bist du sicher?
+            body: Gib zur Bestätigung deinen Alias unten ein.
+            placeholder: Dein Alias
+            mismatch: Der Alias stimmt nicht überein
+            confirm: Endgültig löschen
+            cancel: Abbrechen
+        request_error: Ein Fehler ist aufgetreten, bitte versuche es später erneut
+        title: Kontolöschung
     email:
         label: E-Mail
         not_editable: Nicht änderbar

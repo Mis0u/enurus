@@ -153,12 +153,35 @@ routine:
         title: My routines
 
 settings:
+    account_deletion:
+        requested:
+            subject: Your account deletion request has been recorded
+            title: Account deletion in progress
+            body: Hello {nickname}, your account deletion request has been registered. Your account will be permanently deleted on {deadline} if you don't log back in before that date.
+            cancel_hint: To cancel this deletion, simply log back in before that date — no other action required.
+        cancelled:
+            subject: Your account deletion has been cancelled
+            title: Welcome back!
+            body: Hello {nickname}, you logged back into your account. Your deletion request has been automatically cancelled, and your account remains active as normal.
+        deleted:
+            subject: Your account has been permanently deleted
+            title: Account deleted
+            body: Hello {nickname}, as per your request, your FitTracker account and all associated data (workouts, routines, custom exercises) have been permanently deleted. Thank you for using FitTracker.
     avatar:
         change: Change photo
         hint: JPEG, PNG or WebP · 5 MB max
     danger_zone:
-        coming_soon: Coming soon
-        title: Danger zone
+        button: Delete my account
+        explanation: Your account will be deactivated then permanently deleted after 30 days. Logging back in before the deadline will automatically cancel the deletion.
+        modal:
+            title: Are you sure?
+            body: To confirm, type your alias below.
+            placeholder: Your alias
+            mismatch: The alias does not match
+            confirm: Delete permanently
+            cancel: Cancel
+        request_error: An error occurred, please try again later
+        title: Account deletion
     email:
         label: Email
         not_editable: Not editable

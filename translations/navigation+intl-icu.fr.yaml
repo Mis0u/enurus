@@ -151,12 +151,35 @@ routine:
             }
         title: Mes routines
 settings:
+    account_deletion:
+        requested:
+            subject: Ta demande de suppression de compte a été enregistrée
+            title: Suppression de compte en cours
+            body: Bonjour {nickname}, ta demande de suppression de compte a bien été prise en compte. Ton compte sera définitivement supprimé le {deadline} si tu ne te reconnectes pas avant cette date.
+            cancel_hint: Pour annuler cette suppression, il te suffit de te reconnecter avant cette date — aucune autre action nécessaire.
+        cancelled:
+            subject: Ta suppression de compte a été annulée
+            title: Bon retour parmi nous !
+            body: Bonjour {nickname}, tu tes reconnecté à ton compte. Ta demande de suppression a donc été automatiquement annulée, et ton compte reste actif normalement.
+        deleted:
+            subject: Ton compte a été définitivement supprimé
+            title: Compte supprimé
+            body: Bonjour {nickname}, conformément à ta demande, ton compte FitTracker et toutes les données associées (séances, routines, exercices personnalisés) ont été définitivement supprimés. Merci davoir utilisé FitTracker.
     avatar:
         change: Changer la photo
         hint: JPEG, PNG ou WebP · 5 Mo max
     danger_zone:
-        coming_soon: Bientôt disponible
-        title: Zone de danger
+        button: Supprimer mon compte
+        explanation: Ton compte sera désactivé puis définitivement supprimé après 30 jours. Te reconnecter avant l'échéance annulera automatiquement la suppression.
+        modal:
+            title: Es-tu sûr ?
+            body: Pour confirmer, tape ton alias ci-dessous.
+            placeholder: Ton alias
+            mismatch: L'alias ne correspond pas
+            confirm: Supprimer définitivement
+            cancel: Annuler
+        request_error: Une erreur est survenue, réessaie plus tard
+        title: Suppression du compte
     email:
         label: Email
         not_editable: Non modifiable
