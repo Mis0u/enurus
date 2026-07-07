@@ -43,5 +43,10 @@ services:
 
     League\Flysystem\FilesystemOperator $defaultStorage: '@default.storage'
 
+    rate_limiter.storage:
+        class: Symfony\Component\Cache\Adapter\ArrayAdapter
+        autoconfigure: false
+        public: false
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

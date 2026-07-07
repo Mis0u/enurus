@@ -52,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Exercise>
      */
-    #[ORM\OneToMany(targetEntity: Exercise::class, mappedBy: 'owner')]
+    #[ORM\OneToMany(targetEntity: Exercise::class, mappedBy: 'owner', cascade: ['remove'], orphanRemoval: true)]
     public Collection $exercises {
         get {
             return $this->exercises;
@@ -62,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Workout>
      */
-    #[ORM\OneToMany(targetEntity: Workout::class, mappedBy: 'owner')]
+    #[ORM\OneToMany(targetEntity: Workout::class, mappedBy: 'owner', cascade: ['remove'], orphanRemoval: true)]
     public Collection $workouts {
         get {
             return $this->workouts;
@@ -72,7 +72,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Routine>
      */
-    #[ORM\OneToMany(targetEntity: Routine::class, mappedBy: 'owner')]
+    #[ORM\OneToMany(targetEntity: Routine::class, mappedBy: 'owner', cascade: ['remove'], orphanRemoval: true)]
     public Collection $routines {
         get {
             return $this->routines;
@@ -165,6 +165,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         set(UnitOfMeasureEnum $unitOfMeasure) {
             $this->unitOfMeasure = $unitOfMeasure;
+        }
+    }
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    public ?\DateTimeImmutable $deletionRequestedAt = null {
+        get {
+            return $this->deletionRequestedAt;
+        }
+        set(?\DateTimeImmutable $deletionRequestedAt) {
+            $this->deletionRequestedAt = $deletionRequestedAt;
         }
     }
 

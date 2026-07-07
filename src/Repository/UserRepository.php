@@ -35,20 +35,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    //    /**
-    //     * @return User[] Returns an array of User objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('u.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * @return list<User>
+     */
+    public function findPendingDeletionOlderThan(\DateTimeImmutable $threshold): array
+    {
+        /** @var list<User> */
+        return $this->createQueryBuilder('u')
+            ->where('u.deletionRequestedAt IS NOT NULL')
+            ->andWhere('u.deletionRequestedAt <= :threshold')
+            ->setParameter('threshold', $threshold)
+            ->getQuery()
+            ->getResult();
+    }
 
     //    public function findOneBySomeField($value): ?User
     //    {

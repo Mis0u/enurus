@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EventListener;
 
 use App\Entity\User;
+use App\Service\Entity\AccountDeletionService;
 use App\Service\Entity\UserService;
 use function Symfony\Component\Clock\now;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -16,7 +17,8 @@ final readonly class LoginSuccessListener
 {
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
-        private UserService $userService
+        private UserService $userService,
+        private AccountDeletionService $accountDeletionService,
     ) {
     }
 
@@ -24,7 +26,7 @@ final readonly class LoginSuccessListener
     public function onLoginSuccessEvent(LoginSuccessEvent $event): void
     {
         $this->saveUserLogin($event);
-
+        $this->cancelPendingDeletion($event);
         $this->redirectTo($event);
     }
 
@@ -49,5 +51,13 @@ final readonly class LoginSuccessListener
         ]);
 
         $event->setResponse(new RedirectResponse($url));
+    }
+
+    private function cancelPendingDeletion(LoginSuccessEvent $event): void
+    {
+        /** @var User $user */
+        $user = $event->getUser();
+
+        $this->accountDeletionService->cancelDeletion($user);
     }
 }

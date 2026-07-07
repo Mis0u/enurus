@@ -153,12 +153,35 @@ routine:
         title: Le mie routine
 
 settings:
+    account_deletion:
+        requested:
+            subject: La tua richiesta di eliminazione dell'account è stata registrata
+            title: Eliminazione dell'account in corso
+            body: Ciao {nickname}, la tua richiesta di eliminazione dell'account è stata presa in carico. Il tuo account verrà eliminato definitivamente il {deadline} se non effettui l'accesso prima di quella data.
+            cancel_hint: Per annullare questa eliminazione, ti basta accedere nuovamente prima di quella data — nessun'altra azione necessaria.
+        cancelled:
+            subject: L'eliminazione del tuo account è stata annullata
+            title: Bentornato!
+            body: Ciao {nickname}, hai effettuato nuovamente l'accesso al tuo account. La tua richiesta di eliminazione è stata automaticamente annullata e il tuo account resta attivo normalmente.
+        deleted:
+            subject: Il tuo account è stato eliminato definitivamente
+            title: Account eliminato
+            body: Ciao {nickname}, come da tua richiesta, il tuo account FitTracker e tutti i dati associati (allenamenti, routine, esercizi personalizzati) sono stati eliminati definitivamente. Grazie per aver utilizzato FitTracker.
     avatar:
         change: Cambia foto
         hint: JPEG, PNG o WebP · 5 MB max
     danger_zone:
-        coming_soon: Disponibile a breve
-        title: Zona di pericolo
+        button: Elimina il mio account
+        explanation: Il tuo account verrà disattivato e poi eliminato definitivamente dopo 30 giorni. Accedere nuovamente prima della scadenza annullerà automaticamente l'eliminazione.
+        modal:
+            title: Sei sicuro?
+            body: Per confermare, digita il tuo alias qui sotto.
+            placeholder: Il tuo alias
+            mismatch: L'alias non corrisponde
+            confirm: Elimina definitivamente
+            cancel: Annulla
+        request_error: Si è verificato un errore, riprova più tardi
+        title: Eliminazione dell'account
     email:
         label: Email
         not_editable: Non modificabile

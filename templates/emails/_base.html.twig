@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="{{ locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #0f172a; color: #e2e8f0;">
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #0f172a; padding: 40px 20px;">
+    {% set brand_name = 'name'|trans({}, 'brand', locale) %}
+    <tr>
+        <td align="center">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 24px; overflow: hidden; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);">
+
+                <tr>
+                    <td style="padding: 40px 40px 30px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                        <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="logo {{ 'name'|trans({}, 'brand') }}" style="display: block; margin: 0 auto 8px; height: 160px;">
+                        <h1 style="font-size: 1.875rem; font-weight: 700; color: #ffffff; margin: 0 0 8px;">{{ brand_name }}</h1>
+                        <p style="margin: 8px 0 0; font-size: 14px; color: #94a3b8;">{{ 'baseline'|trans({}, 'brand', locale) }}</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 40px;">
+                        {% block content %}{% endblock %}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 30px 40px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center;">
+                        <p style="margin: 0 0 16px; font-size: 14px; color: #64748b;">
+                            {{ 'sentence.need_help'|trans({}, 'common', locale) }}
+                        </p>
+                        <p style="margin: 0; font-size: 12px; color: #475569;">
+                            {{ 'footer.copyright'|trans({'year': "now"|date("Y"), 'brand': brand_name}, 'navigation', locale) }}
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

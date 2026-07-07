@@ -153,12 +153,35 @@ routine:
         title: As minhas rotinas
 
 settings:
+    account_deletion:
+        requested:
+            subject: O teu pedido de eliminação de conta foi registado
+            title: Eliminação de conta em curso
+            body: Olá {nickname}, o teu pedido de eliminação de conta foi registado. A tua conta será definitivamente eliminada em {deadline} se não voltares a iniciar sessão antes dessa data.
+            cancel_hint: Para cancelar esta eliminação, basta voltares a iniciar sessão antes dessa data — nenhuma outra ação necessária.
+        cancelled:
+            subject: A eliminação da tua conta foi cancelada
+            title: Bem-vindo de volta!
+            body: Olá {nickname}, voltaste a iniciar sessão na tua conta. O teu pedido de eliminação foi automaticamente cancelado e a tua conta continua ativa normalmente.
+        deleted:
+            subject: A tua conta foi definitivamente eliminada
+            title: Conta eliminada
+            body: Olá {nickname}, conforme o teu pedido, a tua conta FitTracker e todos os dados associados (treinos, rotinas, exercícios personalizados) foram definitivamente eliminados. Obrigado por teres utilizado o FitTracker.
     avatar:
         change: Alterar foto
         hint: JPEG, PNG ou WebP · 5 MB máx
     danger_zone:
-        coming_soon: Brevemente disponível
-        title: Zona de perigo
+        button: Eliminar a minha conta
+        explanation: A tua conta será desativada e depois definitivamente eliminada após 30 dias. Voltares a iniciar sessão antes do prazo cancelará automaticamente a eliminação.
+        modal:
+            title: Tens a certeza?
+            body: Para confirmar, escreve o teu alias abaixo.
+            placeholder: O teu alias
+            mismatch: O alias não corresponde
+            confirm: Eliminar definitivamente
+            cancel: Cancelar
+        request_error: Ocorreu um erro, tenta novamente mais tarde
+        title: Eliminação da conta
     email:
         label: Email
         not_editable: Não modificável
