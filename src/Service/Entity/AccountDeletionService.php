@@ -1,0 +1,118 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service\Entity;
+
+use App\Entity\DeletedAccountTrace;
+use App\Entity\User;
+use App\Repository\UserRepository;
+use App\Service\Email\EmailInterface;
+use App\Service\Utils\ImageUploadService;
+use Doctrine\ORM\EntityManagerInterface;
+use function Symfony\Component\Clock\now;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+final readonly class AccountDeletionService
+{
+    private const int RETENTION_DAYS = 30;
+
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private UserRepository $userRepository,
+        private EmailInterface $emailService,
+        private TranslatorInterface $translator,
+        private ImageUploadService $imageUploadService,
+    ) {
+    }
+
+    public function requestDeletion(User $user): void
+    {
+        $user->deletionRequestedAt = now();
+        $this->entityManager->flush();
+
+        $this->sendEmail(
+            $user,
+            'settings.account_deletion.requested.subject',
+            'emails/account_deletion_requested.html.twig',
+            [
+                'deadline' => $this->getDeletionDeadline($user),
+            ],
+        );
+    }
+
+    public function cancelDeletion(User $user): void
+    {
+        if (null === $user->deletionRequestedAt) {
+            return;
+        }
+
+        $user->deletionRequestedAt = null;
+        $this->entityManager->flush();
+
+        $this->sendEmail($user, 'settings.account_deletion.cancelled.subject', 'emails/account_deletion_cancelled.html.twig');
+    }
+
+    public function purgeExpired(): int
+    {
+        $threshold = now()->modify(sprintf('-%d days', self::RETENTION_DAYS));
+        $users = $this->userRepository->findPendingDeletionOlderThan($threshold);
+
+        foreach ($users as $user) {
+            $this->sendEmail($user, 'settings.account_deletion.deleted.subject', 'emails/account_deletion_deleted.html.twig');
+            $this->recordDeletionTrace($user);
+            $this->deletePhysicalFiles($user);
+            $this->entityManager->remove($user);
+        }
+
+        $this->entityManager->flush();
+
+        return \count($users);
+    }
+
+    public function getDeletionDeadline(User $user): ?\DateTimeImmutable
+    {
+        if (null === $user->deletionRequestedAt) {
+            return null;
+        }
+
+        return $user->deletionRequestedAt->modify(sprintf('+%d days', self::RETENTION_DAYS));
+    }
+
+    /**
+     * @param array<string, mixed> $extraContext
+     */
+    private function sendEmail(User $user, string $subjectKey, string $template, array $extraContext = []): void
+    {
+        $email = $this->emailService->createEmail(
+            $user->email,
+            $this->translator->trans($subjectKey, [], 'navigation', $user->locale),
+            array_merge([
+                'user' => $user,
+                'locale' => $user->locale,
+            ], $extraContext),
+            $template,
+            $user->locale,
+        );
+
+        $this->emailService->sendEmail($email);
+    }
+
+    private function recordDeletionTrace(User $user): void
+    {
+        $trace = new DeletedAccountTrace();
+        $trace->emailHash = hash('sha256', mb_strtolower(trim($user->email)));
+        $trace->deletedAt = now();
+
+        $this->entityManager->persist($trace);
+    }
+
+    private function deletePhysicalFiles(User $user): void
+    {
+        $this->imageUploadService->delete($user->avatarPath);
+
+        foreach ($user->workouts as $workout) {
+            $this->imageUploadService->delete($workout->photoPath);
+        }
+    }
+}
