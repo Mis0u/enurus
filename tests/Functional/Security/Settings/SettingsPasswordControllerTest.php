@@ -135,6 +135,8 @@ final class SettingsPasswordControllerTest extends WebTestCase
     public function testSixthAttemptWithinWindowIsRateLimited(): void
     {
         $client = $this->login(self::USER);
+        $client->disableReboot();
+
         $crawler = $client->request(Request::METHOD_GET, '/fr/reglages');
 
         for ($i = 0; 5 > $i; $i++) {
