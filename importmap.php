@@ -34,4 +34,7 @@ return [
     'sortablejs' => [
         'version' => '1.15.7',
     ],
+    'chart.js' => [
+        'version' => '3.9.1',
+    ],
 ];

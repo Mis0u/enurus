@@ -1,0 +1,149 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - regularityData : array{
+          streak       : int,
+          bestStreak   : int,
+          weekCount    : int,
+          monthCount   : int,
+          yearCount    : int,
+          weekDelta    : int,
+          monthDelta   : int,
+          yearDelta    : int|null,
+          weekDays         : array<int, array{date: DateTimeImmutable, hasWorkout: bool, isToday: bool, isFuture: bool}>,
+          previousWeekDays : array<int, array{date: DateTimeImmutable, hasWorkout: bool, isToday: bool, isFuture: bool}>
+      }
+#}
+{% macro day_strip(label, days) %}
+    <div class="w-full">
+        <div class="text-[12px] md:text-[13.5px] text-[#4a5568] font-semibold uppercase tracking-[0.4px] mb-3 text-center">
+            {{ label }}
+        </div>
+        <div class="flex gap-1.5 md:gap-3 justify-center">
+            {% for day in days %}
+                {% if day.isToday %}
+                    {% set day_classes = 'bg-rose-ft text-white shadow-[0_0_10px_rgba(244,63,94,0.3)]' %}
+                {% elseif day.hasWorkout %}
+                    {% set day_classes = 'bg-rose-ft/[0.15] border border-rose-ft/35 text-rose-ft' %}
+                {% else %}
+                    {% set day_classes = 'bg-white/[0.03] border border-white/[0.07] text-[#4a5568]' %}
+                {% endif %}
+                <div class="flex-1 aspect-square md:flex-none md:w-[56px] md:h-[56px] rounded-[9px] md:rounded-[11px] flex items-center justify-center text-[12px] md:text-[15px] font-semibold {{ day_classes }}"
+                     title="{{ day.date|format_date('full', locale=app.request.locale) }}">
+                    {{ day.date|format_date(pattern='EEEEE', locale=app.request.locale) }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+<div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] pb-[34px] md:p-[26px] md:pb-[42px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(244,63,94,0.04),transparent_60%)] pointer-events-none"></div>
+
+    {# En-tête #}
+    <div class="flex items-center gap-[7px] mb-4">
+        <svg class="w-[15px] h-[15px] text-[#8b9bb4]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+        </svg>
+        <span class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
+            {{ 'dashboard.widget.regularity.title'|trans({}, 'navigation') }}
+        </span>
+    </div>
+
+    <div class="flex-1 flex flex-col gap-5 md:gap-6">
+        {# Métriques : séances cette semaine | ce mois | cette année #}
+        <div class="grid grid-cols-3 gap-3 md:gap-4">
+            <div class="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-[14px_8px] md:p-[24px_10px] text-center">
+                <div class="font-rajdhani text-[32px] md:text-[48px] font-bold leading-[1] text-cyan-ft">
+                    {{ regularityData.weekCount }}
+                </div>
+                <div class="text-[11px] md:text-[13px] text-[#4a5568] mt-1.5">
+                    {{ 'dashboard.widget.regularity.week_label'|trans({count: regularityData.weekCount}, 'navigation') }}
+                </div>
+                <div class="text-[10px] md:text-[11.5px] text-[#4a5568] mt-0.5">
+                    {% if regularityData.weekDelta > 0 %}
+                        {{ 'dashboard.widget.regularity.week_delta_positive'|trans({count: regularityData.weekDelta}, 'navigation') }}
+                    {% elseif regularityData.weekDelta < 0 %}
+                        {{ 'dashboard.widget.regularity.week_delta_negative'|trans({count: regularityData.weekDelta|abs}, 'navigation') }}
+                    {% else %}
+                        {{ 'dashboard.widget.regularity.week_delta_zero'|trans({}, 'navigation') }}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-[14px_8px] md:p-[24px_10px] text-center">
+                <div class="font-rajdhani text-[32px] md:text-[48px] font-bold leading-[1] text-rose-ft">
+                    {{ regularityData.monthCount }}
+                </div>
+                <div class="text-[11px] md:text-[13px] text-[#4a5568] mt-1.5">
+                    {{ 'dashboard.widget.regularity.month_label'|trans({count: regularityData.monthCount}, 'navigation') }}
+                </div>
+                <div class="text-[10px] md:text-[11.5px] text-[#4a5568] mt-0.5">
+                    {% if regularityData.monthDelta > 0 %}
+                        {{ 'dashboard.widget.regularity.month_delta_positive'|trans({count: regularityData.monthDelta}, 'navigation') }}
+                    {% elseif regularityData.monthDelta < 0 %}
+                        {{ 'dashboard.widget.regularity.month_delta_negative'|trans({count: regularityData.monthDelta|abs}, 'navigation') }}
+                    {% else %}
+                        {{ 'dashboard.widget.regularity.month_delta_zero'|trans({}, 'navigation') }}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-[14px_8px] md:p-[24px_10px] text-center">
+                <div class="font-rajdhani text-[32px] md:text-[48px] font-bold leading-[1] text-amber-ft">
+                    {{ regularityData.yearCount }}
+                </div>
+                <div class="text-[11px] md:text-[13px] text-[#4a5568] mt-1.5">
+                    {{ 'dashboard.widget.regularity.year_label'|trans({count: regularityData.yearCount}, 'navigation') }}
+                </div>
+                {% if regularityData.yearDelta is not null %}
+                    <div class="text-[10px] md:text-[11.5px] text-[#4a5568] mt-0.5">
+                        {% if regularityData.yearDelta > 0 %}
+                            {{ 'dashboard.widget.regularity.year_delta_positive'|trans({count: regularityData.yearDelta}, 'navigation') }}
+                        {% elseif regularityData.yearDelta < 0 %}
+                            {{ 'dashboard.widget.regularity.year_delta_negative'|trans({count: regularityData.yearDelta|abs}, 'navigation') }}
+                        {% else %}
+                            {{ 'dashboard.widget.regularity.year_delta_zero'|trans({}, 'navigation') }}
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {# Streak — style neutre si aucun streak actif (pause de l'utilisateur) #}
+        <div class="{{ regularityData.streak > 0 ? 'regularity-streak-card' : 'bg-white/[0.03] border border-white/[0.07]' }} rounded-2xl p-[18px] md:p-[26px] flex items-center gap-4 md:gap-6">
+            <div class="text-[40px] md:text-[60px] leading-none {{ regularityData.streak > 0 ? 'drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]' : 'opacity-30 grayscale' }}">🔥</div>
+            <div class="flex-1">
+                {% if regularityData.streak > 0 %}
+                    <div class="flex items-baseline gap-2">
+                        <div class="font-rajdhani text-[32px] md:text-[46px] font-bold leading-[1] text-amber-ft">
+                            {{ regularityData.streak }}
+                        </div>
+                        <div class="font-rajdhani text-[18px] md:text-[24px] font-bold text-amber-ft">
+                            {{ 'dashboard.widget.regularity.streak_unit'|trans({count: regularityData.streak}, 'navigation') }}
+                        </div>
+                    </div>
+                    <div class="text-[13px] md:text-[15px] text-white mt-1">
+                        {{ 'dashboard.widget.regularity.streak_qualifier'|trans({count: regularityData.streak}, 'navigation') }}
+                    </div>
+                {% else %}
+                    <div class="text-[15px] md:text-[17px] font-semibold text-[#8b9bb4]">
+                        {{ 'dashboard.widget.regularity.no_streak'|trans({}, 'navigation') }}
+                    </div>
+                {% endif %}
+            </div>
+            {% if regularityData.bestStreak > 0 %}
+                <div class="text-right">
+                    <div class="text-[26px] md:text-[34px] leading-none">🏅</div>
+                    <div class="text-[11px] md:text-[12.5px] text-[#4a5568] mt-1">
+                        {{ 'dashboard.widget.regularity.best_streak'|trans({count: regularityData.bestStreak}, 'navigation') }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        {# Jours de la semaine — cette semaine et la semaine dernière #}
+        <div class="flex-1 flex flex-col gap-5 md:gap-6 justify-center items-center">
+            {{ _self.day_strip('dashboard.widget.regularity.this_week'|trans({}, 'navigation'), regularityData.weekDays) }}
+            {{ _self.day_strip('dashboard.widget.regularity.last_week'|trans({}, 'navigation'), regularityData.previousWeekDays) }}
+        </div>
+    </div>
+</div>

@@ -1,17 +1,12 @@
-{% set total_sets = 0 %}
-{% for item in exerciseData %}
-    {% set total_sets = total_sets + item.sets|length %}
-{% endfor %}
-
 <div class="show-header-card relative border border-white/[0.07] rounded-2xl p-6 mb-5 overflow-hidden max-md:p-5">
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(244,63,94,0.03),transparent_60%)] pointer-events-none"></div>
 
     {% include 'workout/show/header/_title.html.twig' %}
 
-    <div class="grid grid-cols-4 gap-4 mb-5 max-md:grid-cols-2 max-md:gap-2.5">
+    <div class="grid grid-cols-5 gap-4 mb-5 max-md:grid-cols-2 max-md:gap-2.5">
         {% include 'workout/show/header/_tonnage.html.twig' %}
         {% include 'workout/show/header/_workout_duration.html.twig' %}
-        {% include 'workout/show/header/_exercise_sets.html.twig' %}
+        {% include 'workout/show/header/_exercise_sets.html.twig' with {exerciseData: exerciseData, total_sets: totalSets, total_reps: totalReps} only %}
     </div>
 
     {% if workout.note is not null and workout.note != '' %}

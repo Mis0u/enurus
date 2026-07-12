@@ -10,6 +10,63 @@ dashboard:
     save_workout: Erfasse dein Training
     setting: Einstellungen
     title: Übersicht
+    widget:
+        coming_soon: Demnächst verfügbar
+        locked:
+            need_days: "{count, plural, =1 {+ # Tag Aktivität} other {+ # Tage Aktivität}}"
+            need_workouts: "{count, plural, =1 {Noch # Training} other {Noch # Trainings}}"
+            title_muscle_period: "Muskeln · Woche / Monat"
+            title_progression: Fortschrittsvergleiche
+            title_regularity: Regelmäßigkeit
+            title_tonnage: Gehobenes Gewicht
+        muscles:
+            breakdown: "{primaryCount, plural, =1 {# primärer Satz} other {# primäre Sätze}} · {secondaryCount, plural, =1 {# sekundärer Satz} other {# sekundäre Sätze}}"
+            filter:
+                month: Monat
+                session: Letztes Training
+                week: Woche
+            last_solicited: "{days, plural, =0 {Heute trainiert} =1 {Zuletzt: vor 1 Tag} other {Zuletzt: vor # Tagen}}"
+            more_muscles: "{count, plural, =1 {+ # weiterer trainierter Muskel} other {+ # weitere trainierte Muskeln}}"
+            sets_count: "{count, plural, =1 {# Satz} other {# Sätze}}"
+            sort_info: "Sortiert nach Gesamtzahl der Sätze (primär und sekundär zusammen), absteigend nach Belastung."
+            title: Trainierte Muskeln
+        regularity:
+            best_streak: "{count, plural, =1 {Rekord: # Woche} other {Rekord: # Wochen}}"
+            last_week: Letzte Woche
+            month_delta_negative: "{count, plural, =1 {-# Einheit vs. Vormonat} other {-# Einheiten vs. Vormonat}}"
+            month_delta_positive: "{count, plural, =1 {+# Einheit vs. Vormonat} other {+# Einheiten vs. Vormonat}}"
+            month_delta_zero: Wie im Vormonat
+            month_label: "{count, plural, =1 {Einheit diesen Monat} other {Einheiten diesen Monat}}"
+            no_streak: Kein aktiver Streak
+            streak_qualifier: "{count, plural, =1 {aufeinanderfolgende} other {aufeinanderfolgende}}"
+            streak_unit: "{count, plural, =1 {Woche} other {Wochen}}"
+            this_week: Diese Woche
+            title: Regelmäßigkeit
+            week_delta_negative: "{count, plural, =1 {-# Einheit vs. Vorwoche} other {-# Einheiten vs. Vorwoche}}"
+            week_delta_positive: "{count, plural, =1 {+# Einheit vs. Vorwoche} other {+# Einheiten vs. Vorwoche}}"
+            week_delta_zero: Wie in der Vorwoche
+            week_label: "{count, plural, =1 {Einheit diese Woche} other {Einheiten diese Woche}}"
+            year_delta_negative: "{count, plural, =1 {-# Einheit vs. Vorjahr} other {-# Einheiten vs. Vorjahr}}"
+            year_delta_positive: "{count, plural, =1 {+# Einheit vs. Vorjahr} other {+# Einheiten vs. Vorjahr}}"
+            year_delta_zero: Wie im Vorjahr
+            year_label: "{count, plural, =1 {Einheit dieses Jahr} other {Einheiten dieses Jahr}}"
+        session:
+            exercises: "{count, plural, =1 {# Übung} other {# Übungen}}"
+            filter:
+                last: Letztes Training
+                month: Aktueller Monat
+                week: Woche
+            pr_count: "{count, plural, =1 {# persönlicher Rekord gebrochen} other {# persönliche Rekorde gebrochen}}"
+            pr_count_zero: Diesmal kein PR, weiter so!
+            pr_tooltip: "Ein PR (persönlicher Rekord) wird erreicht, wenn du bei einer Übung schwerer hebst als je zuvor, unabhängig von der Wiederholungszahl."
+            title: Training
+        tonnage:
+            annual_total_label: "Gesamt für das Jahr {year}:"
+            annual_total_value: "{total} {unit}"
+            filter:
+                month: Monat
+                sessions: Einheiten
+                week: Woche
     workout: Trainings
 
 exercise:
@@ -325,6 +382,7 @@ workout:
             reps: Wdh
             tonnage: Tonnage
         pr_badge: PR
+        pr_badge_tooltip: "Neuer persönlicher Rekord: das schwerste je bei dieser Übung gehobene Gewicht"
         title: Mein Training
     title: Erfasse dein Training
     type:

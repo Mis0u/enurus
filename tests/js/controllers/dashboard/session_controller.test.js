@@ -1,0 +1,74 @@
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { Application } from '@hotwired/stimulus';
+import SessionController from '../../../../assets/controllers/dashboard/session_controller.js';
+
+function nextTick() {
+    return new Promise(resolve => setTimeout(resolve, 0));
+}
+
+describe('dashboard--session controller', () => {
+    let application;
+
+    beforeEach(() => {
+        document.body.innerHTML = `
+            <div data-controller="dashboard--session"
+                 data-dashboard--session-last-value='{"exercises":5,"sets":20,"reps":180,"prCount":2,"prLabel":"2 PR battus"}'
+                 data-dashboard--session-week-value='{"exercises":12,"sets":48,"reps":410,"prCount":0,"prLabel":"Aucun PR cette fois, continue comme ça !"}'
+                 data-dashboard--session-month-value='{"exercises":30,"sets":110,"reps":900,"prCount":5,"prLabel":"5 PR battus"}'>
+                <button data-dashboard--session-target="tab" data-filter="last"
+                        data-action="click->dashboard--session#switchFilter" class="dashboard-tab-active"></button>
+                <button data-dashboard--session-target="tab" data-filter="week"
+                        data-action="click->dashboard--session#switchFilter" class="dashboard-tab-inactive"></button>
+
+                <span data-dashboard--session-target="exercises"></span>
+                <span data-dashboard--session-target="sets"></span>
+                <span data-dashboard--session-target="reps"></span>
+                <span data-dashboard--session-target="prIcon">🏆</span>
+                <span data-dashboard--session-target="prLabel"></span>
+            </div>
+        `;
+
+        application = Application.start();
+        application.register('dashboard--session', SessionController);
+    });
+
+    afterEach(() => {
+        application.stop();
+        document.body.innerHTML = '';
+    });
+
+    it('displays the "last" stats and PR label on connect', async () => {
+        await nextTick();
+
+        expect(document.querySelector('[data-dashboard--session-target="exercises"]').textContent).toBe('5');
+        expect(document.querySelector('[data-dashboard--session-target="sets"]').textContent).toBe('20');
+        expect(document.querySelector('[data-dashboard--session-target="reps"]').textContent).toBe('180');
+        expect(document.querySelector('[data-dashboard--session-target="prLabel"]').textContent).toBe('2 PR battus');
+        expect(document.querySelector('[data-dashboard--session-target="prIcon"]').classList.contains('hidden')).toBe(false);
+    });
+
+    it('updates stats, PR label and active tab when switching to week', async () => {
+        await nextTick();
+
+        document.querySelector('[data-filter="week"]').click();
+
+        expect(document.querySelector('[data-dashboard--session-target="exercises"]').textContent).toBe('12');
+        expect(document.querySelector('[data-dashboard--session-target="sets"]').textContent).toBe('48');
+        expect(document.querySelector('[data-dashboard--session-target="reps"]').textContent).toBe('410');
+        expect(document.querySelector('[data-dashboard--session-target="prLabel"]').textContent)
+            .toBe('Aucun PR cette fois, continue comme ça !');
+
+        const lastTab = document.querySelector('[data-filter="last"]');
+        const weekTab = document.querySelector('[data-filter="week"]');
+        expect(lastTab.classList.contains('dashboard-tab-inactive')).toBe(true);
+        expect(weekTab.classList.contains('dashboard-tab-active')).toBe(true);
+    });
+
+    it('hides the trophy icon when there is no PR for the active filter', async () => {
+        await nextTick();
+
+        document.querySelector('[data-filter="week"]').click();
+
+        expect(document.querySelector('[data-dashboard--session-target="prIcon"]').classList.contains('hidden')).toBe(true);
+    });
+});

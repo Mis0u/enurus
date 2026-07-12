@@ -10,6 +10,63 @@ dashboard:
     save_workout: Zapisz swój trening
     setting: Ustawienia
     title: Panel
+    widget:
+        coming_soon: Wkrótce dostępne
+        locked:
+            need_days: "{count, plural, =1 {+ # dzień historii} few {+ # dni historii} many {+ # dni historii} other {+ # dni historii}}"
+            need_workouts: "{count, plural, =1 {Jeszcze # trening} few {Jeszcze # treningi} many {Jeszcze # treningów} other {Jeszcze # treningów}}"
+            title_muscle_period: "Mięśnie · Tydzień / Miesiąc"
+            title_progression: Porównania postępów
+            title_regularity: Regularność
+            title_tonnage: Podniesiony ciężar
+        muscles:
+            breakdown: "{primaryCount, plural, =1 {# seria podstawowa} few {# serie podstawowe} many {# serii podstawowych} other {# serii podstawowych}} · {secondaryCount, plural, =1 {# seria pomocnicza} few {# serie pomocnicze} many {# serii pomocniczych} other {# serii pomocniczych}}"
+            filter:
+                month: Miesiąc
+                session: Ostatni trening
+                week: Tydzień
+            last_solicited: "{days, plural, =0 {Trenowano dzisiaj} =1 {Ostatnio: 1 dzień temu} few {Ostatnio: # dni temu} many {Ostatnio: # dni temu} other {Ostatnio: # dni temu}}"
+            more_muscles: "{count, plural, =1 {+ # inny wytrenowany mięsień} few {+ # inne wytrenowane mięśnie} many {+ # innych wytrenowanych mięśni} other {+ # innych wytrenowanych mięśni}}"
+            sets_count: "{count, plural, =1 {# seria} few {# serie} many {# serii} other {# serii}}"
+            sort_info: "Sortowanie według łącznej liczby serii (podstawowych i pomocniczych razem), od najbardziej do najmniej trenowanych."
+            title: Trenowane mięśnie
+        regularity:
+            best_streak: "{count, plural, =1 {Rekord: # tydzień} few {Rekord: # tygodnie} many {Rekord: # tygodni} other {Rekord: # tygodnia}}"
+            last_week: Poprzedni tydzień
+            month_delta_negative: "{count, plural, =1 {-# trening vs poprz. miesiąc} few {-# treningi vs poprz. miesiąc} many {-# treningów vs poprz. miesiąc} other {-# treningu vs poprz. miesiąc}}"
+            month_delta_positive: "{count, plural, =1 {+# trening vs poprz. miesiąc} few {+# treningi vs poprz. miesiąc} many {+# treningów vs poprz. miesiąc} other {+# treningu vs poprz. miesiąc}}"
+            month_delta_zero: Tyle samo co w poprzednim miesiącu
+            month_label: "{count, plural, =1 {trening w tym miesiącu} few {treningi w tym miesiącu} many {treningów w tym miesiącu} other {treningu w tym miesiącu}}"
+            no_streak: Brak aktywnej serii
+            streak_qualifier: "{count, plural, =1 {z rzędu} few {z rzędu} many {z rzędu} other {z rzędu}}"
+            streak_unit: "{count, plural, =1 {tydzień} few {tygodnie} many {tygodni} other {tygodnia}}"
+            this_week: Ten tydzień
+            title: Regularność
+            week_delta_negative: "{count, plural, =1 {-# trening vs poprz. tydzień} few {-# treningi vs poprz. tydzień} many {-# treningów vs poprz. tydzień} other {-# treningu vs poprz. tydzień}}"
+            week_delta_positive: "{count, plural, =1 {+# trening vs poprz. tydzień} few {+# treningi vs poprz. tydzień} many {+# treningów vs poprz. tydzień} other {+# treningu vs poprz. tydzień}}"
+            week_delta_zero: Tyle samo co w poprzednim tygodniu
+            week_label: "{count, plural, =1 {trening w tym tygodniu} few {treningi w tym tygodniu} many {treningów w tym tygodniu} other {treningu w tym tygodniu}}"
+            year_delta_negative: "{count, plural, =1 {-# trening vs poprz. rok} few {-# treningi vs poprz. rok} many {-# treningów vs poprz. rok} other {-# treningu vs poprz. rok}}"
+            year_delta_positive: "{count, plural, =1 {+# trening vs poprz. rok} few {+# treningi vs poprz. rok} many {+# treningów vs poprz. rok} other {+# treningu vs poprz. rok}}"
+            year_delta_zero: Tyle samo co w poprzednim roku
+            year_label: "{count, plural, =1 {trening w tym roku} few {treningi w tym roku} many {treningów w tym roku} other {treningu w tym roku}}"
+        session:
+            exercises: "{count, plural, =1 {# ćwiczenie} few {# ćwiczenia} many {# ćwiczeń} other {# ćwiczeń}}"
+            filter:
+                last: Ostatni trening
+                month: Bieżący miesiąc
+                week: Tydzień
+            pr_count: "{count, plural, =1 {# pobity rekord} few {# pobite rekordy} many {# pobitych rekordów} other {# pobitego rekordu}}"
+            pr_count_zero: Brak rekordu tym razem, tak trzymaj!
+            pr_tooltip: "Rekord osobisty (PR) zostaje osiągnięty, gdy podnosisz cięższy ciężar niż kiedykolwiek wcześniej w danym ćwiczeniu, niezależnie od liczby powtórzeń."
+            title: Trening
+        tonnage:
+            annual_total_label: "Łącznie w roku {year}:"
+            annual_total_value: "{total} {unit}"
+            filter:
+                month: Miesiąc
+                sessions: Treningi
+                week: Tydzień
     workout: Treningi
 
 exercise:
@@ -339,6 +396,7 @@ workout:
             reps: Powt
             tonnage: Tonaż
         pr_badge: PR
+        pr_badge_tooltip: "Nowy rekord osobisty: najcięższy ciężar kiedykolwiek podniesiony w tym ćwiczeniu"
         title: Mój trening
     title: Zapisz swój trening
     type:

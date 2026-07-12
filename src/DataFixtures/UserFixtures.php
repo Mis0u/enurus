@@ -49,6 +49,8 @@ class UserFixtures extends Fixture
 
     public const string USER_ROUTINE_OTHER = 'user-fixture-routine-other@test.com';
 
+    public const string USER_DASHBOARD_SINGLE = 'user-fixture-1-workout@test.com';
+
     private const array USERS_ETHNIES = [
         'en' => 'user-fixture-english@test.com',
         'es' => 'user-fixture-spanish@test.com',
@@ -71,6 +73,7 @@ class UserFixtures extends Fixture
         $this->loadWorkoutUsers($manager);
         $this->loadExerciseUsers($manager);
         $this->loadRoutineUsers($manager);
+        $this->loadDashboardUsers($manager);
 
         $manager->flush();
     }
@@ -193,6 +196,25 @@ class UserFixtures extends Fixture
                 'nickname' => 'user-tirage-supination',
             ],
         ];
+    }
+
+    private function loadDashboardUsers(ObjectManager $manager): void
+    {
+        $user = new User();
+        $user->email = self::USER_DASHBOARD_SINGLE;
+        $user->nickname = 'user-dashboard-1-workout';
+        $user->createdBy = $user;
+        $user->locale = LocaleAllowedEnum::FR->value;
+        $user->gender = GenderEnum::MALE;
+        $user->lastLogin = new \DateTimeImmutable();
+        $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+
+        $manager->persist($user);
+
+        $this->addReference(
+            \sprintf('%s%s', self::REFERENCE_PREFIX, self::USER_DASHBOARD_SINGLE),
+            $user,
+        );
     }
 
     /**

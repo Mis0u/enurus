@@ -1,0 +1,39 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - distribution : array{bars: array<array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null}>, remainingCount: int}
+    - filter       : string  — session|week|month, valeur de l'attribut data-filter
+    - active       : bool    — panneau visible au chargement initial
+#}
+<div data-dashboard--muscles-target="barsPanel"
+     data-filter="{{ filter }}"
+     class="flex flex-col gap-2 mt-4{{ active ? '' : ' hidden' }}">
+    {% for bar in distribution.bars %}
+        {% set is_mixed = bar.primarySets > 0 and bar.secondarySets > 0 %}
+        {% set fill = 'linear-gradient(to right, var(--color-rose-ft) 0%, var(--color-rose-ft) ' ~ bar.primaryPercentage ~ '%, var(--color-orange-ft) ' ~ bar.primaryPercentage ~ '%, var(--color-orange-ft) 100%)' %}
+        <div class="flex items-center gap-3">
+            <span class="flex flex-col w-[100px] sm:w-[120px] shrink-0">
+                <span class="text-[11.5px] text-[#8b9bb4] truncate">
+                    {{ bar.name|trans({}, 'muscle') }}
+                </span>
+                {% if filter != 'session' and bar.daysSinceLastSolicited is not null %}
+                    <span class="text-[10px] text-[#4a5568] truncate">
+                        {{ 'dashboard.widget.muscles.last_solicited'|trans({days: bar.daysSinceLastSolicited}, 'navigation') }}
+                    </span>
+                {% endif %}
+            </span>
+            <div class="flex-1 h-2 bg-white/[0.06] rounded-full overflow-hidden">
+                <div class="h-full rounded-full transition-ft{{ is_mixed ? ' cursor-help' : '' }}"
+                     style="width: {{ bar.percentage }}%; background: {{ fill }};"
+                     {% if is_mixed %}title="{{ 'dashboard.widget.muscles.breakdown'|trans({primaryCount: bar.primarySets, secondaryCount: bar.secondarySets}, 'navigation') }}"{% endif %}></div>
+            </div>
+            <span class="text-[11px] text-[#4a5568] w-[60px] text-right shrink-0">
+                {{ 'dashboard.widget.muscles.sets_count'|trans({count: bar.sets}, 'navigation') }}
+            </span>
+        </div>
+    {% endfor %}
+    {% if distribution.remainingCount > 0 %}
+        <p class="text-[11px] text-[#4a5568] text-center mt-1">
+            {{ 'dashboard.widget.muscles.more_muscles'|trans({count: distribution.remainingCount}, 'navigation') }}
+        </p>
+    {% endif %}
+</div>

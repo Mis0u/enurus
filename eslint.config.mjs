@@ -3,10 +3,11 @@ import globals from "globals";
 
 export default [
     {
-        files: ["assets/**/*.js"],
+        files: ["assets/**/*.js", "tests/js/**/*.js"],
         languageOptions: {
             globals: {
                 ...globals.browser,
+                ...globals.node,
                 // Ajoute les globales Stimulus si nécessaire
             },
             ecmaVersion: 'latest',

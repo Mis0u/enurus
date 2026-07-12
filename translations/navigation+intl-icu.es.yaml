@@ -10,6 +10,63 @@ dashboard:
     save_workout: Registra tu entrenamiento
     setting: Ajustes
     title: Panel
+    widget:
+        coming_soon: Próximamente
+        locked:
+            need_days: "{count, plural, =1 {+ # día de historial} other {+ # días de historial}}"
+            need_workouts: "{count, plural, =1 {Aún # entrenamiento} other {Aún # entrenamientos}}"
+            title_muscle_period: "Músculos · Semana / Mes"
+            title_progression: Comparativas de progresión
+            title_regularity: Regularidad
+            title_tonnage: Volumen levantado
+        muscles:
+            breakdown: "{primaryCount, plural, =1 {# serie primaria} other {# series primarias}} · {secondaryCount, plural, =1 {# serie secundaria} other {# series secundarias}}"
+            filter:
+                month: Mes
+                session: Último entrenamiento
+                week: Semana
+            last_solicited: "{days, plural, =0 {Trabajado hoy} =1 {Última vez: hace 1 día} other {Última vez: hace # días}}"
+            more_muscles: "{count, plural, =1 {+ # músculo trabajado adicional} other {+ # músculos trabajados adicionales}}"
+            sets_count: "{count, plural, =1 {# serie} other {# series}}"
+            sort_info: "Ordenado por número total de series (primarias y secundarias combinadas), de más a menos trabajado."
+            title: Músculos trabajados
+        regularity:
+            best_streak: "{count, plural, =1 {Récord: # semana} other {Récord: # semanas}}"
+            last_week: Semana pasada
+            month_delta_negative: "{count, plural, =1 {-# sesión vs mes ant.} other {-# sesiones vs mes ant.}}"
+            month_delta_positive: "{count, plural, =1 {+# sesión vs mes ant.} other {+# sesiones vs mes ant.}}"
+            month_delta_zero: Igual que el mes anterior
+            month_label: "{count, plural, =1 {sesión este mes} other {sesiones este mes}}"
+            no_streak: Sin racha activa
+            streak_qualifier: "{count, plural, =1 {consecutiva} other {consecutivas}}"
+            streak_unit: "{count, plural, =1 {semana} other {semanas}}"
+            this_week: Esta semana
+            title: Regularidad
+            week_delta_negative: "{count, plural, =1 {-# sesión vs sem. ant.} other {-# sesiones vs sem. ant.}}"
+            week_delta_positive: "{count, plural, =1 {+# sesión vs sem. ant.} other {+# sesiones vs sem. ant.}}"
+            week_delta_zero: Igual que la semana anterior
+            week_label: "{count, plural, =1 {sesión esta sem.} other {sesiones esta sem.}}"
+            year_delta_negative: "{count, plural, =1 {-# sesión vs año ant.} other {-# sesiones vs año ant.}}"
+            year_delta_positive: "{count, plural, =1 {+# sesión vs año ant.} other {+# sesiones vs año ant.}}"
+            year_delta_zero: Igual que el año anterior
+            year_label: "{count, plural, =1 {sesión este año} other {sesiones este año}}"
+        session:
+            exercises: "{count, plural, =1 {# ejercicio} other {# ejercicios}}"
+            filter:
+                last: Último entrenamiento
+                month: Mes actual
+                week: Semana
+            pr_count: "{count, plural, =1 {# PR batido} other {# PR batidos}}"
+            pr_count_zero: Ningún PR esta vez, ¡sigue así!
+            pr_tooltip: "Un PR (récord personal) se alcanza cuando levantas más peso que nunca en un ejercicio, sin importar el número de repeticiones."
+            title: Sesión
+        tonnage:
+            annual_total_label: "Total del año {year}:"
+            annual_total_value: "{total} {unit}"
+            filter:
+                month: Mes
+                sessions: Sesiones
+                week: Semana
     workout: Entrenamientos
 
 exercise:
@@ -325,6 +382,7 @@ workout:
             reps: Reps
             tonnage: Tonelaje
         pr_badge: PR
+        pr_badge_tooltip: "Nuevo récord personal: el peso más pesado levantado en este ejercicio"
         title: Mi entrenamiento
     title: Registra tu entrenamiento
     type:

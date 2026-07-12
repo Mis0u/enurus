@@ -76,6 +76,17 @@ function test(bool $coverage = false): void
     );
 }
 
+#[AsTask(description: 'Execute JavaScript tests with Vitest')]
+function testJs(): void
+{
+    execute(
+        'VITEST',
+        '✅ Running JavaScript tests...',
+        'npm test',
+        'All the JavaScript tests passed'
+    );
+}
+
 #[AsTask(description: 'Execute Eslint')]
 function eslint(): void
 {
@@ -91,6 +102,7 @@ function eslint(): void
 function qa(): void
 {
     test();
+    testJs();
     phpstan();
     ecs();
     phpmnd();

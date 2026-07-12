@@ -1,0 +1,52 @@
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block title %}{{ 'dashboard.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    {% block state %}
+        <div class="flex-1 overflow-y-auto p-4 md:p-[24px_28px]">
+            <div class="grid md:grid-cols-2 gap-4 md:gap-5 items-stretch">
+
+                {# Ligne 1 col 1 : Séance #}
+                {% include 'dashboard/_widgets/_session.html.twig' with {
+                    sessionStats: sessionStats,
+                } only %}
+
+                {# Ligne 1 col 2 : Tonnage (chiffre toujours débloqué dès 1 séance) #}
+                {% include 'dashboard/_widgets/_tonnage.html.twig' with {
+                    tonnageData: tonnageData,
+                } only %}
+
+                {# Ligne 2 col 1 : Muscles travaillés #}
+                {% include 'dashboard/_widgets/_muscles.html.twig' with {
+                    user: user,
+                    muscleWeekMonthUnlocked: dashboardState.muscleWeekMonthUnlocked,
+                    sessionPrimary: sessionPrimary,
+                    sessionSecondary: sessionSecondary,
+                    weekPrimary: weekPrimary,
+                    weekSecondary: weekSecondary,
+                    monthPrimary: monthPrimary,
+                    monthSecondary: monthSecondary,
+                    sessionBars: sessionBars,
+                    weekBars: weekBars,
+                    monthBars: monthBars,
+                } only %}
+
+                {# Ligne 2 col 2 : Régularité #}
+                {% if dashboardState.regularityUnlocked %}
+                    {% include 'dashboard/_widgets/_regularity.html.twig' with {
+                        regularityData: regularityData,
+                    } only %}
+                {% else %}
+                    {% include 'dashboard/_widgets/_locked_card.html.twig' with {
+                        title: 'dashboard.widget.locked.title_regularity'|trans({}, 'navigation'),
+                        need_workouts: dashboardState.workoutsNeededForRegularity,
+                        need_days: 0,
+                    } only %}
+                {% endif %}
+
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}

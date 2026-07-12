@@ -1,0 +1,91 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - tonnageData : array{
+          unit: string,
+          year: int,
+          annualTotal: float,
+          sessionsChartMinWidth: int,
+          weekChartMinWidth: int,
+          charts: array{sessions: Chart, week: Chart, month: Chart}
+      }
+#}
+<div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
+     data-controller="dashboard--tonnage">
+
+    {# En-tête #}
+    <div class="flex items-center gap-[7px] mb-4">
+        <svg class="w-[15px] h-[15px] text-[#8b9bb4]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18M7 15l4-4 3 3 5-6"/>
+        </svg>
+        <span class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
+            {{ 'dashboard.widget.locked.title_tonnage'|trans({}, 'navigation') }}
+        </span>
+    </div>
+
+    <div class="flex-1 flex flex-col justify-center">
+        {# Total annuel — fixe, indépendant du filtre actif #}
+        <div class="text-center mb-4">
+            <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-rose-ft flex flex-col md:block">
+                <span>
+                    {{ 'dashboard.widget.tonnage.annual_total_label'|trans({
+                        year: tonnageData.year,
+                    }, 'navigation') }}
+                </span>
+                <span class="text-cyan-ft">
+                    {{ 'dashboard.widget.tonnage.annual_total_value'|trans({
+                        total: tonnageData.annualTotal|number_format(0, ',', ' '),
+                        unit: tonnageData.unit,
+                    }, 'navigation') }}
+                </span>
+            </div>
+        </div>
+
+        {# Filtres #}
+        <div class="flex items-center gap-1 bg-white/[0.04] border border-white/[0.07] rounded-lg p-1 mb-5">
+            <button type="button"
+                    data-dashboard--tonnage-target="tab"
+                    data-filter="sessions"
+                    data-action="click->dashboard--tonnage#switchFilter"
+                    class="dashboard-tab-active flex-1 px-3 py-1.5 text-[12px] font-semibold rounded-md transition-ft">
+                {{ 'dashboard.widget.tonnage.filter.sessions'|trans({}, 'navigation') }}
+            </button>
+            <button type="button"
+                    data-dashboard--tonnage-target="tab"
+                    data-filter="week"
+                    data-action="click->dashboard--tonnage#switchFilter"
+                    class="dashboard-tab-inactive flex-1 px-3 py-1.5 text-[12px] font-semibold rounded-md transition-ft">
+                {{ 'dashboard.widget.tonnage.filter.week'|trans({}, 'navigation') }}
+            </button>
+            <button type="button"
+                    data-dashboard--tonnage-target="tab"
+                    data-filter="month"
+                    data-action="click->dashboard--tonnage#switchFilter"
+                    class="dashboard-tab-inactive flex-1 px-3 py-1.5 text-[12px] font-semibold rounded-md transition-ft">
+                {{ 'dashboard.widget.tonnage.filter.month'|trans({}, 'navigation') }}
+            </button>
+        </div>
+
+        {# Graphique en barres — un panneau par filtre #}
+        <div class="h-[160px]">
+            <div data-dashboard--tonnage-target="chartPanel"
+                 data-filter="sessions"
+                 class="relative h-full overflow-x-auto overflow-y-hidden">
+                <div style="min-width: {{ tonnageData.sessionsChartMinWidth }}px;" class="h-full">
+                    {{ render_chart(tonnageData.charts.sessions) }}
+                </div>
+            </div>
+            <div data-dashboard--tonnage-target="chartPanel"
+                 data-filter="week"
+                 class="relative h-full hidden overflow-x-auto overflow-y-hidden">
+                <div style="min-width: {{ tonnageData.weekChartMinWidth }}px;" class="h-full">
+                    {{ render_chart(tonnageData.charts.week) }}
+                </div>
+            </div>
+            <div data-dashboard--tonnage-target="chartPanel"
+                 data-filter="month"
+                 class="relative h-full hidden">
+                {{ render_chart(tonnageData.charts.month) }}
+            </div>
+        </div>
+    </div>
+</div>

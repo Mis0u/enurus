@@ -56,16 +56,39 @@ class WorkoutShowController extends AbstractController
         $totalTonnageKg = $tonnageMap[(string) $workout->id] ?? 0.0;
         $totalTonnage = $weightConverter->convertToLbs($totalTonnageKg, $user->unitOfMeasure);
         $exerciseData = $this->buildExerciseData($workoutExercises, $prMap, $exerciseTonnageMap, $weightConverter, $user);
+        [$totalSets, $totalReps] = $this->countSetsAndReps($exerciseData);
 
         return $this->render('workout/show/show.html.twig', [
             'workout' => $workout,
             'exerciseData' => $exerciseData,
             'totalTonnage' => $totalTonnage,
+            'totalSets' => $totalSets,
+            'totalReps' => $totalReps,
             'unit' => $user->unitOfMeasure,
             'allPrimarySvgIds' => $this->resolveAllPrimarySvgIds($exerciseData),
             'allSecondarySvgIds' => $this->resolveAllSecondarySvgIds($exerciseData),
             'user' => $user,
         ]);
+    }
+
+    /**
+     * @param array<int, array{sets: array<int, array{reps: int}>}> $exerciseData
+     * @return array{0: int, 1: int}
+     */
+    private function countSetsAndReps(array $exerciseData): array
+    {
+        $totalSets = 0;
+        $totalReps = 0;
+
+        foreach ($exerciseData as $item) {
+            $totalSets += \count($item['sets']);
+
+            foreach ($item['sets'] as $set) {
+                $totalReps += $set['reps'];
+            }
+        }
+
+        return [$totalSets, $totalReps];
     }
 
     /**

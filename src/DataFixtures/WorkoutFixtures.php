@@ -46,6 +46,8 @@ class WorkoutFixtures extends Fixture implements DependentFixtureInterface
             $this->createWorkoutsForUser($user, $userData['count'], $userData['spreadDays'], $exercises, $manager);
         }
 
+        $this->createDashboardWorkouts($exercises, $manager);
+
         $manager->flush();
     }
 
@@ -74,7 +76,35 @@ class WorkoutFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * Crée N workouts répartis sur $spreadDays jours en remontant depuis aujourd'hui.
+     * Crée 1 workout aujourd'hui pour user-fixture-1-workout (palier 1 — tests de frontière).
+     *
+     * @param Exercise[] $exercises
+     */
+    private function createDashboardWorkouts(array $exercises, ObjectManager $manager): void
+    {
+        /** @var User $userSingle */
+        $userSingle = $this->getReference(
+            \sprintf('%s%s', UserFixtures::REFERENCE_PREFIX, UserFixtures::USER_DASHBOARD_SINGLE),
+            User::class,
+        );
+
+        $workout = new Workout();
+        $workout->owner = $userSingle;
+        $workout->performedAt = new \DateTimeImmutable('today 10:00:00');
+        $workout->duration = 60;
+
+        $pickedExercises = $this->pickRandom($exercises, 3);
+        foreach ($pickedExercises as $position => $exercise) {
+            $workoutExercise = $this->createWorkoutExercise($workout, $exercise, $position);
+            $workout->workoutExercises->add($workoutExercise);
+        }
+
+        $manager->persist($workout);
+    }
+
+    /**
+     * Crée N workouts garantissant des séances dans la semaine courante et la semaine précédente,
+     * le reste distribué aléatoirement sur $spreadDays jours en remontant depuis aujourd'hui.
      *
      * @param Exercise[] $exercises
      */
@@ -85,7 +115,7 @@ class WorkoutFixtures extends Fixture implements DependentFixtureInterface
         array $exercises,
         ObjectManager $manager,
     ): void {
-        $today = new \DateTimeImmutable('2026-05-14 23:59:59');
+        $today = new \DateTimeImmutable();
         $dates = $this->generateDates($today, $workoutCount, $spreadDays);
 
         foreach ($dates as $date) {
@@ -110,30 +140,72 @@ class WorkoutFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * Génère $count dates uniques réparties aléatoirement sur $spreadDays jours.
+     * Génère $count dates uniques garantissant :
+     *  - 2 séances minimum dans la semaine courante (lundi → aujourd'hui)
+     *  - 3 séances minimum dans la semaine précédente (lundi → dimanche)
+     *  - le reste distribué aléatoirement sur $spreadDays jours depuis aujourd'hui
+     * Jamais de date dans le futur.
      *
      * @return \DateTimeImmutable[]
      */
     private function generateDates(\DateTimeImmutable $today, int $count, int $spreadDays): array
     {
-        $dates = [];
-        $usedDays = [];
+        $dayOfWeek = (int) $today->format('N'); // 1=lundi, 7=dimanche
 
+        // Lundi de la semaine courante
+        $currentWeekStart = $today->modify(\sprintf('-%d days', $dayOfWeek - 1))->setTime(0, 0, 0);
+        // Lundi de la semaine précédente
+        $prevWeekStart = $currentWeekStart->modify('-7 days');
+
+        /** @var array<string, true> $usedDays */
+        $usedDays = [];
+        /** @var \DateTimeImmutable[] $dates */
+        $dates = [];
+
+        // Phase 1 : séances garanties dans la semaine courante (lundi → aujourd'hui)
+        $currentWeekSlots = min(2, $dayOfWeek, $count);
+        $currentOffsets = range(0, $dayOfWeek - 1);
+        shuffle($currentOffsets);
+        foreach (\array_slice($currentOffsets, 0, $currentWeekSlots) as $daysFromMonday) {
+            $date = $currentWeekStart
+                ->modify(\sprintf('+%d days', $daysFromMonday))
+                ->setTime(random_int(7, 21), random_int(0, 59), 0);
+            $key = $date->format('Y-m-d');
+            $usedDays[$key] = true;
+            $dates[] = $date;
+        }
+
+        // Phase 2 : séances garanties dans la semaine précédente (lundi → dimanche)
+        $prevWeekSlots = min(3, max(0, $count - \count($dates)));
+        $prevOffsets = range(0, 6);
+        shuffle($prevOffsets);
+        foreach (\array_slice($prevOffsets, 0, $prevWeekSlots) as $daysFromPrevMonday) {
+            $date = $prevWeekStart
+                ->modify(\sprintf('+%d days', $daysFromPrevMonday))
+                ->setTime(random_int(7, 21), random_int(0, 59), 0);
+            $key = $date->format('Y-m-d');
+            if (! isset($usedDays[$key])) {
+                $usedDays[$key] = true;
+                $dates[] = $date;
+            }
+        }
+
+        // Phase 3 : reste aléatoire sur la fenêtre $spreadDays (jamais dans le futur)
         $attempts = 0;
-        $maxAttempts = $count * 10;
+        $maxAttempts = $count * 15;
 
         while (\count($dates) < $count && $attempts < $maxAttempts) {
             ++$attempts;
             $daysAgo = random_int(0, $spreadDays - 1);
-            $hour = random_int(7, 21);
-            $minute = random_int(0, 59);
+            $date = $today
+                ->modify(\sprintf('-%d days', $daysAgo))
+                ->setTime(random_int(7, 21), random_int(0, 59), 0);
+            $key = $date->format('Y-m-d');
 
-            if (isset($usedDays[$daysAgo]) && \count($usedDays) < $spreadDays) {
-                continue;
+            if (! isset($usedDays[$key])) {
+                $usedDays[$key] = true;
+                $dates[] = $date;
             }
-
-            $usedDays[$daysAgo] = true;
-            $dates[] = $today->modify(\sprintf('-%d days', $daysAgo))->setTime($hour, $minute, 0);
         }
 
         usort($dates, static fn (\DateTimeImmutable $a, \DateTimeImmutable $b): int => $b <=> $a);
