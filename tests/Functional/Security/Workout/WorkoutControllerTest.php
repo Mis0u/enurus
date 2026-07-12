@@ -475,7 +475,7 @@ class WorkoutControllerTest extends WebTestCase
         );
 
         $this->assertResponseIsSuccessful();
-        $this->assertGreaterThan(0, $crawler->filter('.muscle-tag, span[class*="text-[#f43f5e]"], span[class*="text-[#f97316]"]')->count());
+        $this->assertGreaterThan(0, $crawler->filter('.muscle-tag, span[class*="text-[#f43f5e]"], span[class*="text-[#a855f7]"]')->count());
     }
 
     //DÉBUT NOTE
@@ -519,13 +519,25 @@ class WorkoutControllerTest extends WebTestCase
 
         $this->assertResponseRedirects('/fr/tableau-de-bord');
 
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        /** @var User $user */
+        $user = $userRepository->findOneBy([
+            'email' => self::USER,
+        ]);
+
         /** @var WorkoutRepository $workoutRepository */
         $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
 
         /** @var Workout $workout */
-        $workout = $workoutRepository->findOneBy([], [
-            'performedAt' => 'DESC',
-        ]);
+        $workout = $workoutRepository->findOneBy(
+            [
+                'owner' => $user,
+            ],
+            [
+                'performedAt' => 'DESC',
+            ]
+        );
 
         $this->assertNull($workout->note);
     }
