@@ -10,6 +10,63 @@ dashboard:
     save_workout: Registra il tuo allenamento
     setting: Impostazioni
     title: Cruscotto
+    widget:
+        coming_soon: Presto disponibile
+        locked:
+            need_days: "{count, plural, =1 {+ # giorno di storico} other {+ # giorni di storico}}"
+            need_workouts: "{count, plural, =1 {Ancora # allenamento} other {Ancora # allenamenti}}"
+            title_muscle_period: "Muscoli · Settimana / Mese"
+            title_progression: Confronti di progressione
+            title_regularity: Regolarità
+            title_tonnage: Volume sollevato
+        muscles:
+            breakdown: "{primaryCount, plural, =1 {# serie primaria} other {# serie primarie}} · {secondaryCount, plural, =1 {# serie secondaria} other {# serie secondarie}}"
+            filter:
+                month: Mese
+                session: Ultimo allenamento
+                week: Settimana
+            last_solicited: "{days, plural, =0 {Allenato oggi} =1 {Ultima volta: 1 giorno fa} other {Ultima volta: # giorni fa}}"
+            more_muscles: "{count, plural, =1 {+ # altro muscolo allenato} other {+ # altri muscoli allenati}}"
+            sets_count: "{count, plural, =1 {# serie} other {# serie}}"
+            sort_info: "Ordinati per numero totale di serie (primarie e secondarie combinate), dal più al meno allenato."
+            title: Muscoli allenati
+        regularity:
+            best_streak: "{count, plural, =1 {Record: # settimana} other {Record: # settimane}}"
+            last_week: Settimana scorsa
+            month_delta_negative: "{count, plural, =1 {-# allenamento vs mese prec.} other {-# allenamenti vs mese prec.}}"
+            month_delta_positive: "{count, plural, =1 {+# allenamento vs mese prec.} other {+# allenamenti vs mese prec.}}"
+            month_delta_zero: Come il mese scorso
+            month_label: "{count, plural, =1 {allenamento questo mese} other {allenamenti questo mese}}"
+            no_streak: Nessuno streak attivo
+            streak_qualifier: "{count, plural, =1 {consecutiva} other {consecutive}}"
+            streak_unit: "{count, plural, =1 {settimana} other {settimane}}"
+            this_week: Questa settimana
+            title: Regolarità
+            week_delta_negative: "{count, plural, =1 {-# allenamento vs sett. prec.} other {-# allenamenti vs sett. prec.}}"
+            week_delta_positive: "{count, plural, =1 {+# allenamento vs sett. prec.} other {+# allenamenti vs sett. prec.}}"
+            week_delta_zero: Come la settimana scorsa
+            week_label: "{count, plural, =1 {allenamento questa sett.} other {allenamenti questa sett.}}"
+            year_delta_negative: "{count, plural, =1 {-# allenamento vs anno prec.} other {-# allenamenti vs anno prec.}}"
+            year_delta_positive: "{count, plural, =1 {+# allenamento vs anno prec.} other {+# allenamenti vs anno prec.}}"
+            year_delta_zero: Come lo scorso anno
+            year_label: "{count, plural, =1 {allenamento questo anno} other {allenamenti questo anno}}"
+        session:
+            exercises: "{count, plural, =1 {# esercizio} other {# esercizi}}"
+            filter:
+                last: Ultimo allenamento
+                month: Mese corrente
+                week: Settimana
+            pr_count: "{count, plural, =1 {# PR battuto} other {# PR battuti}}"
+            pr_count_zero: Nessun PR questa volta, continua così!
+            pr_tooltip: "Un PR (record personale) viene raggiunto quando sollevi più pesante che mai su un esercizio, indipendentemente dal numero di ripetizioni."
+            title: Sessione
+        tonnage:
+            annual_total_label: "Totale per l'anno {year}:"
+            annual_total_value: "{total} {unit}"
+            filter:
+                month: Mese
+                sessions: Allenamenti
+                week: Settimana
     workout: Allenamenti
 
 exercise:
@@ -325,6 +382,7 @@ workout:
             reps: Rip
             tonnage: Tonnellaggio
         pr_badge: PR
+        pr_badge_tooltip: "Nuovo record personale: il peso più pesante mai sollevato per questo esercizio"
         title: Il mio allenamento
     title: Registra il tuo allenamento
     type:

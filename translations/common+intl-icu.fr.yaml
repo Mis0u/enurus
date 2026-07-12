@@ -60,8 +60,8 @@ sentence:
             confirmation: Votre mot de passe a bien été modifié
             criteria_min_char: Au moins {min} caractères
             min_char: Minimum {min} caractères avec majuscules, minuscules et chiffres
-            regex: Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial (! ? % $ * &)
-            special_char: Au moins un des caractères spéciaux suivant ! ? % $ * &
+            regex: "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial (! ? % $ * & # @ _ -)"
+            special_char: "Au moins un des caractères spéciaux suivant ! ? % $ * & # @ _ -"
             upper_lower: Une majuscule et une minuscule
             valid_new_password: Valider le nouveau mot de passe
     progress_comparaison: Comparatifs de progression · Séries

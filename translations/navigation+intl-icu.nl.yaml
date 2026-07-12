@@ -10,6 +10,63 @@ dashboard:
     save_workout: Registreer je training
     setting: Instellingen
     title: Overzicht
+    widget:
+        coming_soon: Binnenkort beschikbaar
+        locked:
+            need_days: "{count, plural, =1 {+ # dag geschiedenis} other {+ # dagen geschiedenis}}"
+            need_workouts: "{count, plural, =1 {Nog # training} other {Nog # trainingen}}"
+            title_muscle_period: "Spieren · Week / Maand"
+            title_progression: Vorderingsvergelijkingen
+            title_regularity: Regelmaat
+            title_tonnage: Geheven gewicht
+        muscles:
+            breakdown: "{primaryCount, plural, =1 {# primaire set} other {# primaire sets}} · {secondaryCount, plural, =1 {# secundaire set} other {# secundaire sets}}"
+            filter:
+                month: Maand
+                session: Laatste training
+                week: Week
+            last_solicited: "{days, plural, =0 {Vandaag getraind} =1 {Laatste keer: 1 dag geleden} other {Laatste keer: # dagen geleden}}"
+            more_muscles: "{count, plural, =1 {+ # andere getrainde spier} other {+ # andere getrainde spieren}}"
+            sets_count: "{count, plural, =1 {# set} other {# sets}}"
+            sort_info: "Gesorteerd op totaal aantal sets (primair en secundair samen), van meest naar minst getraind."
+            title: Getrainde spieren
+        regularity:
+            best_streak: "{count, plural, =1 {Record: # week} other {Record: # weken}}"
+            last_week: Vorige week
+            month_delta_negative: "{count, plural, =1 {-# training vs vorige maand} other {-# trainingen vs vorige maand}}"
+            month_delta_positive: "{count, plural, =1 {+# training vs vorige maand} other {+# trainingen vs vorige maand}}"
+            month_delta_zero: Gelijk aan vorige maand
+            month_label: "{count, plural, =1 {training deze maand} other {trainingen deze maand}}"
+            no_streak: Geen actieve streak
+            streak_qualifier: "{count, plural, =1 {aaneengesloten} other {aaneengesloten}}"
+            streak_unit: "{count, plural, =1 {week} other {weken}}"
+            this_week: Deze week
+            title: Regelmaat
+            week_delta_negative: "{count, plural, =1 {-# training vs vorige week} other {-# trainingen vs vorige week}}"
+            week_delta_positive: "{count, plural, =1 {+# training vs vorige week} other {+# trainingen vs vorige week}}"
+            week_delta_zero: Gelijk aan vorige week
+            week_label: "{count, plural, =1 {training deze week} other {trainingen deze week}}"
+            year_delta_negative: "{count, plural, =1 {-# training vs vorig jaar} other {-# trainingen vs vorig jaar}}"
+            year_delta_positive: "{count, plural, =1 {+# training vs vorig jaar} other {+# trainingen vs vorig jaar}}"
+            year_delta_zero: Gelijk aan vorig jaar
+            year_label: "{count, plural, =1 {training dit jaar} other {trainingen dit jaar}}"
+        session:
+            exercises: "{count, plural, =1 {# oefening} other {# oefeningen}}"
+            filter:
+                last: Laatste training
+                month: Huidige maand
+                week: Week
+            pr_count: "{count, plural, =1 {# PR verbroken} other {# PR's verbroken}}"
+            pr_count_zero: Geen PR deze keer, ga zo door!
+            pr_tooltip: "Een PR (persoonlijk record) wordt behaald wanneer je zwaarder tilt dan ooit tevoren bij een oefening, ongeacht het aantal herhalingen."
+            title: Training
+        tonnage:
+            annual_total_label: "Totaal voor jaar {year}:"
+            annual_total_value: "{total} {unit}"
+            filter:
+                month: Maand
+                sessions: Trainingen
+                week: Week
     workout: Trainingen
 
 exercise:
@@ -325,6 +382,7 @@ workout:
             reps: Reps
             tonnage: Tonnage
         pr_badge: PR
+        pr_badge_tooltip: "Nieuw persoonlijk record: het zwaarste gewicht ooit getild bij deze oefening"
         title: Mijn training
     title: Registreer je training
     type:

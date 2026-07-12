@@ -10,6 +10,63 @@ dashboard:
     save_workout: Log your workout
     setting: Settings
     title: Dashboard
+    widget:
+        coming_soon: Coming soon
+        locked:
+            need_days: "{count, plural, =1 {+ # day of history} other {+ # days of history}}"
+            need_workouts: "{count, plural, =1 {# more workout} other {# more workouts}}"
+            title_muscle_period: "Muscles · Week / Month"
+            title_progression: Progress comparisons
+            title_regularity: Regularity
+            title_tonnage: Volume lifted
+        muscles:
+            breakdown: "{primaryCount, plural, =1 {# primary set} other {# primary sets}} · {secondaryCount, plural, =1 {# secondary set} other {# secondary sets}}"
+            filter:
+                month: Month
+                session: Last workout
+                week: Week
+            last_solicited: "{days, plural, =0 {Worked today} =1 {Last time: 1 day ago} other {Last time: # days ago}}"
+            more_muscles: "{count, plural, =1 {+ # more muscle worked} other {+ # more muscles worked}}"
+            sets_count: "{count, plural, =1 {# set} other {# sets}}"
+            sort_info: "Sorted by total sets (primary and secondary combined), most to least worked."
+            title: Muscles worked
+        regularity:
+            best_streak: "{count, plural, =1 {Record: # week} other {Record: # weeks}}"
+            last_week: Last week
+            month_delta_negative: "{count, plural, =1 {-# session vs last month} other {-# sessions vs last month}}"
+            month_delta_positive: "{count, plural, =1 {+# session vs last month} other {+# sessions vs last month}}"
+            month_delta_zero: Same as last month
+            month_label: "{count, plural, =1 {session this month} other {sessions this month}}"
+            no_streak: No active streak
+            streak_qualifier: "{count, plural, =1 {consecutive} other {consecutive}}"
+            streak_unit: "{count, plural, =1 {week} other {weeks}}"
+            this_week: This week
+            title: Regularity
+            week_delta_negative: "{count, plural, =1 {-# session vs last week} other {-# sessions vs last week}}"
+            week_delta_positive: "{count, plural, =1 {+# session vs last week} other {+# sessions vs last week}}"
+            week_delta_zero: Same as last week
+            week_label: "{count, plural, =1 {session this week} other {sessions this week}}"
+            year_delta_negative: "{count, plural, =1 {-# session vs last year} other {-# sessions vs last year}}"
+            year_delta_positive: "{count, plural, =1 {+# session vs last year} other {+# sessions vs last year}}"
+            year_delta_zero: Same as last year
+            year_label: "{count, plural, =1 {session this year} other {sessions this year}}"
+        session:
+            exercises: "{count, plural, =1 {# exercise} other {# exercises}}"
+            filter:
+                last: Last workout
+                month: Current month
+                week: Week
+            pr_count: "{count, plural, =1 {# PR broken} other {# PRs broken}}"
+            pr_count_zero: No PR this time, keep it up!
+            pr_tooltip: "A PR (personal record) is reached when you lift heavier than ever before on an exercise, no matter the number of reps."
+            title: Session
+        tonnage:
+            annual_total_label: "Total for year {year}:"
+            annual_total_value: "{total} {unit}"
+            filter:
+                month: Month
+                sessions: Sessions
+                week: Week
     workout: Workouts
 
 exercise:
@@ -325,6 +382,7 @@ workout:
             reps: Reps
             tonnage: Tonnage
         pr_badge: PR
+        pr_badge_tooltip: "New personal record: heaviest weight ever lifted for this exercise"
         title: My workout
     title: Log your workout
     type:
