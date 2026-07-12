@@ -116,6 +116,30 @@ html, body { overflow: hidden; font-family: 'DM Sans', sans-serif; }
 /* ---- Helper transition ---- */
 .transition-ft { transition: all 0.25s cubic-bezier(0.4,0,0.2,1); }
 
+/* ---- Dots légende muscles ---- */
+.show-muscles-dot-primary  { background: #f43f5e; }
+.show-muscles-dot-secondary { background: #a855f7; }
+
+/* ---- Filtres widgets dashboard (Muscles, Séance — état piloté par Stimulus) ---- */
+.dashboard-tab-active {
+    background: #f43f5e;
+    color: #fff;
+    cursor: default;
+}
+.dashboard-tab-inactive {
+    color: #4a5568;
+    cursor: pointer;
+}
+.dashboard-tab-inactive:hover {
+    color: #8b9bb4;
+}
+
+/* ---- Carte streak widget Régularité (dégradé ambre) ---- */
+.regularity-streak-card {
+    background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(245,158,11,0.03));
+    border: 1px solid rgba(245,158,11,0.25);
+}
+
 
 #sidebar-toggle {
     box-shadow:

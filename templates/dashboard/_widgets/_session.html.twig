@@ -1,0 +1,98 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - sessionStats : array{
+          last : array{exercises: int, sets: int, reps: int, prCount: int, prLabel: string},
+          week : array{exercises: int, sets: int, reps: int, prCount: int, prLabel: string},
+          month: array{exercises: int, sets: int, reps: int, prCount: int, prLabel: string}
+      }
+#}
+<div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
+     data-controller="dashboard--session"
+     data-dashboard--session-last-value='{{ sessionStats.last|json_encode }}'
+     data-dashboard--session-week-value='{{ sessionStats.week|json_encode }}'
+     data-dashboard--session-month-value='{{ sessionStats.month|json_encode }}'>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(244,63,94,0.04),transparent_60%)] pointer-events-none"></div>
+
+    {# En-tête #}
+    <div class="flex items-center gap-[7px] mb-4">
+        <svg class="w-[15px] h-[15px] text-[#8b9bb4]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+        <span class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
+            {{ 'dashboard.widget.session.title'|trans({}, 'navigation') }}
+        </span>
+    </div>
+
+    <div class="flex-1 flex flex-col justify-between gap-4">
+        {# Filtres #}
+        <div class="flex items-center gap-1 bg-white/[0.04] border border-white/[0.07] rounded-lg p-1">
+            <button type="button"
+                    data-dashboard--session-target="tab"
+                    data-filter="last"
+                    data-action="click->dashboard--session#switchFilter"
+                    class="dashboard-tab-active flex-1 px-3 py-1.5 text-[12px] font-semibold rounded-md transition-ft">
+                {{ 'dashboard.widget.session.filter.last'|trans({}, 'navigation') }}
+            </button>
+            <button type="button"
+                    data-dashboard--session-target="tab"
+                    data-filter="week"
+                    data-action="click->dashboard--session#switchFilter"
+                    class="dashboard-tab-inactive flex-1 px-3 py-1.5 text-[12px] font-semibold rounded-md transition-ft">
+                {{ 'dashboard.widget.session.filter.week'|trans({}, 'navigation') }}
+            </button>
+            <button type="button"
+                    data-dashboard--session-target="tab"
+                    data-filter="month"
+                    data-action="click->dashboard--session#switchFilter"
+                    class="dashboard-tab-inactive flex-1 px-3 py-1.5 text-[12px] font-semibold rounded-md transition-ft">
+                {{ 'dashboard.widget.session.filter.month'|trans({}, 'navigation') }}
+            </button>
+        </div>
+
+        {# Métriques : exercices | séries | reps #}
+        <div class="grid grid-cols-3 gap-[10px]">
+            <div class="bg-white/[0.03] border border-white/[0.07] rounded-[10px] p-[10px_12px] text-center">
+                <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-white" data-dashboard--session-target="exercises">
+                    {{ sessionStats.last.exercises }}
+                </div>
+                <div class="text-[11px] text-[#4a5568] mt-0.5">
+                    {{ 'dashboard.widget.session.exercises'|trans({}, 'navigation') }}
+                </div>
+            </div>
+
+            <div class="bg-white/[0.03] border border-white/[0.07] rounded-[10px] p-[10px_12px] text-center">
+                <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-white" data-dashboard--session-target="sets">
+                    {{ sessionStats.last.sets }}
+                </div>
+                <div class="text-[11px] text-[#4a5568] mt-0.5">
+                    {{ 'workout.show.metrics.sets'|trans({}, 'navigation') }}
+                </div>
+            </div>
+
+            <div class="bg-white/[0.03] border border-white/[0.07] rounded-[10px] p-[10px_12px] text-center">
+                <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-white" data-dashboard--session-target="reps">
+                    {{ sessionStats.last.reps }}
+                </div>
+                <div class="text-[11px] text-[#4a5568] mt-0.5">
+                    {{ 'workout.show.sets_table.reps'|trans({}, 'navigation') }}
+                </div>
+            </div>
+        </div>
+
+        {# PR battus sur la période — mis en avant, distinct des 3 chiffres neutres au-dessus #}
+        <div class="bg-cyan-ft/[0.1] border border-cyan-ft/30 rounded-[10px] p-[10px_12px] flex items-center justify-center gap-2 text-center">
+            <span class="text-[17px] leading-none{{ sessionStats.last.prCount > 0 ? '' : ' hidden' }}" data-dashboard--session-target="prIcon">🏆</span>
+            <span class="font-rajdhani text-[14px] font-bold text-cyan-ft" data-dashboard--session-target="prLabel">
+                {{ sessionStats.last.prLabel }}
+            </span>
+            <span class="inline-flex items-center justify-center w-4 h-4 shrink-0 cursor-help text-cyan-ft/70 hover:text-cyan-ft transition-ft"
+                  title="{{ 'dashboard.widget.session.pr_tooltip'|trans({}, 'navigation') }}">
+                <svg class="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+            </span>
+        </div>
+    </div>
+</div>
