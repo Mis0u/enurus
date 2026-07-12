@@ -104,9 +104,9 @@
     color: #f43f5e;
 }
 .show-muscle-tag-secondary {
-    background: rgba(249, 115, 22, 0.15);
-    border-color: rgba(249, 115, 22, 0.3);
-    color: #f97316;
+    background: rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.3);
+    color: #a855f7;
 }
 
 /* Tonnage exercice */
@@ -183,5 +183,5 @@
 }
 
 .show-muscles-dot-secondary {
-    background: #f97316;
+    background: #a855f7;
 }

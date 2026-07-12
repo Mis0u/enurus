@@ -1,20 +1,12 @@
 import { Controller } from '@hotwired/stimulus';
 import Swal from 'sweetalert2';
-
-const CYCLE = ['none', 'primary', 'secondary'];
-
-const COLORS = {
-    none:      { fill: '#1e293b',               stroke: 'rgba(255,255,255,0.1)' },
-    primary:   { fill: 'rgba(244,63,94,0.55)',  stroke: '#f43f5e'              },
-    secondary: { fill: 'rgba(249,115,22,0.45)', stroke: '#f97316'              },
-};
+import { MusclePills, updatePillVisual, buildRecapHtml } from './muscle_pills.js';
 
 /**
  * Exercise edit controller.
  *
- * Identical to exercise--create with one addition:
- * #initFromExistingData() reads the pre-filled hidden input (JSON from DataTransformer)
- * and restores pill states + SVG colors + recap on connect().
+ * Identique à exercise--create, avec en plus #initFromExistingData() qui restaure l'état des
+ * pills depuis le hidden input pré-rempli (JSON produit par ExerciseMuscleDataTransformer).
  *
  * File: assets/controllers/exercise/edit_controller.js
  */
@@ -37,17 +29,17 @@ export default class extends Controller {
         duplicatePublicMessage:  String,
     };
 
-    /** @type {Map<string, string>} muscleId → 'none'|'primary'|'secondary' */
-    #states = new Map();
+    /** @type {MusclePills} */
+    #pills;
 
     #abortController = null;
 
     // ── Lifecycle ─────────────────────────────────────────────────────────────
 
     connect() {
-        this.#initStates();
-        this.#paintAllSvg('none');
+        this.#pills = new MusclePills(this.element, this.pillTargets);
         this.#initFromExistingData();
+        this.#pills.paintAll();
         this.#updateRecap();
         this.#openAccordionIfDescription();
     }
@@ -60,18 +52,17 @@ export default class extends Controller {
 
     cyclePill({ currentTarget: pill }) {
         const id   = pill.dataset.muscleId;
-        const next = CYCLE[(CYCLE.indexOf(this.#states.get(id)) + 1) % CYCLE.length];
+        const next = this.#pills.cycle(id);
 
-        this.#states.set(id, next);
-        this.#applyPillState(pill, next);
-        this.#paintMuscle(pill, next);
+        updatePillVisual(pill, next);
+        this.#pills.paintAll();
         this.#updateRecap();
         this.#syncHiddenInput();
     }
 
     submitForm(event) {
         const nameOk   = this.#validateName();
-        const muscleOk = this.#hasPrimary();
+        const muscleOk = this.#pills.hasPrimary();
 
         if (nameOk && muscleOk) {
             return;
@@ -132,12 +123,6 @@ export default class extends Controller {
 
     // ── Private — init ────────────────────────────────────────────────────────
 
-    #initStates() {
-        this.pillTargets.forEach(pill => {
-            this.#states.set(pill.dataset.muscleId, 'none');
-        });
-    }
-
     /**
      * Reads pre-filled JSON from hidden input set by ExerciseMuscleDataTransformer::transform().
      * Expected: [{ id: string, type: 'PRIMARY'|'SECONDARY' }, ...]
@@ -174,9 +159,8 @@ export default class extends Controller {
                 return;
             }
 
-            this.#states.set(id, state);
-            this.#applyPillState(pill, state);
-            this.#paintMuscle(pill, state);
+            this.#pills.set(id, state);
+            updatePillVisual(pill, state);
         });
     }
 
@@ -208,88 +192,17 @@ export default class extends Controller {
         return this.element.querySelector('#description-accordion button');
     }
 
-    // ── Private — pills ───────────────────────────────────────────────────────
-
-    #applyPillState(pill, state) {
-        pill.dataset.state = state;
-        pill.classList.remove('pill--primary', 'pill--secondary');
-
-        if (state !== 'none') {
-            pill.classList.add(`pill--${state}`);
-        }
-
-        const dot   = pill.querySelector('[data-role="dot"]');
-        const badge = pill.querySelector('[data-role="badge"]');
-
-        if (dot)   { dot.hidden = state === 'none'; }
-        if (badge) {
-            badge.hidden      = state === 'none';
-            badge.textContent = state === 'primary' ? 'P' : state === 'secondary' ? 'S' : '';
-        }
-    }
-
-    // ── Private — SVG ─────────────────────────────────────────────────────────
-
-    #paintAllSvg(state) {
-        this.element.querySelectorAll('g.bodymap').forEach(g => this.#paintGroup(g, state));
-    }
-
-    #paintMuscle(pill, state) {
-        const ids = JSON.parse(pill.dataset.svgIds ?? '[]');
-
-        ids.forEach(id => {
-            const group = this.element.querySelector(`g#${id}`);
-            if (group) { this.#paintGroup(group, state); }
-        });
-    }
-
-    #paintGroup(group, state) {
-        const colors = COLORS[state] ?? COLORS.none;
-        group.style.fill   = colors.fill;
-        group.style.stroke = colors.stroke;
-        group.style.color  = colors.fill;
-    }
-
     // ── Private — recap ───────────────────────────────────────────────────────
 
     #updateRecap() {
-        const primary   = [];
-        const secondary = [];
-
-        this.#states.forEach((state, id) => {
-            const pill  = this.pillTargets.find(p => p.dataset.muscleId === id);
-            const label = pill?.dataset.muscleLabel ?? id;
-
-            if (state === 'primary')   { primary.push(label); }
-            if (state === 'secondary') { secondary.push(label); }
-        });
-
-        this.recapPrimaryTarget.innerHTML   = this.#buildRecapHtml(primary,   'primary');
-        this.recapSecondaryTarget.innerHTML = this.#buildRecapHtml(secondary, 'secondary');
-    }
-
-    #buildRecapHtml(labels, type) {
-        if (labels.length === 0) {
-            return `<span class="text-[12px] text-[#334155] italic">${this.labelNoneValue}</span>`;
-        }
-
-        return labels
-            .map(label => `<span class="recap-pill recap-pill--${type}">${label}</span>`)
-            .join('');
+        this.recapPrimaryTarget.innerHTML   = buildRecapHtml(this.#pills.musclesByState('primary'), 'primary', this.labelNoneValue);
+        this.recapSecondaryTarget.innerHTML = buildRecapHtml(this.#pills.musclesByState('secondary'), 'secondary', this.labelNoneValue);
     }
 
     // ── Private — hidden input ────────────────────────────────────────────────
 
     #syncHiddenInput() {
-        const data = [];
-
-        this.#states.forEach((state, id) => {
-            if (state !== 'none') {
-                data.push({ id, type: state });
-            }
-        });
-
-        this.musclesInputTarget.value = JSON.stringify(data);
+        this.musclesInputTarget.value = JSON.stringify(this.#pills.toAssignments());
     }
 
     // ── Private — duplicate check ─────────────────────────────────────────────
@@ -334,13 +247,6 @@ export default class extends Controller {
 
     #validateName() {
         return this.nameInputTarget.value.trim().length >= 2;
-    }
-
-    #hasPrimary() {
-        for (const state of this.#states.values()) {
-            if (state === 'primary') { return true; }
-        }
-        return false;
     }
 
     #showError(target) {
