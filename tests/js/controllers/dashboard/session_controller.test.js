@@ -12,9 +12,9 @@ describe('dashboard--session controller', () => {
     beforeEach(() => {
         document.body.innerHTML = `
             <div data-controller="dashboard--session"
-                 data-dashboard--session-last-value='{"exercises":5,"sets":20,"reps":180,"prCount":2,"prLabel":"2 PR battus"}'
-                 data-dashboard--session-week-value='{"exercises":12,"sets":48,"reps":410,"prCount":0,"prLabel":"Aucun PR cette fois, continue comme ça !"}'
-                 data-dashboard--session-month-value='{"exercises":30,"sets":110,"reps":900,"prCount":5,"prLabel":"5 PR battus"}'>
+                 data-dashboard--session-last-value='{"exercises":5,"sets":20,"reps":180,"prCount":2,"prLabel":"2 PR battus","repsRecordCount":1,"repsRecordLabel":"+ 1 record de reps"}'
+                 data-dashboard--session-week-value='{"exercises":12,"sets":48,"reps":410,"prCount":0,"prLabel":"Aucun PR cette fois, continue comme ça !","repsRecordCount":0,"repsRecordLabel":""}'
+                 data-dashboard--session-month-value='{"exercises":30,"sets":110,"reps":900,"prCount":5,"prLabel":"5 PR battus","repsRecordCount":3,"repsRecordLabel":"+ 3 records de reps"}'>
                 <button data-dashboard--session-target="tab" data-filter="last"
                         data-action="click->dashboard--session#switchFilter" class="dashboard-tab-active"></button>
                 <button data-dashboard--session-target="tab" data-filter="week"
@@ -25,6 +25,9 @@ describe('dashboard--session controller', () => {
                 <span data-dashboard--session-target="reps"></span>
                 <span data-dashboard--session-target="prIcon">🏆</span>
                 <span data-dashboard--session-target="prLabel"></span>
+                <div data-dashboard--session-target="repsRecordRow">
+                    <span data-dashboard--session-target="repsRecordLabel"></span>
+                </div>
             </div>
         `;
 
@@ -45,6 +48,8 @@ describe('dashboard--session controller', () => {
         expect(document.querySelector('[data-dashboard--session-target="reps"]').textContent).toBe('180');
         expect(document.querySelector('[data-dashboard--session-target="prLabel"]').textContent).toBe('2 PR battus');
         expect(document.querySelector('[data-dashboard--session-target="prIcon"]').classList.contains('hidden')).toBe(false);
+        expect(document.querySelector('[data-dashboard--session-target="repsRecordLabel"]').textContent).toBe('+ 1 record de reps');
+        expect(document.querySelector('[data-dashboard--session-target="repsRecordRow"]').classList.contains('hidden')).toBe(false);
     });
 
     it('updates stats, PR label and active tab when switching to week', async () => {
@@ -70,5 +75,13 @@ describe('dashboard--session controller', () => {
         document.querySelector('[data-filter="week"]').click();
 
         expect(document.querySelector('[data-dashboard--session-target="prIcon"]').classList.contains('hidden')).toBe(true);
+    });
+
+    it('hides the reps record row when there is none for the active filter', async () => {
+        await nextTick();
+
+        document.querySelector('[data-filter="week"]').click();
+
+        expect(document.querySelector('[data-dashboard--session-target="repsRecordRow"]').classList.contains('hidden')).toBe(true);
     });
 });
