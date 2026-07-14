@@ -13,16 +13,19 @@
         </svg>
     </div>
 
-    <div class="flex-1 flex flex-col justify-center gap-[6px]">
-        {% if need_workouts > 0 %}
-            <span class="text-[13px] text-[#8b9bb4]">
-                {{ 'dashboard.widget.locked.need_workouts'|trans({count: need_workouts}, 'navigation') }}
-            </span>
-        {% endif %}
-        {% if need_days > 0 %}
-            <span class="text-[13px] text-[#8b9bb4]">
-                {{ 'dashboard.widget.locked.need_days'|trans({count: need_days}, 'navigation') }}
-            </span>
-        {% endif %}
+    <div class="flex-1 flex flex-col items-center justify-center text-center gap-2">
+        <span class="text-[32px] leading-none" aria-hidden="true">🕐</span>
+        <div class="flex flex-col gap-[6px]">
+            {% if need_workouts > 0 %}
+                <span class="text-[13px] text-[#8b9bb4]">
+                    {{ 'dashboard.widget.locked.need_workouts'|trans({count: need_workouts}, 'navigation') }}
+                </span>
+            {% endif %}
+            {% if need_days > 0 %}
+                <span class="text-[13px] text-[#8b9bb4]">
+                    {{ 'dashboard.widget.locked.need_days'|trans({count: need_days}, 'navigation') }}
+                </span>
+            {% endif %}
+        </div>
     </div>
 </div>
