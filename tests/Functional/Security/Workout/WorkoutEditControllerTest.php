@@ -285,7 +285,7 @@ class WorkoutEditControllerTest extends WebTestCase
         $workouts = $workoutRepository->findBy([
             'owner' => $user,
         ], [
-            'performedAt' => 'DESC',
+            'id' => 'DESC',
         ]);
 
         /** @var Workout $workout */
@@ -312,7 +312,7 @@ class WorkoutEditControllerTest extends WebTestCase
         $workouts = $workoutRepository->findBy([
             'owner' => $user,
         ], [
-            'performedAt' => 'DESC',
+            'id' => 'DESC',
         ]);
 
         return \sprintf('/fr/seance/%s/modifier', $workouts[0]->id);

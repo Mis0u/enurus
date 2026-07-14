@@ -42,7 +42,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
                 'owner' => $user,
             ],
             [
-                'performedAt' => 'DESC',
+                'id' => 'DESC',
             ],
         );
 
@@ -197,7 +197,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
                 'owner' => $user,
             ],
             [
-                'performedAt' => 'DESC',
+                'id' => 'DESC',
             ],
         );
 
