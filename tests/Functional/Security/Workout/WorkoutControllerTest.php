@@ -64,7 +64,7 @@ class WorkoutControllerTest extends WebTestCase
                 'owner' => $user,
             ],
             [
-                'performedAt' => 'DESC',
+                'id' => 'DESC',
             ]
         );
 
@@ -134,7 +134,7 @@ class WorkoutControllerTest extends WebTestCase
                 'owner' => $user,
             ],
             [
-                'performedAt' => 'DESC',
+                'id' => 'DESC',
             ]
         );
 
@@ -151,7 +151,7 @@ class WorkoutControllerTest extends WebTestCase
 
         /** @var Workout $workout */
         $workout = $workoutRepository->findOneBy([], [
-            'performedAt' => 'DESC',
+            'id' => 'DESC',
         ]);
 
         $this->assertNull($workout->routine);
@@ -167,7 +167,7 @@ class WorkoutControllerTest extends WebTestCase
 
         /** @var Workout $workout */
         $workout = $workoutRepository->findOneBy([], [
-            'performedAt' => 'DESC',
+            'id' => 'DESC',
         ]);
 
         /** @var WorkoutExercise $firstExercise */
@@ -186,7 +186,7 @@ class WorkoutControllerTest extends WebTestCase
 
         /** @var Workout $workout */
         $workout = $workoutRepository->findOneBy([], [
-            'performedAt' => 'DESC',
+            'id' => 'DESC',
         ]);
 
         /** @var WorkoutExercise $firstExercise */
@@ -244,7 +244,7 @@ class WorkoutControllerTest extends WebTestCase
 
         /** @var Workout $workout */
         $workout = $workoutRepository->findOneBy([], [
-            'performedAt' => 'DESC',
+            'id' => 'DESC',
         ]);
 
         $exercises = $workout->workoutExercises->toArray();
@@ -299,7 +299,7 @@ class WorkoutControllerTest extends WebTestCase
 
         /** @var Workout $workout */
         $workout = $workoutRepository->findOneBy([], [
-            'performedAt' => 'DESC',
+            'id' => 'DESC',
         ]);
 
         /** @var WorkoutExercise $firstExercise */
@@ -505,7 +505,7 @@ class WorkoutControllerTest extends WebTestCase
                 'owner' => $user,
             ],
             [
-                'performedAt' => 'DESC',
+                'id' => 'DESC',
             ]
         );
 
@@ -535,7 +535,7 @@ class WorkoutControllerTest extends WebTestCase
                 'owner' => $user,
             ],
             [
-                'performedAt' => 'DESC',
+                'id' => 'DESC',
             ]
         );
 
@@ -684,7 +684,7 @@ class WorkoutControllerTest extends WebTestCase
                 'owner' => $user,
             ],
             [
-                'performedAt' => 'DESC',
+                'id' => 'DESC',
             ]
         );
 

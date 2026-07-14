@@ -10,6 +10,7 @@ use App\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,25 +24,29 @@ class ExerciseSetRepository extends ServiceEntityRepository
     }
 
     /**
+     * Poids max par exercice sur les séances strictement antérieures à `$before` — sert de
+     * référence pour déterminer si une séance donnée a battu le record précédent. Exclut
+     * volontairement la séance affichée elle-même : sinon son propre poids serait déjà compté
+     * dans le max, et une simple égalité (poids identique, jamais dépassé) afficherait à tort le
+     * badge PR — même règle stricte que `DashboardPrService` ("une égalité de poids n'est pas un
+     * nouveau record battu").
+     *
      * @param array<Exercise> $exercises
      * @return array<string, float>
      */
-    public function findMaxWeightPerExercise(User $user, array $exercises): array
+    public function findMaxWeightPerExerciseBeforeDate(User $user, array $exercises, DateTimeImmutable $before): array
     {
         if (empty($exercises)) {
             return [];
         }
 
         /** @var array<int, array{exerciseId: mixed, maxWeight: mixed}> $results */
-        $results = $this->createQueryBuilder('es')
+        $results = $this->queryForUser($user)
             ->select('e.id AS exerciseId, MAX(es.weight) AS maxWeight')
-            ->join('es.workoutExercise', 'we')
-            ->join('we.exercise', 'e')
-            ->join('we.workout', 'w')
-            ->where('w.owner = :user')
             ->andWhere('e IN (:exercises)')
-            ->setParameter('user', $user)
+            ->andWhere('w.performedAt < :before')
             ->setParameter('exercises', $exercises)
+            ->setParameter('before', $before)
             ->groupBy('e.id')
             ->getQuery()
             ->getArrayResult();
@@ -59,26 +64,68 @@ class ExerciseSetRepository extends ServiceEntityRepository
     }
 
     /**
-     * Tous les sets de l'historique complet de l'utilisateur, triés chronologiquement (séance,
-     * puis position d'exercice, puis position de set) — sert de base à la détection progressive
-     * des records personnels (un seul appel, le regroupement/la détection se fait ensuite en
-     * PHP, même philosophie que DashboardTonnageService::findTonnageSeriesByUser()).
+     * Reps max par (exercice, poids exact) sur les séances strictement antérieures à `$before` —
+     * même rôle que `findMaxWeightPerExerciseBeforeDate`, mais pour détecter un "record de reps"
+     * (même poids qu'avant, mais jamais fait à autant de répétitions). Clé composite exercice+
+     * poids indispensable : les reps ne se comparent qu'à poids égal, jamais entre poids
+     * différents.
+     *
+     * @param array<Exercise> $exercises
+     * @return array<string, array<string, int>> exerciseId => (poids en chaîne) => reps max
+     */
+    public function findMaxRepsPerWeightBeforeDate(User $user, array $exercises, DateTimeImmutable $before): array
+    {
+        if (empty($exercises)) {
+            return [];
+        }
+
+        /** @var array<int, array{exerciseId: mixed, weight: mixed, maxReps: mixed}> $results */
+        $results = $this->queryForUser($user)
+            ->select('e.id AS exerciseId, es.weight AS weight, MAX(es.reps) AS maxReps')
+            ->andWhere('e IN (:exercises)')
+            ->andWhere('w.performedAt < :before')
+            ->setParameter('exercises', $exercises)
+            ->setParameter('before', $before)
+            ->groupBy('e.id')
+            ->addGroupBy('es.weight')
+            ->getQuery()
+            ->getArrayResult();
+
+        $map = [];
+        foreach ($results as $row) {
+            /** @var string|\Stringable $exerciseId */
+            $exerciseId = $row['exerciseId'];
+            /** @var numeric $weight */
+            $weight = $row['weight'];
+            /** @var numeric $maxReps */
+            $maxReps = $row['maxReps'];
+
+            $map[(string) $exerciseId][self::weightKey((float) $weight)] = (int) $maxReps;
+        }
+
+        return $map;
+    }
+
+    /**
+     * Poids max par (séance, exercice), triés chronologiquement par séance — sert de base à la
+     * détection progressive des records personnels. Agrégation par séance ET exercice
+     * indispensable : sans elle, une séance avec plusieurs sets progressifs sur le même exercice
+     * (ex. échauffement 100kg → 110kg → poids de travail 130kg) compterait un PR par set qui
+     * progresse, au lieu d'un seul PR pour la séance sur cet exercice — même définition de PR que
+     * WorkoutShowController (le meilleur set de la séance sur l'exercice, jamais un set
+     * intermédiaire).
      *
      * @return array<int, array{workoutId: string, exerciseId: string, weight: float, performedAt: DateTimeImmutable}>
      */
-    public function findAllSetsChronologicallyByUser(User $user): array
+    public function findMaxWeightPerWorkoutAndExerciseChronologicallyByUser(User $user): array
     {
         /** @var array<int, array{workoutId: mixed, exerciseId: mixed, weight: mixed, performedAt: mixed}> $rows */
-        $rows = $this->createQueryBuilder('es')
-            ->select('w.id as workoutId', 'e.id as exerciseId', 'es.weight as weight', 'w.performedAt as performedAt')
-            ->join('es.workoutExercise', 'we')
-            ->join('we.exercise', 'e')
-            ->join('we.workout', 'w')
-            ->andWhere('w.owner = :user')
-            ->setParameter('user', $user)
+        $rows = $this->queryForUser($user)
+            ->select('w.id as workoutId', 'e.id as exerciseId', 'MAX(es.weight) as weight', 'w.performedAt as performedAt')
+            ->groupBy('w.id')
+            ->addGroupBy('e.id')
+            ->addGroupBy('w.performedAt')
             ->orderBy('w.performedAt', 'ASC')
-            ->addOrderBy('we.position', 'ASC')
-            ->addOrderBy('es.position', 'ASC')
             ->getQuery()
             ->getResult(AbstractQuery::HYDRATE_ARRAY);
 
@@ -102,5 +149,74 @@ class ExerciseSetRepository extends ServiceEntityRepository
         }
 
         return $result;
+    }
+
+    /**
+     * Reps max par (séance, exercice, poids exact), triées chronologiquement — même principe que
+     * `findMaxWeightPerWorkoutAndExerciseChronologicallyByUser`, mais pour détecter les records de
+     * répétitions à poids égal.
+     *
+     * @return array<int, array{workoutId: string, exerciseId: string, weight: float, reps: int, performedAt: DateTimeImmutable}>
+     */
+    public function findMaxRepsPerWorkoutExerciseAndWeightChronologicallyByUser(User $user): array
+    {
+        /** @var array<int, array{workoutId: mixed, exerciseId: mixed, weight: mixed, reps: mixed, performedAt: mixed}> $rows */
+        $rows = $this->queryForUser($user)
+            ->select('w.id as workoutId', 'e.id as exerciseId', 'es.weight as weight', 'MAX(es.reps) as reps', 'w.performedAt as performedAt')
+            ->groupBy('w.id')
+            ->addGroupBy('e.id')
+            ->addGroupBy('es.weight')
+            ->addGroupBy('w.performedAt')
+            ->orderBy('w.performedAt', 'ASC')
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY);
+
+        $result = [];
+        foreach ($rows as $row) {
+            /** @var \Stringable|string $workoutId */
+            $workoutId = $row['workoutId'];
+            /** @var \Stringable|string $exerciseId */
+            $exerciseId = $row['exerciseId'];
+            /** @var numeric $weight */
+            $weight = $row['weight'];
+            /** @var numeric $reps */
+            $reps = $row['reps'];
+            /** @var DateTimeImmutable $performedAt */
+            $performedAt = $row['performedAt'];
+
+            $result[] = [
+                'workoutId' => (string) $workoutId,
+                'exerciseId' => (string) $exerciseId,
+                'weight' => (float) $weight,
+                'reps' => (int) $reps,
+                'performedAt' => $performedAt,
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
+     * Clé de tableau stable pour un poids exact — jamais un cast `(string)` brut : un poids rond
+     * (ex. 130.0) donnerait la chaîne "130", que PHP convertit silencieusement en clé entière,
+     * cassant le typage `array<string, ...>` attendu par les appelants (WorkoutShowController).
+     */
+    public static function weightKey(float $weight): string
+    {
+        return number_format($weight, 2, '.', '');
+    }
+
+    /**
+     * Base commune (jointures + propriétaire) réutilisée par toutes les requêtes de détection de
+     * records de ce repository — évite de répéter les mêmes 3 jointures dans chaque méthode.
+     */
+    private function queryForUser(User $user): QueryBuilder
+    {
+        return $this->createQueryBuilder('es')
+            ->join('es.workoutExercise', 'we')
+            ->join('we.exercise', 'e')
+            ->join('we.workout', 'w')
+            ->andWhere('w.owner = :user')
+            ->setParameter('user', $user);
     }
 }

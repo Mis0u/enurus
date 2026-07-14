@@ -198,6 +198,17 @@ Le JS de suppression de séance n'envoie pas de header `X-CSRF-Token`.
   false` — sinon Symfony le reset après **chaque requête** en env test via `ResetInterface`.
 - `ImageTestHelper` : toujours créer de vrais fichiers image (`imagecreatetruecolor`) dans les
   tests d'upload — Symfony valide le MIME réel via `finfo`.
+- **Jamais `findOneBy(..., ['performedAt' => 'DESC'])` pour retrouver "le workout qu'on vient de
+  créer".** `performedAt` est une donnée métier saisie par l'utilisateur, pas un horodatage de
+  création — un `Workout` fixture peut porter la même date (voire une heure plus tardive) que celui
+  tout juste soumis par le test, et passer devant en tri `DESC` (piège déjà documenté côté fixtures :
+  `WorkoutFixtures::generateDates()` pioche des jours **aléatoires**, dont potentiellement
+  aujourd'hui). Un tri secondaire `'id' => 'DESC'` ne corrige rien tant que `performedAt` reste la
+  clé primaire du tri : il ne s'applique qu'en cas d'égalité stricte sur `performedAt`, jamais entre
+  `2026-07-14 00:00:00` (soumis par le test) et `2026-07-14 15:30:00` (fixture du jour). La seule
+  clé fiable pour "le plus récemment créé" est `'id' => 'DESC'` **seul** : les entités utilisent
+  `UuidGenerator` configuré en **UUIDv7** (chronologiquement ordonnable), donc l'`id` reflète l'ordre
+  réel d'insertion indépendamment de `performedAt`.
 
 ### PHPStan (niveau 9)
 - `json_encode(..., JSON_THROW_ON_ERROR)` plutôt que `if (false === ...)`.
@@ -230,7 +241,7 @@ TODO #17 (non résolu) : `UserFixtures` a beaucoup grossi, refactor à prévoir.
 | # | Item |
 |---|------|
 | 1 | Page de contact support |
-| 3 | Menus mobile manquants dans Profil (Bibliothèque, Mes routines, Profils suivis, Réglages, Déconnexion) |
+| 3 | Menus mobile manquants dans Profil (Bibliothèque, Mes routines, Réglages, Déconnexion) |
 | 4 | SVG dynamiques (en cours) |
 | 7 | Trier les muscles dans `_exercise_card.html.twig` et la page enregistre-séance |
 | 8 | Support des routines dans "Enregistre ta séance" |

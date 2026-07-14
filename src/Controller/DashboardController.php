@@ -116,9 +116,15 @@ final class DashboardController extends AbstractController
         // Répartition par groupe musculaire pour le filtre Séance (depuis le workout déjà chargé)
         $sessionBars = $this->muscleDistributionService->getBars([(string) $lastWorkout->id]);
 
-        // PR battus par filtre (Dernière séance/Semaine/Mois courant), même définition que
-        // WorkoutShowController (poids max sur un exercice), détectés sur tout l'historique.
+        // PR de poids et records de reps par filtre (Dernière séance/Semaine/Mois courant), même
+        // définition que WorkoutShowController, détectés sur tout l'historique.
         $prCounts = $this->prService->countPrsByFilter(
+            $user,
+            (string) $lastWorkout->id,
+            $week,
+            $month,
+        );
+        $repsRecordCounts = $this->prService->countRepsRecordsByFilter(
             $user,
             (string) $lastWorkout->id,
             $week,
@@ -133,16 +139,22 @@ final class DashboardController extends AbstractController
                 'reps' => $sessionSummary['totalReps'],
                 'prCount' => $prCounts['last'],
                 'prLabel' => $this->buildPrLabel($prCounts['last']),
+                'repsRecordCount' => $repsRecordCounts['last'],
+                'repsRecordLabel' => $this->buildRepsRecordLabel($repsRecordCounts['last']),
             ],
             'week' => [
                 ...$workoutRepository->findExerciseSetRepTotals($user, $week->start, $week->end),
                 'prCount' => $prCounts['week'],
                 'prLabel' => $this->buildPrLabel($prCounts['week']),
+                'repsRecordCount' => $repsRecordCounts['week'],
+                'repsRecordLabel' => $this->buildRepsRecordLabel($repsRecordCounts['week']),
             ],
             'month' => [
                 ...$workoutRepository->findExerciseSetRepTotals($user, $month->start, $month->end),
                 'prCount' => $prCounts['month'],
                 'prLabel' => $this->buildPrLabel($prCounts['month']),
+                'repsRecordCount' => $repsRecordCounts['month'],
+                'repsRecordLabel' => $this->buildRepsRecordLabel($repsRecordCounts['month']),
             ],
         ];
 
@@ -180,5 +192,12 @@ final class DashboardController extends AbstractController
             : $this->translator->trans('dashboard.widget.session.pr_count', [
                 'count' => $count,
             ], 'navigation');
+    }
+
+    private function buildRepsRecordLabel(int $count): string
+    {
+        return $this->translator->trans('dashboard.widget.session.reps_record_count', [
+            'count' => $count,
+        ], 'navigation');
     }
 }

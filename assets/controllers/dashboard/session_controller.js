@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import { switchDashboardTab } from '../../utils/dashboard_tabs.js';
 
-const DEFAULT_STATS = { exercises: 0, sets: 0, reps: 0, prCount: 0, prLabel: '' };
+const DEFAULT_STATS = { exercises: 0, sets: 0, reps: 0, prCount: 0, prLabel: '', repsRecordCount: 0, repsRecordLabel: '' };
 
 export default class extends Controller {
     static values = {
@@ -10,7 +10,7 @@ export default class extends Controller {
         month: { type: Object, default: DEFAULT_STATS },
     };
 
-    static targets = ['tab', 'exercises', 'sets', 'reps', 'prLabel', 'prIcon'];
+    static targets = ['tab', 'exercises', 'sets', 'reps', 'prLabel', 'prIcon', 'repsRecordRow', 'repsRecordLabel'];
 
     connect() {
         this.#applyStats('last');
@@ -32,5 +32,8 @@ export default class extends Controller {
         this.repsTarget.textContent = stats.reps;
         this.prLabelTarget.textContent = stats.prLabel;
         this.prIconTarget.classList.toggle('hidden', stats.prCount === 0);
+
+        this.repsRecordLabelTarget.textContent = stats.repsRecordLabel;
+        this.repsRecordRowTarget.classList.toggle('hidden', stats.repsRecordCount === 0);
     }
 }

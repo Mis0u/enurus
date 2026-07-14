@@ -114,7 +114,7 @@
         "dama/doctrine-test-bundle": "^8.4",
         "doctrine/doctrine-fixtures-bundle": "^4.3",
         "friendsoftwig/twigcs": "^6.6",
-        "jolicode/castor": "^1.1",
+        "jolicode/castor": "^1.5",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-doctrine": "^2.0",

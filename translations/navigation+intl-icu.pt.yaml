@@ -5,7 +5,6 @@ dashboard:
     my_routines: As minhas rotinas
     my_workouts: Os meus treinos
     profile: Perfil
-    profile_followed: Perfis seguidos
     save_first_workout: Regista o teu primeiro treino
     save_workout: Regista o teu treino
     setting: Definições
@@ -59,6 +58,9 @@ dashboard:
             pr_count: "{count, plural, =1 {# PR batido} other {# PR batidos}}"
             pr_count_zero: Nenhum PR desta vez, continua assim!
             pr_tooltip: "Um PR (recorde pessoal) é atingido quando levantas mais peso do que nunca num exercício, independentemente do número de repetições."
+            reps_record_badge: Recorde de repetições
+            reps_record_count: "{count, plural, =1 {+ # recorde de repetições} other {+ # recordes de repetições}}"
+            reps_record_tooltip: "Um recorde de repetições é atingido quando fazes mais repetições do que antes com um peso que já levantaste."
             title: Sessão
         tonnage:
             annual_total_label: "Total do ano {year}:"
@@ -382,7 +384,6 @@ workout:
             reps: Reps
             tonnage: Tonelagem
         pr_badge: PR
-        pr_badge_tooltip: "Novo recorde pessoal: o peso mais pesado já levantado neste exercício"
         title: O meu treino
     title: Regista o teu treino
     type:

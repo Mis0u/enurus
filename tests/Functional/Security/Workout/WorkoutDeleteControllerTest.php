@@ -122,7 +122,7 @@ class WorkoutDeleteControllerTest extends WebTestCase
         $workouts = $workoutRepository->findBy([
             'owner' => $user,
         ], [
-            'performedAt' => 'DESC',
+            'id' => 'DESC',
         ]);
 
         return $workouts[0];

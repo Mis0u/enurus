@@ -25,12 +25,6 @@ sentence:
             =1    {Depois de # treino}
             other {Depois de # treinos}
         }
-    after_weeks: >-
-        {count, plural,
-            =1    {Depois de # semana}
-            other {Depois de # semanas}
-        }
-    contact_support: Contacta o nosso suporte
     back_to_login: Voltar ao login
     email:
         button_failed: Se o botão não funcionar, copia e cola este link no teu navegador
@@ -51,6 +45,7 @@ sentence:
     log_first_workout: Regista o teu primeiro treino
     log_workout: Clica em "Registar o meu treino" no teu painel
     maintain_regularity: Mantém a regularidade e bate os teus recordes
+    muscle_period_regularity: Silhueta · Semana/Mês · Regularidade
     need_help: Precisas de ajuda?
     outline_muscle: Silhueta muscular
     password:
@@ -59,17 +54,15 @@ sentence:
             confirmation: A tua palavra-passe foi alterada com sucesso
             criteria_min_char: Pelo menos {min} caracteres
             min_char: Mínimo {min} caracteres com maiúsculas, minúsculas e números
-            regex: A palavra-passe deve conter pelo menos uma maiúscula, uma minúscula, um número e um carácter especial (! ? % $ * &)
-            special_char: Pelo menos um dos seguintes caracteres especiais ! ? % $ * &
+            regex: "A palavra-passe deve conter pelo menos uma maiúscula, uma minúscula, um número e um carácter especial (! ? % $ * & # @ _ -)"
+            special_char: "Pelo menos um dos seguintes caracteres especiais ! ? % $ * & # @ _ -"
             upper_lower: Uma maiúscula e uma minúscula
             valid_new_password: Confirmar nova palavra-passe
-    progress_comparaison: Comparativos de progresso · Séries · Recordes
     ready: Pronto para começar?
     ready_to_start: Pronto para começar? O teu progresso começa aqui
     ready_to_transform: Pronto para te transformar?
     see_datas: Visualiza a tua tonelagem, os teus recordes e a tua evolução
     see_working_muscles: Vê exatamente quais músculos estás a trabalhar
-    tonnage_curve_weekly_frequency: Curva de tonelagem · Frequência semanal
     welcome: Bem-vindo à tua aventura fitness!
     welcome_to: Bem-vindo ao {brand}
     what_next: O que te espera

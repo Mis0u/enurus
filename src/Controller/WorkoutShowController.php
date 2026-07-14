@@ -51,11 +51,12 @@ class WorkoutShowController extends AbstractController
 
         $tonnageMap = $workoutRepository->findTonnageByWorkoutIds([(string) $workout->id]);
         $exerciseTonnageMap = $workoutExerciseRepository->findTonnageByWorkoutExerciseIds($workoutExerciseIds);
-        $prMap = $exerciseSetRepository->findMaxWeightPerExercise($user, $exercises);
+        $priorMaxWeightPerExercise = $exerciseSetRepository->findMaxWeightPerExerciseBeforeDate($user, $exercises, $workout->performedAt);
+        $priorMaxRepsPerWeight = $exerciseSetRepository->findMaxRepsPerWeightBeforeDate($user, $exercises, $workout->performedAt);
 
         $totalTonnageKg = $tonnageMap[(string) $workout->id] ?? 0.0;
         $totalTonnage = $weightConverter->convertToLbs($totalTonnageKg, $user->unitOfMeasure);
-        $exerciseData = $this->buildExerciseData($workoutExercises, $prMap, $exerciseTonnageMap, $weightConverter, $user);
+        $exerciseData = $this->buildExerciseData($workoutExercises, $priorMaxWeightPerExercise, $priorMaxRepsPerWeight, $exerciseTonnageMap, $weightConverter, $user);
         [$totalSets, $totalReps] = $this->countSetsAndReps($exerciseData);
 
         return $this->render('workout/show/show.html.twig', [
@@ -117,11 +118,12 @@ class WorkoutShowController extends AbstractController
 
     /**
      * @param array<WorkoutExercise> $workoutExercises
-     * @param array<string, float> $prMap
+     * @param array<string, float> $priorMaxWeightPerExercise
+     * @param array<string, array<string, int>> $priorMaxRepsPerWeight
      * @param array<string, float> $exerciseTonnageMap
      * @return array<int, array{
      *     workoutExercise: WorkoutExercise,
-     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, isPr: bool}>,
+     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, isPr: bool, isRepsRecord: bool}>,
      *     tonnage: float,
      *     primarySvgIds: array<string>,
      *     secondarySvgIds: array<string>
@@ -129,7 +131,8 @@ class WorkoutShowController extends AbstractController
      */
     private function buildExerciseData(
         array $workoutExercises,
-        array $prMap,
+        array $priorMaxWeightPerExercise,
+        array $priorMaxRepsPerWeight,
         array $exerciseTonnageMap,
         WeightConverterService $weightConverter,
         User $user,
@@ -137,7 +140,8 @@ class WorkoutShowController extends AbstractController
         return array_map(
             fn (WorkoutExercise $we) => $this->buildSingleExerciseData(
                 $we,
-                $prMap,
+                $priorMaxWeightPerExercise,
+                $priorMaxRepsPerWeight,
                 $exerciseTonnageMap,
                 $weightConverter,
                 $user,
@@ -147,11 +151,12 @@ class WorkoutShowController extends AbstractController
     }
 
     /**
-     * @param array<string, float> $prMap
+     * @param array<string, float> $priorMaxWeightPerExercise
+     * @param array<string, array<string, int>> $priorMaxRepsPerWeight
      * @param array<string, float> $exerciseTonnageMap
      * @return array{
      *     workoutExercise: WorkoutExercise,
-     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, isPr: bool}>,
+     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, isPr: bool, isRepsRecord: bool}>,
      *     tonnage: float,
      *     primarySvgIds: array<string>,
      *     secondarySvgIds: array<string>
@@ -159,17 +164,19 @@ class WorkoutShowController extends AbstractController
      */
     private function buildSingleExerciseData(
         WorkoutExercise $we,
-        array $prMap,
+        array $priorMaxWeightPerExercise,
+        array $priorMaxRepsPerWeight,
         array $exerciseTonnageMap,
         WeightConverterService $weightConverter,
         User $user,
     ): array {
-        $prWeight = $prMap[(string) $we->exercise->id] ?? null;
+        $priorMaxWeight = $priorMaxWeightPerExercise[(string) $we->exercise->id] ?? null;
+        $priorMaxRepsByWeight = $priorMaxRepsPerWeight[(string) $we->exercise->id] ?? [];
         $tonnage = $weightConverter->convertToLbs(
             $exerciseTonnageMap[(string) $we->id] ?? 0.0,
             $user->unitOfMeasure
         );
-        $sets = $this->buildSets($we, $prWeight, $weightConverter, $user);
+        $sets = $this->buildSets($we, $priorMaxWeight, $priorMaxRepsByWeight, $weightConverter, $user);
         [$primarySvgIds, $secondarySvgIds] = $this->resolveSvgIds($we);
         $sortedMuscles = $this->sortMusclesByType($we->exercise->exerciseMuscles->toArray());
 
@@ -200,18 +207,60 @@ class WorkoutShowController extends AbstractController
     }
 
     /**
-     * @return array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, tonnageUnit: string, isPr: bool}>
+     * Seul le meilleur set de la séance pour cet exercice peut porter le badge PR (poids), et
+     * seulement si son poids dépasse strictement le record précédent — une égalité n'est pas un
+     * nouveau record battu (même règle que DashboardPrService). Un exercice jamais fait avant
+     * (`$priorMaxWeight` null) obtient automatiquement le badge : il n'y a rien à dépasser, le
+     * premier essai est le record.
+     *
+     * Le badge "record de reps" suit la même règle stricte, mais par poids exact plutôt que par
+     * exercice, et ne s'applique jamais à un set déjà PR poids ni à un poids jamais fait avant
+     * (sans quoi un nouveau poids max déclencherait aussi un record de reps trivial et redondant).
+     *
+     * @param array<string, int> $priorMaxRepsByWeight poids (chaîne) => reps max avant cette séance
+     * @return array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>
      */
     private function buildSets(
         WorkoutExercise $we,
-        ?float $prWeight,
+        ?float $priorMaxWeight,
+        array $priorMaxRepsByWeight,
         WeightConverterService $weightConverter,
         User $user,
     ): array {
+        $workoutMaxWeight = 0.0;
+        /** @var array<string, int> $workoutMaxRepsByWeight */
+        $workoutMaxRepsByWeight = [];
+
+        foreach ($we->exerciseSets as $set) {
+            $workoutMaxWeight = max($workoutMaxWeight, $set->weight);
+
+            $weightKey = ExerciseSetRepository::weightKey($set->weight);
+            $workoutMaxRepsByWeight[$weightKey] = max($workoutMaxRepsByWeight[$weightKey] ?? 0, $set->reps);
+        }
+
+        $isWeightPr = $this->beatsRecord($priorMaxWeight, $workoutMaxWeight, firstAttemptCounts: true);
+
+        /** @var array<string, bool> $repsRecordByWeight */
+        $repsRecordByWeight = [];
+        foreach ($workoutMaxRepsByWeight as $weightKey => $maxReps) {
+            $priorMaxReps = $priorMaxRepsByWeight[$weightKey] ?? null;
+            $repsRecordByWeight[$weightKey] = $this->beatsRecord(
+                null !== $priorMaxReps ? (float) $priorMaxReps : null,
+                (float) $maxReps,
+                firstAttemptCounts: false,
+            );
+        }
+
         $sets = [];
 
         foreach ($we->exerciseSets as $set) {
             $rawTonnage = $set->weight * $set->reps;
+            $weightKey = ExerciseSetRepository::weightKey($set->weight);
+
+            $isPr = $isWeightPr && $set->weight === $workoutMaxWeight;
+            $isRepsRecord = ! $isPr
+                && ($repsRecordByWeight[$weightKey] ?? false)
+                && $set->reps === $workoutMaxRepsByWeight[$weightKey];
 
             $sets[] = [
                 'position' => $set->position,
@@ -219,13 +268,25 @@ class WorkoutShowController extends AbstractController
                 'reps' => $set->reps,
                 'tonnage' => $weightConverter->convertToLbs($rawTonnage, $user->unitOfMeasure),
                 'tonnageUnit' => $user->unitOfMeasure->label(),
-                'isPr' => null !== $prWeight && $set->weight >= $prWeight,
+                'isPr' => $isPr,
+                'isRepsRecord' => $isRepsRecord,
             ];
         }
 
         usort($sets, static fn ($a, $b) => $a['position'] <=> $b['position']);
 
         return $sets;
+    }
+
+    /**
+     * Un nouveau record est atteint si la valeur dépasse strictement le précédent — une égalité
+     * ne compte jamais. `$firstAttemptCounts` décide si l'absence de record précédent (`null`)
+     * compte comme un record immédiat : oui pour un poids jamais soulevé, non pour des reps à un
+     * poids jamais fait avant (déjà couvert par le PR poids, voir `buildSets`).
+     */
+    private function beatsRecord(?float $priorMax, float $currentValue, bool $firstAttemptCounts): bool
+    {
+        return null === $priorMax ? $firstAttemptCounts : $currentValue > $priorMax;
     }
 
     /**
