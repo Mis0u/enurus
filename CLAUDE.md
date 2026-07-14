@@ -250,7 +250,6 @@ TODO #17 (non résolu) : `UserFixtures` a beaucoup grossi, refactor à prévoir.
 | 16 | Description d'exercice au survol (tooltip/popover) |
 | 17 | Refactoriser `UserFixtures` |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
-| 19 | **Bug actif** — page d'inscription cassée, erreur JS `Missing target element "submitButton"` sur `password_validator_controller.js` |
 | 20 | Sessions persistées en base pour invalider toutes les sessions actives au changement de mot de passe |
 | 21 | Notifier l'admin si un email de compte supprimé (>30j) se réinscrit |
 | 22 | Migrer les emails existants vers `emails/_base.html.twig` |
