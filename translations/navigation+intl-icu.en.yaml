@@ -5,7 +5,6 @@ dashboard:
     my_routines: My routines
     my_workouts: My workouts
     profile: Profile
-    profile_followed: Followed profiles
     save_first_workout: Log your first workout
     save_workout: Log your workout
     setting: Settings
@@ -59,6 +58,9 @@ dashboard:
             pr_count: "{count, plural, =1 {# PR broken} other {# PRs broken}}"
             pr_count_zero: No PR this time, keep it up!
             pr_tooltip: "A PR (personal record) is reached when you lift heavier than ever before on an exercise, no matter the number of reps."
+            reps_record_badge: Rep record
+            reps_record_count: "{count, plural, =1 {+ # rep record} other {+ # rep records}}"
+            reps_record_tooltip: "A rep record is reached when you do more reps than before at a weight you've already lifted."
             title: Session
         tonnage:
             annual_total_label: "Total for year {year}:"
@@ -382,7 +384,6 @@ workout:
             reps: Reps
             tonnage: Tonnage
         pr_badge: PR
-        pr_badge_tooltip: "New personal record: heaviest weight ever lifted for this exercise"
         title: My workout
     title: Log your workout
     type:

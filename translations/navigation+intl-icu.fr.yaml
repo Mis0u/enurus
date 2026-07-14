@@ -5,7 +5,6 @@ dashboard:
     my_routines: Mes routines
     my_workouts: Mes séances
     profile: Profil
-    profile_followed: Profils suivis
     save_first_workout: Enregistre ta première séance
     save_workout: Enregistre ta séance
     setting: Réglages
@@ -59,6 +58,9 @@ dashboard:
             pr_count: "{count, plural, =1 {# PR battu} other {# PR battus}}"
             pr_count_zero: Aucun PR cette fois, continue comme ça !
             pr_tooltip: "Un PR (record personnel) est atteint quand tu soulèves plus lourd que jamais sur un exercice, peu importe le nombre de répétitions."
+            reps_record_badge: Record de reps
+            reps_record_count: "{count, plural, =1 {+ # record de reps} other {+ # records de reps}}"
+            reps_record_tooltip: "Un record de reps est atteint quand tu fais plus de répétitions qu'avant à un poids que tu as déjà soulevé."
             title: Séance
         tonnage:
             annual_total_label: "Total sur l'année {year} :"
@@ -379,7 +381,6 @@ workout:
             reps: Reps
             tonnage: Tonnage
         pr_badge: PR
-        pr_badge_tooltip: "Nouveau record personnel : poids le plus lourd jamais soulevé sur cet exercice"
         title: Ma séance
     title: Enregistre ta séance
     type:

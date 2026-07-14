@@ -5,7 +5,6 @@ dashboard:
     my_routines: Moje programy
     my_workouts: Moje treningi
     profile: Profil
-    profile_followed: Obserwowane profile
     save_first_workout: Zapisz swój pierwszy trening
     save_workout: Zapisz swój trening
     setting: Ustawienia
@@ -59,6 +58,9 @@ dashboard:
             pr_count: "{count, plural, =1 {# pobity rekord} few {# pobite rekordy} many {# pobitych rekordów} other {# pobitego rekordu}}"
             pr_count_zero: Brak rekordu tym razem, tak trzymaj!
             pr_tooltip: "Rekord osobisty (PR) zostaje osiągnięty, gdy podnosisz cięższy ciężar niż kiedykolwiek wcześniej w danym ćwiczeniu, niezależnie od liczby powtórzeń."
+            reps_record_badge: Rekord powtórzeń
+            reps_record_count: "{count, plural, =1 {+ # rekord powtórzeń} few {+ # rekordy powtórzeń} many {+ # rekordów powtórzeń} other {+ # rekordu powtórzeń}}"
+            reps_record_tooltip: "Rekord powtórzeń zostaje osiągnięty, gdy wykonujesz więcej powtórzeń niż wcześniej przy ciężarze, który już podniosłeś."
             title: Trening
         tonnage:
             annual_total_label: "Łącznie w roku {year}:"
@@ -396,7 +398,6 @@ workout:
             reps: Powt
             tonnage: Tonaż
         pr_badge: PR
-        pr_badge_tooltip: "Nowy rekord osobisty: najcięższy ciężar kiedykolwiek podniesiony w tym ćwiczeniu"
         title: Mój trening
     title: Zapisz swój trening
     type:

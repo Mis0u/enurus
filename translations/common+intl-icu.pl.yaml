@@ -28,14 +28,6 @@ sentence:
             many  {Po # treningach}
             other {Po # treningów}
         }
-    after_weeks: >-
-        {count, plural,
-            =1    {Po # tygodniu}
-            few   {Po # tygodniach}
-            many  {Po # tygodniach}
-            other {Po # tygodni}
-        }
-    contact_support: Skontaktuj się z naszym wsparciem
     back_to_login: Powrót do logowania
     email:
         button_failed: Jeśli przycisk nie działa, skopiuj i wklej ten link w przeglądarce
@@ -56,6 +48,7 @@ sentence:
     log_first_workout: Zapisz swój pierwszy trening
     log_workout: Kliknij „Zapisz mój trening" na swoim panelu
     maintain_regularity: Bądź regularny i bij swoje rekordy
+    muscle_period_regularity: Sylwetka · Tydzień/Miesiąc · Regularność
     need_help: Potrzebujesz pomocy?
     outline_muscle: Sylwetka mięśniowa
     password:
@@ -64,17 +57,15 @@ sentence:
             confirmation: Twoje hasło zostało pomyślnie zmienione
             criteria_min_char: Przynajmniej {min} znaków
             min_char: Minimum {min} znaków z wielkimi literami, małymi literami i cyframi
-            regex: Hasło musi zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę i jeden znak specjalny (! ? % $ * &)
-            special_char: Przynajmniej jeden z następujących znaków specjalnych ! ? % $ * &
+            regex: "Hasło musi zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę i jeden znak specjalny (! ? % $ * & # @ _ -)"
+            special_char: "Przynajmniej jeden z następujących znaków specjalnych ! ? % $ * & # @ _ -"
             upper_lower: Jedna wielka i jedna mała litera
             valid_new_password: Potwierdź nowe hasło
-    progress_comparaison: Porównanie postępów · Serie · Rekordy
     ready: Gotowy, żeby zacząć?
     ready_to_start: Gotowy, żeby zacząć? Twoje postępy zaczynają się tutaj
     ready_to_transform: Gotowy na transformację?
     see_datas: Śledź swój tonaż, rekordy i rozwój
     see_working_muscles: Zobacz dokładnie, które mięśnie trenujesz
-    tonnage_curve_weekly_frequency: Krzywa tonażu · Częstotliwość tygodniowa
     welcome: Witaj w swojej fitnessowej przygodzie!
     welcome_to: Witaj na {brand}
     what_next: Co Cię czeka

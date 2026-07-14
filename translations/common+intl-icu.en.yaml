@@ -26,12 +26,6 @@ sentence:
             =1    {After # workout}
             other {After # workouts}
         }
-    after_weeks: >-
-        {count, plural,
-            =1    {After # week}
-            other {After # weeks}
-        }
-    contact_support: Contact our support
     back_to_login: Back to login
     email:
         button_failed: If the button doesn't work, copy and paste this link into your browser
@@ -52,6 +46,7 @@ sentence:
     log_first_workout: Log your first workout
     log_workout: Click "Log my workout" on your dashboard
     maintain_regularity: Stay consistent and smash your records
+    muscle_period_regularity: Silhouette · Week/Month · Regularity
     need_help: Need help?
     outline_muscle: Muscle outline
     password:
@@ -60,17 +55,15 @@ sentence:
             confirmation: Your password has been successfully changed
             criteria_min_char: At least {min} characters
             min_char: Minimum {min} characters with uppercase, lowercase and numbers
-            regex: Password must contain at least one uppercase letter, one lowercase letter, one number and one special character (! ? % $ * &)
-            special_char: At least one of the following special characters ! ? % $ * &
+            regex: "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character (! ? % $ * & # @ _ -)"
+            special_char: "At least one of the following special characters ! ? % $ * & # @ _ -"
             upper_lower: One uppercase and one lowercase letter
             valid_new_password: Confirm new password
-    progress_comparaison: Progress comparison · Sets · Records
     ready: Ready to get started?
     ready_to_start: Ready to get started? Your progress begins here
     ready_to_transform: Ready to transform yourself?
     see_datas: Track your tonnage, records and progress
     see_working_muscles: See exactly which muscles you're working
-    tonnage_curve_weekly_frequency: Tonnage curve · Weekly frequency
     welcome: Welcome to your fitness adventure!
     welcome_to: Welcome to {brand}
     what_next: What's ahead

@@ -26,12 +26,6 @@ sentence:
             =1    {Na # training}
             other {Na # trainingen}
         }
-    after_weeks: >-
-        {count, plural,
-            =1    {Na # week}
-            other {Na # weken}
-        }
-    contact_support: Neem contact op met onze support
     back_to_login: Terug naar inloggen
     email:
         button_failed: Als de knop niet werkt, kopieer en plak deze link in je browser
@@ -52,6 +46,7 @@ sentence:
     log_first_workout: Registreer je eerste training
     log_workout: Klik op "Training vastleggen" in je overzicht
     maintain_regularity: Blijf consistent en verbreek je records
+    muscle_period_regularity: Silhouet · Week/Maand · Regelmaat
     need_help: Hulp nodig?
     outline_muscle: Spiersilhouet
     password:
@@ -60,17 +55,15 @@ sentence:
             confirmation: Je wachtwoord is succesvol gewijzigd
             criteria_min_char: Minstens {min} tekens
             min_char: Minimaal {min} tekens met hoofdletters, kleine letters en cijfers
-            regex: Het wachtwoord moet minstens één hoofdletter, één kleine letter, één cijfer en één speciaal teken bevatten (! ? % $ * &)
-            special_char: Minstens één van de volgende speciale tekens ! ? % $ * &
+            regex: "Het wachtwoord moet minstens één hoofdletter, één kleine letter, één cijfer en één speciaal teken bevatten (! ? % $ * & # @ _ -)"
+            special_char: "Minstens één van de volgende speciale tekens ! ? % $ * & # @ _ -"
             upper_lower: Eén hoofdletter en één kleine letter
             valid_new_password: Nieuw wachtwoord bevestigen
-    progress_comparaison: Voortgangsvergelijking · Sets · Records
     ready: Klaar om te beginnen?
     ready_to_start: Klaar om te beginnen? Je vooruitgang begint hier
     ready_to_transform: Klaar om jezelf te transformeren?
     see_datas: Bekijk je tonnage, records en ontwikkeling
     see_working_muscles: Zie precies welke spieren je traint
-    tonnage_curve_weekly_frequency: Tonnage-curve · Wekelijkse frequentie
     welcome: Welkom bij je fitness-avontuur!
     welcome_to: Welkom bij {brand}
     what_next: Wat je te wachten staat

@@ -26,12 +26,6 @@ sentence:
             =1    {Après # séance}
             other {Après # séances}
         }
-    after_weeks: >-
-        {count, plural,
-            =1    {Après # semaine}
-            other {Après # semaines}
-        }
-    contact_support: Contactez notre support
     back_to_login: Retour à la connexion
     email:
         button_failed: Si le bouton ne fonctionne pas, copiez et collez ce lien dans votre navigateur
@@ -52,6 +46,7 @@ sentence:
     log_first_workout: Enregistre ta première séance
     log_workout: Clique sur "Enregistrer ma séance" dans ton tableau de bord
     maintain_regularity: Maintiens ta régularité et casse tes records
+    muscle_period_regularity: Silhouette · Semaine/Mois · Régularité
     need_help: Besoin d'aide ?
     outline_muscle: Silhouette musculaire
     password:
@@ -64,13 +59,11 @@ sentence:
             special_char: "Au moins un des caractères spéciaux suivant ! ? % $ * & # @ _ -"
             upper_lower: Une majuscule et une minuscule
             valid_new_password: Valider le nouveau mot de passe
-    progress_comparaison: Comparatifs de progression · Séries
     ready: Prêt à commencer ?
     ready_to_start: Prêt à démarrer ? Ta progression commence ici
     ready_to_transform: Prêt à vous transformer ?
     see_datas: Visualise ton tonnage, tes records et ton évolution
     see_working_muscles: Vois exactement quels muscles tu travailles
-    tonnage_curve_weekly_frequency: Courbe de tonnage · Fréquence hebdomadaire
     welcome: Bienvenue dans votre aventure fitness !
     welcome_to: Bienvenue sur {brand}
     what_next: Ce qui t'attend
