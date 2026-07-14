@@ -256,6 +256,13 @@ function assetMapCompile(): void
     );
 }
 
+#[AsTask(description: 'Compile importmap and build Tailwind assets')]
+function assets(): void
+{
+    assetMapCompile();
+    tailwindBuild();
+}
+
 #[AsTask(description: 'Start the project')]
 function start(): void
 {
