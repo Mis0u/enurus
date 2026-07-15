@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Entity\Trait\TimestampTrait;
+use App\Enum\Contact\ContactRestrictionDurationEnum;
 use App\Enum\Entity\User\GenderEnum;
 use App\Enum\Entity\User\UnitOfMeasureEnum;
 use App\Enum\Translations\LocaleAllowedEnum;
@@ -76,6 +77,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public Collection $routines {
         get {
             return $this->routines;
+        }
+    }
+
+    /**
+     * @var Collection<int, ContactThread>
+     */
+    #[ORM\OneToMany(targetEntity: ContactThread::class, mappedBy: 'owner', cascade: ['remove'], orphanRemoval: true)]
+    public Collection $contactThreads {
+        get {
+            return $this->contactThreads;
         }
     }
 
@@ -178,6 +189,50 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
     }
 
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    public ?\DateTimeImmutable $contactRestrictedUntil = null {
+        get {
+            return $this->contactRestrictedUntil;
+        }
+        set(?\DateTimeImmutable $contactRestrictedUntil) {
+            $this->contactRestrictedUntil = $contactRestrictedUntil;
+        }
+    }
+
+    #[ORM\Column]
+    public bool $contactRestrictedPermanently = false {
+        get {
+            return $this->contactRestrictedPermanently;
+        }
+        set(bool $contactRestrictedPermanently) {
+            $this->contactRestrictedPermanently = $contactRestrictedPermanently;
+        }
+    }
+
+    #[ORM\Column(type: 'string', enumType: ContactRestrictionDurationEnum::class, nullable: true)]
+    public ?ContactRestrictionDurationEnum $contactRestrictionDuration = null {
+        get {
+            return $this->contactRestrictionDuration;
+        }
+        set(?ContactRestrictionDurationEnum $contactRestrictionDuration) {
+            $this->contactRestrictionDuration = $contactRestrictionDuration;
+        }
+    }
+
+    /**
+     * Propriété virtuelle non persistée — dérivée des deux champs ci-dessus, jamais stockée en
+     * base (une restriction "1 semaine" ne doit pas nécessiter de job pour se lever d'elle-même).
+     */
+    public bool $isContactRestricted {
+        get {
+            if ($this->contactRestrictedPermanently) {
+                return true;
+            }
+
+            return null !== $this->contactRestrictedUntil && $this->contactRestrictedUntil > new \DateTimeImmutable();
+        }
+    }
+
     /**
      * @var string[] $roles
      */
@@ -189,6 +244,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->exercises = new ArrayCollection();
         $this->workouts = new ArrayCollection();
         $this->routines = new ArrayCollection();
+        $this->contactThreads = new ArrayCollection();
         $this->locale = LocaleAllowedEnum::EN->value;
     }
 

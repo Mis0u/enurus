@@ -1,4 +1,39 @@
+contact:
+    category:
+        bug: Fehler
+        love: "Schick mir etwas Liebe"
+        other: Sonstiges
+        question: Frage
+        suggestion: Vorschlag
+    feedback:
+        success: "Deine Nachricht wurde gesendet, danke!"
+    field:
+        category: Kategorie
+        category_placeholder: Wähle eine Kategorie
+        image: Bild
+        image_optional: "(optional — um einen Fehler oder Vorschlag zu veranschaulichen)"
+        message: Nachricht
+        message_placeholder: "Beschreibe dein Anliegen im Detail…"
+        subject: Betreff
+        subject_placeholder: "Fasse dein Anliegen in wenigen Worten zusammen"
+    image:
+        cta: Klicke, um ein Bild auszuwählen
+        hint: "PNG, JPG — max. 5 MB"
+    intro: "Eine Frage, ein Fehler zu melden, eine Verbesserungsidee? Schreib mir direkt unten. Du erhältst meine Antwort in deinen internen Nachrichten."
+    restricted:
+        duration:
+            one_month: 1 Monat
+            one_week: 1 Woche
+        text_permanent: "Dein Zugang zum Kontakt-Nachrichtensystem wurde dauerhaft gesperrt."
+        text_temporary: "Aufgrund missbräuchlicher Nutzung des Kontakt-Nachrichtensystems wurde dein Zugang zu diesem Formular für {duration} eingeschränkt. Du kannst nach Ablauf dieser Frist wieder eine Nachricht senden."
+        title_permanent: Nachrichtenzugang gesperrt
+        title_temporary: Nachrichtenversand vorübergehend blockiert
+        until_label: Einschränkung aufgehoben am
+    submit: Senden
+    title: Kontakt
+
 dashboard:
+    contact: Kontakt
     library: Bibliothek
     logout: Abmelden
     messaging: Nachrichten
@@ -145,6 +180,31 @@ exercise:
                 other {# Übungen verfügbar}
             }
         title: Bibliothek
+
+messagerie:
+    author:
+        admin: FitTracker
+        you: Du
+    back_to_list: Zurück zu den Nachrichten
+    delete:
+        cancel_button: Abbrechen
+        confirm_button: Löschen
+        confirm_text: "Möchtest du diese Unterhaltung wirklich löschen? Diese Aktion ist unwiderruflich und betrifft nur deine Nachrichten."
+        confirm_title: Unterhaltung löschen
+        error_text: "Beim Löschen ist ein Fehler aufgetreten. Bitte versuche es erneut."
+        success: Die Unterhaltung wurde aus deinen Nachrichten gelöscht.
+    empty:
+        text: "In diesem Bereich erhältst du meine Antworten auf deine Kontaktnachrichten sowie gelegentliche Mitteilungen zu Website-Updates — nie Nachrichten von anderen Mitgliedern, nie Spam."
+        title: Willkommen in deinen Nachrichten
+    reply:
+        submit: Antworten
+    reply_restricted: "Dein Zugang zum Kontakt-Nachrichtensystem ist derzeit eingeschränkt. Du kannst deine Nachrichten lesen, aber nicht antworten."
+    status:
+        answered: Beantwortet
+        awaiting_admin: Antwort ausstehend
+        closed: Geschlossen
+    thread_closed: "Diese Unterhaltung ist geschlossen, du kannst nicht mehr antworten."
+    title: Nachrichten
 
 routine:
     badge:

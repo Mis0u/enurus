@@ -1,4 +1,39 @@
+contact:
+    category:
+        bug: Bug
+        love: "Stuur me wat liefde"
+        other: Anders
+        question: Vraag
+        suggestion: Suggestie
+    feedback:
+        success: "Je bericht is verzonden, bedankt!"
+    field:
+        category: Categorie
+        category_placeholder: Kies een categorie
+        image: Afbeelding
+        image_optional: "(optioneel — om een bug of suggestie te illustreren)"
+        message: Bericht
+        message_placeholder: "Beschrijf je verzoek in detail…"
+        subject: Onderwerp
+        subject_placeholder: "Vat je verzoek in een paar woorden samen"
+    image:
+        cta: Klik om een afbeelding te kiezen
+        hint: "PNG, JPG — max. 5 MB"
+    intro: "Een vraag, een bug om te melden, een idee voor verbetering? Schrijf me hieronder direct. Je ontvangt mijn antwoord in je interne Berichten."
+    restricted:
+        duration:
+            one_month: 1 maand
+            one_week: 1 week
+        text_permanent: "Je toegang tot de contactberichten is permanent opgeschort."
+        text_temporary: "Vanwege misbruik van de contactberichten is je toegang tot dit formulier beperkt voor {duration}. Je kunt weer een bericht sturen zodra deze periode voorbij is."
+        title_permanent: Toegang tot berichten opgeschort
+        title_temporary: Verzenden van berichten tijdelijk geblokkeerd
+        until_label: Beperking opgeheven op
+    submit: Verzenden
+    title: Contact
+
 dashboard:
+    contact: Contact
     library: Bibliotheek
     logout: Uitloggen
     messaging: Berichten
@@ -145,6 +180,31 @@ exercise:
                 other {# oefeningen beschikbaar}
             }
         title: Bibliotheek
+
+messagerie:
+    author:
+        admin: FitTracker
+        you: Jij
+    back_to_list: Terug naar berichten
+    delete:
+        cancel_button: Annuleren
+        confirm_button: Verwijderen
+        confirm_text: "Weet je zeker dat je dit gesprek wilt verwijderen? Deze actie is onomkeerbaar en heeft alleen invloed op jouw berichten."
+        confirm_title: Gesprek verwijderen
+        error_text: "Er is een fout opgetreden bij het verwijderen. Probeer het opnieuw."
+        success: Het gesprek is verwijderd uit je berichten.
+    empty:
+        text: "In deze ruimte ontvang je mijn antwoorden op je contactberichten, evenals af en toe mededelingen over site-updates — nooit berichten van andere leden, nooit spam."
+        title: Welkom in je berichten
+    reply:
+        submit: Beantwoorden
+    reply_restricted: "Je toegang tot de contactberichten is momenteel beperkt. Je kunt je berichten lezen, maar niet beantwoorden."
+    status:
+        answered: Beantwoord
+        awaiting_admin: In afwachting van antwoord
+        closed: Gesloten
+    thread_closed: "Dit gesprek is gesloten, je kunt niet meer antwoorden."
+    title: Berichten
 
 routine:
     badge:

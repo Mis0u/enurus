@@ -1,0 +1,55 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - thread : ContactThread
+    - unreadCount : int
+#}
+{% set category_emoji = {
+    bug: '🐞',
+    suggestion: '💡',
+    question: '❓',
+    love: '❤️',
+    other: '📁',
+}[thread.category.value] %}
+
+{% set category_label = ('contact.category.' ~ thread.category.value)|trans({}, 'navigation') %}
+
+{% if thread.category.value == 'bug' %}
+    {% set category_class = 'bg-[rgba(239,68,68,0.14)] border-[rgba(239,68,68,0.3)] text-[#f87171]' %}
+{% elseif thread.category.value == 'suggestion' %}
+    {% set category_class = 'bg-[rgba(6,182,212,0.12)] border-[rgba(6,182,212,0.3)] text-[#06b6d4]' %}
+{% elseif thread.category.value == 'question' %}
+    {% set category_class = 'bg-[rgba(168,85,247,0.12)] border-[rgba(168,85,247,0.3)] text-[#a855f7]' %}
+{% elseif thread.category.value == 'love' %}
+    {% set category_class = 'bg-[rgba(244,63,94,0.15)] border-[rgba(244,63,94,0.3)] text-[#f43f5e]' %}
+{% else %}
+    {% set category_class = 'bg-white/[0.05] border-white/[0.07] text-[#4a5568]' %}
+{% endif %}
+
+{% set last_message = thread.messages|last %}
+{% set excerpt_prefix = last_message.fromAdmin ? 'messagerie.author.admin'|trans({}, 'navigation') ~ ' : ' : 'messagerie.author.you'|trans({}, 'navigation') ~ ' : ' %}
+{% set excerpt_body = last_message.body|length > 90 ? last_message.body|slice(0, 90) ~ '…' : last_message.body %}
+
+<a href="{{ path('app_contact_thread_show', {id: thread.id.toRfc4122}) }}"
+   class="block bg-[#0f1928] border rounded-2xl p-4.5 no-underline hover:bg-[#151f30] hover:border-white/[0.15] transition-all {{ unreadCount > 0 ? 'border-[rgba(244,63,94,0.25)]' : 'border-white/[0.07]' }}">
+    <div class="flex items-center justify-between gap-3 mb-2.5">
+        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md border text-[10.5px] font-semibold whitespace-nowrap {{ category_class }}">
+            {{ category_emoji }} {{ category_label }}
+        </span>
+        <span class="text-[11.5px] text-[#4a5568] whitespace-nowrap shrink-0">
+            {{ thread.updatedAt|format_datetime(pattern: 'd MMMM yyyy', locale: app.user.locale) }}
+        </span>
+    </div>
+
+    <div class="flex items-center gap-2 mb-1.5">
+        {% if unreadCount > 0 %}
+            <span class="w-2 h-2 rounded-full bg-rose-ft shrink-0" aria-hidden="true"></span>
+        {% endif %}
+        <span class="font-['Rajdhani'] text-[16px] font-semibold truncate {{ unreadCount > 0 ? 'text-[#f0f4ff] font-bold' : 'text-[#8b9bb4]' }}">
+            {{ thread.subject }}
+        </span>
+    </div>
+
+    <p class="text-[12.5px] truncate {{ unreadCount > 0 ? 'text-[#8b9bb4]' : 'text-[#4a5568]' }}">
+        {{ excerpt_prefix }}{{ excerpt_body }}
+    </p>
+</a>

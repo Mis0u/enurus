@@ -1,0 +1,38 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - thread : ContactThread
+    - replyForm : FormView
+    - imageMaxSizeBytes : int
+    - imageAllowedMimeTypes : array<string>
+#}
+{% form_theme replyForm 'registration/theme/error_theme.html.twig' %}
+
+{{ form_start(replyForm, {
+    render_rest: false,
+    action: path('app_contact_thread_reply', {id: thread.id.toRfc4122}),
+}) }}
+
+<div class="mb-[18px]">
+    {{ form_widget(replyForm.message, {
+        attr: {
+            rows: 4,
+            class: 'w-full pl-4 pr-4 py-3 rounded-xl bg-white/5 border text-white placeholder-slate-500 outline-none focus:ring-2 focus:border-transparent transition-all backdrop-blur-sm ' ~ (replyForm.message.vars.valid ? 'border-white/10 focus:ring-cyan-500' : 'border-red-500/50 focus:ring-red-500/20'),
+            placeholder: 'contact.field.message_placeholder'|trans({}, 'navigation'),
+        }
+    }) }}
+    {{ form_errors(replyForm.message) }}
+</div>
+
+{% include 'contact/_image_field.html.twig' with {
+    fieldId: 'replyImage',
+    imageMaxSizeBytes: imageMaxSizeBytes,
+    imageAllowedMimeTypes: imageAllowedMimeTypes,
+} only %}
+
+{{ form_row(replyForm._token) }}
+
+<button type="submit"
+        class="cursor-pointer w-full min-h-11 py-3 px-4 bg-gradient-to-r from-cyan-500 to-cyan-700 hover:from-cyan-600 hover:to-cyan-800 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-200">
+    {{ 'messagerie.reply.submit'|trans({}, 'navigation') }}
+</button>
+{{ form_end(replyForm, {render_rest: false}) }}

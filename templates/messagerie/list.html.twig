@@ -1,0 +1,29 @@
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block title %}{{ 'messagerie.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        title: 'messagerie.title'|trans({}, 'navigation'),
+        subtitle: app.user.nickname|formatInitials,
+    } only %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 overflow-y-auto">
+        <div class="max-w-[720px] mx-auto px-4 lg:px-8 py-6">
+            {% if threads is empty %}
+                {% include 'messagerie/_empty_state.html.twig' only %}
+            {% else %}
+                <div class="space-y-3">
+                    {% for thread in threads %}
+                        {% include 'messagerie/_thread_row.html.twig' with {
+                            thread: thread,
+                            unreadCount: unreadCounts[thread.id.toRfc4122] ?? 0,
+                        } only %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

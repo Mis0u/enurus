@@ -1,4 +1,39 @@
+contact:
+    category:
+        bug: Bug
+        love: "Send some love"
+        other: Other
+        question: Question
+        suggestion: Suggestion
+    feedback:
+        success: "Your message has been sent, thank you!"
+    field:
+        category: Category
+        category_placeholder: Choose a category
+        image: Image
+        image_optional: "(optional — to illustrate a bug or a suggestion)"
+        message: Message
+        message_placeholder: "Describe your request in detail…"
+        subject: Subject
+        subject_placeholder: "Summarize your request in a few words"
+    image:
+        cta: Click to choose an image
+        hint: "PNG, JPG — 5 MB max"
+    intro: "A question, a bug to report, an idea for improvement? Write to me directly below. You'll get my reply in your internal Messages."
+    restricted:
+        duration:
+            one_month: 1 month
+            one_week: 1 week
+        text_permanent: "Your access to the contact messaging has been permanently suspended."
+        text_temporary: "Following abusive use of the contact messaging, your access to this form has been restricted for {duration}. You'll be able to send a message again once this period is over."
+        title_permanent: Messaging access suspended
+        title_temporary: Sending messages temporarily blocked
+        until_label: Restriction lifted on
+    submit: Send
+    title: Contact
+
 dashboard:
+    contact: Contact
     library: Library
     logout: Log out
     messaging: Messages
@@ -145,6 +180,31 @@ exercise:
                 other {# exercises available}
             }
         title: Library
+
+messagerie:
+    author:
+        admin: FitTracker
+        you: You
+    back_to_list: Back to messages
+    delete:
+        cancel_button: Cancel
+        confirm_button: Delete
+        confirm_text: "Are you sure you want to delete this conversation? This action is irreversible and only affects your messages."
+        confirm_title: Delete conversation
+        error_text: "An error occurred while deleting. Please try again."
+        success: The conversation has been deleted from your messages.
+    empty:
+        text: "This space lets you receive my replies to your contact messages, as well as occasional site update announcements — never messages from other members, never spam."
+        title: Welcome to your messages
+    reply:
+        submit: Reply
+    reply_restricted: "Your access to the contact messaging is currently restricted. You can read your messages, but you can't reply."
+    status:
+        answered: Answered
+        awaiting_admin: Awaiting reply
+        closed: Closed
+    thread_closed: "This conversation is closed, you can no longer reply."
+    title: Messages
 
 routine:
     badge:

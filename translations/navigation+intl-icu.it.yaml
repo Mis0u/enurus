@@ -1,4 +1,39 @@
+contact:
+    category:
+        bug: Bug
+        love: "Mandami un po' d'amore"
+        other: Altro
+        question: Domanda
+        suggestion: Suggerimento
+    feedback:
+        success: "Il tuo messaggio è stato inviato, grazie!"
+    field:
+        category: Categoria
+        category_placeholder: Scegli una categoria
+        image: Immagine
+        image_optional: "(facoltativo — per illustrare un bug o un suggerimento)"
+        message: Messaggio
+        message_placeholder: "Descrivi la tua richiesta nel dettaglio…"
+        subject: Oggetto
+        subject_placeholder: "Riassumi la tua richiesta in poche parole"
+    image:
+        cta: Clicca per scegliere un'immagine
+        hint: "PNG, JPG — max 5 MB"
+    intro: "Una domanda, un bug da segnalare, un'idea di miglioramento? Scrivimi direttamente qui sotto. Riceverai la mia risposta nella tua Messaggistica interna."
+    restricted:
+        duration:
+            one_month: 1 mese
+            one_week: 1 settimana
+        text_permanent: "Il tuo accesso alla messaggistica di contatto è stato sospeso permanentemente."
+        text_temporary: "In seguito a un uso improprio della messaggistica di contatto, il tuo accesso a questo modulo è stato limitato per {duration}. Potrai inviare di nuovo un messaggio una volta trascorso questo periodo."
+        title_permanent: Accesso alla messaggistica sospeso
+        title_temporary: Invio di messaggi temporaneamente bloccato
+        until_label: Restrizione revocata il
+    submit: Invia
+    title: Contatti
+
 dashboard:
+    contact: Contatti
     library: Biblioteca
     logout: Disconnetti
     messaging: Messaggi
@@ -145,6 +180,31 @@ exercise:
                 other {# esercizi disponibili}
             }
         title: Biblioteca
+
+messagerie:
+    author:
+        admin: FitTracker
+        you: Tu
+    back_to_list: Torna alla messaggistica
+    delete:
+        cancel_button: Annulla
+        confirm_button: Elimina
+        confirm_text: "Sei sicuro di voler eliminare questa conversazione? Questa azione è irreversibile e riguarda solo la tua messaggistica."
+        confirm_title: Elimina la conversazione
+        error_text: "Si è verificato un errore durante l'eliminazione. Riprova."
+        success: La conversazione è stata eliminata dalla tua messaggistica.
+    empty:
+        text: "Questo spazio ti permette di ricevere le mie risposte ai tuoi messaggi di contatto, oltre a eventuali comunicazioni occasionali sugli aggiornamenti del sito — mai messaggi da altri membri, mai spam."
+        title: Benvenuto nella tua messaggistica
+    reply:
+        submit: Rispondi
+    reply_restricted: "Il tuo accesso alla messaggistica di contatto è attualmente limitato. Puoi consultare i tuoi messaggi, ma non puoi rispondere."
+    status:
+        answered: Risposto
+        awaiting_admin: In attesa di risposta
+        closed: Chiuso
+    thread_closed: "Questa conversazione è chiusa, non puoi più rispondere."
+    title: Messaggistica
 
 routine:
     badge:

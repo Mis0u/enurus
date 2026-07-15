@@ -1,5 +1,7 @@
 <nav class="md:hidden flex items-center justify-around fixed bottom-0 left-0 right-0 h-[70px] bg-bg-card border-t border-white/[0.07] z-[100] px-2 shadow-[0_-4px_20px_rgba(0,0,0,0.3)]">
 
+    {% set unread_contact_count = contact_unread_count(app.user) %}
+
     <twig:Navigation:Sidebar:NavigationItem
         link="{{ path('app_dashboard') }}"
         route="app_dashboard"
@@ -17,7 +19,15 @@
         </svg>
     </a>
 
-    <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.messaging'|trans({}, 'navigation') }}" icon="messaging" badge="true" mobile="true"/>
+    <twig:Navigation:Sidebar:NavigationItem
+        link="{{ path('app_contact_thread_list') }}"
+        route="app_contact_thread_list"
+        menu="{{ 'dashboard.messaging'|trans({}, 'navigation') }}"
+        icon="messaging"
+        badge="{{ unread_contact_count > 0 }}"
+        totalNotification="{{ unread_contact_count }}"
+        mobile="true"
+    />
 
     <twig:Navigation:Sidebar:NavigationItem menu="{{ 'dashboard.profile'|trans({}, 'navigation') }}" icon="profile" mobile="true"/>
 </nav>

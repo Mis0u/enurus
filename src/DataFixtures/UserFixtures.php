@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Enum\Contact\ContactRestrictionDurationEnum;
 use App\Enum\Entity\User\GenderEnum;
 use App\Enum\Entity\User\UnitOfMeasureEnum;
 use App\Enum\Translations\LocaleAllowedEnum;
@@ -51,6 +52,14 @@ class UserFixtures extends Fixture
 
     public const string USER_DASHBOARD_SINGLE = 'user-fixture-1-workout@test.com';
 
+    public const string USER_ADMIN = 'admin-fixture@test.com';
+
+    public const string USER_RESTRICTED_ONE_WEEK = 'user-fixture-restricted-1-week@test.com';
+
+    public const string USER_RESTRICTED_ONE_MONTH = 'user-fixture-restricted-1-month@test.com';
+
+    public const string USER_RESTRICTED_PERMANENT = 'user-fixture-restricted-permanent@test.com';
+
     private const array USERS_ETHNIES = [
         'en' => 'user-fixture-english@test.com',
         'es' => 'user-fixture-spanish@test.com',
@@ -74,6 +83,8 @@ class UserFixtures extends Fixture
         $this->loadExerciseUsers($manager);
         $this->loadRoutineUsers($manager);
         $this->loadDashboardUsers($manager);
+        $this->loadAdminUser($manager);
+        $this->loadRestrictedUsers($manager);
 
         $manager->flush();
     }
@@ -215,6 +226,78 @@ class UserFixtures extends Fixture
             \sprintf('%s%s', self::REFERENCE_PREFIX, self::USER_DASHBOARD_SINGLE),
             $user,
         );
+    }
+
+    private function loadAdminUser(ObjectManager $manager): void
+    {
+        $user = new User();
+        $user->email = self::USER_ADMIN;
+        $user->nickname = 'admin-fixture';
+        $user->createdBy = $user;
+        $user->locale = LocaleAllowedEnum::FR->value;
+        $user->gender = GenderEnum::MALE;
+        $user->lastLogin = new \DateTimeImmutable();
+        $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+        $user->setRoles(['ROLE_ADMIN']);
+
+        $manager->persist($user);
+
+        $this->addReference(
+            \sprintf('%s%s', self::REFERENCE_PREFIX, self::USER_ADMIN),
+            $user,
+        );
+    }
+
+    /**
+     * Trois cas de restriction demandés (1 semaine / 1 mois / permanente) — pas d'interface admin
+     * pour poser ces états pour l'instant, seules les fixtures les couvrent.
+     */
+    private function loadRestrictedUsers(ObjectManager $manager): void
+    {
+        $restrictedUsers = [
+            [
+                'email' => self::USER_RESTRICTED_ONE_WEEK,
+                'nickname' => 'user-restricted-1-week',
+                'until' => new \DateTimeImmutable('+7 days'),
+                'duration' => ContactRestrictionDurationEnum::ONE_WEEK,
+                'permanent' => false,
+            ],
+            [
+                'email' => self::USER_RESTRICTED_ONE_MONTH,
+                'nickname' => 'user-restricted-1-month',
+                'until' => new \DateTimeImmutable('+30 days'),
+                'duration' => ContactRestrictionDurationEnum::ONE_MONTH,
+                'permanent' => false,
+            ],
+            [
+                'email' => self::USER_RESTRICTED_PERMANENT,
+                'nickname' => 'user-restricted-permanent',
+                'until' => null,
+                'duration' => null,
+                'permanent' => true,
+            ],
+        ];
+
+        foreach ($restrictedUsers as $userData) {
+            $user = new User();
+            $user->email = $userData['email'];
+            $user->nickname = $userData['nickname'];
+            $user->createdBy = $user;
+            $user->locale = LocaleAllowedEnum::FR->value;
+            $user->gender = GenderEnum::MALE;
+            $user->lastLogin = new \DateTimeImmutable();
+            $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+            $user->contactRestrictedUntil = $userData['until'];
+            $user->contactRestrictedPermanently = $userData['permanent'];
+            $user->contactRestrictionDuration = $userData['duration'];
+
+            $manager->persist($user);
+
+            $this->addReference(
+                \sprintf('%s%s', self::REFERENCE_PREFIX, $userData['email']),
+                $user,
+            );
+        }
     }
 
     /**

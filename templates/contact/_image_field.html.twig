@@ -1,0 +1,59 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - fieldId : string — id unique de l'input file sur la page
+    - imageMaxSizeBytes : int
+    - imageAllowedMimeTypes : array<string>
+#}
+<div class="mb-[18px]"
+     data-controller="contact--image"
+     data-contact--image-max-size-value="{{ imageMaxSizeBytes }}"
+     data-contact--image-allowed-types-value="{{ imageAllowedMimeTypes|json_encode }}"
+     data-contact--image-too-large-error-value="{{ 'contact.image.too_large'|trans({'{{ limit }}': (imageMaxSizeBytes / 1024 / 1024)|round}, 'validators') }}"
+     data-contact--image-invalid-type-error-value="{{ 'contact.image.invalid_type'|trans({}, 'validators') }}">
+
+    <label for="{{ fieldId }}" class="block text-sm font-semibold text-slate-200 mb-2">
+        {{ 'contact.field.image'|trans({}, 'navigation') }}
+        <span class="text-slate-500 font-normal text-xs ml-1">{{ 'contact.field.image_optional'|trans({}, 'navigation') }}</span>
+    </label>
+
+    <label for="{{ fieldId }}"
+           class="flex flex-col items-center justify-center gap-2 border border-dashed border-white/10 rounded-xl px-4 py-5 text-center cursor-pointer hover:border-white/20 hover:bg-white/[0.03] transition-all">
+        <svg class="w-7.5 h-7.5 text-[#4a5568]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+        </svg>
+        <span class="text-[13px] text-[#8b9bb4] font-medium">{{ 'contact.image.cta'|trans({}, 'navigation') }}</span>
+        <span class="text-[11px] text-[#4a5568]">{{ 'contact.image.hint'|trans({}, 'navigation') }}</span>
+        <input type="file"
+               id="{{ fieldId }}"
+               name="image"
+               accept="{{ imageAllowedMimeTypes|join(',') }}"
+               class="hidden"
+               data-contact--image-target="input"
+               data-action="change->contact--image#validate">
+    </label>
+
+    <div data-contact--image-target="preview" class="hidden items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 mt-2.5">
+        <div data-contact--image-target="thumb"
+             class="w-10 h-10 rounded-lg bg-[rgba(244,63,94,0.15)] border border-[rgba(244,63,94,0.25)] flex items-center justify-center shrink-0 overflow-hidden"></div>
+        <div class="flex-1 min-w-0">
+            <div data-contact--image-target="filename" class="text-[12.5px] text-[#f0f4ff] font-medium truncate"></div>
+            <div data-contact--image-target="filesize" class="text-[11px] text-[#4a5568] mt-0.5"></div>
+        </div>
+        <button type="button"
+                data-action="click->contact--image#remove"
+                aria-label="{{ 'field.form.button.delete'|trans({}, 'common') }}"
+                class="cursor-pointer w-7.5 h-7.5 min-w-7.5 rounded-lg border border-white/10 text-[#4a5568] hover:text-rose-ft hover:border-[rgba(244,63,94,0.3)] hover:bg-[rgba(244,63,94,0.15)] flex items-center justify-center transition-all">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <div data-contact--image-target="error"
+         class="hidden items-center gap-1.5 mt-2 text-xs text-red-200 bg-[rgba(239,68,68,0.1)] border border-red-500/30 rounded-lg px-2.5 py-1.5">
+        <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0 3.75h.007v.008H12v-.008zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span data-contact--image-target="errorText"></span>
+    </div>
+</div>

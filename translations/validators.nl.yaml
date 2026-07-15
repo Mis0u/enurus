@@ -1,3 +1,8 @@
+contact:
+    image:
+        invalid_type: Het bestand moet in JPEG-, PNG- of WebP-formaat zijn
+        too_large: Het bestand overschrijdt de maximaal toegestane grootte van {{ limit }} MB
+
 exercise:
     muscle_primary_required: Minstens één primaire spier is vereist.
     name_not_blank: Er moet een naam worden opgegeven

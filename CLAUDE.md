@@ -240,11 +240,8 @@ TODO #17 (non résolu) : `UserFixtures` a beaucoup grossi, refactor à prévoir.
 
 | # | Item |
 |---|------|
-| 1 | Page de contact support |
 | 3 | Menus mobile manquants dans Profil (Bibliothèque, Mes routines, Réglages, Déconnexion) |
 | 4 | SVG dynamiques (en cours) |
-| 7 | Trier les muscles dans `_exercise_card.html.twig` et la page enregistre-séance |
-| 8 | Support des routines dans "Enregistre ta séance" |
 | 10 | Évaluer `datetimetz_immutable` pour `Workout::$performedAt` — pas encore acté |
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 16 | Description d'exercice au survol (tooltip/popover) |

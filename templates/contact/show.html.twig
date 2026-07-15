@@ -1,0 +1,32 @@
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% if not restricted %}
+    {% form_theme contactForm 'registration/theme/error_theme.html.twig' %}
+{% endif %}
+
+{% block title %}{{ 'contact.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        title: 'contact.title'|trans({}, 'navigation'),
+        subtitle: app.user.nickname|formatInitials,
+    } only %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 overflow-y-auto">
+        <div class="max-w-[640px] mx-auto px-4 lg:px-8 py-6">
+            {% if restricted %}
+                {% include 'contact/_restricted.html.twig' with {
+                    user: user,
+                } only %}
+            {% else %}
+                {% include 'contact/_form.html.twig' with {
+                    contactForm: contactForm,
+                    imageMaxSizeBytes: imageMaxSizeBytes,
+                    imageAllowedMimeTypes: imageAllowedMimeTypes,
+                } only %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
