@@ -20,12 +20,17 @@ class ContactThreadRepository extends ServiceEntityRepository
     }
 
     /**
+     * `JOIN FETCH` sur les messages (sans `setMaxResults`) pour que l'aperçu du dernier message
+     * affiché dans la liste ne déclenche pas un lazy-load par fil (N+1).
+     *
      * @return array<int, ContactThread>
      */
     public function findByOwnerOrderedByActivity(User $owner): array
     {
         /** @var list<ContactThread> $result */
         $result = $this->createQueryBuilder('t')
+            ->leftJoin('t.messages', 'm')
+            ->addSelect('m')
             ->andWhere('t.owner = :owner')
             ->andWhere('t.hiddenByUserAt IS NULL')
             ->setParameter('owner', $owner)

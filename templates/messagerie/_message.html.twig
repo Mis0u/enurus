@@ -1,22 +1,26 @@
 {#
     Variables attendues (toutes via `only`) :
     - message : ContactThreadMessage
+
+    message.fromAdmin = true  → auteur = FitTracker (Micka), aligné à gauche.
+    message.fromAdmin = false → auteur = l'utilisateur, aligné à droite.
 #}
-<div class="rounded-2xl p-4.5 border {{ message.fromAdmin ? 'bg-[rgba(6,182,212,0.06)] border-[rgba(6,182,212,0.2)]' : 'bg-white/[0.03] border-white/[0.07]' }}">
-    <div class="flex items-center justify-between gap-3 mb-2.5">
-        <span class="text-[12.5px] font-semibold {{ message.fromAdmin ? 'text-[#06b6d4]' : 'text-[#f0f4ff]' }}">
-            {{ message.fromAdmin ? 'messagerie.author.admin'|trans({}, 'navigation') : 'messagerie.author.you'|trans({}, 'navigation') }}
-        </span>
-        <span class="text-[11px] text-[#4a5568]">
-            {{ message.createdAt|format_datetime(pattern: 'd MMM yyyy, HH:mm', locale: app.user.locale) }}
-        </span>
+<div class="flex flex-col gap-1.5 {{ message.fromAdmin ? 'items-start' : 'items-end' }}">
+    <span class="flex items-center gap-1.5 text-[11px] font-semibold px-1 {{ message.fromAdmin ? 'text-[#06b6d4]' : 'text-[#8b9bb4]' }}">
+        {{ message.fromAdmin ? 'messagerie.author.admin'|trans({}, 'navigation') : 'messagerie.author.you'|trans({}, 'navigation') }}
+    </span>
+
+    <div class="max-w-[78%] rounded-2xl px-4 py-3 border {{ message.fromAdmin ? 'bg-[rgba(6,182,212,0.06)] border-[rgba(6,182,212,0.2)] rounded-bl-md' : 'bg-[rgba(244,63,94,0.15)] border-[rgba(244,63,94,0.25)] rounded-br-md' }}">
+        <p class="text-[13.5px] text-[#f0f4ff] leading-relaxed whitespace-pre-line">{{ message.body }}</p>
+
+        {% if message.imagePath %}
+            <a href="/uploads/{{ message.imagePath }}" target="_blank" rel="noopener noreferrer" class="inline-block mt-3">
+                <img src="/uploads/{{ message.imagePath }}" alt="" class="max-w-[220px] max-h-[160px] rounded-lg border border-white/[0.07] object-cover">
+            </a>
+        {% endif %}
     </div>
 
-    <p class="text-[13.5px] text-[#c5d0e0] leading-relaxed whitespace-pre-line">{{ message.body }}</p>
-
-    {% if message.imagePath %}
-        <a href="/uploads/{{ message.imagePath }}" target="_blank" rel="noopener noreferrer" class="inline-block mt-3">
-            <img src="/uploads/{{ message.imagePath }}" alt="" class="max-w-[220px] max-h-[160px] rounded-lg border border-white/[0.07] object-cover">
-        </a>
-    {% endif %}
+    <span class="text-[10.5px] text-[#4a5568] px-1">
+        {{ message.createdAt|format_datetime(pattern: 'd MMM yyyy, HH:mm', locale: app.user.locale) }}
+    </span>
 </div>
