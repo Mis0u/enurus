@@ -1,0 +1,40 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - user : User
+#}
+<section class="bg-[#0f1928] border border-[rgba(244,63,94,0.2)] rounded-2xl p-6">
+    <div class="flex flex-col items-center text-center py-3">
+        <div class="w-14 h-14 rounded-2xl bg-[rgba(244,63,94,0.15)] border border-[rgba(244,63,94,0.3)] flex items-center justify-center mb-4.5">
+            <svg class="w-6.5 h-6.5 text-[#f43f5e]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+        </div>
+
+        <h2 class="font-['Rajdhani'] text-lg font-bold text-[#f0f4ff] mb-2.5">
+            {{ (user.contactRestrictedPermanently ? 'contact.restricted.title_permanent' : 'contact.restricted.title_temporary')|trans({}, 'navigation') }}
+        </h2>
+
+        {% if user.contactRestrictedPermanently %}
+            <p class="text-[13.5px] text-[#8b9bb4] leading-relaxed max-w-[420px]">
+                {{ 'contact.restricted.text_permanent'|trans({}, 'navigation') }}
+            </p>
+        {% else %}
+            {% if user.contactRestrictionDuration.value == 'one_month' %}
+                {% set duration_label = 'contact.restricted.duration.one_month'|trans({}, 'navigation') %}
+            {% else %}
+                {% set duration_label = 'contact.restricted.duration.one_week'|trans({}, 'navigation') %}
+            {% endif %}
+            <p class="text-[13.5px] text-[#8b9bb4] leading-relaxed max-w-[420px]">
+                {{ 'contact.restricted.text_temporary'|trans({duration: duration_label}, 'navigation') }}
+            </p>
+
+            <div class="inline-flex items-center gap-1.5 mt-4 px-4 py-2 bg-white/[0.04] border border-white/[0.07] rounded-full text-[12.5px] text-[#8b9bb4]">
+                <svg class="w-3.5 h-3.5 text-[#4a5568]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                </svg>
+                {{ 'contact.restricted.until_label'|trans({}, 'navigation') }}
+                <strong class="text-[#f0f4ff] font-semibold">{{ user.contactRestrictedUntil|format_datetime(pattern: 'd MMMM yyyy', locale: app.user.locale) }}</strong>
+            </div>
+        {% endif %}
+    </div>
+</section>

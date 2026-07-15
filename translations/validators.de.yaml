@@ -1,3 +1,8 @@
+contact:
+    image:
+        invalid_type: Die Datei muss im Format JPEG, PNG oder WebP sein
+        too_large: Die Datei überschreitet die maximal erlaubte Größe von {{ limit }} MB
+
 exercise:
     muscle_primary_required: Mindestens ein primärer Muskel ist erforderlich.
     name_not_blank: Ein Name muss angegeben werden

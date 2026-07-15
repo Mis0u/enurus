@@ -1,4 +1,39 @@
+contact:
+    category:
+        bug: Bug
+        love: "Envoyer de l'amour"
+        other: Autre
+        question: Question
+        suggestion: Suggestion
+    feedback:
+        success: "Ton message a bien été envoyé, merci !"
+    field:
+        category: Catégorie
+        category_placeholder: Choisissez une catégorie
+        image: Image
+        image_optional: "(facultatif — pour illustrer un bug ou une suggestion)"
+        message: Message
+        message_placeholder: "Décris ta demande en détail…"
+        subject: Sujet
+        subject_placeholder: "Résume ta demande en quelques mots"
+    image:
+        cta: Clique pour choisir une image
+        hint: "PNG, JPG — 5 Mo max"
+    intro: "Une question, un bug à signaler, une idée d'amélioration ? Écris-moi directement ci-dessous. Tu recevras ma réponse dans ta Messagerie interne."
+    restricted:
+        duration:
+            one_month: 1 mois
+            one_week: 1 semaine
+        text_permanent: "Ton accès à la messagerie de contact a fait l'objet d'une suspension permanente."
+        text_temporary: "Suite à un usage abusif de la messagerie de contact, ton accès à ce formulaire a été restreint pour une durée de {duration}. Tu pourras à nouveau envoyer un message une fois cette période écoulée."
+        title_permanent: Accès à la messagerie suspendu
+        title_temporary: Envoi de message temporairement bloqué
+        until_label: Restriction levée le
+    submit: Envoyer
+    title: Contact
+
 dashboard:
+    contact: Contact
     library: Bibliothèque
     logout: Déconnexion
     messaging: Messagerie
@@ -145,6 +180,32 @@ exercise:
                 other {# exercices disponibles}
             }
         title: Bibliothèque
+
+messagerie:
+    author:
+        admin: FitTracker
+        you: Toi
+    back_to_list: Retour à la messagerie
+    delete:
+        cancel_button: Annuler
+        confirm_button: Supprimer
+        confirm_text: "Es-tu sûr de vouloir supprimer ce fil de discussion ? Cette action est irréversible et ne concerne que ta messagerie."
+        confirm_title: Supprimer le fil de discussion
+        error_text: "Une erreur est survenue lors de la suppression. Veuillez réessayer."
+        success: Le fil de discussion a été supprimé de ta messagerie.
+    empty:
+        text: "Cet espace te permet de recevoir mes réponses à tes messages de contact, ainsi que d'éventuelles communications ponctuelles liées à des mises à jour du site — jamais de messages d'autres membres, jamais de spam."
+        title: Bienvenue dans ta messagerie
+    reply:
+        submit: Répondre
+    reply_restricted: "Ton accès à la messagerie de contact est actuellement restreint. Tu peux consulter tes messages, mais tu ne peux pas répondre."
+    status:
+        answered: Répondu
+        awaiting_admin: En attente de réponse
+        closed: Clôturé
+    thread_closed: "Ce fil de discussion est clôturé, tu ne peux plus y répondre."
+    title: Messagerie
+
 routine:
     badge:
         base: De base

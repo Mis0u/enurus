@@ -1,4 +1,39 @@
+contact:
+    category:
+        bug: Bug
+        love: "Envíame algo de cariño"
+        other: Otro
+        question: Pregunta
+        suggestion: Sugerencia
+    feedback:
+        success: "¡Tu mensaje ha sido enviado, gracias!"
+    field:
+        category: Categoría
+        category_placeholder: Elige una categoría
+        image: Imagen
+        image_optional: "(opcional — para ilustrar un error o una sugerencia)"
+        message: Mensaje
+        message_placeholder: "Describe tu solicitud en detalle…"
+        subject: Asunto
+        subject_placeholder: "Resume tu solicitud en pocas palabras"
+    image:
+        cta: Haz clic para elegir una imagen
+        hint: "PNG, JPG — 5 MB máx."
+    intro: "¿Una pregunta, un error que reportar, una idea de mejora? Escríbeme directamente a continuación. Recibirás mi respuesta en tu Mensajería interna."
+    restricted:
+        duration:
+            one_month: 1 mes
+            one_week: 1 semana
+        text_permanent: "Tu acceso a la mensajería de contacto ha sido suspendido de forma permanente."
+        text_temporary: "Debido a un uso abusivo de la mensajería de contacto, tu acceso a este formulario ha sido restringido durante {duration}. Podrás volver a enviar un mensaje una vez transcurrido este período."
+        title_permanent: Acceso a la mensajería suspendido
+        title_temporary: Envío de mensajes bloqueado temporalmente
+        until_label: Restricción levantada el
+    submit: Enviar
+    title: Contacto
+
 dashboard:
+    contact: Contacto
     library: Biblioteca
     logout: Cerrar sesión
     messaging: Mensajes
@@ -145,6 +180,31 @@ exercise:
                 other {# ejercicios disponibles}
             }
         title: Biblioteca
+
+messagerie:
+    author:
+        admin: FitTracker
+        you: Tú
+    back_to_list: Volver a la mensajería
+    delete:
+        cancel_button: Cancelar
+        confirm_button: Eliminar
+        confirm_text: "¿Seguro que quieres eliminar esta conversación? Esta acción es irreversible y solo afecta a tu mensajería."
+        confirm_title: Eliminar la conversación
+        error_text: "Se ha producido un error al eliminar. Inténtalo de nuevo."
+        success: La conversación se ha eliminado de tu mensajería.
+    empty:
+        text: "Este espacio te permite recibir mis respuestas a tus mensajes de contacto, así como eventuales comunicaciones puntuales sobre actualizaciones del sitio — nunca mensajes de otros miembros, nunca spam."
+        title: Bienvenido a tu mensajería
+    reply:
+        submit: Responder
+    reply_restricted: "Tu acceso a la mensajería de contacto está actualmente restringido. Puedes consultar tus mensajes, pero no puedes responder."
+    status:
+        answered: Respondido
+        awaiting_admin: En espera de respuesta
+        closed: Cerrado
+    thread_closed: "Esta conversación está cerrada, ya no puedes responder."
+    title: Mensajería
 
 routine:
     badge:

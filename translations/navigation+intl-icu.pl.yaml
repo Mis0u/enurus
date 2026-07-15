@@ -1,4 +1,39 @@
+contact:
+    category:
+        bug: Błąd
+        love: "Wyślij mi trochę miłości"
+        other: Inne
+        question: Pytanie
+        suggestion: Sugestia
+    feedback:
+        success: "Twoja wiadomość została wysłana, dziękuję!"
+    field:
+        category: Kategoria
+        category_placeholder: Wybierz kategorię
+        image: Obraz
+        image_optional: "(opcjonalnie — aby zilustrować błąd lub sugestię)"
+        message: Wiadomość
+        message_placeholder: "Opisz szczegółowo swoją prośbę…"
+        subject: Temat
+        subject_placeholder: "Podsumuj swoją prośbę w kilku słowach"
+    image:
+        cta: Kliknij, aby wybrać obraz
+        hint: "PNG, JPG — maks. 5 MB"
+    intro: "Pytanie, błąd do zgłoszenia, pomysł na ulepszenie? Napisz do mnie bezpośrednio poniżej. Otrzymasz moją odpowiedź w swojej wewnętrznej Wiadomości."
+    restricted:
+        duration:
+            one_month: 1 miesiąc
+            one_week: 1 tydzień
+        text_permanent: "Twój dostęp do wiadomości kontaktowych został trwale zawieszony."
+        text_temporary: "W związku z nadużyciem wiadomości kontaktowych, twój dostęp do tego formularza został ograniczony na {duration}. Będziesz mógł ponownie wysłać wiadomość po upływie tego okresu."
+        title_permanent: Dostęp do wiadomości zawieszony
+        title_temporary: Wysyłanie wiadomości tymczasowo zablokowane
+        until_label: Ograniczenie zniesione dnia
+    submit: Wyślij
+    title: Kontakt
+
 dashboard:
+    contact: Kontakt
     library: Biblioteka
     logout: Wyloguj się
     messaging: Wiadomości
@@ -149,6 +184,31 @@ exercise:
                 other {# ćwiczeń dostępnych}
             }
         title: Biblioteka
+
+messagerie:
+    author:
+        admin: FitTracker
+        you: Ty
+    back_to_list: Powrót do wiadomości
+    delete:
+        cancel_button: Anuluj
+        confirm_button: Usuń
+        confirm_text: "Czy na pewno chcesz usunąć tę rozmowę? Ta czynność jest nieodwracalna i dotyczy tylko twoich wiadomości."
+        confirm_title: Usuń rozmowę
+        error_text: "Wystąpił błąd podczas usuwania. Spróbuj ponownie."
+        success: Rozmowa została usunięta z twoich wiadomości.
+    empty:
+        text: "Ta przestrzeń pozwala ci otrzymywać moje odpowiedzi na twoje wiadomości kontaktowe, a także okazjonalne komunikaty o aktualizacjach strony — nigdy wiadomości od innych użytkowników, nigdy spamu."
+        title: Witaj w swoich wiadomościach
+    reply:
+        submit: Odpowiedz
+    reply_restricted: "Twój dostęp do wiadomości kontaktowych jest obecnie ograniczony. Możesz czytać swoje wiadomości, ale nie możesz odpowiadać."
+    status:
+        answered: Odpowiedziano
+        awaiting_admin: Oczekuje na odpowiedź
+        closed: Zamknięte
+    thread_closed: "Ta rozmowa jest zamknięta, nie możesz już na nią odpowiadać."
+    title: Wiadomości
 
 routine:
     badge:

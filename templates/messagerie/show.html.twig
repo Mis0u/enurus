@@ -1,0 +1,52 @@
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block title %}{{ thread.subject|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        title: thread.subject,
+        subtitle: app.user.nickname|formatInitials,
+    } only %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 overflow-y-auto">
+        <div class="max-w-[640px] mx-auto px-4 lg:px-8 py-6">
+
+            <a href="{{ path('app_contact_thread_list') }}" class="inline-flex items-center gap-1.5 text-[13px] text-[#8b9bb4] hover:text-[#f0f4ff] no-underline mb-4 transition-colors">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                {{ 'messagerie.back_to_list'|trans({}, 'navigation') }}
+            </a>
+
+            <div class="space-y-3 mb-6">
+                {% for message in thread.messages %}
+                    {% include 'messagerie/_message.html.twig' with {
+                        message: message,
+                    } only %}
+                {% endfor %}
+            </div>
+
+            {% if canReply %}
+                <section class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-6">
+                    {% include 'messagerie/_reply_form.html.twig' with {
+                        thread: thread,
+                        replyForm: replyForm,
+                        imageMaxSizeBytes: imageMaxSizeBytes,
+                        imageAllowedMimeTypes: imageAllowedMimeTypes,
+                    } only %}
+                </section>
+            {% elseif thread.status.value == 'closed' %}
+                <section class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-4.5 text-center">
+                    <p class="text-[13px] text-[#8b9bb4]">{{ 'messagerie.thread_closed'|trans({}, 'navigation') }}</p>
+                </section>
+            {% else %}
+                <section class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-4.5 text-center">
+                    <p class="text-[13px] text-[#8b9bb4]">{{ 'messagerie.reply_restricted'|trans({}, 'navigation') }}</p>
+                </section>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
