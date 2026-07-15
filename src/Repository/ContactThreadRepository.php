@@ -27,6 +27,7 @@ class ContactThreadRepository extends ServiceEntityRepository
         /** @var list<ContactThread> $result */
         $result = $this->createQueryBuilder('t')
             ->andWhere('t.owner = :owner')
+            ->andWhere('t.hiddenByUserAt IS NULL')
             ->setParameter('owner', $owner)
             ->orderBy('t.updatedAt', 'DESC')
             ->getQuery()

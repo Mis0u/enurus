@@ -21,9 +21,11 @@ final class ContactThreadVoter extends Voter
 
     public const string CLOSE = 'CONTACT_THREAD_CLOSE';
 
+    public const string DELETE = 'CONTACT_THREAD_DELETE';
+
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return in_array($attribute, [self::VIEW, self::REPLY, self::CLOSE], true)
+        return in_array($attribute, [self::VIEW, self::REPLY, self::CLOSE, self::DELETE], true)
             && $subject instanceof ContactThread;
     }
 
@@ -37,11 +39,13 @@ final class ContactThreadVoter extends Voter
 
         /** @var ContactThread $subject */
         return match ($attribute) {
-            self::VIEW => $subject->owner === $user || in_array('ROLE_ADMIN', $user->getRoles(), true),
+            self::VIEW => (null === $subject->hiddenByUserAt && $subject->owner === $user)
+                || in_array('ROLE_ADMIN', $user->getRoles(), true),
             self::REPLY => $subject->owner === $user
                 && ContactThreadStatusEnum::CLOSED !== $subject->status
                 && ! $user->isContactRestricted,
             self::CLOSE => in_array('ROLE_ADMIN', $user->getRoles(), true),
+            self::DELETE => $subject->owner === $user,
             default => false,
         };
     }

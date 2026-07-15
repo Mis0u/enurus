@@ -99,6 +99,20 @@ class ContactThread
     }
 
     /**
+     * Masquage côté propriétaire uniquement — l'autre partie (future interface admin) garde sa
+     * propre vue du fil indépendamment de ce champ.
+     */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    public ?\DateTimeImmutable $hiddenByUserAt = null {
+        get {
+            return $this->hiddenByUserAt;
+        }
+        set(?\DateTimeImmutable $hiddenByUserAt) {
+            $this->hiddenByUserAt = $hiddenByUserAt;
+        }
+    }
+
+    /**
      * @var Collection<int, ContactThreadMessage>
      */
     #[ORM\OneToMany(targetEntity: ContactThreadMessage::class, mappedBy: 'thread', cascade: ['persist', 'remove'], orphanRemoval: true)]
