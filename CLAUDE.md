@@ -209,6 +209,10 @@ Le JS de suppression de séance n'envoie pas de header `X-CSRF-Token`.
   clé fiable pour "le plus récemment créé" est `'id' => 'DESC'` **seul** : les entités utilisent
   `UuidGenerator` configuré en **UUIDv7** (chronologiquement ordonnable), donc l'`id` reflète l'ordre
   réel d'insertion indépendamment de `performedAt`.
+- **Ne jamais mettre `final` sur une classe stubbée/mockée via `createStub()`/`createMock()`** dans
+  un test unitaire — PHPUnit génère un double en sous-classant la classe cible, ce qui échoue
+  silencieusement (`unresolvableReturnType` côté PHPStan) si elle est `final`. Vérifier
+  `grep -rn "createStub(\|createMock(" tests` avant d'ajouter `final` à un repository ou service.
 
 ### PHPStan (niveau 9)
 - `json_encode(..., JSON_THROW_ON_ERROR)` plutôt que `if (false === ...)`.
@@ -254,6 +258,8 @@ TODO #17 (non résolu) : `UserFixtures` a beaucoup grossi, refactor à prévoir.
 | — | Audit CSRF sur les controllers de suppression (voir section Sécurité) |
 | — | Durée de rétention du hash `DeletedAccountTrace` non fixée, purge non implémentée |
 | — | Vérifier sous-collections `Routine`/`Exercise` avec fichiers physiques échappant à `deletePhysicalFiles()` |
+| — | Discuter d'un split SRP de `WorkoutRepository` (625 lignes, 15 méthodes publiques : comptage, tonnage, muscles sollicités, pagination, SVG, dates — plusieurs responsabilités mélangées) |
+| — | Discuter de la duplication du bloc upload d'image entre `ContactThreadReplyService`/`ContactThreadService`, et de la fusion possible des 3 méthodes `buildDailyPoints`/`buildWeeklyPoints`/`buildMonthlyPoints` de `DashboardTonnageService` (zero-fill jour/semaine/mois très similaires) |
 
 ---
 
