@@ -8,6 +8,7 @@ use App\Entity\Workout;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Helper\ImageTestHelper;
+use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,27 +29,9 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
     public function testRedirectsToLoginWhenNotLogged(): void
     {
         $client = static::createClient();
+        $workout = $this->getFirstWorkout(self::USER);
 
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        $user = $userRepository->findOneBy([
-            'email' => self::USER,
-        ]);
-
-        /** @var WorkoutRepository $workoutRepository */
-        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-        $workouts = $workoutRepository->findBy(
-            [
-                'owner' => $user,
-            ],
-            [
-                'id' => 'DESC',
-            ],
-        );
-
-        $url = \sprintf('/fr/workout/%s/photo', $workouts[0]->id);
-
-        $client->request(Request::METHOD_POST, $url, [], [], [
+        $client->request(Request::METHOD_POST, $this->getUploadUrl($workout), [], [], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ]);
 
@@ -186,30 +169,15 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
     {
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
-        $user = $userRepository->findOneBy([
-            'email' => $email,
-        ]);
-
         /** @var WorkoutRepository $workoutRepository */
         $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-        $workouts = $workoutRepository->findBy(
-            [
-                'owner' => $user,
-            ],
-            [
-                'id' => 'DESC',
-            ],
-        );
 
-        /** @var Workout $workout */
-        $workout = $workouts[0];
-
-        return $workout;
+        return WorkoutTestHelper::getFirstWorkout($userRepository, $workoutRepository, $email);
     }
 
     private function getUploadUrl(Workout $workout): string
     {
-        return \sprintf('/fr/workout/%s/photo', $workout->id);
+        return \sprintf('/fr/seance/%s/photo', $workout->id);
     }
 
     private function findUpdatedWorkout(mixed $id): Workout

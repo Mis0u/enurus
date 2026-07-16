@@ -14,15 +14,7 @@ trait FunctionalTestTrait
     private function login(string $userEmail): KernelBrowser
     {
         $client = static::createClient();
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-
-        /** @var User $testUser */
-        $testUser = $userRepository->findOneBy([
-            'email' => $userEmail,
-        ]);
-
-        $client->loginUser($testUser);
+        $client->loginUser($this->getUserByEmail($userEmail));
 
         return $client;
     }
@@ -43,5 +35,41 @@ trait FunctionalTestTrait
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h2', 'Connexion', 'Le sélecteur H2 ne contient pas le texte attendu');
+    }
+
+    private function getUserByEmail(string $email): User
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $user = $userRepository->findOneBy([
+            'email' => $email,
+        ]);
+
+        if (! $user instanceof User) {
+            throw new \LogicException(\sprintf('Fixture user "%s" not found.', $email));
+        }
+
+        return $user;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function toJson(array $data): string
+    {
+        return json_encode($data, JSON_THROW_ON_ERROR);
+    }
+
+    private function deleteRequest(KernelBrowser $client, string $url): void
+    {
+        $client->request(
+            Request::METHOD_DELETE,
+            $url,
+            [],
+            [],
+            [
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            ],
+        );
     }
 }

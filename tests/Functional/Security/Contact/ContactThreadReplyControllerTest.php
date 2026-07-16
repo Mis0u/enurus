@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Security\Contact;
 
 use App\DataFixtures\UserFixtures;
-use App\Entity\User;
 use App\Enum\Contact\ContactThreadStatusEnum;
 use App\Repository\ContactThreadRepository;
-use App\Repository\UserRepository;
 use App\Tests\Functional\Helper\ContactThreadTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -121,20 +119,5 @@ final class ContactThreadReplyControllerTest extends WebTestCase
     private function getCsrfToken(Crawler $crawler): string
     {
         return (string) $crawler->filter('#contact_reply_form__token')->attr('value');
-    }
-
-    private function getUserByEmail(string $email): User
-    {
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        $user = $userRepository->findOneBy([
-            'email' => $email,
-        ]);
-
-        if (! $user instanceof User) {
-            throw new \LogicException(\sprintf('Fixture user "%s" not found.', $email));
-        }
-
-        return $user;
     }
 }

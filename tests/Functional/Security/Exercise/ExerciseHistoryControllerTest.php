@@ -96,11 +96,9 @@ final class ExerciseHistoryControllerTest extends WebTestCase
             fn ($node) => $node->attr('data-name') ?? '',
         );
 
+        $collator = \Collator::create('fr');
         $sorted = $names;
-        usort($sorted, fn (string $a, string $b) => strcoll(
-            mb_strtolower($a),
-            mb_strtolower($b),
-        ));
+        usort($sorted, fn (string $a, string $b) => (int) $collator->compare($a, $b));
 
         $this->assertSame(
             $sorted,

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security\Contact;
 
-use App\Entity\User;
-use App\Repository\UserRepository;
 use App\Tests\Functional\Helper\ContactThreadTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,20 +37,5 @@ final class ContactThreadCloseControllerTest extends WebTestCase
         ]);
 
         self::assertResponseStatusCodeSame(403);
-    }
-
-    private function getUserByEmail(string $email): User
-    {
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        $user = $userRepository->findOneBy([
-            'email' => $email,
-        ]);
-
-        if (! $user instanceof User) {
-            throw new \LogicException(\sprintf('Fixture user "%s" not found.', $email));
-        }
-
-        return $user;
     }
 }

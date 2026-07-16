@@ -7,8 +7,8 @@ namespace App\Tests\Functional\Security\Workout;
 use App\Entity\Workout;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
+use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,7 +57,7 @@ class WorkoutDeleteControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER);
 
-        $this->deleteRequest($client, '/fr/workout/invalid-uuid/delete');
+        $this->deleteRequest($client, '/fr/seance/invalid-uuid/supprimer');
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
@@ -113,36 +113,14 @@ class WorkoutDeleteControllerTest extends WebTestCase
     {
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
-        $user = $userRepository->findOneBy([
-            'email' => $email,
-        ]);
-
         /** @var WorkoutRepository $workoutRepository */
         $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-        $workouts = $workoutRepository->findBy([
-            'owner' => $user,
-        ], [
-            'id' => 'DESC',
-        ]);
 
-        return $workouts[0];
+        return WorkoutTestHelper::getFirstWorkout($userRepository, $workoutRepository, $email);
     }
 
     private function getDeleteUrl(Workout $workout): string
     {
-        return \sprintf('/fr/workout/%s/delete', $workout->id);
-    }
-
-    private function deleteRequest(KernelBrowser $client, string $url): void
-    {
-        $client->request(
-            Request::METHOD_DELETE,
-            $url,
-            [],
-            [],
-            [
-                'HTTP_X-Requested-With' => 'XMLHttpRequest',
-            ],
-        );
+        return \sprintf('/fr/seance/%s/supprimer', $workout->id);
     }
 }

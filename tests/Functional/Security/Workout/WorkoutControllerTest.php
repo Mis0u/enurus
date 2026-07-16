@@ -5,21 +5,18 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Security\Workout;
 
 use App\DataFixtures\UserFixtures;
-use App\Entity\Exercise;
 use App\Entity\ExerciseSet;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
 use App\Repository\ExerciseRepository;
-use App\Repository\RoutineRepository;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
+use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WorkoutControllerTest extends WebTestCase
 {
@@ -30,8 +27,6 @@ class WorkoutControllerTest extends WebTestCase
     private const string USER_LBS = 'user-fixture-51-workout@test.com';
 
     private const string ROUTINE_OWNER = UserFixtures::USER_ROUTINE_OWNER;
-
-    private const string ROUTINE_OTHER = UserFixtures::USER_ROUTINE_OTHER;
 
     public function testIsAccessibleWhenLogged(): void
     {
@@ -50,25 +45,8 @@ class WorkoutControllerTest extends WebTestCase
 
         $this->assertResponseRedirects('/fr/tableau-de-bord');
 
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        /** @var User $user */
-        $user = $userRepository->findOneBy([
-            'email' => self::USER,
-        ]);
+        $workout = $this->getLatestWorkout(self::USER);
 
-        /** @var WorkoutRepository $workoutRepository */
-        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-        $workout = $workoutRepository->findOneBy(
-            [
-                'owner' => $user,
-            ],
-            [
-                'id' => 'DESC',
-            ]
-        );
-
-        $this->assertNotNull($workout);
         $this->assertCount(1, $workout->workoutExercises);
 
         /** @var WorkoutExercise $firstExercise */
@@ -77,66 +55,12 @@ class WorkoutControllerTest extends WebTestCase
         $this->assertCount(1, $firstExercise->exerciseSets);
     }
 
-    public function testExerciseBlockIsAccessibleWhenLogged(): void
-    {
-        $client = $this->login(self::USER);
-        $exerciseId = $this->getExerciseId();
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/exercise-block',
-            [
-                'exerciseId' => $exerciseId,
-                'index' => 0,
-            ]
-        );
-
-        $this->assertResponseIsSuccessful();
-    }
-
-    public function testExerciseBlockRedirectsToLoginWhenNotLogged(): void
-    {
-        $client = static::createClient();
-        $exerciseId = $this->getExerciseId();
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/exercise-block',
-            [
-                'exerciseId' => $exerciseId,
-                'index' => 0,
-            ]
-        );
-
-        $this->assertResponseRedirects('/fr/');
-        $client->followRedirect();
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h2', 'Connexion');
-    }
-
     public function testWorkoutOwnerIsCurrentUser(): void
     {
         $client = $this->login(self::USER);
         $this->submitWorkout($client);
 
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        /** @var User $user */
-        $user = $userRepository->findOneBy([
-            'email' => self::USER,
-        ]);
-
-        /** @var WorkoutRepository $workoutRepository */
-        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-        /** @var Workout $workout */
-        $workout = $workoutRepository->findOneBy(
-            [
-                'owner' => $user,
-            ],
-            [
-                'id' => 'DESC',
-            ]
-        );
+        $workout = $this->getLatestWorkout(self::USER);
 
         $this->assertSame(self::USER, $workout->owner->email);
     }
@@ -146,13 +70,7 @@ class WorkoutControllerTest extends WebTestCase
         $client = $this->login(self::USER);
         $this->submitWorkout($client);
 
-        /** @var WorkoutRepository $workoutRepository */
-        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-
-        /** @var Workout $workout */
-        $workout = $workoutRepository->findOneBy([], [
-            'id' => 'DESC',
-        ]);
+        $workout = $this->getLatestWorkoutForAnyUser();
 
         $this->assertNull($workout->routine);
     }
@@ -162,13 +80,7 @@ class WorkoutControllerTest extends WebTestCase
         $client = $this->login(self::USER);
         $this->submitWorkout($client);
 
-        /** @var WorkoutRepository $workoutRepository */
-        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-
-        /** @var Workout $workout */
-        $workout = $workoutRepository->findOneBy([], [
-            'id' => 'DESC',
-        ]);
+        $workout = $this->getLatestWorkoutForAnyUser();
 
         /** @var WorkoutExercise $firstExercise */
         $firstExercise = $workout->workoutExercises->first();
@@ -181,13 +93,7 @@ class WorkoutControllerTest extends WebTestCase
         $client = $this->login(self::USER);
         $this->submitWorkout($client);
 
-        /** @var WorkoutRepository $workoutRepository */
-        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-
-        /** @var Workout $workout */
-        $workout = $workoutRepository->findOneBy([], [
-            'id' => 'DESC',
-        ]);
+        $workout = $this->getLatestWorkoutForAnyUser();
 
         /** @var WorkoutExercise $firstExercise */
         $firstExercise = $workout->workoutExercises->first();
@@ -201,7 +107,7 @@ class WorkoutControllerTest extends WebTestCase
     public function testWorkoutWithMultipleExercisesHasCorrectPositions(): void
     {
         $client = $this->login(self::USER);
-        $exerciseId = $this->getExerciseId();
+        $exerciseId = WorkoutTestHelper::getPublicExerciseId($this->exerciseRepository());
 
         $crawler = $client->request(Request::METHOD_GET, '/fr/enregistre-seance');
         $csrfToken = $crawler->filter('input[name="workout[_token]"]')->attr('value');
@@ -239,13 +145,7 @@ class WorkoutControllerTest extends WebTestCase
             ],
         ]);
 
-        /** @var WorkoutRepository $workoutRepository */
-        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-
-        /** @var Workout $workout */
-        $workout = $workoutRepository->findOneBy([], [
-            'id' => 'DESC',
-        ]);
+        $workout = $this->getLatestWorkoutForAnyUser();
 
         $exercises = $workout->workoutExercises->toArray();
         usort($exercises, fn ($a, $b) => $a->position <=> $b->position);
@@ -257,7 +157,7 @@ class WorkoutControllerTest extends WebTestCase
     public function testWorkoutWithMultipleSetsHasCorrectPositions(): void
     {
         $client = $this->login(self::USER);
-        $exerciseId = $this->getExerciseId();
+        $exerciseId = WorkoutTestHelper::getPublicExerciseId($this->exerciseRepository());
 
         $crawler = $client->request(Request::METHOD_GET, '/fr/enregistre-seance');
         $csrfToken = $crawler->filter('input[name="workout[_token]"]')->attr('value');
@@ -294,13 +194,7 @@ class WorkoutControllerTest extends WebTestCase
             ],
         ]);
 
-        /** @var WorkoutRepository $workoutRepository */
-        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-
-        /** @var Workout $workout */
-        $workout = $workoutRepository->findOneBy([], [
-            'id' => 'DESC',
-        ]);
+        $workout = $this->getLatestWorkoutForAnyUser();
 
         /** @var WorkoutExercise $firstExercise */
         $firstExercise = $workout->workoutExercises->first();
@@ -368,117 +262,6 @@ class WorkoutControllerTest extends WebTestCase
         $this->assertResponseRedirects('/fr/enregistre-seance');
     }
 
-    public function testExerciseBlockReturnsHtml(): void
-    {
-        $client = $this->login(self::USER);
-        $exerciseId = $this->getExerciseId();
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/exercise-block',
-            [
-                'exerciseId' => $exerciseId,
-                'index' => 0,
-            ]
-        );
-
-        $this->assertResponseIsSuccessful();
-        $this->assertResponseHeaderSame('content-type', 'text/html; charset=UTF-8');
-    }
-
-    public function testExerciseBlockWithInvalidIdReturnsNotFound(): void
-    {
-        $client = $this->login(self::USER);
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/exercise-block',
-            [
-                'exerciseId' => '00000000-0000-0000-0000-000000000000',
-                'index' => 0,
-            ]
-        );
-
-        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
-    }
-
-    public function testExerciseBlockContainsCorrectInputNames(): void
-    {
-        $client = $this->login(self::USER);
-        $exerciseId = $this->getExerciseId();
-
-        $crawler = $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/exercise-block',
-            [
-                'exerciseId' => $exerciseId,
-                'index' => 0,
-            ]
-        );
-
-        $this->assertResponseIsSuccessful();
-        $this->assertCount(1, $crawler->filter('input[name="workout[workoutExercises][0][exercise]"]'));
-        $this->assertCount(1, $crawler->filter('input[name="workout[workoutExercises][0][exerciseSets][0][weight]"]'));
-        $this->assertCount(1, $crawler->filter('input[name="workout[workoutExercises][0][exerciseSets][0][reps]"]'));
-        $this->assertCount(1, $crawler->filter('input[name="workout[workoutExercises][0][position]"]'));
-    }
-
-    public function testExerciseBlockContainsTranslatedExerciseName(): void
-    {
-        $client = $this->login(self::USER);
-
-        /** @var ExerciseRepository $exerciseRepository */
-        $exerciseRepository = static::getContainer()->get(ExerciseRepository::class);
-
-        /** @var Exercise $exercise */
-        $exercise = $exerciseRepository->findOneBy([
-            'isPublic' => true,
-        ]);
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/exercise-block',
-            [
-                'exerciseId' => (string) $exercise->id,
-                'index' => 0,
-            ]
-        );
-
-        $this->assertResponseIsSuccessful();
-
-        /** @var TranslatorInterface $translator */
-        $translator = static::getContainer()->get(TranslatorInterface::class);
-        $translatedName = $translator->trans($exercise->name, [], 'exercise', 'fr');
-
-        $this->assertSelectorTextContains('h4', $translatedName);
-    }
-
-    public function testExerciseBlockContainsMusclesTags(): void
-    {
-        $client = $this->login(self::USER);
-
-        /** @var ExerciseRepository $exerciseRepository */
-        $exerciseRepository = static::getContainer()->get(ExerciseRepository::class);
-
-        /** @var Exercise $exercise */
-        $exercise = $exerciseRepository->findOneBy([
-            'isPublic' => true,
-        ]);
-
-        $crawler = $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/exercise-block',
-            [
-                'exerciseId' => (string) $exercise->id,
-                'index' => 0,
-            ]
-        );
-
-        $this->assertResponseIsSuccessful();
-        $this->assertGreaterThan(0, $crawler->filter('.muscle-tag, span[class*="text-[#f43f5e]"], span[class*="text-[#a855f7]"]')->count());
-    }
-
-    //DÉBUT NOTE
     public function testWorkoutWithNoteIsPersisted(): void
     {
         $note = 'Super séance, nouveau record sur le développé couché !';
@@ -490,24 +273,7 @@ class WorkoutControllerTest extends WebTestCase
         ]);
         $this->assertResponseRedirects('/fr/tableau-de-bord');
 
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        /** @var User $user */
-        $user = $userRepository->findOneBy([
-            'email' => self::USER,
-        ]);
-
-        /** @var WorkoutRepository $workoutRepository */
-        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-        /** @var Workout $workout */
-        $workout = $workoutRepository->findOneBy(
-            [
-                'owner' => $user,
-            ],
-            [
-                'id' => 'DESC',
-            ]
-        );
+        $workout = $this->getLatestWorkout(self::USER);
 
         $this->assertSame($note, $workout->note);
     }
@@ -519,122 +285,9 @@ class WorkoutControllerTest extends WebTestCase
 
         $this->assertResponseRedirects('/fr/tableau-de-bord');
 
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        /** @var User $user */
-        $user = $userRepository->findOneBy([
-            'email' => self::USER,
-        ]);
-
-        /** @var WorkoutRepository $workoutRepository */
-        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-
-        /** @var Workout $workout */
-        $workout = $workoutRepository->findOneBy(
-            [
-                'owner' => $user,
-            ],
-            [
-                'id' => 'DESC',
-            ]
-        );
+        $workout = $this->getLatestWorkout(self::USER);
 
         $this->assertNull($workout->note);
-    }
-    //FIN NOTE
-
-    //DÉBUT WORKOUT DATE
-
-    public function testCheckDateReturnsExistsWhenWorkoutExists(): void
-    {
-        $client = $this->login(self::USER);
-        $this->submitWorkout($client);
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/check-date',
-            [
-                'date' => new \DateTime('today')->format('Y-m-d'),
-            ]
-        );
-
-        $this->assertResponseIsSuccessful();
-
-        $content = $client->getResponse()->getContent();
-        assert(is_string($content));
-
-        $data = json_decode($content, true);
-        assert(is_array($data));
-
-        $this->assertTrue($data['exists']);
-        $this->assertSame(1, $data['count']);
-    }
-
-    public function testCheckDateReturnsNotExistsWhenNoWorkout(): void
-    {
-        $client = $this->login(self::USER);
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/check-date',
-            [
-                'date' => new \DateTime('+1 day')->format('Y-m-d'),
-            ]
-        );
-
-        $this->assertResponseIsSuccessful();
-
-        $content = $client->getResponse()->getContent();
-        assert(is_string($content));
-
-        $data = json_decode($content, true);
-        assert(is_array($data));
-
-        $this->assertFalse($data['exists']);
-        $this->assertSame(0, $data['count']);
-    }
-
-    public function testCheckDateIsNotAccessibleWhenNotLogged(): void
-    {
-        $client = static::createClient();
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/check-date',
-            [
-                'date' => new \DateTime('today')->format('Y-m-d'),
-            ]
-        );
-
-        $this->assertResponseRedirects('/fr/');
-    }
-
-    public function testCheckDateReturnsCorrectCount(): void
-    {
-        $client = $this->login(self::USER);
-
-        // Crée 2 séances le même jour
-        $this->submitWorkout($client);
-        $this->submitWorkout($client);
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/check-date',
-            [
-                'date' => new \DateTime('today')->format('Y-m-d'),
-            ]
-        );
-
-        $this->assertResponseIsSuccessful();
-
-        $content = $client->getResponse()->getContent();
-        assert(is_string($content));
-
-        $data = json_decode($content, true);
-        assert(is_array($data));
-
-        $this->assertTrue($data['exists']);
-        $this->assertSame(2, $data['count']);
     }
 
     public function testWeightIsConvertedToKgOnSubmissionForLbsUser(): void
@@ -653,7 +306,7 @@ class WorkoutControllerTest extends WebTestCase
                 'routine' => '',
                 'workoutExercises' => [
                     0 => [
-                        'exercise' => $this->getExerciseId(),
+                        'exercise' => WorkoutTestHelper::getPublicExerciseId($this->exerciseRepository()),
                         'position' => 0,
                         'exerciseSets' => [
                             0 => [
@@ -669,24 +322,7 @@ class WorkoutControllerTest extends WebTestCase
 
         $this->assertResponseRedirects('/fr/tableau-de-bord');
 
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        /** @var User $user */
-        $user = $userRepository->findOneBy([
-            'email' => self::USER_LBS,
-        ]);
-
-        /** @var WorkoutRepository $workoutRepository */
-        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-        /** @var Workout $workout */
-        $workout = $workoutRepository->findOneBy(
-            [
-                'owner' => $user,
-            ],
-            [
-                'id' => 'DESC',
-            ]
-        );
+        $workout = $this->getLatestWorkout(self::USER_LBS);
 
         /** @var WorkoutExercise $firstExercise */
         $firstExercise = $workout->workoutExercises->first();
@@ -740,227 +376,15 @@ class WorkoutControllerTest extends WebTestCase
     }
 
     // -------------------------------------------------------------------------
-    // RoutineExercisesBlockController
+    // HELPERS PRIVÉS
     // -------------------------------------------------------------------------
-
-    public function testRoutineExercisesBlockRedirectsToLoginWhenNotLogged(): void
-    {
-        $client = static::createClient();
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/routine-exercises-block',
-            [
-                'routineId' => '019f0000-0000-7000-8000-000000000000',
-            ]
-        );
-
-        $this->assertResponseRedirects('/fr/');
-    }
-
-    public function testRoutineExercisesBlockReturns400WhenRoutineIdMissing(): void
-    {
-        $client = $this->login(self::ROUTINE_OWNER);
-
-        $client->request(Request::METHOD_GET, '/fr/workout/routine-exercises-block');
-
-        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
-    }
-
-    public function testRoutineExercisesBlockReturns404WhenRoutineNotFound(): void
-    {
-        $client = $this->login(self::ROUTINE_OWNER);
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/routine-exercises-block',
-            [
-                'routineId' => '019f0000-0000-7000-8000-000000000000',
-            ]
-        );
-
-        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
-    }
-
-    public function testRoutineExercisesBlockReturns403WhenRoutineBelongsToOtherUser(): void
-    {
-        $client = $this->login(self::ROUTINE_OWNER);
-        $routineId = $this->getOtherUserRoutineId();
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/routine-exercises-block',
-            [
-                'routineId' => $routineId,
-            ]
-        );
-
-        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
-    }
-
-    public function testRoutineExercisesBlockReturnsExercisesForOwnRoutine(): void
-    {
-        $client = $this->login(self::ROUTINE_OWNER);
-        $routineId = $this->getOwnerRoutineId($client);
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/routine-exercises-block',
-            [
-                'routineId' => $routineId,
-            ]
-        );
-
-        $this->assertResponseIsSuccessful();
-
-        $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
-        $this->assertStringContainsString('data-exercise-index', $content);
-    }
-
-    public function testRoutineExercisesBlockUsesStartIndex(): void
-    {
-        $client = $this->login(self::ROUTINE_OWNER);
-        $routineId = $this->getOwnerRoutineId($client);
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/routine-exercises-block',
-            [
-                'routineId' => $routineId,
-                'startIndex' => 5,
-            ]
-        );
-
-        $this->assertResponseIsSuccessful();
-
-        $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
-        $this->assertStringContainsString('workout[workoutExercises][5][exercise]', $content);
-    }
-
-    public function testRoutineExercisesBlockReturnsCorrectExerciseCount(): void
-    {
-        $client = $this->login(self::ROUTINE_OWNER);
-        $routineId = $this->getOwnerRoutineId($client);
-
-        $client->request(
-            Request::METHOD_GET,
-            '/fr/workout/routine-exercises-block',
-            [
-                'routineId' => $routineId,
-            ]
-        );
-
-        $this->assertResponseIsSuccessful();
-
-        /** @var RoutineRepository $routineRepository */
-        $routineRepository = static::getContainer()->get(RoutineRepository::class);
-        $routine = $routineRepository->find($routineId);
-        $this->assertNotNull($routine);
-
-        $expectedCount = $routine->routineExercises->count();
-
-        $crawler = $client->getCrawler();
-        $blocks = $crawler->filter('[data-exercise-index]');
-
-        $this->assertCount($expectedCount, $blocks);
-    }
-
-    // -------------------------------------------------------------------------
-    // HELPERS PRIVÉS — à ajouter avec les autres helpers privés
-    // -------------------------------------------------------------------------
-
-    private function getOwnerRoutineId(KernelBrowser $client): string
-    {
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        $owner = $userRepository->findOneBy([
-            'email' => self::ROUTINE_OWNER,
-        ]);
-        $this->assertNotNull($owner);
-
-        /** @var RoutineRepository $routineRepository */
-        $routineRepository = static::getContainer()->get(RoutineRepository::class);
-        $routine = $routineRepository->findOneBy([
-            'owner' => $owner,
-            'name' => 'Push Day',
-        ]);
-        $this->assertNotNull($routine);
-        $this->assertNotNull($routine->id);
-
-        return $routine->id->toRfc4122();
-    }
-
-    private function getOtherUserRoutineId(): string
-    {
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        $otherUser = $userRepository->findOneBy([
-            'email' => self::ROUTINE_OTHER,
-        ]);
-        $this->assertNotNull($otherUser);
-
-        /** @var RoutineRepository $routineRepository */
-        $routineRepository = static::getContainer()->get(RoutineRepository::class);
-        $routine = $routineRepository->findOneBy([
-            'owner' => $otherUser,
-        ]);
-        $this->assertNotNull($routine);
-        $this->assertNotNull($routine->id);
-
-        return $routine->id->toRfc4122();
-    }
 
     /**
      * @param array<string, mixed> $overrides
      */
     private function submitWorkout(KernelBrowser $client, array $overrides = []): void
     {
-        $exerciseId = $this->getExerciseId();
-
-        $crawler = $client->request(Request::METHOD_GET, '/fr/enregistre-seance');
-        $csrfToken = $crawler->filter('input[name="workout[_token]"]')->attr('value');
-
-        $data = array_replace_recursive([
-            'workout' => [
-                '_token' => $csrfToken,
-                'performedAt' => new \DateTime('today')->format('Y-m-d'),
-                'duration' => 60,
-                'routine' => '',
-                'workoutExercises' => [
-                    0 => [
-                        'exercise' => $exerciseId,
-                        'position' => 0,
-                        'exerciseSets' => [
-                            0 => [
-                                'weight' => 80,
-                                'reps' => 10,
-                                'position' => 0,
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ], $overrides);
-
-        $client->request(
-            Request::METHOD_POST,
-            '/fr/enregistre-seance',
-            $data
-        );
-    }
-
-    private function getExerciseId(): string
-    {
-        /** @var ExerciseRepository $exerciseRepository */
-        $exerciseRepository = static::getContainer()->get(ExerciseRepository::class);
-
-        /** @var Exercise $exercise */
-        $exercise = $exerciseRepository->findOneBy([
-            'isPublic' => true,
-        ]);
-        return (string) $exercise->id;
+        WorkoutTestHelper::submitWorkout($client, $this->exerciseRepository(), $overrides);
     }
 
     /**
@@ -983,5 +407,53 @@ class WorkoutControllerTest extends WebTestCase
                 ],
             ],
         ];
+    }
+
+    private function getLatestWorkout(string $email): Workout
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        /** @var User $user */
+        $user = $userRepository->findOneBy([
+            'email' => $email,
+        ]);
+
+        /** @var Workout $workout */
+        $workout = $this->workoutRepository()->findOneBy(
+            [
+                'owner' => $user,
+            ],
+            [
+                'id' => 'DESC',
+            ]
+        );
+
+        return $workout;
+    }
+
+    private function getLatestWorkoutForAnyUser(): Workout
+    {
+        /** @var Workout $workout */
+        $workout = $this->workoutRepository()->findOneBy([], [
+            'id' => 'DESC',
+        ]);
+
+        return $workout;
+    }
+
+    private function exerciseRepository(): ExerciseRepository
+    {
+        /** @var ExerciseRepository $exerciseRepository */
+        $exerciseRepository = static::getContainer()->get(ExerciseRepository::class);
+
+        return $exerciseRepository;
+    }
+
+    private function workoutRepository(): WorkoutRepository
+    {
+        /** @var WorkoutRepository $workoutRepository */
+        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
+
+        return $workoutRepository;
     }
 }
