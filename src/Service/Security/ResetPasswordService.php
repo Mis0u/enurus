@@ -15,7 +15,7 @@ use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
-readonly class ResetPasswordService
+final readonly class ResetPasswordService
 {
     public function __construct(
         private ResetPasswordHelperInterface $resetPasswordHelper,
@@ -57,7 +57,7 @@ readonly class ResetPasswordService
     ): ResetPasswordToken {
         $user = $this->findUserByEmail($emailFormData);
 
-        if (! $user) {
+        if (null === $user) {
             throw new UserNotFoundException();
         }
 
