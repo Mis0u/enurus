@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Enum\Password\PasswordRuleEnum;
-use App\Enum\tailwind_class\form\field\FieldClassEnum;
+use App\Enum\TailwindClass\Form\Field\FieldClassEnum;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @template TData of object|null
@@ -26,4 +29,22 @@ abstract class AbstractFormSecurityType extends AbstractType
         'data-min-length' => PasswordRuleEnum::MIN_LENGTH->value,
         'data-special-chars' => PasswordRuleEnum::SPECIAL_CHARS->value,
     ];
+
+    protected const array LABEL_ATTR = [
+        'class' => FieldClassEnum::LABEL_ATTRIBUTE->value,
+    ];
+
+    /**
+     * @return array{0: Length, 1: Regex}
+     */
+    protected function passwordConstraints(TranslatorInterface $translator): array
+    {
+        return [
+            new Length(min: (int) PasswordRuleEnum::MIN_LENGTH->value, max: 4096),
+            new Regex(
+                pattern: PasswordRuleEnum::REGEX->value,
+                message: $translator->trans('sentence.password.security.regex', [], 'common')
+            ),
+        ];
+    }
 }

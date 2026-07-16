@@ -6,7 +6,7 @@ namespace App\Service\Security;
 
 use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 
-readonly class RateLimiterService
+final readonly class RateLimiterService
 {
     private const int HOUR_IN_MINUTE = 60;
 

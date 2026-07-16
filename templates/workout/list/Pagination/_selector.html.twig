@@ -1,0 +1,12 @@
+<div class="flex items-center gap-2 text-[12px] text-[#8b9bb4] max-md:justify-center">
+    <span>{{ 'workout.list.pagination.per_page'|trans({}, 'navigation') }}</span>
+    <select
+        onchange="window.location.href = '{{ path('app_workout_list', {'_locale': app.request.locale, 'page': 1, 'filter': filterType, 'date': filterDate}) }}&limit=' + this.value"
+        class="bg-[#0f1928] border border-white/[0.07] rounded-md px-2 py-1 text-[12px] text-[#f0f4ff] font-['DM_Sans'] outline-none cursor-pointer"
+    >
+        {% for limit in limitAllowed %}
+            <option value="{{ limit }}" {% if per_page == limit %}selected{% endif %}>{{ limit }}</option>
+        {% endfor %}
+    </select>
+    <span>{{ 'workout.list.pagination.results'|trans({}, 'navigation') }}</span>
+</div>

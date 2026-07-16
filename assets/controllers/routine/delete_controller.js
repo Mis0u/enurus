@@ -1,7 +1,8 @@
 // assets/controllers/routine/delete_controller.js
 
 import { Controller } from '@hotwired/stimulus';
-import Swal from 'sweetalert2';
+import { confirmDeletion, sendDeleteRequest, showDeleteError } from '../../utils/delete_confirmation.js';
+import { showSuccessToast } from '../../utils/toast.js';
 
 export default class extends Controller {
     static values = {
@@ -16,68 +17,24 @@ export default class extends Controller {
     };
 
     async confirmDelete() {
-        const confirmed = await this.#showConfirmation();
+        const confirmed = await confirmDeletion({
+            title:             this.confirmTitleValue,
+            text:              this.confirmTextValue,
+            confirmButtonText: this.confirmButtonValue,
+            cancelButtonText:  this.cancelButtonValue,
+        });
+
         if (!confirmed) { return; }
-        await this.#sendDeleteRequest();
-    }
 
-    async #showConfirmation() {
-        const result = await Swal.fire({
-            title:              this.confirmTitleValue,
-            text:               this.confirmTextValue,
-            icon:               'warning',
-            showCancelButton:   true,
-            confirmButtonText:  this.confirmButtonValue,
-            cancelButtonText:   this.cancelButtonValue,
-            confirmButtonColor: '#f43f5e',
-            cancelButtonColor:  '#334155',
-            background:         '#0f1928',
-            color:              '#f0f4ff',
-        });
+        const { ok, data } = await sendDeleteRequest(this.urlValue, this.csrfTokenValue);
 
-        return result.isConfirmed;
-    }
-
-    async #sendDeleteRequest() {
-        let response;
-        try {
-            response = await fetch(this.urlValue, {
-                method:  'DELETE',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-Token':     this.csrfTokenValue,
-                },
-            });
-        } catch {
-            this.#showError();
+        if (!ok || !data?.success) {
+            showDeleteError({ title: this.errorTextValue });
             return;
         }
-        if (!response.ok) {
-            this.#showError();
-            return;
-        }
-        const data = await response.json();
-        if (data.success) {
-            this.#showSuccessToast(data.message);
-            this.#removeCard();
-        } else {
-            this.#showError();
-        }
-    }
 
-    #showSuccessToast(message) {
-        Swal.fire({
-            toast:              true,
-            position:            'top-end',
-            icon:                'success',
-            title:               message,
-            showConfirmButton:   false,
-            timer:               3000,
-            timerProgressBar:    true,
-            background:          '#0f1928',
-            color:               '#f0f4ff',
-            iconColor:           '#22c55e',
-        });
+        showSuccessToast(data.message);
+        this.#removeCard();
     }
 
     /**
@@ -114,15 +71,5 @@ export default class extends Controller {
         return count === 0
             ? '0 routine'
             : `${count} routine${count > 1 ? 's' : ''}`;
-    }
-
-    #showError() {
-        Swal.fire({
-            title:              this.errorTextValue,
-            icon:               'error',
-            background:         '#0f1928',
-            color:              '#f0f4ff',
-            confirmButtonColor: '#f43f5e',
-        });
     }
 }

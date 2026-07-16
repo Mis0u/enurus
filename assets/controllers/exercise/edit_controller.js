@@ -1,6 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
-import Swal from 'sweetalert2';
-import { MusclePills, updatePillVisual, buildRecapHtml } from './muscle_pills.js';
+import { MusclePills, updatePillVisual, renderMuscleRecap, syncMusclesInput, showFieldError, showDuplicateAlert } from './muscle_pills.js';
 
 /**
  * Exercise edit controller.
@@ -71,11 +70,11 @@ export default class extends Controller {
         event.preventDefault();
 
         if (!nameOk) {
-            this.#showError(this.nameErrorTarget);
+            showFieldError(this.nameErrorTarget);
             return;
         }
 
-        this.#showError(this.musclesErrorTarget);
+        showFieldError(this.musclesErrorTarget);
     }
 
     clearNameError() {
@@ -195,14 +194,13 @@ export default class extends Controller {
     // ── Private — recap ───────────────────────────────────────────────────────
 
     #updateRecap() {
-        this.recapPrimaryTarget.innerHTML   = buildRecapHtml(this.#pills.musclesByState('primary'), 'primary', this.labelNoneValue);
-        this.recapSecondaryTarget.innerHTML = buildRecapHtml(this.#pills.musclesByState('secondary'), 'secondary', this.labelNoneValue);
+        renderMuscleRecap(this.#pills, this.recapPrimaryTarget, this.recapSecondaryTarget, this.labelNoneValue);
     }
 
     // ── Private — hidden input ────────────────────────────────────────────────
 
     #syncHiddenInput() {
-        this.musclesInputTarget.value = JSON.stringify(this.#pills.toAssignments());
+        syncMusclesInput(this.#pills, this.musclesInputTarget);
     }
 
     // ── Private — duplicate check ─────────────────────────────────────────────
@@ -215,42 +213,26 @@ export default class extends Controller {
                 return;
             }
 
-            this.#showDuplicateAlert(
+            showDuplicateAlert(
                 this.duplicateCustomMessageValue
                     .replace('%name%', data.name ?? name)
-                    .replace('%date%', data.date ?? '')
+                    .replace('%date%', data.date ?? ''),
+                { icon: 'info' },
             );
             return;
         }
 
         if (data.type === 'public') {
-            this.#showDuplicateAlert(
-                this.duplicatePublicMessageValue.replace('%name%', data.name ?? name)
+            showDuplicateAlert(
+                this.duplicatePublicMessageValue.replace('%name%', data.name ?? name),
+                { icon: 'info' },
             );
         }
-    }
-
-    #showDuplicateAlert(message) {
-        if (typeof Swal === 'undefined') { return; }
-
-        Swal.fire({
-            icon:               'info',
-            text:               message,
-            confirmButtonText:  'OK',
-            background:         '#111827',
-            color:              '#f1f5f9',
-            confirmButtonColor: '#f43f5e',
-        });
     }
 
     // ── Private — validation ──────────────────────────────────────────────────
 
     #validateName() {
         return this.nameInputTarget.value.trim().length >= 2;
-    }
-
-    #showError(target) {
-        target.hidden = false;
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }

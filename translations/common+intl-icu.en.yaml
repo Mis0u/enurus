@@ -18,6 +18,13 @@ field:
     reduce: Collapse
     security_password: Choose a secure password
 
+rate_limiter:
+    too_many_attempt: >-
+        {minutes, plural,
+            =1    {Too many attempts. Please try again in # minute.}
+            other {Too many attempts. Please try again in # minutes.}
+        }
+
 sentence:
     add_datas: Enter your exercises, sets and weights
     advice: "Tip: The more regularly you log your workouts, the more accurate your stats become!"

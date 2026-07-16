@@ -125,8 +125,6 @@ exercise:
         submit: Zapisz
         subtitle: Zmień informacje o swoim ćwiczeniu
         title: Edytuj ćwiczenie
-    library:
-        title: Biblioteka
     flash:
         created: Ćwiczenie utworzone pomyślnie.
         deleted: Ćwiczenie usunięte pomyślnie.
@@ -145,10 +143,12 @@ exercise:
         preview_label: Podgląd
         primary_muscles: Główne
         secondary_muscles: Wspomagające
-    history:
+    library:
+        title: Biblioteka
+    list:
         actions:
-            edit: Edytuj
             delete: Usuń
+            edit: Edytuj
         badge:
             base: Bazowe
             mine: Moje ćwiczenie
@@ -185,6 +185,18 @@ exercise:
             }
         title: Biblioteka
 
+footer:
+    copyright: "© {year} {brand}. Wszelkie prawa zastrzeżone."
+
+login:
+    connect: Zaloguj się
+    connexion: Logowanie
+    create_an_account: Utwórz konto
+    create_my_account: Utwórz moje konto
+    forgot_password: Zapomniałeś hasła?
+    no_account_yet: Nie masz jeszcze konta?
+    remember_me: Zapamiętaj mnie
+
 messagerie:
     author:
         admin: FitTracker
@@ -209,6 +221,46 @@ messagerie:
         closed: Zamknięte
     thread_closed: "Ta rozmowa jest zamknięta, nie możesz już na nią odpowiadać."
     title: Wiadomości
+
+registration:
+    account_created: Twoje konto jest utworzone i gotowe do użycia
+    confirm_email: Potwierdzenie adresu e-mail
+    create_account: Utwórz konto
+    email:
+        activate_account: Aktywuj moje konto
+        click_activate: Jesteś o jedno kliknięcie od rozpoczęcia swojej transformacji! Kliknij przycisk poniżej, aby aktywować swoje konto.
+        info_link_life: Ten link wygasa za {hour}
+        not_created_account: Jeśli nie zakładałeś konta w {brand}, po prostu zignoruj tę wiadomość.
+        receive_email: Otrzymujesz tego e-maila, ponieważ zarejestrowałeś się na {brand}
+        registration_confirm: Potwierdź rejestrację w {brand}
+        welcome: Witaj na {brand}! Twój pierwszy trening na Ciebie czeka
+    have_an_account: Masz już konto?
+    nickname:
+        label: Wybierz swój alias
+        placeholder: Pod jakim imieniem chcesz zabłysnąć?
+    registration: Rejestracja
+    success: Rejestracja zakończona pomyślnie!
+    website: Website
+
+reset_password_request:
+    asking_reset: Poprosiłeś o zresetowanie hasła. Kliknij przycisk poniżej, aby utworzyć nowe hasło
+    back_to_connexion: Powrót do logowania
+    email_link: Kliknij link resetujący
+    expire_link: Ten link wygaśnie za
+    forgot_password: Zapomniałem hasła
+    identical_password: Identyczne hasło
+    info_email: Otrzymujesz tę wiadomość, ponieważ złożono prośbę o zresetowanie hasła do Twojego konta
+    info_link_life: Ten link wygasa za {hour}. Po zmianie hasła zostaniesz przekierowany na stronę logowania.
+    info_reset_password: Wpisz swój adres e-mail, a otrzymasz link do zresetowania hasła.
+    message_problem_handle: Wystąpił problem podczas przetwarzania prośby o zresetowanie hasła
+    message_problem_validate: Wystąpił problem podczas weryfikacji prośby o zresetowanie hasła
+    new_password: Utwórz nowe hasło
+    not_asking_reset: Jeśli nie prosiłeś o zresetowanie hasła, zignoruj tę wiadomość. Twoje obecne hasło pozostaje bez zmian.
+    reset_email_password_send: E-mail z linkiem resetującym wysłany
+    reset_my_password: Zresetuj moje hasło
+    reset_password: Zresetuj swoje hasło
+    reseting_password: Resetowanie hasła
+    send_link: Wyślij link resetujący
 
 routine:
     badge:
@@ -260,8 +312,8 @@ routine:
                 many  {# rutyn}
                 other {# rutyn}
             }
-        created_at: Utworzona {date}
         create_btn: Nowa rutyna
+        created_at: Utworzona {date}
         empty_cta: Utwórz moją pierwszą rutynę
         empty_subtitle: Utwórz swoją pierwszą rutynę, aby wstępnie skonfigurować treningi i zaoszczędzić czas.
         empty_title: Brak rutyn na razie
@@ -283,19 +335,19 @@ routine:
 
 settings:
     account_deletion:
-        requested:
-            subject: Twoja prośba o usunięcie konta została zarejestrowana
-            title: Usuwanie konta w toku
-            body: Cześć {nickname}, Twoja prośba o usunięcie konta została zarejestrowana. Twoje konto zostanie trwale usunięte {deadline}, jeśli nie zalogujesz się ponownie przed tą datą.
-            cancel_hint: Aby anulować to usunięcie, po prostu zaloguj się ponownie przed tą datą — żadne inne działanie nie jest wymagane.
         cancelled:
+            body: Cześć {nickname}, zalogowałeś się ponownie na swoje konto. Twoja prośba o usunięcie została automatycznie anulowana, a Twoje konto pozostaje aktywne.
             subject: Usunięcie Twojego konta zostało anulowane
             title: Witaj z powrotem!
-            body: Cześć {nickname}, zalogowałeś się ponownie na swoje konto. Twoja prośba o usunięcie została automatycznie anulowana, a Twoje konto pozostaje aktywne.
         deleted:
+            body: Cześć {nickname}, zgodnie z Twoją prośbą, Twoje konto FitTracker i wszystkie powiązane dane (treningi, rutyny, niestandardowe ćwiczenia) zostały trwale usunięte. Dziękujemy za korzystanie z FitTracker.
             subject: Twoje konto zostało trwale usunięte
             title: Konto usunięte
-            body: Cześć {nickname}, zgodnie z Twoją prośbą, Twoje konto FitTracker i wszystkie powiązane dane (treningi, rutyny, niestandardowe ćwiczenia) zostały trwale usunięte. Dziękujemy za korzystanie z FitTracker.
+        requested:
+            body: Cześć {nickname}, Twoja prośba o usunięcie konta została zarejestrowana. Twoje konto zostanie trwale usunięte {deadline}, jeśli nie zalogujesz się ponownie przed tą datą.
+            cancel_hint: Aby anulować to usunięcie, po prostu zaloguj się ponownie przed tą datą — żadne inne działanie nie jest wymagane.
+            subject: Twoja prośba o usunięcie konta została zarejestrowana
+            title: Usuwanie konta w toku
     avatar:
         change: Zmień zdjęcie
         hint: JPEG, PNG lub WebP · maks. 5 MB
@@ -303,12 +355,12 @@ settings:
         button: Usuń moje konto
         explanation: Twoje konto zostanie dezaktywowane, a następnie trwale usunięte po 30 dniach. Ponowne zalogowanie się przed upływem terminu automatycznie anuluje usunięcie.
         modal:
-            title: Czy na pewno?
             body: Aby potwierdzić, wpisz swój alias poniżej.
-            placeholder: Twój alias
-            mismatch: Alias nie pasuje
-            confirm: Usuń na stałe
             cancel: Anuluj
+            confirm: Usuń na stałe
+            mismatch: Alias nie pasuje
+            placeholder: Twój alias
+            title: Czy na pewno?
         request_error: Wystąpił błąd, spróbuj ponownie później
         title: Usunięcie konta
     email:
@@ -371,19 +423,20 @@ workout:
         type_readonly: Rodzaj treningu nie może być zmieniony
     error:
         no_exercise:
-            title: Brak ćwiczenia
             text: Dodaj przynajmniej jedno ćwiczenie przed zatwierdzeniem treningu
-        required_weight: Waga jest wymagana
+            title: Brak ćwiczenia
         required_reps: Powtórzenia są wymagane
+        required_weight: Waga jest wymagana
         validation: Wystąpił błąd podczas przesyłania danych
     flash:
         created: Twój trening został zapisany
         deleted: Twój trening został usunięty
         updated: Twój trening został zmieniony
-    history:
+    list:
         delete:
             cancel: Anuluj
             confirm: Usuń
+            error_text: Wystąpił błąd podczas usuwania. Spróbuj ponownie.
             message: Czy na pewno chcesz usunąć ten trening? Tej akcji nie można cofnąć.
             title: Usunąć ten trening?
         duration_unit: min
@@ -420,17 +473,17 @@ workout:
     photo:
         alt: Zdjęcie treningu
         click_to_preview: Kliknij, aby powiększyć
+        constraints: JPEG, PNG lub WebP · maks. 5 MB
+        drag_or: Przeciągnij zdjęcie lub
         has_photo: Zdjęcie treningu
+        invalid_type: Plik musi być obrazem JPEG, PNG lub WebP.
         label: Zdjęcie treningu (opcjonalne)
         label_visible: Zdjęcie treningu
-        drag_or: Przeciągnij zdjęcie lub
-        select: Wybierz
-        constraints: JPEG, PNG lub WebP · maks. 5 MB
-        invalid_type: Plik musi być obrazem JPEG, PNG lub WebP.
-        too_large: Zdjęcie nie może przekraczać 5 MB.
         remove: Usuń
-    reps_abbreviate: Powt
+        select: Wybierz
+        too_large: Zdjęcie nie może przekraczać 5 MB.
     reps: Powtórzenia
+    reps_abbreviate: Powt
     routine:
         change_confirm: Kontynuuj
         change_warning_text: Zmiana rutyny usunie ćwiczenia już dodane do Twojego treningu. Chcesz kontynuować?
@@ -444,20 +497,20 @@ workout:
     series: Serie
     show:
         back: Powrót do moich treningów
-        routine_badge: Rutyna
-        muscles_title: Trenowane mięśnie
-        muscles_primary: Mięśnie główne
-        muscles_secondary: Mięśnie wspomagające
         metrics:
-            tonnage: Tonaż
             duration: Czas trwania
             exercises: Ćwiczenia
             sets: Serie
+            tonnage: Tonaż
+        muscles_primary: Mięśnie główne
+        muscles_secondary: Mięśnie wspomagające
+        muscles_title: Trenowane mięśnie
+        pr_badge: PR
+        routine_badge: Rutyna
         sets_table:
-            weight: Waga
             reps: Powt
             tonnage: Tonaż
-        pr_badge: PR
+            weight: Waga
         title: Mój trening
     title: Zapisz swój trening
     type:
@@ -465,6 +518,3 @@ workout:
         routine: Wybierz rutynę
         title: Rodzaj treningu
     weight: Waga
-
-footer:
-    copyright: "© {year} {brand}. Wszelkie prawa zastrzeżone."

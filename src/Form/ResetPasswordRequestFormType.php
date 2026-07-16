@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\ResetPasswordRequest;
-use App\Enum\tailwind_class\form\field\FieldClassEnum;
+use App\Enum\TailwindClass\Form\Field\FieldClassEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,7 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * @extends AbstractType<ResetPasswordRequest>
  */
-class ResetPasswordRequestFormType extends AbstractType
+final class ResetPasswordRequestFormType extends AbstractType
 {
     public function __construct(
         private readonly TranslatorInterface $translator

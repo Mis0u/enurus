@@ -18,6 +18,13 @@ field:
     reduce: Riduci
     security_password: Scegli una password sicura
 
+rate_limiter:
+    too_many_attempt: >-
+        {minutes, plural,
+            =1    {Troppi tentativi. Riprova tra # minuto.}
+            other {Troppi tentativi. Riprova tra # minuti.}
+        }
+
 sentence:
     add_datas: Inserisci i tuoi esercizi, serie e carichi
     advice: "Consiglio: Più registri regolarmente i tuoi allenamenti, più le tue statistiche saranno precise!"

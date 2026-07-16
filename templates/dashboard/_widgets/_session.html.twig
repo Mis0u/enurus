@@ -15,9 +15,7 @@
 
     {# En-tête #}
     <div class="flex items-center gap-[7px] mb-4">
-        <svg class="w-[15px] h-[15px] text-[#8b9bb4]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-        </svg>
+        {% include 'partials/_svg/_lightning.html.twig' with {'width': 3.75, 'height': 3.75, 'extraClass': 'text-[#8b9bb4]'} only %}
         <span class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
             {{ 'dashboard.widget.session.title'|trans({}, 'navigation') }}
         </span>

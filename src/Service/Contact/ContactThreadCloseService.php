@@ -8,7 +8,7 @@ use App\Entity\ContactThread;
 use App\Enum\Contact\ContactThreadStatusEnum;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class ContactThreadCloseService
+final readonly class ContactThreadCloseService
 {
     public function __construct(
         private EntityManagerInterface $entityManager,

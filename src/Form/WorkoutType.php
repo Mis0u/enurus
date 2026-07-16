@@ -24,10 +24,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @template TData of object|null
- * @extends AbstractType<TData>
+ * @extends AbstractType<Workout>
  */
-class WorkoutType extends AbstractType
+final class WorkoutType extends AbstractType
 {
     private const int MIN_DURATION = 0;
 
@@ -55,8 +54,7 @@ class WorkoutType extends AbstractType
             ->add('duration', IntegerType::class, $this->durationOptions())
             ->add('routine', EntityType::class, $this->routineOptions())
             ->add('workoutExercises', CollectionType::class, $this->workoutExercisesOptions())
-            ->add('note', $isEdit ? TextareaType::class : HiddenType::class, $this->noteOptions($isEdit))
-        ;
+            ->add('note', $isEdit ? TextareaType::class : HiddenType::class, $this->noteOptions($isEdit));
 
         $builder->addEventSubscriber(new WorkoutFormListener());
     }
@@ -177,7 +175,7 @@ class WorkoutType extends AbstractType
     private function workoutExercisesOptions(): array
     {
         return [
-            'entry_type' => WorkoutExerciseType::class,
+            'entry_type' => \App\Form\WorkoutExerciseType::class,
             'allow_add' => true,
             'allow_delete' => true,
             'by_reference' => false,

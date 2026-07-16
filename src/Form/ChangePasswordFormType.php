@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use App\Enum\Password\PasswordRuleEnum;
-use App\Enum\tailwind_class\form\field\FieldClassEnum;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -24,10 +20,6 @@ final class ChangePasswordFormType extends AbstractFormSecurityType
     private const array DATA_REPEAT_PASSWORD = [
         'data-password-validator-target' => 'inputRepeatPassword',
         'data-action' => 'input->password-validator#validate',
-    ];
-
-    private const array LABEL_ATTR = [
-        'class' => FieldClassEnum::LABEL_ATTRIBUTE->value,
     ];
 
     public function __construct(
@@ -61,11 +53,7 @@ final class ChangePasswordFormType extends AbstractFormSecurityType
                     ],
                     'constraints' => [
                         new NotBlank(),
-                        new Length(min: (int) PasswordRuleEnum::MIN_LENGTH->value, max: 4096),
-                        new Regex(
-                            pattern: PasswordRuleEnum::REGEX->value,
-                            message: $this->translator->trans('sentence.password.security.regex', [], 'common')
-                        ),
+                        ...$this->passwordConstraints($this->translator),
                     ],
                     'attr' => array_merge(self::ATTR_FIELD_CLASS, self::DATA_PASSWORD),
                 ],

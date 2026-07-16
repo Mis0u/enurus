@@ -3,6 +3,16 @@
 @source "../../templates";
 @source "../../src";
 
+/*
+ * Les partials SVG (templates/partials/_svg/) construisent leurs classes de taille via
+ * `w-{{ width|default(N) }} h-{{ height|default(N) }}` et `text-{{ color|default(...) }}` —
+ * Tailwind scanne le texte source et ne peut pas résoudre ces valeurs interpolées par Twig,
+ * donc les classes ne sont jamais générées sans ce safelist explicite (icônes en taille par
+ * défaut du navigateur ~300x150px sinon, cassant toute la mise en page).
+ */
+@source inline("{w-,h-}{1.5,2,2.5,3,3.25,3.5,3.75,4,4.5,5,5.5,6.5,7,7.5,8,10,12,16}");
+@source inline("text-{[#4a5568],[#8b9bb4],[#f43f5e]}");
+
 @theme {
     --color-bg-base:       #080e1a;
     --color-bg-card:       #0f1928;

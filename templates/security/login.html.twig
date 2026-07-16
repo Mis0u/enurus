@@ -24,7 +24,7 @@
                         <twig:Message:Error:Error message="{{ error.messageKey|trans(error.messageData, 'security') }}" icon="red_cross"/>
                     {% endif %}
 
-                    <h2 class="text-2xl font-bold text-white mb-6">{{ 'login.connexion'|trans({}, 'security') }}</h2>
+                    <h2 class="text-2xl font-bold text-white mb-6">{{ 'login.connexion'|trans({}, 'navigation') }}</h2>
 
                     {% include 'security/_email_field.html.twig' %}
 
@@ -34,7 +34,7 @@
 
                     {% include 'security/_remember_me_field.html.twig' %}
 
-                    <twig:Button:Primary:Primary message="{{ 'login.connect'|trans({}, 'security') }}"/>
+                    <twig:Button:Primary:Primary message="{{ 'login.connect'|trans({}, 'navigation') }}"/>
 
                     {% include 'security/_additionnal_link.html.twig' %}
 

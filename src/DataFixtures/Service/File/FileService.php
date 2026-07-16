@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Service\File;
 
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-
 class FileService
 {
     /**
@@ -28,7 +26,7 @@ class FileService
         try {
             $data = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {
-            throw new BadRequestHttpException(\sprintf('JSON invalide : %s', $e->getMessage()));
+            throw new \RuntimeException(\sprintf('JSON invalide : %s', $e->getMessage()));
         }
 
         if (! is_array($data)) {

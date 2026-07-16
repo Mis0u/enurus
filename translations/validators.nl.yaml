@@ -13,7 +13,6 @@ routine:
     name_too_long: De naam mag niet meer dan {{ limit }} tekens bevatten.
     no_exercise: Je moet minstens één oefening selecteren.
 
-
 settings:
     avatar:
         invalid_type: Het bestand moet in JPEG-, PNG- of WebP-formaat zijn
@@ -23,6 +22,8 @@ user:
     nickname:
         length:
             max: Je alias is te lang. Het mag maximaal {{ limit }} tekens bevatten
+            min: Je alias is te kort. Het moet minimaal {{ limit }} tekens bevatten
+
 workout:
     performed_at:
         today: De datum mag niet in de toekomst liggen

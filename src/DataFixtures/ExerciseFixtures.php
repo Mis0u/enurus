@@ -68,10 +68,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
         $muscleNames = $this->typeService->getStringArray($data, $muscleType->value);
 
         foreach ($muscleNames as $muscleName) {
-            $exerciseMuscle = $this->createExerciseMuscle($exercise, $muscleName, $muscleType);
-            if (null !== $exerciseMuscle) {
-                $exercise->exerciseMuscles->add($exerciseMuscle);
-            }
+            $this->attachMuscleGroup($exercise, $muscleName, $muscleType);
         }
     }
 
@@ -112,8 +109,8 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
         $exercise->isPublic = false;
         $exercise->owner = $owner;
 
-        $this->addMuscleGroupToExercise($exercise, 'name.posterior_deltoid', MuscleTypeEnum::PRIMARY);
-        $this->addMuscleGroupToExercise($exercise, 'name.traps', MuscleTypeEnum::SECONDARY);
+        $this->attachMuscleGroup($exercise, 'name.posterior_deltoid', MuscleTypeEnum::PRIMARY);
+        $this->attachMuscleGroup($exercise, 'name.traps', MuscleTypeEnum::SECONDARY);
 
         $manager->persist($exercise);
     }
@@ -132,30 +129,18 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
         $exercise->owner = $owner;
         $exercise->description = 'Tirage à la poulie basse en supination, coudes le long du corps. Contractez les dorsaux en fin de mouvement.';
 
-        $this->addMuscleGroupToExercise($exercise, 'name.lats', MuscleTypeEnum::PRIMARY);
-        $this->addMuscleGroupToExercise($exercise, 'name.biceps', MuscleTypeEnum::SECONDARY);
+        $this->attachMuscleGroup($exercise, 'name.lats', MuscleTypeEnum::PRIMARY);
+        $this->attachMuscleGroup($exercise, 'name.biceps', MuscleTypeEnum::SECONDARY);
 
         $manager->persist($exercise);
     }
 
-    private function addMuscleGroupToExercise(
-        Exercise $exercise,
-        string $muscleGroupName,
-        MuscleTypeEnum $type,
-    ): void {
-        $refKey = \sprintf('%s%s', MuscleGroupFixtures::REFERENCE_PREFIX, $muscleGroupName);
+    private function attachMuscleGroup(Exercise $exercise, string $muscleGroupName, MuscleTypeEnum $type): void
+    {
+        $exerciseMuscle = $this->createExerciseMuscle($exercise, $muscleGroupName, $type);
 
-        if (! $this->hasReference($refKey, MuscleGroup::class)) {
-            return;
+        if (null !== $exerciseMuscle) {
+            $exercise->exerciseMuscles->add($exerciseMuscle);
         }
-
-        $muscleGroup = $this->getReference($refKey, MuscleGroup::class);
-
-        $exerciseMuscle = new ExerciseMuscle();
-        $exerciseMuscle->exercise = $exercise;
-        $exerciseMuscle->muscleGroup = $muscleGroup;
-        $exerciseMuscle->type = $type;
-
-        $exercise->exerciseMuscles->add($exerciseMuscle);
     }
 }

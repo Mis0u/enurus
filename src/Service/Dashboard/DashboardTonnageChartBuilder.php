@@ -7,7 +7,7 @@ namespace App\Service\Dashboard;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
-readonly class DashboardTonnageChartBuilder
+final readonly class DashboardTonnageChartBuilder
 {
     public function __construct(
         private ChartBuilderInterface $chartBuilder,

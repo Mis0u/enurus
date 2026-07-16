@@ -1,0 +1,82 @@
+{#
+templates/routine/list/_routine_card.html.twig
+
+Paramètres :
+  - routine : Routine
+#}
+{% set exercises = routine.routineExercises %}
+{% set total = exercises|length %}
+{% set max_displayed = 10 %}
+{% set displayed = exercises|slice(0, max_displayed) %}
+{% set remaining = total - max_displayed %}
+
+<div class="routine-card">
+
+    <div class="routine-card__header">
+        <div class="routine-card__meta">
+            <h2 class="routine-card__name">{{ routine.name }}</h2>
+            <span class="routine-card__count">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                </svg>
+                {{ 'routine.list.exercise_count'|trans({count: total}, 'navigation') }}
+            </span>
+        </div>
+
+        <div class="routine-card__actions">
+            <a
+                href="{{ path('app_routine_edit', {id: routine.id}) }}"
+                class="routine-action-btn edit"
+                title="{{ 'field.form.button.edit'|trans({}, 'common') }}"
+            >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                </svg>
+            </a>
+
+            <div
+                data-controller="routine--delete"
+                data-routine--delete-url-value="{{ path('app_routine_delete', {id: routine.id}) }}"
+                data-routine--delete-csrf-token-value="{{ csrf_token('routine_delete_' ~ routine.id) }}"
+                data-routine--delete-confirm-title-value="{{ 'routine.delete.confirm_title'|trans({}, 'navigation') }}"
+                data-routine--delete-confirm-text-value="{{ 'routine.delete.confirm_text'|trans({name: routine.name}, 'navigation') }}"
+                data-routine--delete-confirm-button-value="{{ 'routine.delete.confirm_button'|trans({}, 'navigation') }}"
+                data-routine--delete-cancel-button-value="{{ 'routine.delete.cancel_button'|trans({}, 'navigation') }}"
+                data-routine--delete-error-text-value="{{ 'routine.delete.error_text'|trans({}, 'navigation') }}"
+            >
+                <button
+                    type="button"
+                    class="routine-action-btn delete"
+                    title="{{ 'field.form.button.delete'|trans({}, 'common') }}"
+                    data-action="click->routine--delete#confirmDelete"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <ul class="routine-card__exercises">
+        {% for routine_exercise in displayed %}
+            {% set exercise = routine_exercise.exercise %}
+            <li>
+                {{ exercise.isPublic ? (exercise.name|trans({}, 'exercise')) : exercise.name }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% if remaining > 0 %}
+        <p class="routine-card__more">
+            {{ 'routine.list.more_exercises'|trans({count: remaining}, 'navigation') }}
+        </p>
+    {% endif %}
+
+    <div class="routine-card__divider"></div>
+
+    <p class="routine-card__date">
+        {{ 'routine.list.created_at'|trans({date: routine.createdAt|date('d/m/Y')}, 'navigation') }}
+    </p>
+
+</div>

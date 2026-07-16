@@ -1,6 +1,6 @@
 {% extends 'emails/_base.html.twig' %}
 
-{% block title %}{{ 'settings.account_deletion.cancelled.subject'|trans({}, 'security', locale) }}{% endblock %}
+{% block title %}{{ 'settings.account_deletion.cancelled.subject'|trans({}, 'navigation', locale) }}{% endblock %}
 
 {% block content %}
     <div style="text-align: center; margin-bottom: 24px;">
@@ -8,11 +8,11 @@
     </div>
 
     <h2 style="margin: 0 0 16px; font-size: 24px; font-weight: bold; color: #ffffff; text-align: center;">
-        {{ 'settings.account_deletion.cancelled.title'|trans({}, 'security', locale) }}
+        {{ 'settings.account_deletion.cancelled.title'|trans({}, 'navigation', locale) }}
     </h2>
 
     <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #cbd5e1; text-align: center;">
-        {{ 'settings.account_deletion.cancelled.body'|trans({'nickname': user.nickname}, 'security', locale) }}
+        {{ 'settings.account_deletion.cancelled.body'|trans({'nickname': user.nickname}, 'navigation', locale) }}
     </p>
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">

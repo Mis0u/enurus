@@ -18,7 +18,7 @@
 
 <div class="text-right max-md:text-left">
     <div class="show-exercise-tonnage-value font-['Rajdhani'] text-[18px] font-bold">
-        {{ item.tonnage|number_format(0, ',', ' ') }} {{ unit.label() }}
+        {{ item.tonnage|number_format(0, ',', ' ') }} {{ unit.value }}
     </div>
     <div class="show-exercise-tonnage-label text-[10px]">
         {{ 'workout.show.metrics.tonnage'|trans({}, 'navigation') }}

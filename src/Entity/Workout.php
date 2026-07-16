@@ -96,7 +96,7 @@ class Workout
     }
 
     #[ORM\Column(length: 255, nullable: true)]
-    public ?string $photoPath {
+    public ?string $photoPath = null {
         get {
             return $this->photoPath;
         }

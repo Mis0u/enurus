@@ -9,7 +9,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
-readonly class WorkoutFormListener implements EventSubscriberInterface
+final readonly class WorkoutFormListener implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {

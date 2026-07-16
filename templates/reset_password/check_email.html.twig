@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'reset_password_request.reset_email_password_send'|trans({}, 'security') }}{% endblock %}
+{% block title %}{{ 'reset_password_request.reset_email_password_send'|trans({}, 'navigation') }}{% endblock %}
 
 {% block body %}
     {% for message in app.flashes('error') %}
@@ -23,7 +23,7 @@
                     </p>
                 </div>
                 <twig:Message:Warning:Warning
-                    message="{{ 'reset_password_request.expire_link'|trans({}, 'security') }}"
+                    message="{{ 'reset_password_request.expire_link'|trans({}, 'navigation') }}"
                     icon="clock"
                     variable="{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}"
                 />

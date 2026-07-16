@@ -18,6 +18,13 @@ field:
     reduce: Inklappen
     security_password: Kies een veilig wachtwoord
 
+rate_limiter:
+    too_many_attempt: >-
+        {minutes, plural,
+            =1    {Te veel pogingen. Probeer het opnieuw over # minuut.}
+            other {Te veel pogingen. Probeer het opnieuw over # minuten.}
+        }
+
 sentence:
     add_datas: Voer je oefeningen, sets en gewichten in
     advice: "Tip: Hoe vaker je je trainingen bijhoudt, hoe nauwkeuriger je statistieken worden!"

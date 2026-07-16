@@ -14,6 +14,7 @@ final readonly class ExerciseCreateService
 {
     public function __construct(
         private EntityManagerInterface $em,
+        private ExerciseMuscleAttacherService $muscleAttacher,
     ) {
     }
 
@@ -26,21 +27,9 @@ final readonly class ExerciseCreateService
     {
         $exercise->owner = $owner;
 
-        $this->attachMuscles($exercise, $muscles);
+        $this->muscleAttacher->attach($exercise, $muscles);
 
         $this->em->persist($exercise);
         $this->em->flush();
-    }
-
-    /**
-     * @param Collection<int, ExerciseMuscle> $muscles
-     */
-    private function attachMuscles(Exercise $exercise, Collection $muscles): void
-    {
-        foreach ($muscles as $exerciseMuscle) {
-            $exerciseMuscle->exercise = $exercise;
-            $exercise->exerciseMuscles->add($exerciseMuscle);
-            $this->em->persist($exerciseMuscle);
-        }
     }
 }

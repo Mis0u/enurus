@@ -125,8 +125,6 @@ exercise:
         submit: Guardar
         subtitle: Modifica as informações do teu exercício
         title: Modificar o exercício
-    library:
-        title: Biblioteca
     flash:
         created: Exercício criado com sucesso.
         deleted: Exercício eliminado com sucesso.
@@ -145,10 +143,12 @@ exercise:
         preview_label: Pré-visualização
         primary_muscles: Primários
         secondary_muscles: Secundários
-    history:
+    library:
+        title: Biblioteca
+    list:
         actions:
-            edit: Modificar
             delete: Eliminar
+            edit: Modificar
         badge:
             base: Base
             mine: Meu exercício
@@ -181,6 +181,18 @@ exercise:
             }
         title: Biblioteca
 
+footer:
+    copyright: "© {year} {brand}. Todos os direitos reservados."
+
+login:
+    connect: Entrar
+    connexion: Login
+    create_an_account: Criar uma conta
+    create_my_account: Criar a minha conta
+    forgot_password: Esqueceu a sua palavra-passe?
+    no_account_yet: Ainda não tem conta?
+    remember_me: Lembrar-me
+
 messagerie:
     author:
         admin: FitTracker
@@ -205,6 +217,46 @@ messagerie:
         closed: Encerrado
     thread_closed: "Esta conversa está encerrada, já não podes responder."
     title: Mensagens
+
+registration:
+    account_created: A tua conta está criada e pronta a usar
+    confirm_email: Confirmação do teu email
+    create_account: Criar uma conta
+    email:
+        activate_account: Ativar a minha conta
+        click_activate: Estás a um clique de começar a tua transformação! Clica no botão abaixo para ativar a tua conta.
+        info_link_life: Este link expira em {hour}
+        not_created_account: Se não criaste uma conta no {brand}, ignora simplesmente este email.
+        receive_email: Recebes este email porque te inscreveste no {brand}
+        registration_confirm: Confirma o teu registo no {brand}
+        welcome: Bem-vindo ao {brand}! O teu primeiro treino está à tua espera
+    have_an_account: Já tens uma conta?
+    nickname:
+        label: Escolhe o teu alias
+        placeholder: Com que nome queres brilhar?
+    registration: Registo
+    success: Registo concluído com sucesso!
+    website: Website
+
+reset_password_request:
+    asking_reset: Solicitaste a redefinição da tua palavra-passe. Clica no botão abaixo para criar uma nova palavra-passe
+    back_to_connexion: Voltar ao login
+    email_link: Clica no link de redefinição
+    expire_link: Este link expirará em
+    forgot_password: Palavra-passe esquecida
+    identical_password: Palavra-passe idêntica
+    info_email: Estás a receber este email porque foi solicitada uma redefinição de palavra-passe na tua conta
+    info_link_life: Este link expira em {hour}. Depois de alterar a tua palavra-passe, serás redirecionado para a página de login.
+    info_reset_password: Introduz o teu endereço de email e receberás um link para redefinir a tua palavra-passe.
+    message_problem_handle: Ocorreu um problema ao processar o pedido de redefinição da palavra-passe
+    message_problem_validate: Ocorreu um problema ao validar o pedido de redefinição da palavra-passe
+    new_password: Cria a tua nova palavra-passe
+    not_asking_reset: Se não solicitaste esta redefinição, ignora este email. A tua palavra-passe atual permanece inalterada.
+    reset_email_password_send: Email de redefinição enviado
+    reset_my_password: Redefinir a minha palavra-passe
+    reset_password: Redefinir a tua palavra-passe
+    reseting_password: Redefinição da tua palavra-passe
+    send_link: Enviar link de redefinição
 
 routine:
     badge:
@@ -254,8 +306,8 @@ routine:
                 one   {# rotina}
                 other {# rotinas}
             }
-        created_at: Criada em {date}
         create_btn: Nova rotina
+        created_at: Criada em {date}
         empty_cta: Criar a minha primeira rotina
         empty_subtitle: Cria a tua primeira rotina para pré-configurar os teus treinos e poupar tempo.
         empty_title: Nenhuma rotina por agora
@@ -273,19 +325,19 @@ routine:
 
 settings:
     account_deletion:
-        requested:
-            subject: O teu pedido de eliminação de conta foi registado
-            title: Eliminação de conta em curso
-            body: Olá {nickname}, o teu pedido de eliminação de conta foi registado. A tua conta será definitivamente eliminada em {deadline} se não voltares a iniciar sessão antes dessa data.
-            cancel_hint: Para cancelar esta eliminação, basta voltares a iniciar sessão antes dessa data — nenhuma outra ação necessária.
         cancelled:
+            body: Olá {nickname}, voltaste a iniciar sessão na tua conta. O teu pedido de eliminação foi automaticamente cancelado e a tua conta continua ativa normalmente.
             subject: A eliminação da tua conta foi cancelada
             title: Bem-vindo de volta!
-            body: Olá {nickname}, voltaste a iniciar sessão na tua conta. O teu pedido de eliminação foi automaticamente cancelado e a tua conta continua ativa normalmente.
         deleted:
+            body: Olá {nickname}, conforme o teu pedido, a tua conta FitTracker e todos os dados associados (treinos, rotinas, exercícios personalizados) foram definitivamente eliminados. Obrigado por teres utilizado o FitTracker.
             subject: A tua conta foi definitivamente eliminada
             title: Conta eliminada
-            body: Olá {nickname}, conforme o teu pedido, a tua conta FitTracker e todos os dados associados (treinos, rotinas, exercícios personalizados) foram definitivamente eliminados. Obrigado por teres utilizado o FitTracker.
+        requested:
+            body: Olá {nickname}, o teu pedido de eliminação de conta foi registado. A tua conta será definitivamente eliminada em {deadline} se não voltares a iniciar sessão antes dessa data.
+            cancel_hint: Para cancelar esta eliminação, basta voltares a iniciar sessão antes dessa data — nenhuma outra ação necessária.
+            subject: O teu pedido de eliminação de conta foi registado
+            title: Eliminação de conta em curso
     avatar:
         change: Alterar foto
         hint: JPEG, PNG ou WebP · 5 MB máx
@@ -293,12 +345,12 @@ settings:
         button: Eliminar a minha conta
         explanation: A tua conta será desativada e depois definitivamente eliminada após 30 dias. Voltares a iniciar sessão antes do prazo cancelará automaticamente a eliminação.
         modal:
-            title: Tens a certeza?
             body: Para confirmar, escreve o teu alias abaixo.
-            placeholder: O teu alias
-            mismatch: O alias não corresponde
-            confirm: Eliminar definitivamente
             cancel: Cancelar
+            confirm: Eliminar definitivamente
+            mismatch: O alias não corresponde
+            placeholder: O teu alias
+            title: Tens a certeza?
         request_error: Ocorreu um erro, tenta novamente mais tarde
         title: Eliminação da conta
     email:
@@ -359,19 +411,20 @@ workout:
         type_readonly: O tipo de treino não pode ser modificado
     error:
         no_exercise:
-            title: Nenhum exercício
             text: Adiciona pelo menos um exercício antes de validar o teu treino
-        required_weight: O peso é obrigatório
+            title: Nenhum exercício
         required_reps: As repetições são obrigatórias
+        required_weight: O peso é obrigatório
         validation: Ocorreu um erro ao submeter os teus dados
     flash:
         created: O teu treino foi registado
         deleted: O teu treino foi eliminado
         updated: O teu treino foi modificado
-    history:
+    list:
         delete:
             cancel: Cancelar
             confirm: Eliminar
+            error_text: Ocorreu um erro durante a eliminação. Tenta novamente.
             message: Tens a certeza de que queres eliminar este treino? Esta ação é irreversível.
             title: Eliminar este treino?
         duration_unit: min
@@ -406,17 +459,17 @@ workout:
     photo:
         alt: Foto do treino
         click_to_preview: Clica para ampliar
+        constraints: JPEG, PNG ou WebP · 5 MB máx
+        drag_or: Arrasta uma foto ou
         has_photo: Foto do treino
+        invalid_type: O ficheiro deve ser uma imagem JPEG, PNG ou WebP.
         label: Foto do treino (opcional)
         label_visible: Foto do treino
-        drag_or: Arrasta uma foto ou
-        select: Selecionar
-        constraints: JPEG, PNG ou WebP · 5 MB máx
-        invalid_type: O ficheiro deve ser uma imagem JPEG, PNG ou WebP.
-        too_large: A foto não deve ultrapassar 5 MB.
         remove: Eliminar
-    reps_abbreviate: Reps
+        select: Selecionar
+        too_large: A foto não deve ultrapassar 5 MB.
     reps: Repetições
+    reps_abbreviate: Reps
     routine:
         change_confirm: Continuar
         change_warning_text: Mudar de rotina apagará os exercícios já adicionados ao teu treino. Queres continuar?
@@ -430,20 +483,20 @@ workout:
     series: Séries
     show:
         back: Voltar aos meus treinos
-        routine_badge: Rotina
-        muscles_title: Músculos trabalhados
-        muscles_primary: Músculos primários
-        muscles_secondary: Músculos secundários
         metrics:
-            tonnage: Tonelagem
             duration: Duração
             exercises: Exercícios
             sets: Séries
+            tonnage: Tonelagem
+        muscles_primary: Músculos primários
+        muscles_secondary: Músculos secundários
+        muscles_title: Músculos trabalhados
+        pr_badge: PR
+        routine_badge: Rotina
         sets_table:
-            weight: Peso
             reps: Reps
             tonnage: Tonelagem
-        pr_badge: PR
+            weight: Peso
         title: O meu treino
     title: Regista o teu treino
     type:
@@ -451,6 +504,3 @@ workout:
         routine: Escolher uma rotina
         title: Tipo de treino
     weight: Peso
-
-footer:
-    copyright: "© {year} {brand}. Todos os direitos reservados."

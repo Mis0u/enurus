@@ -6,8 +6,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Enum\Entity\User\GenderEnum;
-use App\Enum\Password\PasswordRuleEnum;
-use App\Enum\tailwind_class\form\field\FieldClassEnum;
+use App\Enum\TailwindClass\Form\Field\FieldClassEnum;
 use Symfony\Component\Clock\ClockInterface;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -16,16 +15,14 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @extends AbstractFormSecurityType<User>
  */
-class RegistrationFormType extends AbstractFormSecurityType
+final class RegistrationFormType extends AbstractFormSecurityType
 {
     private const array DATA_ROUTE = [
         'data-route' => 'registration',
@@ -54,20 +51,16 @@ class RegistrationFormType extends AbstractFormSecurityType
                 'multiple' => false,
             ])
             ->add('nickname', TextType::class, [
-                'label' => $this->translator->trans('registration.nickname.label', [], 'security'),
-                'label_attr' => [
-                    'class' => FieldClassEnum::LABEL_ATTRIBUTE->value,
-                ],
+                'label' => $this->translator->trans('registration.nickname.label', [], 'navigation'),
+                'label_attr' => self::LABEL_ATTR,
                 'attr' => [
                     'class' => FieldClassEnum::ATTRIBUTE_FIELD_CLASS->value,
-                    'placeholder' => $this->translator->trans('registration.nickname.placeholder', [], 'security'),
+                    'placeholder' => $this->translator->trans('registration.nickname.placeholder', [], 'navigation'),
                 ],
             ])
             ->add('email', EmailType::class, [
                 'label' => $this->translator->trans('field.email', [], 'common'),
-                'label_attr' => [
-                    'class' => FieldClassEnum::LABEL_ATTRIBUTE->value,
-                ],
+                'label_attr' => self::LABEL_ATTR,
                 'attr' => [
                     'class' => FieldClassEnum::ATTRIBUTE_FIELD_CLASS->value,
                     'placeholder' => $this->translator->trans('field.email_placeholder', [], 'common'),
@@ -75,25 +68,19 @@ class RegistrationFormType extends AbstractFormSecurityType
             ])
             ->add('plainPassword', PasswordType::class, [
                 'label' => $this->translator->trans('field.password', [], 'common'),
-                'label_attr' => [
-                    'class' => FieldClassEnum::LABEL_ATTRIBUTE->value,
-                ],
+                'label_attr' => self::LABEL_ATTR,
                 'mapped' => false,
                 'attr' => array_merge(self::ATTR_FIELD_CLASS, self::DATA_PASSWORD, self::DATA_ROUTE),
                 'constraints' => [
                     new NotBlank(),
-                    new Length(min: (int) PasswordRuleEnum::MIN_LENGTH->value, max: 4096),
+                    ...$this->passwordConstraints($this->translator),
                     new NotCompromisedPassword(),
-                    new Regex(
-                        pattern: PasswordRuleEnum::REGEX->value,
-                        message: $this->translator->trans('sentence.password.security.regex', [], 'common')
-                    ),
                 ],
             ])
             ->add('website', TextType::class, [
-                'label' => $this->translator->trans('registration.website', [], 'security'),
+                'label' => $this->translator->trans('registration.website', [], 'navigation'),
                 'attr' => [
-                    'id' => $this->translator->trans('registration.website', [], 'security'),
+                    'id' => $this->translator->trans('registration.website', [], 'navigation'),
                     'autocomplete' => 'off',
                 ],
                 'mapped' => false,

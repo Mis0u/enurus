@@ -6,7 +6,7 @@ namespace App\Twig\Extension;
 
 use Twig\Attribute\AsTwigFilter;
 
-class FormatHourExtension
+final class FormatHourExtension
 {
     private const int MINUTES_IN_ONE_HOUR = 60;
 

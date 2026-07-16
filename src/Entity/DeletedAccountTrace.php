@@ -17,7 +17,7 @@ class DeletedAccountTrace
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
-    public Uuid $id {
+    public ?Uuid $id = null {
         get {
             return $this->id;
         }

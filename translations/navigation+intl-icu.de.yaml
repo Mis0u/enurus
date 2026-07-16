@@ -125,8 +125,6 @@ exercise:
         submit: Speichern
         subtitle: Bearbeite die Informationen deiner Übung
         title: Übung bearbeiten
-    library:
-        title: Bibliothek
     flash:
         created: Übung erfolgreich erstellt.
         deleted: Übung erfolgreich gelöscht.
@@ -145,10 +143,12 @@ exercise:
         preview_label: Vorschau
         primary_muscles: Primäre
         secondary_muscles: Sekundäre
-    history:
+    library:
+        title: Bibliothek
+    list:
         actions:
-            edit: Bearbeiten
             delete: Löschen
+            edit: Bearbeiten
         badge:
             base: Standard
             mine: Meine Übung
@@ -181,6 +181,18 @@ exercise:
             }
         title: Bibliothek
 
+footer:
+    copyright: "© {year} {brand}. Alle Rechte vorbehalten."
+
+login:
+    connect: Anmelden
+    connexion: Anmeldung
+    create_an_account: Ein Konto erstellen
+    create_my_account: Mein Konto erstellen
+    forgot_password: Passwort vergessen?
+    no_account_yet: Noch kein Konto?
+    remember_me: Angemeldet bleiben
+
 messagerie:
     author:
         admin: FitTracker
@@ -205,6 +217,46 @@ messagerie:
         closed: Geschlossen
     thread_closed: "Diese Unterhaltung ist geschlossen, du kannst nicht mehr antworten."
     title: Nachrichten
+
+registration:
+    account_created: Dein Konto ist erstellt und einsatzbereit
+    confirm_email: Bestätigung deiner E-Mail
+    create_account: Ein Konto erstellen
+    email:
+        activate_account: Mein Konto aktivieren
+        click_activate: Du bist nur einen Klick davon entfernt, deine Transformation zu starten! Klicke auf den Button unten, um dein Konto zu aktivieren.
+        info_link_life: Dieser Link läuft in {hour} ab
+        not_created_account: Wenn du kein Konto bei {brand} erstellt hast, ignoriere einfach diese E-Mail.
+        receive_email: Du erhältst diese E-Mail, weil du dich bei {brand} registriert hast
+        registration_confirm: Bestätige deine Registrierung bei {brand}
+        welcome: Willkommen bei {brand}! Dein erstes Training wartet auf dich
+    have_an_account: Du hast bereits ein Konto?
+    nickname:
+        label: Wähle deinen Alias
+        placeholder: Unter welchem Namen willst du glänzen?
+    registration: Registrierung
+    success: Registrierung erfolgreich!
+    website: Website
+
+reset_password_request:
+    asking_reset: Du hast die Zurücksetzung deines Passworts angefordert. Klicke auf den Button unten, um ein neues Passwort zu erstellen
+    back_to_connexion: Zurück zur Anmeldung
+    email_link: Klicke auf den Zurücksetzungslink
+    expire_link: Dieser Link läuft ab in
+    forgot_password: Passwort vergessen
+    identical_password: Identisches Passwort
+    info_email: Du erhältst diese E-Mail, weil eine Passwortzurücksetzung für dein Konto angefordert wurde
+    info_link_life: Dieser Link läuft in {hour} ab. Nach der Änderung deines Passworts wirst du zur Anmeldeseite weitergeleitet.
+    info_reset_password: Gib deine E-Mail-Adresse ein und du erhältst einen Link zum Zurücksetzen deines Passworts.
+    message_problem_handle: Bei der Verarbeitung Ihrer Anfrage zur Passwortzurücksetzung ist ein Problem aufgetreten
+    message_problem_validate: Bei der Überprüfung Ihrer Anfrage zur Passwortzurücksetzung ist ein Problem aufgetreten
+    new_password: Erstelle dein neues Passwort
+    not_asking_reset: Wenn du diese Zurücksetzung nicht angefordert hast, ignoriere diese E-Mail. Dein aktuelles Passwort bleibt unverändert.
+    reset_email_password_send: Zurücksetzungs-E-Mail gesendet
+    reset_my_password: Mein Passwort zurücksetzen
+    reset_password: Dein Passwort zurücksetzen
+    reseting_password: Zurücksetzung deines Passworts
+    send_link: Zurücksetzungslink senden
 
 routine:
     badge:
@@ -254,8 +306,8 @@ routine:
                 one   {# Routine}
                 other {# Routinen}
             }
-        created_at: Erstellt am {date}
         create_btn: Neue Routine
+        created_at: Erstellt am {date}
         empty_cta: Meine erste Routine erstellen
         empty_subtitle: Erstelle deine erste Routine, um deine Trainings vorzukonfigurieren und Zeit zu sparen.
         empty_title: Noch keine Routinen
@@ -273,19 +325,19 @@ routine:
 
 settings:
     account_deletion:
-        requested:
-            subject: Deine Anfrage zur Kontolöschung wurde registriert
-            title: Kontolöschung in Bearbeitung
-            body: Hallo {nickname}, deine Anfrage zur Kontolöschung wurde registriert. Dein Konto wird am {deadline} endgültig gelöscht, wenn du dich nicht vorher erneut anmeldest.
-            cancel_hint: Um diese Löschung abzubrechen, melde dich einfach vor diesem Datum erneut an — keine weitere Aktion erforderlich.
         cancelled:
+            body: Hallo {nickname}, du hast dich erneut in dein Konto eingeloggt. Deine Löschanfrage wurde automatisch abgebrochen und dein Konto bleibt wie gewohnt aktiv.
             subject: Deine Kontolöschung wurde abgebrochen
             title: Willkommen zurück!
-            body: Hallo {nickname}, du hast dich erneut in dein Konto eingeloggt. Deine Löschanfrage wurde automatisch abgebrochen und dein Konto bleibt wie gewohnt aktiv.
         deleted:
+            body: Hallo {nickname}, gemäß deiner Anfrage wurden dein FitTracker-Konto und alle zugehörigen Daten (Trainings, Routinen, benutzerdefinierte Übungen) endgültig gelöscht. Vielen Dank, dass du FitTracker genutzt hast.
             subject: Dein Konto wurde endgültig gelöscht
             title: Konto gelöscht
-            body: Hallo {nickname}, gemäß deiner Anfrage wurden dein FitTracker-Konto und alle zugehörigen Daten (Trainings, Routinen, benutzerdefinierte Übungen) endgültig gelöscht. Vielen Dank, dass du FitTracker genutzt hast.
+        requested:
+            body: Hallo {nickname}, deine Anfrage zur Kontolöschung wurde registriert. Dein Konto wird am {deadline} endgültig gelöscht, wenn du dich nicht vorher erneut anmeldest.
+            cancel_hint: Um diese Löschung abzubrechen, melde dich einfach vor diesem Datum erneut an — keine weitere Aktion erforderlich.
+            subject: Deine Anfrage zur Kontolöschung wurde registriert
+            title: Kontolöschung in Bearbeitung
     avatar:
         change: Foto ändern
         hint: JPEG, PNG oder WebP · max. 5 MB
@@ -293,12 +345,12 @@ settings:
         button: Mein Konto löschen
         explanation: Dein Konto wird deaktiviert und nach 30 Tagen endgültig gelöscht. Eine erneute Anmeldung vor Ablauf der Frist bricht die Löschung automatisch ab.
         modal:
-            title: Bist du sicher?
             body: Gib zur Bestätigung deinen Alias unten ein.
-            placeholder: Dein Alias
-            mismatch: Der Alias stimmt nicht überein
-            confirm: Endgültig löschen
             cancel: Abbrechen
+            confirm: Endgültig löschen
+            mismatch: Der Alias stimmt nicht überein
+            placeholder: Dein Alias
+            title: Bist du sicher?
         request_error: Ein Fehler ist aufgetreten, bitte versuche es später erneut
         title: Kontolöschung
     email:
@@ -359,19 +411,20 @@ workout:
         type_readonly: Die Trainingsart kann nicht geändert werden
     error:
         no_exercise:
-            title: Keine Übung
             text: Füge mindestens eine Übung hinzu, bevor du dein Training bestätigst
-        required_weight: Das Gewicht ist erforderlich
+            title: Keine Übung
         required_reps: Die Wiederholungen sind erforderlich
+        required_weight: Das Gewicht ist erforderlich
         validation: Beim Absenden deiner Daten ist ein Fehler aufgetreten
     flash:
         created: Dein Training wurde gespeichert
         deleted: Dein Training wurde gelöscht
         updated: Dein Training wurde geändert
-    history:
+    list:
         delete:
             cancel: Abbrechen
             confirm: Löschen
+            error_text: Beim Löschen ist ein Fehler aufgetreten. Bitte versuche es erneut.
             message: Bist du sicher, dass du dieses Training löschen möchtest? Diese Aktion ist unwiderruflich.
             title: Dieses Training löschen?
         duration_unit: Min
@@ -384,8 +437,8 @@ workout:
             reset: Zurücksetzen
             week: Diese Woche
         free_session: Freies Training
-        lbs: Lbs
         kg: kg
+        lbs: Lbs
         pagination:
             next: Weiter
             per_page: Anzeigen
@@ -406,17 +459,17 @@ workout:
     photo:
         alt: Trainingsfoto
         click_to_preview: Klicken zum Vergrößern
+        constraints: JPEG, PNG oder WebP · max. 5 MB
+        drag_or: Foto hierhin ziehen oder
         has_photo: Trainingsfoto
+        invalid_type: Die Datei muss ein JPEG-, PNG- oder WebP-Bild sein.
         label: Trainingsfoto (optional)
         label_visible: Trainingsfoto
-        drag_or: Foto hierhin ziehen oder
-        select: Auswählen
-        constraints: JPEG, PNG oder WebP · max. 5 MB
-        invalid_type: Die Datei muss ein JPEG-, PNG- oder WebP-Bild sein.
-        too_large: Das Foto darf 5 MB nicht überschreiten.
         remove: Entfernen
-    reps_abbreviate: Wdh
+        select: Auswählen
+        too_large: Das Foto darf 5 MB nicht überschreiten.
     reps: Wiederholungen
+    reps_abbreviate: Wdh
     routine:
         change_confirm: Weiter
         change_warning_text: Ein Routinenwechsel löscht die bereits zu deinem Training hinzugefügten Übungen. Möchtest du fortfahren?
@@ -430,20 +483,20 @@ workout:
     series: Sätze
     show:
         back: Zurück zu meinen Trainings
-        routine_badge: Routine
-        muscles_title: Trainierte Muskeln
-        muscles_primary: Primäre Muskeln
-        muscles_secondary: Sekundäre Muskeln
         metrics:
-            tonnage: Tonnage
             duration: Dauer
             exercises: Übungen
             sets: Sätze
+            tonnage: Tonnage
+        muscles_primary: Primäre Muskeln
+        muscles_secondary: Sekundäre Muskeln
+        muscles_title: Trainierte Muskeln
+        pr_badge: PR
+        routine_badge: Routine
         sets_table:
-            weight: Gewicht
             reps: Wdh
             tonnage: Tonnage
-        pr_badge: PR
+            weight: Gewicht
         title: Mein Training
     title: Erfasse dein Training
     type:
@@ -451,6 +504,3 @@ workout:
         routine: Routine wählen
         title: Trainingsart
     weight: Gewicht
-
-footer:
-    copyright: "© {year} {brand}. Alle Rechte vorbehalten."

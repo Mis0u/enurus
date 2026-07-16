@@ -59,7 +59,7 @@ final class SettingsPasswordController extends AbstractController
                 [
                     'error' => $this->translator->trans('rate_limiter.too_many_attempt', [
                         'minutes' => $limitResult['minutes'],
-                    ], 'security'),
+                    ], 'common'),
                 ],
                 Response::HTTP_TOO_MANY_REQUESTS,
             );

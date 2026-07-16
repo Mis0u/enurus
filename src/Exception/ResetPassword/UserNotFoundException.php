@@ -6,7 +6,7 @@ namespace App\Exception\ResetPassword;
 
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 
-class UserNotFoundException extends \Exception implements ResetPasswordExceptionInterface
+final class UserNotFoundException extends \Exception implements ResetPasswordExceptionInterface
 {
     public function getReason(): string
     {

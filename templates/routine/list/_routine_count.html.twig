@@ -1,0 +1,12 @@
+{#
+templates/routine/list/_routine_count.html.twig
+
+Paramètres :
+  - count : int
+#}
+<p
+    class="text-[12px] text-[#4a5568] font-medium"
+    data-routine-count="{{ count }}"
+>
+    {{ 'routine.list.count'|trans({count: count}, 'navigation') }}
+</p>

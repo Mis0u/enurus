@@ -7,9 +7,7 @@
 <section class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-6">
     <div class="flex items-center gap-2.5 mb-2">
         <div class="w-8.5 h-8.5 rounded-lg bg-[rgba(6,182,212,0.15)] border border-[rgba(6,182,212,0.3)] flex items-center justify-center shrink-0">
-            <svg class="w-4.5 h-4.5 text-[#06b6d4]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-            </svg>
+            {% include 'partials/_svg/_envelope.html.twig' with {'width': 4.5, 'height': 4.5, 'extraClass': 'text-[#06b6d4]'} only %}
         </div>
         <h2 class="font-['Rajdhani'] text-lg font-bold text-[#f0f4ff]">{{ 'contact.title'|trans({}, 'navigation') }}</h2>
     </div>

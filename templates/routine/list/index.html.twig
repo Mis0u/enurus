@@ -1,0 +1,47 @@
+{#
+    templates/routine/list/index.html.twig
+
+    Page liste des routines de l'utilisateur.
+    Controller : RoutineListController (GET /{_locale}/mes-routines)
+
+    Variables passées par le controller :
+      - routines : list<Routine>
+      - count    : int
+#}
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/routine-list.css') }}">
+{% endblock %}
+
+{% block title %}{{ 'routine.list.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        title: 'routine.list.title'|trans({}, 'navigation'),
+        subtitle: app.user.nickname|formatInitials,
+        action: {
+            label: 'routine.list.create_btn'|trans({}, 'navigation'),
+            url: path('app_routine_create'),
+        },
+    } only %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]">
+
+        {% if routines is empty %}
+            {% include 'routine/list/_empty_state.html.twig' only %}
+        {% else %}
+            {% include 'routine/list/_routine_count.html.twig' with {count: count} only %}
+
+            <div class="routines-grid mt-5">
+                {% for routine in routines %}
+                    {% include 'routine/list/_routine_card.html.twig' with {routine: routine} only %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}

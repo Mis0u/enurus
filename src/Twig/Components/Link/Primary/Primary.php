@@ -8,7 +8,7 @@ use App\Twig\Components\Link\AbstractLink;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
-class Primary extends AbstractLink
+final class Primary extends AbstractLink
 {
     public function getClasses(): string
     {

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security\Contact;
 
-use App\Entity\User;
 use App\Repository\ContactThreadRepository;
-use App\Repository\UserRepository;
 use App\Tests\Functional\Helper\ContactThreadTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -121,20 +119,5 @@ final class ContactThreadDeleteControllerTest extends WebTestCase
     private function getDeleteCsrfToken(Crawler $crawler): string
     {
         return (string) $crawler->filter('button[data-contact--delete-csrf-token-value]')->attr('data-contact--delete-csrf-token-value');
-    }
-
-    private function getUserByEmail(string $email): User
-    {
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        $user = $userRepository->findOneBy([
-            'email' => $email,
-        ]);
-
-        if (! $user instanceof User) {
-            throw new \LogicException(\sprintf('Fixture user "%s" not found.', $email));
-        }
-
-        return $user;
     }
 }

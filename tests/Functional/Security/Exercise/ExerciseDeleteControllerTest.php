@@ -9,7 +9,6 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\Exercise;
 use App\Repository\ExerciseRepository;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -141,18 +140,5 @@ class ExerciseDeleteControllerTest extends WebTestCase
         ]);
 
         return $exercise;
-    }
-
-    private function deleteRequest(KernelBrowser $client, string $url): void
-    {
-        $client->request(
-            Request::METHOD_DELETE,
-            $url,
-            [],
-            [],
-            [
-                'HTTP_X-Requested-With' => 'XMLHttpRequest',
-            ],
-        );
     }
 }

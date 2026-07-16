@@ -7,7 +7,7 @@ namespace App\Twig\Components\Badge;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
-class Badge
+final class Badge
 {
     public string $title;
 

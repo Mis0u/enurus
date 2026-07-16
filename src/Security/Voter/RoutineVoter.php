@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Security\Voter;
 
 use App\Entity\Routine;
-use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
@@ -14,6 +13,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class RoutineVoter extends Voter
 {
+    use ResolvesAuthenticatedUserTrait;
+
     public const string CREATE = 'ROUTINE_CREATE';
 
     public const string EDIT = 'ROUTINE_EDIT';
@@ -32,9 +33,9 @@ final class RoutineVoter extends Voter
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
-        $user = $token->getUser();
+        $user = $this->resolveUser($token);
 
-        if (! $user instanceof User) {
+        if (null === $user) {
             return false;
         }
 

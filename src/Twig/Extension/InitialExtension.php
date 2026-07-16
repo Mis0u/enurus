@@ -6,7 +6,7 @@ namespace App\Twig\Extension;
 
 use Twig\Attribute\AsTwigFilter;
 
-class InitialExtension
+final class InitialExtension
 {
     #[AsTwigFilter('formatInitials')]
     public function initials(string $userNickname): string

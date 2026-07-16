@@ -10,6 +10,7 @@ use App\Entity\WorkoutExercise;
 use App\Repository\ExerciseRepository;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
+use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -220,7 +221,7 @@ class WorkoutEditControllerTest extends WebTestCase
         $exercise = $this->getAnyExercise();
 
         $client->request(Request::METHOD_GET, \sprintf(
-            '/fr/workout/edit/exercise-block?exerciseId=%s&index=0',
+            '/fr/seance/modifier/bloc-exercice?exerciseId=%s&index=0',
             $exercise->id,
         ));
 
@@ -234,7 +235,7 @@ class WorkoutEditControllerTest extends WebTestCase
         $exercise = $this->getAnyExercise();
 
         $client->request(Request::METHOD_GET, \sprintf(
-            '/fr/workout/edit/exercise-block?exerciseId=%s&index=0',
+            '/fr/seance/modifier/bloc-exercice?exerciseId=%s&index=0',
             $exercise->id,
         ));
 
@@ -245,7 +246,7 @@ class WorkoutEditControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER);
 
-        $client->request(Request::METHOD_GET, '/fr/workout/edit/exercise-block?exerciseId=invalid-id&index=0');
+        $client->request(Request::METHOD_GET, '/fr/seance/modifier/bloc-exercice?exerciseId=invalid-id&index=0');
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
 
@@ -276,22 +277,10 @@ class WorkoutEditControllerTest extends WebTestCase
     {
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
-        $user = $userRepository->findOneBy([
-            'email' => $email,
-        ]);
-
         /** @var WorkoutRepository $workoutRepository */
         $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-        $workouts = $workoutRepository->findBy([
-            'owner' => $user,
-        ], [
-            'id' => 'DESC',
-        ]);
 
-        /** @var Workout $workout */
-        $workout = $workouts[0];
-
-        return $workout;
+        return WorkoutTestHelper::getFirstWorkout($userRepository, $workoutRepository, $email);
     }
 
     private function getEditUrl(Workout $workout): string
@@ -301,21 +290,7 @@ class WorkoutEditControllerTest extends WebTestCase
 
     private function getEditUrlFromClient(string $email): string
     {
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        $user = $userRepository->findOneBy([
-            'email' => $email,
-        ]);
-
-        /** @var WorkoutRepository $workoutRepository */
-        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-        $workouts = $workoutRepository->findBy([
-            'owner' => $user,
-        ], [
-            'id' => 'DESC',
-        ]);
-
-        return \sprintf('/fr/seance/%s/modifier', $workouts[0]->id);
+        return $this->getEditUrl($this->getFirstWorkout($email));
     }
 
     private function findUpdatedWorkout(mixed $id): Workout

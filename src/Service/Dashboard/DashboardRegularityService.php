@@ -7,7 +7,7 @@ namespace App\Service\Dashboard;
 use App\Entity\User;
 use App\Repository\WorkoutRepository;
 
-readonly class DashboardRegularityService
+final readonly class DashboardRegularityService
 {
     private const int SECONDS_PER_DAY = 86400;
 

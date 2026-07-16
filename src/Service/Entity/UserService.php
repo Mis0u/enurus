@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use function Symfony\Component\Clock\now;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-readonly class UserService
+final readonly class UserService
 {
     public function __construct(
         private UserPasswordHasherInterface $passwordHasher,

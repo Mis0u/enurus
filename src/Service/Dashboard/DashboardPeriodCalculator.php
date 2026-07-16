@@ -10,7 +10,7 @@ namespace App\Service\Dashboard;
  * formules de date. Une période "courante" s'arrête à $now (progression en cours), une période
  * "précédente" couvre l'intégralité de la période passée.
  */
-readonly class DashboardPeriodCalculator
+final readonly class DashboardPeriodCalculator
 {
     public function currentWeek(\DateTimeImmutable $now): DashboardPeriod
     {

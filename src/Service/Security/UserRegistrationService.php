@@ -9,7 +9,7 @@ use App\Service\Email\EmailInterface;
 use App\Service\Entity\UserService;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-readonly class UserRegistrationService
+final readonly class UserRegistrationService
 {
     public function __construct(
         private UserService $userService,
@@ -32,7 +32,7 @@ readonly class UserRegistrationService
             $user->email,
             $this->translator->trans('registration.email.welcome', [
                 'brand' => $this->translator->trans('name', [], 'brand'),
-            ], 'security'),
+            ], 'navigation'),
             [
                 'user' => $user,
                 'locale' => $locale,

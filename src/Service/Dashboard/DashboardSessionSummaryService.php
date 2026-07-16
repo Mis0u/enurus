@@ -12,7 +12,7 @@ use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
  * sollicités — calculé depuis les collections déjà chargées par
  * WorkoutRepository::findLatestByUser(), sans requête supplémentaire.
  */
-readonly class DashboardSessionSummaryService
+final readonly class DashboardSessionSummaryService
 {
     /**
      * @return array{totalSets: int, totalReps: int, primarySvgIds: list<string>, secondarySvgIds: list<string>}

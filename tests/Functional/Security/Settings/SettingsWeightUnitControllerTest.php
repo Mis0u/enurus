@@ -122,12 +122,4 @@ final class SettingsWeightUnitControllerTest extends WebTestCase
 
         return (string) $node->attr('data-settings--select-field-csrf-token-value');
     }
-
-    /**
-     * @param array<string, mixed> $data
-     */
-    private function toJson(array $data): string
-    {
-        return json_encode($data, JSON_THROW_ON_ERROR);
-    }
 }

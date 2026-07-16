@@ -125,8 +125,6 @@ exercise:
         submit: Enregistrer
         subtitle: Modifiez les informations de votre exercice
         title: Modifier l'exercice
-    library:
-        title: Bibliothèque
     flash:
         created: Exercice créé avec succès.
         deleted: Exercice supprimé avec succès.
@@ -145,10 +143,12 @@ exercise:
         preview_label: Aperçu
         primary_muscles: Primaires
         secondary_muscles: Secondaires
-    history:
+    library:
+        title: Bibliothèque
+    list:
         actions:
-            edit: Modifier
             delete: Supprimer
+            edit: Modifier
         badge:
             base: De base
             mine: Mon exercice
@@ -181,6 +181,18 @@ exercise:
             }
         title: Bibliothèque
 
+footer:
+    copyright: © {year} {brand}. Tous droits réservés.
+
+login:
+    connect: Se connecter
+    connexion: Connexion
+    create_an_account: Créer un compte
+    create_my_account: Créer mon compte
+    forgot_password: Mot de passe oublié ?
+    no_account_yet: Pas encore de compte ?
+    remember_me: Se souvenir de moi
+
 messagerie:
     author:
         admin: FitTracker
@@ -205,6 +217,46 @@ messagerie:
         closed: Clôturé
     thread_closed: "Ce fil de discussion est clôturé, tu ne peux plus y répondre."
     title: Messagerie
+
+registration:
+    account_created: Ton compte est créé et prêt à l'emploi
+    confirm_email: Confirmation de votre email
+    create_account: Créer un compte
+    email:
+        activate_account: Activer mon compte
+        click_activate: Vous êtes à un clic de commencer votre transformation ! Cliquez sur le bouton ci-dessous pour activer votre compte.
+        info_link_life: Ce lien expire dans {hour}
+        not_created_account: Si vous n'avez pas créé de compte sur {brand}, ignorez simplement cet email.
+        receive_email: Tu reçois cet email car tu t'es inscrit sur {brand}
+        registration_confirm: Confirmez votre inscription {brand}
+        welcome: Bienvenue sur {brand} ! Ta première séance t'attend
+    have_an_account: Vous avez déjà un compte ?
+    nickname:
+        label: Choisis ton alias
+        placeholder: Sous quel nom veux-tu briller ?
+    registration: Inscription
+    success: Inscription réussie !
+    website: Website
+
+reset_password_request:
+    asking_reset: Vous avez demandé la réinitialisation de votre mot de passe. Cliquez sur le bouton ci-dessous pour créer un nouveau mot de passe
+    back_to_connexion: Retour à la connexion
+    email_link: Cliquez sur le lien de réinitialisation
+    expire_link: Ce lien expirera dans
+    forgot_password: Mot de passe oublié
+    identical_password: Mot de passe identique
+    info_email: Vous recevez cet email car une demande de réinitialisation de mot de passe a été effectuée sur votre compte
+    info_link_life: Ce lien expire dans {hour}. Une fois votre mot de passe changé, vous serez redirigé vers la page de connexion.
+    info_reset_password: Entrez votre adresse email et vous recevrez un lien pour réinitialiser votre mot de passe.
+    message_problem_handle: Un problème est survenu lors du traitement de votre demande de réinitialisation de mot de passe
+    message_problem_validate: Un problème est survenu lors de la validation de votre demande de réinitialisation de mot de passe
+    new_password: Créez votre nouveau mot de passe
+    not_asking_reset: Si vous n'avez pas demandé cette réinitialisation, ignorez cet email. Votre mot de passe actuel reste inchangé.
+    reset_email_password_send: Email de réinitialisation envoyé
+    reset_my_password: Réinitialiser mon mot de passe
+    reset_password: Réinitialiser votre mot de passe
+    reseting_password: Réinitialisation de votre mot de passe
+    send_link: Envoyer le lien de réinitialisation
 
 routine:
     badge:
@@ -254,8 +306,8 @@ routine:
                 one   {# routine}
                 other {# routines}
             }
-        created_at: Créée le {date}
         create_btn: Nouvelle routine
+        created_at: Créée le {date}
         empty_cta: Créer ma première routine
         empty_subtitle: Crée ta première routine pour pré-configurer tes séances et gagner du temps.
         empty_title: Aucune routine pour l'instant
@@ -270,21 +322,22 @@ routine:
                 other {et # autres exercices…}
             }
         title: Mes routines
+
 settings:
     account_deletion:
-        requested:
-            subject: Ta demande de suppression de compte a été enregistrée
-            title: Suppression de compte en cours
-            body: Bonjour {nickname}, ta demande de suppression de compte a bien été prise en compte. Ton compte sera définitivement supprimé le {deadline} si tu ne te reconnectes pas avant cette date.
-            cancel_hint: Pour annuler cette suppression, il te suffit de te reconnecter avant cette date — aucune autre action nécessaire.
         cancelled:
+            body: Bonjour {nickname}, tu tes reconnecté à ton compte. Ta demande de suppression a donc été automatiquement annulée, et ton compte reste actif normalement.
             subject: Ta suppression de compte a été annulée
             title: Bon retour parmi nous !
-            body: Bonjour {nickname}, tu tes reconnecté à ton compte. Ta demande de suppression a donc été automatiquement annulée, et ton compte reste actif normalement.
         deleted:
+            body: Bonjour {nickname}, conformément à ta demande, ton compte FitTracker et toutes les données associées (séances, routines, exercices personnalisés) ont été définitivement supprimés. Merci davoir utilisé FitTracker.
             subject: Ton compte a été définitivement supprimé
             title: Compte supprimé
-            body: Bonjour {nickname}, conformément à ta demande, ton compte FitTracker et toutes les données associées (séances, routines, exercices personnalisés) ont été définitivement supprimés. Merci davoir utilisé FitTracker.
+        requested:
+            body: Bonjour {nickname}, ta demande de suppression de compte a bien été prise en compte. Ton compte sera définitivement supprimé le {deadline} si tu ne te reconnectes pas avant cette date.
+            cancel_hint: Pour annuler cette suppression, il te suffit de te reconnecter avant cette date — aucune autre action nécessaire.
+            subject: Ta demande de suppression de compte a été enregistrée
+            title: Suppression de compte en cours
     avatar:
         change: Changer la photo
         hint: JPEG, PNG ou WebP · 5 Mo max
@@ -292,12 +345,12 @@ settings:
         button: Supprimer mon compte
         explanation: Ton compte sera désactivé puis définitivement supprimé après 30 jours. Te reconnecter avant l'échéance annulera automatiquement la suppression.
         modal:
-            title: Es-tu sûr ?
             body: Pour confirmer, tape ton alias ci-dessous.
-            placeholder: Ton alias
-            mismatch: L'alias ne correspond pas
-            confirm: Supprimer définitivement
             cancel: Annuler
+            confirm: Supprimer définitivement
+            mismatch: L'alias ne correspond pas
+            placeholder: Ton alias
+            title: Es-tu sûr ?
         request_error: Une erreur est survenue, réessaie plus tard
         title: Suppression du compte
     email:
@@ -325,6 +378,7 @@ settings:
     title: Réglages
     weight_unit:
         label: Unité de poids
+
 workout:
     add:
         exercice: Ajouter un exercice
@@ -357,19 +411,20 @@ workout:
         type_readonly: Le type de séance ne peut pas être modifié
     error:
         no_exercise:
-            title: Aucun exercice
             text: Ajoute au moins un exercice avant de valider ta séance
-        required_weight: Le poids est requis
+            title: Aucun exercice
         required_reps: Les répétitions sont requises
+        required_weight: Le poids est requis
         validation: Une erreur est survenue lors de la saisie de vos données
     flash:
         created: Votre séance a bien été enregistrée
         deleted: Votre séance a bien été supprimée
         updated: Votre séance a bien été modifiée
-    history:
+    list:
         delete:
             cancel: Annuler
             confirm: Supprimer
+            error_text: Une erreur est survenue lors de la suppression. Veuillez réessayer.
             message: Es-tu sûr de vouloir supprimer cette séance ? Cette action est irréversible.
             title: Supprimer cette séance ?
         duration_unit: min
@@ -404,17 +459,17 @@ workout:
     photo:
         alt: Photo de la séance
         click_to_preview: Cliquer pour agrandir
+        constraints: JPEG, PNG ou WebP · 5 Mo max
+        drag_or: Glisse une photo ou
         has_photo: Photo de séance
+        invalid_type: Le fichier doit être une image JPEG, PNG ou WebP.
         label: Photo de séance (optionnelle)
         label_visible: Photo de la séance
-        drag_or: Glisse une photo ou
-        select: Sélectionner
-        constraints: JPEG, PNG ou WebP · 5 Mo max
-        invalid_type: Le fichier doit être une image JPEG, PNG ou WebP.
-        too_large: La photo ne doit pas dépasser 5 Mo.
         remove: Supprimer
-    reps_abbreviate: Reps
+        select: Sélectionner
+        too_large: La photo ne doit pas dépasser 5 Mo.
     reps: Répétitions
+    reps_abbreviate: Reps
     routine:
         change_confirm: Continue
         change_warning_text: Changer de routine effacera les exercices déjà ajoutés à ta séance. Veux-tu continuer ?
@@ -428,20 +483,20 @@ workout:
     series: Séries
     show:
         back: Retour à mes séances
-        routine_badge: Routine
-        muscles_title: Muscles travaillés
-        muscles_primary: Muscles primaires
-        muscles_secondary: Muscles secondaires
         metrics:
-            tonnage: Tonnage
             duration: Durée
             exercises: Exercices
             sets: Séries
+            tonnage: Tonnage
+        muscles_primary: Muscles primaires
+        muscles_secondary: Muscles secondaires
+        muscles_title: Muscles travaillés
+        pr_badge: PR
+        routine_badge: Routine
         sets_table:
-            weight: Poids
             reps: Reps
             tonnage: Tonnage
-        pr_badge: PR
+            weight: Poids
         title: Ma séance
     title: Enregistre ta séance
     type:
@@ -449,6 +504,3 @@ workout:
         routine: Choisir une routine
         title: Type de séance
     weight: Poids
-
-footer:
-    copyright: © {year} {brand}. Tous droits réservés.

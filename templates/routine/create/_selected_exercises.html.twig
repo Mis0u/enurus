@@ -38,9 +38,7 @@
         class="flex flex-col items-center justify-center gap-2 py-8 text-[13px] text-[#4a5568] italic text-center border border-dashed border-white/[0.08] rounded-[10px]"
         data-{{ controllerName }}-target="emptyState"
     >
-        <svg class="w-7 h-7 opacity-40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-        </svg>
+        {% include 'partials/_svg/_filter.html.twig' with {'weight': 7, 'height': 7, 'color': false, 'extraClass': 'opacity-40', 'strokeWidth': 1.5} only %}
         <span>{{ 'routine.form.empty_selection'|trans({}, 'navigation') }}</span>
     </div>
 

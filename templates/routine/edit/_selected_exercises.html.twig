@@ -38,9 +38,7 @@
         data-{{ controllerName }}-target="emptyState"
         {% if routine.routineExercises is not empty %}hidden{% endif %}
     >
-        <svg class="w-7 h-7 opacity-40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-        </svg>
+        {% include 'partials/_svg/_filter.html.twig' with {'weight': 7, 'height': 7, 'color': false, 'extraClass': 'opacity-40', 'strokeWidth': 1.5} only %}
         <span>{{ 'routine.form.empty_selection'|trans({}, 'navigation') }}</span>
     </div>
 
@@ -89,9 +87,7 @@
                     data-action="click->{{ controllerName }}#removeExercise"
                     data-exercise-id="{{ exercise.id }}"
                 >
-                    <svg class="w-[13px] h-[13px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
+                    {% include 'partials/_svg/_cross.html.twig' with {'width': 3.25, 'height': 3.25, 'strokeWidth': 2.5} only %}
                 </button>
             </div>
         {% endfor %}

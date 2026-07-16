@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RoutineExerciseRepository::class)]
 class RoutineExercise
@@ -46,6 +47,7 @@ class RoutineExercise
     }
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero]
     public int $position {
         get {
             return $this->position;

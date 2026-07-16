@@ -15,10 +15,10 @@ use Doctrine\ORM\EntityManagerInterface;
  * Stratégie : suppression + réinsertion de la collection complète.
  * orphanRemoval: true sur Routine::$routineExercises gère la suppression en base.
  */
-final class RoutineEditService
+final readonly class RoutineEditService
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
+        private EntityManagerInterface $em,
     ) {
     }
 

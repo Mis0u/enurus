@@ -15,9 +15,7 @@
                        hover:shadow-[0_6px_22px_rgba(244,63,94,0.5)] hover:-translate-y-px
                        transition-all duration-200 whitespace-nowrap"
             >
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
-                </svg>
+                {% include 'partials/_svg/_add.html.twig' with {'width': 4, 'height': 4, 'ariaHidden': true} only %}
                 {{ action.label }}
             </a>
         {% endif %}

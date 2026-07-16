@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
-import Swal from 'sweetalert2';
+import { confirmDeletion, sendDeleteRequest, showDeleteError } from '../../utils/delete_confirmation.js';
 
 /**
  * Contact thread delete controller.
@@ -22,62 +22,23 @@ export default class extends Controller {
     };
 
     async confirmDelete() {
-        const confirmed = await this.#showConfirmation();
+        const confirmed = await confirmDeletion({
+            title:             this.confirmTitleValue,
+            text:              this.confirmTextValue,
+            confirmButtonText: this.confirmButtonValue,
+            cancelButtonText:  this.cancelButtonValue,
+            reverseButtons:    true,
+        });
+
         if (!confirmed) { return; }
-        await this.#sendDeleteRequest();
-    }
 
-    async #showConfirmation() {
-        const result = await Swal.fire({
-            title:              this.confirmTitleValue,
-            text:               this.confirmTextValue,
-            icon:               'warning',
-            showCancelButton:   true,
-            confirmButtonText:  this.confirmButtonValue,
-            cancelButtonText:   this.cancelButtonValue,
-            confirmButtonColor: '#f43f5e',
-            cancelButtonColor:  '#334155',
-            background:         '#0f1928',
-            color:              '#f0f4ff',
-            reverseButtons:     true,
-        });
+        const { ok, data } = await sendDeleteRequest(this.urlValue, this.csrfTokenValue);
 
-        return result.isConfirmed;
-    }
-
-    async #sendDeleteRequest() {
-        let response;
-        try {
-            response = await fetch(this.urlValue, {
-                method:  'DELETE',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-Token':     this.csrfTokenValue,
-                },
-            });
-        } catch {
-            this.#showError();
+        if (!ok || !data?.success) {
+            showDeleteError({ title: this.errorTextValue });
             return;
         }
-        if (!response.ok) {
-            this.#showError();
-            return;
-        }
-        const data = await response.json();
-        if (data.success) {
-            window.location.href = this.redirectUrlValue;
-        } else {
-            this.#showError();
-        }
-    }
 
-    #showError() {
-        Swal.fire({
-            title:              this.errorTextValue,
-            icon:               'error',
-            background:         '#0f1928',
-            color:              '#f0f4ff',
-            confirmButtonColor: '#f43f5e',
-        });
+        window.location.href = this.redirectUrlValue;
     }
 }

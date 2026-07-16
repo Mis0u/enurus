@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard;
 
-readonly class DashboardState
+final readonly class DashboardState
 {
     private const int WORKOUTS_NEEDED_FOR_REGULARITY = 2;
 

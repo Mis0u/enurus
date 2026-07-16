@@ -8,7 +8,7 @@ use App\Twig\Components\Message\AbstractMessage;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
-class Warning extends AbstractMessage
+final class Warning extends AbstractMessage
 {
     public function getClasses(): string
     {

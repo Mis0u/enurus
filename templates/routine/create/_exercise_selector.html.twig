@@ -2,9 +2,10 @@
     templates/routine/create/_exercise_selector.html.twig
 
     Paramètres :
-      - controllerName : string
-      - muscleGroups   : list<MuscleGroup>
-      - exercises      : list<Exercise>
+      - controllerName   : string
+      - muscleGroups     : list<MuscleGroup>
+      - exercises        : list<Exercise>
+      - primaryMuscleIds : array<string, string> exerciseId => IDs de muscles primaires séparés par virgule
 #}
 <div class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-[22px] flex flex-col min-w-0 overflow-visible">
 
@@ -16,9 +17,7 @@
 
     {# Barre de recherche #}
     <div class="relative mb-3.5">
-        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4a5568] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
+        {% include 'partials/_svg/_magnifying_glass.html.twig' with {'width': 4, 'height': 4, 'extraClass': 'absolute left-3 top-1/2 -translate-y-1/2 text-[#4a5568] pointer-events-none'} only %}
         <input
             type="text"
             class="w-full bg-[#080e1a] border border-white/[0.07] rounded-[10px] pl-[38px] pr-4 py-3 text-[#f0f4ff] font-dm-sans text-sm outline-none transition-all duration-200 placeholder:text-[#4a5568] focus:border-rose-500/50 focus:shadow-[0_0_0_3px_rgba(244,63,94,0.08)]"
@@ -41,7 +40,7 @@
                 data-{{ controllerName }}-target="exerciseItem"
                 data-exercise-id="{{ exercise.id }}"
                 data-exercise-name="{{ exercise_name }}"
-                data-muscle-ids="{{ exercise.exerciseMuscles|filter(em => em.type.value == 'primary')|map(em => em.muscleGroup.id)|join(',') }}"
+                data-muscle-ids="{{ primaryMuscleIds[exercise.id] ?? '' }}"
             >
                 <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2 mb-1">
@@ -82,9 +81,7 @@
                     data-action="click->{{ controllerName }}#toggleExercise"
                     data-exercise-id="{{ exercise.id }}"
                 >
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
-                    </svg>
+                    {% include 'partials/_svg/_add.html.twig' with {'width': 3.5, 'height': 3.5} only %}
                 </button>
             </div>
         {% endfor %}

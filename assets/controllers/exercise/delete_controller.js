@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
-import Swal from 'sweetalert2';
+import { confirmDeletion, sendDeleteRequest, showDeleteError } from '../../utils/delete_confirmation.js';
+import { showSuccessToast } from '../../utils/toast.js';
 
 /**
  * Exercise delete controller.
@@ -36,102 +37,42 @@ export default class extends Controller {
     // ── Action ────────────────────────────────────────────────────────────────
 
     async confirmDelete() {
-        const confirmed = await this.#showConfirmation();
+        const confirmed = await confirmDeletion({
+            title:              this.confirmTitleValue,
+            text:               this.confirmTextValue,
+            confirmButtonText:  this.confirmButtonValue,
+            cancelButtonText:   this.cancelButtonValue,
+            background:         '#111827',
+            color:              '#f1f5f9',
+            cancelButtonColor:  'transparent',
+            customClass:        { cancelButton: 'swal-cancel-btn' },
+            reverseButtons:     true,
+        });
 
         if (!confirmed) {
             return;
         }
 
-        await this.#sendDeleteRequest();
+        const { ok, data } = await sendDeleteRequest(this.urlValue, this.csrfTokenValue);
+
+        if (!ok || !data?.success) {
+            showDeleteError({
+                text:               this.errorTextValue,
+                confirmButtonText:  'OK',
+                background:         '#111827',
+                color:              '#f1f5f9',
+            });
+            return;
+        }
+
+        showSuccessToast(data.message);
+        this.#removeCard();
     }
 
     // ── Private ───────────────────────────────────────────────────────────────
 
-    async #showConfirmation() {
-        if (typeof Swal === 'undefined') {
-            return window.confirm(this.confirmTextValue);
-        }
-
-        const result = await Swal.fire({
-            title:              this.confirmTitleValue,
-            text:               this.confirmTextValue,
-            icon:               'warning',
-            showCancelButton:   true,
-            confirmButtonText:  this.confirmButtonValue,
-            cancelButtonText:   this.cancelButtonValue,
-            background:         '#111827',
-            color:              '#f1f5f9',
-            confirmButtonColor: '#f43f5e',
-            cancelButtonColor:  'transparent',
-            customClass: {
-                cancelButton: 'swal-cancel-btn',
-            },
-            reverseButtons: true,
-        });
-
-        return result.isConfirmed;
-    }
-
-    async #sendDeleteRequest() {
-        try {
-            const response = await fetch(this.urlValue, {
-                method:  'DELETE',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-Token':     this.csrfTokenValue,
-                },
-            });
-            if (!response.ok) {
-                this.#showError();
-                return;
-            }
-            const data = await response.json();
-            if (data.success) {
-                this.#showSuccessToast(data.message);
-                this.#removeCard();
-            } else {
-                this.#showError();
-            }
-        } catch {
-            this.#showError();
-        }
-    }
-
-    #showSuccessToast(message) {
-        if (typeof Swal === 'undefined') {
-            return;
-        }
-        Swal.fire({
-            toast:             true,
-            position:           'top-end',
-            icon:               'success',
-            title:              message,
-            showConfirmButton:  false,
-            timer:              3000,
-            timerProgressBar:   true,
-            background:         '#111827',
-            color:              '#f1f5f9',
-            iconColor:          '#22c55e',
-        });
-    }
-
     #removeCard() {
-        const card = this.element.closest('.exercise-history-card');
+        const card = this.element.closest('.exercise-list-card');
         card?.remove();
-    }
-
-    #showError() {
-        if (typeof Swal === 'undefined') {
-            return;
-        }
-
-        Swal.fire({
-            icon:               'error',
-            text:               this.errorTextValue,
-            confirmButtonText:  'OK',
-            background:         '#111827',
-            color:              '#f1f5f9',
-            confirmButtonColor: '#f43f5e',
-        });
     }
 }
