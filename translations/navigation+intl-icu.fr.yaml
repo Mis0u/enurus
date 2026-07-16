@@ -420,7 +420,7 @@ workout:
         created: Votre séance a bien été enregistrée
         deleted: Votre séance a bien été supprimée
         updated: Votre séance a bien été modifiée
-    history:
+    list:
         delete:
             cancel: Annuler
             confirm: Supprimer

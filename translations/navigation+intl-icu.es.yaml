@@ -420,7 +420,7 @@ workout:
         created: Tu entrenamiento ha sido registrado
         deleted: Tu entrenamiento ha sido eliminado
         updated: Tu entrenamiento ha sido modificado
-    history:
+    list:
         delete:
             cancel: Cancelar
             confirm: Eliminar

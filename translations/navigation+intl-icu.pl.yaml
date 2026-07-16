@@ -432,7 +432,7 @@ workout:
         created: Twój trening został zapisany
         deleted: Twój trening został usunięty
         updated: Twój trening został zmieniony
-    history:
+    list:
         delete:
             cancel: Anuluj
             confirm: Usuń

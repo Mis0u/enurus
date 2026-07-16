@@ -420,7 +420,7 @@ workout:
         created: Je training is opgeslagen
         deleted: Je training is verwijderd
         updated: Je training is gewijzigd
-    history:
+    list:
         delete:
             cancel: Annuleren
             confirm: Verwijderen

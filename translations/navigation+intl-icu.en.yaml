@@ -420,7 +420,7 @@ workout:
         created: Your workout has been saved
         deleted: Your workout has been deleted
         updated: Your workout has been updated
-    history:
+    list:
         delete:
             cancel: Cancel
             confirm: Delete
