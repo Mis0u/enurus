@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @extends AbstractType<WorkoutExercise>
  */
-class WorkoutExerciseType extends AbstractType
+final class WorkoutExerciseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

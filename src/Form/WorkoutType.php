@@ -24,10 +24,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @template TData of object|null
- * @extends AbstractType<TData>
+ * @extends AbstractType<Workout>
  */
-class WorkoutType extends AbstractType
+final class WorkoutType extends AbstractType
 {
     private const int MIN_DURATION = 0;
 
