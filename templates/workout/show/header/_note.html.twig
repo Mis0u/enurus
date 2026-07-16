@@ -1,6 +1,4 @@
 <div class="show-note flex items-start gap-2.5 pl-4 py-3.5 ml-2.5 max-md:ml-0">
-    <svg class="w-4 h-4 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-    </svg>
+    {% include 'partials/_svg/_pen.html.twig' with {'weight': 4, 'height': 4, 'color': false, 'extraClass': 'mt-0.5 shrink-0'} only %}
     <p class="italic text-[13px] leading-relaxed">{{ workout.note }}</p>
 </div>

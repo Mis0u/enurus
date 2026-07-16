@@ -21,9 +21,7 @@
 
 <a href="{{ path('app_workout') }}"
    class="anim-cta inline-flex items-center gap-[10px] px-7 md:px-9 py-[14px] md:py-4 bg-gradient-to-br from-rose-ft to-red-600 rounded-[14px] text-white text-[15px] md:text-base font-bold font-rajdhani tracking-[0.5px] no-underline shadow-[0_8px_28px_rgba(244,63,94,0.3)] transition-ft hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-[0_14px_38px_rgba(244,63,94,0.5)] active:scale-[0.98] mb-6 md:mb-8">
-    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
-    </svg>
+    {% include 'partials/_svg/_add.html.twig' only %}
     {{ 'sentence.log_first_workout'|trans({}, 'common') }}
 </a>
 

@@ -3,9 +3,7 @@
     {{ form_label(requestForm.email, null) }}
     <div class="relative">
         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-            </svg>
+            {% include 'partials/_svg/_envelope.html.twig' with {'extraClass': 'text-slate-400'} only %}
         </div>
         {{ form_widget(requestForm.email) }}
     </div>

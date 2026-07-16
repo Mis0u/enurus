@@ -14,9 +14,7 @@
 
     <a href="#"
        class="bottom-nav-cta flex items-center justify-center relative -top-5 w-16 h-16 bg-gradient-to-br from-rose-ft to-red-600 rounded-full shadow-[0_4px_20px_rgba(244,63,94,0.3)] border-4 border-bg-base no-underline transition-ft">
-        <svg class="w-[26px] h-[26px]" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
-        </svg>
+        {% include 'partials/_svg/_add.html.twig' with {'width': 6.5, 'height': 6.5, 'strokeColor': 'white'} only %}
     </a>
 
     <twig:Navigation:Sidebar:NavigationItem
