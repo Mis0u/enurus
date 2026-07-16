@@ -180,6 +180,17 @@ Le JS de suppression de séance n'envoie pas de header `X-CSRF-Token`.
   dans `var/tailwind/app.built.css`, pas le fichier source `assets/styles/app.css`).
 - Classes Tailwind avec variables CSS custom non résolues en JIT dans ce contexte → classes
   sémantiques dans un `.css` dédié avec valeurs hex directes.
+- **Jamais de classe Tailwind construite par interpolation Twig** (`class="w-{{ width|default(5) }}"`,
+  `class="text-{{ color }}"`) — Tailwind scanne le texte source des fichiers, il ne peut pas
+  résoudre une variable Twig, donc la classe finale (`w-3.75`, `text-[#4a5568]`, etc.) n'apparaît
+  jamais comme chaîne littérale contiguë et n'est **jamais générée** dans le CSS compilé. Symptôme :
+  élément (souvent une icône SVG) à la taille par défaut du navigateur (~300×150px), cassant toute
+  la mise en page — `rm -rf var/cache` / `castor assets` / redémarrage du serveur ne corrigent rien
+  car le bug est dans la détection de candidats Tailwind, pas dans un cache. Déjà rencontré sur
+  `templates/partials/_svg/*.html.twig` (props `width`/`height`/`color`) : corrigé via
+  `@source inline("...")` dans `assets/styles/app.css` qui force la génération des classes
+  utilisées dynamiquement. Toute nouvelle valeur numérique ajoutée à un de ces partials doit être
+  ajoutée à la liste `@source inline(...)`, sinon même symptôme.
 - Fichier `.css` dédié réservé aux pseudo-éléments, keyframes, états dynamiques JS — sinon
   Tailwind-first partout.
 - `_base_dashboard.html.twig` pose volontairement `overflow-hidden` deux fois (wrapper + `<main>`)
@@ -236,7 +247,6 @@ Mot de passe fixture universel : `pass_1234`. Référence : `UserFixtures::REFER
 `WorkoutFixtures::generateDates()` pioche des jours **aléatoires** dans la fenêtre `spreadDays` —
 rien ne garantit qu'une séance tombe pile à la date la plus ancienne. Pour tester une frontière de
 palier précise, préférer des dates fixes en dur.
-TODO #17 (non résolu) : `UserFixtures` a beaucoup grossi, refactor à prévoir.
 
 ---
 
@@ -245,21 +255,19 @@ TODO #17 (non résolu) : `UserFixtures` a beaucoup grossi, refactor à prévoir.
 | # | Item |
 |---|------|
 | 3 | Menus mobile manquants dans Profil (Bibliothèque, Mes routines, Réglages, Déconnexion) |
-| 4 | SVG dynamiques (en cours) |
 | 10 | Évaluer `datetimetz_immutable` pour `Workout::$performedAt` — pas encore acté |
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 16 | Description d'exercice au survol (tooltip/popover) |
-| 17 | Refactoriser `UserFixtures` |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
 | 20 | Sessions persistées en base pour invalider toutes les sessions actives au changement de mot de passe |
 | 21 | Notifier l'admin si un email de compte supprimé (>30j) se réinscrit |
-| 22 | Migrer les emails existants vers `emails/_base.html.twig` |
-| — | Renommer `templates/routine/history/` → `templates/routine/list/` |
 | — | Audit CSRF sur les controllers de suppression (voir section Sécurité) |
 | — | Durée de rétention du hash `DeletedAccountTrace` non fixée, purge non implémentée |
 | — | Vérifier sous-collections `Routine`/`Exercise` avec fichiers physiques échappant à `deletePhysicalFiles()` |
 | — | Discuter d'un split SRP de `WorkoutRepository` (625 lignes, 15 méthodes publiques : comptage, tonnage, muscles sollicités, pagination, SVG, dates — plusieurs responsabilités mélangées) |
 | — | Discuter de la duplication du bloc upload d'image entre `ContactThreadReplyService`/`ContactThreadService`, et de la fusion possible des 3 méthodes `buildDailyPoints`/`buildWeeklyPoints`/`buildMonthlyPoints` de `DashboardTonnageService` (zero-fill jour/semaine/mois très similaires) |
+| — | Auditer les `{% include %}` du projet pour ajouter `only` (règle déjà en place mais ~207 des ~230 includes ne la respectent pas) — chantier à part entière, chaque include doit être vérifié individuellement pour ne pas casser une page qui dépend du contexte implicite du parent |
+| — | Discuter du remplacement de la pagination maison (`workout/list/Pagination/_page_number.html.twig`, calcul d'ellipsis/fenêtre en Twig) par le rendu natif de KnpPaginatorBundle (`pagination.getPaginationData()`), déjà une dépendance du projet |
 
 ---
 
