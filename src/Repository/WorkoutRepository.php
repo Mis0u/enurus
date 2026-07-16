@@ -18,6 +18,16 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class WorkoutRepository extends ServiceEntityRepository
 {
+    /**
+     * Sous-requête DQL de tonnage réutilisée par toutes les requêtes agrégeant le tonnage
+     * (poids × reps) d'une séance — évite de la dupliquer dans chaque méthode.
+     */
+    private const string TONNAGE_SUBQUERY_DQL = '(SELECT COALESCE(SUM(s.weight * s.reps), 0)
+              FROM App\Entity\ExerciseSet s
+              JOIN s.workoutExercise we2
+              WHERE we2.workout = w
+            ) as tonnage';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Workout::class);
@@ -116,12 +126,8 @@ class WorkoutRepository extends ServiceEntityRepository
         }
 
         /** @var array<int, array{svgIds: mixed, muscleType: mixed}> $rows */
-        $rows = $this->createQueryBuilder('w')
+        $rows = $this->muscleGroupJoinQueryBuilder()
             ->select('mg.svgIds as svgIds', 'em.type as muscleType')
-            ->join('w.workoutExercises', 'we')
-            ->join('we.exercise', 'e')
-            ->join('e.exerciseMuscles', 'em')
-            ->join('em.muscleGroup', 'mg')
             ->andWhere('w.id IN (:ids)')
             ->setParameter('ids', $workoutIds)
             ->getQuery()
@@ -171,12 +177,8 @@ class WorkoutRepository extends ServiceEntityRepository
         }
 
         /** @var array<int, array{muscleGroupId: mixed, muscleGroupName: mixed, muscleType: mixed}> $rows */
-        $rows = $this->createQueryBuilder('w')
+        $rows = $this->muscleGroupJoinQueryBuilder()
             ->select('mg.id as muscleGroupId', 'mg.name as muscleGroupName', 'em.type as muscleType')
-            ->join('w.workoutExercises', 'we')
-            ->join('we.exercise', 'e')
-            ->join('e.exerciseMuscles', 'em')
-            ->join('em.muscleGroup', 'mg')
             ->join('we.exerciseSets', 'es')
             ->andWhere('w.id IN (:ids)')
             ->setParameter('ids', $workoutIds)
@@ -231,12 +233,8 @@ class WorkoutRepository extends ServiceEntityRepository
     public function findLastSolicitationDatesByMuscleGroup(User $user): array
     {
         /** @var array<int, array{muscleGroupId: mixed, performedAt: mixed}> $rows */
-        $rows = $this->createQueryBuilder('w')
+        $rows = $this->muscleGroupJoinQueryBuilder()
             ->select('mg.id as muscleGroupId', 'w.performedAt as performedAt')
-            ->join('w.workoutExercises', 'we')
-            ->join('we.exercise', 'e')
-            ->join('e.exerciseMuscles', 'em')
-            ->join('em.muscleGroup', 'mg')
             ->andWhere('w.owner = :user')
             ->setParameter('user', $user)
             ->getQuery()
@@ -370,13 +368,7 @@ class WorkoutRepository extends ServiceEntityRepository
         /** @var array<int, array{workoutId: mixed, tonnage: mixed}> $rows */
         $rows = $this->createQueryBuilder('w')
             ->select('w.id as workoutId')
-            ->addSelect(
-                '(SELECT SUM(s.weight * s.reps)
-              FROM App\Entity\ExerciseSet s
-              JOIN s.workoutExercise we2
-              WHERE we2.workout = w
-            ) as tonnage'
-            )
+            ->addSelect(self::TONNAGE_SUBQUERY_DQL)
             ->andWhere('w.id IN (:ids)')
             ->setParameter('ids', $workoutIds)
             ->getQuery()
@@ -407,13 +399,7 @@ class WorkoutRepository extends ServiceEntityRepository
         /** @var array<int, array{performedAt: mixed, tonnage: mixed}> $rows */
         $rows = $this->createQueryBuilder('w')
             ->select('w.performedAt as performedAt')
-            ->addSelect(
-                '(SELECT COALESCE(SUM(s.weight * s.reps), 0)
-              FROM App\Entity\ExerciseSet s
-              JOIN s.workoutExercise we2
-              WHERE we2.workout = w
-            ) as tonnage'
-            )
+            ->addSelect(self::TONNAGE_SUBQUERY_DQL)
             ->andWhere('w.owner = :user')
             ->andWhere('w.performedAt >= :start')
             ->andWhere('w.performedAt <= :end')
@@ -542,17 +528,13 @@ class WorkoutRepository extends ServiceEntityRepository
     private function fetchMuscleRows(array $workoutIds): array
     {
         /** @var array<int, array{workoutId: mixed, muscleName: string, musclePosition: mixed, muscleType: mixed}> $rows */
-        $rows = $this->createQueryBuilder('w')
+        $rows = $this->muscleGroupJoinQueryBuilder()
             ->select(
                 'w.id as workoutId',
                 'mg.name as muscleName',
                 'mg.position as musclePosition',
                 'em.type as muscleType'
             )
-            ->join('w.workoutExercises', 'we')
-            ->join('we.exercise', 'e')
-            ->join('e.exerciseMuscles', 'em')
-            ->join('em.muscleGroup', 'mg')
             ->andWhere('w.id IN (:ids)')
             ->setParameter('ids', $workoutIds)
             ->orderBy('mg.position', 'ASC')
@@ -560,6 +542,20 @@ class WorkoutRepository extends ServiceEntityRepository
             ->getResult();
 
         return $rows;
+    }
+
+    /**
+     * Base commune (jointures exercice → muscles → groupe musculaire) réutilisée par toutes les
+     * requêtes agrégeant par groupe musculaire — évite de répéter les 4 mêmes jointures dans
+     * chaque méthode.
+     */
+    private function muscleGroupJoinQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('w')
+            ->join('w.workoutExercises', 'we')
+            ->join('we.exercise', 'e')
+            ->join('e.exerciseMuscles', 'em')
+            ->join('em.muscleGroup', 'mg');
     }
 
     /**

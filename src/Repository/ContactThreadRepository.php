@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<ContactThread>
  */
-class ContactThreadRepository extends ServiceEntityRepository
+final class ContactThreadRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
