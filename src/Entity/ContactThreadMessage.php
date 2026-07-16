@@ -25,7 +25,7 @@ class ContactThreadMessage
     }
 
     #[ORM\ManyToOne(targetEntity: ContactThread::class, inversedBy: 'messages')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     public ContactThread $thread {
         get {
             return $this->thread;
