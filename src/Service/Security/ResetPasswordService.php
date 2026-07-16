@@ -91,7 +91,7 @@ final readonly class ResetPasswordService
     ): void {
         $email = $this->emailService->createEmail(
             $user->email,
-            $this->translator->trans('reset_password_request.reseting_password', [], 'security', $locale),
+            $this->translator->trans('reset_password_request.reseting_password', [], 'navigation', $locale),
             [
                 'locale' => $locale,
                 'resetToken' => $resetToken,
