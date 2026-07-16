@@ -12,6 +12,7 @@ use App\Repository\ExerciseRepository;
 use App\Repository\MuscleGroupRepository;
 use App\Repository\RoutineRepository;
 use App\Security\Voter\RoutineVoter;
+use App\Service\Entity\ExercisePrimaryMuscleIdsResolver;
 use App\Service\Entity\ExerciseSorterService;
 use App\Service\Entity\RoutineCreateService;
 use App\Service\Entity\RoutineExerciseAccessService;
@@ -45,6 +46,7 @@ final class RoutineCreateController extends AbstractController
         private readonly TranslatorInterface $translator,
         private readonly RoutineRepository $routineRepository,
         private readonly ExerciseSorterService $exerciseSorter,
+        private readonly ExercisePrimaryMuscleIdsResolver $primaryMuscleIdsResolver,
         private readonly RoutineExerciseAccessService $routineExerciseAccessService,
     ) {
     }
@@ -123,6 +125,7 @@ final class RoutineCreateController extends AbstractController
             'form' => $form,
             'muscleGroups' => $this->muscleGroupRepository->findAllOrderedByPosition(),
             'exercises' => $sortedExercises,
+            'primaryMuscleIds' => $this->primaryMuscleIdsResolver->resolve($sortedExercises),
             'cancelUrl' => $this->generateUrl('app_routine_list'),
         ]);
     }

@@ -12,6 +12,7 @@ use App\Repository\ExerciseRepository;
 use App\Repository\MuscleGroupRepository;
 use App\Repository\RoutineRepository;
 use App\Security\Voter\RoutineVoter;
+use App\Service\Entity\ExercisePrimaryMuscleIdsResolver;
 use App\Service\Entity\ExerciseSorterService;
 use App\Service\Entity\RoutineEditService;
 use App\Service\Entity\RoutineExerciseAccessService;
@@ -43,6 +44,7 @@ final class RoutineEditController extends AbstractController
         private readonly MuscleGroupRepository $muscleGroupRepository,
         private readonly ExerciseRepository $exerciseRepository,
         private readonly ExerciseSorterService $exerciseSorterService,
+        private readonly ExercisePrimaryMuscleIdsResolver $primaryMuscleIdsResolver,
         private readonly TranslatorInterface $translator,
         private readonly RoutineRepository $routineRepository,
         private readonly RoutineExerciseAccessService $routineExerciseAccessService,
@@ -122,12 +124,14 @@ final class RoutineEditController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $exercises = $this->exerciseRepository->findAvailableForUser($user);
+        $sortedExercises = $this->exerciseSorterService->sortByName($exercises, $locale);
 
         return $this->render('routine/edit/index.html.twig', [
             'form' => $form,
             'routine' => $routine,
             'muscleGroups' => $this->muscleGroupRepository->findAllOrderedByPosition(),
-            'exercises' => $this->exerciseSorterService->sortByName($exercises, $locale),
+            'exercises' => $sortedExercises,
+            'primaryMuscleIds' => $this->primaryMuscleIdsResolver->resolve($sortedExercises),
             'cancelUrl' => $this->generateUrl('app_routine_list'),
         ]);
     }

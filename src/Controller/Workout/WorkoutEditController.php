@@ -80,11 +80,13 @@ class WorkoutEditController extends AbstractController
 
         $workoutExercises = $workoutExerciseRepository->findWithExercisesAndSets($workout);
         $exerciseData = $this->buildExerciseData($workoutExercises, $user, $weightConverter);
+        $totalTonnage = array_sum(array_column($exerciseData, 'tonnage'));
 
         return $this->render('workout/edit/edit.html.twig', [
             'workout' => $workout,
             'form' => $form,
             'exerciseData' => $exerciseData,
+            'totalTonnage' => $totalTonnage,
             'unit' => $user->unitOfMeasure,
             'user' => $user,
         ]);

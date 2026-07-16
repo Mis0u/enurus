@@ -23,11 +23,7 @@
             data-workout-edit-tonnage
         >
             {% include 'partials/_svg/_lightning.html.twig' %}
-            {% set global_tonnage = 0 %}
-            {% for item in exerciseData %}
-                {% set global_tonnage = global_tonnage + item.tonnage %}
-            {% endfor %}
-            {{ global_tonnage|number_format(0, '.', ' ') }} {{ unit.value }}
+            {{ totalTonnage|number_format(0, '.', ' ') }} {{ unit.value }}
         </span>
     </div>
 
