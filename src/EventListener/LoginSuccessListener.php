@@ -25,25 +25,22 @@ final readonly class LoginSuccessListener
     #[AsEventListener]
     public function onLoginSuccessEvent(LoginSuccessEvent $event): void
     {
-        $this->saveUserLogin($event);
-        $this->cancelPendingDeletion($event);
-        $this->redirectTo($event);
-    }
-
-    private function saveUserLogin(LoginSuccessEvent $event): void
-    {
         /** @var User $user */
         $user = $event->getUser();
 
+        $this->saveUserLogin($user);
+        $this->cancelPendingDeletion($user);
+        $this->redirectTo($event, $user);
+    }
+
+    private function saveUserLogin(User $user): void
+    {
         $user->lastLogin = now();
         $this->userService->save($user);
     }
 
-    private function redirectTo(LoginSuccessEvent $event): void
+    private function redirectTo(LoginSuccessEvent $event, User $user): void
     {
-        /** @var User $user */
-        $user = $event->getUser();
-
         $locale = $user->locale ?? $event->getRequest()->getLocale();
 
         $url = $this->urlGenerator->generate('app_dashboard', [
@@ -53,11 +50,8 @@ final readonly class LoginSuccessListener
         $event->setResponse(new RedirectResponse($url));
     }
 
-    private function cancelPendingDeletion(LoginSuccessEvent $event): void
+    private function cancelPendingDeletion(User $user): void
     {
-        /** @var User $user */
-        $user = $event->getUser();
-
         $this->accountDeletionService->cancelDeletion($user);
     }
 }
