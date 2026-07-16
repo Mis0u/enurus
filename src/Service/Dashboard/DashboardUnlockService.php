@@ -7,10 +7,10 @@ namespace App\Service\Dashboard;
 use App\Entity\User;
 use App\Repository\WorkoutRepository;
 
-final class DashboardUnlockService
+final readonly class DashboardUnlockService
 {
     public function __construct(
-        private readonly WorkoutRepository $workoutRepository,
+        private WorkoutRepository $workoutRepository,
     ) {
     }
 

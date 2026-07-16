@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 
-readonly class ValidateSecurityService
+final readonly class ValidateSecurityService
 {
     public function __construct(
         private BotDetectionService $botDetectionService,

@@ -10,7 +10,7 @@ use App\Repository\WorkoutRepository;
 use App\Service\Utils\WeightConverterService;
 use Symfony\UX\Chartjs\Model\Chart;
 
-readonly class DashboardTonnageService
+final readonly class DashboardTonnageService
 {
     /**
      * Largeur en pixels réservée à chaque barre du filtre "Séances" — sert à calculer la largeur
@@ -60,7 +60,7 @@ readonly class DashboardTonnageService
         $monthlyPoints = $this->buildMonthlyPoints($series, $year->start, $year->end, $unit, $user->locale);
 
         return [
-            'unit' => $unit->label(),
+            'unit' => $unit->value,
             'year' => (int) $now->format('Y'),
             'annualTotal' => $annualTotal,
             'sessionsChartMinWidth' => \count($dailyPoints) * self::DAILY_BAR_WIDTH_PX,
@@ -213,6 +213,6 @@ readonly class DashboardTonnageService
         /** @var float[] $values */
         $values = array_column($points, 'value');
 
-        return $this->chartBuilder->build($labels, $values, $unit->label());
+        return $this->chartBuilder->build($labels, $values, $unit->value);
     }
 }

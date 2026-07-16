@@ -16,10 +16,10 @@ use Doctrine\ORM\EntityManagerInterface;
  * Le controller extrait la collection depuis le formulaire,
  * ce service attache les entités et flush.
  */
-final class RoutineCreateService
+final readonly class RoutineCreateService
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
+        private EntityManagerInterface $em,
     ) {
     }
 

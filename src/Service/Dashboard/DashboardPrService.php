@@ -7,7 +7,7 @@ namespace App\Service\Dashboard;
 use App\Entity\User;
 use App\Repository\ExerciseSetRepository;
 
-readonly class DashboardPrService
+final readonly class DashboardPrService
 {
     public function __construct(
         private ExerciseSetRepository $exerciseSetRepository,

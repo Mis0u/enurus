@@ -7,7 +7,7 @@ namespace App\Service\Utils;
 use App\Entity\Workout;
 use App\Enum\Entity\User\UnitOfMeasureEnum;
 
-class WeightConverterService
+final class WeightConverterService
 {
     public function convertToLbs(float $weightKg, UnitOfMeasureEnum $unit): float
     {
@@ -28,7 +28,7 @@ class WeightConverterService
     public function format(float $weightKg, UnitOfMeasureEnum $unit): string
     {
         $weight = $this->convertToLbs($weightKg, $unit);
-        return \sprintf('%s %s', $weight, $unit->label());
+        return \sprintf('%s %s', $weight, $unit->value);
     }
 
     /**

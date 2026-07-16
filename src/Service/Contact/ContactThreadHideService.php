@@ -7,7 +7,7 @@ namespace App\Service\Contact;
 use App\Entity\ContactThread;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class ContactThreadHideService
+final readonly class ContactThreadHideService
 {
     public function __construct(
         private EntityManagerInterface $entityManager,

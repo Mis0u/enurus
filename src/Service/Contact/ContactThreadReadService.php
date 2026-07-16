@@ -8,7 +8,7 @@ use App\Entity\ContactThread;
 use App\Repository\ContactThreadMessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class ContactThreadReadService
+final readonly class ContactThreadReadService
 {
     public function __construct(
         private ContactThreadMessageRepository $contactThreadMessageRepository,

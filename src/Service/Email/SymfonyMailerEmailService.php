@@ -9,7 +9,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-readonly class SymfonyMailerEmailService implements EmailInterface
+final readonly class SymfonyMailerEmailService implements EmailInterface
 {
     private const string FROM_EMAIL = 'fittracker@gmail.com';
 

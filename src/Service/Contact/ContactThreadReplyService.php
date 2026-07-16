@@ -12,7 +12,7 @@ use App\Service\Utils\ImageUploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-readonly class ContactThreadReplyService
+final readonly class ContactThreadReplyService
 {
     private const string IMAGE_UPLOAD_CONTEXT = 'contact';
 

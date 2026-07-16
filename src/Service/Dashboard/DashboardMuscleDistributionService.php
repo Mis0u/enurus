@@ -6,7 +6,7 @@ namespace App\Service\Dashboard;
 
 use App\Repository\WorkoutRepository;
 
-readonly class DashboardMuscleDistributionService
+final readonly class DashboardMuscleDistributionService
 {
     private const int MAX_BARS = 8;
 

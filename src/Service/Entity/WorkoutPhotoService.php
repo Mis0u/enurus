@@ -9,13 +9,13 @@ use App\Service\Utils\ImageUploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class WorkoutPhotoService
+final readonly class WorkoutPhotoService
 {
     private const string WORKOUTS = 'workouts';
 
     public function __construct(
-        private readonly ImageUploadService $imageUploadService,
-        private readonly EntityManagerInterface $em,
+        private ImageUploadService $imageUploadService,
+        private EntityManagerInterface $em,
     ) {
     }
 
