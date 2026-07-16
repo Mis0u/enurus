@@ -6,8 +6,8 @@ field:
     form:
         button:
             cancel: Annuler
-            edit: Éditer
             delete: Supprimer
+            edit: Éditer
             validate: Valider
     gender:
         female: Femme
@@ -17,6 +17,13 @@ field:
     password: Mot de passe
     reduce: Réduire
     security_password: Choisissez un mot de passe sécurisé
+
+rate_limiter:
+    too_many_attempt: >-
+        {minutes, plural,
+            =1    {Trop de tentatives. Réessayez dans # minute.}
+            other {Trop de tentatives. Réessayez dans # minutes.}
+        }
 
 sentence:
     add_datas: Renseigne tes exercices, séries et charges

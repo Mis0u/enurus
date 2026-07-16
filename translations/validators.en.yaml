@@ -22,6 +22,7 @@ user:
     nickname:
         length:
             max: Your alias is too long. It must be {{ limit }} characters or less
+            min: Your alias is too short. It must be at least {{ limit }} characters
 
 workout:
     performed_at:

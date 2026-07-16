@@ -15,7 +15,15 @@ field:
         title: Género
     new_password: Nova palavra-passe
     password: Palavra-passe
+    reduce: Reduzir
     security_password: Escolha uma palavra-passe segura
+
+rate_limiter:
+    too_many_attempt: >-
+        {minutes, plural,
+            =1    {Demasiadas tentativas. Tenta novamente em # minuto.}
+            other {Demasiadas tentativas. Tenta novamente em # minutos.}
+        }
 
 sentence:
     add_datas: Regista os teus exercícios, séries e cargas

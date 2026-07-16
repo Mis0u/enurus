@@ -22,6 +22,8 @@ user:
     nickname:
         length:
             max: Dein Alias ist zu lang. Er darf maximal {{ limit }} Zeichen haben
+            min: Dein Alias ist zu kurz. Er muss mindestens {{ limit }} Zeichen haben
+
 workout:
     performed_at:
         today: Das Datum darf nicht in der Zukunft liegen

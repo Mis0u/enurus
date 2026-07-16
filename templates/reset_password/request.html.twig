@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'reset_password_request.reset_password'|trans({}, 'security') }}{% endblock %}
+{% block title %}{{ 'reset_password_request.reset_password'|trans({}, 'navigation') }}{% endblock %}
 
 {% block body %}
     {% for message in app.flashes('error') %}
@@ -10,13 +10,13 @@
         <div class="max-w-md w-full">
             <div class="text-center mb-8">
                 {% include 'partials/_common/logo.html.twig' %}
-                <p class="text-slate-400">{{ 'reset_password_request.reset_password'|trans({}, 'security') }}</p>
+                <p class="text-slate-400">{{ 'reset_password_request.reset_password'|trans({}, 'navigation') }}</p>
             </div>
 
             <div class="backdrop-blur-xl bg-white/10 rounded-3xl shadow-2xl border border-white/20 p-8">
-                <h2 class="text-2xl font-bold text-white mb-6">{{ 'reset_password_request.forgot_password'|trans({}, 'security') }}</h2>
+                <h2 class="text-2xl font-bold text-white mb-6">{{ 'reset_password_request.forgot_password'|trans({}, 'navigation') }}</h2>
 
-                <twig:Message:Info:Info message="{{ 'reset_password_request.info_reset_password'|trans({}, 'security') }}" icon="info"/>
+                <twig:Message:Info:Info message="{{ 'reset_password_request.info_reset_password'|trans({}, 'navigation') }}" icon="info"/>
 
                 {% include 'reset_password/request/_form_request.html.twig' %}
 
@@ -25,7 +25,7 @@
                         <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                         </svg>
-                        {{ 'reset_password_request.back_to_connexion'|trans({}, 'security') }}
+                        {{ 'reset_password_request.back_to_connexion'|trans({}, 'navigation') }}
                     </a>
                 </div>
             </div>

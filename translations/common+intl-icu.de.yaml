@@ -18,6 +18,13 @@ field:
     reduce: Einklappen
     security_password: Wähle ein sicheres Passwort
 
+rate_limiter:
+    too_many_attempt: >-
+        {minutes, plural,
+            =1    {Zu viele Versuche. Bitte versuche es in # Minute erneut.}
+            other {Zu viele Versuche. Bitte versuche es in # Minuten erneut.}
+        }
+
 sentence:
     add_datas: Trage deine Übungen, Sätze und Gewichte ein
     advice: "Tipp: Je regelmäßiger du deine Trainings aufzeichnest, desto genauer werden deine Statistiken!"
@@ -43,8 +50,8 @@ sentence:
     enjoy: Sieh zu, wie deine Übersicht zum Leben erwacht
     evolution_real_time: Fortschritt in Echtzeit
     less_time: Es dauert weniger als 2 Minuten
-    log_workout: Klicke auf „Training erfassen" in deiner Übersicht
     log_first_workout: Erfasse dein erstes Training
+    log_workout: Klicke auf „Training erfassen" in deiner Übersicht
     maintain_regularity: Bleib konstant und knacke deine Rekorde
     muscle_period_regularity: Silhouette · Woche/Monat · Regelmäßigkeit
     need_help: Brauchst du Hilfe?

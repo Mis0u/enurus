@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'registration.registration'|trans({}, 'security') }}{% endblock %}
+{% block title %}{{ 'registration.registration'|trans({}, 'navigation') }}{% endblock %}
 
 {% form_theme registrationForm 'registration/theme/gender_theme.html.twig' 'registration/theme/error_theme.html.twig' %}
 
@@ -13,7 +13,7 @@
             </div>
 
             <div class="backdrop-blur-xl bg-white/10 rounded-3xl shadow-2xl border border-white/20 p-8">
-                <h2 class="text-2xl font-bold text-white mb-6">{{ 'registration.create_account'|trans({}, 'security') }}</h2>
+                <h2 class="text-2xl font-bold text-white mb-6">{{ 'registration.create_account'|trans({}, 'navigation') }}</h2>
 
                 {{ form_start(registrationForm) }}
 
@@ -45,7 +45,7 @@
                 {% include 'partials/_common/_security/_password_strength_indicator.html.twig' %}
 
                 <twig:Button:Primary:Primary
-                    message="{{ 'login.create_my_account'|trans({}, 'security') }}"
+                    message="{{ 'login.create_my_account'|trans({}, 'navigation') }}"
                     icon="add_people"
                     :disabled="true"
                     data="data-password-validator-target=submitButton"

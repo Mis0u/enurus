@@ -125,8 +125,6 @@ exercise:
         submit: Save
         subtitle: Edit your exercise information
         title: Edit exercise
-    library:
-        title: Library
     flash:
         created: Exercise created successfully.
         deleted: Exercise deleted successfully.
@@ -147,8 +145,8 @@ exercise:
         secondary_muscles: Secondary
     history:
         actions:
-            edit: Edit
             delete: Delete
+            edit: Edit
         badge:
             base: Default
             mine: My exercise
@@ -180,6 +178,20 @@ exercise:
                 other {# exercises available}
             }
         title: Library
+    library:
+        title: Library
+
+footer:
+    copyright: "© {year} {brand}. All rights reserved."
+
+login:
+    connect: Sign in
+    connexion: Login
+    create_an_account: Create an account
+    create_my_account: Create my account
+    forgot_password: Forgot your password?
+    no_account_yet: Don't have an account yet?
+    remember_me: Remember me
 
 messagerie:
     author:
@@ -205,6 +217,46 @@ messagerie:
         closed: Closed
     thread_closed: "This conversation is closed, you can no longer reply."
     title: Messages
+
+registration:
+    account_created: Your account is created and ready to go
+    confirm_email: Email confirmation
+    create_account: Create an account
+    email:
+        activate_account: Activate my account
+        click_activate: You're one click away from starting your transformation! Click the button below to activate your account.
+        info_link_life: This link expires in {hour}
+        not_created_account: If you didn't create an account on {brand}, simply ignore this email.
+        receive_email: You're receiving this email because you signed up on {brand}
+        registration_confirm: Confirm your {brand} registration
+        welcome: Welcome to {brand}! Your first workout is waiting for you
+    have_an_account: Already have an account?
+    nickname:
+        label: Choose your alias
+        placeholder: What name will you go by?
+    registration: Registration
+    success: Registration successful!
+    website: Website
+
+reset_password_request:
+    asking_reset: You requested a password reset. Click the button below to create a new password
+    back_to_connexion: Back to login
+    email_link: Click the reset link
+    expire_link: This link will expire in
+    forgot_password: Forgot password
+    identical_password: Identical password
+    info_email: You are receiving this email because a password reset was requested for your account
+    info_link_life: This link expires in {hour}. Once your password is changed, you will be redirected to the login page.
+    info_reset_password: Enter your email address and you will receive a link to reset your password.
+    message_problem_handle: There was a problem handling your password reset request
+    message_problem_validate: There was a problem validating your password reset request
+    new_password: Create your new password
+    not_asking_reset: If you didn't request this reset, ignore this email. Your current password remains unchanged.
+    reset_email_password_send: Reset email sent
+    reset_my_password: Reset my password
+    reset_password: Reset your password
+    reseting_password: Resetting your password
+    send_link: Send reset link
 
 routine:
     badge:
@@ -232,8 +284,8 @@ routine:
         name_required: The routine name is required.
         no_exercise: You must select at least one exercise.
     flash:
-        deleted: The routine "{name}" has been deleted successfully.
         created: The routine "{name}" has been created successfully.
+        deleted: The routine "{name}" has been deleted successfully.
         updated: The routine "{name}" has been updated successfully.
     form:
         description_label: Add a description
@@ -254,8 +306,8 @@ routine:
                 one   {# routine}
                 other {# routines}
             }
-        created_at: Created on {date}
         create_btn: New routine
+        created_at: Created on {date}
         empty_cta: Create my first routine
         empty_subtitle: Create your first routine to pre-configure your workouts and save time.
         empty_title: No routines yet
@@ -273,19 +325,19 @@ routine:
 
 settings:
     account_deletion:
-        requested:
-            subject: Your account deletion request has been recorded
-            title: Account deletion in progress
-            body: Hello {nickname}, your account deletion request has been registered. Your account will be permanently deleted on {deadline} if you don't log back in before that date.
-            cancel_hint: To cancel this deletion, simply log back in before that date — no other action required.
         cancelled:
+            body: Hello {nickname}, you logged back into your account. Your deletion request has been automatically cancelled, and your account remains active as normal.
             subject: Your account deletion has been cancelled
             title: Welcome back!
-            body: Hello {nickname}, you logged back into your account. Your deletion request has been automatically cancelled, and your account remains active as normal.
         deleted:
+            body: Hello {nickname}, as per your request, your FitTracker account and all associated data (workouts, routines, custom exercises) have been permanently deleted. Thank you for using FitTracker.
             subject: Your account has been permanently deleted
             title: Account deleted
-            body: Hello {nickname}, as per your request, your FitTracker account and all associated data (workouts, routines, custom exercises) have been permanently deleted. Thank you for using FitTracker.
+        requested:
+            body: Hello {nickname}, your account deletion request has been registered. Your account will be permanently deleted on {deadline} if you don't log back in before that date.
+            cancel_hint: To cancel this deletion, simply log back in before that date — no other action required.
+            subject: Your account deletion request has been recorded
+            title: Account deletion in progress
     avatar:
         change: Change photo
         hint: JPEG, PNG or WebP · 5 MB max
@@ -293,12 +345,12 @@ settings:
         button: Delete my account
         explanation: Your account will be deactivated then permanently deleted after 30 days. Logging back in before the deadline will automatically cancel the deletion.
         modal:
-            title: Are you sure?
             body: To confirm, type your alias below.
-            placeholder: Your alias
-            mismatch: The alias does not match
-            confirm: Delete permanently
             cancel: Cancel
+            confirm: Delete permanently
+            mismatch: The alias does not match
+            placeholder: Your alias
+            title: Are you sure?
         request_error: An error occurred, please try again later
         title: Account deletion
     email:
@@ -359,10 +411,10 @@ workout:
         type_readonly: Workout type cannot be changed
     error:
         no_exercise:
-            title: No exercise
             text: Add at least one exercise before submitting your workout
-        required_weight: Weight is required
+            title: No exercise
         required_reps: Reps are required
+        required_weight: Weight is required
         validation: An error occurred while submitting your data
     flash:
         created: Your workout has been saved
@@ -372,6 +424,7 @@ workout:
         delete:
             cancel: Cancel
             confirm: Delete
+            error_text: An error occurred while deleting. Please try again.
             message: Are you sure you want to delete this workout? This action is irreversible.
             title: Delete this workout?
         duration_unit: min
@@ -406,17 +459,17 @@ workout:
     photo:
         alt: Workout photo
         click_to_preview: Click to enlarge
+        constraints: JPEG, PNG or WebP · 5 MB max
+        drag_or: Drag a photo or
         has_photo: Workout photo
+        invalid_type: The file must be a JPEG, PNG or WebP image.
         label: Workout photo (optional)
         label_visible: Workout photo
-        drag_or: Drag a photo or
-        select: Select
-        constraints: JPEG, PNG or WebP · 5 MB max
-        invalid_type: The file must be a JPEG, PNG or WebP image.
-        too_large: The photo must not exceed 5 MB.
         remove: Remove
-    reps_abbreviate: Reps
+        select: Select
+        too_large: The photo must not exceed 5 MB.
     reps: Reps
+    reps_abbreviate: Reps
     routine:
         change_confirm: Continue
         change_warning_text: Changing the routine will remove the exercises already added to your workout. Do you want to continue?
@@ -430,20 +483,20 @@ workout:
     series: Sets
     show:
         back: Back to my workouts
-        routine_badge: Routine
-        muscles_title: Muscles worked
-        muscles_primary: Primary muscles
-        muscles_secondary: Secondary muscles
         metrics:
-            tonnage: Tonnage
             duration: Duration
             exercises: Exercises
             sets: Sets
+            tonnage: Tonnage
+        muscles_primary: Primary muscles
+        muscles_secondary: Secondary muscles
+        muscles_title: Muscles worked
+        pr_badge: PR
+        routine_badge: Routine
         sets_table:
-            weight: Weight
             reps: Reps
             tonnage: Tonnage
-        pr_badge: PR
+            weight: Weight
         title: My workout
     title: Log your workout
     type:
@@ -451,6 +504,3 @@ workout:
         routine: Choose a routine
         title: Workout type
     weight: Weight
-
-footer:
-    copyright: "© {year} {brand}. All rights reserved."

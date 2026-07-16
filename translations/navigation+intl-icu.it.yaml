@@ -125,8 +125,6 @@ exercise:
         submit: Salva
         subtitle: Modifica le informazioni del tuo esercizio
         title: Modifica l'esercizio
-    library:
-        title: Biblioteca
     flash:
         created: Esercizio creato con successo.
         deleted: Esercizio eliminato con successo.
@@ -147,8 +145,8 @@ exercise:
         secondary_muscles: Secondari
     history:
         actions:
-            edit: Modifica
             delete: Elimina
+            edit: Modifica
         badge:
             base: Base
             mine: Mio esercizio
@@ -180,6 +178,20 @@ exercise:
                 other {# esercizi disponibili}
             }
         title: Biblioteca
+    library:
+        title: Biblioteca
+
+footer:
+    copyright: "© {year} {brand}. Tutti i diritti riservati."
+
+login:
+    connect: Accedi
+    connexion: Accesso
+    create_an_account: Crea un account
+    create_my_account: Crea il mio account
+    forgot_password: Password dimenticata?
+    no_account_yet: Non hai ancora un account?
+    remember_me: Ricordami
 
 messagerie:
     author:
@@ -205,6 +217,46 @@ messagerie:
         closed: Chiuso
     thread_closed: "Questa conversazione è chiusa, non puoi più rispondere."
     title: Messaggistica
+
+registration:
+    account_created: Il tuo account è stato creato ed è pronto all'uso
+    confirm_email: Conferma della tua email
+    create_account: Crea un account
+    email:
+        activate_account: Attiva il mio account
+        click_activate: Sei a un clic dall'iniziare la tua trasformazione! Clicca il pulsante qui sotto per attivare il tuo account.
+        info_link_life: Questo link scade tra {hour}
+        not_created_account: Se non hai creato un account su {brand}, ignora semplicemente questa email.
+        receive_email: Ricevi questa email perché ti sei iscritto su {brand}
+        registration_confirm: Conferma la tua iscrizione {brand}
+        welcome: Benvenuto su {brand}! Il tuo primo allenamento ti aspetta
+    have_an_account: Hai già un account?
+    nickname:
+        label: Scegli il tuo alias
+        placeholder: Con quale nome vuoi distinguerti?
+    registration: Iscrizione
+    success: Iscrizione completata!
+    website: Website
+
+reset_password_request:
+    asking_reset: Hai richiesto il ripristino della tua password. Clicca il pulsante qui sotto per creare una nuova password
+    back_to_connexion: Torna al login
+    email_link: Clicca il link di ripristino
+    expire_link: Questo link scadrà tra
+    forgot_password: Password dimenticata
+    identical_password: Password identica
+    info_email: Ricevi questa email perché è stata effettuata una richiesta di ripristino della password sul tuo account
+    info_link_life: Questo link scade tra {hour}. Una volta modificata la password, verrai reindirizzato alla pagina di accesso.
+    info_reset_password: Inserisci il tuo indirizzo email e riceverai un link per ripristinare la tua password.
+    message_problem_handle: Si è verificato un problema durante l'elaborazione della richiesta di ripristino della password
+    message_problem_validate: Si è verificato un problema durante la convalida della richiesta di ripristino della password
+    new_password: Crea la tua nuova password
+    not_asking_reset: Se non hai richiesto questo ripristino, ignora questa email. La tua password attuale resta invariata.
+    reset_email_password_send: Email di ripristino inviata
+    reset_my_password: Ripristina la mia password
+    reset_password: Ripristina la tua password
+    reseting_password: Ripristino della tua password
+    send_link: Invia il link di ripristino
 
 routine:
     badge:
@@ -254,8 +306,8 @@ routine:
                 one   {# routine}
                 other {# routine}
             }
-        created_at: Creata il {date}
         create_btn: Nuova routine
+        created_at: Creata il {date}
         empty_cta: Crea la mia prima routine
         empty_subtitle: Crea la tua prima routine per preconfigurare i tuoi allenamenti e risparmiare tempo.
         empty_title: Nessuna routine per ora
@@ -273,19 +325,19 @@ routine:
 
 settings:
     account_deletion:
-        requested:
-            subject: La tua richiesta di eliminazione dell'account è stata registrata
-            title: Eliminazione dell'account in corso
-            body: Ciao {nickname}, la tua richiesta di eliminazione dell'account è stata presa in carico. Il tuo account verrà eliminato definitivamente il {deadline} se non effettui l'accesso prima di quella data.
-            cancel_hint: Per annullare questa eliminazione, ti basta accedere nuovamente prima di quella data — nessun'altra azione necessaria.
         cancelled:
+            body: Ciao {nickname}, hai effettuato nuovamente l'accesso al tuo account. La tua richiesta di eliminazione è stata automaticamente annullata e il tuo account resta attivo normalmente.
             subject: L'eliminazione del tuo account è stata annullata
             title: Bentornato!
-            body: Ciao {nickname}, hai effettuato nuovamente l'accesso al tuo account. La tua richiesta di eliminazione è stata automaticamente annullata e il tuo account resta attivo normalmente.
         deleted:
+            body: Ciao {nickname}, come da tua richiesta, il tuo account FitTracker e tutti i dati associati (allenamenti, routine, esercizi personalizzati) sono stati eliminati definitivamente. Grazie per aver utilizzato FitTracker.
             subject: Il tuo account è stato eliminato definitivamente
             title: Account eliminato
-            body: Ciao {nickname}, come da tua richiesta, il tuo account FitTracker e tutti i dati associati (allenamenti, routine, esercizi personalizzati) sono stati eliminati definitivamente. Grazie per aver utilizzato FitTracker.
+        requested:
+            body: Ciao {nickname}, la tua richiesta di eliminazione dell'account è stata presa in carico. Il tuo account verrà eliminato definitivamente il {deadline} se non effettui l'accesso prima di quella data.
+            cancel_hint: Per annullare questa eliminazione, ti basta accedere nuovamente prima di quella data — nessun'altra azione necessaria.
+            subject: La tua richiesta di eliminazione dell'account è stata registrata
+            title: Eliminazione dell'account in corso
     avatar:
         change: Cambia foto
         hint: JPEG, PNG o WebP · 5 MB max
@@ -293,12 +345,12 @@ settings:
         button: Elimina il mio account
         explanation: Il tuo account verrà disattivato e poi eliminato definitivamente dopo 30 giorni. Accedere nuovamente prima della scadenza annullerà automaticamente l'eliminazione.
         modal:
-            title: Sei sicuro?
             body: Per confermare, digita il tuo alias qui sotto.
-            placeholder: Il tuo alias
-            mismatch: L'alias non corrisponde
-            confirm: Elimina definitivamente
             cancel: Annulla
+            confirm: Elimina definitivamente
+            mismatch: L'alias non corrisponde
+            placeholder: Il tuo alias
+            title: Sei sicuro?
         request_error: Si è verificato un errore, riprova più tardi
         title: Eliminazione dell'account
     email:
@@ -359,10 +411,10 @@ workout:
         type_readonly: Il tipo di allenamento non può essere modificato
     error:
         no_exercise:
-            title: Nessun esercizio
             text: Aggiungi almeno un esercizio prima di convalidare il tuo allenamento
-        required_weight: Il peso è obbligatorio
+            title: Nessun esercizio
         required_reps: Le ripetizioni sono obbligatorie
+        required_weight: Il peso è obbligatorio
         validation: Si è verificato un errore durante l'inserimento dei dati
     flash:
         created: Il tuo allenamento è stato registrato
@@ -372,6 +424,7 @@ workout:
         delete:
             cancel: Annulla
             confirm: Elimina
+            error_text: Si è verificato un errore durante l'eliminazione. Riprova.
             message: Sei sicuro di voler eliminare questo allenamento? Questa azione è irreversibile.
             title: Eliminare questo allenamento?
         duration_unit: min
@@ -406,17 +459,17 @@ workout:
     photo:
         alt: Foto dell'allenamento
         click_to_preview: Clicca per ingrandire
+        constraints: JPEG, PNG o WebP · 5 MB max
+        drag_or: Trascina una foto o
         has_photo: Foto dell'allenamento
+        invalid_type: Il file deve essere un'immagine JPEG, PNG o WebP.
         label: Foto dell'allenamento (facoltativa)
         label_visible: Foto dell'allenamento
-        drag_or: Trascina una foto o
-        select: Seleziona
-        constraints: JPEG, PNG o WebP · 5 MB max
-        invalid_type: Il file deve essere un'immagine JPEG, PNG o WebP.
-        too_large: La foto non deve superare 5 MB.
         remove: Elimina
-    reps_abbreviate: Rip
+        select: Seleziona
+        too_large: La foto non deve superare 5 MB.
     reps: Ripetizioni
+    reps_abbreviate: Rip
     routine:
         change_confirm: Continua
         change_warning_text: Cambiare routine cancellerà gli esercizi già aggiunti al tuo allenamento. Vuoi continuare?
@@ -430,20 +483,20 @@ workout:
     series: Serie
     show:
         back: Torna ai miei allenamenti
-        routine_badge: Routine
-        muscles_title: Muscoli allenati
-        muscles_primary: Muscoli primari
-        muscles_secondary: Muscoli secondari
         metrics:
-            tonnage: Tonnellaggio
             duration: Durata
             exercises: Esercizi
             sets: Serie
+            tonnage: Tonnellaggio
+        muscles_primary: Muscoli primari
+        muscles_secondary: Muscoli secondari
+        muscles_title: Muscoli allenati
+        pr_badge: PR
+        routine_badge: Routine
         sets_table:
-            weight: Peso
             reps: Rip
             tonnage: Tonnellaggio
-        pr_badge: PR
+            weight: Peso
         title: Il mio allenamento
     title: Registra il tuo allenamento
     type:
@@ -451,6 +504,3 @@ workout:
         routine: Scegli una routine
         title: Tipo di allenamento
     weight: Peso
-
-footer:
-    copyright: "© {year} {brand}. Tutti i diritti riservati."

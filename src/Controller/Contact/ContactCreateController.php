@@ -103,7 +103,7 @@ final class ContactCreateController extends AbstractController
                 'error',
                 $this->translator->trans('rate_limiter.too_many_attempt', [
                     'minutes' => $limitResult['minutes'],
-                ], 'security'),
+                ], 'common'),
             );
 
             return $this->redirectToRoute('app_contact');

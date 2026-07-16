@@ -2,14 +2,14 @@
 
 {% form_theme resetForm 'registration/theme/error_theme.html.twig' %}
 
-{% block title %}{{ 'reset_password_request.reset_password'|trans({}, 'security') }}{% endblock %}
+{% block title %}{{ 'reset_password_request.reset_password'|trans({}, 'navigation') }}{% endblock %}
 
 {% block body %}
     <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">
         <div class="max-w-md w-full">
             <div class="text-center mb-8">
                 {% include 'partials/_common/logo.html.twig' %}
-                <p class="text-slate-400">{{ 'reset_password_request.new_password'|trans({}, 'security') }}</p>
+                <p class="text-slate-400">{{ 'reset_password_request.new_password'|trans({}, 'navigation') }}</p>
             </div>
 
             <div class="backdrop-blur-xl bg-white/10 rounded-3xl shadow-2xl border border-white/20 p-8">
