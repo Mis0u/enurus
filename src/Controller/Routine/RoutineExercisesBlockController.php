@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Routine;
 
 use App\Entity\User;
 use App\Repository\RoutineRepository;
@@ -20,7 +20,16 @@ final class RoutineExercisesBlockController extends AbstractController
     ) {
     }
 
-    #[Route('/workout/routine-exercises-block', name: 'workout_routine_exercises_block', methods: ['GET'])]
+    #[Route(path: [
+        'fr' => '/enregistre-seance/bloc-exercices-routine',
+        'en' => '/log-workout/routine-exercises-block',
+        'it' => '/registra-allenamento/blocco-esercizi-routine',
+        'es' => '/registrar-entrenamiento/bloque-ejercicios-rutina',
+        'pt' => '/registar-treino/bloco-exercicios-rotina',
+        'de' => '/training-erfassen/routine-uebungen-block',
+        'nl' => '/training-vastleggen/routine-oefeningen-blok',
+        'pl' => '/zapisz-trening/blok-cwiczen-planu',
+    ], name: 'workout_routine_exercises_block', methods: ['GET'])]
     public function __invoke(Request $request): Response
     {
         $routineId = $request->query->get('routineId');

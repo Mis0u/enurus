@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Workout;
 
 use App\Entity\Workout;
 use App\Security\Voter\WorkoutVoter;
@@ -28,7 +28,16 @@ final class WorkoutDeleteController extends AbstractController
     }
 
     #[Route(
-        path: '/workout/{id}/delete',
+        path: [
+            'fr' => '/seance/{id}/supprimer',
+            'en' => '/workout/{id}/delete',
+            'it' => '/allenamento/{id}/elimina',
+            'es' => '/entrenamiento/{id}/eliminar',
+            'pt' => '/treino/{id}/eliminar',
+            'de' => '/training/{id}/loeschen',
+            'nl' => '/training/{id}/verwijderen',
+            'pl' => '/trening/{id}/usun',
+        ],
         name: 'app_workout_delete',
         methods: [Request::METHOD_DELETE],
     )]

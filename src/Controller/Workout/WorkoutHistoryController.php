@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Workout;
 
 use App\Entity\User;
 use App\Entity\Workout;
@@ -46,7 +46,7 @@ class WorkoutHistoryController extends AbstractController
         $user = $this->getUser();
 
         $filters = $this->resolveFilters($request);
-        $filterType = $this->resolveActiveFilter($request);
+        $filterType = in_array($filters['type'] ?? null, ['week', 'month'], true) ? $filters['type'] : null;
         $filterDate = $request->query->get('date');
 
         $pagination = $this->paginate($paginator, $request, $workoutRepository, $user, $filters);
@@ -102,17 +102,6 @@ class WorkoutHistoryController extends AbstractController
         }
 
         return [];
-    }
-
-    private function resolveActiveFilter(Request $request): ?string
-    {
-        $filterDate = $request->query->get('date');
-        if (null !== $filterDate && '' !== $filterDate && false !== DateTimeImmutable::createFromFormat('Y-m-d', $filterDate)) {
-            return null;
-        }
-
-        $filterType = $request->query->get('filter');
-        return in_array($filterType, ['week', 'month'], true) ? $filterType : null;
     }
 
     /**

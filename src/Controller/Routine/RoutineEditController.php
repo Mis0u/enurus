@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Routine;
 
 use App\Entity\Routine;
 use App\Entity\RoutineExercise;
@@ -14,6 +14,7 @@ use App\Repository\RoutineRepository;
 use App\Security\Voter\RoutineVoter;
 use App\Service\Entity\ExerciseSorterService;
 use App\Service\Entity\RoutineEditService;
+use App\Service\Entity\RoutineExerciseAccessService;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -44,6 +45,7 @@ final class RoutineEditController extends AbstractController
         private readonly ExerciseSorterService $exerciseSorterService,
         private readonly TranslatorInterface $translator,
         private readonly RoutineRepository $routineRepository,
+        private readonly RoutineExerciseAccessService $routineExerciseAccessService,
     ) {
     }
 
@@ -90,7 +92,7 @@ final class RoutineEditController extends AbstractController
             throw new \LogicException('Routine name already exists for this user — should have been caught by frontend.');
         }
 
-        if (! $this->allExercisesAreAccessible($exercises, $user)) {
+        if (! $this->routineExerciseAccessService->allAccessible($exercises, $user)) {
             $this->addFlash('error', $this->translator->trans('routine.error.forbidden_exercise', [], 'navigation'));
 
             return $this->redirectToRoute('app_routine_edit', [
@@ -128,20 +130,5 @@ final class RoutineEditController extends AbstractController
             'exercises' => $this->exerciseSorterService->sortByName($exercises, $locale),
             'cancelUrl' => $this->generateUrl('app_routine_list'),
         ]);
-    }
-
-    /**
-     * @param Collection<int, RoutineExercise> $routineExercises
-     */
-    private function allExercisesAreAccessible(Collection $routineExercises, User $user): bool
-    {
-        foreach ($routineExercises as $routineExercise) {
-            $exercise = $routineExercise->exercise;
-            if (! $exercise->isPublic && $exercise->owner !== $user) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Exercise;
 
 use App\Entity\Exercise;
 use App\Entity\User;
@@ -10,6 +10,7 @@ use App\Form\ExerciseType;
 use App\Repository\MuscleGroupRepository;
 use App\Security\Voter\ExerciseVoter;
 use App\Service\Entity\ExerciseEditService;
+use App\Service\Entity\ExerciseMuscleValidationService;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -32,6 +33,7 @@ final class ExerciseEditController extends AbstractController
 {
     public function __construct(
         private readonly ExerciseEditService $exerciseEditService,
+        private readonly ExerciseMuscleValidationService $exerciseMuscleValidationService,
         private readonly MuscleGroupRepository $muscleGroupRepository,
         private readonly TranslatorInterface $translator
     ) {
@@ -63,7 +65,7 @@ final class ExerciseEditController extends AbstractController
             throw new \LogicException('Expected muscles to be a Collection.');
         }
 
-        if (! $this->exerciseEditService->hasPrimaryMuscle($muscles)) {
+        if (! $this->exerciseMuscleValidationService->hasPrimaryMuscle($muscles)) {
             return $this->renderEditForm($form, $exercise);
         }
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Routine;
 
 use App\Entity\Routine;
 use App\Security\Voter\RoutineVoter;

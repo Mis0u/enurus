@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Workout;
 
 use App\Repository\ExerciseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +16,16 @@ use Symfony\Component\Uid\Uuid;
 class WorkoutEditExerciseBlockController extends AbstractController
 {
     #[Route(
-        path: '/workout/edit/exercise-block',
+        path: [
+            'fr' => '/seance/modifier/bloc-exercice',
+            'en' => '/workout/edit/exercise-block',
+            'it' => '/allenamento/modifica/blocco-esercizio',
+            'es' => '/entrenamiento/editar/bloque-ejercicio',
+            'pt' => '/treino/editar/bloco-exercicio',
+            'de' => '/training/bearbeiten/uebung-block',
+            'nl' => '/training/bewerken/oefening-blok',
+            'pl' => '/trening/edytuj/blok-cwiczenia',
+        ],
         name: 'workout_edit_exercise_block',
         methods: [Request::METHOD_GET],
     )]

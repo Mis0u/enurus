@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Workout;
 
 use App\Constraint\ImageConstraints;
 use App\Entity\User;
@@ -27,7 +27,16 @@ final class WorkoutUploadPhotoController extends AbstractController
     }
 
     #[Route(
-        path: '/workout/{id}/photo',
+        path: [
+            'fr' => '/seance/{id}/photo',
+            'en' => '/workout/{id}/photo',
+            'it' => '/allenamento/{id}/foto',
+            'es' => '/entrenamiento/{id}/foto',
+            'pt' => '/treino/{id}/foto',
+            'de' => '/training/{id}/foto',
+            'nl' => '/training/{id}/foto',
+            'pl' => '/trening/{id}/foto',
+        ],
         name: 'workout_upload_photo',
         methods: ['POST'],
     )]

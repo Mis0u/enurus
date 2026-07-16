@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Exercise;
 
 use App\Entity\Exercise;
 use App\Entity\ExerciseMuscle;
 use App\Entity\User;
-use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
 use App\Form\ExerciseType;
 use App\Repository\MuscleGroupRepository;
 use App\Security\Voter\ExerciseVoter;
 use App\Service\Entity\ExerciseCreateService;
+use App\Service\Entity\ExerciseMuscleValidationService;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -36,6 +36,7 @@ final class ExerciseCreateController extends AbstractController
 {
     public function __construct(
         private readonly ExerciseCreateService $exerciseCreateService,
+        private readonly ExerciseMuscleValidationService $exerciseMuscleValidationService,
         private readonly MuscleGroupRepository $muscleGroupRepository,
         private readonly TranslatorInterface $translator
     ) {
@@ -98,16 +99,10 @@ final class ExerciseCreateController extends AbstractController
         /** @var Collection<int, ExerciseMuscle>|null $muscles */
         $muscles = $form->get('muscles')->getData();
 
-        if (null === $muscles || $muscles->isEmpty()) {
+        if (null === $muscles) {
             return false;
         }
 
-        foreach ($muscles as $exerciseMuscle) {
-            if (MuscleTypeEnum::PRIMARY === $exerciseMuscle->type) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->exerciseMuscleValidationService->hasPrimaryMuscle($muscles);
     }
 }

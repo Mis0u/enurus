@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Exercise;
 
 use App\Repository\ExerciseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +14,16 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class ExerciseBlockController extends AbstractController
 {
-    #[Route('/workout/exercise-block', name: 'workout_exercise_block', methods: ['GET'])]
+    #[Route(path: [
+        'fr' => '/enregistre-seance/bloc-exercice',
+        'en' => '/log-workout/exercise-block',
+        'it' => '/registra-allenamento/blocco-esercizio',
+        'es' => '/registrar-entrenamiento/bloque-ejercicio',
+        'pt' => '/registar-treino/bloco-exercicio',
+        'de' => '/training-erfassen/uebung-block',
+        'nl' => '/training-vastleggen/oefening-blok',
+        'pl' => '/zapisz-trening/blok-cwiczenia',
+    ], name: 'workout_exercise_block', methods: ['GET'])]
     public function __invoke(Request $request, ExerciseRepository $exerciseRepository): Response
     {
         $exerciseId = $request->query->get('exerciseId');

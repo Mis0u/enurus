@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Security;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
@@ -84,7 +84,7 @@ class RegistrationController extends AbstractController
         if (self::BOT_DETECTED === $validator['reason']) {
             $this->addFlash(
                 'success',
-                $this->translator->trans('registration.success', [], 'security')
+                $this->translator->trans('registration.success', [], 'navigation')
             );
         }
 
@@ -93,7 +93,7 @@ class RegistrationController extends AbstractController
                 'error',
                 $this->translator->trans('rate_limiter.too_many_attempt', [
                     'minutes' => $validator['minutes'],
-                ], 'security')
+                ], 'common')
             );
         }
 
