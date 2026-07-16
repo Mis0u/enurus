@@ -143,7 +143,9 @@ exercise:
         preview_label: Vorschau
         primary_muscles: Primäre
         secondary_muscles: Sekundäre
-    history:
+    library:
+        title: Bibliothek
+    list:
         actions:
             delete: Löschen
             edit: Bearbeiten
@@ -177,8 +179,6 @@ exercise:
                 =1    {# Übung verfügbar}
                 other {# Übungen verfügbar}
             }
-        title: Bibliothek
-    library:
         title: Bibliothek
 
 footer:

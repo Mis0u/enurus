@@ -27,7 +27,7 @@
 
             {{ component('Breadcrumb:Breadcrumb', {
                 items: [
-                    {label: 'exercise.library.title'|trans({}, 'navigation'), url: 'app_exercise_history'},
+                    {label: 'exercise.library.title'|trans({}, 'navigation'), url: 'app_exercise_list'},
                     {label: exercise.name, url: null},
                 ]
             }) }}
@@ -51,7 +51,7 @@
             {% include 'exercise/create/_svg_preview.html.twig' with {gender: gender} only %}
             {% include 'exercise/create/_description_accordion.html.twig' with {form: form, controllerName: 'exercise--edit'} only %}
             {% include 'exercise/create/_form_actions.html.twig' with {
-                cancelUrl: path('app_exercise_history'),
+                cancelUrl: path('app_exercise_list'),
                 submitLabel: 'exercise.edit.submit'|trans({}, 'navigation'),
             } only %}
             {{ form_row(form._token) }}

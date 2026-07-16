@@ -8,7 +8,7 @@ use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-final class ExerciseHistoryControllerTest extends WebTestCase
+final class ExerciseListControllerTest extends WebTestCase
 {
     use FunctionalTestTrait;
 

@@ -72,7 +72,7 @@ export default class extends Controller {
     // ── Private ───────────────────────────────────────────────────────────────
 
     #removeCard() {
-        const card = this.element.closest('.exercise-history-card');
+        const card = this.element.closest('.exercise-list-card');
         card?.remove();
     }
 }

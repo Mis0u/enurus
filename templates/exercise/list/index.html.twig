@@ -1,0 +1,46 @@
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/exercise-list.css') }}">
+{% endblock %}
+
+{% block title %}{{ 'exercise.list.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        title: 'exercise.list.title'|trans({}, 'navigation'),
+        subtitle: app.user.nickname|formatInitials,
+        action: {
+            label: 'exercise.list.create_btn'|trans({}, 'navigation'),
+            url: path('app_exercise_create'),
+        },
+    } %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 overflow-y-auto">
+        <div
+            class="p-6 md:p-7 flex flex-col gap-6"
+            data-controller="exercise--list"
+            data-exercise--list-total-count-value="{{ totalCount }}"
+        >
+
+            {% include 'exercise/list/_filters.html.twig' %}
+
+            {% include 'exercise/list/_empty_state.html.twig' %}
+
+            <div
+                class="exercise-list-grid"
+                id="exerciseGrid"
+                data-exercise--list-target="grid"
+            >
+                {% for exercise in exercises %}
+                    {% include 'exercise/list/_exercise_card.html.twig' with {exercise: exercise} %}
+                {% endfor %}
+            </div>
+
+            {% include 'exercise/list/_pagination.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

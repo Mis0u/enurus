@@ -73,7 +73,7 @@ final class ExerciseEditController extends AbstractController
 
         $this->addFlash('success', $this->translator->trans('exercise.flash.updated', [], 'navigation'));
 
-        return $this->redirectToRoute('app_exercise_history');
+        return $this->redirectToRoute('app_exercise_list');
     }
 
     /**

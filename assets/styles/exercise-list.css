@@ -1,5 +1,5 @@
 /*
- * exercise-history.css
+ * exercise-list.css
  *
  * Contient UNIQUEMENT ce que Tailwind JIT ne peut pas gérer :
  * 1. Grille responsive (gap + colonnes)
@@ -15,7 +15,7 @@
 /* =============================================
    ÉTAT VIDE
 ============================================= */
-.exercise-history-empty-state {
+.exercise-list-empty-state {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,7 +27,7 @@
 /* =============================================
    GRILLE
 ============================================= */
-.exercise-history-grid {
+.exercise-list-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
@@ -35,13 +35,13 @@
 }
 
 @media (max-width: 1024px) {
-    .exercise-history-grid {
+    .exercise-list-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 768px) {
-    .exercise-history-grid {
+    .exercise-list-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -49,7 +49,7 @@
 /* =============================================
    CARD
 ============================================= */
-.exercise-history-card {
+.exercise-list-card {
     background: #0f1928;
     border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 14px;
@@ -65,7 +65,7 @@
     animation: exercise-fade-up 0.3s ease both;
 }
 
-.exercise-history-card:hover {
+.exercise-list-card:hover {
     border-color: rgba(255, 255, 255, 0.12);
     background: #151f30;
     transform: translateY(-2px);
@@ -73,7 +73,7 @@
 }
 
 /* Bordure gauche colorée */
-.exercise-history-card::before {
+.exercise-list-card::before {
     content: '';
     position: absolute;
     left: 0;
@@ -83,16 +83,16 @@
     border-radius: 14px 0 0 14px;
 }
 
-.exercise-history-card--official::before {
+.exercise-list-card--official::before {
     background: #06b6d4;
 }
 
-.exercise-history-card--custom::before {
+.exercise-list-card--custom::before {
     background: #f43f5e;
 }
 
 /* Lueur interne */
-.exercise-history-card::after {
+.exercise-list-card::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -100,27 +100,27 @@
     border-radius: 14px;
 }
 
-.exercise-history-card--official::after {
+.exercise-list-card--official::after {
     background: radial-gradient(ellipse at top left, rgba(6, 182, 212, 0.04), transparent 60%);
 }
 
-.exercise-history-card--custom::after {
+.exercise-list-card--custom::after {
     background: radial-gradient(ellipse at top left, rgba(244, 63, 94, 0.03), transparent 60%);
 }
 
 /* Animations en cascade */
-.exercise-history-card:nth-child(1)  { animation-delay: 0.03s; }
-.exercise-history-card:nth-child(2)  { animation-delay: 0.06s; }
-.exercise-history-card:nth-child(3)  { animation-delay: 0.09s; }
-.exercise-history-card:nth-child(4)  { animation-delay: 0.12s; }
-.exercise-history-card:nth-child(5)  { animation-delay: 0.15s; }
-.exercise-history-card:nth-child(6)  { animation-delay: 0.18s; }
-.exercise-history-card:nth-child(7)  { animation-delay: 0.21s; }
-.exercise-history-card:nth-child(8)  { animation-delay: 0.24s; }
-.exercise-history-card:nth-child(9)  { animation-delay: 0.27s; }
-.exercise-history-card:nth-child(10) { animation-delay: 0.30s; }
-.exercise-history-card:nth-child(11) { animation-delay: 0.33s; }
-.exercise-history-card:nth-child(12) { animation-delay: 0.36s; }
+.exercise-list-card:nth-child(1)  { animation-delay: 0.03s; }
+.exercise-list-card:nth-child(2)  { animation-delay: 0.06s; }
+.exercise-list-card:nth-child(3)  { animation-delay: 0.09s; }
+.exercise-list-card:nth-child(4)  { animation-delay: 0.12s; }
+.exercise-list-card:nth-child(5)  { animation-delay: 0.15s; }
+.exercise-list-card:nth-child(6)  { animation-delay: 0.18s; }
+.exercise-list-card:nth-child(7)  { animation-delay: 0.21s; }
+.exercise-list-card:nth-child(8)  { animation-delay: 0.24s; }
+.exercise-list-card:nth-child(9)  { animation-delay: 0.27s; }
+.exercise-list-card:nth-child(10) { animation-delay: 0.30s; }
+.exercise-list-card:nth-child(11) { animation-delay: 0.33s; }
+.exercise-list-card:nth-child(12) { animation-delay: 0.36s; }
 
 @keyframes exercise-fade-up {
     from {
@@ -135,7 +135,7 @@
 
 /* Description tronquée sur mobile uniquement */
 @media (max-width: 768px) {
-    .exercise-history-desc {
+    .exercise-list-desc {
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;

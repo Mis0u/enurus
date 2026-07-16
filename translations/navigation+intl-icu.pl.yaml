@@ -143,7 +143,9 @@ exercise:
         preview_label: Podgląd
         primary_muscles: Główne
         secondary_muscles: Wspomagające
-    history:
+    library:
+        title: Biblioteka
+    list:
         actions:
             delete: Usuń
             edit: Edytuj
@@ -181,8 +183,6 @@ exercise:
                 many  {# ćwiczeń dostępnych}
                 other {# ćwiczeń dostępnych}
             }
-        title: Biblioteka
-    library:
         title: Biblioteka
 
 footer:

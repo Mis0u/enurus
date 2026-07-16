@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 
 /**
  * Controller Stimulus pour la bibliothèque d'exercices.
- * Nom généré : exercise--history
+ * Nom généré : exercise--list
  *
  * Responsabilités (SRP) :
  * - Filtrage client-side (type + recherche textuelle)

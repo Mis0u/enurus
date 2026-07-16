@@ -4,17 +4,15 @@
     <div class="flex items-center gap-2.5 flex-1 min-w-[200px] px-3.5 py-2.5
                 bg-[#0f1928] border border-white/[0.07] rounded-[10px]
                 focus-within:border-white/[0.15] transition-colors duration-200">
-        <svg class="w-4 h-4 text-slate-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
+        {% include 'partials/_svg/_magnifying_glass.html.twig' with {'width': 4, 'height': 4, 'extraClass': 'text-slate-500 shrink-0', 'ariaHidden': true} only %}
         <input
             type="text"
             class="bg-transparent border-none outline-none text-[#f0f4ff] text-[13.5px] w-full
                    placeholder:text-slate-500 font-['DM_Sans']"
-            placeholder="{{ 'exercise.history.filter.search_placeholder'|trans({}, 'navigation') }}"
-            aria-label="{{ 'exercise.history.filter.search_placeholder'|trans({}, 'navigation') }}"
-            data-exercise--history-target="searchInput"
-            data-action="input->exercise--history#onSearch"
+            placeholder="{{ 'exercise.list.filter.search_placeholder'|trans({}, 'navigation') }}"
+            aria-label="{{ 'exercise.list.filter.search_placeholder'|trans({}, 'navigation') }}"
+            data-exercise--list-target="searchInput"
+            data-action="input->exercise--list#onSearch"
         >
     </div>
 
@@ -25,14 +23,14 @@
             class="exercise-filter-btn"
             id="filterBase"
             data-filter-type="official"
-            data-exercise--history-target="filterBtn"
-            data-action="click->exercise--history#toggleFilter"
+            data-exercise--list-target="filterBtn"
+            data-action="click->exercise--list#toggleFilter"
             aria-pressed="false"
         >
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
             </svg>
-            {{ 'exercise.history.filter.base'|trans({}, 'navigation') }}
+            {{ 'exercise.list.filter.base'|trans({}, 'navigation') }}
         </button>
 
         <button
@@ -40,14 +38,12 @@
             class="exercise-filter-btn"
             id="filterMine"
             data-filter-type="custom"
-            data-exercise--history-target="filterBtn"
-            data-action="click->exercise--history#toggleFilter"
+            data-exercise--list-target="filterBtn"
+            data-action="click->exercise--list#toggleFilter"
             aria-pressed="false"
         >
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-            {{ 'exercise.history.filter.mine'|trans({}, 'navigation') }}
+            {% include 'partials/_svg/_profile.html.twig' with {'width': 3.5, 'height': 3.5, 'ariaHidden': true} only %}
+            {{ 'exercise.list.filter.mine'|trans({}, 'navigation') }}
         </button>
     </div>
 
@@ -56,14 +52,12 @@
         type="button"
         class="exercise-filter-btn"
         hidden
-        data-exercise--history-target="resetBtn"
-        data-action="click->exercise--history#resetFilters"
-        aria-label="{{ 'exercise.history.filter.reset'|trans({}, 'navigation') }}"
+        data-exercise--list-target="resetBtn"
+        data-action="click->exercise--list#resetFilters"
+        aria-label="{{ 'exercise.list.filter.reset'|trans({}, 'navigation') }}"
     >
-        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
-        {{ 'exercise.history.filter.reset'|trans({}, 'navigation') }}
+        {% include 'partials/_svg/_cross.html.twig' with {'ariaHidden': true} only %}
+        {{ 'exercise.list.filter.reset'|trans({}, 'navigation') }}
     </button>
 
     {# Compteur dynamique #}
@@ -71,16 +65,16 @@
         class="flex items-center gap-1.5 px-3 py-1.5 ml-auto
                bg-cyan-500/[0.12] border border-cyan-500/[0.25] rounded-lg
                text-[12px] font-semibold text-cyan-400 whitespace-nowrap"
-        data-exercise--history-target="counter"
+        data-exercise--list-target="counter"
         aria-live="polite"
         aria-atomic="true"
     >
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
         </svg>
-        <span data-exercise--history-target="counterText">
+        <span data-exercise--list-target="counterText">
             {# Valeur initiale rendue par Twig — mise à jour par Stimulus #}
-            {{ 'exercise.history.filter.count'|trans({count: totalCount}, 'navigation') }}
+            {{ 'exercise.list.filter.count'|trans({count: totalCount}, 'navigation') }}
         </span>
     </div>
 

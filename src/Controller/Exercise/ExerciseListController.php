@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
-final class ExerciseHistoryController extends AbstractController
+final class ExerciseListController extends AbstractController
 {
     public function __construct(
         private readonly ExerciseRepository $exerciseRepository,
@@ -31,7 +31,7 @@ final class ExerciseHistoryController extends AbstractController
         'de' => '/bibliothek',
         'nl' => '/bibliotheek',
         'pl' => '/biblioteka',
-    ], name: 'app_exercise_history', methods: ['GET'])]
+    ], name: 'app_exercise_list', methods: ['GET'])]
     public function __invoke(): Response
     {
         /** @var User $user */
@@ -40,7 +40,7 @@ final class ExerciseHistoryController extends AbstractController
         $exercises = $this->exerciseRepository->findAvailableForUser($user);
         $sorted = $this->exerciseSorter->sortByName($exercises, $user->locale ?? LocaleAllowedEnum::EN->value);
 
-        return $this->render('exercise/history/index.html.twig', [
+        return $this->render('exercise/list/index.html.twig', [
             'exercises' => $sorted,
             'totalCount' => count($sorted),
         ]);

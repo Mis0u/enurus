@@ -143,7 +143,9 @@ exercise:
         preview_label: Voorbeeld
         primary_muscles: Primaire
         secondary_muscles: Secundaire
-    history:
+    library:
+        title: Bibliotheek
+    list:
         actions:
             delete: Verwijderen
             edit: Bewerken
@@ -177,8 +179,6 @@ exercise:
                 =1    {# oefening beschikbaar}
                 other {# oefeningen beschikbaar}
             }
-        title: Bibliotheek
-    library:
         title: Bibliotheek
 
 footer:

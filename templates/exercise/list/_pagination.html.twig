@@ -1,44 +1,44 @@
 <div
     class="flex items-center justify-between mt-2 pt-5 border-t border-white/[0.07]"
-    data-exercise--history-target="paginationWrapper"
+    data-exercise--list-target="paginationWrapper"
 >
     {# Sélecteur de résultats par page #}
     <div class="flex items-center gap-2 text-[12px] text-slate-400">
-        <span>{{ 'exercise.history.pagination.show'|trans({}, 'navigation') }}</span>
+        <span>{{ 'exercise.list.pagination.show'|trans({}, 'navigation') }}</span>
         <select
             class="bg-[#0f1928] border border-white/[0.07] rounded-md px-2 py-1
                    text-[#f0f4ff] text-[12px] font-['DM_Sans'] outline-none cursor-pointer
                    hover:border-white/[0.12] transition-colors duration-200"
-            aria-label="{{ 'exercise.history.pagination.per_page'|trans({}, 'navigation') }}"
-            data-exercise--history-target="perPageSelect"
-            data-action="change->exercise--history#onPerPageChange"
+            aria-label="{{ 'exercise.list.pagination.per_page'|trans({}, 'navigation') }}"
+            data-exercise--list-target="perPageSelect"
+            data-action="change->exercise--list#onPerPageChange"
         >
             <option value="12" selected>12</option>
             <option value="24">24</option>
             <option value="48">48</option>
         </select>
-        <span>{{ 'exercise.history.pagination.results'|trans({}, 'navigation') }}</span>
+        <span>{{ 'exercise.list.pagination.results'|trans({}, 'navigation') }}</span>
     </div>
 
     {# Navigation pages #}
-    <div class="flex items-center gap-1" role="navigation" aria-label="{{ 'exercise.history.pagination.navigation'|trans({}, 'navigation') }}">
+    <div class="flex items-center gap-1" role="navigation" aria-label="{{ 'exercise.list.pagination.navigation'|trans({}, 'navigation') }}">
         <button
             type="button"
             class="exercise-page-btn exercise-page-btn--nav"
             disabled
-            data-exercise--history-target="prevBtn"
-            data-action="click->exercise--history#prevPage"
-            aria-label="{{ 'exercise.history.pagination.previous'|trans({}, 'navigation') }}"
+            data-exercise--list-target="prevBtn"
+            data-action="click->exercise--list#prevPage"
+            aria-label="{{ 'exercise.list.pagination.previous'|trans({}, 'navigation') }}"
         >
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
             </svg>
-            {{ 'exercise.history.pagination.previous'|trans({}, 'navigation') }}
+            {{ 'exercise.list.pagination.previous'|trans({}, 'navigation') }}
         </button>
 
         <div
             class="flex items-center gap-1"
-            data-exercise--history-target="pageNumbers"
+            data-exercise--list-target="pageNumbers"
         >
             {# Les numéros de page sont injectés dynamiquement par Stimulus #}
         </div>
@@ -46,11 +46,11 @@
         <button
             type="button"
             class="exercise-page-btn exercise-page-btn--nav"
-            data-exercise--history-target="nextBtn"
-            data-action="click->exercise--history#nextPage"
-            aria-label="{{ 'exercise.history.pagination.next'|trans({}, 'navigation') }}"
+            data-exercise--list-target="nextBtn"
+            data-action="click->exercise--list#nextPage"
+            aria-label="{{ 'exercise.list.pagination.next'|trans({}, 'navigation') }}"
         >
-            {{ 'exercise.history.pagination.next'|trans({}, 'navigation') }}
+            {{ 'exercise.list.pagination.next'|trans({}, 'navigation') }}
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
             </svg>
