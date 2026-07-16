@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Security\Voter;
 
 use App\Entity\Exercise;
-use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
@@ -14,6 +13,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class ExerciseVoter extends Voter
 {
+    use ResolvesAuthenticatedUserTrait;
+
     public const string CREATE = 'EXERCISE_CREATE';
 
     public const string EDIT = 'EXERCISE_EDIT';
@@ -41,21 +42,16 @@ final class ExerciseVoter extends Voter
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
-        $user = $token->getUser();
+        $user = $this->resolveUser($token);
 
-        if (! $user instanceof User) {
+        if (null === $user) {
             return false;
         }
 
         return match ($attribute) {
             self::CREATE => true,
-            self::EDIT, self::DELETE => $subject instanceof Exercise && $this->isOwner($subject, $user),
+            self::EDIT, self::DELETE => $subject instanceof Exercise && $subject->owner === $user,
             default => false,
         };
-    }
-
-    private function isOwner(Exercise $exercise, User $user): bool
-    {
-        return $exercise->owner === $user;
     }
 }

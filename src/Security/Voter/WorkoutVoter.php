@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Security\Voter;
 
-use App\Entity\User;
 use App\Entity\Workout;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -14,6 +13,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class WorkoutVoter extends Voter
 {
+    use ResolvesAuthenticatedUserTrait;
+
     public const string VIEW = 'WORKOUT_VIEW';
 
     public const string EDIT = 'WORKOUT_EDIT';
@@ -28,9 +29,9 @@ final class WorkoutVoter extends Voter
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
-        $user = $token->getUser();
+        $user = $this->resolveUser($token);
 
-        if (! $user instanceof User) {
+        if (null === $user) {
             return false;
         }
 

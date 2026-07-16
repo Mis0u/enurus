@@ -15,6 +15,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class ContactThreadVoter extends Voter
 {
+    use ResolvesAuthenticatedUserTrait;
+
     public const string VIEW = 'CONTACT_THREAD_VIEW';
 
     public const string REPLY = 'CONTACT_THREAD_REPLY';
@@ -31,22 +33,27 @@ final class ContactThreadVoter extends Voter
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
-        $user = $token->getUser();
+        $user = $this->resolveUser($token);
 
-        if (! $user instanceof User) {
+        if (null === $user) {
             return false;
         }
 
         /** @var ContactThread $subject */
         return match ($attribute) {
             self::VIEW => (null === $subject->hiddenByUserAt && $subject->owner === $user)
-                || in_array('ROLE_ADMIN', $user->getRoles(), true),
+                || $this->isAdmin($user),
             self::REPLY => $subject->owner === $user
                 && ContactThreadStatusEnum::CLOSED !== $subject->status
                 && ! $user->isContactRestricted,
-            self::CLOSE => in_array('ROLE_ADMIN', $user->getRoles(), true),
+            self::CLOSE => $this->isAdmin($user),
             self::DELETE => $subject->owner === $user,
             default => false,
         };
+    }
+
+    private function isAdmin(User $user): bool
+    {
+        return in_array('ROLE_ADMIN', $user->getRoles(), true);
     }
 }
