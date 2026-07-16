@@ -29,16 +29,21 @@
 
                 <tr>
                     <td style="padding: 30px 40px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center;">
-                        <p style="margin: 0 0 16px; font-size: 14px; color: #64748b;">
-                            {{ 'sentence.need_help'|trans({}, 'common', locale) }}
-                        </p>
-                        <p style="margin: 0; font-size: 12px; color: #475569;">
-                            {{ 'footer.copyright'|trans({'year': "now"|date("Y"), 'brand': brand_name}, 'navigation', locale) }}
-                        </p>
+                        {% block footer %}
+                            <p style="margin: 0 0 16px; font-size: 14px; color: #64748b;">
+                                {{ 'sentence.need_help'|trans({}, 'common', locale) }}
+                            </p>
+                            <p style="margin: 0; font-size: 12px; color: #475569;">
+                                {{ 'footer.copyright'|trans({'year': "now"|date("Y"), 'brand': brand_name}, 'navigation', locale) }}
+                            </p>
+                        {% endblock %}
                     </td>
                 </tr>
 
             </table>
+
+            {% block below_card %}{% endblock %}
+
         </td>
     </tr>
 </table>
