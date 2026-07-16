@@ -1,6 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
-import Swal from 'sweetalert2';
-import { MusclePills, updatePillVisual, buildRecapHtml } from './muscle_pills.js';
+import { MusclePills, updatePillVisual, renderMuscleRecap, syncMusclesInput, showFieldError, showDuplicateAlert } from './muscle_pills.js';
 
 /**
  * Stimulus controller: exercise--create
@@ -80,12 +79,12 @@ export default class extends Controller {
         event.preventDefault();
 
         if (!nameValid) {
-            this.#showError(this.nameErrorTarget);
+            showFieldError(this.nameErrorTarget);
 
             return;
         }
 
-        this.#showError(this.musclesErrorTarget);
+        showFieldError(this.musclesErrorTarget);
     }
 
     toggleAccordion() {
@@ -100,43 +99,26 @@ export default class extends Controller {
 
     #handleDuplicateResult(data) {
         if (data.type === 'custom') {
-            this.#showDuplicateAlert(
+            showDuplicateAlert(
                 this.duplicateCustomMessageValue
                     .replace('%name%', data.name)
-                    .replace('%date%', data.date)
+                    .replace('%date%', data.date),
+                { customClass: { popup: 'rounded-xl' } },
             );
 
             return;
         }
 
         if (data.type === 'public') {
-            this.#showDuplicateAlert(
-                this.duplicatePublicMessageValue.replace('%name%', data.name)
+            showDuplicateAlert(
+                this.duplicatePublicMessageValue.replace('%name%', data.name),
+                { customClass: { popup: 'rounded-xl' } },
             );
         }
     }
 
-    /** @param {string} message */
-    #showDuplicateAlert(message) {
-        Swal.fire({
-            icon:               'warning',
-            text:               message,
-            confirmButtonText:  'OK',
-            background:         '#111827',
-            color:              '#f1f5f9',
-            confirmButtonColor: '#f43f5e',
-            customClass:        { popup: 'rounded-xl' },
-        });
-    }
-
     #validateName() {
         return this.hasNameInputTarget && this.nameInputTarget.value.trim().length >= 2;
-    }
-
-    /** @param {HTMLElement} target */
-    #showError(target) {
-        this.#toggleError(target, true);
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     /**
@@ -148,11 +130,10 @@ export default class extends Controller {
     }
 
     #updateRecap() {
-        this.recapPrimaryTarget.innerHTML   = buildRecapHtml(this.#pills.musclesByState('primary'), 'primary', this.labelNoneValue);
-        this.recapSecondaryTarget.innerHTML = buildRecapHtml(this.#pills.musclesByState('secondary'), 'secondary', this.labelNoneValue);
+        renderMuscleRecap(this.#pills, this.recapPrimaryTarget, this.recapSecondaryTarget, this.labelNoneValue);
     }
 
     #syncHiddenInput() {
-        this.musclesInputTarget.value = JSON.stringify(this.#pills.toAssignments());
+        syncMusclesInput(this.#pills, this.musclesInputTarget);
     }
 }

@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import { paintMuscleGroupsByIds, resetBodymap } from '../../utils/muscle_colors.js';
 
 export const MUSCLE_STATES = ['none', 'primary', 'secondary'];
@@ -136,4 +137,58 @@ export function buildRecapHtml(muscles, type, labelNone) {
     return muscles
         .map(m => `<span class="recap-pill recap-pill--${type}">${m.label}</span>`)
         .join('');
+}
+
+/**
+ * Rafraîchit les deux blocs de récap (primaire/secondaire) — partagé par exercise--create et
+ * exercise--edit.
+ *
+ * @param {MusclePills} pills
+ * @param {HTMLElement} primaryTarget
+ * @param {HTMLElement} secondaryTarget
+ * @param {string} labelNone
+ */
+export function renderMuscleRecap(pills, primaryTarget, secondaryTarget, labelNone) {
+    primaryTarget.innerHTML   = buildRecapHtml(pills.musclesByState('primary'), 'primary', labelNone);
+    secondaryTarget.innerHTML = buildRecapHtml(pills.musclesByState('secondary'), 'secondary', labelNone);
+}
+
+/**
+ * Sérialise l'état courant des pills dans le hidden input consommé par
+ * ExerciseMuscleDataTransformer côté serveur.
+ *
+ * @param {MusclePills} pills
+ * @param {HTMLInputElement} inputTarget
+ */
+export function syncMusclesInput(pills, inputTarget) {
+    inputTarget.value = JSON.stringify(pills.toAssignments());
+}
+
+/**
+ * Affiche un message d'erreur de champ et scroll jusqu'à lui.
+ *
+ * @param {HTMLElement} target
+ */
+export function showFieldError(target) {
+    target.hidden = false;
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+/**
+ * Alerte SweetAlert2 de doublon d'exercice — mêmes options entre création et édition,
+ * seuls l'icône et le style de popup diffèrent selon le contexte.
+ *
+ * @param {string} message
+ * @param {object} [options]
+ */
+export function showDuplicateAlert(message, options = {}) {
+    Swal.fire({
+        icon:               'warning',
+        text:               message,
+        confirmButtonText:  'OK',
+        background:         '#111827',
+        color:              '#f1f5f9',
+        confirmButtonColor: '#f43f5e',
+        ...options,
+    });
 }
