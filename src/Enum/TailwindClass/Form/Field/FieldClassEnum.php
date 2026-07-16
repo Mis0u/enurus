@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Enum\tailwind_class\form\field;
+namespace App\Enum\TailwindClass\Form\Field;
 
 enum FieldClassEnum: string
 {

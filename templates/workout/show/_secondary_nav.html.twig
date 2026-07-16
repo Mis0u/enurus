@@ -20,7 +20,7 @@
 
         <div class="show-chip-tonnage inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border max-md:px-2 max-md:text-[11px]">
             {% include 'partials/_svg/_lightning.html.twig' %}
-            {{ totalTonnage|number_format(0, ',', ' ') }} {{ unit.label() }}
+            {{ totalTonnage|number_format(0, ',', ' ') }} {{ unit.value }}
         </div>
     </div>
 </div>

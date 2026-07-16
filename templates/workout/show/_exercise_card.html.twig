@@ -24,7 +24,7 @@
                 <td class="show-table-td-muted px-3 py-2.5 text-[12px]">{{ set.position + 1 }}</td>
                 <td class="show-table-td-value px-3 py-2.5 font-['Rajdhani'] text-[15px] font-semibold">{{ set.weightFormatted }}</td>
                 <td class="show-table-td-value px-3 py-2.5 font-['Rajdhani'] text-[15px] font-semibold">× {{ set.reps }}</td>
-                <td class="show-table-td-secondary px-3 py-2.5 font-['Rajdhani'] text-[15px] font-semibold max-md:hidden">{{ set.tonnage|number_format(0, ',', ' ') }} {{ unit.label() }}</td>
+                <td class="show-table-td-secondary px-3 py-2.5 font-['Rajdhani'] text-[15px] font-semibold max-md:hidden">{{ set.tonnage|number_format(0, ',', ' ') }} {{ unit.value }}</td>
                 <td class="px-3 py-2.5 text-right">
                     {% if set.isPr %}
                         <span class="show-pr-badge inline-flex items-center gap-1 px-2 py-0.5 border rounded-md text-[11px] font-bold"
