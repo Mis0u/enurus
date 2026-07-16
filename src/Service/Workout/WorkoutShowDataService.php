@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Service\Workout;
 
 use App\Entity\ExerciseMuscle;
 use App\Entity\User;
@@ -11,65 +11,64 @@ use App\Entity\WorkoutExercise;
 use App\Repository\ExerciseSetRepository;
 use App\Repository\WorkoutExerciseRepository;
 use App\Repository\WorkoutRepository;
-use App\Security\Voter\WorkoutVoter;
 use App\Service\Utils\WeightConverterService;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class WorkoutShowController extends AbstractController
+/**
+ * Responsabilité unique : assembler les données affichées sur la page de détail d'une séance
+ * (tonnage, PR, records de reps, SVG des muscles sollicités) à partir du Workout et de son
+ * historique. Le controller se contente d'orchestrer l'appel et de rendre la vue.
+ */
+final readonly class WorkoutShowDataService
 {
-    #[Route(path: [
-        'fr' => '/seance/{id}',
-        'en' => '/workout/{id}',
-        'it' => '/allenamento/{id}',
-        'es' => '/entrenamiento/{id}',
-        'pt' => '/treino/{id}',
-        'de' => '/training/{id}',
-        'nl' => '/training/{id}',
-        'pl' => '/trening/{id}',
-    ], name: 'app_workout_show')]
-    #[IsGranted('ROLE_USER')]
-    public function __invoke(
-        #[MapEntity(id: 'id')]
-        Workout $workout,
-        WorkoutRepository $workoutRepository,
-        WorkoutExerciseRepository $workoutExerciseRepository,
-        ExerciseSetRepository $exerciseSetRepository,
-        WeightConverterService $weightConverter,
-    ): Response {
-        $this->denyAccessUnlessGranted(WorkoutVoter::VIEW, $workout);
+    public function __construct(
+        private WorkoutRepository $workoutRepository,
+        private WorkoutExerciseRepository $workoutExerciseRepository,
+        private ExerciseSetRepository $exerciseSetRepository,
+        private WeightConverterService $weightConverter,
+    ) {
+    }
 
-        /** @var User $user */
-        $user = $this->getUser();
-
-        $workoutExercises = $workoutExerciseRepository->findWithExercisesAndSets($workout);
+    /**
+     * @return array{
+     *     exerciseData: array<int, array{
+     *         workoutExercise: WorkoutExercise,
+     *         sets: array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>,
+     *         tonnage: float,
+     *         primarySvgIds: array<string>,
+     *         secondarySvgIds: array<string>,
+     *         muscles: array<ExerciseMuscle>,
+     *     }>,
+     *     totalTonnage: float,
+     *     totalSets: int,
+     *     totalReps: int,
+     *     allPrimarySvgIds: array<string>,
+     *     allSecondarySvgIds: array<string>,
+     * }
+     */
+    public function build(Workout $workout, User $user): array
+    {
+        $workoutExercises = $this->workoutExerciseRepository->findWithExercisesAndSets($workout);
         $workoutExerciseIds = $this->extractWorkoutExerciseIds($workoutExercises);
         $exercises = $this->extractExercises($workoutExercises);
 
-        $tonnageMap = $workoutRepository->findTonnageByWorkoutIds([(string) $workout->id]);
-        $exerciseTonnageMap = $workoutExerciseRepository->findTonnageByWorkoutExerciseIds($workoutExerciseIds);
-        $priorMaxWeightPerExercise = $exerciseSetRepository->findMaxWeightPerExerciseBeforeDate($user, $exercises, $workout->performedAt);
-        $priorMaxRepsPerWeight = $exerciseSetRepository->findMaxRepsPerWeightBeforeDate($user, $exercises, $workout->performedAt);
+        $tonnageMap = $this->workoutRepository->findTonnageByWorkoutIds([(string) $workout->id]);
+        $exerciseTonnageMap = $this->workoutExerciseRepository->findTonnageByWorkoutExerciseIds($workoutExerciseIds);
+        $priorMaxWeightPerExercise = $this->exerciseSetRepository->findMaxWeightPerExerciseBeforeDate($user, $exercises, $workout->performedAt);
+        $priorMaxRepsPerWeight = $this->exerciseSetRepository->findMaxRepsPerWeightBeforeDate($user, $exercises, $workout->performedAt);
 
         $totalTonnageKg = $tonnageMap[(string) $workout->id] ?? 0.0;
-        $totalTonnage = $weightConverter->convertToLbs($totalTonnageKg, $user->unitOfMeasure);
-        $exerciseData = $this->buildExerciseData($workoutExercises, $priorMaxWeightPerExercise, $priorMaxRepsPerWeight, $exerciseTonnageMap, $weightConverter, $user);
+        $totalTonnage = $this->weightConverter->convertToLbs($totalTonnageKg, $user->unitOfMeasure);
+        $exerciseData = $this->buildExerciseData($workoutExercises, $priorMaxWeightPerExercise, $priorMaxRepsPerWeight, $exerciseTonnageMap, $user);
         [$totalSets, $totalReps] = $this->countSetsAndReps($exerciseData);
 
-        return $this->render('workout/show/show.html.twig', [
-            'workout' => $workout,
+        return [
             'exerciseData' => $exerciseData,
             'totalTonnage' => $totalTonnage,
             'totalSets' => $totalSets,
             'totalReps' => $totalReps,
-            'unit' => $user->unitOfMeasure,
             'allPrimarySvgIds' => $this->resolveAllPrimarySvgIds($exerciseData),
             'allSecondarySvgIds' => $this->resolveAllSecondarySvgIds($exerciseData),
-            'user' => $user,
-        ]);
+        ];
     }
 
     /**
@@ -123,10 +122,11 @@ class WorkoutShowController extends AbstractController
      * @param array<string, float> $exerciseTonnageMap
      * @return array<int, array{
      *     workoutExercise: WorkoutExercise,
-     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, isPr: bool, isRepsRecord: bool}>,
+     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>,
      *     tonnage: float,
      *     primarySvgIds: array<string>,
-     *     secondarySvgIds: array<string>
+     *     secondarySvgIds: array<string>,
+     *     muscles: array<ExerciseMuscle>,
      * }>
      */
     private function buildExerciseData(
@@ -134,7 +134,6 @@ class WorkoutShowController extends AbstractController
         array $priorMaxWeightPerExercise,
         array $priorMaxRepsPerWeight,
         array $exerciseTonnageMap,
-        WeightConverterService $weightConverter,
         User $user,
     ): array {
         return array_map(
@@ -143,7 +142,6 @@ class WorkoutShowController extends AbstractController
                 $priorMaxWeightPerExercise,
                 $priorMaxRepsPerWeight,
                 $exerciseTonnageMap,
-                $weightConverter,
                 $user,
             ),
             $workoutExercises
@@ -156,10 +154,11 @@ class WorkoutShowController extends AbstractController
      * @param array<string, float> $exerciseTonnageMap
      * @return array{
      *     workoutExercise: WorkoutExercise,
-     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, isPr: bool, isRepsRecord: bool}>,
+     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>,
      *     tonnage: float,
      *     primarySvgIds: array<string>,
-     *     secondarySvgIds: array<string>
+     *     secondarySvgIds: array<string>,
+     *     muscles: array<ExerciseMuscle>,
      * }
      */
     private function buildSingleExerciseData(
@@ -167,16 +166,15 @@ class WorkoutShowController extends AbstractController
         array $priorMaxWeightPerExercise,
         array $priorMaxRepsPerWeight,
         array $exerciseTonnageMap,
-        WeightConverterService $weightConverter,
         User $user,
     ): array {
         $priorMaxWeight = $priorMaxWeightPerExercise[(string) $we->exercise->id] ?? null;
         $priorMaxRepsByWeight = $priorMaxRepsPerWeight[(string) $we->exercise->id] ?? [];
-        $tonnage = $weightConverter->convertToLbs(
+        $tonnage = $this->weightConverter->convertToLbs(
             $exerciseTonnageMap[(string) $we->id] ?? 0.0,
             $user->unitOfMeasure
         );
-        $sets = $this->buildSets($we, $priorMaxWeight, $priorMaxRepsByWeight, $weightConverter, $user);
+        $sets = $this->buildSets($we, $priorMaxWeight, $priorMaxRepsByWeight, $user);
         [$primarySvgIds, $secondarySvgIds] = $this->resolveSvgIds($we);
         $sortedMuscles = $this->sortMusclesByType($we->exercise->exerciseMuscles->toArray());
 
@@ -224,7 +222,6 @@ class WorkoutShowController extends AbstractController
         WorkoutExercise $we,
         ?float $priorMaxWeight,
         array $priorMaxRepsByWeight,
-        WeightConverterService $weightConverter,
         User $user,
     ): array {
         $workoutMaxWeight = 0.0;
@@ -264,10 +261,10 @@ class WorkoutShowController extends AbstractController
 
             $sets[] = [
                 'position' => $set->position,
-                'weightFormatted' => $weightConverter->format($set->weight, $user->unitOfMeasure),
+                'weightFormatted' => $this->weightConverter->format($set->weight, $user->unitOfMeasure),
                 'reps' => $set->reps,
-                'tonnage' => $weightConverter->convertToLbs($rawTonnage, $user->unitOfMeasure),
-                'tonnageUnit' => $user->unitOfMeasure->label(),
+                'tonnage' => $this->weightConverter->convertToLbs($rawTonnage, $user->unitOfMeasure),
+                'tonnageUnit' => $user->unitOfMeasure->value,
                 'isPr' => $isPr,
                 'isRepsRecord' => $isRepsRecord,
             ];
