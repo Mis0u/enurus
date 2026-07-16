@@ -32,6 +32,7 @@ class Exercise
 
     #[ORM\Column(length: 150)]
     #[Assert\NotBlank(message: 'exercise.name_not_blank')]
+    #[Assert\Length(max: 150)]
     public string $name {
         get {
             return $this->name;

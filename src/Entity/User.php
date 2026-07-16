@@ -93,6 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, nullable: false)]
     #[NotBlank]
     #[Email]
+    #[Length(max: 180)]
     public string $email {
         get {
             return $this->email;
