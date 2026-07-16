@@ -89,18 +89,40 @@ class UserFixtures extends Fixture
         $manager->flush();
     }
 
+    /**
+     * Construit un User avec les champs communs à toutes les fixtures (mot de passe, alias créé
+     * par lui-même, dernière connexion). Les appelants n'ajustent que ce qui les distingue.
+     */
+    private function createUser(
+        string $email,
+        string $nickname,
+        string $locale = LocaleAllowedEnum::FR->value,
+        GenderEnum $gender = GenderEnum::MALE,
+        ?\DateTimeImmutable $lastLogin = null,
+    ): User {
+        $user = new User();
+        $user->email = $email;
+        $user->nickname = $nickname;
+        $user->createdBy = $user;
+        $user->locale = $locale;
+        $user->gender = $gender;
+        $user->lastLogin = $lastLogin ?? new \DateTimeImmutable();
+        $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+
+        return $user;
+    }
+
+    private function addUserReference(User $user, string $email): void
+    {
+        $this->addReference(\sprintf('%s%s', self::REFERENCE_PREFIX, $email), $user);
+    }
+
     private function loadLocaleUsers(ObjectManager $manager): void
     {
+        $lastLogin = now(\sprintf('+%d day +%d hours', 1, 1));
+
         foreach (self::USERS_ETHNIES as $key => $userEmail) {
-            $user = new User();
-            $lastLogin = now(\sprintf('+%d day +%d hours', 1, 1));
-            $user->email = $userEmail;
-            $user->nickname = \sprintf('user-country-%s', $key);
-            $user->createdBy = $user;
-            $user->locale = $key;
-            $user->lastLogin = $lastLogin;
-            $user->gender = GenderEnum::MALE;
-            $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+            $user = $this->createUser($userEmail, \sprintf('user-country-%s', $key), $key, lastLogin: $lastLogin);
 
             $manager->persist($user);
         }
@@ -109,15 +131,15 @@ class UserFixtures extends Fixture
     private function loadIndexedUsers(ObjectManager $manager): void
     {
         for ($i = 0; 10 > $i; ++$i) {
-            $user = new User();
+            $gender = 0 === $i % 5 ? GenderEnum::FEMALE : GenderEnum::MALE;
             $lastLogin = now(\sprintf('+%d day +%d hours', $i, $i));
-            $user->email = \sprintf('user-fixture-%s@test.com', $i);
-            $user->nickname = \sprintf('user-fixture-%s', $i);
-            $user->createdBy = $user;
-            $user->locale = LocaleAllowedEnum::FR->value;
-            $user->lastLogin = $lastLogin;
-            $user->gender = 0 === $i % 5 ? GenderEnum::FEMALE : GenderEnum::MALE;
-            $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+
+            $user = $this->createUser(
+                \sprintf('user-fixture-%s@test.com', $i),
+                \sprintf('user-fixture-%s', $i),
+                gender: $gender,
+                lastLogin: $lastLogin,
+            );
 
             $manager->persist($user);
         }
@@ -126,69 +148,38 @@ class UserFixtures extends Fixture
     private function loadWorkoutUsers(ObjectManager $manager): void
     {
         foreach (self::WORKOUT_USERS as $userData) {
-            $user = new User();
-            $user->email = $userData['email'];
-            $user->nickname = $userData['nickname'];
-            $user->createdBy = $user;
-            $user->locale = LocaleAllowedEnum::FR->value;
-            $user->gender = 'user-fixture-26-workout@test.com' === $userData['email']
+            $gender = 'user-fixture-26-workout@test.com' === $userData['email']
                 ? GenderEnum::FEMALE
                 : GenderEnum::MALE;
-            $user->lastLogin = new \DateTimeImmutable();
-            $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+
+            $user = $this->createUser($userData['email'], $userData['nickname'], gender: $gender);
 
             if ('user-fixture-51-workout@test.com' === $userData['email']) {
                 $user->unitOfMeasure = UnitOfMeasureEnum::LBS;
             }
 
             $manager->persist($user);
-
-            $this->addReference(
-                \sprintf('%s%s', self::REFERENCE_PREFIX, $userData['email']),
-                $user,
-            );
+            $this->addUserReference($user, $userData['email']);
         }
     }
 
     private function loadExerciseUsers(ObjectManager $manager): void
     {
         foreach ($this->exerciseUsers() as $userData) {
-            $user = new User();
-            $user->email = $userData['email'];
-            $user->nickname = $userData['nickname'];
-            $user->createdBy = $user;
-            $user->locale = LocaleAllowedEnum::FR->value;
-            $user->gender = GenderEnum::MALE;
-            $user->lastLogin = new \DateTimeImmutable();
-            $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+            $user = $this->createUser($userData['email'], $userData['nickname']);
 
             $manager->persist($user);
-
-            $this->addReference(
-                \sprintf('%s%s', self::REFERENCE_PREFIX, $userData['email']),
-                $user,
-            );
+            $this->addUserReference($user, $userData['email']);
         }
     }
 
     private function loadRoutineUsers(ObjectManager $manager): void
     {
         foreach ($this->routineUsers() as $userData) {
-            $user = new User();
-            $user->email = $userData['email'];
-            $user->nickname = $userData['nickname'];
-            $user->createdBy = $user;
-            $user->locale = LocaleAllowedEnum::FR->value;
-            $user->gender = GenderEnum::MALE;
-            $user->lastLogin = new \DateTimeImmutable();
-            $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+            $user = $this->createUser($userData['email'], $userData['nickname']);
 
             $manager->persist($user);
-
-            $this->addReference(
-                \sprintf('%s%s', self::REFERENCE_PREFIX, $userData['email']),
-                $user,
-            );
+            $this->addUserReference($user, $userData['email']);
         }
     }
 
@@ -211,41 +202,19 @@ class UserFixtures extends Fixture
 
     private function loadDashboardUsers(ObjectManager $manager): void
     {
-        $user = new User();
-        $user->email = self::USER_DASHBOARD_SINGLE;
-        $user->nickname = 'user-dashboard-1-workout';
-        $user->createdBy = $user;
-        $user->locale = LocaleAllowedEnum::FR->value;
-        $user->gender = GenderEnum::MALE;
-        $user->lastLogin = new \DateTimeImmutable();
-        $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+        $user = $this->createUser(self::USER_DASHBOARD_SINGLE, 'user-dashboard-1-workout');
 
         $manager->persist($user);
-
-        $this->addReference(
-            \sprintf('%s%s', self::REFERENCE_PREFIX, self::USER_DASHBOARD_SINGLE),
-            $user,
-        );
+        $this->addUserReference($user, self::USER_DASHBOARD_SINGLE);
     }
 
     private function loadAdminUser(ObjectManager $manager): void
     {
-        $user = new User();
-        $user->email = self::USER_ADMIN;
-        $user->nickname = 'admin-fixture';
-        $user->createdBy = $user;
-        $user->locale = LocaleAllowedEnum::FR->value;
-        $user->gender = GenderEnum::MALE;
-        $user->lastLogin = new \DateTimeImmutable();
-        $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+        $user = $this->createUser(self::USER_ADMIN, 'admin-fixture');
         $user->setRoles(['ROLE_ADMIN']);
 
         $manager->persist($user);
-
-        $this->addReference(
-            \sprintf('%s%s', self::REFERENCE_PREFIX, self::USER_ADMIN),
-            $user,
-        );
+        $this->addUserReference($user, self::USER_ADMIN);
     }
 
     /**
@@ -279,24 +248,13 @@ class UserFixtures extends Fixture
         ];
 
         foreach ($restrictedUsers as $userData) {
-            $user = new User();
-            $user->email = $userData['email'];
-            $user->nickname = $userData['nickname'];
-            $user->createdBy = $user;
-            $user->locale = LocaleAllowedEnum::FR->value;
-            $user->gender = GenderEnum::MALE;
-            $user->lastLogin = new \DateTimeImmutable();
-            $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+            $user = $this->createUser($userData['email'], $userData['nickname']);
             $user->contactRestrictedUntil = $userData['until'];
             $user->contactRestrictedPermanently = $userData['permanent'];
             $user->contactRestrictionDuration = $userData['duration'];
 
             $manager->persist($user);
-
-            $this->addReference(
-                \sprintf('%s%s', self::REFERENCE_PREFIX, $userData['email']),
-                $user,
-            );
+            $this->addUserReference($user, $userData['email']);
         }
     }
 
