@@ -8,7 +8,7 @@ use App\Entity\User;
 use App\Repository\ContactThreadMessageRepository;
 use Twig\Attribute\AsTwigFunction;
 
-readonly class ContactUnreadCountExtension
+final readonly class ContactUnreadCountExtension
 {
     public function __construct(
         private ContactThreadMessageRepository $contactThreadMessageRepository,

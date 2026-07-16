@@ -8,7 +8,7 @@ use App\Twig\Components\Button\AbstractButton;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
-class Secondary extends AbstractButton
+final class Secondary extends AbstractButton
 {
     public function getClasses(): string
     {

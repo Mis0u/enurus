@@ -7,7 +7,7 @@ namespace App\Twig\Extension;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Attribute\AsTwigFilter;
 
-readonly class FormatTitleExtension
+final readonly class FormatTitleExtension
 {
     private const int SEPARATOR_MAX_LENGTH = 3;
 

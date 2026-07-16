@@ -18,13 +18,10 @@ use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent('LiveComponent:ExerciseSelectorComponent:ExerciseSelectorComponent')]
-class ExerciseSelectorComponent
+final class ExerciseSelectorComponent
 {
     use DefaultActionTrait;
     use ComponentToolsTrait;
-
-    #[LiveProp(writable: true)]
-    public ?int $selectedExerciseId = null;
 
     #[LiveProp(writable: true)]
     public string $search = '';
@@ -56,21 +53,11 @@ class ExerciseSelectorComponent
     #[LiveAction]
     public function selectExercise(#[LiveArg] string $id): void
     {
-        $this->selectedExerciseId = (int) $id;
         $this->search = '';
         $this->isOpen = false;
         $this->dispatchBrowserEvent('exercise:selected', [
             'id' => $id,
         ]);
-    }
-
-    public function getCurrentExercise(): ?Exercise
-    {
-        if (null === $this->selectedExerciseId) {
-            return null;
-        }
-
-        return $this->exerciseRepository->find($this->selectedExerciseId);
     }
 
     /**

@@ -8,7 +8,7 @@ use App\Twig\Components\Trait\WithSvgIcon;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
-class NavigationItem
+final class NavigationItem
 {
     use WithSvgIcon;
 
