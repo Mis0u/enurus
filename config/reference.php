@@ -1499,9 +1499,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     },
  *     controllers_json?: scalar|\Symfony\Component\Config\Loader\ParamConfigurator|null, // Deprecated: The "twig_component.controllers_json" config option is deprecated, and will be removed in 3.0. // Default: null
  * }
- * @psalm-type SymfonycastsVerifyEmailConfig = array{
- *     lifetime?: int|\Symfony\Component\Config\Loader\ParamConfigurator, // The length of time in seconds that a signed URI is valid for after it is created. // Default: 3600
- * }
  * @psalm-type DoctrineDoctorConfig = array{
  *     enabled?: bool|\Symfony\Component\Config\Loader\ParamConfigurator, // Enable or disable Doctrine Doctor // Default: true
  *     analysis?: array{
@@ -1823,7 +1820,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *     symfonycasts_reset_password?: SymfonycastsResetPasswordConfig,
  *     twig_component?: TwigComponentConfig,
- *     symfonycasts_verify_email?: SymfonycastsVerifyEmailConfig,
  *     live_component?: LiveComponentConfig,
  *     knp_paginator?: KnpPaginatorConfig,
  *     flysystem?: FlysystemConfig,
@@ -1846,7 +1842,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *         symfonycasts_reset_password?: SymfonycastsResetPasswordConfig,
  *         twig_component?: TwigComponentConfig,
- *         symfonycasts_verify_email?: SymfonycastsVerifyEmailConfig,
  *         doctrine_doctor?: DoctrineDoctorConfig,
  *         live_component?: LiveComponentConfig,
  *         knp_paginator?: KnpPaginatorConfig,
@@ -1868,7 +1863,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
  *         symfonycasts_reset_password?: SymfonycastsResetPasswordConfig,
  *         twig_component?: TwigComponentConfig,
- *         symfonycasts_verify_email?: SymfonycastsVerifyEmailConfig,
  *         live_component?: LiveComponentConfig,
  *         knp_paginator?: KnpPaginatorConfig,
  *         flysystem?: FlysystemConfig,
@@ -1891,7 +1885,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         symfonycasts_reset_password?: SymfonycastsResetPasswordConfig,
  *         dama_doctrine_test?: DamaDoctrineTestConfig,
  *         twig_component?: TwigComponentConfig,
- *         symfonycasts_verify_email?: SymfonycastsVerifyEmailConfig,
  *         doctrine_doctor?: DoctrineDoctorConfig,
  *         live_component?: LiveComponentConfig,
  *         knp_paginator?: KnpPaginatorConfig,
