@@ -1,7 +1,7 @@
 <button
     {% if disabled %}disabled{% endif %}
     {% if class is null %}
-        class="{{ this.classes }}"
+        class="{{ this.classes }}{% if extraClass is not null %} {{ extraClass }}{% endif %}"
     {% else %}
         class="{{ class }}"
     {% endif %}
