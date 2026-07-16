@@ -35,7 +35,7 @@ final class RoutineListController extends AbstractController
         $user = $this->getUser();
         $routines = $this->routineRepository->findByOwnerOrderedByDate($user);
 
-        return $this->render('routine/history/index.html.twig', [
+        return $this->render('routine/list/index.html.twig', [
             'routines' => $routines,
             'count' => count($routines),
         ]);

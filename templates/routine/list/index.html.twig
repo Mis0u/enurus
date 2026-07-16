@@ -1,5 +1,5 @@
 {#
-    templates/routine/history/index.html.twig
+    templates/routine/list/index.html.twig
 
     Page liste des routines de l'utilisateur.
     Controller : RoutineListController (GET /{_locale}/mes-routines)
@@ -32,13 +32,13 @@
     <div class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]">
 
         {% if routines is empty %}
-            {% include 'routine/history/_empty_state.html.twig' only %}
+            {% include 'routine/list/_empty_state.html.twig' only %}
         {% else %}
-            {% include 'routine/history/_routine_count.html.twig' with {count: count} only %}
+            {% include 'routine/list/_routine_count.html.twig' with {count: count} only %}
 
             <div class="routines-grid mt-5">
                 {% for routine in routines %}
-                    {% include 'routine/history/_routine_card.html.twig' with {routine: routine} only %}
+                    {% include 'routine/list/_routine_card.html.twig' with {routine: routine} only %}
                 {% endfor %}
             </div>
         {% endif %}
