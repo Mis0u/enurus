@@ -43,12 +43,37 @@ class ContactFixtures extends Fixture implements DependentFixtureInterface
         );
 
         $this->createAwaitingThread($manager, $awaitingOwner);
-        $this->createAnsweredThreadWithUnreadMessage($manager, $answeredOwner, $admin);
         $this->createClosedThread($manager, $closedOwner, $admin);
-        // $answeredOwner porte déjà 1 message admin non lu ci-dessus — ces deux fils lui en
-        // ajoutent 2 de plus, pour un total de 3 non lus (utile pour tester le badge de nav).
-        $this->createSecondThreadWithUnreadMessage($manager, $answeredOwner, $admin);
-        $this->createThirdThreadWithUnreadMessage($manager, $answeredOwner, $admin);
+
+        // $answeredOwner reçoit 3 fils répondus avec message admin non lu — total de 3 non lus,
+        // utile pour tester le badge de nav.
+        $this->createAnsweredThread(
+            $manager,
+            $answeredOwner,
+            $admin,
+            ContactCategoryEnum::SUGGESTION,
+            "Ajouter un export CSV de l'historique",
+            "Ce serait top de pouvoir exporter l'historique de mes séances en CSV pour le suivre dans un tableur.",
+            "Bonne idée, c'est noté ! Je l'ajoute à la liste des prochaines fonctionnalités.",
+        );
+        $this->createAnsweredThread(
+            $manager,
+            $answeredOwner,
+            $admin,
+            ContactCategoryEnum::LOVE,
+            "Juste pour dire que l'app est géniale",
+            "Je voulais juste dire un grand merci, l'application est top et super pratique au quotidien !",
+            'Ça nous touche énormément, merci infiniment pour ce message !',
+        );
+        $this->createAnsweredThread(
+            $manager,
+            $answeredOwner,
+            $admin,
+            ContactCategoryEnum::BUG,
+            "Le bouton d'export CSV ne fonctionne plus",
+            "Depuis la dernière mise à jour, le bouton d'export CSV sur la page Mes séances ne réagit plus au clic.",
+            'Merci pour le signalement, on regarde ça de ce pas et on te tient au courant.',
+        );
 
         $manager->flush();
     }
@@ -77,74 +102,31 @@ class ContactFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($thread);
     }
 
-    private function createAnsweredThreadWithUnreadMessage(ObjectManager $manager, User $owner, User $admin): void
-    {
+    private function createAnsweredThread(
+        ObjectManager $manager,
+        User $owner,
+        User $admin,
+        ContactCategoryEnum $category,
+        string $subject,
+        string $userBody,
+        string $adminBody,
+    ): void {
         $thread = new ContactThread();
         $thread->owner = $owner;
-        $thread->category = ContactCategoryEnum::SUGGESTION;
-        $thread->subject = "Ajouter un export CSV de l'historique";
+        $thread->category = $category;
+        $thread->subject = $subject;
 
         $userMessage = new ContactThreadMessage();
         $userMessage->author = $owner;
         $userMessage->fromAdmin = false;
-        $userMessage->body = "Ce serait top de pouvoir exporter l'historique de mes séances en CSV pour le suivre dans un tableur.";
+        $userMessage->body = $userBody;
 
         $thread->addMessage($userMessage);
 
         $adminMessage = new ContactThreadMessage();
         $adminMessage->author = $admin;
         $adminMessage->fromAdmin = true;
-        $adminMessage->body = "Bonne idée, c'est noté ! Je l'ajoute à la liste des prochaines fonctionnalités.";
-
-        $thread->addMessage($adminMessage);
-        $thread->status = ContactThreadStatusEnum::ANSWERED_BY_ADMIN;
-
-        $manager->persist($thread);
-    }
-
-    private function createSecondThreadWithUnreadMessage(ObjectManager $manager, User $owner, User $admin): void
-    {
-        $thread = new ContactThread();
-        $thread->owner = $owner;
-        $thread->category = ContactCategoryEnum::LOVE;
-        $thread->subject = "Juste pour dire que l'app est géniale";
-
-        $userMessage = new ContactThreadMessage();
-        $userMessage->author = $owner;
-        $userMessage->fromAdmin = false;
-        $userMessage->body = "Je voulais juste dire un grand merci, l'application est top et super pratique au quotidien !";
-
-        $thread->addMessage($userMessage);
-
-        $adminMessage = new ContactThreadMessage();
-        $adminMessage->author = $admin;
-        $adminMessage->fromAdmin = true;
-        $adminMessage->body = 'Ça nous touche énormément, merci infiniment pour ce message !';
-
-        $thread->addMessage($adminMessage);
-        $thread->status = ContactThreadStatusEnum::ANSWERED_BY_ADMIN;
-
-        $manager->persist($thread);
-    }
-
-    private function createThirdThreadWithUnreadMessage(ObjectManager $manager, User $owner, User $admin): void
-    {
-        $thread = new ContactThread();
-        $thread->owner = $owner;
-        $thread->category = ContactCategoryEnum::BUG;
-        $thread->subject = "Le bouton d'export CSV ne fonctionne plus";
-
-        $userMessage = new ContactThreadMessage();
-        $userMessage->author = $owner;
-        $userMessage->fromAdmin = false;
-        $userMessage->body = "Depuis la dernière mise à jour, le bouton d'export CSV sur la page Mes séances ne réagit plus au clic.";
-
-        $thread->addMessage($userMessage);
-
-        $adminMessage = new ContactThreadMessage();
-        $adminMessage->author = $admin;
-        $adminMessage->fromAdmin = true;
-        $adminMessage->body = 'Merci pour le signalement, on regarde ça de ce pas et on te tient au courant.';
+        $adminMessage->body = $adminBody;
 
         $thread->addMessage($adminMessage);
         $thread->status = ContactThreadStatusEnum::ANSWERED_BY_ADMIN;

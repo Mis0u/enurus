@@ -43,30 +43,12 @@ final class RoutineFixtures extends Fixture implements DependentFixtureInterface
             Exercise::class,
         );
 
-        $routine = new Routine();
-        $routine->owner = $owner;
-        $routine->name = 'Push Day';
-
-        $routineExercise = new RoutineExercise();
-        $routineExercise->exercise = $exercise;
-        $routineExercise->position = 1;
-        $routineExercise->routine = $routine;
-        $routine->routineExercises->add($routineExercise);
-
+        $routine = $this->createRoutineWithExercise($owner, 'Push Day', $exercise);
         $manager->persist($routine);
         $this->addReference(self::ROUTINE_PUSH_DAY, $routine);
 
         // Routine appartenant à un autre user — pour tester l'isolation
-        $otherRoutine = new Routine();
-        $otherRoutine->owner = $otherUser;
-        $otherRoutine->name = 'Other User Routine';
-
-        $otherRoutineExercise = new RoutineExercise();
-        $otherRoutineExercise->exercise = $exercise;
-        $otherRoutineExercise->position = 1;
-        $otherRoutineExercise->routine = $otherRoutine;
-        $otherRoutine->routineExercises->add($otherRoutineExercise);
-
+        $otherRoutine = $this->createRoutineWithExercise($otherUser, 'Other User Routine', $exercise);
         $manager->persist($otherRoutine);
         $this->addReference(self::ROUTINE_OTHER_USER, $otherRoutine);
         $this->loadOtherUserExercise($manager, $otherUser);
@@ -80,6 +62,21 @@ final class RoutineFixtures extends Fixture implements DependentFixtureInterface
             UserFixtures::class,
             ExerciseFixtures::class,
         ];
+    }
+
+    private function createRoutineWithExercise(User $owner, string $name, Exercise $exercise): Routine
+    {
+        $routine = new Routine();
+        $routine->owner = $owner;
+        $routine->name = $name;
+
+        $routineExercise = new RoutineExercise();
+        $routineExercise->exercise = $exercise;
+        $routineExercise->position = 1;
+        $routineExercise->routine = $routine;
+        $routine->routineExercises->add($routineExercise);
+
+        return $routine;
     }
 
     private function loadOtherUserExercise(ObjectManager $manager, User $otherUser): void
