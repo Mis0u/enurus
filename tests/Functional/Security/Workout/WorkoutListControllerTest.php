@@ -8,7 +8,7 @@ use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class WorkoutHistoryControllerTest extends WebTestCase
+class WorkoutListControllerTest extends WebTestCase
 {
     use FunctionalTestTrait;
 
@@ -44,7 +44,7 @@ class WorkoutHistoryControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertCount(
             0,
-            $crawler->filter('[data-action="click->workout--history--delete-modal#deleteWorkout"]')
+            $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]')
         );
     }
 
@@ -56,7 +56,7 @@ class WorkoutHistoryControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertCount(
             0,
-            $crawler->filter('[data-action="click->workout--history--delete-modal#deleteWorkout"]')
+            $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]')
         );
     }
 
@@ -68,7 +68,7 @@ class WorkoutHistoryControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertCount(
             10,
-            $crawler->filter('[data-action="click->workout--history--delete-modal#deleteWorkout"]')
+            $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]')
         );
     }
 
@@ -97,7 +97,7 @@ class WorkoutHistoryControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertCount(
             0,
-            $crawler->filter('[data-action="click->workout--history--delete-modal#deleteWorkout"]')
+            $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]')
         );
     }
 
@@ -110,7 +110,7 @@ class WorkoutHistoryControllerTest extends WebTestCase
         // Date invalide ignorée → toutes les séances affichées (10 en page 1)
         $this->assertCount(
             10,
-            $crawler->filter('[data-action="click->workout--history--delete-modal#deleteWorkout"]')
+            $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]')
         );
     }
 
@@ -122,7 +122,7 @@ class WorkoutHistoryControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertCount(
             10,
-            $crawler->filter('[data-action="click->workout--history--delete-modal#deleteWorkout"]')
+            $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]')
         );
     }
 
@@ -134,7 +134,7 @@ class WorkoutHistoryControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertCount(
             10,
-            $crawler->filter('[data-action="click->workout--history--delete-modal#deleteWorkout"]')
+            $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]')
         );
     }
 
@@ -146,7 +146,7 @@ class WorkoutHistoryControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertCount(
             1,
-            $crawler->filter('[data-action="click->workout--history--delete-modal#deleteWorkout"]')
+            $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]')
         );
     }
 
@@ -158,7 +158,7 @@ class WorkoutHistoryControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertCount(
             25,
-            $crawler->filter('[data-action="click->workout--history--delete-modal#deleteWorkout"]')
+            $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]')
         );
     }
 
@@ -170,7 +170,7 @@ class WorkoutHistoryControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertCount(
             50,
-            $crawler->filter('[data-action="click->workout--history--delete-modal#deleteWorkout"]')
+            $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]')
         );
     }
 
@@ -182,7 +182,7 @@ class WorkoutHistoryControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertCount(
             10,
-            $crawler->filter('[data-action="click->workout--history--delete-modal#deleteWorkout"]')
+            $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]')
         );
     }
 

@@ -1,6 +1,6 @@
 <a
-    href="{{ path('app_workout_history', {'filter': 'week', '_locale': app.request.locale}) }}"
-    data-workout--history--workout-filters-target="dateInput"="tabWeek"
+    href="{{ path('app_workout_list', {'filter': 'week', '_locale': app.request.locale}) }}"
+    data-workout--list--workout-filters-target="dateInput"="tabWeek"
     class="px-3 py-1.5 rounded-md text-[12px] font-medium transition-all duration-250
                 {% if filterType == 'week' and (filterDate is null or filterDate == '') %}
                     bg-[#f43f5e] text-white
@@ -9,11 +9,11 @@
                 {% endif %}
             "
 >
-{{ 'workout.history.filter.week'|trans({}, 'navigation') }}
+{{ 'workout.list.filter.week'|trans({}, 'navigation') }}
 </a>
 <a
-    href="{{ path('app_workout_history', {'filter': 'month', '_locale': app.request.locale}) }}"
-    data-workout--history--workout-filters-target="dateInput"="tabMonth"
+    href="{{ path('app_workout_list', {'filter': 'month', '_locale': app.request.locale}) }}"
+    data-workout--list--workout-filters-target="dateInput"="tabMonth"
 class="px-3 py-1.5 rounded-md text-[12px] font-medium transition-all duration-250
                 {% if filterType == 'month' and (filterDate is null or filterDate == '') %}
                     bg-[#f43f5e] text-white
@@ -22,5 +22,5 @@ class="px-3 py-1.5 rounded-md text-[12px] font-medium transition-all duration-25
                 {% endif %}
             "
 >
-{{ 'workout.history.filter.month'|trans({}, 'navigation') }}
+{{ 'workout.list.filter.month'|trans({}, 'navigation') }}
 </a>

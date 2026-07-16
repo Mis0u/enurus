@@ -158,7 +158,7 @@ class WorkoutShowControllerTest extends WebTestCase
         );
     }
 
-    public function testBackLinkPointsToHistory(): void
+    public function testBackLinkPointsToWorkoutList(): void
     {
         $crawler = $this->requestToWorkoutWhenLoggedIn(self::USER_WITH_NOTE);
 

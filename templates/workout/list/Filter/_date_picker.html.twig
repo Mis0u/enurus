@@ -8,8 +8,8 @@
 
     <input
         type="date"
-        data-workout--history--workout-filters-target="dateInput"="dateInput"
-    data-action="change->workout--history--workout-filters#onDateChange"
+        data-workout--list--workout-filters-target="dateInput"="dateInput"
+    data-action="change->workout--list--workout-filters#onDateChange"
     value="{{ filterDate ?? '' }}"
     max="{{ 'now'|date('Y-m-d') }}"
     class="bg-transparent border-none text-[#f0f4ff] text-[13px] font-medium outline-none w-[130px] cursor-pointer [color-scheme:dark]"
@@ -17,9 +17,9 @@
     {% if filterDate is not null and filterDate != '' %}
         <button
             type="button"
-            data-action="click->workout--history--workout-filters#clearDate"
+            data-action="click->workout--list--workout-filters#clearDate"
             class="ml-1 text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250"
-            title="{{ 'workout.history.filter.clear'|trans({}, 'navigation') }}"
+            title="{{ 'workout.list.filter.clear'|trans({}, 'navigation') }}"
         >
             {% include 'partials/_svg/_cross.html.twig' %}
         </button>

@@ -5,22 +5,22 @@
 >
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(244,63,94,0.03),transparent_60%)] pointer-events-none"></div>
 
-    {% include 'workout/history/Session/_date_time.html.twig' %}
+    {% include 'workout/list/Session/_date_time.html.twig' %}
 
     <div class="flex flex-col gap-2">
 
-        {% include 'workout/history/Session/_title.html.twig' %}
+        {% include 'workout/list/Session/_title.html.twig' %}
 
-        {% include 'workout/history/Session/_metric.html.twig' %}
+        {% include 'workout/list/Session/_metric.html.twig' %}
 
-        {% include 'workout/history/Session/_muscle_tag.html.twig' %}
+        {% include 'workout/list/Session/_muscle_tag.html.twig' %}
     </div>
 
     <div class="flex items-center gap-2 max-md:justify-end" onclick="event.stopPropagation()">
 
-        {% include 'workout/history/Session/_edit_button.html.twig' %}
+        {% include 'workout/list/Session/_edit_button.html.twig' %}
 
-        {% include 'workout/history/Session/_delete_button.html.twig' %}
+        {% include 'workout/list/Session/_delete_button.html.twig' %}
     </div>
 
 </div>

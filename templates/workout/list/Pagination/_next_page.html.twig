@@ -1,20 +1,20 @@
-{% if current_page > 1 %}
+{% if current_page < total_pages %}
     <a
-        href="{{ path('app_workout_history', {
+        href="{{ path('app_workout_list', {
             '_locale': app.request.locale,
-            'page': current_page - 1,
+            'page': current_page + 1,
             'filter': filterType,
             'date': filterDate,
             'limit': per_page,
         }) }}"
         class="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-white/[0.07] bg-white/[0.03] text-[12.5px] font-medium text-[#8b9bb4] hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-[#f0f4ff] transition-all duration-250"
     >
-        {% include 'partials/_svg/_inferior.html.twig' %}
-        {{ 'workout.history.pagination.previous'|trans({}, 'navigation') }}
+        {{ 'workout.list.pagination.next'|trans({}, 'navigation') }}
+        {% include 'partials/_svg/_superior.html.twig' %}
     </a>
 {% else %}
     <span class="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-white/[0.07] bg-white/[0.02] text-[12.5px] font-medium text-[#4a5568] opacity-40 cursor-not-allowed">
-        {% include 'partials/_svg/_inferior.html.twig' %}
-        {{ 'workout.history.pagination.previous'|trans({}, 'navigation') }}
+        {{ 'workout.list.pagination.next'|trans({}, 'navigation') }}
+        {% include 'partials/_svg/_superior.html.twig' %}
     </span>
 {% endif %}

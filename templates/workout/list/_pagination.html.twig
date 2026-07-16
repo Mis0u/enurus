@@ -5,15 +5,15 @@
 {% if pagination.getTotalItemCount() > 0 %}
     <div class="flex items-center justify-between gap-4 mt-6 pt-5 border-t border-white/[0.07] max-md:flex-col max-md:items-stretch">
 
-        {% include 'workout/history/Pagination/_selector.html.twig' %}
+        {% include 'workout/list/Pagination/_selector.html.twig' %}
 
         {% if total_pages > 1 %}
             <div class="flex items-center gap-1 max-md:justify-center">
-                {% include 'workout/history/Pagination/_previous_page.html.twig' with {'current_page': current_page, 'per_page': per_page} %}
+                {% include 'workout/list/Pagination/_previous_page.html.twig' with {'current_page': current_page, 'per_page': per_page} %}
 
-                {% include 'workout/history/Pagination/_page_number.html.twig' %}
+                {% include 'workout/list/Pagination/_page_number.html.twig' %}
 
-                {% include 'workout/history/Pagination/_next_page.html.twig' %}
+                {% include 'workout/list/Pagination/_next_page.html.twig' %}
             </div>
         {% endif %}
     </div>

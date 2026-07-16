@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class WorkoutHistoryController extends AbstractController
+class WorkoutListController extends AbstractController
 {
     private const int DISPLAY_LIMIT_BY_DEFAULT = 10;
 
@@ -34,7 +34,7 @@ class WorkoutHistoryController extends AbstractController
         'de' => '/meine-trainings',
         'nl' => '/mijn-trainingen',
         'pl' => '/moje-treningi',
-    ], name: 'app_workout_history')]
+    ], name: 'app_workout_list')]
     #[IsGranted('ROLE_USER')]
     public function index(
         Request $request,
@@ -64,7 +64,7 @@ class WorkoutHistoryController extends AbstractController
         $hiddenCountMap = $this->computeHiddenMuscleCountMap($musclesMap);
         $exerciseCountMap = $workoutRepository->findExerciseCountByWorkoutIds($workoutIds);
 
-        return $this->render('workout/history/index.html.twig', [
+        return $this->render('workout/list/index.html.twig', [
             'user' => $user,
             'pagination' => $pagination,
             'tonnageMap' => $tonnageMap,
