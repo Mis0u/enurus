@@ -443,9 +443,6 @@
             "config/packages/symfonycasts_tailwind.yaml"
         ]
     },
-    "symfonycasts/verify-email-bundle": {
-        "version": "v1.18.0"
-    },
     "twig/extra-bundle": {
         "version": "v3.22.2"
     }
