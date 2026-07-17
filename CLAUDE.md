@@ -6,6 +6,8 @@ directement sur une demande de feature sans avoir fait valider l'approche.
 
 ## Docs par sujet — à lire seulement si le sujet est concerné
 - Chantier dashboard progressif (widgets, paliers, streak, Chart.js) → lire `docs/dashboard-architecture.md`
+- Avant toute création de fichier ou refactoring → lire `docs/consignes.md`
+  (Clean Code, SOLID, tests TDD)
 
 ---
 
@@ -55,6 +57,10 @@ Captain Hook, PHPUnit 12.5.4, Castor comme task runner.
 - **Fixtures = dev only, destructives.** Données de référence métier (ex. `svgIds` de
   `MuscleGroup`) = migrations Doctrine, jamais fixtures.
 - **Responsive et accessibilité pris en compte systématiquement.**
+- **Code propre non négociable** : nommage explicite, fonctions courtes (~20 lignes,
+  1 responsabilité, 0-2 arguments idéalement), SOLID appliqué systématiquement,
+  règle du boy-scout à chaque passage dans un fichier. Détail complet dans
+  `docs/consignes.md` — à lire avant toute création de fichier.
 
 ---
 
