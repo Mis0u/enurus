@@ -1,0 +1,8 @@
+<button
+    type="button"
+    class="md:hidden flex items-center justify-center w-9 h-9 -ml-1 text-[#8b9bb4] hover:text-[#f0f4ff] transition-ft"
+    data-action="click->mobile-nav#open"
+    aria-label="{{ 'field.open_menu'|trans({}, 'common') }}"
+>
+    {% include 'partials/_svg/_menu.html.twig' with {'width': 6, 'height': 6, 'ariaHidden': true} only %}
+</button>

@@ -1,4 +1,5 @@
 field:
+    close_menu: Menu sluiten
     confirm_new_password: Wachtwoord bevestigen
     criteria_password: "Beveiligingscriteria:"
     email: E-mail
@@ -14,6 +15,7 @@ field:
         male: Man
         title: Geslacht
     new_password: Nieuw wachtwoord
+    open_menu: Menu openen
     password: Wachtwoord
     reduce: Inklappen
     security_password: Kies een veilig wachtwoord
