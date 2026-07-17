@@ -1,6 +1,7 @@
 contact:
     category:
         bug: Bug
+        informative: Informativo
         love: "Envia-me algum carinho"
         other: Outro
         question: Pergunta
@@ -31,6 +32,20 @@ contact:
         until_label: Restrição levantada a
     submit: Enviar
     title: Contacto
+    welcome_thread:
+        body: |-
+            Olá {nickname}!
+
+            Algumas indicações para te orientares:
+
+            📚 Biblioteca — é aqui que crias os teus próprios exercícios, além dos já disponíveis na app.
+
+            🗂️ Rotina — agrupa uma lista de exercícios que usas frequentemente (ex. "Push day"). Depois de criada, podes selecioná-la diretamente ao criar um novo treino, para não teres de voltar a inserir os teus exercícios sempre.
+
+            🏋️ Criar um treino — é aqui que tudo acontece: escolhe os teus exercícios (ou a tua rotina), indica peso/repetições, e pronto.
+
+            Bom treino! 🔥
+        subject: "Bem-vindo ao FitTracker 🎉"
 
 dashboard:
     contact: Contacto

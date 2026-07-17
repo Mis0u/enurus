@@ -1,6 +1,7 @@
 contact:
     category:
         bug: Błąd
+        informative: Informacyjny
         love: "Wyślij mi trochę miłości"
         other: Inne
         question: Pytanie
@@ -31,6 +32,20 @@ contact:
         until_label: Ograniczenie zniesione dnia
     submit: Wyślij
     title: Kontakt
+    welcome_thread:
+        body: |-
+            Cześć {nickname}!
+
+            Kilka wskazówek, jak się poruszać po aplikacji:
+
+            📚 Biblioteka — tutaj tworzysz własne ćwiczenia, oprócz tych już dostępnych w aplikacji.
+
+            🗂️ Rutyna — grupuje listę ćwiczeń, których często używasz (np. "Push day"). Po utworzeniu będziesz mógł ją wybrać bezpośrednio podczas tworzenia nowego treningu, aby nie wpisywać ćwiczeń za każdym razem od nowa.
+
+            🏋️ Utwórz trening — tutaj dzieje się wszystko: wybierz swoje ćwiczenia (lub rutynę), wpisz ciężar/powtórzenia, i gotowe.
+
+            Udanego treningu! 🔥
+        subject: "Witaj w FitTracker 🎉"
 
 dashboard:
     contact: Kontakt

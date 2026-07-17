@@ -36,12 +36,20 @@ final class ContactFormType extends AbstractType
         $builder
             ->add('category', EnumType::class, [
                 'class' => ContactCategoryEnum::class,
+                'choices' => [
+                    ContactCategoryEnum::BUG,
+                    ContactCategoryEnum::SUGGESTION,
+                    ContactCategoryEnum::QUESTION,
+                    ContactCategoryEnum::LOVE,
+                    ContactCategoryEnum::OTHER,
+                ],
                 'choice_label' => fn (ContactCategoryEnum $category): string => match ($category) {
                     ContactCategoryEnum::BUG => '🐞 ' . $this->translator->trans('contact.category.bug', [], 'navigation'),
                     ContactCategoryEnum::SUGGESTION => '💡 ' . $this->translator->trans('contact.category.suggestion', [], 'navigation'),
                     ContactCategoryEnum::QUESTION => '❓ ' . $this->translator->trans('contact.category.question', [], 'navigation'),
                     ContactCategoryEnum::LOVE => '❤️ ' . $this->translator->trans('contact.category.love', [], 'navigation'),
                     ContactCategoryEnum::OTHER => '📁 ' . $this->translator->trans('contact.category.other', [], 'navigation'),
+                    ContactCategoryEnum::INFORMATIVE => throw new \LogicException('INFORMATIVE is a system-only category, excluded from this form via the explicit choices list.'),
                 },
                 'placeholder' => $this->translator->trans('contact.field.category_placeholder', [], 'navigation'),
                 'label' => $this->translator->trans('contact.field.category', [], 'navigation'),

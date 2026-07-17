@@ -1,6 +1,7 @@
 contact:
     category:
         bug: Fehler
+        informative: Informativ
         love: "Schick mir etwas Liebe"
         other: Sonstiges
         question: Frage
@@ -31,6 +32,20 @@ contact:
         until_label: Einschränkung aufgehoben am
     submit: Senden
     title: Kontakt
+    welcome_thread:
+        body: |-
+            Hallo {nickname}!
+
+            Ein paar Hinweise zur Orientierung:
+
+            📚 Bibliothek — hier erstellst du deine eigenen Übungen, zusätzlich zu den bereits verfügbaren.
+
+            🗂️ Routine — fasst eine Liste von Übungen zusammen, die du häufig nutzt (z. B. "Push day"). Einmal erstellt, kannst du sie direkt beim Erstellen eines neuen Workouts auswählen, statt deine Übungen jedes Mal neu einzugeben.
+
+            🏋️ Workout erstellen — hier passiert alles: wähle deine Übungen (oder deine Routine), trage Gewicht/Wiederholungen ein, und los geht's.
+
+            Viel Erfolg beim Training! 🔥
+        subject: "Willkommen bei FitTracker 🎉"
 
 dashboard:
     contact: Kontakt

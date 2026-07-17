@@ -21,6 +21,10 @@ services:
 
     League\Flysystem\FilesystemOperator $defaultStorage: '@default.storage'
 
+    App\Service\Contact\RegistrationWelcomeThreadService:
+        arguments:
+            $adminEmail: '%env(ADMIN_USER_EMAIL)%'
+
     rate_limiter.storage:
         class: Symfony\Component\Cache\Adapter\ArrayAdapter
         autoconfigure: false

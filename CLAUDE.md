@@ -293,3 +293,12 @@ palier précise, préférer des dates fixes en dur.
 - `php bin/console asset-map:compile` — recompiler après modif JS non détectée (cache AssetMapper).
 - Castor comme task runner pour PHPUnit (vérifier `castor.php` pour les tâches exactes).
 - PHPStan niveau 9 obligatoire avant toute PR — jamais de `@phpstan-ignore`.
+
+## Commits
+
+- **Gitmoji obligatoire** : chaque commit commence par un emoji gitmoji pertinent
+  (ex. `✨` feature, `🐛` fix, `♻️` refactor, `✅` tests, `📝` docs, `🔧` config).
+- **Titre** : 48 caractères maximum (emoji inclus), toujours en anglais, commence par une majuscule.
+- **Message de corps** : optionnel, à ajouter si le commit nécessite un contexte
+  que le titre seul ne porte pas (raison d'un choix, effet de bord, breaking change).
+  En anglais également.

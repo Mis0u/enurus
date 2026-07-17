@@ -1,6 +1,7 @@
 contact:
     category:
         bug: Bug
+        informative: Informativo
         love: "Mandami un po' d'amore"
         other: Altro
         question: Domanda
@@ -31,6 +32,20 @@ contact:
         until_label: Restrizione revocata il
     submit: Invia
     title: Contatti
+    welcome_thread:
+        body: |-
+            Ciao {nickname}!
+
+            Qualche indicazione per orientarti:
+
+            📚 Libreria — qui puoi creare i tuoi esercizi personalizzati, oltre a quelli già disponibili nell'app.
+
+            🗂️ Routine — raggruppa una lista di esercizi che usi spesso (es. "Push day"). Una volta creata, potrai selezionarla direttamente durante la creazione di un nuovo allenamento, senza dover reinserire gli esercizi ogni volta.
+
+            🏋️ Crea un allenamento — è qui che succede tutto: scegli i tuoi esercizi (o la tua routine), inserisci peso/ripetizioni, ed è fatta.
+
+            Buon allenamento! 🔥
+        subject: "Benvenuto su FitTracker 🎉"
 
 dashboard:
     contact: Contatti
