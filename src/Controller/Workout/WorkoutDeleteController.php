@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Workout;
 
+use App\Controller\Trait\ValidatesDeleteRequestTrait;
 use App\Entity\Workout;
 use App\Security\Voter\WorkoutVoter;
 use App\Service\Entity\WorkoutPhotoService;
@@ -20,6 +21,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted('ROLE_USER')]
 final class WorkoutDeleteController extends AbstractController
 {
+    use ValidatesDeleteRequestTrait;
+
     public function __construct(
         private readonly WorkoutPhotoService $workoutPhotoService,
         private readonly EntityManagerInterface $em,
@@ -48,16 +51,17 @@ final class WorkoutDeleteController extends AbstractController
         Workout $workout,
         Request $request,
     ): JsonResponse {
-        if (! $request->isXmlHttpRequest()) {
-            return $this->json(
-                [
-                    'error' => 'Invalid request',
-                ],
-                Response::HTTP_BAD_REQUEST,
-            );
+        if ($response = $this->denyUnlessXmlHttpRequest($request)) {
+            return $response;
         }
 
         $this->denyAccessUnlessGranted(WorkoutVoter::DELETE, $workout);
+
+        if (null === $workout->id) {
+            throw new \LogicException('Cannot delete a workout without a persisted id.');
+        }
+
+        $this->denyUnlessValidCsrfToken($request, 'workout_delete_' . $workout->id->toRfc4122());
 
         // Supprime la photo du storage avant de supprimer l'entité —
         // si le flush échoue, la photo est conservée (pas de perte de données)

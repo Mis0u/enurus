@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,6 +73,16 @@ class WorkoutDeleteControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
     }
 
+    public function testDeleteWithInvalidCsrfTokenIsRejected(): void
+    {
+        $client = $this->login(self::USER);
+        $workout = $this->getFirstWorkout(self::USER);
+
+        $this->deleteRequest($client, $this->getDeleteUrl($workout), 'invalid-token');
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
+
     // -------------------------------------------------------------------------
     // Suppression
     // -------------------------------------------------------------------------
@@ -81,7 +92,7 @@ class WorkoutDeleteControllerTest extends WebTestCase
         $client = $this->login(self::USER);
         $workout = $this->getFirstWorkout(self::USER);
 
-        $this->deleteRequest($client, $this->getDeleteUrl($workout));
+        $this->deleteRequest($client, $this->getDeleteUrl($workout), $this->getDeleteCsrfToken($client, $workout));
 
         $this->assertResponseIsSuccessful();
 
@@ -100,13 +111,25 @@ class WorkoutDeleteControllerTest extends WebTestCase
         $workout = $this->getFirstWorkout(self::USER);
         $workoutId = $workout->id;
 
-        $this->deleteRequest($client, $this->getDeleteUrl($workout));
+        $this->deleteRequest($client, $this->getDeleteUrl($workout), $this->getDeleteCsrfToken($client, $workout));
 
         /** @var WorkoutRepository $workoutRepository */
         $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
         $deleted = $workoutRepository->find($workoutId);
 
         $this->assertNull($deleted);
+    }
+
+    private function getDeleteCsrfToken(KernelBrowser $client, Workout $workout): string
+    {
+        self::assertNotNull($workout->id);
+
+        return $this->csrfTokenFromPage(
+            $client,
+            '/fr/mes-seances?limit=50',
+            \sprintf('button[data-delete-url*="%s"]', $workout->id->toRfc4122()),
+            'data-token',
+        );
     }
 
     private function getFirstWorkout(string $email): Workout

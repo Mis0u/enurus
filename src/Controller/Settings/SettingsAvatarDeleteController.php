@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Settings;
 
+use App\Controller\Trait\ValidatesDeleteRequestTrait;
 use App\Entity\User;
 use App\Service\Entity\UserAvatarService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +17,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 final class SettingsAvatarDeleteController extends AbstractController
 {
+    use ValidatesDeleteRequestTrait;
+
     public function __construct(
         private readonly UserAvatarService $userAvatarService,
     ) {
@@ -35,8 +38,14 @@ final class SettingsAvatarDeleteController extends AbstractController
         name: 'app_settings_avatar_delete',
         methods: [Request::METHOD_DELETE],
     )]
-    public function __invoke(): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
+        if ($response = $this->denyUnlessXmlHttpRequest($request)) {
+            return $response;
+        }
+
+        $this->denyUnlessValidCsrfToken($request, 'settings_avatar_delete');
+
         /** @var User $user */
         $user = $this->getUser();
         $this->userAvatarService->remove($user);

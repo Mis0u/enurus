@@ -2,6 +2,7 @@
      data-controller="settings--avatar"
      data-settings--avatar-upload-url-value="{{ path('app_settings_avatar_upload') }}"
      data-settings--avatar-delete-url-value="{{ path('app_settings_avatar_delete') }}"
+     data-settings--avatar-delete-csrf-token-value="{{ csrf_token('settings_avatar_delete') }}"
      data-settings--avatar-max-size-value="{{ avatarMaxSizeBytes }}"
      data-settings--avatar-allowed-types-value="{{ avatarAllowedMimeTypes|json_encode }}"
      data-settings--avatar-too-large-error-value="{{ 'settings.avatar.too_large'|trans({'{{ limit }}': (avatarMaxSizeBytes / 1024 / 1024)|round}, 'validators') }}"

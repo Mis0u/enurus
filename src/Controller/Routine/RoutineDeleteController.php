@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller\Routine;
 
+use App\Controller\Trait\ValidatesDeleteRequestTrait;
 use App\Entity\Routine;
 use App\Security\Voter\RoutineVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -28,6 +28,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 ], name: 'app_routine_delete', methods: ['DELETE'])]
 final class RoutineDeleteController extends AbstractController
 {
+    use ValidatesDeleteRequestTrait;
+
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly TranslatorInterface $translator,
@@ -36,13 +38,17 @@ final class RoutineDeleteController extends AbstractController
 
     public function __invoke(Request $request, Routine $routine): JsonResponse
     {
-        if (! $request->isXmlHttpRequest()) {
-            return $this->json([
-                'error' => 'XHR only',
-            ], Response::HTTP_BAD_REQUEST);
+        if ($response = $this->denyUnlessXmlHttpRequest($request)) {
+            return $response;
         }
 
         $this->denyAccessUnlessGranted(RoutineVoter::DELETE, $routine);
+
+        if (null === $routine->id) {
+            throw new \LogicException('Cannot delete a routine without a persisted id.');
+        }
+
+        $this->denyUnlessValidCsrfToken($request, 'routine_delete_' . $routine->id->toRfc4122());
 
         $this->em->remove($routine);
         $this->em->flush();

@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use App\Tests\Functional\Helper\ImageTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -30,6 +31,22 @@ final class SettingsAvatarDeleteControllerTest extends WebTestCase
         self::assertContains($client->getResponse()->getStatusCode(), [302, 401]);
     }
 
+    public function testDeleteWithNonXmlHttpRequestReturns400(): void
+    {
+        $client = $this->login(self::USER);
+
+        $client->request(Request::METHOD_DELETE, self::DELETE_URL);
+
+        self::assertResponseStatusCodeSame(400);
+    }
+
+    public function testDeleteWithInvalidCsrfTokenIsRejected(): void
+    {
+        $this->deleteRequest($this->login(self::USER), self::DELETE_URL, 'invalid-token');
+
+        self::assertResponseStatusCodeSame(403);
+    }
+
     public function testDeleteSucceedsWhenAvatarExists(): void
     {
         $client = $this->login(self::USER);
@@ -40,7 +57,7 @@ final class SettingsAvatarDeleteControllerTest extends WebTestCase
         ]);
         $this->assertResponseIsSuccessful();
 
-        $client->request(Request::METHOD_DELETE, self::DELETE_URL);
+        $this->deleteRequest($client, self::DELETE_URL, $this->getDeleteCsrfToken($client));
         $this->assertResponseIsSuccessful();
 
         /** @var EntityManagerInterface $em */
@@ -61,8 +78,18 @@ final class SettingsAvatarDeleteControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER);
 
-        $client->request(Request::METHOD_DELETE, self::DELETE_URL);
+        $this->deleteRequest($client, self::DELETE_URL, $this->getDeleteCsrfToken($client));
 
         $this->assertResponseIsSuccessful();
+    }
+
+    private function getDeleteCsrfToken(KernelBrowser $client): string
+    {
+        return $this->csrfTokenFromPage(
+            $client,
+            '/fr/reglages',
+            'div[data-settings--avatar-delete-csrf-token-value]',
+            'data-settings--avatar-delete-csrf-token-value',
+        );
     }
 }

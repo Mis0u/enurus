@@ -25,7 +25,7 @@ export default class extends Controller {
             return;
         }
 
-        const { ok, data } = await sendDeleteRequest(btn.dataset.deleteUrl);
+        const { ok, data } = await sendDeleteRequest(btn.dataset.deleteUrl, btn.dataset.token);
 
         if (!ok || !data?.success) {
             showDeleteError({ title: btn.dataset.errorText });
