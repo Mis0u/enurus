@@ -133,16 +133,6 @@
     }
 }
 
-/* Description tronquée sur mobile uniquement */
-@media (max-width: 768px) {
-    .exercise-list-desc {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-}
-
 /* =============================================
    BOUTONS D'ACTION
 ============================================= */
