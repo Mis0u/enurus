@@ -477,6 +477,12 @@ workout:
         select: Kies je routine
         title: Routine
     search_exercise:
+        create_link:
+            cancel_button: Annuleren
+            confirm_button: Aanmaken
+            message: "Je bent een training aan het maken: als je deze pagina verlaat, verlies je je huidige selectie."
+            text: "Vind je jouw oefening niet? Maak hem aan!"
+            title: Nieuwe oefening aanmaken?
         no_result: Geen oefening gevonden !
         placeholder: Naam van de oefening...
         title: Zoek een oefening
