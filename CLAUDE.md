@@ -98,11 +98,18 @@ de propriété dupliquée dans un controller. Pas de voter `_LIST` : une liste n
 individuelle, `#[IsGranted('ROLE_USER')]` + filtre `owner` en repository suffisent.
 
 Endpoints XHR (delete, etc.) vérifient `$request->isXmlHttpRequest()` — protection faible (header
-falsifiable) mais barrière de base contre les appels directs.
+falsifiable) mais barrière de base contre les appels directs, doublée d'une vraie validation CSRF
+(voir ci-dessous).
 
-**Audit CSRF en attente (non résolu)** : `RoutineDeleteController`, `WorkoutDeleteController`,
-`ExerciseDeleteController` ne vérifient que `isXmlHttpRequest()`, sans validation de token CSRF.
-Le JS de suppression de séance n'envoie pas de header `X-CSRF-Token`.
+**CSRF sur les endpoints de suppression** : `App\Controller\Trait\ValidatesDeleteRequestTrait`
+(`denyUnlessXmlHttpRequest()` + `denyUnlessValidCsrfToken()`) centralise les deux contrôles,
+utilisé par tous les controllers de suppression (`RoutineDeleteController`, `WorkoutDeleteController`,
+`ExerciseDeleteController`, `SettingsAvatarDeleteController`, `ContactThreadDeleteController`).
+Le token est généré via `csrf_token('<entité>_delete_' ~ entity.id)` en Twig, transmis en header
+`X-CSRF-Token` par `assets/utils/delete_confirmation.js` (`sendDeleteRequest()`). En test, jamais
+régénérer le token via `CsrfTokenManagerInterface::getToken()` hors requête
+(`SessionNotFoundException`) — le lire depuis le DOM déjà rendu via `Crawler`
+(`FunctionalTestTrait::csrfTokenFromPage()`).
 
 ---
 
@@ -260,14 +267,12 @@ palier précise, préférer des dates fixes en dur.
 
 | # | Item |
 |---|------|
-| 3 | Menus mobile manquants dans Profil (Bibliothèque, Mes routines, Réglages, Déconnexion) |
 | 10 | Évaluer `datetimetz_immutable` pour `Workout::$performedAt` — pas encore acté |
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 16 | Description d'exercice au survol (tooltip/popover) |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
 | 20 | Sessions persistées en base pour invalider toutes les sessions actives au changement de mot de passe |
 | 21 | Notifier l'admin si un email de compte supprimé (>30j) se réinscrit |
-| — | Audit CSRF sur les controllers de suppression (voir section Sécurité) |
 | — | Durée de rétention du hash `DeletedAccountTrace` non fixée, purge non implémentée |
 | — | Vérifier sous-collections `Routine`/`Exercise` avec fichiers physiques échappant à `deletePhysicalFiles()` |
 | — | Discuter d'un split SRP de `WorkoutRepository` (625 lignes, 15 méthodes publiques : comptage, tonnage, muscles sollicités, pagination, SVG, dates — plusieurs responsabilités mélangées) |
