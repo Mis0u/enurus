@@ -42,14 +42,13 @@
         {% endfor %}
     </div>
 
-    {# Description — line-clamp sur mobile, complète sur desktop #}
+    {# Description — tronquée à 160 caractères, identique sur mobile et desktop #}
     {% if exercise.description %}
-        <p class="mt-2.5 pl-2.5 text-[13px] leading-relaxed text-slate-400
-                   line-clamp-3 md:line-clamp-none exercise-list-desc">
+        <p class="mt-2.5 pl-2.5 text-[13px] leading-relaxed text-slate-400">
             {% if exercise.isPublic %}
-                {{ exercise.description|trans({}, 'exercise') }}
+                {{ exercise.description|trans({}, 'exercise')|truncate(160) }}
             {% else %}
-                {{ exercise.description }}
+                {{ exercise.description|truncate(160) }}
             {% endif %}
         </p>
     {% endif %}
