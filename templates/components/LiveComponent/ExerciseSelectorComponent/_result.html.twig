@@ -16,7 +16,20 @@
         </div>
     {% endfor %}
 {% else %}
-    <p class="text-center text-white/40 text-[14px] py-6">
-        {{ 'workout.search_exercise.no_result'|trans({}, 'navigation') }}
-    </p>
+    <div class="text-center py-6">
+        <p class="text-white/40 text-[14px] mb-2">
+            {{ 'workout.search_exercise.no_result'|trans({}, 'navigation') }}
+        </p>
+        <a
+            href="{{ path('app_exercise_create') }}"
+            class="text-[14px] text-rose-400 hover:text-rose-300 underline underline-offset-2"
+            data-action="click->search-modal#confirmNavigate"
+            data-title="{{ 'workout.search_exercise.create_link.title'|trans({}, 'navigation') }}"
+            data-message="{{ 'workout.search_exercise.create_link.message'|trans({}, 'navigation') }}"
+            data-confirm="{{ 'workout.search_exercise.create_link.confirm_button'|trans({}, 'navigation') }}"
+            data-cancel="{{ 'workout.search_exercise.create_link.cancel_button'|trans({}, 'navigation') }}"
+        >
+            {{ 'workout.search_exercise.create_link.text'|trans({}, 'navigation') }}
+        </a>
+    </div>
 {% endif %}

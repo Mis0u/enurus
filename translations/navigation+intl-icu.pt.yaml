@@ -477,6 +477,12 @@ workout:
         select: Escolhe a tua rotina
         title: Rotina
     search_exercise:
+        create_link:
+            cancel_button: Cancelar
+            confirm_button: Criar
+            message: "Estás a criar um treino: sair desta página fará perder a tua seleção atual."
+            text: "Não encontras o teu exercício? Cria-o!"
+            title: Criar um novo exercício?
         no_result: Nenhum exercício encontrado !
         placeholder: Nome do exercício...
         title: Procurar um exercício
