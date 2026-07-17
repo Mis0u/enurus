@@ -59,6 +59,23 @@ final class RoutineDeleteControllerTest extends WebTestCase
         self::assertResponseRedirects();
     }
 
+    public function testIsForbiddenWithInvalidCsrfToken(): void
+    {
+        $client = $this->login(self::OWNER);
+        $routine = $this->getOwnerRoutine();
+
+        $client->request(
+            Request::METHOD_DELETE,
+            $this->getDeleteUrl($routine),
+            server: [
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
+                'HTTP_X-CSRF-Token' => 'invalid-token',
+            ],
+        );
+
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
+
     public function testIsForbiddenForOtherUser(): void
     {
         $client = $this->login(self::OTHER_USER);
@@ -158,12 +175,27 @@ final class RoutineDeleteControllerTest extends WebTestCase
 
     private function sendDeleteRequest(KernelBrowser $client, Routine $routine): void
     {
+        $token = $this->getDeleteCsrfToken($client, $routine);
+
         $client->request(
             Request::METHOD_DELETE,
             $this->getDeleteUrl($routine),
             server: [
                 'HTTP_X-Requested-With' => 'XMLHttpRequest',
+                'HTTP_X-CSRF-Token' => $token,
             ],
+        );
+    }
+
+    private function getDeleteCsrfToken(KernelBrowser $client, Routine $routine): string
+    {
+        self::assertNotNull($routine->id);
+
+        return $this->csrfTokenFromPage(
+            $client,
+            '/fr/mes-routines',
+            \sprintf('div[data-routine--delete-url-value*="%s"]', $routine->id->toRfc4122()),
+            'data-routine--delete-csrf-token-value',
         );
     }
 

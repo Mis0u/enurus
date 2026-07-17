@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller\Exercise;
 
+use App\Controller\Trait\ValidatesDeleteRequestTrait;
 use App\Entity\Exercise;
 use App\Security\Voter\ExerciseVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -28,6 +28,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 ], name: 'app_exercise_delete', methods: ['DELETE'])]
 final class ExerciseDeleteController extends AbstractController
 {
+    use ValidatesDeleteRequestTrait;
+
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly TranslatorInterface $translator,
@@ -36,13 +38,17 @@ final class ExerciseDeleteController extends AbstractController
 
     public function __invoke(Request $request, Exercise $exercise): JsonResponse
     {
-        if (! $request->isXmlHttpRequest()) {
-            return $this->json([
-                'error' => 'XHR only',
-            ], Response::HTTP_BAD_REQUEST);
+        if ($response = $this->denyUnlessXmlHttpRequest($request)) {
+            return $response;
         }
 
         $this->denyAccessUnlessGranted(ExerciseVoter::DELETE, $exercise);
+
+        if (null === $exercise->id) {
+            throw new \LogicException('Cannot delete an exercise without a persisted id.');
+        }
+
+        $this->denyUnlessValidCsrfToken($request, 'exercise_delete_' . $exercise->id->toRfc4122());
 
         $this->em->remove($exercise);
         $this->em->flush();

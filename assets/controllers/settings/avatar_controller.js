@@ -1,10 +1,12 @@
 import { Controller } from '@hotwired/stimulus';
+import { sendDeleteRequest } from '../../utils/delete_confirmation.js';
 
 export default class extends Controller {
     static targets = ['input', 'image', 'initials', 'spinner', 'removeButton', 'error', 'errorText'];
     static values = {
         uploadUrl: String,
         deleteUrl: String,
+        deleteCsrfToken: String,
         maxSize: Number,
         allowedTypes: Array,
         tooLargeError: String,
@@ -64,15 +66,11 @@ export default class extends Controller {
     }
 
     async remove() {
-        try {
-            const response = await fetch(this.deleteUrlValue, { method: 'DELETE' });
+        const { ok, data } = await sendDeleteRequest(this.deleteUrlValue, this.deleteCsrfTokenValue);
 
-            if (response.ok) {
-                this.#applyInitials();
-                this.#broadcastAvatarUpdate(null);
-            }
-        } catch {
-            // Échec silencieux — l'avatar reste inchangé côté UI.
+        if (ok && data?.success) {
+            this.#applyInitials();
+            this.#broadcastAvatarUpdate(null);
         }
     }
 

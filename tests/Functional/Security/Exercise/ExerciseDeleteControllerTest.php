@@ -9,6 +9,7 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\Exercise;
 use App\Repository\ExerciseRepository;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,6 +65,16 @@ class ExerciseDeleteControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
+    public function testDeleteWithInvalidCsrfTokenIsRejected(): void
+    {
+        $client = $this->login(self::OWNER);
+        $url = $this->getDeleteUrl(ExerciseFixtures::EXERCISE_REVERSE_FLY);
+
+        $this->deleteRequest($client, $url, 'invalid-token');
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
+
     // ── Suppression ───────────────────────────────────────────────────────────
 
     public function testDeleteReturnsSuccess(): void
@@ -71,7 +82,7 @@ class ExerciseDeleteControllerTest extends WebTestCase
         $client = $this->login(self::OWNER);
         $url = $this->getDeleteUrl(ExerciseFixtures::EXERCISE_REVERSE_FLY);
 
-        $this->deleteRequest($client, $url);
+        $this->deleteRequest($client, $url, $this->getDeleteCsrfToken($client, ExerciseFixtures::EXERCISE_REVERSE_FLY));
 
         $this->assertResponseIsSuccessful();
 
@@ -91,7 +102,11 @@ class ExerciseDeleteControllerTest extends WebTestCase
         $this->assertNotNull($exercise);
         $exerciseId = $exercise->id;
 
-        $this->deleteRequest($client, \sprintf('/fr/bibliotheque/exercice/%s/supprimer', $exerciseId));
+        $this->deleteRequest(
+            $client,
+            \sprintf('/fr/bibliotheque/exercice/%s/supprimer', $exerciseId),
+            $this->getDeleteCsrfToken($client, ExerciseFixtures::EXERCISE_REVERSE_FLY),
+        );
 
         /** @var ExerciseRepository $repository */
         $repository = static::getContainer()->get(ExerciseRepository::class);
@@ -103,7 +118,7 @@ class ExerciseDeleteControllerTest extends WebTestCase
         $client = $this->login(self::OWNER);
         $url = $this->getDeleteUrl(ExerciseFixtures::EXERCISE_REVERSE_FLY);
 
-        $this->deleteRequest($client, $url);
+        $this->deleteRequest($client, $url, $this->getDeleteCsrfToken($client, ExerciseFixtures::EXERCISE_REVERSE_FLY));
 
         $remaining = $this->getExerciseByName(ExerciseFixtures::EXERCISE_TIRAGE_SUPINATION);
         $this->assertNotNull($remaining);
@@ -117,6 +132,20 @@ class ExerciseDeleteControllerTest extends WebTestCase
         $this->assertNotNull($exercise);
 
         return \sprintf('/fr/bibliotheque/exercice/%s/supprimer', $exercise->id);
+    }
+
+    private function getDeleteCsrfToken(KernelBrowser $client, string $exerciseName): string
+    {
+        $exercise = $this->getExerciseByName($exerciseName);
+        $this->assertNotNull($exercise);
+        $this->assertNotNull($exercise->id);
+
+        return $this->csrfTokenFromPage(
+            $client,
+            '/fr/bibliotheque',
+            \sprintf('div[data-exercise--delete-url-value*="%s"]', $exercise->id->toRfc4122()),
+            'data-exercise--delete-csrf-token-value',
+        );
     }
 
     private function getExerciseByName(string $name): ?Exercise
