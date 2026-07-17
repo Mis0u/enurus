@@ -1,0 +1,58 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service\Contact;
+
+use App\Entity\ContactThread;
+use App\Entity\ContactThreadMessage;
+use App\Entity\User;
+use App\Enum\Contact\ContactCategoryEnum;
+use App\Enum\Contact\ContactThreadStatusEnum;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+final readonly class RegistrationWelcomeThreadService
+{
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private UserRepository $userRepository,
+        private TranslatorInterface $translator,
+        private string $adminEmail,
+    ) {
+    }
+
+    public function create(User $user, string $locale): void
+    {
+        $admin = $this->userRepository->findOneByEmail($this->adminEmail);
+
+        if (null === $admin) {
+            throw new \LogicException(sprintf('Admin account "%s" not found — cannot author the welcome thread.', $this->adminEmail));
+        }
+
+        $thread = new ContactThread();
+        $thread->owner = $user;
+        $thread->category = ContactCategoryEnum::INFORMATIVE;
+        $thread->subject = $this->translator->trans('contact.welcome_thread.subject', [], 'navigation', $locale);
+        $thread->status = ContactThreadStatusEnum::CLOSED;
+        $thread->closedAt = new \DateTimeImmutable();
+
+        $message = new ContactThreadMessage();
+        $message->author = $admin;
+        $message->fromAdmin = true;
+        $message->body = $this->translator->trans(
+            'contact.welcome_thread.body',
+            [
+                'nickname' => $user->nickname,
+            ],
+            'navigation',
+            $locale,
+        );
+
+        $thread->addMessage($message);
+
+        $this->entityManager->persist($thread);
+        $this->entityManager->flush();
+    }
+}

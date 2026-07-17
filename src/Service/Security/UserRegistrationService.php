@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Security;
 
 use App\Entity\User;
+use App\Service\Contact\RegistrationWelcomeThreadService;
 use App\Service\Email\EmailInterface;
 use App\Service\Entity\UserService;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -14,7 +15,8 @@ final readonly class UserRegistrationService
     public function __construct(
         private UserService $userService,
         private EmailInterface $emailService,
-        private TranslatorInterface $translator
+        private TranslatorInterface $translator,
+        private RegistrationWelcomeThreadService $welcomeThreadService,
     ) {
     }
 
@@ -22,6 +24,7 @@ final readonly class UserRegistrationService
     {
         $this->userService->createUser($user, $plainPassword, $locale);
         $this->sendRegistrationEmail($user, $locale);
+        $this->welcomeThreadService->create($user, $locale);
 
         return $user;
     }

@@ -1,6 +1,7 @@
 contact:
     category:
         bug: Bug
+        informative: Informatief
         love: "Stuur me wat liefde"
         other: Anders
         question: Vraag
@@ -31,6 +32,20 @@ contact:
         until_label: Beperking opgeheven op
     submit: Verzenden
     title: Contact
+    welcome_thread:
+        body: |-
+            Hoi {nickname}!
+
+            Een paar aanwijzingen om je wegwijs te maken:
+
+            📚 Bibliotheek — hier maak je je eigen oefeningen aan, naast de oefeningen die de app al aanbiedt.
+
+            🗂️ Routine — bundelt een lijst met oefeningen die je vaak gebruikt (bv. "Push day"). Eenmaal aangemaakt, kun je hem direct selecteren bij het aanmaken van een nieuwe training, zodat je niet elke keer opnieuw je oefeningen hoeft in te voeren.
+
+            🏋️ Training aanmaken — hier gebeurt het allemaal: kies je oefeningen (of je routine), vul gewicht/herhalingen in, en klaar.
+
+            Veel trainingsplezier! 🔥
+        subject: "Welkom bij FitTracker 🎉"
 
 dashboard:
     contact: Contact

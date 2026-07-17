@@ -9,6 +9,7 @@
     question: '❓',
     love: '❤️',
     other: '📁',
+    informative: '📌',
 }[thread.category.value] %}
 
 {% set category_label = ('contact.category.' ~ thread.category.value)|trans({}, 'navigation') %}
@@ -21,6 +22,8 @@
     {% set category_class = 'bg-[rgba(168,85,247,0.12)] border-[rgba(168,85,247,0.3)] text-[#a855f7]' %}
 {% elseif thread.category.value == 'love' %}
     {% set category_class = 'bg-[rgba(244,63,94,0.15)] border-[rgba(244,63,94,0.3)] text-[#f43f5e]' %}
+{% elseif thread.category.value == 'informative' %}
+    {% set category_class = 'bg-[rgba(34,197,94,0.12)] border-[rgba(34,197,94,0.3)] text-[#22c55e]' %}
 {% else %}
     {% set category_class = 'bg-white/[0.05] border-white/[0.07] text-[#4a5568]' %}
 {% endif %}
