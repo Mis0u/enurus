@@ -1,4 +1,5 @@
 field:
+    close_menu: Chiudi il menu
     confirm_new_password: Conferma la password
     criteria_password: "Criteri di sicurezza:"
     email: Email
@@ -14,6 +15,7 @@ field:
         male: Uomo
         title: Genere
     new_password: Nuova password
+    open_menu: Apri il menu
     password: Password
     reduce: Riduci
     security_password: Scegli una password sicura

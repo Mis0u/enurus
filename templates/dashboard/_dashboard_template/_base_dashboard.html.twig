@@ -13,7 +13,7 @@
     {% for message in app.flashes('error') %}
         <twig:Flash:Message:Message message="{{ message }}" type="error"/>
     {% endfor %}
-<div class="flex h-screen w-screen overflow-hidden bg-bg-base text-[#f0f4ff] text-sm leading-relaxed font-dm-sans">
+<div class="flex h-screen w-screen overflow-hidden bg-bg-base text-[#f0f4ff] text-sm leading-relaxed font-dm-sans" data-controller="mobile-nav">
 
     {% block sidebar %}
         {% include 'dashboard/_dashboard_template/_sidebar/_sidebar.html.twig' %}
@@ -25,6 +25,8 @@
 
         {% block state %}{% endblock %}
     </main>
+
+    {% include 'dashboard/_dashboard_template/_sidebar/_nav_mobile_drawer.html.twig' %}
 </div>
     {% include 'dashboard/_dashboard_template/_sidebar/_nav_mobile.html.twig' %}
 
