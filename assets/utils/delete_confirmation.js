@@ -8,23 +8,33 @@ const DEFAULT_THEME = {
 };
 
 /**
- * Confirmation SweetAlert2 avant suppression — pattern partagé par tous les controllers de
- * suppression (contact, exercise, routine, workout). `options` passe les champs Swal spécifiques
- * à la page (textes traduits, thème) ; `icon`/`showCancelButton` et le thème par défaut sont déjà
- * posés ici.
+ * Confirmation SweetAlert2 générique — pattern partagé par tous les controllers ayant besoin d'une
+ * confirmation avant action (suppression, navigation avec perte de données, etc.). `options` passe
+ * les champs Swal spécifiques à l'appelant (icône, textes traduits) ; `showCancelButton` et le
+ * thème par défaut sont déjà posés ici.
  *
  * @param {object} options
  * @returns {Promise<boolean>}
  */
-export async function confirmDeletion(options) {
+export async function confirmAction(options) {
     const result = await Swal.fire({
-        icon:            'warning',
         showCancelButton: true,
         ...DEFAULT_THEME,
         ...options,
     });
 
     return result.isConfirmed;
+}
+
+/**
+ * Confirmation SweetAlert2 avant suppression — pattern partagé par tous les controllers de
+ * suppression (contact, exercise, routine, workout).
+ *
+ * @param {object} options
+ * @returns {Promise<boolean>}
+ */
+export async function confirmDeletion(options) {
+    return confirmAction({ icon: 'warning', ...options });
 }
 
 /**
