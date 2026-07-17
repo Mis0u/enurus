@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Entity;
 
+use App\Entity\ContactThread;
+use App\Entity\ContactThreadMessage;
 use App\Entity\User;
+use App\Entity\Workout;
 use App\Repository\UserRepository;
 use App\Service\Email\EmailInterface;
 use App\Service\Entity\AccountDeletionService;
@@ -113,6 +116,58 @@ final class AccountDeletionServiceTest extends TestCase
         $service = new AccountDeletionService($em, $userRepository, $emailService, $translator, $imageUploadService);
 
         self::assertSame(0, $service->purgeExpired());
+    }
+
+    public function testPurgeExpiredDeletesAvatarWorkoutAndContactThreadImages(): void
+    {
+        $user = new User();
+        $user->email = 'test@example.com';
+        $user->nickname = 'TestUser';
+        $user->locale = 'fr';
+        $user->avatarPath = 'avatars/avatar.jpg';
+        $user->deletionRequestedAt = new \DateTimeImmutable('-35 days');
+
+        $workout = new Workout();
+        $workout->owner = $user;
+        $workout->photoPath = 'workouts/photo.jpg';
+        $user->workouts->add($workout);
+
+        $thread = new ContactThread();
+        $thread->owner = $user;
+        $thread->subject = 'Test subject';
+
+        $message = new ContactThreadMessage();
+        $message->author = $user;
+        $message->body = 'A message with an attached image.';
+        $message->imagePath = 'contact/message.jpg';
+        $thread->addMessage($message);
+
+        $user->contactThreads->add($thread);
+
+        $userRepository = $this->createStub(UserRepository::class);
+        $userRepository->method('findPendingDeletionOlderThan')->willReturn([$user]);
+
+        $em = $this->createStub(EntityManagerInterface::class);
+        $emailService = $this->createStub(EmailInterface::class);
+        $emailService->method('createEmail')->willReturn(new TemplatedEmail());
+        $translator = $this->createStub(TranslatorInterface::class);
+
+        $deletedPaths = [];
+        $imageUploadService = $this->createMock(ImageUploadService::class);
+        $imageUploadService->expects(self::exactly(3))
+            ->method('delete')
+            ->willReturnCallback(function (?string $path) use (&$deletedPaths): void {
+                $deletedPaths[] = $path;
+            });
+
+        $service = new AccountDeletionService($em, $userRepository, $emailService, $translator, $imageUploadService);
+
+        $service->purgeExpired();
+
+        self::assertSame(
+            ['avatars/avatar.jpg', 'workouts/photo.jpg', 'contact/message.jpg'],
+            $deletedPaths,
+        );
     }
 
     public function testGetDeletionDeadlineReturnsNullWithoutPendingRequest(): void

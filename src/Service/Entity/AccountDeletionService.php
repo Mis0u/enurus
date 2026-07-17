@@ -114,5 +114,11 @@ final readonly class AccountDeletionService
         foreach ($user->workouts as $workout) {
             $this->imageUploadService->delete($workout->photoPath);
         }
+
+        foreach ($user->contactThreads as $thread) {
+            foreach ($thread->messages as $message) {
+                $this->imageUploadService->delete($message->imagePath);
+            }
+        }
     }
 }
