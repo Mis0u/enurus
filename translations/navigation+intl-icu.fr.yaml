@@ -183,6 +183,8 @@ exercise:
             reset: Réinitialiser les filtres
             search_placeholder: Rechercher un exercice…
         pagination:
+            first: Première page
+            last: Dernière page
             navigation: Navigation des pages
             next: Suivant
             per_page: Afficher
@@ -234,6 +236,8 @@ messagerie:
     title: Messagerie
 
 pagination:
+    first: Première page
+    last: Dernière page
     navigation: Navigation des pages
     next: Suivant
     per_page: Afficher

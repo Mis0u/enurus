@@ -183,6 +183,8 @@ exercise:
             reset: Filter zurücksetzen
             search_placeholder: Übung suchen…
         pagination:
+            first: Erste Seite
+            last: Letzte Seite
             navigation: Seitennavigation
             next: Weiter
             per_page: Anzeigen
@@ -234,6 +236,8 @@ messagerie:
     title: Nachrichten
 
 pagination:
+    first: Erste Seite
+    last: Letzte Seite
     navigation: Seitennavigation
     next: Weiter
     per_page: Anzeigen

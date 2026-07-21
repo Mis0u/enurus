@@ -25,6 +25,20 @@
         <button
             type="button"
             class="exercise-page-btn exercise-page-btn--nav"
+            hidden
+            data-exercise--list-target="firstBtn"
+            data-action="click->exercise--list#goFirst"
+            aria-label="{{ 'exercise.list.pagination.first'|trans({}, 'navigation') }}"
+        >
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polyline points="11 17 6 12 11 7"></polyline>
+                <polyline points="18 17 13 12 18 7"></polyline>
+            </svg>
+        </button>
+
+        <button
+            type="button"
+            class="exercise-page-btn exercise-page-btn--nav"
             disabled
             data-exercise--list-target="prevBtn"
             data-action="click->exercise--list#prevPage"
@@ -53,6 +67,20 @@
             {{ 'exercise.list.pagination.next'|trans({}, 'navigation') }}
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+
+        <button
+            type="button"
+            class="exercise-page-btn exercise-page-btn--nav"
+            hidden
+            data-exercise--list-target="lastBtn"
+            data-action="click->exercise--list#goLast"
+            aria-label="{{ 'exercise.list.pagination.last'|trans({}, 'navigation') }}"
+        >
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polyline points="13 17 18 12 13 7"></polyline>
+                <polyline points="6 17 11 12 6 7"></polyline>
             </svg>
         </button>
     </div>

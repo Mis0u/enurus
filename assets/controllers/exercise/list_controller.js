@@ -21,8 +21,10 @@ export default class extends Controller {
         'grid',
         'emptyState',
         'paginationWrapper',
+        'firstBtn',
         'prevBtn',
         'nextBtn',
+        'lastBtn',
         'pageNumbers',
         'perPageSelect',
     ];
@@ -75,6 +77,13 @@ export default class extends Controller {
         this.#applyFilters();
     }
 
+    goFirst() {
+        if (this.#currentPage <= 1) return;
+        this.#currentPage = 1;
+        this.#applyFilters();
+        this.#scrollToGrid();
+    }
+
     prevPage() {
         if (this.#currentPage <= 1) return;
         this.#currentPage--;
@@ -86,6 +95,14 @@ export default class extends Controller {
         const totalPages = this.#computeTotalPages(this.#getMatchingCards().length);
         if (this.#currentPage >= totalPages) return;
         this.#currentPage++;
+        this.#applyFilters();
+        this.#scrollToGrid();
+    }
+
+    goLast() {
+        const totalPages = this.#computeTotalPages(this.#getMatchingCards().length);
+        if (this.#currentPage >= totalPages) return;
+        this.#currentPage = totalPages;
         this.#applyFilters();
         this.#scrollToGrid();
     }
@@ -208,6 +225,10 @@ export default class extends Controller {
 
         this.prevBtnTarget.disabled = this.#currentPage <= 1;
         this.nextBtnTarget.disabled = this.#currentPage >= totalPages;
+
+        // "Première/dernière page" masqués quand la fenêtre glissante couvre déjà cette borne.
+        this.firstBtnTarget.hidden = pagesInRange[0] === 1;
+        this.lastBtnTarget.hidden  = pagesInRange[pagesInRange.length - 1] === totalPages;
     }
 
     /**

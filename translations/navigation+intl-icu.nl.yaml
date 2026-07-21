@@ -183,6 +183,8 @@ exercise:
             reset: Filters resetten
             search_placeholder: Zoek een oefening…
         pagination:
+            first: Eerste pagina
+            last: Laatste pagina
             navigation: Paginanavigatie
             next: Volgende
             per_page: Tonen
@@ -234,6 +236,8 @@ messagerie:
     title: Berichten
 
 pagination:
+    first: Eerste pagina
+    last: Laatste pagina
     navigation: Paginanavigatie
     next: Volgende
     per_page: Tonen
