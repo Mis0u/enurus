@@ -309,7 +309,6 @@ palier précise, préférer des dates fixes en dur.
 | 20 | Sessions persistées en base pour invalider toutes les sessions actives au changement de mot de passe |
 | 21 | Notifier l'admin si un email de compte supprimé (>30j) se réinscrit |
 | — | Durée de rétention du hash `DeletedAccountTrace` non fixée, purge non implémentée |
-| — | Discuter de la duplication du bloc upload d'image entre `ContactThreadReplyService`/`ContactThreadService`, et de la fusion possible des 3 méthodes `buildDailyPoints`/`buildWeeklyPoints`/`buildMonthlyPoints` de `DashboardTonnageService` (zero-fill jour/semaine/mois très similaires) |
 
 ---
 

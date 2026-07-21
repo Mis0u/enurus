@@ -55,9 +55,39 @@ final readonly class DashboardTonnageService
             $unit,
         );
 
-        $dailyPoints = $this->buildDailyPoints($series, $year->start, $year->end, $unit, $user->locale);
-        $weeklyPoints = $this->buildWeeklyPoints($series, $year->start, $year->end, $unit, $user->locale);
-        $monthlyPoints = $this->buildMonthlyPoints($series, $year->start, $year->end, $unit, $user->locale);
+        $dailyPoints = $this->buildPoints(
+            $series,
+            $year->start,
+            $year->end,
+            $unit,
+            $user->locale,
+            'd MMM',
+            static fn (\DateTimeImmutable $date): string => $date->format('Y-m-d'),
+            static fn (\DateTimeImmutable $date): \DateTimeImmutable => $date,
+            static fn (\DateTimeImmutable $cursor): \DateTimeImmutable => $cursor->modify('+1 day'),
+        );
+        $weeklyPoints = $this->buildPoints(
+            $series,
+            $year->start,
+            $year->end,
+            $unit,
+            $user->locale,
+            'd MMM',
+            fn (\DateTimeImmutable $date): string => $this->periodCalculator->weekStartOf($date)->format('Y-m-d'),
+            fn (\DateTimeImmutable $date): \DateTimeImmutable => $this->periodCalculator->weekStartOf($date),
+            static fn (\DateTimeImmutable $cursor): \DateTimeImmutable => $cursor->modify('+7 days'),
+        );
+        $monthlyPoints = $this->buildPoints(
+            $series,
+            $year->start,
+            $year->end,
+            $unit,
+            $user->locale,
+            'MMM',
+            static fn (\DateTimeImmutable $date): string => $date->format('Y-m'),
+            static fn (\DateTimeImmutable $date): \DateTimeImmutable => $date->modify('first day of this month')->setTime(0, 0, 0),
+            static fn (\DateTimeImmutable $cursor): \DateTimeImmutable => $cursor->modify('+1 month'),
+        );
 
         return [
             'unit' => $unit->value,
@@ -74,108 +104,46 @@ final readonly class DashboardTonnageService
     }
 
     /**
-     * Zero-fill jour par jour de $start à $end (bornes incluses) — une barre par jour même sans
-     * séance, les séances multiples du même jour sont agrégées sur une seule barre.
+     * Zero-fill générique (jour/semaine/mois) : regroupe $series par clé de bucket
+     * ($bucketKeyOf), puis parcourt le curseur de $start à $end (bornes normalisées par
+     * $normalizeBucketStart, incrémentées par $incrementCursor) — une barre par bucket même sans
+     * séance, les séances multiples du même bucket sont agrégées sur une seule barre.
      *
      * @param array<int, array{performedAt: \DateTimeImmutable, tonnage: float}> $series
+     * @param \Closure(\DateTimeImmutable): string $bucketKeyOf clé de regroupement d'une date
+     * @param \Closure(\DateTimeImmutable): \DateTimeImmutable $normalizeBucketStart aligne une date sur le début de son bucket
+     * @param \Closure(\DateTimeImmutable): \DateTimeImmutable $incrementCursor avance le curseur d'un bucket
      * @return array<int, array{label: string, value: float}>
      */
-    private function buildDailyPoints(
+    private function buildPoints(
         array $series,
         \DateTimeImmutable $start,
         \DateTimeImmutable $end,
         UnitOfMeasureEnum $unit,
         string $locale,
+        string $labelPattern,
+        \Closure $bucketKeyOf,
+        \Closure $normalizeBucketStart,
+        \Closure $incrementCursor,
     ): array {
-        $dailyTotals = [];
+        $totals = [];
         foreach ($series as $point) {
-            $key = $point['performedAt']->format('Y-m-d');
-            $dailyTotals[$key] = ($dailyTotals[$key] ?? 0.0) + $point['tonnage'];
+            $key = $bucketKeyOf($point['performedAt']);
+            $totals[$key] = ($totals[$key] ?? 0.0) + $point['tonnage'];
         }
 
-        $formatter = $this->buildFormatter($locale, 'd MMM');
+        $formatter = $this->buildFormatter($locale, $labelPattern);
         $points = [];
 
-        $cursor = $start;
-        while ($cursor <= $end) {
-            $key = $cursor->format('Y-m-d');
+        $cursor = $normalizeBucketStart($start);
+        $lastBucketStart = $normalizeBucketStart($end);
+        while ($cursor <= $lastBucketStart) {
+            $key = $bucketKeyOf($cursor);
             $points[] = [
                 'label' => $this->formatDate($formatter, $cursor),
-                'value' => $this->weightConverter->convertToLbs($dailyTotals[$key] ?? 0.0, $unit),
+                'value' => $this->weightConverter->convertToLbs($totals[$key] ?? 0.0, $unit),
             ];
-            $cursor = $cursor->modify('+1 day');
-        }
-
-        return $points;
-    }
-
-    /**
-     * Zero-fill semaine par semaine (lundi → dimanche) de la semaine de $start à celle de $end.
-     *
-     * @param array<int, array{performedAt: \DateTimeImmutable, tonnage: float}> $series
-     * @return array<int, array{label: string, value: float}>
-     */
-    private function buildWeeklyPoints(
-        array $series,
-        \DateTimeImmutable $start,
-        \DateTimeImmutable $end,
-        UnitOfMeasureEnum $unit,
-        string $locale,
-    ): array {
-        $weeklyTotals = [];
-        foreach ($series as $point) {
-            $key = $this->periodCalculator->weekStartOf($point['performedAt'])->format('Y-m-d');
-            $weeklyTotals[$key] = ($weeklyTotals[$key] ?? 0.0) + $point['tonnage'];
-        }
-
-        $formatter = $this->buildFormatter($locale, 'd MMM');
-        $points = [];
-
-        $cursor = $this->periodCalculator->weekStartOf($start);
-        $lastWeekStart = $this->periodCalculator->weekStartOf($end);
-        while ($cursor <= $lastWeekStart) {
-            $key = $cursor->format('Y-m-d');
-            $points[] = [
-                'label' => $this->formatDate($formatter, $cursor),
-                'value' => $this->weightConverter->convertToLbs($weeklyTotals[$key] ?? 0.0, $unit),
-            ];
-            $cursor = $cursor->modify('+7 days');
-        }
-
-        return $points;
-    }
-
-    /**
-     * Zero-fill mois par mois du mois de $start à celui de $end.
-     *
-     * @param array<int, array{performedAt: \DateTimeImmutable, tonnage: float}> $series
-     * @return array<int, array{label: string, value: float}>
-     */
-    private function buildMonthlyPoints(
-        array $series,
-        \DateTimeImmutable $start,
-        \DateTimeImmutable $end,
-        UnitOfMeasureEnum $unit,
-        string $locale,
-    ): array {
-        $monthlyTotals = [];
-        foreach ($series as $point) {
-            $key = $point['performedAt']->format('Y-m');
-            $monthlyTotals[$key] = ($monthlyTotals[$key] ?? 0.0) + $point['tonnage'];
-        }
-
-        $formatter = $this->buildFormatter($locale, 'MMM');
-        $points = [];
-
-        $cursor = $start->modify('first day of this month')->setTime(0, 0, 0);
-        $lastMonthStart = $end->modify('first day of this month')->setTime(0, 0, 0);
-        while ($cursor <= $lastMonthStart) {
-            $key = $cursor->format('Y-m');
-            $points[] = [
-                'label' => $this->formatDate($formatter, $cursor),
-                'value' => $this->weightConverter->convertToLbs($monthlyTotals[$key] ?? 0.0, $unit),
-            ];
-            $cursor = $cursor->modify('+1 month');
+            $cursor = $incrementCursor($cursor);
         }
 
         return $points;
