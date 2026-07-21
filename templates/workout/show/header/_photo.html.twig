@@ -5,5 +5,5 @@
             {{ 'workout.photo.label_visible'|trans({}, 'navigation') }}
         </span>
     </div>
-    {% include 'workout/show/header/_photo_thumbnail.html.twig' %}
+    {% include 'workout/show/header/_photo_thumbnail.html.twig' with {'workout': workout} only %}
 </div>
