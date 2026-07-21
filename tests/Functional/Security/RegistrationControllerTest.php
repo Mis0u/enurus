@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security;
 
+use App\Entity\ContactThreadMessage;
+use App\Entity\DeletedAccountTrace;
 use App\Entity\User;
 use App\Enum\Entity\User\GenderEnum;
+use App\Repository\ContactThreadRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -64,6 +67,66 @@ class RegistrationControllerTest extends WebTestCase
         $this->assertSame($user->lastLogin->format('Y-m-d'), now()->format('Y-m-d'));
         $this->assertSame(GenderEnum::from($gender), $user->gender);
         $this->assertSame('fr', $user->locale);
+    }
+
+    public function testReregistrationWithEmailOfDeletedAccountNotifiesAdminInternally(): void
+    {
+        $email = 'rejoined-after-deletion@test.com';
+
+        $client = static::createClient();
+        $client->disableReboot();
+        $mockClock = new MockClock('2026-01-29 08:46:00');
+        $client->getContainer()->set(ClockInterface::class, $mockClock);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $client->getContainer()->get(EntityManagerInterface::class);
+
+        $trace = new DeletedAccountTrace();
+        $trace->emailHash = hash('sha256', $email);
+        $trace->deletedAt = new \DateTimeImmutable('-3 days');
+        $entityManager->persist($trace);
+        $entityManager->flush();
+
+        $crawler = $client->request(Request::METHOD_GET, '/fr/inscription');
+        $buttonCrawlerNode = $crawler->selectButton('Créer mon compte');
+        $form = $buttonCrawlerNode->form();
+
+        $mockClock->sleep(5);
+
+        $client->submit($form, [
+            'registration_form[gender]' => 'male',
+            'registration_form[nickname]' => 'Toto',
+            'registration_form[email]' => $email,
+            'registration_form[plainPassword]' => self::PASSWORD,
+            'registration_form[website]' => null,
+        ]);
+
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
+
+        /** @var ContactThreadRepository $contactThreadRepository */
+        $contactThreadRepository = $client->getContainer()->get(ContactThreadRepository::class);
+        /** @var UserRepository $userRepository */
+        $userRepository = $entityManager->getRepository(User::class);
+
+        $admin = $userRepository->findOneByEmail('admin-fixture@test.com');
+        self::assertNotNull($admin);
+
+        $adminThreads = $contactThreadRepository->findBy([
+            'owner' => $admin,
+        ]);
+        $notificationThread = null;
+        foreach ($adminThreads as $thread) {
+            if (str_contains($thread->subject, 'Réinscription')) {
+                $notificationThread = $thread;
+            }
+        }
+
+        self::assertNotNull($notificationThread, 'Expected an internal messaging thread notifying the admin of the re-registration.');
+        self::assertCount(1, $notificationThread->messages);
+
+        $message = $notificationThread->messages->first();
+        self::assertInstanceOf(ContactThreadMessage::class, $message);
+        self::assertStringContainsString($email, $message->body);
     }
 
     public function testRedirectToDashboardIfUserIsAuthenticated(): void

@@ -1,3 +1,8 @@
+admin:
+    reregistration:
+        body: "L'indirizzo {email} corrisponde a un account eliminato il {deletedAt}. Verifica se si tratta di un abuso."
+        subject: Nuova registrazione rilevata
+
 contact:
     category:
         bug: Bug

@@ -1,3 +1,8 @@
+admin:
+    reregistration:
+        body: "Adres e-mail {email} odpowiada kontu usuniętemu {deletedAt}. Sprawdź, czy to nadużycie."
+        subject: Wykryto ponowną rejestrację
+
 contact:
     category:
         bug: Błąd

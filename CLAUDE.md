@@ -111,6 +111,18 @@ régénérer le token via `CsrfTokenManagerInterface::getToken()` hors requête
 (`SessionNotFoundException`) — le lire depuis le DOM déjà rendu via `Crawler`
 (`FunctionalTestTrait::csrfTokenFromPage()`).
 
+**Trace de compte supprimé** : `AccountDeletionService::purgeExpired()` enregistre un hash
+SHA-256 de l'email (jamais l'email en clair) dans `DeletedAccountTrace`, à la suppression
+effective du compte (pas à la demande). Purgé 6 mois après cette suppression effective par
+`app:deleted-account-trace:purge` (`DeletedAccountTracePurgeCommand`) — délibérément plus long que
+la rétention du compte lui-même (30 jours), pour une fenêtre de détection de réinscription
+réaliste. À l'inscription, `DeletedAccountReregistrationNotifierService::notifyIfReregistration()`
+(appelé depuis `UserRegistrationService::registerUser()`) compare le hash du nouvel email à
+`DeletedAccountTrace` et, en cas de correspondance, crée un `ContactThread` (message interne,
+même mécanisme que `RegistrationWelcomeThreadService`) **appartenant au compte admin**
+(`ADMIN_USER_EMAIL`, même paramètre env que le fil de bienvenue) plutôt qu'un email — apparaît
+comme non lu dans la messagerie de l'admin. Ne bloque jamais l'inscription.
+
 ---
 
 ## Patterns transversaux éprouvés
@@ -273,6 +285,12 @@ régénérer le token via `CsrfTokenManagerInterface::getToken()` hors requête
   un test unitaire — PHPUnit génère un double en sous-classant la classe cible, ce qui échoue
   silencieusement (`unresolvableReturnType` côté PHPStan) si elle est `final`. Vérifier
   `grep -rn "createStub(\|createMock(" tests` avant d'ajouter `final` à un repository ou service.
+- **`messenger.transport.async` (route de `SendEmailMessage`) n'est pas fiable à interroger dans un
+  test fonctionnel** : le DSN pointe une vraie table Doctrine (`doctrine://default?auto_setup=0`,
+  aucun override en `.env.test`), pas un `InMemoryTransport` — un worker `messenger:consume`
+  concurrent sur la machine peut déjà avoir consommé le message avant l'assertion, rendant le
+  compte de messages instable. Tester la logique métier d'envoi au niveau du service (mock
+  `EmailInterface`) plutôt qu'en comptant les messages du transport dans un test d'intégration.
 
 ### PHPStan (niveau 9)
 - `json_encode(..., JSON_THROW_ON_ERROR)` plutôt que `if (false === ...)`.
@@ -307,8 +325,6 @@ palier précise, préférer des dates fixes en dur.
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
 | 20 | Sessions persistées en base pour invalider toutes les sessions actives au changement de mot de passe |
-| 21 | Notifier l'admin si un email de compte supprimé (>30j) se réinscrit |
-| — | Durée de rétention du hash `DeletedAccountTrace` non fixée, purge non implémentée |
 
 ---
 

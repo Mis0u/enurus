@@ -17,6 +17,7 @@ final readonly class UserRegistrationService
         private EmailInterface $emailService,
         private TranslatorInterface $translator,
         private RegistrationWelcomeThreadService $welcomeThreadService,
+        private DeletedAccountReregistrationNotifierService $reregistrationNotifier,
     ) {
     }
 
@@ -25,6 +26,7 @@ final readonly class UserRegistrationService
         $this->userService->createUser($user, $plainPassword, $locale);
         $this->sendRegistrationEmail($user, $locale);
         $this->welcomeThreadService->create($user, $locale);
+        $this->reregistrationNotifier->notifyIfReregistration($user);
 
         return $user;
     }

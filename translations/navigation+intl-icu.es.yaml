@@ -1,3 +1,8 @@
+admin:
+    reregistration:
+        body: "El correo {email} coincide con una cuenta eliminada el {deletedAt}. Verifica si se trata de un abuso."
+        subject: Reinscripción detectada
+
 contact:
     category:
         bug: Bug

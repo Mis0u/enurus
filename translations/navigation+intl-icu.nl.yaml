@@ -1,3 +1,8 @@
+admin:
+    reregistration:
+        body: "Het e-mailadres {email} komt overeen met een account dat op {deletedAt} is verwijderd. Controleer of dit misbruik betreft."
+        subject: Herregistratie gedetecteerd
+
 contact:
     category:
         bug: Bug

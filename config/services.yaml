@@ -25,6 +25,10 @@ services:
         arguments:
             $adminEmail: '%env(ADMIN_USER_EMAIL)%'
 
+    App\Service\Security\DeletedAccountReregistrationNotifierService:
+        arguments:
+            $adminUserEmail: '%env(ADMIN_USER_EMAIL)%'
+
     rate_limiter.storage:
         class: Symfony\Component\Cache\Adapter\ArrayAdapter
         autoconfigure: false
