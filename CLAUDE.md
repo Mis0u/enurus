@@ -112,15 +112,16 @@ régénérer le token via `CsrfTokenManagerInterface::getToken()` hors requête
 (`FunctionalTestTrait::csrfTokenFromPage()`).
 
 **Trace de compte supprimé** : `AccountDeletionService::purgeExpired()` enregistre un hash
-SHA-256 de l'email (jamais l'email en clair) dans `DeletedAccountTrace`. Purgé après 30 jours par
-`app:deleted-account-trace:purge` (`DeletedAccountTracePurgeCommand`, même conservation que la
-fenêtre de détection ci-dessous — au-delà, la trace n'a plus d'utilité). À l'inscription,
-`DeletedAccountReregistrationNotifierService::notifyIfReregistration()` (appelé depuis
-`UserRegistrationService::registerUser()`) compare le hash du nouvel email à `DeletedAccountTrace`
-et notifie `ADMIN_USER_EMAIL` (même paramètre env que `RegistrationWelcomeThreadService`) sans
-jamais bloquer l'inscription. Piège rencontré : `TemplatedEmail` réserve la clé de contexte
-`email` (utilisée en interne par le `BodyRenderer`) — utiliser un autre nom de variable
-(`reregisteredEmail`) dans le contexte Twig transmis à `createEmail()`.
+SHA-256 de l'email (jamais l'email en clair) dans `DeletedAccountTrace`, à la suppression
+effective du compte (pas à la demande). Purgé 6 mois après cette suppression effective par
+`app:deleted-account-trace:purge` (`DeletedAccountTracePurgeCommand`) — délibérément plus long que
+la rétention du compte lui-même (30 jours), pour une fenêtre de détection de réinscription
+réaliste. À l'inscription, `DeletedAccountReregistrationNotifierService::notifyIfReregistration()`
+(appelé depuis `UserRegistrationService::registerUser()`) compare le hash du nouvel email à
+`DeletedAccountTrace` et, en cas de correspondance, crée un `ContactThread` (message interne,
+même mécanisme que `RegistrationWelcomeThreadService`) **appartenant au compte admin**
+(`ADMIN_USER_EMAIL`, même paramètre env que le fil de bienvenue) plutôt qu'un email — apparaît
+comme non lu dans la messagerie de l'admin. Ne bloque jamais l'inscription.
 
 ---
 

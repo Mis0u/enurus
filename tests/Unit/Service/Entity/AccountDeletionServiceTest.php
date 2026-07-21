@@ -224,7 +224,7 @@ final class AccountDeletionServiceTest extends TestCase
         $deletedAccountTraceRepository->expects(self::once())
             ->method('deleteOlderThan')
             ->with(self::callback(static function (\DateTimeImmutable $threshold): bool {
-                $expected = (new \DateTimeImmutable())->modify('-30 days');
+                $expected = (new \DateTimeImmutable())->modify('-6 months');
 
                 return 5 > abs($threshold->getTimestamp() - $expected->getTimestamp());
             }))

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security;
 
+use App\Entity\ContactThreadMessage;
 use App\Entity\DeletedAccountTrace;
 use App\Entity\User;
 use App\Enum\Entity\User\GenderEnum;
+use App\Repository\ContactThreadRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -67,7 +69,7 @@ class RegistrationControllerTest extends WebTestCase
         $this->assertSame('fr', $user->locale);
     }
 
-    public function testReregistrationWithEmailOfDeletedAccountSucceedsWithoutError(): void
+    public function testReregistrationWithEmailOfDeletedAccountNotifiesAdminInternally(): void
     {
         $email = 'rejoined-after-deletion@test.com';
 
@@ -99,15 +101,32 @@ class RegistrationControllerTest extends WebTestCase
             'registration_form[website]' => null,
         ]);
 
-        // Le rendu du corps de l'email admin (BodyRenderer) est déclenché de façon synchrone dès
-        // sendEmail(), même si l'envoi effectif passe par Messenger (transport async) — une
-        // requête réussie ici couvre déjà la régression réelle rencontrée pendant le
-        // développement (variable de contexte "email" réservée par TemplatedEmail, qui faisait
-        // planter le rendu en 500). La vérification du contenu/destinataire de la notification
-        // admin est couverte par DeletedAccountReregistrationNotifierServiceTest (le transport
-        // Messenger réel de cet environnement n'est pas fiable à interroger en test : un worker
-        // `messenger:consume` concurrent peut déjà avoir consommé le message).
         $this->assertResponseRedirects('/fr/tableau-de-bord');
+
+        /** @var ContactThreadRepository $contactThreadRepository */
+        $contactThreadRepository = $client->getContainer()->get(ContactThreadRepository::class);
+        /** @var UserRepository $userRepository */
+        $userRepository = $entityManager->getRepository(User::class);
+
+        $admin = $userRepository->findOneByEmail('admin-fixture@test.com');
+        self::assertNotNull($admin);
+
+        $adminThreads = $contactThreadRepository->findBy([
+            'owner' => $admin,
+        ]);
+        $notificationThread = null;
+        foreach ($adminThreads as $thread) {
+            if (str_contains($thread->subject, 'Réinscription')) {
+                $notificationThread = $thread;
+            }
+        }
+
+        self::assertNotNull($notificationThread, 'Expected an internal messaging thread notifying the admin of the re-registration.');
+        self::assertCount(1, $notificationThread->messages);
+
+        $message = $notificationThread->messages->first();
+        self::assertInstanceOf(ContactThreadMessage::class, $message);
+        self::assertStringContainsString($email, $message->body);
     }
 
     public function testRedirectToDashboardIfUserIsAuthenticated(): void

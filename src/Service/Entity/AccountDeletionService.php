@@ -19,11 +19,11 @@ final readonly class AccountDeletionService
     private const int RETENTION_DAYS = 30;
 
     /**
-     * Durée de conservation du hash d'email dans DeletedAccountTrace — alignée sur la fenêtre de
-     * détection de réinscription (DeletedAccountReregistrationNotifierService) : au-delà, la
-     * trace n'a plus d'utilité fonctionnelle.
+     * Durée de conservation du hash d'email dans DeletedAccountTrace, à compter de la suppression
+     * effective du compte (pas de la demande) — délibérément plus longue que la rétention du
+     * compte lui-même, pour couvrir une fenêtre de détection de réinscription réaliste.
      */
-    private const int TRACE_RETENTION_DAYS = 30;
+    private const int TRACE_RETENTION_MONTHS = 6;
 
     public function __construct(
         private EntityManagerInterface $entityManager,
@@ -81,7 +81,7 @@ final readonly class AccountDeletionService
 
     public function purgeExpiredTraces(): int
     {
-        $threshold = now()->modify(sprintf('-%d days', self::TRACE_RETENTION_DAYS));
+        $threshold = now()->modify(sprintf('-%d months', self::TRACE_RETENTION_MONTHS));
 
         return $this->deletedAccountTraceRepository->deleteOlderThan($threshold);
     }

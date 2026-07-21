@@ -2,7 +2,6 @@ admin:
     reregistration:
         body: "L'adresse {email} correspond à un compte supprimé le {deletedAt}. Vérifie s'il s'agit d'un abus."
         subject: Réinscription détectée
-        title: Réinscription après suppression de compte
 
 contact:
     category:

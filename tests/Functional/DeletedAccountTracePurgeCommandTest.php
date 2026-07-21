@@ -22,11 +22,11 @@ final class DeletedAccountTracePurgeCommandTest extends KernelTestCase
 
         $expiredTrace = new DeletedAccountTrace();
         $expiredTrace->emailHash = hash('sha256', 'expired-trace-test@test.com');
-        $expiredTrace->deletedAt = new \DateTimeImmutable('-35 days');
+        $expiredTrace->deletedAt = new \DateTimeImmutable('-7 months');
 
         $recentTrace = new DeletedAccountTrace();
         $recentTrace->emailHash = hash('sha256', 'recent-trace-test@test.com');
-        $recentTrace->deletedAt = new \DateTimeImmutable('-5 days');
+        $recentTrace->deletedAt = new \DateTimeImmutable('-1 month');
 
         $em->persist($expiredTrace);
         $em->persist($recentTrace);

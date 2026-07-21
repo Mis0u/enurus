@@ -4,24 +4,27 @@ declare(strict_types=1);
 
 namespace App\Service\Security;
 
+use App\Entity\ContactThread;
+use App\Entity\ContactThreadMessage;
 use App\Entity\User;
+use App\Enum\Contact\ContactCategoryEnum;
 use App\Repository\DeletedAccountTraceRepository;
-use App\Service\Email\EmailInterface;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Notifie l'admin par email quand un utilisateur se réinscrit avec un email correspondant à un
- * compte supprimé récemment (trace toujours présente, purgée après 30 jours — voir
- * AccountDeletionService::purgeExpiredTraces()). Ne bloque jamais l'inscription, se contente
- * d'alerter pour une éventuelle vérification manuelle d'abus.
+ * Notifie l'admin dans sa propre messagerie interne (pas par email) quand un utilisateur se
+ * réinscrit avec un email correspondant à un compte supprimé récemment (trace toujours présente,
+ * purgée après 6 mois — voir AccountDeletionService::purgeExpiredTraces()). Ne bloque jamais
+ * l'inscription, se contente d'alerter pour une éventuelle vérification manuelle d'abus.
  */
 final readonly class DeletedAccountReregistrationNotifierService
 {
-    private const string ADMIN_LOCALE = 'fr';
-
     public function __construct(
         private DeletedAccountTraceRepository $traceRepository,
-        private EmailInterface $emailService,
+        private EntityManagerInterface $entityManager,
+        private UserRepository $userRepository,
         private TranslatorInterface $translator,
         private string $adminUserEmail,
     ) {
@@ -36,18 +39,33 @@ final readonly class DeletedAccountReregistrationNotifierService
             return;
         }
 
-        $email = $this->emailService->createEmail(
-            $this->adminUserEmail,
-            $this->translator->trans('admin.reregistration.subject', [], 'navigation', self::ADMIN_LOCALE),
+        $admin = $this->userRepository->findOneByEmail($this->adminUserEmail);
+
+        if (null === $admin) {
+            throw new \LogicException(sprintf('Admin account "%s" not found — cannot notify about reregistration.', $this->adminUserEmail));
+        }
+
+        $thread = new ContactThread();
+        $thread->owner = $admin;
+        $thread->category = ContactCategoryEnum::INFORMATIVE;
+        $thread->subject = $this->translator->trans('admin.reregistration.subject', [], 'navigation', $admin->locale);
+
+        $message = new ContactThreadMessage();
+        $message->author = $admin;
+        $message->fromAdmin = true;
+        $message->body = $this->translator->trans(
+            'admin.reregistration.body',
             [
-                'reregisteredEmail' => $user->email,
-                'deletedAt' => $trace->deletedAt,
-                'locale' => self::ADMIN_LOCALE,
+                'email' => $user->email,
+                'deletedAt' => $trace->deletedAt->format('d/m/Y'),
             ],
-            'emails/admin_reregistration_notice.html.twig',
-            self::ADMIN_LOCALE,
+            'navigation',
+            $admin->locale,
         );
 
-        $this->emailService->sendEmail($email);
+        $thread->addMessage($message);
+
+        $this->entityManager->persist($thread);
+        $this->entityManager->flush();
     }
 }

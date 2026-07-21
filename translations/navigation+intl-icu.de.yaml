@@ -2,7 +2,6 @@ admin:
     reregistration:
         body: "Die E-Mail {email} entspricht einem am {deletedAt} gelöschten Konto. Prüfe, ob es sich um Missbrauch handelt."
         subject: Neuanmeldung erkannt
-        title: Neuanmeldung nach Kontolöschung
 
 contact:
     category:

@@ -13,7 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'app:deleted-account-trace:purge',
-    description: 'Supprime les traces de compte (hash email) dont le délai de rétention de 30 jours est écoulé.',
+    description: 'Supprime les traces de compte (hash email) dont le délai de rétention de 6 mois est écoulé.',
 )]
 final class DeletedAccountTracePurgeCommand extends Command
 {
