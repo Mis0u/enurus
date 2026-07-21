@@ -13,11 +13,11 @@ use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
 use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
 use App\Repository\MuscleGroupRepository;
-use App\Repository\WorkoutRepository;
+use App\Repository\WorkoutMuscleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-final class WorkoutRepositoryMuscleTest extends KernelTestCase
+final class WorkoutMuscleRepositoryTest extends KernelTestCase
 {
     public function testFindLastSolicitationDatesByMuscleGroupReturnsMostRecentDatePerMuscle(): void
     {
@@ -25,8 +25,8 @@ final class WorkoutRepositoryMuscleTest extends KernelTestCase
 
         /** @var EntityManagerInterface $em */
         $em = static::getContainer()->get(EntityManagerInterface::class);
-        /** @var WorkoutRepository $workoutRepository */
-        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
+        /** @var WorkoutMuscleRepository $workoutMuscleRepository */
+        $workoutMuscleRepository = static::getContainer()->get(WorkoutMuscleRepository::class);
         /** @var MuscleGroupRepository $muscleGroupRepository */
         $muscleGroupRepository = static::getContainer()->get(MuscleGroupRepository::class);
 
@@ -40,7 +40,7 @@ final class WorkoutRepositoryMuscleTest extends KernelTestCase
         $oldWorkout = $this->createTestWorkout($em, $user, $exercise, new \DateTimeImmutable('-30 days'));
         $recentWorkout = $this->createTestWorkout($em, $user, $exercise, new \DateTimeImmutable('-2 days'));
 
-        $result = $workoutRepository->findLastSolicitationDatesByMuscleGroup($user);
+        $result = $workoutMuscleRepository->findLastSolicitationDatesByMuscleGroup($user);
 
         $muscleAId = (string) $muscleA->id;
         $muscleBId = (string) $muscleB->id;

@@ -154,6 +154,13 @@ régénérer le token via `CsrfTokenManagerInterface::getToken()` hors requête
   Tri primaires→secondaires en repository.
 - Toutes les données lourdes précalculées dans le controller, passées à la vue en maps indexées —
   zéro requête N+1, zéro logique de calcul en Twig.
+- **`WorkoutRepository` scindé par responsabilité** (ex-625 lignes/15 méthodes) : `WorkoutRepository`
+  garde le cœur entité (`countByUser`, `findLatestByUser`, `findByUserPaginated`) et reste seul
+  `ServiceEntityRepository<Workout>` ; `WorkoutMuscleRepository` (muscles sollicités + SVG,
+  non-final car stubbé par `DashboardMuscleDistributionServiceTest`), `WorkoutTonnageRepository`
+  (tonnage) et `WorkoutStatsRepository` (comptages/dates/totaux exercices-reps) sont de simples
+  services injectés avec `WorkoutRepository` pour réutiliser `createQueryBuilder('w')` — pas de
+  vrais repositories Doctrine, la convention de nom `...Repository` est gardée par cohérence.
 
 ### Pagination (KnpPaginatorBundle)
 - Composant Twig partagé `templates/_pagination/_pagination.html.twig` (+ `_selector`,
@@ -294,13 +301,10 @@ palier précise, préférer des dates fixes en dur.
 |---|------|
 | 10 | Évaluer `datetimetz_immutable` pour `Workout::$performedAt` — pas encore acté |
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
-| 16 | Description d'exercice au survol (tooltip/popover) |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
 | 20 | Sessions persistées en base pour invalider toutes les sessions actives au changement de mot de passe |
 | 21 | Notifier l'admin si un email de compte supprimé (>30j) se réinscrit |
 | — | Durée de rétention du hash `DeletedAccountTrace` non fixée, purge non implémentée |
-| — | Vérifier sous-collections `Routine`/`Exercise` avec fichiers physiques échappant à `deletePhysicalFiles()` |
-| — | Discuter d'un split SRP de `WorkoutRepository` (625 lignes, 15 méthodes publiques : comptage, tonnage, muscles sollicités, pagination, SVG, dates — plusieurs responsabilités mélangées) |
 | — | Discuter de la duplication du bloc upload d'image entre `ContactThreadReplyService`/`ContactThreadService`, et de la fusion possible des 3 méthodes `buildDailyPoints`/`buildWeeklyPoints`/`buildMonthlyPoints` de `DashboardTonnageService` (zero-fill jour/semaine/mois très similaires) |
 
 ---

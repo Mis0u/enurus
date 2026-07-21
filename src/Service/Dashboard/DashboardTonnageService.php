@@ -6,7 +6,7 @@ namespace App\Service\Dashboard;
 
 use App\Entity\User;
 use App\Enum\Entity\User\UnitOfMeasureEnum;
-use App\Repository\WorkoutRepository;
+use App\Repository\WorkoutTonnageRepository;
 use App\Service\Utils\WeightConverterService;
 use Symfony\UX\Chartjs\Model\Chart;
 
@@ -25,7 +25,7 @@ final readonly class DashboardTonnageService
     private const int WEEKLY_BAR_WIDTH_PX = 40;
 
     public function __construct(
-        private WorkoutRepository $workoutRepository,
+        private WorkoutTonnageRepository $workoutTonnageRepository,
         private WeightConverterService $weightConverter,
         private DashboardTonnageChartBuilder $chartBuilder,
         private DashboardPeriodCalculator $periodCalculator,
@@ -48,7 +48,7 @@ final readonly class DashboardTonnageService
         $year = $this->periodCalculator->currentYearElapsed($now);
 
         $unit = $user->unitOfMeasure;
-        $series = $this->workoutRepository->findTonnageSeriesByUser($user, $year->start, $year->end);
+        $series = $this->workoutTonnageRepository->findTonnageSeriesByUser($user, $year->start, $year->end);
 
         $annualTotal = $this->weightConverter->convertToLbs(
             array_sum(array_column($series, 'tonnage')),

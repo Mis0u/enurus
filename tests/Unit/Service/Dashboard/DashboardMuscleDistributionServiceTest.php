@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Dashboard;
 
-use App\Repository\WorkoutRepository;
+use App\Repository\WorkoutMuscleRepository;
 use App\Service\Dashboard\DashboardMuscleDistributionService;
 use PHPUnit\Framework\TestCase;
 
@@ -12,8 +12,8 @@ final class DashboardMuscleDistributionServiceTest extends TestCase
 {
     public function testBarsAreSortedByTotalSetsRegardlessOfPrimaryInvolvement(): void
     {
-        $workoutRepository = $this->createStub(WorkoutRepository::class);
-        $workoutRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn([
+        $workoutMuscleRepository = $this->createStub(WorkoutMuscleRepository::class);
+        $workoutMuscleRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn([
             [
                 'id' => 'muscle-biceps',
                 'name' => 'biceps',
@@ -30,7 +30,7 @@ final class DashboardMuscleDistributionServiceTest extends TestCase
             ],
         ]);
 
-        $service = new DashboardMuscleDistributionService($workoutRepository);
+        $service = new DashboardMuscleDistributionService($workoutMuscleRepository);
         $result = $service->getBars(['workout-1']);
 
         self::assertSame('quadriceps', $result['bars'][0]['name']);
@@ -50,10 +50,10 @@ final class DashboardMuscleDistributionServiceTest extends TestCase
             ];
         }
 
-        $workoutRepository = $this->createStub(WorkoutRepository::class);
-        $workoutRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn($counts);
+        $workoutMuscleRepository = $this->createStub(WorkoutMuscleRepository::class);
+        $workoutMuscleRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn($counts);
 
-        $service = new DashboardMuscleDistributionService($workoutRepository);
+        $service = new DashboardMuscleDistributionService($workoutMuscleRepository);
         $result = $service->getBars(['workout-1']);
 
         self::assertCount(8, $result['bars']);
@@ -64,8 +64,8 @@ final class DashboardMuscleDistributionServiceTest extends TestCase
 
     public function testDaysSinceLastSolicitedIsNullWhenNoMapProvided(): void
     {
-        $workoutRepository = $this->createStub(WorkoutRepository::class);
-        $workoutRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn([
+        $workoutMuscleRepository = $this->createStub(WorkoutMuscleRepository::class);
+        $workoutMuscleRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn([
             [
                 'id' => 'muscle-biceps',
                 'name' => 'biceps',
@@ -75,7 +75,7 @@ final class DashboardMuscleDistributionServiceTest extends TestCase
             ],
         ]);
 
-        $service = new DashboardMuscleDistributionService($workoutRepository);
+        $service = new DashboardMuscleDistributionService($workoutMuscleRepository);
         $result = $service->getBars(['workout-1']);
 
         self::assertNull($result['bars'][0]['daysSinceLastSolicited']);
@@ -83,8 +83,8 @@ final class DashboardMuscleDistributionServiceTest extends TestCase
 
     public function testDaysSinceLastSolicitedIsZeroWhenSolicitedToday(): void
     {
-        $workoutRepository = $this->createStub(WorkoutRepository::class);
-        $workoutRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn([
+        $workoutMuscleRepository = $this->createStub(WorkoutMuscleRepository::class);
+        $workoutMuscleRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn([
             [
                 'id' => 'muscle-biceps',
                 'name' => 'biceps',
@@ -94,7 +94,7 @@ final class DashboardMuscleDistributionServiceTest extends TestCase
             ],
         ]);
 
-        $service = new DashboardMuscleDistributionService($workoutRepository);
+        $service = new DashboardMuscleDistributionService($workoutMuscleRepository);
         $result = $service->getBars(['workout-1'], [
             'muscle-biceps' => new \DateTimeImmutable('now'),
         ]);
@@ -104,8 +104,8 @@ final class DashboardMuscleDistributionServiceTest extends TestCase
 
     public function testDaysSinceLastSolicitedIsComputedInCalendarDaysForPastDate(): void
     {
-        $workoutRepository = $this->createStub(WorkoutRepository::class);
-        $workoutRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn([
+        $workoutMuscleRepository = $this->createStub(WorkoutMuscleRepository::class);
+        $workoutMuscleRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn([
             [
                 'id' => 'muscle-biceps',
                 'name' => 'biceps',
@@ -115,7 +115,7 @@ final class DashboardMuscleDistributionServiceTest extends TestCase
             ],
         ]);
 
-        $service = new DashboardMuscleDistributionService($workoutRepository);
+        $service = new DashboardMuscleDistributionService($workoutMuscleRepository);
         $result = $service->getBars(['workout-1'], [
             'muscle-biceps' => new \DateTimeImmutable('-3 days'),
         ]);
@@ -125,8 +125,8 @@ final class DashboardMuscleDistributionServiceTest extends TestCase
 
     public function testDaysSinceLastSolicitedIsNullWhenMuscleGroupIdIsMissingFromMap(): void
     {
-        $workoutRepository = $this->createStub(WorkoutRepository::class);
-        $workoutRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn([
+        $workoutMuscleRepository = $this->createStub(WorkoutMuscleRepository::class);
+        $workoutMuscleRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn([
             [
                 'id' => 'muscle-biceps',
                 'name' => 'biceps',
@@ -136,7 +136,7 @@ final class DashboardMuscleDistributionServiceTest extends TestCase
             ],
         ]);
 
-        $service = new DashboardMuscleDistributionService($workoutRepository);
+        $service = new DashboardMuscleDistributionService($workoutMuscleRepository);
         $result = $service->getBars(['workout-1'], [
             'other-id' => new \DateTimeImmutable('-3 days'),
         ]);

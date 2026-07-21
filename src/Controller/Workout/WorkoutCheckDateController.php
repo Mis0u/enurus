@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Workout;
 
 use App\Entity\User;
-use App\Repository\WorkoutRepository;
+use App\Repository\WorkoutStatsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,7 @@ class WorkoutCheckDateController extends AbstractController
         'nl' => '/training-vastleggen/datum-controleren',
         'pl' => '/zapisz-trening/sprawdz-date',
     ], name: 'workout_check_date', methods: ['GET'])]
-    public function __invoke(Request $request, WorkoutRepository $workoutRepository, TranslatorInterface $translator): JsonResponse
+    public function __invoke(Request $request, WorkoutStatsRepository $workoutStatsRepository, TranslatorInterface $translator): JsonResponse
     {
         $date = $request->query->get('date');
 
@@ -42,7 +42,7 @@ class WorkoutCheckDateController extends AbstractController
         $start = new \DateTimeImmutable($date . ' 00:00:00');
         $end = new \DateTimeImmutable($date . ' 23:59:59');
 
-        $count = $workoutRepository->countByUserAndDate($user, $start, $end);
+        $count = $workoutStatsRepository->countByUserAndDate($user, $start, $end);
 
         return $this->json([
             'exists' => 0 < $count,

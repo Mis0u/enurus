@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard;
 
-use App\Repository\WorkoutRepository;
+use App\Repository\WorkoutMuscleRepository;
 
 final readonly class DashboardMuscleDistributionService
 {
@@ -13,7 +13,7 @@ final readonly class DashboardMuscleDistributionService
     private const int PERCENTAGE_SCALE = 100;
 
     public function __construct(
-        private WorkoutRepository $workoutRepository,
+        private WorkoutMuscleRepository $workoutMuscleRepository,
     ) {
     }
 
@@ -34,7 +34,7 @@ final readonly class DashboardMuscleDistributionService
      */
     public function getBars(array $workoutIds, array $lastSolicitationDates = []): array
     {
-        $counts = $this->workoutRepository->findMuscleGroupSetCountsByWorkoutIds($workoutIds);
+        $counts = $this->workoutMuscleRepository->findMuscleGroupSetCountsByWorkoutIds($workoutIds);
 
         if ([] === $counts) {
             return [
