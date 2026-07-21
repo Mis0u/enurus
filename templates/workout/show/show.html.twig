@@ -11,7 +11,7 @@
     {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
         'title': workout.routine is not null ? workout.routine.name : 'workout.list.free_session'|trans({}, 'navigation'),
         'subtitle': user.nickname|formatInitials,
-    } %}
+    } only %}
 {% endblock %}
 
 {% block state %}

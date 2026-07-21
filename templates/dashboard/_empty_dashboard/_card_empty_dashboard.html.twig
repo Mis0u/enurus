@@ -1,7 +1,7 @@
 <div class="empty-hero relative z-[2] flex flex-col items-center text-center px-4 md:px-10 py-5 md:py-8 max-w-full md:max-w-[580px] w-full">
     <div class="hero-card bg-[rgba(10,18,34,0.82)] backdrop-blur-[20px] border border-white/10 rounded-[20px] md:rounded-[28px] p-[32px_24px_28px] md:p-[44px_48px_38px] w-full shadow-[0_0_0_1px_rgba(244,63,94,0.1),0_30px_80px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)]">
 
-        {% include 'dashboard/_empty_dashboard/_introduction.html.twig' %}
+        {% include 'dashboard/_empty_dashboard/_introduction.html.twig' only %}
 
         <div class="anim-fade-5 w-full flex flex-col gap-[8px] md:gap-[10px]">
             <twig:Badge:Badge title="{{ 'sentence.after_workout'|trans({'count': 1}, 'common') }}" message="{{ 'sentence.workout_resume'|trans({}, 'common') }}"/>
