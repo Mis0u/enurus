@@ -2,7 +2,7 @@
     {% if workout.photoPath is not null %}
         {% include 'workout/edit/_upload/_existing_photo.html.twig' %}
     {% else %}
-        {% include 'partials/_svg/_upload.html.twig' %}
+        {% include 'partials/_svg/_upload.html.twig' only %}
         <p class="text-slate-400 text-sm font-medium mt-3">
             {{ 'workout.edit.photo_add'|trans({}, 'navigation') }}
         </p>

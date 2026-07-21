@@ -40,7 +40,7 @@
                     <button type="button"
                             data-action="click->{{ controllerName|default('exercise') }}#deleteSet"
                             class="text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250 text-[20px] leading-none flex items-center justify-center w-6 h-6">
-                        {% include 'partials/_svg/_red_cross.html.twig' %}
+                        {% include 'partials/_svg/_red_cross.html.twig' only %}
                     </button>
                 </td>
             </tr>
@@ -74,7 +74,7 @@
                 <button type="button"
                         data-action="click->{{ controllerName|default('exercise') }}#deleteSet"
                         class="text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250 text-[20px] leading-none flex items-center justify-center w-6 h-6">
-                    {% include 'partials/_svg/_red_cross.html.twig' %}
+                    {% include 'partials/_svg/_red_cross.html.twig' only %}
                 </button>
             </td>
         </tr>

@@ -16,7 +16,7 @@
     <button type="button"
             data-action="click->{{ controllerName|default('exercise') }}#addSet"
             class="w-full flex items-center justify-center gap-1.5 px-3.5 py-2.5 bg-white/[0.03] border border-dashed border-white/[0.12] rounded-lg text-[#8b9bb4] text-[12.5px] font-medium cursor-pointer transition-all duration-250 hover:bg-[rgba(244,63,94,0.07)] hover:text-[#f43f5e] hover:border-[#f43f5e]">
-        {% include 'partials/_svg/_add.html.twig' with {'width': 3.5, 'height': 3.5} %}
+        {% include 'partials/_svg/_add.html.twig' with {'width': 3.5, 'height': 3.5} only %}
         {{ 'workout.add.serie'|trans({}, 'navigation') }}
     </button>
 </div>

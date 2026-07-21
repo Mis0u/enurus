@@ -2,7 +2,7 @@
    class="{{ this.classes }}">
     {% if this.svg %}
         <span class="min-w-[20px] flex items-center justify-center text-white">
-            {% include 'partials/_svg/_add.html.twig' %}
+            {% include 'partials/_svg/_add.html.twig' only %}
         </span>
     {% endif %}
     <span class="nav-label text-white font-semibold text-[13.5px]">{{ this.message }}</span>

@@ -19,9 +19,9 @@
 ">
             <span class="flex-shrink-0">
                 {% if type == 'success' %}
-                    {% include 'partials/_svg/_check.html.twig' %}
+                    {% include 'partials/_svg/_check.html.twig' only %}
                 {% elseif type == 'error' %}
-                    {% include 'partials/_svg/_red_cross.html.twig' %}
+                    {% include 'partials/_svg/_red_cross.html.twig' only %}
                 {% endif %}
             </span>
             <p class="text-sm font-medium text-[#f0f4ff]">

@@ -4,7 +4,7 @@
         </span>
     {% if workout.duration is not null %}
         <span class="inline-flex items-center gap-1 text-[11.5px] text-[#4a5568]">
-                {% include 'partials/_svg/_time.html.twig' %}
+                {% include 'partials/_svg/_time.html.twig' only %}
                 {{ workout.duration|format_hour }}
             </span>
     {% endif %}

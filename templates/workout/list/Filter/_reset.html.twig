@@ -3,6 +3,6 @@
     class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/[0.07] bg-white/[0.03] text-[12px] font-medium text-[#8b9bb4] hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-[#f0f4ff] transition-all duration-250"
     title="{{ 'workout.list.filter.reset'|trans({}, 'navigation') }}"
 >
-    {% include 'partials/_svg/_cross.html.twig' %}
+    {% include 'partials/_svg/_cross.html.twig' only %}
     {{ 'workout.list.filter.reset'|trans({}, 'navigation') }}
 </a>

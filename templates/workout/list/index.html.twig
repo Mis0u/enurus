@@ -16,7 +16,7 @@
         {% if pagination.getTotalItemCount() == 0 %}
             <div class="flex flex-col items-center justify-center py-20 gap-4">
                 <div class="w-16 h-16 rounded-2xl bg-white/[0.04] border border-white/[0.07] flex items-center justify-center">
-                    {% include 'partials/_svg/_calendar.html.twig' with {'width': '8', 'height': '8'} %}
+                    {% include 'partials/_svg/_calendar.html.twig' with {'width': '8', 'height': '8'} only %}
                 </div>
                 <p class="font-rajdhani text-lg font-semibold text-[#8b9bb4]">
                     {{ 'workout.list.empty'|trans({}, 'navigation') }}
