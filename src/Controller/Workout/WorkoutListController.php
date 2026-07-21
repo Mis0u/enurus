@@ -6,7 +6,10 @@ namespace App\Controller\Workout;
 
 use App\Entity\User;
 use App\Entity\Workout;
+use App\Repository\WorkoutMuscleRepository;
 use App\Repository\WorkoutRepository;
+use App\Repository\WorkoutStatsRepository;
+use App\Repository\WorkoutTonnageRepository;
 use App\Service\Utils\WeightConverterService;
 use DateTimeImmutable;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -39,6 +42,9 @@ class WorkoutListController extends AbstractController
     public function index(
         Request $request,
         WorkoutRepository $workoutRepository,
+        WorkoutTonnageRepository $workoutTonnageRepository,
+        WorkoutMuscleRepository $workoutMuscleRepository,
+        WorkoutStatsRepository $workoutStatsRepository,
         PaginatorInterface $paginator,
         WeightConverterService $weightConverter
     ): Response {
@@ -53,8 +59,8 @@ class WorkoutListController extends AbstractController
 
         $workoutIds = $this->extractWorkoutId($pagination);
 
-        $tonnageMap = $workoutRepository->findTonnageByWorkoutIds($workoutIds);
-        $musclesMap = $workoutRepository->findMusclesByWorkoutIds($workoutIds);
+        $tonnageMap = $workoutTonnageRepository->findTonnageByWorkoutIds($workoutIds);
+        $musclesMap = $workoutMuscleRepository->findMusclesByWorkoutIds($workoutIds);
 
         $tonnageMap = array_map(
             fn (float $tonnage) => $weightConverter->convertToLbs($tonnage, $user->unitOfMeasure),
@@ -62,7 +68,7 @@ class WorkoutListController extends AbstractController
         );
 
         $hiddenCountMap = $this->computeHiddenMuscleCountMap($musclesMap);
-        $exerciseCountMap = $workoutRepository->findExerciseCountByWorkoutIds($workoutIds);
+        $exerciseCountMap = $workoutStatsRepository->findExerciseCountByWorkoutIds($workoutIds);
 
         return $this->render('workout/list/index.html.twig', [
             'user' => $user,

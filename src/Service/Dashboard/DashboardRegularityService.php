@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Dashboard;
 
 use App\Entity\User;
-use App\Repository\WorkoutRepository;
+use App\Repository\WorkoutStatsRepository;
 
 final readonly class DashboardRegularityService
 {
@@ -14,7 +14,7 @@ final readonly class DashboardRegularityService
     private const int DAYS_PER_WEEK = 7;
 
     public function __construct(
-        private WorkoutRepository $workoutRepository,
+        private WorkoutStatsRepository $workoutStatsRepository,
         private DashboardPeriodCalculator $periodCalculator,
     ) {
     }
@@ -48,7 +48,7 @@ final readonly class DashboardRegularityService
         $year = $this->periodCalculator->currentYearElapsed($now);
         $previousYear = $this->periodCalculator->previousYear($now);
 
-        $allDates = $this->workoutRepository->findAllPerformedDatesByUser($user);
+        $allDates = $this->workoutStatsRepository->findAllPerformedDatesByUser($user);
 
         $weekCount = 0;
         $monthCount = 0;
@@ -74,9 +74,9 @@ final readonly class DashboardRegularityService
             }
         }
 
-        $previousWeekCount = $this->workoutRepository->countByUserAndDate($user, $previousWeek->start, $previousWeek->end);
-        $previousMonthCount = $this->workoutRepository->countByUserAndDate($user, $previousMonth->start, $previousMonth->end);
-        $previousYearCount = $this->workoutRepository->countByUserAndDate($user, $previousYear->start, $previousYear->end);
+        $previousWeekCount = $this->workoutStatsRepository->countByUserAndDate($user, $previousWeek->start, $previousWeek->end);
+        $previousMonthCount = $this->workoutStatsRepository->countByUserAndDate($user, $previousMonth->start, $previousMonth->end);
+        $previousYearCount = $this->workoutStatsRepository->countByUserAndDate($user, $previousYear->start, $previousYear->end);
 
         return [
             'streak' => $this->computeStreak($allDates, $week->start),

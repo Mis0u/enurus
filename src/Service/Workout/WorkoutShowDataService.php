@@ -10,7 +10,7 @@ use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
 use App\Repository\ExerciseSetRepository;
 use App\Repository\WorkoutExerciseRepository;
-use App\Repository\WorkoutRepository;
+use App\Repository\WorkoutTonnageRepository;
 use App\Service\Utils\WeightConverterService;
 
 /**
@@ -21,7 +21,7 @@ use App\Service\Utils\WeightConverterService;
 final readonly class WorkoutShowDataService
 {
     public function __construct(
-        private WorkoutRepository $workoutRepository,
+        private WorkoutTonnageRepository $workoutTonnageRepository,
         private WorkoutExerciseRepository $workoutExerciseRepository,
         private ExerciseSetRepository $exerciseSetRepository,
         private WeightConverterService $weightConverter,
@@ -51,7 +51,7 @@ final readonly class WorkoutShowDataService
         $workoutExerciseIds = $this->extractWorkoutExerciseIds($workoutExercises);
         $exercises = $this->extractExercises($workoutExercises);
 
-        $tonnageMap = $this->workoutRepository->findTonnageByWorkoutIds([(string) $workout->id]);
+        $tonnageMap = $this->workoutTonnageRepository->findTonnageByWorkoutIds([(string) $workout->id]);
         $exerciseTonnageMap = $this->workoutExerciseRepository->findTonnageByWorkoutExerciseIds($workoutExerciseIds);
         $priorMaxWeightPerExercise = $this->exerciseSetRepository->findMaxWeightPerExerciseBeforeDate($user, $exercises, $workout->performedAt);
         $priorMaxRepsPerWeight = $this->exerciseSetRepository->findMaxRepsPerWeightBeforeDate($user, $exercises, $workout->performedAt);

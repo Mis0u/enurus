@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\WorkoutMuscleRepository;
 use App\Repository\WorkoutRepository;
+use App\Repository\WorkoutStatsRepository;
 use App\Service\Dashboard\DashboardMuscleDistributionService;
 use App\Service\Dashboard\DashboardPeriodCalculator;
 use App\Service\Dashboard\DashboardPrService;
@@ -49,6 +51,8 @@ final class DashboardController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function __invoke(
         WorkoutRepository $workoutRepository,
+        WorkoutMuscleRepository $workoutMuscleRepository,
+        WorkoutStatsRepository $workoutStatsRepository,
     ): Response {
         $user = $this->getUser();
 
@@ -102,14 +106,14 @@ final class DashboardController extends AbstractController
         if ($dashboardState->muscleWeekMonthUnlocked) {
             // Sur tout l'historique, pas seulement la période du filtre — sert à afficher
             // "depuis quand ce muscle n'a pas été sollicité", une seule requête pour les 2 filtres.
-            $lastSolicitationDates = $workoutRepository->findLastSolicitationDatesByMuscleGroup($user);
+            $lastSolicitationDates = $workoutMuscleRepository->findLastSolicitationDatesByMuscleGroup($user);
 
-            $weekIds = $workoutRepository->findIdsByUserAndDateRange($user, $week->start, $week->end);
-            $weekSvgIds = $workoutRepository->findSvgIdsByWorkoutIds($weekIds);
+            $weekIds = $workoutStatsRepository->findIdsByUserAndDateRange($user, $week->start, $week->end);
+            $weekSvgIds = $workoutMuscleRepository->findSvgIdsByWorkoutIds($weekIds);
             $weekBars = $this->muscleDistributionService->getBars($weekIds, $lastSolicitationDates);
 
-            $monthIds = $workoutRepository->findIdsByUserAndDateRange($user, $month->start, $month->end);
-            $monthSvgIds = $workoutRepository->findSvgIdsByWorkoutIds($monthIds);
+            $monthIds = $workoutStatsRepository->findIdsByUserAndDateRange($user, $month->start, $month->end);
+            $monthSvgIds = $workoutMuscleRepository->findSvgIdsByWorkoutIds($monthIds);
             $monthBars = $this->muscleDistributionService->getBars($monthIds, $lastSolicitationDates);
         }
 
@@ -143,14 +147,14 @@ final class DashboardController extends AbstractController
                 'repsRecordLabel' => $this->buildRepsRecordLabel($repsRecordCounts['last']),
             ],
             'week' => [
-                ...$workoutRepository->findExerciseSetRepTotals($user, $week->start, $week->end),
+                ...$workoutStatsRepository->findExerciseSetRepTotals($user, $week->start, $week->end),
                 'prCount' => $prCounts['week'],
                 'prLabel' => $this->buildPrLabel($prCounts['week']),
                 'repsRecordCount' => $repsRecordCounts['week'],
                 'repsRecordLabel' => $this->buildRepsRecordLabel($repsRecordCounts['week']),
             ],
             'month' => [
-                ...$workoutRepository->findExerciseSetRepTotals($user, $month->start, $month->end),
+                ...$workoutStatsRepository->findExerciseSetRepTotals($user, $month->start, $month->end),
                 'prCount' => $prCounts['month'],
                 'prLabel' => $this->buildPrLabel($prCounts['month']),
                 'repsRecordCount' => $repsRecordCounts['month'],
