@@ -302,7 +302,6 @@ palier précise, préférer des dates fixes en dur.
 | — | Vérifier sous-collections `Routine`/`Exercise` avec fichiers physiques échappant à `deletePhysicalFiles()` |
 | — | Discuter d'un split SRP de `WorkoutRepository` (625 lignes, 15 méthodes publiques : comptage, tonnage, muscles sollicités, pagination, SVG, dates — plusieurs responsabilités mélangées) |
 | — | Discuter de la duplication du bloc upload d'image entre `ContactThreadReplyService`/`ContactThreadService`, et de la fusion possible des 3 méthodes `buildDailyPoints`/`buildWeeklyPoints`/`buildMonthlyPoints` de `DashboardTonnageService` (zero-fill jour/semaine/mois très similaires) |
-| — | Auditer les `{% include %}` du projet pour ajouter `only` (règle déjà en place mais ~207 des ~230 includes ne la respectent pas) — chantier à part entière, chaque include doit être vérifié individuellement pour ne pas casser une page qui dépend du contexte implicite du parent |
 
 ---
 

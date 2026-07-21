@@ -1,1 +1,10 @@
-{% include 'components/Button/base.html.twig' %}
+{% include 'components/Button/base.html.twig' with {
+    'this': this,
+    'disabled': disabled,
+    'class': class,
+    'extraClass': extraClass,
+    'type': type,
+    'data': data,
+    'icon': icon,
+    'message': message,
+} only %}

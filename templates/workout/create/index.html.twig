@@ -12,15 +12,15 @@
     {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
         'title': 'workout.title'|trans({}, 'navigation'),
         'subtitle': user.nickname|formatInitials,
-    } %}
+    } only %}
 {% endblock %}
 
 {% block state %}
     <div class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]">
         {{ form_start(form) }}
-        {% include 'workout/create/_config-bar.html.twig' %}
-        {% include 'workout/create/_exercise_list.html.twig' %}
-        {% include 'workout/create/_note_modal.html.twig' %}
+        {% include 'workout/create/_config-bar.html.twig' with {'form': form, 'user': user} only %}
+        {% include 'workout/create/_exercise_list.html.twig' only %}
+        {% include 'workout/create/_note_modal.html.twig' only %}
         {{ component('LiveComponent:ExerciseSelectorComponent:ExerciseSelectorComponent') }}
         {{ form_end(form) }}
     </div>

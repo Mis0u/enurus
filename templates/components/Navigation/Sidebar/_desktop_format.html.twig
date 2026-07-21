@@ -9,7 +9,7 @@
 >
     {% if this.svg %}
         <span class="min-w-[20px] flex items-center justify-center">
-            {% include this.svg %}
+            {% include this.svg only %}
         </span>
     {% endif %}
     <span class="nav-label text-[13.5px] font-medium">{{ this.menu }}</span>

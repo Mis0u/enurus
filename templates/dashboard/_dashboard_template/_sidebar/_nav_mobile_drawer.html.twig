@@ -9,7 +9,7 @@
         data-action="click->mobile-nav#stop"
     >
         <div class="relative">
-            {% include 'dashboard/_dashboard_template/_sidebar/_logo.html.twig' %}
+            {% include 'dashboard/_dashboard_template/_sidebar/_logo.html.twig' only %}
             <button
                 type="button"
                 class="absolute top-1/2 right-3.5 -translate-y-1/2 flex items-center justify-center w-8 h-8 text-[#8b9bb4] hover:text-[#f0f4ff] transition-ft"
@@ -19,7 +19,7 @@
                 {% include 'partials/_svg/_cross.html.twig' with {'width': 4.5, 'height': 4.5, 'ariaHidden': true} only %}
             </button>
         </div>
-        {% include 'dashboard/_dashboard_template/_sidebar/_nav.html.twig' %}
-        {% include 'dashboard/_dashboard_template/_sidebar/_nav_footer.html.twig' %}
+        {% include 'dashboard/_dashboard_template/_sidebar/_nav.html.twig' only %}
+        {% include 'dashboard/_dashboard_template/_sidebar/_nav_footer.html.twig' only %}
     </aside>
 </div>

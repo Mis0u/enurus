@@ -8,7 +8,7 @@
     <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">
         <div class="max-w-md w-full">
             <div class="text-center mb-8">
-                {% include 'partials/_common/logo.html.twig' %}
+                {% include 'partials/_common/logo.html.twig' only %}
                 <p class="text-slate-400">{{ 'starting'|trans({}, 'brand') }}</p>
             </div>
 
@@ -40,9 +40,9 @@
                     {{ form_widget(registrationForm.plainPassword) }}
                 </div>
 
-                {% include 'partials/_common/_security/_detect_honey_pot.html.twig' %}
+                {% include 'partials/_common/_security/_detect_honey_pot.html.twig' with {'registrationForm': registrationForm} only %}
 
-                {% include 'partials/_common/_security/_password_strength_indicator.html.twig' %}
+                {% include 'partials/_common/_security/_password_strength_indicator.html.twig' only %}
 
                 <twig:Button:Primary:Primary
                     message="{{ 'login.create_my_account'|trans({}, 'navigation') }}"
@@ -52,10 +52,10 @@
                 />
                 {{ form_end(registrationForm) }}
 
-                {% include 'registration/_already_account.html.twig' %}
+                {% include 'registration/_already_account.html.twig' only %}
             </div>
 
-            {% include 'partials/_common/_footer.html.twig' %}
+            {% include 'partials/_common/_footer.html.twig' only %}
         </div>
     </div>
 {% endblock %}

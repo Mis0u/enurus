@@ -15,7 +15,7 @@
             label: 'exercise.list.create_btn'|trans({}, 'navigation'),
             url: path('app_exercise_create'),
         },
-    } %}
+    } only %}
 {% endblock %}
 
 {% block state %}
@@ -26,9 +26,9 @@
             data-exercise--list-total-count-value="{{ totalCount }}"
         >
 
-            {% include 'exercise/list/_filters.html.twig' %}
+            {% include 'exercise/list/_filters.html.twig' with {'totalCount': totalCount} only %}
 
-            {% include 'exercise/list/_empty_state.html.twig' %}
+            {% include 'exercise/list/_empty_state.html.twig' only %}
 
             <div
                 class="exercise-list-grid"
@@ -36,11 +36,11 @@
                 data-exercise--list-target="grid"
             >
                 {% for exercise in exercises %}
-                    {% include 'exercise/list/_exercise_card.html.twig' with {exercise: exercise} %}
+                    {% include 'exercise/list/_exercise_card.html.twig' with {exercise: exercise} only %}
                 {% endfor %}
             </div>
 
-            {% include 'exercise/list/_pagination.html.twig' %}
+            {% include 'exercise/list/_pagination.html.twig' only %}
         </div>
     </div>
 {% endblock %}

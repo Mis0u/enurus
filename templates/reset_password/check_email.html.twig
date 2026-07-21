@@ -9,11 +9,11 @@
     <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">
         <div class="max-w-lg w-full">
             <div class="text-center mb-8">
-                {% include 'partials/_common/logo.html.twig' %}
+                {% include 'partials/_common/logo.html.twig' only %}
             </div>
 
             <div class="backdrop-blur-xl bg-white/10 rounded-3xl shadow-2xl border border-white/20 p-8 mb-6">
-                {% include 'reset_password/check_email/_success_icon.html.twig' %}
+                {% include 'reset_password/check_email/_success_icon.html.twig' only %}
 
                 <h2 class="text-2xl font-bold text-white text-center mb-4">{{ 'sentence.email.email_send'|trans({}, 'common') }}</h2>
 
@@ -28,18 +28,18 @@
                     variable="{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}"
                 />
 
-                {% include 'reset_password/check_email/_next_step.html.twig' %}
+                {% include 'reset_password/check_email/_next_step.html.twig' only %}
             </div>
 
             <div class="backdrop-blur-xl bg-white/10 rounded-2xl border border-white/20 p-6 mb-6">
-                {% include 'reset_password/check_email/_help_section.html.twig' %}
+                {% include 'reset_password/check_email/_help_section.html.twig' only %}
             </div>
 
             <div class="text-center">
-                {% include 'reset_password/check_email/_back_to_login.html.twig' %}
+                {% include 'reset_password/check_email/_back_to_login.html.twig' only %}
             </div>
 
-            {% include 'partials/_common/_footer.html.twig' %}
+            {% include 'partials/_common/_footer.html.twig' only %}
         </div>
     </div>
 

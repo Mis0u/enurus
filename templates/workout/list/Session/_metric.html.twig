@@ -1,7 +1,7 @@
 <div class="session-tonnage flex items-center gap-4 text-[12px]">
     {% if tonnage is not null and tonnage > 0 %}
         <span class="flex items-center gap-1.5 text-[#8b9bb4]">
-            {% include 'partials/_svg/_lightning.html.twig' %}
+            {% include 'partials/_svg/_lightning.html.twig' only %}
             <span class="font-semibold text-[#f0f4ff]">{{ tonnage|number_format(0, ',', ' ') }}</span>
             {% if user.unitOfMeasure.value == enum('App\\Enum\\Entity\\User\\UnitOfMeasureEnum').LBS.value %}
                 {{ 'workout.list.lbs'|trans({}, 'navigation')|lower }}
@@ -11,7 +11,7 @@
         </span>
     {% endif %}
     <span class="flex items-center gap-1.5 text-[#8b9bb4]">
-        {% include 'partials/_svg/_list.html.twig' %}
+        {% include 'partials/_svg/_list.html.twig' only %}
         <span class="font-semibold text-[#f0f4ff]">{{ exerciseCount }}</span>
         {{ 'workout.list.exercises'|trans({}, 'navigation') }}
     </span>
@@ -19,7 +19,7 @@
         <span class="flex items-center gap-1.5 text-[#8b9bb4]"
               aria-label="{{ 'workout.photo.has_photo'|trans({}, 'navigation') }}"
               title="{{ 'workout.photo.has_photo'|trans({}, 'navigation') }}">
-        {% include 'partials/_svg/_picture.html.twig' with {'weight': 3, 'height': 3, 'color': '[#8b9bb4]'} %}
+        {% include 'partials/_svg/_picture.html.twig' with {'weight': 3, 'height': 3, 'color': '[#8b9bb4]'} only %}
     </span>
     {% endif %}
 </div>

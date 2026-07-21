@@ -16,18 +16,18 @@
 <div class="flex h-screen w-screen overflow-hidden bg-bg-base text-[#f0f4ff] text-sm leading-relaxed font-dm-sans" data-controller="mobile-nav">
 
     {% block sidebar %}
-        {% include 'dashboard/_dashboard_template/_sidebar/_sidebar.html.twig' %}
+        {% include 'dashboard/_dashboard_template/_sidebar/_sidebar.html.twig' only %}
     {% endblock %}
     <main class="flex-1 overflow-hidden flex flex-col relative max-md:pb-20">
         {% block topbar %}
-            {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {'title': 'dashboard.title'|trans({}, 'navigation'), 'subtitle': user.nickname|formatInitials} %}
+            {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {'title': 'dashboard.title'|trans({}, 'navigation'), 'subtitle': user.nickname|formatInitials} only %}
         {% endblock %}
 
         {% block state %}{% endblock %}
     </main>
 
-    {% include 'dashboard/_dashboard_template/_sidebar/_nav_mobile_drawer.html.twig' %}
+    {% include 'dashboard/_dashboard_template/_sidebar/_nav_mobile_drawer.html.twig' only %}
 </div>
-    {% include 'dashboard/_dashboard_template/_sidebar/_nav_mobile.html.twig' %}
+    {% include 'dashboard/_dashboard_template/_sidebar/_nav_mobile.html.twig' only %}
 
 {% endblock %}

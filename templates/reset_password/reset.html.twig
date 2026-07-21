@@ -8,7 +8,7 @@
     <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">
         <div class="max-w-md w-full">
             <div class="text-center mb-8">
-                {% include 'partials/_common/logo.html.twig' %}
+                {% include 'partials/_common/logo.html.twig' only %}
                 <p class="text-slate-400">{{ 'reset_password_request.new_password'|trans({}, 'navigation') }}</p>
             </div>
 
@@ -23,10 +23,10 @@
 
                 {{ form_start(resetForm) }}
                 {{ form_errors(resetForm.plainPassword.first) }}
-                {% include 'reset_password/reset/_password_field.html.twig' %}
+                {% include 'reset_password/reset/_password_field.html.twig' with {'resetForm': resetForm} only %}
 
-                {% include 'reset_password/reset/_confirm_password_field.html.twig' %}
-                {% include 'partials/_common/_security/_password_strength_indicator.html.twig' %}
+                {% include 'reset_password/reset/_confirm_password_field.html.twig' with {'resetForm': resetForm} only %}
+                {% include 'partials/_common/_security/_password_strength_indicator.html.twig' only %}
 
                 <twig:Button:Primary:Primary
                     message="{{ 'sentence.password.security.valid_new_password'|trans({}, 'common') }}"
@@ -38,9 +38,9 @@
                 {{ form_end(resetForm) }}
             </div>
 
-            {% include 'reset_password/reset/_security_notice.html.twig' %}
+            {% include 'reset_password/reset/_security_notice.html.twig' with {'resetToken': resetToken} only %}
 
-            {% include 'partials/_common/_footer.html.twig' %}
+            {% include 'partials/_common/_footer.html.twig' only %}
         </div>
     </div>
 {% endblock %}
