@@ -12,17 +12,24 @@
 {% block state %}
     <div class="flex-1 overflow-y-auto">
         <div class="max-w-[720px] mx-auto px-4 lg:px-8 py-6">
-            {% if threads is empty %}
+            {% if pagination.getTotalItemCount() == 0 %}
                 {% include 'messagerie/_empty_state.html.twig' only %}
             {% else %}
                 <div class="space-y-3">
-                    {% for thread in threads %}
+                    {% for thread in pagination %}
                         {% include 'messagerie/_thread_row.html.twig' with {
                             thread: thread,
                             unreadCount: unreadCounts[thread.id.toRfc4122] ?? 0,
                         } only %}
                     {% endfor %}
                 </div>
+
+                {% include '_pagination/_pagination.html.twig' with {
+                    'pagination': pagination,
+                    'route': 'app_contact_thread_list',
+                    'routeParams': {},
+                    'limitAllowed': limitAllowed,
+                } only %}
             {% endif %}
         </div>
     </div>
