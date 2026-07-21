@@ -1,3 +1,9 @@
+admin:
+    reregistration:
+        body: "The email {email} matches an account deleted on {deletedAt}. Check whether this is abuse."
+        subject: Re-registration detected
+        title: Re-registration after account deletion
+
 contact:
     category:
         bug: Bug

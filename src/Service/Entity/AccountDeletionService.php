@@ -6,6 +6,7 @@ namespace App\Service\Entity;
 
 use App\Entity\DeletedAccountTrace;
 use App\Entity\User;
+use App\Repository\DeletedAccountTraceRepository;
 use App\Repository\UserRepository;
 use App\Service\Email\EmailInterface;
 use App\Service\Utils\ImageUploadService;
@@ -17,9 +18,17 @@ final readonly class AccountDeletionService
 {
     private const int RETENTION_DAYS = 30;
 
+    /**
+     * Durée de conservation du hash d'email dans DeletedAccountTrace — alignée sur la fenêtre de
+     * détection de réinscription (DeletedAccountReregistrationNotifierService) : au-delà, la
+     * trace n'a plus d'utilité fonctionnelle.
+     */
+    private const int TRACE_RETENTION_DAYS = 30;
+
     public function __construct(
         private EntityManagerInterface $entityManager,
         private UserRepository $userRepository,
+        private DeletedAccountTraceRepository $deletedAccountTraceRepository,
         private EmailInterface $emailService,
         private TranslatorInterface $translator,
         private ImageUploadService $imageUploadService,
@@ -68,6 +77,13 @@ final readonly class AccountDeletionService
         $this->entityManager->flush();
 
         return \count($users);
+    }
+
+    public function purgeExpiredTraces(): int
+    {
+        $threshold = now()->modify(sprintf('-%d days', self::TRACE_RETENTION_DAYS));
+
+        return $this->deletedAccountTraceRepository->deleteOlderThan($threshold);
     }
 
     public function getDeletionDeadline(User $user): ?\DateTimeImmutable

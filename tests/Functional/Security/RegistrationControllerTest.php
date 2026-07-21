@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security;
 
+use App\Entity\DeletedAccountTrace;
 use App\Entity\User;
 use App\Enum\Entity\User\GenderEnum;
 use App\Repository\UserRepository;
@@ -64,6 +65,49 @@ class RegistrationControllerTest extends WebTestCase
         $this->assertSame($user->lastLogin->format('Y-m-d'), now()->format('Y-m-d'));
         $this->assertSame(GenderEnum::from($gender), $user->gender);
         $this->assertSame('fr', $user->locale);
+    }
+
+    public function testReregistrationWithEmailOfDeletedAccountSucceedsWithoutError(): void
+    {
+        $email = 'rejoined-after-deletion@test.com';
+
+        $client = static::createClient();
+        $client->disableReboot();
+        $mockClock = new MockClock('2026-01-29 08:46:00');
+        $client->getContainer()->set(ClockInterface::class, $mockClock);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $client->getContainer()->get(EntityManagerInterface::class);
+
+        $trace = new DeletedAccountTrace();
+        $trace->emailHash = hash('sha256', $email);
+        $trace->deletedAt = new \DateTimeImmutable('-3 days');
+        $entityManager->persist($trace);
+        $entityManager->flush();
+
+        $crawler = $client->request(Request::METHOD_GET, '/fr/inscription');
+        $buttonCrawlerNode = $crawler->selectButton('Créer mon compte');
+        $form = $buttonCrawlerNode->form();
+
+        $mockClock->sleep(5);
+
+        $client->submit($form, [
+            'registration_form[gender]' => 'male',
+            'registration_form[nickname]' => 'Toto',
+            'registration_form[email]' => $email,
+            'registration_form[plainPassword]' => self::PASSWORD,
+            'registration_form[website]' => null,
+        ]);
+
+        // Le rendu du corps de l'email admin (BodyRenderer) est déclenché de façon synchrone dès
+        // sendEmail(), même si l'envoi effectif passe par Messenger (transport async) — une
+        // requête réussie ici couvre déjà la régression réelle rencontrée pendant le
+        // développement (variable de contexte "email" réservée par TemplatedEmail, qui faisait
+        // planter le rendu en 500). La vérification du contenu/destinataire de la notification
+        // admin est couverte par DeletedAccountReregistrationNotifierServiceTest (le transport
+        // Messenger réel de cet environnement n'est pas fiable à interroger en test : un worker
+        // `messenger:consume` concurrent peut déjà avoir consommé le message).
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
     }
 
     public function testRedirectToDashboardIfUserIsAuthenticated(): void

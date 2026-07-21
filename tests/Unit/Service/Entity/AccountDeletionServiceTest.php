@@ -8,6 +8,7 @@ use App\Entity\ContactThread;
 use App\Entity\ContactThreadMessage;
 use App\Entity\User;
 use App\Entity\Workout;
+use App\Repository\DeletedAccountTraceRepository;
 use App\Repository\UserRepository;
 use App\Service\Email\EmailInterface;
 use App\Service\Entity\AccountDeletionService;
@@ -39,7 +40,8 @@ final class AccountDeletionServiceTest extends TestCase
         $userRepository = $this->createStub(UserRepository::class);
         $imageUploadService = $this->createStub(ImageUploadService::class);
 
-        $service = new AccountDeletionService($em, $userRepository, $emailService, $translator, $imageUploadService);
+        $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
 
         self::assertNull($user->deletionRequestedAt);
 
@@ -69,7 +71,8 @@ final class AccountDeletionServiceTest extends TestCase
         $userRepository = $this->createStub(UserRepository::class);
         $imageUploadService = $this->createStub(ImageUploadService::class);
 
-        $service = new AccountDeletionService($em, $userRepository, $emailService, $translator, $imageUploadService);
+        $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
 
         $service->cancelDeletion($user);
 
@@ -91,7 +94,8 @@ final class AccountDeletionServiceTest extends TestCase
         $userRepository = $this->createStub(UserRepository::class);
         $imageUploadService = $this->createStub(ImageUploadService::class);
 
-        $service = new AccountDeletionService($em, $userRepository, $emailService, $translator, $imageUploadService);
+        $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
 
         $service->cancelDeletion($user);
 
@@ -113,7 +117,8 @@ final class AccountDeletionServiceTest extends TestCase
         $translator = $this->createStub(TranslatorInterface::class);
         $imageUploadService = $this->createStub(ImageUploadService::class);
 
-        $service = new AccountDeletionService($em, $userRepository, $emailService, $translator, $imageUploadService);
+        $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
 
         self::assertSame(0, $service->purgeExpired());
     }
@@ -160,7 +165,8 @@ final class AccountDeletionServiceTest extends TestCase
                 $deletedPaths[] = $path;
             });
 
-        $service = new AccountDeletionService($em, $userRepository, $emailService, $translator, $imageUploadService);
+        $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
 
         $service->purgeExpired();
 
@@ -180,7 +186,8 @@ final class AccountDeletionServiceTest extends TestCase
         $userRepository = $this->createStub(UserRepository::class);
         $imageUploadService = $this->createStub(ImageUploadService::class);
 
-        $service = new AccountDeletionService($em, $userRepository, $emailService, $translator, $imageUploadService);
+        $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
 
         self::assertNull($service->getDeletionDeadline($user));
     }
@@ -196,11 +203,35 @@ final class AccountDeletionServiceTest extends TestCase
         $userRepository = $this->createStub(UserRepository::class);
         $imageUploadService = $this->createStub(ImageUploadService::class);
 
-        $service = new AccountDeletionService($em, $userRepository, $emailService, $translator, $imageUploadService);
+        $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
 
         $deadline = $service->getDeletionDeadline($user);
 
         self::assertNotNull($deadline);
         self::assertSame('2026-01-31 10:00:00', $deadline->format('Y-m-d H:i:s'));
+    }
+
+    public function testPurgeExpiredTracesDelegatesToRepositoryWithThresholdAndReturnsCount(): void
+    {
+        $em = $this->createStub(EntityManagerInterface::class);
+        $emailService = $this->createStub(EmailInterface::class);
+        $translator = $this->createStub(TranslatorInterface::class);
+        $userRepository = $this->createStub(UserRepository::class);
+        $imageUploadService = $this->createStub(ImageUploadService::class);
+
+        $deletedAccountTraceRepository = $this->createMock(DeletedAccountTraceRepository::class);
+        $deletedAccountTraceRepository->expects(self::once())
+            ->method('deleteOlderThan')
+            ->with(self::callback(static function (\DateTimeImmutable $threshold): bool {
+                $expected = (new \DateTimeImmutable())->modify('-30 days');
+
+                return 5 > abs($threshold->getTimestamp() - $expected->getTimestamp());
+            }))
+            ->willReturn(3);
+
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
+
+        self::assertSame(3, $service->purgeExpiredTraces());
     }
 }

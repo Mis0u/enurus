@@ -1,3 +1,9 @@
+admin:
+    reregistration:
+        body: "O email {email} corresponde a uma conta eliminada em {deletedAt}. Verifica se se trata de abuso."
+        subject: Reinscrição detetada
+        title: Reinscrição após eliminação da conta
+
 contact:
     category:
         bug: Bug

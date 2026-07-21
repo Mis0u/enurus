@@ -4,13 +4,19 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\DeletedAccountTraceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity]
+/**
+ * Trace minimale (hash SHA-256 de l'email + date) laissée par un compte purgé — sert à détecter
+ * une réinscription avec le même email et à en notifier l'admin (TODO #21). Jamais l'email en
+ * clair : seul un hash est conservé, retenu 30 jours puis purgé (DeletedAccountTracePurgeCommand).
+ */
+#[ORM\Entity(repositoryClass: DeletedAccountTraceRepository::class)]
 class DeletedAccountTrace
 {
     #[ORM\Id]
