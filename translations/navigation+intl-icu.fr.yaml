@@ -233,6 +233,13 @@ messagerie:
     thread_closed: "Ce fil de discussion est clôturé, tu ne peux plus y répondre."
     title: Messagerie
 
+pagination:
+    navigation: Navigation des pages
+    next: Suivant
+    per_page: Afficher
+    previous: Précédent
+    results: Résultats
+
 registration:
     account_created: Ton compte est créé et prêt à l'emploi
     confirm_email: Confirmation de votre email
@@ -454,11 +461,6 @@ workout:
         free_session: Séance libre
         kg: Kg
         lbs: Lbs
-        pagination:
-            next: Suivant
-            per_page: Afficher
-            previous: Précédent
-            results: Résultats
         title: Mes séances
         total: >-
             {count, plural,

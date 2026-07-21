@@ -35,7 +35,12 @@
                 {% endfor %}
             </div>
 
-            {% include 'workout/list/_pagination.html.twig' %}
+            {% include '_pagination/_pagination.html.twig' with {
+                'pagination': pagination,
+                'route': 'app_workout_list',
+                'routeParams': {'filter': filterType, 'date': filterDate},
+                'limitAllowed': limitAllowed,
+            } only %}
         {% endif %}
 
     </div>

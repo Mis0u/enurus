@@ -1,0 +1,68 @@
+{#
+    templates/_pagination/_pagination.html.twig
+
+    Composant de pagination Knp partagé (Mes séances, Mes routines, Messagerie).
+
+    Variables attendues :
+      - pagination   : PaginationInterface
+      - route        : string (nom de la route de la liste)
+      - routeParams  : array<string, mixed> (paramètres de route additionnels, ex. filtres)
+      - limitAllowed : int[] (valeurs proposées dans le sélecteur "par page")
+#}
+{% if pagination.getTotalItemCount() > 0 %}
+    {% set data = pagination.paginationData %}
+
+    <div class="flex items-center justify-between gap-4 mt-6 pt-5 border-t border-white/[0.07] max-md:flex-col max-md:items-stretch">
+
+        {% include '_pagination/_selector.html.twig' with {
+            'route': route,
+            'routeParams': routeParams,
+            'per_page': data.numItemsPerPage,
+            'limitAllowed': limitAllowed,
+        } only %}
+
+        {% if data.pageCount > 1 %}
+            <div class="flex items-center gap-1 max-md:justify-center">
+                {% if data.firstPageInRange > 1 %}
+                    {% include '_pagination/_first_page.html.twig' with {
+                        'route': route,
+                        'routeParams': routeParams,
+                        'first': data.first,
+                        'per_page': data.numItemsPerPage,
+                    } only %}
+                {% endif %}
+
+                {% include '_pagination/_previous_page.html.twig' with {
+                    'route': route,
+                    'routeParams': routeParams,
+                    'previous': data.previous ?? null,
+                    'per_page': data.numItemsPerPage,
+                } only %}
+
+                {% include '_pagination/_page_number.html.twig' with {
+                    'route': route,
+                    'routeParams': routeParams,
+                    'pages_in_range': data.pagesInRange,
+                    'current': data.current,
+                    'per_page': data.numItemsPerPage,
+                } only %}
+
+                {% include '_pagination/_next_page.html.twig' with {
+                    'route': route,
+                    'routeParams': routeParams,
+                    'next': data.next ?? null,
+                    'per_page': data.numItemsPerPage,
+                } only %}
+
+                {% if data.lastPageInRange < data.last %}
+                    {% include '_pagination/_last_page.html.twig' with {
+                        'route': route,
+                        'routeParams': routeParams,
+                        'last': data.last,
+                        'per_page': data.numItemsPerPage,
+                    } only %}
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endif %}

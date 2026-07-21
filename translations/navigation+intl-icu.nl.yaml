@@ -233,6 +233,13 @@ messagerie:
     thread_closed: "Dit gesprek is gesloten, je kunt niet meer antwoorden."
     title: Berichten
 
+pagination:
+    navigation: Paginanavigatie
+    next: Volgende
+    per_page: Tonen
+    previous: Vorige
+    results: Resultaten
+
 registration:
     account_created: Je account is aangemaakt en klaar voor gebruik
     confirm_email: Bevestiging van je e-mail
@@ -454,11 +461,6 @@ workout:
         free_session: Vrije training
         kg: Kg
         lbs: Lbs
-        pagination:
-            next: Volgende
-            per_page: Tonen
-            previous: Vorige
-            results: Resultaten
         title: Mijn trainingen
         total: >-
             {count, plural,

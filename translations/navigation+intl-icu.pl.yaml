@@ -237,6 +237,13 @@ messagerie:
     thread_closed: "Ta rozmowa jest zamknięta, nie możesz już na nią odpowiadać."
     title: Wiadomości
 
+pagination:
+    navigation: Nawigacja stron
+    next: Następny
+    per_page: Wyświetl
+    previous: Poprzedni
+    results: Wyniki
+
 registration:
     account_created: Twoje konto jest utworzone i gotowe do użycia
     confirm_email: Potwierdzenie adresu e-mail
@@ -466,11 +473,6 @@ workout:
         free_session: Trening dowolny
         kg: Kg
         lbs: Lbs
-        pagination:
-            next: Następny
-            per_page: Wyświetl
-            previous: Poprzedni
-            results: Wyniki
         title: Moje treningi
         total: >-
             {count, plural,

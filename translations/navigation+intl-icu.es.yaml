@@ -233,6 +233,13 @@ messagerie:
     thread_closed: "Esta conversación está cerrada, ya no puedes responder."
     title: Mensajería
 
+pagination:
+    navigation: Navegación de páginas
+    next: Siguiente
+    per_page: Mostrar
+    previous: Anterior
+    results: Resultados
+
 registration:
     account_created: Tu cuenta está creada y lista para usar
     confirm_email: Confirmación de tu correo electrónico
@@ -454,11 +461,6 @@ workout:
         free_session: Entrenamiento libre
         kg: Kg
         lbs: Lbs
-        pagination:
-            next: Siguiente
-            per_page: Mostrar
-            previous: Anterior
-            results: Resultados
         title: Mis entrenamientos
         total: >-
             {count, plural,

@@ -233,6 +233,13 @@ messagerie:
     thread_closed: "Questa conversazione è chiusa, non puoi più rispondere."
     title: Messaggistica
 
+pagination:
+    navigation: Navigazione pagine
+    next: Successivo
+    per_page: Mostra
+    previous: Precedente
+    results: Risultati
+
 registration:
     account_created: Il tuo account è stato creato ed è pronto all'uso
     confirm_email: Conferma della tua email
@@ -454,11 +461,6 @@ workout:
         free_session: Allenamento libero
         kg: Kg
         lbs: Lbs
-        pagination:
-            next: Successivo
-            per_page: Mostra
-            previous: Precedente
-            results: Risultati
         title: I miei allenamenti
         total: >-
             {count, plural,
