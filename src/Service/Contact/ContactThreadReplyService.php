@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class ContactThreadReplyService
 {
-    private const string IMAGE_UPLOAD_CONTEXT = 'contact';
+    use AttachesContactImageTrait;
 
     public function __construct(
         private EntityManagerInterface $entityManager,
@@ -38,13 +38,7 @@ final readonly class ContactThreadReplyService
         $message->fromAdmin = $fromAdmin;
         $message->body = $body;
 
-        if (null !== $image) {
-            $message->imagePath = $this->imageUploadService->upload(
-                $image,
-                self::IMAGE_UPLOAD_CONTEXT,
-                $author->id->toRfc4122(),
-            );
-        }
+        $this->attachImageIfPresent($message, $image, $author->id->toRfc4122());
 
         $thread->addMessage($message);
         $thread->status = $fromAdmin ? ContactThreadStatusEnum::ANSWERED_BY_ADMIN : ContactThreadStatusEnum::AWAITING_ADMIN_REPLY;

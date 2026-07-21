@@ -144,6 +144,10 @@ régénérer le token via `CsrfTokenManagerInterface::getToken()` hors requête
 - `ImageConstraints` : constantes partagées back/front (taille max, MIME autorisés), single source
   of truth — jamais de valeur dupliquée en dur côté Twig.
 - Chemins stockés en base = **relatifs**, jamais une URL publique.
+- `AttachesContactImageTrait` (`src/Service/Contact/`) : logique d'attache d'image optionnelle à
+  un `ContactThreadMessage`, partagée entre `ContactThreadService::create()` et
+  `ContactThreadReplyService::reply()` — la garde de nullité sur l'id de l'auteur reste dans
+  chaque service appelant (le trait reçoit `$ownerId` déjà résolu, pas l'entité `User`).
 
 ### Requêtes Doctrine
 - **Ne jamais `setMaxResults()` sur une requête avec JOIN sur une collection one-to-many** — le
@@ -305,7 +309,6 @@ palier précise, préférer des dates fixes en dur.
 | 20 | Sessions persistées en base pour invalider toutes les sessions actives au changement de mot de passe |
 | 21 | Notifier l'admin si un email de compte supprimé (>30j) se réinscrit |
 | — | Durée de rétention du hash `DeletedAccountTrace` non fixée, purge non implémentée |
-| — | Discuter de la duplication du bloc upload d'image entre `ContactThreadReplyService`/`ContactThreadService`, et de la fusion possible des 3 méthodes `buildDailyPoints`/`buildWeeklyPoints`/`buildMonthlyPoints` de `DashboardTonnageService` (zero-fill jour/semaine/mois très similaires) |
 
 ---
 
