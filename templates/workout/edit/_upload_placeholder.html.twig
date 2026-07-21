@@ -4,12 +4,12 @@
      data-workout--photo-upload-accepted-types-value='["image/jpeg","image/png","image/webp"]'
      data-workout--photo-upload-max-size-value="5242880">
 
-    {% include 'workout/edit/_upload/_header.html.twig' %}
-    {% include 'workout/edit/_upload/_zone.html.twig' %}
+    {% include 'workout/edit/_upload/_header.html.twig' only %}
+    {% include 'workout/edit/_upload/_zone.html.twig' with {'workout': workout} only %}
 
     <p data-workout--photo-upload-target="error"
        class="hidden text-rose-400 text-[12px] mt-2"></p>
 </div>
 
-{% include 'workout/edit/_upload/_lightbox_existing.html.twig' %}
-{% include 'workout/edit/_upload/_lightbox_preview.html.twig' %}
+{% include 'workout/edit/_upload/_lightbox_existing.html.twig' with {'workout': workout} only %}
+{% include 'workout/edit/_upload/_lightbox_preview.html.twig' only %}
