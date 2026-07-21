@@ -183,6 +183,8 @@ exercise:
             reset: Réinitialiser les filtres
             search_placeholder: Rechercher un exercice…
         pagination:
+            first: Première page
+            last: Dernière page
             navigation: Navigation des pages
             next: Suivant
             per_page: Afficher
@@ -232,6 +234,15 @@ messagerie:
         closed: Clôturé
     thread_closed: "Ce fil de discussion est clôturé, tu ne peux plus y répondre."
     title: Messagerie
+
+pagination:
+    first: Première page
+    last: Dernière page
+    navigation: Navigation des pages
+    next: Suivant
+    per_page: Afficher
+    previous: Précédent
+    results: Résultats
 
 registration:
     account_created: Ton compte est créé et prêt à l'emploi
@@ -454,11 +465,6 @@ workout:
         free_session: Séance libre
         kg: Kg
         lbs: Lbs
-        pagination:
-            next: Suivant
-            per_page: Afficher
-            previous: Précédent
-            results: Résultats
         title: Mes séances
         total: >-
             {count, plural,

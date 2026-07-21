@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Routine;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
 
@@ -42,19 +43,11 @@ final class RoutineRepository extends ServiceEntityRepository
         return null !== $qb->getQuery()->getOneOrNullResult();
     }
 
-    /**
-     * @return list<Routine>
-     */
-    public function findByOwnerOrderedByDate(User $user): array
+    public function findByOwnerOrderedByDate(User $user): QueryBuilder
     {
-        /** @var list<Routine> $result */
-        $result = $this->createQueryBuilder('r')
+        return $this->createQueryBuilder('r')
             ->where('r.owner = :user')
             ->setParameter('user', $user)
-            ->orderBy('r.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult();
-
-        return $result;
+            ->orderBy('r.createdAt', 'DESC');
     }
 }

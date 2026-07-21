@@ -5,8 +5,9 @@
     Controller : RoutineListController (GET /{_locale}/mes-routines)
 
     Variables passées par le controller :
-      - routines : list<Routine>
-      - count    : int
+      - pagination   : PaginationInterface<int, Routine>
+      - count        : int (nombre total de routines, toutes pages confondues)
+      - limitAllowed : int[]
 #}
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
 
@@ -31,16 +32,23 @@
 {% block state %}
     <div class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]">
 
-        {% if routines is empty %}
+        {% if pagination.getTotalItemCount() == 0 %}
             {% include 'routine/list/_empty_state.html.twig' only %}
         {% else %}
             {% include 'routine/list/_routine_count.html.twig' with {count: count} only %}
 
             <div class="routines-grid mt-5">
-                {% for routine in routines %}
+                {% for routine in pagination %}
                     {% include 'routine/list/_routine_card.html.twig' with {routine: routine} only %}
                 {% endfor %}
             </div>
+
+            {% include '_pagination/_pagination.html.twig' with {
+                'pagination': pagination,
+                'route': 'app_routine_list',
+                'routeParams': {},
+                'limitAllowed': limitAllowed,
+            } only %}
         {% endif %}
 
     </div>

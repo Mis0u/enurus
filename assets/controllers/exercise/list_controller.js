@@ -21,8 +21,10 @@ export default class extends Controller {
         'grid',
         'emptyState',
         'paginationWrapper',
+        'firstBtn',
         'prevBtn',
         'nextBtn',
+        'lastBtn',
         'pageNumbers',
         'perPageSelect',
     ];
@@ -39,6 +41,9 @@ export default class extends Controller {
 
     /** @type {number} */
     #perPage = 12;
+
+    /** Fenêtre glissante de pages, alignée sur `knp_paginator.page_range` (config/packages/knp_paginator.yaml). */
+    #pageRange = 5;
 
     connect() {
         this.#applyFilters();
@@ -72,6 +77,13 @@ export default class extends Controller {
         this.#applyFilters();
     }
 
+    goFirst() {
+        if (this.#currentPage <= 1) return;
+        this.#currentPage = 1;
+        this.#applyFilters();
+        this.#scrollToGrid();
+    }
+
     prevPage() {
         if (this.#currentPage <= 1) return;
         this.#currentPage--;
@@ -83,6 +95,14 @@ export default class extends Controller {
         const totalPages = this.#computeTotalPages(this.#getMatchingCards().length);
         if (this.#currentPage >= totalPages) return;
         this.#currentPage++;
+        this.#applyFilters();
+        this.#scrollToGrid();
+    }
+
+    goLast() {
+        const totalPages = this.#computeTotalPages(this.#getMatchingCards().length);
+        if (this.#currentPage >= totalPages) return;
+        this.#currentPage = totalPages;
         this.#applyFilters();
         this.#scrollToGrid();
     }
@@ -195,16 +215,43 @@ export default class extends Controller {
      */
     #renderPagination(totalVisible) {
         const totalPages = this.#computeTotalPages(totalVisible);
+        const pagesInRange = this.#computePagesInRange(this.#currentPage, totalPages);
 
         this.pageNumbersTarget.innerHTML = '';
 
-        for (let i = 1; i <= totalPages; i++) {
-            const btn = this.#createPageBtn(i);
-            this.pageNumbersTarget.appendChild(btn);
-        }
+        pagesInRange.forEach(page => {
+            this.pageNumbersTarget.appendChild(this.#createPageBtn(page));
+        });
 
         this.prevBtnTarget.disabled = this.#currentPage <= 1;
         this.nextBtnTarget.disabled = this.#currentPage >= totalPages;
+
+        // "Première/dernière page" masqués quand la fenêtre glissante couvre déjà cette borne.
+        this.firstBtnTarget.hidden = pagesInRange[0] === 1;
+        this.lastBtnTarget.hidden  = pagesInRange[pagesInRange.length - 1] === totalPages;
+    }
+
+    /**
+     * Fenêtre glissante de pages autour de la page courante — reproduit l'algorithme de
+     * Knp\Component\Pager\Pagination\SlidingPagination::getPaginationData() utilisé côté serveur
+     * (Mes séances, Mes routines, Messagerie), pour un comportement identique partout.
+     * @param {number} current
+     * @param {number} pageCount
+     * @returns {number[]}
+     */
+    #computePagesInRange(current, pageCount) {
+        let range = Math.min(this.#pageRange, pageCount);
+        let delta = Math.ceil(range / 2);
+
+        let start;
+        if (current - delta > pageCount - range) {
+            start = pageCount - range + 1;
+        } else {
+            if (current - delta < 0) delta = current;
+            start = current - delta + 1;
+        }
+
+        return Array.from({length: range}, (_, i) => start + i);
     }
 
     /**

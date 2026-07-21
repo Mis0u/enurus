@@ -155,6 +155,31 @@ régénérer le token via `CsrfTokenManagerInterface::getToken()` hors requête
 - Toutes les données lourdes précalculées dans le controller, passées à la vue en maps indexées —
   zéro requête N+1, zéro logique de calcul en Twig.
 
+### Pagination (KnpPaginatorBundle)
+- Composant Twig partagé `templates/_pagination/_pagination.html.twig` (+ `_selector`,
+  `_previous_page`, `_page_number`, `_next_page`) utilisé par Mes séances, Mes routines et
+  Messagerie — mêmes variables partout : `pagination` (`PaginationInterface`), `route` (nom de
+  route), `routeParams` (map de paramètres additionnels, ex. filtres date/type ; `{}` si aucun),
+  `limitAllowed` (int[] du sélecteur "par page"). Fenêtre glissante native de Knp
+  (`pagination.paginationData`, `page_range: 5` dans `config/packages/knp_paginator.yaml`), pas de
+  calcul d'ellipsis fait main.
+- Boutons "première page"/"dernière page" affichés uniquement quand la fenêtre glissante ne couvre
+  pas déjà cette borne (`data.firstPageInRange > 1` / `data.lastPageInRange < data.last`, valeurs
+  déjà fournies par `paginationData` — aucun changement de repository/controller nécessaire). Même
+  logique côté JS Bibliothèque (`firstBtnTarget.hidden` / `lastBtnTarget.hidden`).
+- Les repositories exposant une liste paginable retournent un `QueryBuilder` (jamais `getResult()`),
+  y compris quand la requête fait un `JOIN` `addSelect` sur une collection one-to-many (ex.
+  `ContactThreadRepository::findByOwnerOrderedByActivity` avec les messages) : le subscriber
+  Doctrine ORM de Knp enveloppe la query dans `Doctrine\ORM\Tools\Pagination\Paginator` avec
+  `fetchJoinCollection: true` par défaut, qui gère correctement LIMIT/OFFSET sur les lignes jointes
+  — contrairement à un `setMaxResults()` manuel (règle ci-dessus).
+- Bibliothèque (Exercise) reste une exception volontaire : pagination client-side en JS
+  (`assets/controllers/exercise/list_controller.js`), dataset borné (référentiel public + exercices
+  perso d'un seul user). Le rendu de sa fenêtre de pages (`#computePagesInRange`) reproduit à la
+  main l'algorithme de `SlidingPagination::getPaginationData()` (même fenêtre de 5, même
+  comportement aux bornes) pour une cohérence visuelle avec les 3 listes server-side, sans
+  dupliquer leur mécanisme serveur.
+
 ### SVG / silhouette musculaire
 - Composant : `{% include 'SVG_BODY/' ~ gender.value ~ '/front.html.twig' %}` (+ `/back.html.twig`).
 - Couleurs réelles du projet (celles de la création d'exercice, **source de vérité**) : primaire
@@ -278,7 +303,6 @@ palier précise, préférer des dates fixes en dur.
 | — | Discuter d'un split SRP de `WorkoutRepository` (625 lignes, 15 méthodes publiques : comptage, tonnage, muscles sollicités, pagination, SVG, dates — plusieurs responsabilités mélangées) |
 | — | Discuter de la duplication du bloc upload d'image entre `ContactThreadReplyService`/`ContactThreadService`, et de la fusion possible des 3 méthodes `buildDailyPoints`/`buildWeeklyPoints`/`buildMonthlyPoints` de `DashboardTonnageService` (zero-fill jour/semaine/mois très similaires) |
 | — | Auditer les `{% include %}` du projet pour ajouter `only` (règle déjà en place mais ~207 des ~230 includes ne la respectent pas) — chantier à part entière, chaque include doit être vérifié individuellement pour ne pas casser une page qui dépend du contexte implicite du parent |
-| — | Discuter du remplacement de la pagination maison (`workout/list/Pagination/_page_number.html.twig`, calcul d'ellipsis/fenêtre en Twig) par le rendu natif de KnpPaginatorBundle (`pagination.getPaginationData()`), déjà une dépendance du projet |
 
 ---
 

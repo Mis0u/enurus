@@ -183,6 +183,8 @@ exercise:
             reset: Filter zurücksetzen
             search_placeholder: Übung suchen…
         pagination:
+            first: Erste Seite
+            last: Letzte Seite
             navigation: Seitennavigation
             next: Weiter
             per_page: Anzeigen
@@ -232,6 +234,15 @@ messagerie:
         closed: Geschlossen
     thread_closed: "Diese Unterhaltung ist geschlossen, du kannst nicht mehr antworten."
     title: Nachrichten
+
+pagination:
+    first: Erste Seite
+    last: Letzte Seite
+    navigation: Seitennavigation
+    next: Weiter
+    per_page: Anzeigen
+    previous: Zurück
+    results: Ergebnisse
 
 registration:
     account_created: Dein Konto ist erstellt und einsatzbereit
@@ -454,11 +465,6 @@ workout:
         free_session: Freies Training
         kg: kg
         lbs: Lbs
-        pagination:
-            next: Weiter
-            per_page: Anzeigen
-            previous: Zurück
-            results: Ergebnisse
         title: Meine Trainings
         total: >-
             {count, plural,

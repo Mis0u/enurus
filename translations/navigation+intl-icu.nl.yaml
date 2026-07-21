@@ -183,6 +183,8 @@ exercise:
             reset: Filters resetten
             search_placeholder: Zoek een oefening…
         pagination:
+            first: Eerste pagina
+            last: Laatste pagina
             navigation: Paginanavigatie
             next: Volgende
             per_page: Tonen
@@ -232,6 +234,15 @@ messagerie:
         closed: Gesloten
     thread_closed: "Dit gesprek is gesloten, je kunt niet meer antwoorden."
     title: Berichten
+
+pagination:
+    first: Eerste pagina
+    last: Laatste pagina
+    navigation: Paginanavigatie
+    next: Volgende
+    per_page: Tonen
+    previous: Vorige
+    results: Resultaten
 
 registration:
     account_created: Je account is aangemaakt en klaar voor gebruik
@@ -454,11 +465,6 @@ workout:
         free_session: Vrije training
         kg: Kg
         lbs: Lbs
-        pagination:
-            next: Volgende
-            per_page: Tonen
-            previous: Vorige
-            results: Resultaten
         title: Mijn trainingen
         total: >-
             {count, plural,
