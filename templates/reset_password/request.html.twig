@@ -9,7 +9,7 @@
     <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">
         <div class="max-w-md w-full">
             <div class="text-center mb-8">
-                {% include 'partials/_common/logo.html.twig' %}
+                {% include 'partials/_common/logo.html.twig' only %}
                 <p class="text-slate-400">{{ 'reset_password_request.reset_password'|trans({}, 'navigation') }}</p>
             </div>
 
@@ -18,7 +18,7 @@
 
                 <twig:Message:Info:Info message="{{ 'reset_password_request.info_reset_password'|trans({}, 'navigation') }}" icon="info"/>
 
-                {% include 'reset_password/request/_form_request.html.twig' %}
+                {% include 'reset_password/request/_form_request.html.twig' with {'requestForm': requestForm} only %}
 
                 <div class="text-center pt-6 mt-6 border-t border-white/10">
                     <a href="{{ path('app_login') }}" class="inline-flex items-center text-sm text-slate-400 hover:text-cyan-400 transition-colors group">
@@ -29,9 +29,9 @@
                     </a>
                 </div>
             </div>
-            {% include 'reset_password/request/_additional_help.html.twig' %}
+            {% include 'reset_password/request/_additional_help.html.twig' only %}
 
-            {% include 'partials/_common/_footer.html.twig' %}
+            {% include 'partials/_common/_footer.html.twig' only %}
         </div>
     </div>
 {% endblock %}

@@ -13,7 +13,7 @@
         <div class="max-w-md w-full">
 
             <div class="text-center mb-8">
-                {% include 'partials/_common/logo.html.twig' %}
+                {% include 'partials/_common/logo.html.twig' only %}
                 <p class="text-slate-400">{{ 'baseline'|trans({}, 'brand') }}</p>
             </div>
 
@@ -26,22 +26,22 @@
 
                     <h2 class="text-2xl font-bold text-white mb-6">{{ 'login.connexion'|trans({}, 'navigation') }}</h2>
 
-                    {% include 'security/_email_field.html.twig' %}
+                    {% include 'security/_email_field.html.twig' with {'last_username': last_username} only %}
 
-                    {% include 'security/_password_field.html.twig' %}
+                    {% include 'security/_password_field.html.twig' only %}
 
                     <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
 
-                    {% include 'security/_remember_me_field.html.twig' %}
+                    {% include 'security/_remember_me_field.html.twig' only %}
 
                     <twig:Button:Primary:Primary message="{{ 'login.connect'|trans({}, 'navigation') }}"/>
 
-                    {% include 'security/_additionnal_link.html.twig' %}
+                    {% include 'security/_additionnal_link.html.twig' only %}
 
                 </form>
             </div>
 
-            {% include 'partials/_common/_footer.html.twig' %}
+            {% include 'partials/_common/_footer.html.twig' only %}
         </div>
     </div>
 {% endblock %}
