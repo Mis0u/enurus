@@ -11,7 +11,11 @@
         class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]"
         data-controller="workout--list--delete-modal"
     >
-        {% include 'workout/list/_filters.html.twig' %}
+        {% include 'workout/list/_filters.html.twig' with {
+            'filterType': filterType,
+            'filterDate': filterDate,
+            'pagination': pagination,
+        } only %}
 
         {% if pagination.getTotalItemCount() == 0 %}
             <div class="flex flex-col items-center justify-center py-20 gap-4">
@@ -30,8 +34,9 @@
                         tonnage: tonnageMap[workout.id] ?? null,
                         muscles: musclesMap[workout.id] ?? [],
                         hiddenCount: hiddenCountMap[workout.id] ?? 0,
-                        exerciseCount: exerciseCountMap[workout.id ~ ''] ?? 0
-                    } %}
+                        exerciseCount: exerciseCountMap[workout.id ~ ''] ?? 0,
+                        user: user,
+                    } only %}
                 {% endfor %}
             </div>
 

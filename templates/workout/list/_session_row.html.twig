@@ -5,22 +5,30 @@
 >
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(244,63,94,0.03),transparent_60%)] pointer-events-none"></div>
 
-    {% include 'workout/list/Session/_date_time.html.twig' %}
+    {% include 'workout/list/Session/_date_time.html.twig' with {'workout': workout} only %}
 
     <div class="flex flex-col gap-2">
 
-        {% include 'workout/list/Session/_title.html.twig' %}
+        {% include 'workout/list/Session/_title.html.twig' with {'workout': workout} only %}
 
-        {% include 'workout/list/Session/_metric.html.twig' %}
+        {% include 'workout/list/Session/_metric.html.twig' with {
+            'workout': workout,
+            'tonnage': tonnage,
+            'exerciseCount': exerciseCount,
+            'user': user,
+        } only %}
 
-        {% include 'workout/list/Session/_muscle_tag.html.twig' %}
+        {% include 'workout/list/Session/_muscle_tag.html.twig' with {
+            'muscles': muscles,
+            'hiddenCount': hiddenCount,
+        } only %}
     </div>
 
     <div class="flex items-center gap-2 max-md:justify-end" onclick="event.stopPropagation()">
 
-        {% include 'workout/list/Session/_edit_button.html.twig' %}
+        {% include 'workout/list/Session/_edit_button.html.twig' with {'workout': workout} only %}
 
-        {% include 'workout/list/Session/_delete_button.html.twig' %}
+        {% include 'workout/list/Session/_delete_button.html.twig' with {'workout': workout} only %}
     </div>
 
 </div>
