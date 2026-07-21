@@ -5,11 +5,11 @@
          data-workout--photo-upload-accepted-types-value='["image/jpeg","image/png","image/webp"]'
          data-workout--photo-upload-max-size-value="5242880">
 
-        {% include 'workout/create/_note_modal/_header.html.twig' %}
-        {% include 'workout/create/_note_modal/_textarea.html.twig' %}
-        {% include 'workout/create/_note_modal/_photo_upload.html.twig' %}
-        {% include 'workout/create/_note_modal/_actions.html.twig' %}
+        {% include 'workout/create/_note_modal/_header.html.twig' only %}
+        {% include 'workout/create/_note_modal/_textarea.html.twig' only %}
+        {% include 'workout/create/_note_modal/_photo_upload.html.twig' only %}
+        {% include 'workout/create/_note_modal/_actions.html.twig' only %}
     </div>
 </div>
 
-{% include 'workout/create/_note_modal/_lightbox.html.twig' %}
+{% include 'workout/create/_note_modal/_lightbox.html.twig' only %}

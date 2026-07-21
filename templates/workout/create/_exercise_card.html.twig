@@ -2,7 +2,7 @@
      data-exercise-index="{{ index }}">
     <input type="hidden" name="workout[workoutExercises][{{ index }}][exercise]" value="{{ exercise.id }}">
     <input type="hidden" name="workout[workoutExercises][{{ index }}][position]" value="{{ index }}" class="js-position-input">
-    {% include 'workout/create/_card.html.twig' with {'controllerName': controllerName|default('exercise')} %}
+    {% include 'workout/create/_card.html.twig' with {'controllerName': controllerName|default('exercise'), 'exercise': exercise} only %}
     {% if exercise.exerciseMuscles is not empty %}
         <div class="flex flex-wrap gap-1.5 mb-4">
             {{ component('MuscleTags', {exercise: exercise}) }}
@@ -11,8 +11,9 @@
     {% include 'workout/create/_table.html.twig' with {
         'controllerName': controllerName|default('exercise'),
         'existingSets': existingSets|default([]),
-    } %}
-    {% include 'workout/create/_template.html.twig' with {'controllerName': controllerName|default('exercise')} %}
+        'index': index,
+    } only %}
+    {% include 'workout/create/_template.html.twig' with {'controllerName': controllerName|default('exercise')} only %}
     <button type="button"
             data-action="click->{{ controllerName|default('exercise') }}#addSet"
             class="w-full flex items-center justify-center gap-1.5 px-3.5 py-2.5 bg-white/[0.03] border border-dashed border-white/[0.12] rounded-lg text-[#8b9bb4] text-[12.5px] font-medium cursor-pointer transition-all duration-250 hover:bg-[rgba(244,63,94,0.07)] hover:text-[#f43f5e] hover:border-[#f43f5e]">

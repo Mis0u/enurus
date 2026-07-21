@@ -5,7 +5,7 @@
     {{ form_row(form.performedAt) }}
     {{ form_row(form.duration) }}
 
-    {% include 'workout/create/_toggle_routine.html.twig' %}
+    {% include 'workout/create/_toggle_routine.html.twig' with {'user': user} only %}
 
 
     <div
