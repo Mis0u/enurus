@@ -144,6 +144,10 @@ régénérer le token via `CsrfTokenManagerInterface::getToken()` hors requête
 - `ImageConstraints` : constantes partagées back/front (taille max, MIME autorisés), single source
   of truth — jamais de valeur dupliquée en dur côté Twig.
 - Chemins stockés en base = **relatifs**, jamais une URL publique.
+- `AttachesContactImageTrait` (`src/Service/Contact/`) : logique d'attache d'image optionnelle à
+  un `ContactThreadMessage`, partagée entre `ContactThreadService::create()` et
+  `ContactThreadReplyService::reply()` — la garde de nullité sur l'id de l'auteur reste dans
+  chaque service appelant (le trait reçoit `$ownerId` déjà résolu, pas l'entité `User`).
 
 ### Requêtes Doctrine
 - **Ne jamais `setMaxResults()` sur une requête avec JOIN sur une collection one-to-many** — le
