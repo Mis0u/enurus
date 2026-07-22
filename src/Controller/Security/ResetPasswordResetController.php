@@ -7,6 +7,7 @@ namespace App\Controller\Security;
 use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Service\Security\ResetPasswordService;
+use App\Service\Security\SessionInvalidationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +27,7 @@ final class ResetPasswordResetController extends AbstractController
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly ResetPasswordService $resetPasswordService,
+        private readonly SessionInvalidationService $sessionInvalidationService,
     ) {
     }
 
@@ -95,6 +97,7 @@ final class ResetPasswordResetController extends AbstractController
     private function resetPasswordAndRedirect(string $token, string $plainPassword, User $user): RedirectResponse
     {
         $this->resetPasswordService->resetPassword($token, $plainPassword, $user);
+        $this->sessionInvalidationService->invalidateAllSessions($user);
         $this->cleanSessionAfterReset();
         $this->addFlash('success', $this->translator->trans('sentence.password.security.confirmation', [], 'common'));
         return $this->redirectToRoute('app_login');
