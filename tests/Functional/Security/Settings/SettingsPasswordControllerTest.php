@@ -6,7 +6,9 @@ namespace App\Tests\Functional\Security\Settings;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\Security\SessionInvalidationService;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,6 +58,32 @@ final class SettingsPasswordControllerTest extends WebTestCase
 
         self::assertTrue($hasher->isPasswordValid($user, 'NewValidPass123!'));
         self::assertFalse($hasher->isPasswordValid($user, self::CURRENT_PASSWORD));
+    }
+
+    public function testChangeSucceedsInvalidatesOtherSessionsButKeepsCurrentOne(): void
+    {
+        $client = $this->login(self::USER);
+        $client->disableReboot();
+
+        /** @var MockObject&SessionInvalidationService $sessionInvalidationService */
+        $sessionInvalidationService = $this->createMock(SessionInvalidationService::class);
+        $sessionInvalidationService->expects(self::once())
+            ->method('invalidateOtherSessions')
+            ->with(self::isInstanceOf(User::class), self::isString());
+
+        static::getContainer()->set(SessionInvalidationService::class, $sessionInvalidationService);
+
+        $crawler = $client->request(Request::METHOD_GET, '/fr/reglages');
+
+        $form = $crawler->filter('form[name="change_password_form"]')->form([
+            'change_password_form[currentPassword]' => self::CURRENT_PASSWORD,
+            'change_password_form[plainPassword][first]' => 'NewValidPass123!',
+            'change_password_form[plainPassword][second]' => 'NewValidPass123!',
+        ]);
+
+        $client->request($form->getMethod(), $form->getUri(), $form->getPhpValues(), $form->getPhpFiles());
+
+        $this->assertResponseIsSuccessful();
     }
 
     public function testChangeFailsWithIncorrectCurrentPassword(): void

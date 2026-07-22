@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Service\Entity\UserService;
 use App\Service\Security\RateLimiterService;
+use App\Service\Security\SessionInvalidationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
@@ -26,6 +27,7 @@ final class SettingsPasswordController extends AbstractController
         private readonly UserService $userService,
         private readonly TranslatorInterface $translator,
         private readonly RateLimiterService $rateLimiterService,
+        private readonly SessionInvalidationService $sessionInvalidationService,
     ) {
     }
 
@@ -96,6 +98,8 @@ final class SettingsPasswordController extends AbstractController
                 Response::HTTP_UNPROCESSABLE_ENTITY,
             );
         }
+
+        $this->sessionInvalidationService->invalidateOtherSessions($user, $request->getSession()->getId());
 
         return $this->json([
             'success' => true,
