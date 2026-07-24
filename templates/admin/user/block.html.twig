@@ -1,0 +1,12 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% form_theme form with ea().crud.formThemes only %}
+
+{% block content_title %}{{ 'admin.user.block.title'|trans({email: user.email}, 'admin', 'fr') }}{% endblock %}
+
+{% block main %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-primary">{{ 'admin.user.block.button'|trans({}, 'admin', 'fr') }}</button>
+    {{ form_end(form) }}
+{% endblock %}

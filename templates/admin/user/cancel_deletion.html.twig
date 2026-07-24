@@ -1,0 +1,11 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}{{ 'admin.user.cancel_deletion.title'|trans({email: user.email}, 'admin', 'fr') }}{% endblock %}
+
+{% block main %}
+    <p>{{ 'admin.user.cancel_deletion.confirm'|trans({}, 'admin', 'fr') }}</p>
+    <form method="post">
+        <input type="hidden" name="_token" value="{{ csrf_token('user_admin_cancel_deletion_' ~ user.id) }}">
+        <button type="submit" class="btn btn-primary">{{ 'admin.user.action.cancel_deletion'|trans({}, 'admin', 'fr') }}</button>
+    </form>
+{% endblock %}

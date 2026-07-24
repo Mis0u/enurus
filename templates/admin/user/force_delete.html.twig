@@ -1,0 +1,13 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% form_theme form with ea().crud.formThemes only %}
+
+{% block content_title %}{{ 'admin.user.force_delete.title'|trans({email: user.email}, 'admin', 'fr') }}{% endblock %}
+
+{% block main %}
+    <p>{{ 'admin.user.force_delete.warning'|trans({email: user.email}, 'admin', 'fr') }}</p>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-danger">{{ 'admin.user.force_delete.button'|trans({}, 'admin', 'fr') }}</button>
+    {{ form_end(form) }}
+{% endblock %}

@@ -13,7 +13,10 @@ framework:
                     max_retries: 3
                     multiplier: 2
             failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
+            # Utilisé via l'en-tête MIME "X-Bus-Transport" sur un email précis (ex. renvoi admin
+            # de reset password) pour l'envoyer immédiatement, hors file `async` — cf.
+            # ResetPasswordService::resendForAdmin().
+            sync: 'sync://'
 
         default_bus: messenger.bus.default
 

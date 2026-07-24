@@ -109,6 +109,23 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
 
+    /**
+     * `roles` est stocké en colonne JSON — DQL ne sait pas comparer un JSON brut (`LIKE`/`IN`
+     * échouent sans cast SQL non portable), d'où une requête native plutôt qu'un `QueryBuilder`.
+     * Utilisé pour exclure les comptes admin de l'admin User (jamais gérables via cette UI).
+     *
+     * @return list<Uuid>
+     */
+    public function findAdminIds(): array
+    {
+        /** @var list<string> $rows */
+        $rows = $this->getEntityManager()->getConnection()->fetchFirstColumn(
+            "SELECT id FROM users WHERE roles::text LIKE '%ROLE_ADMIN%'",
+        );
+
+        return array_map(static fn (string $id): Uuid => Uuid::fromString($id), $rows);
+    }
+
     private function broadcastRecipientsQueryBuilder(Uuid $excludedUserId, ?string $locale): QueryBuilder
     {
         $qb = $this->createQueryBuilder('u')
