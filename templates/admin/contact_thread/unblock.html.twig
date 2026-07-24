@@ -1,0 +1,11 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}{{ 'admin.thread.unblock.title'|trans({email: thread.owner.email}, 'admin', 'fr') }}{% endblock %}
+
+{% block main %}
+    <p>{{ 'admin.thread.unblock.confirm'|trans({}, 'admin', 'fr') }}</p>
+    <form method="post">
+        <input type="hidden" name="_token" value="{{ csrf_token('contact_thread_admin_unblock_' ~ thread.owner.id) }}">
+        <button type="submit" class="btn btn-primary">{{ 'admin.thread.unblock.button'|trans({}, 'admin', 'fr') }}</button>
+    </form>
+{% endblock %}

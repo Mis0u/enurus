@@ -6,10 +6,12 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -54,5 +56,87 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->setParameter('threshold', $threshold)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * Destinataires d'une diffusion admin (compose EasyAdmin) — exclut les comptes en attente de
+     * suppression et l'auteur de la diffusion lui-même, filtre en plus par locale si fournie.
+     *
+     * @return list<User>
+     */
+    public function findAllForBroadcast(Uuid $excludedUserId, ?string $locale = null): array
+    {
+        /** @var list<User> */
+        return $this->broadcastRecipientsQueryBuilder($excludedUserId, $locale)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * Compte rapide des destinataires d'une diffusion, sans charger les entités — utilisé pour un
+     * retour immédiat à l'admin (le nombre réel de fils créés est connu ensuite, de façon
+     * asynchrone, cf. SendContactBroadcastMessageHandler).
+     */
+    public function countForBroadcast(Uuid $excludedUserId, ?string $locale = null): int
+    {
+        /** @var int */
+        return $this->broadcastRecipientsQueryBuilder($excludedUserId, $locale)
+            ->select('COUNT(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    /**
+     * Autocomplete du destinataire d'un message admin 1-to-1 (EasyAdmin) — limité à 10 résultats,
+     * exclut l'auteur (l'admin lui-même) et les comptes en attente de suppression.
+     *
+     * @return list<User>
+     */
+    public function searchForRecipientAutocomplete(string $query, Uuid $excludedUserId): array
+    {
+        /** @var list<User> */
+        return $this->createQueryBuilder('u')
+            ->where('u.deletionRequestedAt IS NULL')
+            ->andWhere('u.id != :excludedUserId')
+            ->andWhere('LOWER(u.email) LIKE :query')
+            ->setParameter('excludedUserId', $excludedUserId)
+            ->setParameter('query', '%' . mb_strtolower($query) . '%')
+            ->orderBy('u.email', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * `roles` est stocké en colonne JSON — DQL ne sait pas comparer un JSON brut (`LIKE`/`IN`
+     * échouent sans cast SQL non portable), d'où une requête native plutôt qu'un `QueryBuilder`.
+     * Utilisé pour exclure les comptes admin de l'admin User (jamais gérables via cette UI).
+     *
+     * @return list<Uuid>
+     */
+    public function findAdminIds(): array
+    {
+        /** @var list<string> $rows */
+        $rows = $this->getEntityManager()->getConnection()->fetchFirstColumn(
+            "SELECT id FROM users WHERE roles::text LIKE '%ROLE_ADMIN%'",
+        );
+
+        return array_map(static fn (string $id): Uuid => Uuid::fromString($id), $rows);
+    }
+
+    private function broadcastRecipientsQueryBuilder(Uuid $excludedUserId, ?string $locale): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->where('u.deletionRequestedAt IS NULL')
+            ->andWhere('u.id != :excludedUserId')
+            ->setParameter('excludedUserId', $excludedUserId);
+
+        if (null !== $locale) {
+            $qb->andWhere('u.locale = :locale')->setParameter('locale', $locale);
+        }
+
+        return $qb;
     }
 }

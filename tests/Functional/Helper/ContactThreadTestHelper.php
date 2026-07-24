@@ -18,10 +18,11 @@ final class ContactThreadTestHelper
         User $owner,
         string $subject = 'Sujet de test',
         ContactThreadStatusEnum $status = ContactThreadStatusEnum::AWAITING_ADMIN_REPLY,
+        ContactCategoryEnum $category = ContactCategoryEnum::BUG,
     ): ContactThread {
         $thread = new ContactThread();
         $thread->owner = $owner;
-        $thread->category = ContactCategoryEnum::BUG;
+        $thread->category = $category;
         $thread->subject = $subject;
         $thread->status = $status;
 
@@ -43,11 +44,12 @@ final class ContactThreadTestHelper
         ContactThread $thread,
         User $admin,
         ?\DateTimeImmutable $readAt = null,
+        ?string $body = null,
     ): ContactThreadMessage {
         $message = new ContactThreadMessage();
         $message->author = $admin;
         $message->fromAdmin = true;
-        $message->body = "Réponse de test de l'admin, suffisamment longue pour la validation.";
+        $message->body = $body ?? "Réponse de test de l'admin, suffisamment longue pour la validation.";
         $message->readAt = $readAt;
 
         $thread->addMessage($message);

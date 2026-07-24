@@ -16,6 +16,10 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    'admin' => [
+        'path' => './assets/admin.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
@@ -36,5 +40,33 @@ return [
     ],
     'chart.js' => [
         'version' => '3.9.1',
+    ],
+    'quill' => [
+        'version' => '2.0.3',
+    ],
+    'lodash-es' => [
+        'version' => '4.17.21',
+    ],
+    'parchment' => [
+        'version' => '3.0.0',
+    ],
+    'quill-delta' => [
+        'version' => '5.1.0',
+    ],
+    'eventemitter3' => [
+        'version' => '5.0.1',
+    ],
+    'fast-diff' => [
+        'version' => '1.3.0',
+    ],
+    'lodash.clonedeep' => [
+        'version' => '4.5.0',
+    ],
+    'lodash.isequal' => [
+        'version' => '4.5.0',
+    ],
+    'quill/dist/quill.snow.css' => [
+        'version' => '2.0.3',
+        'type' => 'css',
     ],
 ];

@@ -1,0 +1,18 @@
+{% for message in field.value %}
+    <div class="admin-message {{ message.fromAdmin ? 'admin-message--admin' }}">
+        <div class="admin-message-meta">
+            <strong>{{ message.fromAdmin ? 'admin.thread.message.author_admin'|trans({}, 'admin', 'fr') : 'admin.thread.message.author_user'|trans({}, 'admin', 'fr') }}</strong>
+            — {{ message.createdAt|date('d/m/Y H:i') }}
+        </div>
+        <div class="admin-message-body">{{ message.fromAdmin ? message.body|raw : message.body }}</div>
+        {% if message.imagePath %}
+            <div class="admin-message-attachment">
+                <a href="/uploads/{{ message.imagePath }}" target="_blank" rel="noopener">
+                    <img class="admin-message-thumb" src="/uploads/{{ message.imagePath }}" alt="">
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% else %}
+    <p>{{ 'admin.thread.message.none'|trans({}, 'admin', 'fr') }}</p>
+{% endfor %}

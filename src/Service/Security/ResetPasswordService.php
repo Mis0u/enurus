@@ -6,6 +6,7 @@ namespace App\Service\Security;
 
 use App\Entity\User;
 use App\Exception\ResetPassword\UserNotFoundException;
+use App\Repository\ResetPasswordRequestRepository;
 use App\Service\Email\SymfonyMailerEmailService;
 use App\Service\Entity\UserService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,6 +24,7 @@ final readonly class ResetPasswordService
         private UserService $userService,
         private SymfonyMailerEmailService $emailService,
         private TranslatorInterface $translator,
+        private ResetPasswordRequestRepository $resetPasswordRequestRepository,
     ) {
     }
 
@@ -77,6 +79,25 @@ final readonly class ResetPasswordService
 
     }
 
+    /**
+     * Renvoi admin d'un email de reset password (l'utilisateur signale ne pas l'avoir reçu) — le
+     * throttle d'1h de `generateResetToken()` porte sur la demande existante, donc on la retire
+     * d'abord pour permettre un nouvel envoi immédiat. Envoyé en synchrone (hors file `async`) :
+     * un renvoi déclenché par un admin doit arriver tout de suite, pas attendre le prochain worker.
+     */
+    public function resendForAdmin(User $user, string $locale): void
+    {
+        $this->resetPasswordRequestRepository->removeRequests($user);
+
+        try {
+            $resetToken = $this->resetPasswordHelper->generateResetToken($user);
+        } catch (ResetPasswordExceptionInterface $e) {
+            throw new InvalidResetPasswordTokenException($e->getReason());
+        }
+
+        $this->sendResetPasswordEmail($user, $resetToken, $locale, sync: true);
+    }
+
     private function findUserByEmail(string $email): ?User
     {
         return $this->entityManager->getRepository(User::class)->findOneBy([
@@ -88,6 +109,7 @@ final readonly class ResetPasswordService
         User $user,
         ResetPasswordToken $resetToken,
         string $locale,
+        bool $sync = false,
     ): void {
         $email = $this->emailService->createEmail(
             $user->email,
@@ -99,6 +121,10 @@ final readonly class ResetPasswordService
             'reset_password/email.html.twig',
             $locale
         );
+
+        if ($sync) {
+            $email->getHeaders()->addTextHeader('X-Bus-Transport', 'sync');
+        }
 
         $this->emailService->sendEmail($email);
     }

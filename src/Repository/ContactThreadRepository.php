@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Entity\ContactThread;
 use App\Entity\User;
+use App\Enum\Contact\ContactThreadStatusEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -35,5 +36,46 @@ final class ContactThreadRepository extends ServiceEntityRepository
             ->andWhere('t.hiddenByUserAt IS NULL')
             ->setParameter('owner', $owner)
             ->orderBy('t.updatedAt', 'DESC');
+    }
+
+    /**
+     * `JOIN FETCH` sur les messages pour permettre au service appelant de récupérer leurs
+     * `imagePath` (nettoyage disque) sans déclencher un lazy-load par fil. Exclut les fils issus
+     * d'une diffusion (`broadcast IS NULL`) — hors scope de la purge 1 to 1.
+     *
+     * @return list<ContactThread>
+     */
+    public function findClosedBefore(\DateTimeImmutable $threshold): array
+    {
+        /** @var list<ContactThread> */
+        return $this->createQueryBuilder('t')
+            ->leftJoin('t.messages', 'm')
+            ->addSelect('m')
+            ->andWhere('t.broadcast IS NULL')
+            ->andWhere('t.status = :status')
+            ->andWhere('t.closedAt <= :threshold')
+            ->setParameter('status', ContactThreadStatusEnum::CLOSED)
+            ->setParameter('threshold', $threshold)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * Nombre de fils en attente d'une réponse admin — sert de badge sur le menu "Messagerie"
+     * du back-office. Exclut les fils issus d'une diffusion (jamais répondables, cf.
+     * ContactThreadCrudController::createIndexQueryBuilder()).
+     */
+    public function countAwaitingAdminReply(): int
+    {
+        /** @var int */
+        return $this->createQueryBuilder('t')
+            ->select('COUNT(t.id)')
+            ->andWhere('t.status = :status')
+            ->andWhere('t.broadcast IS NULL')
+            ->setParameter('status', ContactThreadStatusEnum::AWAITING_ADMIN_REPLY)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
     }
 }

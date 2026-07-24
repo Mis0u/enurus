@@ -232,11 +232,13 @@ messagerie:
         title: Bienvenue dans ta messagerie
     reply:
         submit: Répondre
+    reply_informative: "Ceci est un message informatif, tu ne peux pas répondre."
     reply_restricted: "Ton accès à la messagerie de contact est actuellement restreint. Tu peux consulter tes messages, mais tu ne peux pas répondre."
     status:
         answered: Répondu
         awaiting_admin: En attente de réponse
         closed: Clôturé
+        informative: Informatif
     thread_closed: "Ce fil de discussion est clôturé, tu ne peux plus y répondre."
     title: Messagerie
 

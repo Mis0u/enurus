@@ -232,11 +232,13 @@ messagerie:
         title: Willkommen in deinen Nachrichten
     reply:
         submit: Antworten
+    reply_informative: "Dies ist eine Informationsnachricht, du kannst nicht antworten."
     reply_restricted: "Dein Zugang zum Kontakt-Nachrichtensystem ist derzeit eingeschränkt. Du kannst deine Nachrichten lesen, aber nicht antworten."
     status:
         answered: Beantwortet
         awaiting_admin: Antwort ausstehend
         closed: Geschlossen
+        informative: Informativ
     thread_closed: "Diese Unterhaltung ist geschlossen, du kannst nicht mehr antworten."
     title: Nachrichten
 

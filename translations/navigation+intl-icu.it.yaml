@@ -232,11 +232,13 @@ messagerie:
         title: Benvenuto nella tua messaggistica
     reply:
         submit: Rispondi
+    reply_informative: "Questo è un messaggio informativo, non puoi rispondere."
     reply_restricted: "Il tuo accesso alla messaggistica di contatto è attualmente limitato. Puoi consultare i tuoi messaggi, ma non puoi rispondere."
     status:
         answered: Risposto
         awaiting_admin: In attesa di risposta
         closed: Chiuso
+        informative: Informativo
     thread_closed: "Questa conversazione è chiusa, non puoi più rispondere."
     title: Messaggistica
 

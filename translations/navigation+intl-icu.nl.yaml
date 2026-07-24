@@ -232,11 +232,13 @@ messagerie:
         title: Welkom in je berichten
     reply:
         submit: Beantwoorden
+    reply_informative: "Dit is een informatief bericht, je kunt niet antwoorden."
     reply_restricted: "Je toegang tot de contactberichten is momenteel beperkt. Je kunt je berichten lezen, maar niet beantwoorden."
     status:
         answered: Beantwoord
         awaiting_admin: In afwachting van antwoord
         closed: Gesloten
+        informative: Informatief
     thread_closed: "Dit gesprek is gesloten, je kunt niet meer antwoorden."
     title: Berichten
 

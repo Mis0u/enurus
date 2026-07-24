@@ -6,6 +6,7 @@ namespace App\Security\Voter;
 
 use App\Entity\ContactThread;
 use App\Entity\User;
+use App\Enum\Contact\ContactCategoryEnum;
 use App\Enum\Contact\ContactThreadStatusEnum;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -45,6 +46,7 @@ final class ContactThreadVoter extends Voter
                 || $this->isAdmin($user),
             self::REPLY => $subject->owner === $user
                 && ContactThreadStatusEnum::CLOSED !== $subject->status
+                && ContactCategoryEnum::INFORMATIVE !== $subject->category
                 && ! $user->isContactRestricted,
             self::CLOSE => $this->isAdmin($user),
             self::DELETE => $subject->owner === $user,

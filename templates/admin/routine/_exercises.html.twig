@@ -1,0 +1,7 @@
+{% for routine_exercise in field.value|sort((a, b) => a.position <=> b.position) %}
+    <div class="admin-card">
+        {{ routine_exercise.exercise.name }}
+    </div>
+{% else %}
+    <p>{{ 'admin.routine.no_exercise'|trans({}, 'admin', 'fr') }}</p>
+{% endfor %}

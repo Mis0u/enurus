@@ -68,15 +68,23 @@ final readonly class AccountDeletionService
         $users = $this->userRepository->findPendingDeletionOlderThan($threshold);
 
         foreach ($users as $user) {
-            $this->sendEmail($user, 'settings.account_deletion.deleted.subject', 'emails/account_deletion_deleted.html.twig');
-            $this->recordDeletionTrace($user);
-            $this->deletePhysicalFiles($user);
-            $this->entityManager->remove($user);
+            $this->purgeUser($user);
         }
 
         $this->entityManager->flush();
 
         return \count($users);
+    }
+
+    /**
+     * Suppression immédiate déclenchée par un admin (cas exceptionnel), hors flux de rétention de
+     * 30 jours — même nettoyage (fichiers, trace, cascade) que `purgeExpired()`, sans en passer par
+     * `deletionRequestedAt`.
+     */
+    public function deleteImmediately(User $user): void
+    {
+        $this->purgeUser($user);
+        $this->entityManager->flush();
     }
 
     public function purgeExpiredTraces(): int
@@ -112,6 +120,14 @@ final readonly class AccountDeletionService
         );
 
         $this->emailService->sendEmail($email);
+    }
+
+    private function purgeUser(User $user): void
+    {
+        $this->sendEmail($user, 'settings.account_deletion.deleted.subject', 'emails/account_deletion_deleted.html.twig');
+        $this->recordDeletionTrace($user);
+        $this->deletePhysicalFiles($user);
+        $this->entityManager->remove($user);
     }
 
     private function recordDeletionTrace(User $user): void

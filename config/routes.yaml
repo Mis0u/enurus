@@ -11,9 +11,18 @@ controllers:
     resource:
         path: ../src/Controller/
         namespace: App\Controller
+        exclude: ../src/Controller/Admin/
     type: attribute
     prefix: /{_locale}
     requirements:
         _locale: fr|en|it|es|pt|de|nl|pl
     defaults:
         _locale: en
+
+# EasyAdmin : jamais préfixé par la locale, l'outil n'est vu que par le propriétaire du site
+# (dashboard admin en français uniquement, cf. CLAUDE.md).
+admin_dashboard:
+    resource:
+        path: ../src/Controller/Admin/
+        namespace: App\Controller\Admin
+    type: attribute

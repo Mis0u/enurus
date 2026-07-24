@@ -30,7 +30,7 @@
 
 {% set last_message = thread.messages|last %}
 {% set excerpt_prefix = last_message.fromAdmin ? 'messagerie.author.admin'|trans({}, 'navigation') ~ ' : ' : 'messagerie.author.you'|trans({}, 'navigation') ~ ' : ' %}
-{% set excerpt_body = last_message.body|truncate(90) %}
+{% set excerpt_body = last_message.body|striptags|truncate(90) %}
 
 <a href="{{ path('app_contact_thread_show', {id: thread.id.toRfc4122}) }}"
    class="block bg-[#0f1928] border rounded-2xl p-4.5 no-underline hover:bg-[#151f30] hover:border-white/[0.15] transition-all {{ unreadCount > 0 ? 'border-[rgba(244,63,94,0.25)]' : 'border-white/[0.07]' }}">

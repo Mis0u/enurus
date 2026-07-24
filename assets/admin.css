@@ -1,0 +1,102 @@
+tr.row-awaiting-admin-reply {
+    background-color: rgba(245, 158, 11, 0.16);
+}
+
+body.ea-dark-scheme tr.row-awaiting-admin-reply {
+    background-color: rgba(245, 158, 11, 0.28);
+}
+
+.admin-wysiwyg-editor {
+    background: #fff;
+    min-height: 150px;
+}
+
+.admin-recipient-autocomplete {
+    position: relative;
+}
+
+.admin-recipient-autocomplete-results {
+    position: absolute;
+    z-index: 10;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.admin-recipient-autocomplete-results button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.admin-recipient-autocomplete-results button:hover {
+    background-color: #f3f4f6;
+}
+
+.admin-recipient-autocomplete-locale {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 0.35rem;
+}
+
+.admin-card {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    background-color: #f3f4f6;
+}
+
+.admin-card-meta {
+    color: #6b7280;
+}
+
+.admin-card-note {
+    color: #6b7280;
+    font-size: 0.85rem;
+}
+
+.admin-message {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    background-color: #f3f4f6;
+}
+
+.admin-message--admin {
+    background-color: #eef2ff;
+}
+
+.admin-message-meta {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+}
+
+.admin-message-body {
+    white-space: pre-line;
+}
+
+.admin-message-attachment {
+    margin-top: 0.5rem;
+}
+
+.admin-message-thumb {
+    max-width: 220px;
+    max-height: 160px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.admin-target-radios .form-check {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 1.25rem;
+    margin-bottom: 0.5rem;
+}

@@ -653,7 +653,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         time_based_uuid_node?: scalar|\Symfony\Component\Config\Loader\ParamConfigurator|null,
  *     },
  *     html_sanitizer?: bool|array{ // HtmlSanitizer configuration
- *         enabled?: bool|\Symfony\Component\Config\Loader\ParamConfigurator, // Default: false
+ *         enabled?: bool|\Symfony\Component\Config\Loader\ParamConfigurator, // Default: true
  *         sanitizers?: array<string, array{ // Default: []
  *             allow_safe_elements?: bool|\Symfony\Component\Config\Loader\ParamConfigurator, // Allows "safe" elements and attributes. // Default: false
  *             allow_static_elements?: bool|\Symfony\Component\Config\Loader\ParamConfigurator, // Allows all static elements and attributes from the W3C Sanitizer API standard. // Default: false
@@ -965,7 +965,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         enabled?: bool|\Symfony\Component\Config\Loader\ParamConfigurator, // Default: false
  *     },
  *     html?: bool|array{
- *         enabled?: bool|\Symfony\Component\Config\Loader\ParamConfigurator, // Default: false
+ *         enabled?: bool|\Symfony\Component\Config\Loader\ParamConfigurator, // Default: true
  *     },
  *     markdown?: bool|array{
  *         enabled?: bool|\Symfony\Component\Config\Loader\ParamConfigurator, // Default: false

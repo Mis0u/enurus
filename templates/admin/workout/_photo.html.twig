@@ -1,0 +1,7 @@
+{% if field.value %}
+    <a href="/uploads/{{ field.value }}" target="_blank" rel="noopener">
+        <img class="admin-message-thumb" src="/uploads/{{ field.value }}" alt="">
+    </a>
+{% else %}
+    <p>{{ 'admin.workout.no_photo'|trans({}, 'admin', 'fr') }}</p>
+{% endif %}
