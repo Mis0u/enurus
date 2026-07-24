@@ -1,0 +1,14 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - field : FormView — champ texte du message (TextareaType, mapped: false)
+#}
+<div class="mb-3" data-controller="admin--wysiwyg">
+    {{ form_label(field) }}
+    <div data-admin--wysiwyg-target="editor" style="background: #fff; min-height: 150px;"></div>
+    {{ form_widget(field, {
+        attr: {
+            hidden: true,
+            'data-admin--wysiwyg-target': 'input',
+        },
+    }) }}
+</div>

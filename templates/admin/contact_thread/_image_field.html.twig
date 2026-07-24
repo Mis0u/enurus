@@ -1,0 +1,12 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - fieldId : string — id unique de l'input file sur la page
+#}
+<div class="mb-3">
+    <label class="form-label" for="{{ fieldId }}">Image (optionnel)</label>
+    <input type="file"
+           id="{{ fieldId }}"
+           name="image"
+           accept="{{ constant('App\\Constraint\\ImageConstraints::ALLOWED_MIME_TYPES')|join(',') }}"
+           class="form-control">
+</div>

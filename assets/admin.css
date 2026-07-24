@@ -1,0 +1,7 @@
+tr.row-awaiting-admin-reply {
+    background-color: rgba(245, 158, 11, 0.16);
+}
+
+body.ea-dark-scheme tr.row-awaiting-admin-reply {
+    background-color: rgba(245, 158, 11, 0.28);
+}

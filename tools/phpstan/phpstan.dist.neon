@@ -14,3 +14,7 @@ parameters:
           path: ../../src/Twig/Components/*
         - message: '#^Unused .*#'
           path: ../../src/Twig/Components/*
+        # Actions CRUD EasyAdmin (reply/close/block/unblock) dispatchées par nom de méthode via le
+        # paramètre de requête `crudAction`, jamais appelées depuis le code PHP lui-même.
+        - message: '#^Unused .*#'
+          path: ../../src/Controller/Admin/*

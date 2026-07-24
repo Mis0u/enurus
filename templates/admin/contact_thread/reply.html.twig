@@ -1,0 +1,26 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% form_theme form with ea().crud.formThemes only %}
+
+{% block content_title %}Répondre — {{ thread.subject }}{% endblock %}
+
+{% block main %}
+    {{ form_start(form, {render_rest: false}) }}
+    {{ form_errors(form) }}
+
+    {% include 'admin/contact_thread/_wysiwyg_field.html.twig' with {
+        field: form.message,
+    } only %}
+
+    {% include 'admin/contact_thread/_image_field.html.twig' with {
+        fieldId: 'replyImage',
+    } only %}
+
+    {{ form_row(form._token) }}
+
+    <div class="flex gap-3">
+        <button type="submit" class="btn btn-primary">Envoyer la réponse</button>
+        <button type="submit" name="closeAfterReply" value="1" class="btn btn-secondary">Envoyer et clôturer</button>
+    </div>
+    {{ form_end(form, {render_rest: false}) }}
+{% endblock %}

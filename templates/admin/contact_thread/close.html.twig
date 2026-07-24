@@ -1,0 +1,11 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}Clôturer — {{ thread.subject }}{% endblock %}
+
+{% block main %}
+    <p>Confirmer la clôture de ce fil de discussion ?</p>
+    <form method="post">
+        <input type="hidden" name="_token" value="{{ csrf_token('contact_thread_admin_close_' ~ thread.id) }}">
+        <button type="submit" class="btn btn-primary">Clôturer</button>
+    </form>
+{% endblock %}

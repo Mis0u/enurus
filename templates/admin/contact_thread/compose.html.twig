@@ -1,0 +1,65 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% form_theme form with ea().crud.formThemes only %}
+
+{% block content_title %}Nouveau message{% endblock %}
+
+{% block main %}
+    <style>
+        [data-admin--recipient-autocomplete-target="results"] button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0.5rem 0.75rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        [data-admin--recipient-autocomplete-target="results"] button:hover {
+            background-color: #f3f4f6;
+        }
+    </style>
+
+    {{ form_start(form, {render_rest: false}) }}
+    {{ form_errors(form) }}
+
+    <div class="mb-3"
+         data-controller="admin--recipient-autocomplete"
+         data-admin--recipient-autocomplete-search-url-value="{{ recipientSearchUrl }}"
+         data-admin--recipient-autocomplete-locale-label-value="Langue :"
+         style="position: relative;">
+        <label class="form-label">Destinataire</label>
+        <input type="text"
+               class="form-control"
+               placeholder="Rechercher un email…"
+               autocomplete="off"
+               data-admin--recipient-autocomplete-target="query"
+               data-action="input->admin--recipient-autocomplete#search">
+        <div data-admin--recipient-autocomplete-target="results"
+             hidden
+             style="position: absolute; z-index: 10; background: #fff; border: 1px solid #d1d5db; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-height: 220px; overflow-y: auto;"></div>
+        <p data-admin--recipient-autocomplete-target="localeDisplay" style="font-size: 0.85rem; color: #6b7280; margin-top: 0.35rem;"></p>
+        {{ form_widget(form.recipientId, {
+            attr: {
+                'data-admin--recipient-autocomplete-target': 'hidden',
+            },
+        }) }}
+    </div>
+
+    {{ form_row(form.category) }}
+    {{ form_row(form.subject) }}
+
+    {% include 'admin/contact_thread/_wysiwyg_field.html.twig' with {
+        field: form.body,
+    } only %}
+
+    {% include 'admin/contact_thread/_image_field.html.twig' with {
+        fieldId: 'composeImage',
+    } only %}
+
+    {{ form_row(form._token) }}
+
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+    {{ form_end(form, {render_rest: false}) }}
+{% endblock %}
