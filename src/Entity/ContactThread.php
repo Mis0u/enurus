@@ -113,6 +113,22 @@ class ContactThread
     }
 
     /**
+     * Renseigné uniquement pour les fils créés par un envoi groupé admin — permet de les regrouper
+     * sous un seul affichage côté admin ("Diffusions") sans fusionner les fils eux-mêmes, chaque
+     * destinataire ayant besoin du sien pour son Voter et sa messagerie personnelle.
+     */
+    #[ORM\ManyToOne(targetEntity: ContactBroadcast::class, inversedBy: 'threads')]
+    #[ORM\JoinColumn(nullable: true)]
+    public ?ContactBroadcast $broadcast = null {
+        get {
+            return $this->broadcast;
+        }
+        set(?ContactBroadcast $broadcast) {
+            $this->broadcast = $broadcast;
+        }
+    }
+
+    /**
      * @var Collection<int, ContactThreadMessage>
      */
     #[ORM\OneToMany(targetEntity: ContactThreadMessage::class, mappedBy: 'thread', cascade: ['persist', 'remove'], orphanRemoval: true)]
