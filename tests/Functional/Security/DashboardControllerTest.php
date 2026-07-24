@@ -15,6 +15,8 @@ class DashboardControllerTest extends WebTestCase
 
     private const string USER_WITH_NO_DATA = 'user-fixture-0@test.com';
 
+    private const string ADMIN = 'admin-fixture@test.com';
+
     /**
      * @return array<int, array<int, string>>
      */
@@ -42,5 +44,39 @@ class DashboardControllerTest extends WebTestCase
         $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
         $client->clickLink($link);
         $this->assertRouteSame($route);
+    }
+
+    public function testRegularUserSeesContactAndMessagingLinks(): void
+    {
+        $client = $this->login(self::USER_WITH_NO_DATA);
+        $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertSelectorExists('a[href*="/messagerie"]');
+        self::assertSelectorExists('a[href*="/contact"]');
+    }
+
+    public function testAdminDoesNotSeeContactAndMessagingLinks(): void
+    {
+        $client = $this->login(self::ADMIN);
+        $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertSelectorNotExists('a[href*="/messagerie"]');
+        self::assertSelectorNotExists('a[href*="/contact"]');
+    }
+
+    public function testAdminSeesAdministrationLink(): void
+    {
+        $client = $this->login(self::ADMIN);
+        $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertSelectorExists('a[href="/admin"]');
+    }
+
+    public function testRegularUserDoesNotSeeAdministrationLink(): void
+    {
+        $client = $this->login(self::USER_WITH_NO_DATA);
+        $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertSelectorNotExists('a[href="/admin"]');
     }
 }
