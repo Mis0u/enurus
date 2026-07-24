@@ -51,6 +51,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @extends AbstractCrudController<ContactThread>
@@ -77,6 +78,7 @@ final class ContactThreadCrudController extends AbstractCrudController
         private readonly CsrfTokenManagerInterface $csrfTokenManager,
         private readonly AdminUrlGenerator $adminUrlGenerator,
         private readonly ImageUploadService $imageUploadService,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -88,8 +90,8 @@ final class ContactThreadCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Fil de discussion')
-            ->setEntityLabelInPlural('Messagerie')
+            ->setEntityLabelInSingular($this->trans('admin.thread.label.singular'))
+            ->setEntityLabelInPlural($this->trans('admin.thread.label.plural'))
             ->setDefaultSort([
                 'updatedAt' => 'DESC',
             ])
@@ -98,7 +100,7 @@ final class ContactThreadCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('owner.email', 'Utilisateur');
+        yield TextField::new('owner.email', $this->trans('admin.thread.field.owner'));
         yield ChoiceField::new('category')
             ->setChoices($this->enumChoices(ContactCategoryEnum::cases()))
             ->renderAsBadges([
@@ -110,7 +112,7 @@ final class ContactThreadCrudController extends AbstractCrudController
                 ContactCategoryEnum::INFORMATIVE->value => 'success',
             ])
         ;
-        yield TextField::new('subject', 'Sujet')
+        yield TextField::new('subject', $this->trans('admin.thread.field.subject'))
             ->formatValue(fn (mixed $value, ContactThread $thread): string => $this->formatSubjectForAwaitingReply($thread))
         ;
         yield ChoiceField::new('status')
@@ -121,10 +123,10 @@ final class ContactThreadCrudController extends AbstractCrudController
                 ContactThreadStatusEnum::CLOSED->value => 'secondary',
             ])
         ;
-        yield DateTimeField::new('createdAt', 'Créé le')->hideOnForm();
-        yield DateTimeField::new('updatedAt', 'Mis à jour le')->hideOnForm();
-        yield DateTimeField::new('closedAt', 'Clôturé le')->hideOnIndex();
-        yield Field::new('messages', 'Conversation')
+        yield DateTimeField::new('createdAt', $this->trans('admin.thread.field.created_at'))->hideOnForm();
+        yield DateTimeField::new('updatedAt', $this->trans('admin.thread.field.updated_at'))->hideOnForm();
+        yield DateTimeField::new('closedAt', $this->trans('admin.thread.field.closed_at'))->hideOnIndex();
+        yield Field::new('messages', $this->trans('admin.thread.field.conversation'))
             ->onlyOnDetail()
             ->setTemplatePath('admin/contact_thread/_messages.html.twig')
         ;
@@ -158,7 +160,7 @@ final class ContactThreadCrudController extends AbstractCrudController
                     ->canSelectMultiple()
             )
             ->add(
-                EntityFilter::new('owner', 'Utilisateur')
+                EntityFilter::new('owner', $this->trans('admin.thread.field.owner'))
                     ->setFormTypeOption('value_type_options', [
                         'choice_label' => static fn (User $user): string => $user->email,
                     ])
@@ -185,26 +187,26 @@ final class ContactThreadCrudController extends AbstractCrudController
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->add(
                 Crud::PAGE_INDEX,
-                Action::new(self::ACTION_COMPOSE, 'Nouveau message')
+                Action::new(self::ACTION_COMPOSE, $this->trans('admin.thread.action.compose'))
                     ->linkToCrudAction(self::ACTION_COMPOSE)
                     ->createAsGlobalAction()
             )
-            ->add(Crud::PAGE_DETAIL, Action::new(self::ACTION_REPLY, 'Répondre')->linkToCrudAction(self::ACTION_REPLY))
+            ->add(Crud::PAGE_DETAIL, Action::new(self::ACTION_REPLY, $this->trans('admin.thread.action.reply'))->linkToCrudAction(self::ACTION_REPLY))
             ->add(
                 Crud::PAGE_DETAIL,
-                Action::new(self::ACTION_CLOSE, 'Clôturer')
+                Action::new(self::ACTION_CLOSE, $this->trans('admin.thread.action.close'))
                     ->linkToCrudAction(self::ACTION_CLOSE)
                     ->displayIf(static fn (ContactThread $thread): bool => ContactThreadStatusEnum::CLOSED !== $thread->status)
             )
             ->add(
                 Crud::PAGE_DETAIL,
-                Action::new(self::ACTION_BLOCK, "Bloquer l'utilisateur")
+                Action::new(self::ACTION_BLOCK, $this->trans('admin.thread.action.block'))
                     ->linkToCrudAction(self::ACTION_BLOCK)
                     ->displayIf(static fn (ContactThread $thread): bool => ! $thread->owner->isContactRestricted)
             )
             ->add(
                 Crud::PAGE_DETAIL,
-                Action::new(self::ACTION_UNBLOCK, "Débloquer l'utilisateur")
+                Action::new(self::ACTION_UNBLOCK, $this->trans('admin.thread.action.unblock'))
                     ->linkToCrudAction(self::ACTION_UNBLOCK)
                     ->displayIf(static fn (ContactThread $thread): bool => $thread->owner->isContactRestricted)
             )
@@ -248,9 +250,9 @@ final class ContactThreadCrudController extends AbstractCrudController
 
             if ($request->request->getBoolean('closeAfterReply')) {
                 $this->contactThreadCloseService->close($thread);
-                $this->addFlash('success', 'Réponse envoyée et fil clôturé.');
+                $this->addFlash('success', $this->trans('admin.thread.flash.reply_sent_and_closed'));
             } else {
-                $this->addFlash('success', 'Réponse envoyée.');
+                $this->addFlash('success', $this->trans('admin.thread.flash.reply_sent'));
             }
 
             return $this->redirect($this->detailUrl($thread));
@@ -283,7 +285,7 @@ final class ContactThreadCrudController extends AbstractCrudController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() && $this->handleCompose($form, $admin, $image)) {
-            $this->addFlash('success', 'Message envoyé.');
+            $this->addFlash('success', $this->trans('admin.thread.flash.message_sent'));
 
             return $this->redirect($this->indexUrl());
         }
@@ -306,7 +308,7 @@ final class ContactThreadCrudController extends AbstractCrudController
             $this->denyUnlessValidCsrfToken($request, 'contact_thread_admin_close_' . $thread->id);
 
             $this->contactThreadCloseService->close($thread);
-            $this->addFlash('success', 'Fil clôturé.');
+            $this->addFlash('success', $this->trans('admin.thread.flash.closed'));
 
             return $this->redirect($this->detailUrl($thread));
         }
@@ -338,7 +340,7 @@ final class ContactThreadCrudController extends AbstractCrudController
             };
 
             $this->contactRestrictionService->restrict($thread->owner, $duration, $permanent);
-            $this->addFlash('success', 'Utilisateur bloqué.');
+            $this->addFlash('success', $this->trans('admin.thread.flash.blocked'));
 
             return $this->redirect($this->detailUrl($thread));
         }
@@ -360,7 +362,7 @@ final class ContactThreadCrudController extends AbstractCrudController
             $this->denyUnlessValidCsrfToken($request, 'contact_thread_admin_unblock_' . $thread->owner->id);
 
             $this->contactRestrictionService->liftRestriction($thread->owner);
-            $this->addFlash('success', 'Utilisateur débloqué.');
+            $this->addFlash('success', $this->trans('admin.thread.flash.unblocked'));
 
             return $this->redirect($this->detailUrl($thread));
         }
@@ -402,7 +404,7 @@ final class ContactThreadCrudController extends AbstractCrudController
         $recipient = Uuid::isValid($recipientId) ? $this->userRepository->find(Uuid::fromString($recipientId)) : null;
 
         if (! $recipient instanceof User || $recipient === $admin) {
-            $form->get('recipientId')->addError(new FormError('Aucun utilisateur valide trouvé pour ce destinataire.'));
+            $form->get('recipientId')->addError(new FormError($this->trans('admin.thread.error.no_valid_recipient')));
 
             return false;
         }
@@ -454,6 +456,11 @@ final class ContactThreadCrudController extends AbstractCrudController
         if (! $this->csrfTokenManager->isTokenValid(new CsrfToken($tokenId, $token))) {
             throw $this->createAccessDeniedException('Invalid CSRF token.');
         }
+    }
+
+    private function trans(string $key): string
+    {
+        return $this->translator->trans($key, [], 'admin', 'fr');
     }
 
     /**

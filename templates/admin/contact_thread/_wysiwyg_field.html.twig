@@ -4,7 +4,7 @@
 #}
 <div class="mb-3" data-controller="admin--wysiwyg">
     {{ form_label(field) }}
-    <div data-admin--wysiwyg-target="editor" style="background: #fff; min-height: 150px;"></div>
+    <div class="admin-wysiwyg-editor" data-admin--wysiwyg-target="editor"></div>
     {{ form_widget(field, {
         attr: {
             hidden: true,

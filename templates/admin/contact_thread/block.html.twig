@@ -2,11 +2,11 @@
 
 {% form_theme form with ea().crud.formThemes only %}
 
-{% block content_title %}Bloquer {{ thread.owner.email }}{% endblock %}
+{% block content_title %}{{ 'admin.thread.block.title'|trans({email: thread.owner.email}, 'admin', 'fr') }}{% endblock %}
 
 {% block main %}
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button type="submit" class="btn btn-primary">Bloquer</button>
+    <button type="submit" class="btn btn-primary">{{ 'admin.thread.block.button'|trans({}, 'admin', 'fr') }}</button>
     {{ form_end(form) }}
 {% endblock %}

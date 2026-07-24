@@ -2,44 +2,25 @@
 
 {% form_theme form with ea().crud.formThemes only %}
 
-{% block content_title %}Nouveau message{% endblock %}
+{% block content_title %}{{ 'admin.thread.compose.title'|trans({}, 'admin', 'fr') }}{% endblock %}
 
 {% block main %}
-    <style>
-        [data-admin--recipient-autocomplete-target="results"] button {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 0.5rem 0.75rem;
-            border: none;
-            background: none;
-            cursor: pointer;
-        }
-
-        [data-admin--recipient-autocomplete-target="results"] button:hover {
-            background-color: #f3f4f6;
-        }
-    </style>
-
     {{ form_start(form, {render_rest: false}) }}
     {{ form_errors(form) }}
 
-    <div class="mb-3"
+    <div class="mb-3 admin-recipient-autocomplete"
          data-controller="admin--recipient-autocomplete"
          data-admin--recipient-autocomplete-search-url-value="{{ recipientSearchUrl }}"
-         data-admin--recipient-autocomplete-locale-label-value="Langue :"
-         style="position: relative;">
-        <label class="form-label">Destinataire</label>
+         data-admin--recipient-autocomplete-locale-label-value="{{ 'admin.thread.compose.locale_label'|trans({}, 'admin', 'fr') }}">
+        <label class="form-label">{{ 'admin.thread.compose.recipient_label'|trans({}, 'admin', 'fr') }}</label>
         <input type="text"
                class="form-control"
-               placeholder="Rechercher un email…"
+               placeholder="{{ 'admin.thread.compose.recipient_placeholder'|trans({}, 'admin', 'fr') }}"
                autocomplete="off"
                data-admin--recipient-autocomplete-target="query"
                data-action="input->admin--recipient-autocomplete#search">
-        <div data-admin--recipient-autocomplete-target="results"
-             hidden
-             style="position: absolute; z-index: 10; background: #fff; border: 1px solid #d1d5db; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-height: 220px; overflow-y: auto;"></div>
-        <p data-admin--recipient-autocomplete-target="localeDisplay" style="font-size: 0.85rem; color: #6b7280; margin-top: 0.35rem;"></p>
+        <div class="admin-recipient-autocomplete-results" data-admin--recipient-autocomplete-target="results" hidden></div>
+        <p class="admin-recipient-autocomplete-locale" data-admin--recipient-autocomplete-target="localeDisplay"></p>
         {{ form_widget(form.recipientId, {
             attr: {
                 'data-admin--recipient-autocomplete-target': 'hidden',
@@ -60,6 +41,6 @@
 
     {{ form_row(form._token) }}
 
-    <button type="submit" class="btn btn-primary">Envoyer</button>
+    <button type="submit" class="btn btn-primary">{{ 'admin.field.send_button'|trans({}, 'admin', 'fr') }}</button>
     {{ form_end(form, {render_rest: false}) }}
 {% endblock %}

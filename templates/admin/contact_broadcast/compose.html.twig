@@ -2,24 +2,15 @@
 
 {% form_theme form with ea().crud.formThemes only %}
 
-{% block content_title %}Nouvelle diffusion{% endblock %}
+{% block content_title %}{{ 'admin.broadcast.compose.title'|trans({}, 'admin', 'fr') }}{% endblock %}
 
 {% block main %}
-    <style>
-        .target-radios-horizontal .form-check {
-            display: inline-flex;
-            align-items: center;
-            margin-right: 1.25rem;
-            margin-bottom: 0.5rem;
-        }
-    </style>
-
     {{ form_start(form, {render_rest: false}) }}
     {{ form_errors(form) }}
 
     {{ form_row(form.target, {
         row_attr: {
-            class: 'target-radios-horizontal',
+            class: 'admin-target-radios',
         },
     }) }}
     {{ form_row(form.subject) }}
@@ -34,6 +25,6 @@
 
     {{ form_row(form._token) }}
 
-    <button type="submit" class="btn btn-primary">Envoyer</button>
+    <button type="submit" class="btn btn-primary">{{ 'admin.field.send_button'|trans({}, 'admin', 'fr') }}</button>
     {{ form_end(form, {render_rest: false}) }}
 {% endblock %}

@@ -3,7 +3,7 @@
     - fieldId : string — id unique de l'input file sur la page
 #}
 <div class="mb-3">
-    <label class="form-label" for="{{ fieldId }}">Image (optionnel)</label>
+    <label class="form-label" for="{{ fieldId }}">{{ 'admin.thread.image_field.label'|trans({}, 'admin', 'fr') }}</label>
     <input type="file"
            id="{{ fieldId }}"
            name="image"

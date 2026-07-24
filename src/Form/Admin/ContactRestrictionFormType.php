@@ -9,10 +9,11 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Formulaire admin uniquement (EasyAdmin), français en dur — pas de domaine de traduction du
- * site, cf. décision "dashboard admin en français uniquement".
+ * Formulaire admin uniquement (EasyAdmin) — domaine de traduction `admin`, français uniquement,
+ * cf. décision "dashboard admin en français uniquement".
  *
  * @extends AbstractType<null>
  */
@@ -24,14 +25,19 @@ final class ContactRestrictionFormType extends AbstractType
 
     public const string CHOICE_PERMANENT = 'permanent';
 
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('duration', ChoiceType::class, [
-            'label' => 'Durée du blocage',
+            'label' => $this->translator->trans('admin.contact_restriction.duration.label', [], 'admin', 'fr'),
             'choices' => [
-                '1 semaine' => self::CHOICE_ONE_WEEK,
-                '1 mois' => self::CHOICE_ONE_MONTH,
-                'Permanent' => self::CHOICE_PERMANENT,
+                $this->translator->trans('admin.contact_restriction.duration.one_week', [], 'admin', 'fr') => self::CHOICE_ONE_WEEK,
+                $this->translator->trans('admin.contact_restriction.duration.one_month', [], 'admin', 'fr') => self::CHOICE_ONE_MONTH,
+                $this->translator->trans('admin.contact_restriction.duration.permanent', [], 'admin', 'fr') => self::CHOICE_PERMANENT,
             ],
             'expanded' => true,
             'constraints' => [

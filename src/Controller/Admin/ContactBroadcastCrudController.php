@@ -29,6 +29,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapUploadedFile;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @extends AbstractCrudController<ContactBroadcast>
@@ -42,6 +43,7 @@ final class ContactBroadcastCrudController extends AbstractCrudController
         private readonly ContactThreadComposeService $contactThreadComposeService,
         private readonly AdminUrlGenerator $adminUrlGenerator,
         private readonly ImageUploadService $imageUploadService,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -53,8 +55,8 @@ final class ContactBroadcastCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Diffusion')
-            ->setEntityLabelInPlural('Diffusions')
+            ->setEntityLabelInSingular($this->trans('admin.broadcast.label.singular'))
+            ->setEntityLabelInPlural($this->trans('admin.broadcast.label.plural'))
             ->setDefaultSort([
                 'sentAt' => 'DESC',
             ])
@@ -63,16 +65,16 @@ final class ContactBroadcastCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('subject', 'Sujet');
-        yield Field::new('targetDescription', 'Destinataires')
+        yield TextField::new('subject', $this->trans('admin.broadcast.compose.subject_label'));
+        yield Field::new('targetDescription', $this->trans('admin.broadcast.field.target'))
             ->setVirtual(true)
             ->formatValue(fn (mixed $value, ContactBroadcast $broadcast): string => $this->describeTarget($broadcast))
             ->setTemplatePath('admin/contact_broadcast/_target.html.twig')
         ;
-        yield IntegerField::new('recipientCount', 'Nb. destinataires');
-        yield TextField::new('sentBy.email', 'Envoyé par');
-        yield DateTimeField::new('sentAt', 'Envoyé le');
-        yield Field::new('body', 'Message')
+        yield IntegerField::new('recipientCount', $this->trans('admin.broadcast.field.recipient_count'));
+        yield TextField::new('sentBy.email', $this->trans('admin.broadcast.field.sent_by'));
+        yield DateTimeField::new('sentAt', $this->trans('admin.broadcast.field.sent_at'));
+        yield Field::new('body', $this->trans('admin.broadcast.field.body'))
             ->onlyOnDetail()
             ->setTemplatePath('admin/contact_broadcast/_body.html.twig')
         ;
@@ -101,7 +103,7 @@ final class ContactBroadcastCrudController extends AbstractCrudController
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->add(
                 Crud::PAGE_INDEX,
-                Action::new(self::ACTION_COMPOSE, 'Nouvelle diffusion')
+                Action::new(self::ACTION_COMPOSE, $this->trans('admin.broadcast.action.compose'))
                     ->linkToCrudAction(self::ACTION_COMPOSE)
                     ->createAsGlobalAction()
             )
@@ -130,7 +132,9 @@ final class ContactBroadcastCrudController extends AbstractCrudController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $count = $this->handleCompose($form, $admin, $image);
-            $this->addFlash('success', \sprintf('Diffusion en cours d\'envoi à %d destinataire(s).', $count));
+            $this->addFlash('success', $this->translator->trans('admin.broadcast.flash.sending', [
+                'count' => $count,
+            ], 'admin', 'fr'));
 
             return $this->redirect($this->indexUrl());
         }
@@ -143,10 +147,12 @@ final class ContactBroadcastCrudController extends AbstractCrudController
     private function describeTarget(ContactBroadcast $broadcast): string
     {
         if (ContactBroadcastTargetEnum::LOCALE === $broadcast->target && null !== $broadcast->locale) {
-            return \sprintf('Tous les utilisateurs (%s)', strtoupper($broadcast->locale->value));
+            return $this->translator->trans('admin.broadcast.target.locale', [
+                'locale' => strtoupper($broadcast->locale->value),
+            ], 'admin', 'fr');
         }
 
-        return 'Tous les utilisateurs';
+        return $this->trans('admin.broadcast.target.all');
     }
 
     /**
@@ -181,5 +187,10 @@ final class ContactBroadcastCrudController extends AbstractCrudController
             ->setAction(Action::INDEX)
             ->generateUrl()
         ;
+    }
+
+    private function trans(string $key): string
+    {
+        return $this->translator->trans($key, [], 'admin', 'fr');
     }
 }

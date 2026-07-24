@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Formulaire admin uniquement (EasyAdmin) — envoi groupé
@@ -41,11 +42,16 @@ final class ContactBroadcastComposeFormType extends AbstractType
         'pl' => '🇵🇱',
     ];
 
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('target', ChoiceType::class, [
-                'label' => 'Destinataires',
+                'label' => $this->translator->trans('admin.broadcast.field.target', [], 'admin', 'fr'),
                 'choices' => $this->targetChoices(),
                 'choice_translation_domain' => false,
                 'expanded' => true,
@@ -55,7 +61,7 @@ final class ContactBroadcastComposeFormType extends AbstractType
                 'mapped' => false,
             ])
             ->add('subject', TextType::class, [
-                'label' => 'Sujet',
+                'label' => $this->translator->trans('admin.broadcast.compose.subject_label', [], 'admin', 'fr'),
                 'constraints' => [
                     new NotBlank(),
                     new Length(min: 3, max: 150),
@@ -63,7 +69,7 @@ final class ContactBroadcastComposeFormType extends AbstractType
                 'mapped' => false,
             ])
             ->add('body', TextareaType::class, [
-                'label' => 'Message',
+                'label' => $this->translator->trans('admin.broadcast.field.body', [], 'admin', 'fr'),
                 'constraints' => [
                     new NotBlank(),
                     new Length(min: 10, max: 5000),

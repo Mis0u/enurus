@@ -36,13 +36,13 @@ final class ContactThreadComposeFormType extends AbstractType
         $builder
             ->add('recipientId', HiddenType::class, [
                 'constraints' => [
-                    new NotBlank(message: 'Veuillez choisir un destinataire.'),
+                    new NotBlank(message: $this->translator->trans('admin.thread.error.recipient_required', [], 'admin', 'fr')),
                 ],
                 'mapped' => false,
             ])
             ->add('category', EnumType::class, [
                 'class' => ContactCategoryEnum::class,
-                'label' => 'Catégorie',
+                'label' => $this->translator->trans('admin.thread.compose.category_label', [], 'admin', 'fr'),
                 'choice_label' => fn (ContactCategoryEnum $category): string => $this->translator->trans(
                     'contact.category.' . $category->value,
                     [],
@@ -55,7 +55,7 @@ final class ContactThreadComposeFormType extends AbstractType
                 'mapped' => false,
             ])
             ->add('subject', TextType::class, [
-                'label' => 'Sujet',
+                'label' => $this->translator->trans('admin.thread.compose.subject_label', [], 'admin', 'fr'),
                 'constraints' => [
                     new NotBlank(),
                     new Length(min: 3, max: 150),
@@ -63,7 +63,7 @@ final class ContactThreadComposeFormType extends AbstractType
                 'mapped' => false,
             ])
             ->add('body', TextareaType::class, [
-                'label' => 'Message',
+                'label' => $this->translator->trans('admin.thread.compose.body_label', [], 'admin', 'fr'),
                 'constraints' => [
                     new NotBlank(),
                     new Length(min: 10, max: 5000),

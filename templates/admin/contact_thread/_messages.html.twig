@@ -1,18 +1,18 @@
 {% for message in field.value %}
-    <div style="margin-bottom: 1rem; padding: 0.75rem 1rem; border-radius: 6px; background-color: {{ message.fromAdmin ? '#eef2ff' : '#f3f4f6' }};">
-        <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 0.25rem;">
-            <strong>{{ message.fromAdmin ? 'Admin' : 'Utilisateur' }}</strong>
+    <div class="admin-message {{ message.fromAdmin ? 'admin-message--admin' }}">
+        <div class="admin-message-meta">
+            <strong>{{ message.fromAdmin ? 'admin.thread.message.author_admin'|trans({}, 'admin', 'fr') : 'admin.thread.message.author_user'|trans({}, 'admin', 'fr') }}</strong>
             — {{ message.createdAt|date('d/m/Y H:i') }}
         </div>
-        <div style="white-space: pre-line;">{{ message.fromAdmin ? message.body|raw : message.body }}</div>
+        <div class="admin-message-body">{{ message.fromAdmin ? message.body|raw : message.body }}</div>
         {% if message.imagePath %}
-            <div style="margin-top: 0.5rem;">
+            <div class="admin-message-attachment">
                 <a href="/uploads/{{ message.imagePath }}" target="_blank" rel="noopener">
-                    <img src="/uploads/{{ message.imagePath }}" alt="" style="max-width: 220px; max-height: 160px; border-radius: 6px; object-fit: cover;">
+                    <img class="admin-message-thumb" src="/uploads/{{ message.imagePath }}" alt="">
                 </a>
             </div>
         {% endif %}
     </div>
 {% else %}
-    <p>Aucun message.</p>
+    <p>{{ 'admin.thread.message.none'|trans({}, 'admin', 'fr') }}</p>
 {% endfor %}
