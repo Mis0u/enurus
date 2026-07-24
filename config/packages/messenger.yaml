@@ -24,6 +24,18 @@ framework:
             Symfony\Component\Mailer\Messenger\SendEmailMessage: async
             Symfony\Component\Notifier\Message\ChatMessage: async
             Symfony\Component\Notifier\Message\SmsMessage: async
+            App\Message\SendContactBroadcastMessage: async
 
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
+
+when@test:
+    framework:
+        messenger:
+            transports:
+                # Transport dédié, isolé du DSN Doctrine réel de `async` (celui de SendEmailMessage,
+                # jamais fiable à interroger dans un test — cf. docs/CLAUDE.md). N'affecte que
+                # SendContactBroadcastMessage, jamais les autres messages routés vers `async`.
+                broadcast_test: 'in-memory://'
+            routing:
+                App\Message\SendContactBroadcastMessage: broadcast_test

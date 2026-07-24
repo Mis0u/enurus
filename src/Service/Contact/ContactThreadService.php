@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\Contact;
 
 use App\Entity\ContactThread;
-use App\Entity\ContactThreadMessage;
 use App\Entity\User;
 use App\Enum\Contact\ContactCategoryEnum;
 use App\Service\Utils\ImageUploadService;
@@ -15,6 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 final readonly class ContactThreadService
 {
     use AttachesContactImageTrait;
+    use CreatesContactThreadTrait;
 
     public function __construct(
         private EntityManagerInterface $entityManager,
@@ -33,19 +33,8 @@ final readonly class ContactThreadService
             throw new \LogicException('Cannot create a contact thread for a user without a persisted id.');
         }
 
-        $thread = new ContactThread();
-        $thread->owner = $user;
-        $thread->category = $category;
-        $thread->subject = $subject;
-
-        $message = new ContactThreadMessage();
-        $message->author = $user;
-        $message->fromAdmin = false;
-        $message->body = $body;
-
-        $this->attachImageIfPresent($message, $image, $user->id->toRfc4122());
-
-        $thread->addMessage($message);
+        $imagePath = $this->uploadContactImage($image, $user->id->toRfc4122());
+        $thread = $this->buildThread($user, $user, $category, $subject, $body, $imagePath, fromAdmin: false);
 
         $this->entityManager->persist($thread);
         $this->entityManager->flush();

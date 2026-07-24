@@ -19,6 +19,7 @@ final readonly class ContactThreadReplyService
     public function __construct(
         private EntityManagerInterface $entityManager,
         private ImageUploadService $imageUploadService,
+        private ContactMessageBodySanitizerService $contactMessageBodySanitizerService,
     ) {
     }
 
@@ -36,9 +37,8 @@ final readonly class ContactThreadReplyService
         $message = new ContactThreadMessage();
         $message->author = $author;
         $message->fromAdmin = $fromAdmin;
-        $message->body = $body;
-
-        $this->attachImageIfPresent($message, $image, $author->id->toRfc4122());
+        $message->body = $fromAdmin ? $this->contactMessageBodySanitizerService->sanitize($body) : $body;
+        $message->imagePath = $this->uploadContactImage($image, $author->id->toRfc4122());
 
         $thread->addMessage($message);
         $thread->status = $fromAdmin ? ContactThreadStatusEnum::ANSWERED_BY_ADMIN : ContactThreadStatusEnum::AWAITING_ADMIN_REPLY;
