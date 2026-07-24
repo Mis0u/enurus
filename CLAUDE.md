@@ -324,7 +324,6 @@ palier précise, préférer des dates fixes en dur.
 | 10 | Évaluer `datetimetz_immutable` pour `Workout::$performedAt` — pas encore acté |
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
-| 20 | Sessions persistées en base pour invalider toutes les sessions actives au changement de mot de passe |
 
 ---
 
