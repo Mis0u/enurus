@@ -1,0 +1,196 @@
+# Domaine dédié au back-office EasyAdmin (ROLE_ADMIN) — français uniquement, décision assumée
+# ("dashboard admin en français uniquement"), contrairement aux 8 langues du reste du site.
+# Centralise ici plutôt qu'en dur dans les controllers/formulaires/templates, au cas où un jour
+# le besoin de traduire le back-office se présenterait malgré tout.
+admin:
+    broadcast:
+        action:
+            compose: Nouvelle diffusion
+        compose:
+            subject_label: Sujet
+            title: Nouvelle diffusion
+        field:
+            body: Message
+            recipient_count: "Nb. destinataires"
+            sent_at: "Envoyé le"
+            sent_by: "Envoyé par"
+            target: Destinataires
+        flash:
+            sending: "Diffusion en cours d'envoi à {count} destinataire(s)."
+        label:
+            plural: Diffusions
+            singular: Diffusion
+        target:
+            all: "Tous les utilisateurs"
+            locale: "Tous les utilisateurs ({locale})"
+    contact_restriction:
+        duration:
+            label: "Durée du blocage"
+            one_month: 1 mois
+            one_week: 1 semaine
+            permanent: Permanent
+    deleted_account_trace:
+        field:
+            deleted_at: "Supprimé le"
+            email_hash: "Hash email"
+        label:
+            plural: "Comptes supprimés"
+            singular: "Compte supprimé"
+    exercise:
+        field:
+            description: Description
+            name: Nom
+            owner: Propriétaire
+        label:
+            plural: "Exercices personnalisés"
+            singular: "Exercice personnalisé"
+    field:
+        send_button: Envoyer
+    menu:
+        broadcast: Diffusions
+        deleted_account_trace: "Comptes supprimés"
+        exercise: "Exercices personnalisés"
+        home: Accueil
+        routine: Routines
+        thread: Messagerie
+        user: Utilisateurs
+        workout: Séances
+    routine:
+        field:
+            created_at: "Créé le"
+            description: Description
+            exercises: Exercices
+            name: Nom
+            owner: Utilisateur
+            updated_at: "Mis à jour le"
+        label:
+            plural: Routines
+            singular: Routine
+        no_exercise: Aucun exercice.
+    thread:
+        action:
+            block: "Bloquer l'utilisateur"
+            close: Clôturer
+            compose: "Nouveau message"
+            reply: Répondre
+            unblock: "Débloquer l'utilisateur"
+        block:
+            button: Bloquer
+            title: "Bloquer {email}"
+        close:
+            confirm: "Confirmer la clôture de ce fil de discussion ?"
+            title: "Clôturer — {subject}"
+        compose:
+            body_label: Message
+            category_label: Catégorie
+            locale_label: "Langue :"
+            recipient_label: Destinataire
+            recipient_placeholder: "Rechercher un email…"
+            subject_label: Sujet
+            title: "Nouveau message"
+        error:
+            no_valid_recipient: "Aucun utilisateur valide trouvé pour ce destinataire."
+            recipient_required: "Veuillez choisir un destinataire."
+        field:
+            closed_at: "Clôturé le"
+            conversation: Conversation
+            created_at: "Créé le"
+            owner: Utilisateur
+            subject: Sujet
+            updated_at: "Mis à jour le"
+        flash:
+            blocked: "Utilisateur bloqué."
+            closed: "Fil clôturé."
+            message_sent: "Message envoyé."
+            reply_sent: "Réponse envoyée."
+            reply_sent_and_closed: "Réponse envoyée et fil clôturé."
+            unblocked: "Utilisateur débloqué."
+        image_field:
+            label: "Image (optionnel)"
+        label:
+            plural: Messagerie
+            singular: "Fil de discussion"
+        message:
+            author_admin: Admin
+            author_user: Utilisateur
+            none: Aucun message.
+        reply:
+            send_and_close_button: "Envoyer et clôturer"
+            send_button: "Envoyer la réponse"
+            title: "Répondre — {subject}"
+        unblock:
+            button: Débloquer
+            confirm: "Confirmer le déblocage de cet utilisateur ?"
+            title: "Débloquer {email}"
+    user:
+        action:
+            block: "Bloquer le contact"
+            cancel_deletion: "Annuler la suppression"
+            force_delete: "Supprimer définitivement"
+            force_logout: "Déconnecter partout"
+            resend_reset_email: "Renvoyer l'email de reset"
+            unblock: "Débloquer le contact"
+        block:
+            button: Bloquer
+            title: "Bloquer {email}"
+        cancel_deletion:
+            confirm: "Confirmer l'annulation de la demande de suppression de ce compte ?"
+            title: "Annuler la suppression — {email}"
+        error:
+            wrong_password: "Mot de passe incorrect."
+        field:
+            created_at: "Inscrit le"
+            deletion_requested_at: "Suppression demandée le"
+            gender: Genre
+            last_login: "Dernière connexion"
+            locale: Langue
+            nickname: Pseudo
+            routines: Routines
+            unit_of_measure: Unité
+            workouts: Séances
+        filter:
+            deletion_not_requested: "Pas de demande de suppression"
+            deletion_requested: "Suppression demandée"
+            email: Email
+        flash:
+            blocked: "Utilisateur bloqué."
+            cannot_delete_self: "Vous ne pouvez pas supprimer votre propre compte depuis cette action."
+            deleted: "Compte supprimé définitivement."
+            deletion_cancelled: "Demande de suppression annulée."
+            logged_out: "Sessions déconnectées."
+            reset_email_sent: "Email de réinitialisation renvoyé."
+            unblocked: "Utilisateur débloqué."
+        force_delete:
+            button: "Supprimer définitivement"
+            password_label: "Votre mot de passe"
+            title: "Supprimer définitivement — {email}"
+            warning: "Cette action supprime définitivement le compte de {email} ainsi que toutes ses données associées (séances, routines, exercices personnalisés, messagerie). Elle est irréversible."
+        force_logout:
+            button: "Déconnecter partout"
+            confirm: "Confirmer la déconnexion de toutes les sessions actives de cet utilisateur ?"
+            title: "Déconnecter partout — {email}"
+        label:
+            plural: Utilisateurs
+            singular: Utilisateur
+        resend_reset_email:
+            button: "Renvoyer l'email"
+            confirm: "Confirmer l'envoi immédiat d'un nouvel email de réinitialisation de mot de passe à {email} ?"
+            title: "Renvoyer l'email de reset — {email}"
+        unblock:
+            button: Débloquer
+            confirm: "Confirmer le déblocage de cet utilisateur ?"
+            title: "Débloquer {email}"
+    workout:
+        field:
+            duration: Durée
+            exercises: Exercices
+            note: Note
+            owner: Utilisateur
+            performed_at: "Réalisée le"
+            photo: Photo
+            routine: Routine
+        label:
+            plural: Séances
+            singular: Séance
+        no_exercise: Aucun exercice.
+        no_photo: Aucune photo.
