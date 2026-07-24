@@ -1,4 +1,11 @@
 <div class="px-[10px] py-[10px] border-t border-white/[0.07] flex flex-col gap-[3px]">
+    {% if is_granted('ROLE_ADMIN') %}
+        <twig:Navigation:Sidebar:NavigationItem
+            link="{{ path('admin') }}"
+            menu="Administration"
+            icon="gear"
+        />
+    {% endif %}
     <twig:Navigation:Sidebar:NavigationItem
         link="{{ path('app_settings') }}"
         route="app_settings"
