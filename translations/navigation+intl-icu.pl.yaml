@@ -236,11 +236,13 @@ messagerie:
         title: Witaj w swoich wiadomościach
     reply:
         submit: Odpowiedz
+    reply_informative: "To jest wiadomość informacyjna, nie możesz na nią odpowiedzieć."
     reply_restricted: "Twój dostęp do wiadomości kontaktowych jest obecnie ograniczony. Możesz czytać swoje wiadomości, ale nie możesz odpowiadać."
     status:
         answered: Odpowiedziano
         awaiting_admin: Oczekuje na odpowiedź
         closed: Zamknięte
+        informative: Informacyjny
     thread_closed: "Ta rozmowa jest zamknięta, nie możesz już na nią odpowiadać."
     title: Wiadomości
 

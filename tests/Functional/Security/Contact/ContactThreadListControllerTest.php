@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security\Contact;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Tests\Functional\Helper\ContactThreadTestHelper;
@@ -64,5 +65,37 @@ final class ContactThreadListControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         self::assertStringContainsString('Mon fil à moi', $crawler->filter('body')->text());
         self::assertStringNotContainsString("Le fil d'un autre utilisateur", $crawler->filter('body')->text());
+    }
+
+    public function testExcerptStripsAdminHtmlTagsInsteadOfShowingThemLiterally(): void
+    {
+        $client = $this->login(self::USER);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+
+        $user = $userRepository->findOneBy([
+            'email' => self::USER,
+        ]);
+        $admin = $userRepository->findOneBy([
+            'email' => UserFixtures::USER_ADMIN,
+        ]);
+
+        if (! $user instanceof User || ! $admin instanceof User) {
+            throw new \LogicException('Fixture users not found.');
+        }
+
+        $thread = ContactThreadTestHelper::createThread($entityManager, $user, 'Fil avec réponse enrichie');
+        ContactThreadTestHelper::addAdminMessage($entityManager, $thread, $admin, body: '<p>Réponse <strong>formatée</strong></p>');
+
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+
+        $this->assertResponseIsSuccessful();
+        $bodyText = $crawler->filter('body')->text();
+        self::assertStringContainsString('Réponse formatée', $bodyText);
+        self::assertStringNotContainsString('<p>', $bodyText);
+        self::assertStringNotContainsString('<strong>', $bodyText);
     }
 }

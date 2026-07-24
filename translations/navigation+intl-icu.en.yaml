@@ -232,11 +232,13 @@ messagerie:
         title: Welcome to your messages
     reply:
         submit: Reply
+    reply_informative: "This is an informational message, you can't reply."
     reply_restricted: "Your access to the contact messaging is currently restricted. You can read your messages, but you can't reply."
     status:
         answered: Answered
         awaiting_admin: Awaiting reply
         closed: Closed
+        informative: Informative
     thread_closed: "This conversation is closed, you can no longer reply."
     title: Messages
 

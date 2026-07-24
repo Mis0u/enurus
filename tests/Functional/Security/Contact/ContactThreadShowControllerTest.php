@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Security\Contact;
 
 use App\DataFixtures\UserFixtures;
+use App\Enum\Contact\ContactCategoryEnum;
 use App\Enum\Contact\ContactThreadStatusEnum;
 use App\Repository\ContactThreadMessageRepository;
 use App\Tests\Functional\Helper\ContactThreadTestHelper;
@@ -108,5 +109,101 @@ final class ContactThreadShowControllerTest extends WebTestCase
 
         self::assertSelectorNotExists('form[name="contact_reply_form"]');
         self::assertStringContainsString('restreint', $crawler->filter('body')->text());
+    }
+
+    public function testReplyFormIsHiddenWhenInformativeShowsInformativeMessageNotRestrictedMessage(): void
+    {
+        $client = $this->login(self::OWNER);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::OWNER);
+
+        $thread = ContactThreadTestHelper::createThread($entityManager, $owner, category: ContactCategoryEnum::INFORMATIVE);
+
+        $crawler = $client->request(Request::METHOD_GET, \sprintf('/fr/messagerie/%s', $thread->id));
+
+        self::assertSelectorNotExists('form[name="contact_reply_form"]');
+        $bodyText = $crawler->filter('body')->text();
+        self::assertStringContainsString('message informatif', $bodyText);
+        self::assertStringNotContainsString('restreint', $bodyText);
+    }
+
+    public function testAdminMessageBodyRendersAsHtmlWhileUserMessageStaysEscaped(): void
+    {
+        $client = $this->login(self::OWNER);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::OWNER);
+        $admin = $this->getUserByEmail(UserFixtures::USER_ADMIN);
+
+        $thread = ContactThreadTestHelper::createThread($entityManager, $owner, subject: 'Fil avec réponse admin formatée');
+        ContactThreadTestHelper::addAdminMessage($entityManager, $thread, $admin, body: '<p>Réponse <strong>formatée</strong></p>');
+
+        $crawler = $client->request(Request::METHOD_GET, \sprintf('/fr/messagerie/%s', $thread->id));
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists('strong');
+        self::assertSelectorTextContains('strong', 'formatée');
+    }
+
+    public function testPlainTextAdminMessagePreservesLineBreaks(): void
+    {
+        $client = $this->login(self::OWNER);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::OWNER);
+        $admin = $this->getUserByEmail(UserFixtures::USER_ADMIN);
+
+        $thread = ContactThreadTestHelper::createThread($entityManager, $owner, subject: 'Fil avec message multi-lignes');
+        ContactThreadTestHelper::addAdminMessage($entityManager, $thread, $admin, body: "Première ligne.\n\nDeuxième ligne.");
+
+        $client->request(Request::METHOD_GET, \sprintf('/fr/messagerie/%s', $thread->id));
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists('.whitespace-pre-line');
+    }
+
+    public function testInformativeThreadShowsInformativeBadgeNotAwaitingReply(): void
+    {
+        $client = $this->login(self::OWNER);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::OWNER);
+
+        $thread = ContactThreadTestHelper::createThread($entityManager, $owner, category: ContactCategoryEnum::INFORMATIVE);
+
+        $crawler = $client->request(Request::METHOD_GET, \sprintf('/fr/messagerie/%s', $thread->id));
+
+        $bodyText = $crawler->filter('body')->text();
+        self::assertStringContainsString('Informatif', $bodyText);
+        self::assertStringNotContainsString('En attente de réponse', $bodyText);
+    }
+
+    public function testClosedInformativeThreadShowsInformativeBadgeAndMessageNotClosed(): void
+    {
+        $client = $this->login(self::OWNER);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::OWNER);
+
+        $thread = ContactThreadTestHelper::createThread(
+            $entityManager,
+            $owner,
+            category: ContactCategoryEnum::INFORMATIVE,
+            status: ContactThreadStatusEnum::CLOSED,
+        );
+
+        $crawler = $client->request(Request::METHOD_GET, \sprintf('/fr/messagerie/%s', $thread->id));
+
+        $bodyText = $crawler->filter('body')->text();
+        self::assertStringContainsString('Informatif', $bodyText);
+        self::assertStringContainsString('message informatif', $bodyText);
+        self::assertStringNotContainsString('Clôturé', $bodyText);
+        self::assertStringNotContainsString('clôturé', $bodyText);
     }
 }
