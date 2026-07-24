@@ -100,3 +100,18 @@ body.ea-dark-scheme tr.row-awaiting-admin-reply {
     margin-right: 1.25rem;
     margin-bottom: 0.5rem;
 }
+
+.admin-stat-tile-value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.admin-stat-tile-label {
+    color: #6b7280;
+    font-size: 0.85rem;
+}
+
+.admin-chart-card-body {
+    height: 280px;
+}

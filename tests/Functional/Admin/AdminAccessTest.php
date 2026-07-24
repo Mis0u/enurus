@@ -37,9 +37,6 @@ final class AdminAccessTest extends WebTestCase
         $client = $this->login(self::ADMIN);
         $client->request(Request::METHOD_GET, '/admin');
 
-        self::assertResponseRedirects();
-        $client->followRedirect();
-
         self::assertResponseIsSuccessful();
     }
 }
