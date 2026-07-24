@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Repository\ContactThreadRepository;
+use App\Service\Dashboard\Admin\AdminDashboardStatsService;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Menu\MenuItemInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -20,18 +20,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class DashboardController extends AbstractDashboardController
 {
     public function __construct(
-        private readonly AdminUrlGenerator $adminUrlGenerator,
         private readonly ContactThreadRepository $contactThreadRepository,
+        private readonly AdminDashboardStatsService $adminDashboardStatsService,
         private readonly TranslatorInterface $translator,
     ) {
     }
 
     #[Route('/admin', name: 'admin')]
-    public function index(): RedirectResponse
+    public function index(): Response
     {
-        $url = $this->adminUrlGenerator->setController(ContactThreadCrudController::class)->generateUrl();
-
-        return $this->redirect($url);
+        return $this->render('admin/dashboard/index.html.twig', [
+            'stats' => $this->adminDashboardStatsService->getData(),
+        ]);
     }
 
     public function configureDashboard(): Dashboard

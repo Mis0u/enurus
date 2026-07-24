@@ -126,6 +126,88 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return array_map(static fn (string $id): Uuid => Uuid::fromString($id), $rows);
     }
 
+    /**
+     * Statistiques du dashboard admin — mêmes gardes ROLE_ADMIN que `createIndexQueryBuilder()`
+     * côté `UserCrudController` (jamais compté dans les chiffres visibles par l'admin lui-même).
+     */
+    public function countExcludingAdmins(): int
+    {
+        /** @var int */
+        return $this->excludingAdminsQueryBuilder()
+            ->select('COUNT(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    public function countCreatedSince(\DateTimeImmutable $since): int
+    {
+        /** @var int */
+        return $this->excludingAdminsQueryBuilder()
+            ->select('COUNT(u.id)')
+            ->andWhere('u.createdAt >= :since')
+            ->setParameter('since', $since)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    public function countGroupedByLocale(): array
+    {
+        return $this->countGroupedBy('u.locale');
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    public function countGroupedByGender(): array
+    {
+        return $this->countGroupedBy('u.gender');
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    public function countGroupedByUnitOfMeasure(): array
+    {
+        return $this->countGroupedBy('u.unitOfMeasure');
+    }
+
+    public function countPendingDeletion(): int
+    {
+        /** @var int */
+        return $this->excludingAdminsQueryBuilder()
+            ->select('COUNT(u.id)')
+            ->andWhere('u.deletionRequestedAt IS NOT NULL')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    /**
+     * Dates d'inscription brutes depuis `$since`, pour bucketing en série temporelle côté service
+     * (dashboard admin) — pas de GROUP BY ici, le découpage en semaines dépend de
+     * DashboardPeriodCalculator::weekStartOf(), inutilement couplé si fait en DQL.
+     *
+     * @return list<\DateTimeImmutable>
+     */
+    public function findCreatedAtSince(\DateTimeImmutable $since): array
+    {
+        /** @var list<array{createdAt: \DateTimeImmutable}> $rows */
+        $rows = $this->excludingAdminsQueryBuilder()
+            ->select('u.createdAt AS createdAt')
+            ->andWhere('u.createdAt >= :since')
+            ->setParameter('since', $since)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return array_column($rows, 'createdAt');
+    }
+
     private function broadcastRecipientsQueryBuilder(Uuid $excludedUserId, ?string $locale): QueryBuilder
     {
         $qb = $this->createQueryBuilder('u')
@@ -138,5 +220,48 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
 
         return $qb;
+    }
+
+    private function excludingAdminsQueryBuilder(): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('u');
+        $adminIds = $this->findAdminIds();
+
+        if ([] !== $adminIds) {
+            $qb->andWhere('u.id NOT IN (:adminIds)')->setParameter('adminIds', $adminIds);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    private function countGroupedBy(string $property): array
+    {
+        /** @var list<array{groupKey: mixed, total: int}> $rows */
+        $rows = $this->excludingAdminsQueryBuilder()
+            ->select($property . ' AS groupKey, COUNT(u.id) AS total')
+            ->groupBy($property)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        $counts = [];
+        foreach ($rows as $row) {
+            $groupKey = $row['groupKey'];
+
+            if ($groupKey instanceof \BackedEnum) {
+                $key = (string) $groupKey->value;
+            } elseif (\is_string($groupKey)) {
+                $key = $groupKey;
+            } else {
+                throw new \LogicException('Unexpected group key type for user stats aggregation.');
+            }
+
+            $counts[$key] = (int) $row['total'];
+        }
+
+        return $counts;
     }
 }

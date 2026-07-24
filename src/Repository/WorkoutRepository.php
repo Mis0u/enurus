@@ -11,6 +11,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @extends ServiceEntityRepository<Workout>
@@ -31,6 +32,29 @@ class WorkoutRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult()
         ;
+    }
+
+    /**
+     * Séances loggées depuis `$since`, tous utilisateurs confondus — signal d'activité pour le
+     * dashboard admin (inscriptions ≠ usage réel). `$excludedOwnerIds` exclut les comptes admin,
+     * même mécanisme que `UserRepository::excludingAdminsQueryBuilder()` mais appliqué ici via
+     * l'association `owner` plutôt que dupliqué en DQL.
+     *
+     * @param list<Uuid> $excludedOwnerIds
+     */
+    public function countPerformedSince(\DateTimeImmutable $since, array $excludedOwnerIds = []): int
+    {
+        $qb = $this->createQueryBuilder('w')
+            ->select('COUNT(w.id)')
+            ->andWhere('w.performedAt >= :since')
+            ->setParameter('since', $since);
+
+        if ([] !== $excludedOwnerIds) {
+            $qb->andWhere('w.owner NOT IN (:excludedOwnerIds)')->setParameter('excludedOwnerIds', $excludedOwnerIds);
+        }
+
+        /** @var int */
+        return $qb->getQuery()->getSingleScalarResult();
     }
 
     /**

@@ -29,6 +29,20 @@ admin:
             one_month: 1 mois
             one_week: 1 semaine
             permanent: Permanent
+    dashboard:
+        chart:
+            gender_title: "Répartition par genre"
+            locale_title: "Répartition par langue"
+            registration_trend_title: "Tendance des inscriptions (12 semaines)"
+            unit_of_measure_title: "Répartition par unité de mesure"
+        stat:
+            new_this_month: "Nouveaux ce mois-ci"
+            new_this_week: "Nouveaux cette semaine"
+            new_today: "Nouveaux aujourd'hui"
+            pending_deletions: "Suppressions en attente"
+            total_users: "Utilisateurs au total"
+            workouts_last_30_days: "Séances (30 derniers jours)"
+        title: "Tableau de bord"
     deleted_account_trace:
         field:
             deleted_at: "Supprimé le"
@@ -50,7 +64,7 @@ admin:
         broadcast: Diffusions
         deleted_account_trace: "Comptes supprimés"
         exercise: "Exercices personnalisés"
-        home: Accueil
+        home: "Tableau de bord"
         routine: Routines
         thread: Messagerie
         user: Utilisateurs
