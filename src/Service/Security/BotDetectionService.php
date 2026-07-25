@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormInterface;
 
 final readonly class BotDetectionService
 {
-    private const int MIN_FORM_DURATION_SECONDS = 3;
+    private const int MIN_FORM_DURATION_SECONDS = 5;
 
     public function __construct(
         private ClockInterface $clock
