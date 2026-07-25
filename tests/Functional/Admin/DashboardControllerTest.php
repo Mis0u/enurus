@@ -115,7 +115,7 @@ final class DashboardControllerTest extends WebTestCase
         $crawler = $client->request(Request::METHOD_GET, '/admin');
         $after = $this->chartValueByLabel($crawler, 1, 'PL');
 
-        self::assertSame($before + 1, $after);
+        self::assertGreaterThan($before, $after);
     }
 
     public function testUnitOfMeasureChartCountsCreatedUser(): void
@@ -129,7 +129,7 @@ final class DashboardControllerTest extends WebTestCase
         $crawler = $client->request(Request::METHOD_GET, '/admin');
         $after = $this->chartValueByLabel($crawler, 2, 'LBS');
 
-        self::assertSame($before + 1, $after);
+        self::assertGreaterThan($before, $after);
     }
 
     public function testGenderChartCountsCreatedUser(): void
@@ -143,7 +143,7 @@ final class DashboardControllerTest extends WebTestCase
         $crawler = $client->request(Request::METHOD_GET, '/admin');
         $after = $this->chartValueByLabel($crawler, 3, 'Femme');
 
-        self::assertSame($before + 1, $after);
+        self::assertGreaterThan($before, $after);
     }
 
     public function testRegistrationTrendChartCountsCreatedUserInCurrentWeek(): void
@@ -190,16 +190,16 @@ final class DashboardControllerTest extends WebTestCase
     /**
      * Lit le JSON embarqué par `render_chart()` (ux-chartjs) sur le canvas d'indice `$chartIndex`
      * de la page (0 = tendance inscriptions, 1 = locale, 2 = unité, 3 = genre) et retourne la
-     * valeur associée au label donné.
+     * valeur (un pourcentage, sauf pour la tendance) associée au label donné.
      */
-    private function chartValueByLabel(Crawler $crawler, int $chartIndex, string $label): int
+    private function chartValueByLabel(Crawler $crawler, int $chartIndex, string $label): float
     {
         $canvas = $crawler->filter('canvas')->eq($chartIndex);
         $raw = $canvas->attr('data-symfony--ux-chartjs--chart-view-value');
 
         self::assertIsString($raw);
 
-        /** @var array{data: array{labels: list<string>, datasets: list<array{data: list<int>}>}} $view */
+        /** @var array{data: array{labels: list<string>, datasets: list<array{data: list<float>}>}} $view */
         $view = json_decode($raw, true, 512, JSON_THROW_ON_ERROR);
 
         $index = array_search($label, $view['data']['labels'], true);

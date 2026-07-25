@@ -31,8 +31,8 @@ final readonly class AdminLocaleChartBuilder
     }
 
     /**
-     * @param string[] $labels
-     * @param int[]    $values
+     * @param string[]     $labels
+     * @param list<float>  $values
      */
     public function build(array $labels, array $values): Chart
     {

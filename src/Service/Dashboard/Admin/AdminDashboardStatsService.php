@@ -22,6 +22,10 @@ final readonly class AdminDashboardStatsService
      */
     private const int TREND_WEEKS = 12;
 
+    private const int PERCENT_SCALE = 100;
+
+    private const int PERCENT_ROUNDING_PRECISION = 1;
+
     public function __construct(
         private UserRepository $userRepository,
         private WorkoutRepository $workoutRepository,
@@ -70,12 +74,13 @@ final readonly class AdminDashboardStatsService
     private function buildLocaleChart(): Chart
     {
         $counts = $this->userRepository->countGroupedByLocale();
+        $total = $this->userRepository->countExcludingAdmins();
 
         $labels = [];
         $values = [];
         foreach (LocaleAllowedEnum::cases() as $locale) {
             $labels[] = strtoupper($locale->value);
-            $values[] = $counts[$locale->value] ?? 0;
+            $values[] = $this->percent($counts[$locale->value] ?? 0, $total);
         }
 
         return $this->localeChartBuilder->build($labels, $values);
@@ -84,6 +89,7 @@ final readonly class AdminDashboardStatsService
     private function buildUnitOfMeasureChart(): Chart
     {
         $counts = $this->userRepository->countGroupedByUnitOfMeasure();
+        $total = $this->userRepository->countExcludingAdmins();
 
         $cases = UnitOfMeasureEnum::cases();
         usort(
@@ -95,7 +101,7 @@ final readonly class AdminDashboardStatsService
         $values = [];
         foreach ($cases as $unit) {
             $labels[] = strtoupper($unit->value);
-            $values[] = $counts[$unit->value] ?? 0;
+            $values[] = $this->percent($counts[$unit->value] ?? 0, $total);
         }
 
         return $this->unitOfMeasureChartBuilder->build($labels, $values);
@@ -104,15 +110,21 @@ final readonly class AdminDashboardStatsService
     private function buildGenderChart(): Chart
     {
         $counts = $this->userRepository->countGroupedByGender();
+        $total = $this->userRepository->countExcludingAdmins();
 
         $labels = [];
         $values = [];
         foreach (GenderEnum::cases() as $gender) {
             $labels[] = $this->translator->trans('field.gender.' . $gender->value, [], 'common', 'fr');
-            $values[] = $counts[$gender->value] ?? 0;
+            $values[] = $this->percent($counts[$gender->value] ?? 0, $total);
         }
 
         return $this->genderChartBuilder->build($labels, $values);
+    }
+
+    private function percent(int $part, int $total): float
+    {
+        return 0 === $total ? 0.0 : round($part / $total * self::PERCENT_SCALE, self::PERCENT_ROUNDING_PRECISION);
     }
 
     private function buildRegistrationTrendChart(\DateTimeImmutable $now): Chart

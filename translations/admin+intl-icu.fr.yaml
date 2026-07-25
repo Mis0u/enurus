@@ -50,10 +50,10 @@ admin:
             permanent: Permanent
     dashboard:
         chart:
-            gender_title: "Répartition par genre"
-            locale_title: "Répartition par langue"
+            gender_title: "Répartition par genre en %"
+            locale_title: "Répartition par langue en %"
             registration_trend_title: "Tendance des inscriptions (12 semaines)"
-            unit_of_measure_title: "Répartition par unité de mesure"
+            unit_of_measure_title: "Répartition par unité de mesure en %"
         stat:
             new_this_month: "Nouveaux ce mois-ci"
             new_this_week: "Nouveaux cette semaine"

@@ -8,7 +8,7 @@ use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
 /**
- * Barres horizontales de répartition par unité de mesure — même teinte unique que
+ * Barres verticales de répartition par unité de mesure — même teinte unique que
  * `DashboardTonnageChartBuilder` (magnitude, pas identité : chaque barre porte déjà son
  * étiquette d'axe, pas besoin de palette catégorielle).
  */
@@ -20,8 +20,8 @@ final readonly class AdminUnitOfMeasureChartBuilder
     }
 
     /**
-     * @param string[] $labels
-     * @param int[]    $values
+     * @param string[]    $labels
+     * @param list<float> $values
      */
     public function build(array $labels, array $values): Chart
     {
@@ -40,7 +40,6 @@ final readonly class AdminUnitOfMeasureChartBuilder
         ]);
 
         $chart->setOptions([
-            'indexAxis' => 'y',
             'responsive' => true,
             'maintainAspectRatio' => false,
             'plugins' => [
@@ -50,6 +49,14 @@ final readonly class AdminUnitOfMeasureChartBuilder
             ],
             'scales' => [
                 'x' => [
+                    'ticks' => [
+                        'color' => '#4a5568',
+                    ],
+                    'grid' => [
+                        'display' => false,
+                    ],
+                ],
+                'y' => [
                     'beginAtZero' => true,
                     'ticks' => [
                         'precision' => 0,
@@ -57,14 +64,6 @@ final readonly class AdminUnitOfMeasureChartBuilder
                     ],
                     'grid' => [
                         'color' => 'rgba(255,255,255,0.05)',
-                    ],
-                ],
-                'y' => [
-                    'ticks' => [
-                        'color' => '#4a5568',
-                    ],
-                    'grid' => [
-                        'display' => false,
                     ],
                 ],
             ],
