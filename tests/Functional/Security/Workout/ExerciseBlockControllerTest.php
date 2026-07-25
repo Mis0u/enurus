@@ -163,7 +163,7 @@ class ExerciseBlockControllerTest extends WebTestCase
         );
 
         $this->assertResponseIsSuccessful();
-        $this->assertGreaterThan(0, $crawler->filter('.muscle-tag, span[class*="text-[#f43f5e]"], span[class*="text-[#a855f7]"]')->count());
+        $this->assertGreaterThan(0, $crawler->filter('.muscle-tag, span[class*="text-[#f43f5e]"], span[class*="text-[#06b6d4]"]')->count());
     }
 
     private function getExerciseId(): string

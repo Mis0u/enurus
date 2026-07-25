@@ -5,7 +5,7 @@
 export const MUSCLE_COLORS = {
     none: { fill: '#1e293b', stroke: 'rgba(255,255,255,0.1)', color: '#1e293b' },
     primary: { fill: '#f43f5e', stroke: '#f43f5e', color: '#f43f5e' },
-    secondary: { fill: '#a855f7', stroke: '#a855f7', color: '#a855f7' },
+    secondary: { fill: '#06b6d4', stroke: '#06b6d4', color: '#06b6d4' },
 };
 
 /**

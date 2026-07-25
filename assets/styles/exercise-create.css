@@ -19,13 +19,13 @@
 .exercise-pill.pill--primary [data-role="badge"] { background: #f43f5e; color: #fff; }
 
 .exercise-pill.pill--secondary {
-    background: rgba(168, 85, 247, 0.12);
-    border-color: rgba(168, 85, 247, 0.3);
-    color: #a855f7;
+    background: rgba(6, 182, 212, 0.12);
+    border-color: rgba(6, 182, 212, 0.3);
+    color: #06b6d4;
 }
 
-.exercise-pill.pill--secondary [data-role="dot"] { background: #a855f7; }
-.exercise-pill.pill--secondary [data-role="badge"] { background: #a855f7; color: #fff; }
+.exercise-pill.pill--secondary [data-role="dot"] { background: #06b6d4; }
+.exercise-pill.pill--secondary [data-role="badge"] { background: #06b6d4; color: #fff; }
 
 /* ── Recap pills (injectés via JS) ───────────────────────────── */
 .recap-pill {
@@ -44,9 +44,9 @@
 }
 
 .recap-pill--secondary {
-    background: rgba(168, 85, 247, 0.12);
-    border: 1px solid rgba(168, 85, 247, 0.3);
-    color: #a855f7;
+    background: rgba(6, 182, 212, 0.12);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    color: #06b6d4;
 }
 
 /* ── Accordéon chevron ───────────────────────────────────────── */

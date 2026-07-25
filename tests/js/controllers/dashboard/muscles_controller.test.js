@@ -49,7 +49,7 @@ describe('dashboard--muscles controller', () => {
         await nextTick();
 
         expect(document.getElementById('chest').style.stroke).toBe('#f43f5e');
-        expect(document.getElementById('triceps').style.stroke).toBe('#a855f7');
+        expect(document.getElementById('triceps').style.stroke).toBe('#06b6d4');
         expect(document.getElementById('quads').style.fill).toBe('#1e293b');
         expect(document.getElementById('calves').style.fill).toBe('#1e293b');
     });
@@ -60,7 +60,7 @@ describe('dashboard--muscles controller', () => {
         document.querySelector('[data-filter="week"][data-dashboard--muscles-target="tab"]').click();
 
         expect(document.getElementById('quads').style.stroke).toBe('#f43f5e');
-        expect(document.getElementById('calves').style.stroke).toBe('#a855f7');
+        expect(document.getElementById('calves').style.stroke).toBe('#06b6d4');
         // Les muscles de "session" ne sont plus actifs : reset à la couleur idle.
         expect(document.getElementById('chest').style.fill).toBe('#1e293b');
         expect(document.getElementById('triceps').style.fill).toBe('#1e293b');

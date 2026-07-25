@@ -118,7 +118,7 @@ html, body { overflow: hidden; font-family: 'DM Sans', sans-serif; }
 
 /* ---- Dots légende muscles ---- */
 .show-muscles-dot-primary  { background: #f43f5e; }
-.show-muscles-dot-secondary { background: #a855f7; }
+.show-muscles-dot-secondary { background: #06b6d4; }
 
 /* ---- Filtres widgets dashboard (Muscles, Séance — état piloté par Stimulus) ---- */
 .dashboard-tab-active {
