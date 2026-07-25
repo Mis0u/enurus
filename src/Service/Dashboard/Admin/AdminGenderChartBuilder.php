@@ -8,13 +8,12 @@ use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
 /**
- * Doughnut de répartition par genre — identité à 2 catégories, 2 premières teintes du set
- * catégoriel validé (cf. AdminLocaleChartBuilder). Volontairement pas de rose/bleu genré :
- * les 2 premiers slots neutres de l'ordre validé suffisent à 2 catégories.
+ * Doughnut de répartition par genre — ordre des couleurs aligné sur `GenderEnum::cases()`
+ * (MALE puis FEMALE) : bleu pour les hommes, rose (identité du site) pour les femmes.
  */
 final readonly class AdminGenderChartBuilder
 {
-    private const array COLORS = ['#2a78d6', '#eb6834'];
+    private const array COLORS = ['#2a78d6', '#f43f5e'];
 
     public function __construct(
         private ChartBuilderInterface $chartBuilder,
@@ -22,8 +21,8 @@ final readonly class AdminGenderChartBuilder
     }
 
     /**
-     * @param string[] $labels
-     * @param int[]    $values
+     * @param string[]    $labels
+     * @param list<float> $values
      */
     public function build(array $labels, array $values): Chart
     {
