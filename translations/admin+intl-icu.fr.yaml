@@ -3,6 +3,7 @@
 # Centralise ici plutôt qu'en dur dans les controllers/formulaires/templates, au cas où un jour
 # le besoin de traduire le back-office se présenterait malgré tout.
 admin:
+    backend_title: "{brand} Admin"
     broadcast:
         action:
             compose: Nouvelle diffusion

@@ -185,7 +185,6 @@ export function showDuplicateAlert(message, options = {}) {
     Swal.fire({
         icon:               'warning',
         text:               message,
-        confirmButtonText:  'OK',
         background:         '#111827',
         color:              '#f1f5f9',
         confirmButtonColor: '#f43f5e',

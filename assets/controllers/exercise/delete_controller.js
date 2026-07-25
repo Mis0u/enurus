@@ -57,10 +57,9 @@ export default class extends Controller {
 
         if (!ok || !data?.success) {
             showDeleteError({
-                text:               this.errorTextValue,
-                confirmButtonText:  'OK',
-                background:         '#111827',
-                color:              '#f1f5f9',
+                text:       this.errorTextValue,
+                background: '#111827',
+                color:      '#f1f5f9',
             });
             return;
         }
