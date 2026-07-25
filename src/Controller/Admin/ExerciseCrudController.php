@@ -6,7 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Exercise;
 use App\Entity\User;
-use App\Filter\Admin\CaseInsensitiveTextFilter;
+use App\Repository\ExerciseRepository;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -19,6 +19,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -36,6 +37,7 @@ final class ExerciseCrudController extends AbstractCrudController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
+        private readonly ExerciseRepository $exerciseRepository,
     ) {
     }
 
@@ -80,7 +82,7 @@ final class ExerciseCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add(CaseInsensitiveTextFilter::new('name', $this->trans('admin.exercise.field.name')))
+            ->add(ChoiceFilter::new('name', $this->trans('admin.exercise.field.name'))->setChoices($this->nameChoices()))
             ->add(
                 EntityFilter::new('owner', $this->trans('admin.exercise.field.owner'))
                     ->setFormTypeOption('value_type_options', [
@@ -93,5 +95,19 @@ final class ExerciseCrudController extends AbstractCrudController
     private function trans(string $key): string
     {
         return $this->translator->trans($key, [], 'admin', 'fr');
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function nameChoices(): array
+    {
+        $choices = [];
+
+        foreach ($this->exerciseRepository->findDistinctPersonalizedNames() as $name) {
+            $choices[$name] = $name;
+        }
+
+        return $choices;
     }
 }

@@ -6,8 +6,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Routine;
 use App\Entity\User;
-use App\Filter\Admin\CaseInsensitiveTextFilter;
 use App\Filter\Admin\DayFilter;
+use App\Repository\RoutineRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -17,6 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -29,6 +30,7 @@ final class RoutineCrudController extends AbstractCrudController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
+        private readonly RoutineRepository $routineRepository,
     ) {
     }
 
@@ -80,7 +82,7 @@ final class RoutineCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add(CaseInsensitiveTextFilter::new('name', $this->trans('admin.routine.field.name')))
+            ->add(ChoiceFilter::new('name', $this->trans('admin.routine.field.name'))->setChoices($this->nameChoices()))
             ->add(
                 EntityFilter::new('owner', $this->trans('admin.routine.field.owner'))
                     ->setFormTypeOption('value_type_options', [
@@ -95,5 +97,19 @@ final class RoutineCrudController extends AbstractCrudController
     private function trans(string $key): string
     {
         return $this->translator->trans($key, [], 'admin', 'fr');
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function nameChoices(): array
+    {
+        $choices = [];
+
+        foreach ($this->routineRepository->findDistinctNames() as $name) {
+            $choices[$name] = $name;
+        }
+
+        return $choices;
     }
 }

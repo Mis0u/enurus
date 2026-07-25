@@ -50,4 +50,22 @@ final class RoutineRepository extends ServiceEntityRepository
             ->setParameter('user', $user)
             ->orderBy('r.createdAt', 'DESC');
     }
+
+    /**
+     * Valeurs distinctes pour peupler le sélecteur du filtre admin "nom".
+     *
+     * @return list<string>
+     */
+    public function findDistinctNames(): array
+    {
+        /** @var list<array{name: string}> $rows */
+        $rows = $this->createQueryBuilder('r')
+            ->select('DISTINCT r.name AS name')
+            ->orderBy('r.name', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return array_column($rows, 'name');
+    }
 }

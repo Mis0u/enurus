@@ -384,7 +384,8 @@ final class UserCrudControllerTest extends WebTestCase
         $url = $adminUrlGenerator
             ->setController(UserCrudController::class)
             ->setAction('index')
-            ->set('filters[email]', 'user-crud-filter-email@test.com')
+            ->set('filters[email][comparison]', '=')
+            ->set('filters[email][value]', 'user-crud-filter-email@test.com')
             ->generateUrl()
         ;
 
@@ -397,24 +398,23 @@ final class UserCrudControllerTest extends WebTestCase
         $this->deleteTestUser($user);
     }
 
-    public function testEmailFilterIsCaseInsensitive(): void
+    public function testEmailFilterSelectorOnlyListsExistingEmails(): void
     {
         $client = $this->login(self::ADMIN);
-        $user = $this->createTestUser('user-crud-filter-case@test.com');
+        $user = $this->createTestUser('user-crud-filter-selector@test.com');
 
         /** @var AdminUrlGenerator $adminUrlGenerator */
         $adminUrlGenerator = static::getContainer()->get(AdminUrlGenerator::class);
-        $url = $adminUrlGenerator
-            ->setController(UserCrudController::class)
-            ->setAction('index')
-            ->set('filters[email]', 'USER-CRUD-FILTER-CASE@TEST.COM')
-            ->generateUrl()
-        ;
+        $url = $adminUrlGenerator->setController(UserCrudController::class)->setAction('renderFilters')->generateUrl();
 
-        $client->request(Request::METHOD_GET, $url);
+        $crawler = $client->request(Request::METHOD_GET, $url);
 
         self::assertResponseIsSuccessful();
-        self::assertSelectorTextContains('table.datagrid', 'user-crud-filter-case@test.com');
+        $emailOptions = $crawler->filter('select[name="filters[email][value]"] option')->each(
+            static fn (Crawler $node): string => trim($node->text()),
+        );
+
+        self::assertContains('user-crud-filter-selector@test.com', $emailOptions);
 
         $this->deleteTestUser($user);
     }
