@@ -47,16 +47,15 @@ final class ResetPasswordResetControllerTest extends WebTestCase
         $this->assertResponseRedirects('/fr/reinitialiser-mot-de-passe/reinitialiser');
         $crawler = $client->followRedirect();
 
-        $form = $crawler->filter('form[name="change_password_form"]')->form([
-            'change_password_form[currentPassword]' => 'irrelevant-for-reset',
-            'change_password_form[plainPassword][first]' => 'NewValidPass123!',
-            'change_password_form[plainPassword][second]' => 'NewValidPass123!',
+        $this->assertCount(0, $crawler->filter('input[name="reset_password_form[currentPassword]"]'));
+        $this->assertCount(1, $crawler->filter('button[data-password-validator-target="submitButton"]'));
+
+        $form = $crawler->filter('form[name="reset_password_form"]')->form([
+            'reset_password_form[plainPassword][first]' => 'NewValidPass123!',
+            'reset_password_form[plainPassword][second]' => 'NewValidPass123!',
         ]);
 
-        // NB: ChangePasswordFormType::configureOptions() fixe en dur l'action sur l'endpoint des
-        // réglages (bug préexistant, hors périmètre ici) — on poste donc explicitement vers la
-        // route de reset plutôt que de suivre $form->getUri().
-        $client->request($form->getMethod(), '/fr/reinitialiser-mot-de-passe/reinitialiser', $form->getPhpValues(), $form->getPhpFiles());
+        $client->submit($form);
 
         $this->assertResponseRedirects('/fr/');
     }
