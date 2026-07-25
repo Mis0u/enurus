@@ -48,6 +48,7 @@ final class ResetPasswordResetControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         $this->assertCount(0, $crawler->filter('input[name="reset_password_form[currentPassword]"]'));
+        $this->assertCount(1, $crawler->filter('button[data-password-validator-target="submitButton"]'));
 
         $form = $crawler->filter('form[name="reset_password_form"]')->form([
             'reset_password_form[plainPassword][first]' => 'NewValidPass123!',
