@@ -405,6 +405,11 @@ settings:
         current_password_invalid: A palavra-passe atual não está correta
         edit_password: Alterar palavra-passe
         title: Palavra-passe
+    password_changed:
+        body: Olá {nickname}, acabaste de alterar a palavra-passe da tua conta {brand}.
+        not_you_hint: Se não foste tu a fazer esta alteração, contacta-nos imediatamente.
+        subject: Palavra-passe alterada
+        title: Palavra-passe alterada
     profile:
         subtitle: As tuas informações pessoais
         title: Perfil

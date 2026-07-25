@@ -405,6 +405,11 @@ settings:
         current_password_invalid: Het huidige wachtwoord is niet correct
         edit_password: Wachtwoord wijzigen
         title: Wachtwoord
+    password_changed:
+        body: Hallo {nickname}, je hebt zojuist het wachtwoord van je {brand}-account gewijzigd.
+        not_you_hint: Als jij deze wijziging niet hebt uitgevoerd, neem dan onmiddellijk contact met ons op.
+        subject: Wachtwoord gewijzigd
+        title: Wachtwoord gewijzigd
     profile:
         subtitle: Je persoonlijke informatie
         title: Profiel
