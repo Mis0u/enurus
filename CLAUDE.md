@@ -324,7 +324,6 @@ palier précise, préférer des dates fixes en dur.
 | 10 | Évaluer `datetimetz_immutable` pour `Workout::$performedAt` — pas encore acté |
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
-| 22 | Bug : séance en doublon — à investiguer, reproduction pas encore identifiée |
 | 23 | Ajouter un vote dans la diffusion (`ContactBroadcast`) — feature à spécifier |
 | 24 | Vérification d'email obligatoire avant premier accès (lien de confirmation, compte inactif tant que non cliqué) — renfort anti-bot le plus efficace, à coder seulement si de vraies inscriptions frauduleuses sont constatées |
 

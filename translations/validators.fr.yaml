@@ -26,6 +26,7 @@ user:
 
 workout:
     performed_at:
+        required: La date est obligatoire
         today: La date ne peut pas être dans le futur
     photo:
         invalid_type: Le fichier doit être une image JPEG, PNG ou WebP.

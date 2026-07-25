@@ -21,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -84,6 +85,15 @@ final class WorkoutType extends AbstractType
             ],
             'row_attr' => [
                 'class' => self::ROW_CLASS,
+            ],
+            /**
+             * Validé sur la donnée transformée du champ (avant écriture dans l'entité) plutôt que
+             * de compter sur `Workout::$performedAt` — son setter ignore silencieusement un `null`
+             * (garde défensive pensée pour un champ optionnel, ce que la date n'est pas), donc
+             * `Assert\NotBlank` au niveau entité ne voit jamais de valeur vide.
+             */
+            'constraints' => [
+                new NotBlank(message: 'workout.performed_at.required'),
             ],
         ];
     }
