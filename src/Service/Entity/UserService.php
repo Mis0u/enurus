@@ -7,7 +7,9 @@ namespace App\Service\Entity;
 use App\Entity\User;
 use App\Service\Email\EmailInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use function Symfony\Component\Clock\now;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -18,6 +20,7 @@ final readonly class UserService
         private EntityManagerInterface $entityManager,
         private EmailInterface $emailService,
         private TranslatorInterface $translator,
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -57,7 +60,9 @@ final readonly class UserService
 
     /**
      * Envoyée en synchrone (hors file `async`) : une notification de sécurité doit arriver
-     * immédiatement, sans dépendre du prochain passage d'un worker Messenger.
+     * immédiatement, sans dépendre du prochain passage d'un worker Messenger. Un échec d'envoi
+     * (mailer indisponible) ne doit jamais faire échouer le changement de mot de passe lui-même
+     * (déjà persisté à ce stade) — capturé et loggé plutôt que remonté à l'appelant.
      */
     private function sendPasswordChangedEmail(User $user): void
     {
@@ -74,6 +79,13 @@ final readonly class UserService
 
         $email->getHeaders()->addTextHeader('X-Bus-Transport', 'sync');
 
-        $this->emailService->sendEmail($email);
+        try {
+            $this->emailService->sendEmail($email);
+        } catch (TransportExceptionInterface $e) {
+            $this->logger->error('Failed to send password-changed email.', [
+                'userId' => $user->id,
+                'exception' => $e,
+            ]);
+        }
     }
 }

@@ -8,6 +8,8 @@ use App\Entity\User;
 use App\Service\Contact\RegistrationWelcomeThreadService;
 use App\Service\Email\EmailInterface;
 use App\Service\Entity\UserService;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class UserRegistrationService
@@ -18,6 +20,7 @@ final readonly class UserRegistrationService
         private TranslatorInterface $translator,
         private RegistrationWelcomeThreadService $welcomeThreadService,
         private DeletedAccountReregistrationNotifierService $reregistrationNotifier,
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -31,6 +34,12 @@ final readonly class UserRegistrationService
         return $user;
     }
 
+    /**
+     * Envoyée en synchrone (hors file `async`) : l'utilisateur attend cet email juste après son
+     * inscription. Un échec d'envoi (mailer indisponible) ne doit jamais faire échouer
+     * l'inscription elle-même (compte déjà créé à ce stade) — capturé et loggé plutôt que remonté
+     * à l'appelant.
+     */
     private function sendRegistrationEmail(User $user, string $locale): void
     {
         $mail = $this->emailService->createEmail(
@@ -46,6 +55,15 @@ final readonly class UserRegistrationService
             $locale
         );
 
-        $this->emailService->sendEmail($mail);
+        $mail->getHeaders()->addTextHeader('X-Bus-Transport', 'sync');
+
+        try {
+            $this->emailService->sendEmail($mail);
+        } catch (TransportExceptionInterface $e) {
+            $this->logger->error('Failed to send registration welcome email.', [
+                'userId' => $user->id,
+                'exception' => $e,
+            ]);
+        }
     }
 }

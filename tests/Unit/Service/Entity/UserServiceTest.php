@@ -9,7 +9,9 @@ use App\Service\Email\EmailInterface;
 use App\Service\Entity\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -52,13 +54,46 @@ final class UserServiceTest extends TestCase
             ->willReturn($templatedEmail);
         $emailService->expects(self::once())->method('sendEmail')->with($templatedEmail);
 
-        $userService = new UserService($passwordHasher, $em, $emailService, $translator);
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::never())->method('error');
+
+        $userService = new UserService($passwordHasher, $em, $emailService, $translator, $logger);
 
         $result = $userService->changePassword($user, 'correct-current-password', 'NewValidPassword123!');
 
         self::assertTrue($result);
         self::assertSame('hashed-new-password', $user->password);
         self::assertSame('sync', $templatedEmail->getHeaders()->get('X-Bus-Transport')?->getBodyAsString());
+    }
+
+    public function testChangePasswordSucceedsEvenWhenNotificationEmailFails(): void
+    {
+        $user = new User();
+        $user->email = 'user@example.com';
+
+        $passwordHasher = $this->createStub(UserPasswordHasherInterface::class);
+        $passwordHasher->method('isPasswordValid')->willReturn(true);
+        $passwordHasher->method('hashPassword')->willReturn('hashed-new-password');
+
+        $em = $this->createMock(EntityManagerInterface::class);
+        $em->expects(self::once())->method('persist')->with($user);
+        $em->expects(self::once())->method('flush');
+
+        $translator = $this->createStub(TranslatorInterface::class);
+
+        $emailService = $this->createStub(EmailInterface::class);
+        $emailService->method('createEmail')->willReturn(new TemplatedEmail());
+        $emailService->method('sendEmail')->willThrowException(new TransportException('Mailer unavailable.'));
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::once())->method('error');
+
+        $userService = new UserService($passwordHasher, $em, $emailService, $translator, $logger);
+
+        $result = $userService->changePassword($user, 'correct-current-password', 'NewValidPassword123!');
+
+        self::assertTrue($result);
+        self::assertSame('hashed-new-password', $user->password);
     }
 
     public function testChangePasswordFailsWithIncorrectCurrentPassword(): void
@@ -81,7 +116,10 @@ final class UserServiceTest extends TestCase
         $emailService->expects(self::never())->method('createEmail');
         $emailService->expects(self::never())->method('sendEmail');
 
-        $userService = new UserService($passwordHasher, $em, $emailService, $translator);
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::never())->method('error');
+
+        $userService = new UserService($passwordHasher, $em, $emailService, $translator, $logger);
 
         $result = $userService->changePassword($user, 'wrong-current-password', 'NewValidPassword123!');
 
