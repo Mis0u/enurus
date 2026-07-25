@@ -206,8 +206,8 @@ comme non lu dans la messagerie de l'admin. Ne bloque jamais l'inscription.
 ### SVG / silhouette musculaire
 - Composant : `{% include 'SVG_BODY/' ~ gender.value ~ '/front.html.twig' %}` (+ `/back.html.twig`).
 - Couleurs réelles du projet (celles de la création d'exercice, **source de vérité**) : primaire
-  `#f43f5e` (rose), secondaire `#a855f7` (violet, `rgb(168,85,247)`). Posées en CSS sémantique,
-  pas inline.
+  `#f43f5e` (rose), secondaire `#06b6d4` (cyan, `rgb(6,182,212)` — même token que `--color-cyan-ft`,
+  pas de 3ᵉ teinte dédiée). Posées en CSS sémantique, pas inline.
 - Coloriage piloté par un controller Stimulus recevant les `svgIds` en `data-*-value` JSON
   (ex. `workout--show--muscles` : `data-...-primary-value` / `-secondary-value`).
 - **3 propriétés CSS obligatoires** sur le `g` SVG : `fill`, `stroke`, ET `color` (les SVG utilisent
@@ -324,7 +324,6 @@ palier précise, préférer des dates fixes en dur.
 | 10 | Évaluer `datetimetz_immutable` pour `Workout::$performedAt` — pas encore acté |
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
-| 20 | Muscles secondaires : passer du violet (`#a855f7`) au cyan sur les silhouettes SVG |
 | 22 | Bug : séance en doublon — à investiguer, reproduction pas encore identifiée |
 | 23 | Ajouter un vote dans la diffusion (`ContactBroadcast`) — feature à spécifier |
 | 24 | Vérification d'email obligatoire avant premier accès (lien de confirmation, compte inactif tant que non cliqué) — renfort anti-bot le plus efficace, à coder seulement si de vraies inscriptions frauduleuses sont constatées |

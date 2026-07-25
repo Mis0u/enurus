@@ -9,7 +9,7 @@
      class="flex flex-col gap-2 mt-4{{ active ? '' : ' hidden' }}">
     {% for bar in distribution.bars %}
         {% set is_mixed = bar.primarySets > 0 and bar.secondarySets > 0 %}
-        {% set fill = 'linear-gradient(to right, var(--color-rose-ft) 0%, var(--color-rose-ft) ' ~ bar.primaryPercentage ~ '%, var(--color-orange-ft) ' ~ bar.primaryPercentage ~ '%, var(--color-orange-ft) 100%)' %}
+        {% set fill = 'linear-gradient(to right, var(--color-rose-ft) 0%, var(--color-rose-ft) ' ~ bar.primaryPercentage ~ '%, var(--color-cyan-ft) ' ~ bar.primaryPercentage ~ '%, var(--color-cyan-ft) 100%)' %}
         <div class="flex items-center gap-3">
             <span class="flex flex-col w-[100px] sm:w-[120px] shrink-0">
                 <span class="text-[11.5px] text-[#8b9bb4] truncate">
