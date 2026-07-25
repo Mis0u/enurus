@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Security;
 
 use App\Entity\User;
-use App\Form\ChangePasswordFormType;
+use App\Form\ResetPasswordFormType;
 use App\Service\Security\ResetPasswordService;
 use App\Service\Security\SessionInvalidationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -61,7 +61,7 @@ final class ResetPasswordResetController extends AbstractController
             return $this->flashError($e);
         }
 
-        $form = $this->createForm(ChangePasswordFormType::class);
+        $form = $this->createForm(ResetPasswordFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
