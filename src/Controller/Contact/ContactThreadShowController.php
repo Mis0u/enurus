@@ -7,6 +7,7 @@ namespace App\Controller\Contact;
 use App\Constraint\ImageConstraints;
 use App\Entity\ContactThread;
 use App\Form\ContactReplyFormType;
+use App\Form\ContactVoteFormType;
 use App\Security\Voter\ContactThreadVoter;
 use App\Service\Contact\ContactThreadReadService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,11 +44,18 @@ final class ContactThreadShowController extends AbstractController
         $this->contactThreadReadService->markAdminMessagesAsRead($thread);
 
         $canReply = $this->isGranted(ContactThreadVoter::REPLY, $thread);
+        $canVote = $this->isGranted(ContactThreadVoter::VOTE, $thread);
 
         return $this->render('messagerie/show.html.twig', [
             'thread' => $thread,
             'canReply' => $canReply,
             'replyForm' => $canReply ? $this->createForm(ContactReplyFormType::class) : null,
+            'canVote' => $canVote,
+            'voteForm' => $canVote && null !== $thread->broadcast
+                ? $this->createForm(ContactVoteFormType::class, options: [
+                    'broadcast' => $thread->broadcast,
+                ])
+                : null,
             'imageMaxSizeBytes' => ImageConstraints::MAX_SIZE_BYTES,
             'imageAllowedMimeTypes' => ImageConstraints::ALLOWED_MIME_TYPES,
         ]);

@@ -12,4 +12,5 @@ enum ContactCategoryEnum: string
     case LOVE = 'love';
     case OTHER = 'other';
     case INFORMATIVE = 'informative';
+    case VOTE = 'vote';
 }

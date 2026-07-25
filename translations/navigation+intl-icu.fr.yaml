@@ -11,6 +11,7 @@ contact:
         other: Autre
         question: Question
         suggestion: Suggestion
+        vote: Sondage
     feedback:
         success: "Ton message a bien été envoyé, merci !"
     field:
@@ -239,8 +240,13 @@ messagerie:
         awaiting_admin: En attente de réponse
         closed: Clôturé
         informative: Informatif
+        vote: Sondage
     thread_closed: "Ce fil de discussion est clôturé, tu ne peux plus y répondre."
     title: Messagerie
+    vote:
+        closed: "Le vote est clôturé, tu ne peux plus voter."
+        confirmation: "Ton vote pour {option} est bien enregistré, merci !"
+        submit: Voter
 
 pagination:
     first: Première page

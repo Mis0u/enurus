@@ -1,0 +1,60 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Entity;
+
+use App\Repository\ContactPollOptionRepository;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
+
+#[ORM\Entity(repositoryClass: ContactPollOptionRepository::class)]
+class ContactPollOption
+{
+    #[ORM\Id]
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    public ?Uuid $id = null {
+        get {
+            return $this->id;
+        }
+    }
+
+    #[ORM\ManyToOne(targetEntity: ContactBroadcast::class, inversedBy: 'pollOptions')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    public ContactBroadcast $broadcast {
+        get {
+            return $this->broadcast;
+        }
+        set(ContactBroadcast $broadcast) {
+            $this->broadcast = $broadcast;
+        }
+    }
+
+    #[ORM\Column(length: 150)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 150)]
+    public string $label = '' {
+        get {
+            return $this->label;
+        }
+        set(string $label) {
+            $this->label = $label;
+        }
+    }
+
+    #[ORM\Column]
+    #[Assert\PositiveOrZero]
+    public int $position = 0 {
+        get {
+            return $this->position;
+        }
+        set(int $position) {
+            $this->position = $position;
+        }
+    }
+}

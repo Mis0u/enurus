@@ -11,6 +11,7 @@ contact:
         other: Other
         question: Question
         suggestion: Suggestion
+        vote: Poll
     feedback:
         success: "Your message has been sent, thank you!"
     field:
@@ -239,8 +240,13 @@ messagerie:
         awaiting_admin: Awaiting reply
         closed: Closed
         informative: Informative
+        vote: Poll
     thread_closed: "This conversation is closed, you can no longer reply."
     title: Messages
+    vote:
+        closed: "Voting is closed, you can no longer vote."
+        confirmation: "Your vote for {option} has been recorded, thank you!"
+        submit: Vote
 
 pagination:
     first: First page

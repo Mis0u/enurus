@@ -11,6 +11,7 @@ contact:
         other: Outro
         question: Pergunta
         suggestion: Sugestão
+        vote: Sondagem
     feedback:
         success: "A tua mensagem foi enviada, obrigado!"
     field:
@@ -239,8 +240,13 @@ messagerie:
         awaiting_admin: A aguardar resposta
         closed: Encerrado
         informative: Informativo
+        vote: Sondagem
     thread_closed: "Esta conversa está encerrada, já não podes responder."
     title: Mensagens
+    vote:
+        closed: "A votação está encerrada, já não podes votar."
+        confirmation: "O teu voto em {option} foi registado, obrigado!"
+        submit: Votar
 
 pagination:
     first: Primeira página

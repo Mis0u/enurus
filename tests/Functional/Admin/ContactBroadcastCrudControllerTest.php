@@ -299,6 +299,123 @@ final class ContactBroadcastCrudControllerTest extends WebTestCase
         $this->deleteTestUser('broadcast-delete-cascade@test.com');
     }
 
+    public function testComposeVoteCreatesPollOptionsAndClosesAtFromDuration(): void
+    {
+        $client = $this->login(self::ADMIN);
+        $recipient = $this->createTestUser('broadcast-vote-create@test.com', 'fr');
+
+        $client->request(Request::METHOD_GET, $this->composeUrl());
+        $crawler = $client->getCrawler();
+        $form = $crawler->selectButton('Envoyer')->form([
+            'contact_broadcast_compose_form[category]' => 'vote',
+            'contact_broadcast_compose_form[target]' => 'all',
+            'contact_broadcast_compose_form[subject]' => 'Prochaine langue ?',
+            'contact_broadcast_compose_form[body]' => 'Quelle langue traduire en premier ?',
+            'contact_broadcast_compose_form[pollOptions]' => json_encode(['Turc', 'Norvégien', 'Suédois'], JSON_THROW_ON_ERROR),
+            'contact_broadcast_compose_form[pollDurationDays]' => '7',
+        ]);
+        $client->request($form->getMethod(), $form->getUri(), $form->getPhpValues(), $form->getPhpFiles());
+        self::assertResponseRedirects();
+
+        $broadcast = $this->processPendingBroadcast('Prochaine langue ?');
+
+        self::assertTrue($broadcast->isPoll());
+        self::assertCount(3, $broadcast->pollOptions);
+        self::assertSame(['Turc', 'Norvégien', 'Suédois'], array_map(
+            static fn ($option): string => $option->label,
+            $broadcast->pollOptions->toArray(),
+        ));
+        self::assertNotNull($broadcast->pollClosesAt);
+        self::assertEqualsWithDelta(
+            (new \DateTimeImmutable('+7 days'))->getTimestamp(),
+            $broadcast->pollClosesAt->getTimestamp(),
+            5,
+        );
+
+        $threads = $this->findThreadsForOwner($recipient);
+        self::assertCount(1, $threads);
+        self::assertSame(ContactCategoryEnum::VOTE, $threads[0]->category);
+
+        /** @var AdminUrlGenerator $adminUrlGenerator */
+        $adminUrlGenerator = static::getContainer()->get(AdminUrlGenerator::class);
+        $indexUrl = $adminUrlGenerator->setController(ContactBroadcastCrudController::class)->setAction('index')->generateUrl();
+
+        $client->request(Request::METHOD_GET, $indexUrl);
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorTextContains('body', 'Sondage');
+        self::assertSelectorTextNotContains('body', 'Inaccessible');
+
+        // Régression : `u.gender` est une colonne enum-typée (contrairement à `u.locale`, chaîne
+        // brute) — le détail affiche les résultats groupés par genre, qui a fait planter
+        // ContactPollVoteRepository::countParticipationGroupedByUserProperty() en utilisant un
+        // GenderEnum comme clé de tableau.
+        $detailUrl = $adminUrlGenerator
+            ->setController(ContactBroadcastCrudController::class)
+            ->setAction('detail')
+            ->setEntityId($broadcast->id)
+            ->generateUrl()
+        ;
+
+        $client->request(Request::METHOD_GET, $detailUrl);
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorTextContains('body', 'Résultats du sondage');
+
+        $this->deleteTestUser('broadcast-vote-create@test.com');
+    }
+
+    public function testComposeVoteRequiresAtLeastTwoOptions(): void
+    {
+        $client = $this->login(self::ADMIN);
+
+        $client->request(Request::METHOD_GET, $this->composeUrl());
+        $crawler = $client->getCrawler();
+        $form = $crawler->selectButton('Envoyer')->form([
+            'contact_broadcast_compose_form[category]' => 'vote',
+            'contact_broadcast_compose_form[target]' => 'all',
+            'contact_broadcast_compose_form[subject]' => 'Sondage invalide',
+            'contact_broadcast_compose_form[body]' => 'Une seule option, ce qui ne devrait pas suffire.',
+            'contact_broadcast_compose_form[pollOptions]' => json_encode(['Seule option'], JSON_THROW_ON_ERROR),
+            'contact_broadcast_compose_form[pollDurationDays]' => '7',
+        ]);
+        $client->request($form->getMethod(), $form->getUri(), $form->getPhpValues(), $form->getPhpFiles());
+
+        self::assertResponseStatusCodeSame(422);
+        self::assertSelectorTextContains('body', 'Un sondage doit avoir au moins 2 options.');
+
+        /** @var ContactBroadcastRepository $repository */
+        $repository = static::getContainer()->get(ContactBroadcastRepository::class);
+        self::assertNull($repository->findOneBy([
+            'subject' => 'Sondage invalide',
+        ]));
+    }
+
+    public function testComposeVoteRequiresDuration(): void
+    {
+        $client = $this->login(self::ADMIN);
+
+        $client->request(Request::METHOD_GET, $this->composeUrl());
+        $crawler = $client->getCrawler();
+        $form = $crawler->selectButton('Envoyer')->form([
+            'contact_broadcast_compose_form[category]' => 'vote',
+            'contact_broadcast_compose_form[target]' => 'all',
+            'contact_broadcast_compose_form[subject]' => 'Sondage sans durée',
+            'contact_broadcast_compose_form[body]' => 'Options valides mais durée manquante.',
+            'contact_broadcast_compose_form[pollOptions]' => json_encode(['Option A', 'Option B'], JSON_THROW_ON_ERROR),
+        ]);
+        $client->request($form->getMethod(), $form->getUri(), $form->getPhpValues(), $form->getPhpFiles());
+
+        self::assertResponseStatusCodeSame(422);
+        self::assertSelectorTextContains('body', 'La durée du sondage est obligatoire.');
+
+        /** @var ContactBroadcastRepository $repository */
+        $repository = static::getContainer()->get(ContactBroadcastRepository::class);
+        self::assertNull($repository->findOneBy([
+            'subject' => 'Sondage sans durée',
+        ]));
+    }
+
     /**
      * La création des fils par destinataire est déportée dans SendContactBroadcastMessageHandler
      * via Messenger (transport `async`, routé vers `in-memory://` en environnement de test — cf.
