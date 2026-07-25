@@ -24,19 +24,19 @@ class UserFixtures extends Fixture
     public const array WORKOUT_USERS = [
         [
             'email' => 'user-fixture-11-workout@test.com',
-            'nickname' => 'user-fixture-11-workout',
+            'nickname' => 'user-workout-11',
             'count' => 11,
             'spreadDays' => 42,
         ],
         [
             'email' => 'user-fixture-26-workout@test.com',
-            'nickname' => 'user-fixture-26-workout',
+            'nickname' => 'user-workout-26',
             'count' => 26,
             'spreadDays' => 90,
         ],
         [
             'email' => 'user-fixture-51-workout@test.com',
-            'nickname' => 'user-fixture-51-workout',
+            'nickname' => 'user-workout-51',
             'count' => 51,
             'spreadDays' => 180,
         ],
@@ -195,14 +195,14 @@ class UserFixtures extends Fixture
             ],
             [
                 'email' => self::USER_TIRAGE_SUPINATION,
-                'nickname' => 'user-tirage-supination',
+                'nickname' => 'user-tirage-sup',
             ],
         ];
     }
 
     private function loadDashboardUsers(ObjectManager $manager): void
     {
-        $user = $this->createUser(self::USER_DASHBOARD_SINGLE, 'user-dashboard-1-workout');
+        $user = $this->createUser(self::USER_DASHBOARD_SINGLE, 'user-dashboard-1');
 
         $manager->persist($user);
         $this->addUserReference($user, self::USER_DASHBOARD_SINGLE);
@@ -226,21 +226,21 @@ class UserFixtures extends Fixture
         $restrictedUsers = [
             [
                 'email' => self::USER_RESTRICTED_ONE_WEEK,
-                'nickname' => 'user-restricted-1-week',
+                'nickname' => 'user-restrict-1w',
                 'until' => new \DateTimeImmutable('+7 days'),
                 'duration' => ContactRestrictionDurationEnum::ONE_WEEK,
                 'permanent' => false,
             ],
             [
                 'email' => self::USER_RESTRICTED_ONE_MONTH,
-                'nickname' => 'user-restricted-1-month',
+                'nickname' => 'user-restrict-1m',
                 'until' => new \DateTimeImmutable('+30 days'),
                 'duration' => ContactRestrictionDurationEnum::ONE_MONTH,
                 'permanent' => false,
             ],
             [
                 'email' => self::USER_RESTRICTED_PERMANENT,
-                'nickname' => 'user-restricted-permanent',
+                'nickname' => 'user-restrict-perm',
                 'until' => null,
                 'duration' => null,
                 'permanent' => true,
