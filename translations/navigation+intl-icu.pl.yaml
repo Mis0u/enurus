@@ -415,6 +415,11 @@ settings:
         current_password_invalid: Aktualne hasło jest nieprawidłowe
         edit_password: Zmień hasło
         title: Hasło
+    password_changed:
+        body: Cześć {nickname}, właśnie zmieniłeś hasło do swojego konta {brand}.
+        not_you_hint: Jeśli to nie Ty dokonałeś tej zmiany, skontaktuj się z nami natychmiast.
+        subject: Hasło zmienione
+        title: Hasło zmienione
     profile:
         subtitle: Twoje dane osobowe
         title: Profil

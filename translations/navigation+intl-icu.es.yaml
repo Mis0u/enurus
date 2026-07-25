@@ -405,6 +405,11 @@ settings:
         current_password_invalid: La contraseña actual no es correcta
         edit_password: Cambiar contraseña
         title: Contraseña
+    password_changed:
+        body: Hola {nickname}, acabas de cambiar la contraseña de tu cuenta {brand}.
+        not_you_hint: Si no has sido tú quien ha realizado este cambio, contáctanos de inmediato.
+        subject: Contraseña modificada
+        title: Contraseña modificada
     profile:
         subtitle: Tu información personal
         title: Perfil

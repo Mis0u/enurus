@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace App\Service\Entity;
 
 use App\Entity\User;
+use App\Service\Email\EmailInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use function Symfony\Component\Clock\now;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class UserService
 {
     public function __construct(
         private UserPasswordHasherInterface $passwordHasher,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private EmailInterface $emailService,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -46,7 +50,30 @@ final readonly class UserService
 
         $this->hashPassword($user, $newPassword);
         $this->save($user);
+        $this->sendPasswordChangedEmail($user);
 
         return true;
+    }
+
+    /**
+     * Envoyée en synchrone (hors file `async`) : une notification de sécurité doit arriver
+     * immédiatement, sans dépendre du prochain passage d'un worker Messenger.
+     */
+    private function sendPasswordChangedEmail(User $user): void
+    {
+        $email = $this->emailService->createEmail(
+            $user->email,
+            $this->translator->trans('settings.password_changed.subject', [], 'navigation', $user->locale),
+            [
+                'user' => $user,
+                'locale' => $user->locale,
+            ],
+            'emails/password_changed.html.twig',
+            $user->locale,
+        );
+
+        $email->getHeaders()->addTextHeader('X-Bus-Transport', 'sync');
+
+        $this->emailService->sendEmail($email);
     }
 }

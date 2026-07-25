@@ -405,6 +405,11 @@ settings:
         current_password_invalid: Le mot de passe actuel n'est pas correct
         edit_password: Modifier le mot de passe
         title: Mot de passe
+    password_changed:
+        body: Bonjour {nickname}, vous venez de modifier le mot de passe de votre compte {brand}.
+        not_you_hint: Si vous n'êtes pas à l'origine de cette modification, contactez-nous immédiatement.
+        subject: Mot de passe modifié
+        title: Mot de passe modifié
     profile:
         subtitle: Tes informations personnelles
         title: Profil

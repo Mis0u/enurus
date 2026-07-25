@@ -324,6 +324,10 @@ palier précise, préférer des dates fixes en dur.
 | 10 | Évaluer `datetimetz_immutable` pour `Workout::$performedAt` — pas encore acté |
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
+| 20 | Muscles secondaires : passer du violet (`#a855f7`) au cyan sur les silhouettes SVG |
+| 21 | Emails de reset password et d'inscription : passer en envoi synchrone (actuellement transport `async`) — à discuter avant implémentation |
+| 22 | Bug : séance en doublon — à investiguer, reproduction pas encore identifiée |
+| 23 | Ajouter un vote dans la diffusion (`ContactBroadcast`) — feature à spécifier |
 
 ---
 
