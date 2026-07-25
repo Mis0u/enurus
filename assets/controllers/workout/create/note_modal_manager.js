@@ -5,6 +5,8 @@ export class NoteModalManager {
     constructor(application, uploadPhotoUrl) {
         this.#application = application;
         this.#uploadPhotoUrl = uploadPhotoUrl;
+        this.#bindBack();
+        this.#bindSubmit();
     }
 
     open() {
@@ -13,8 +15,6 @@ export class NoteModalManager {
         modal.classList.add('flex');
 
         this.#resetTextarea();
-        this.#bindBack();
-        this.#bindSubmit();
     }
 
     // ─── Privé ───────────────────────────────────────────────────
