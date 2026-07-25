@@ -135,8 +135,15 @@ final class DashboardController extends AbstractController
             $month,
         );
 
+        // Total annuel de séances — fixe, indépendant du filtre actif, même bornage 1er janvier ->
+        // 31 décembre que le total annuel du widget Tonnage.
+        $year = $this->periodCalculator->currentYearElapsed($now);
+        $annualSessionsTotal = $workoutStatsRepository->countByUserAndDate($user, $year->start, $year->end);
+
         // Stats du widget Séance (3 filtres, toujours débloqués dès 1 séance)
         $sessionStats = [
+            'year' => (int) $now->format('Y'),
+            'annualTotal' => $annualSessionsTotal,
             'last' => [
                 'exercises' => $lastWorkout->workoutExercises->count(),
                 'sets' => $sessionSummary['totalSets'],
