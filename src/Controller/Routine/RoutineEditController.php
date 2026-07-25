@@ -132,6 +132,7 @@ final class RoutineEditController extends AbstractController
             'muscleGroups' => $this->muscleGroupRepository->findAllOrderedByPosition(),
             'exercises' => $sortedExercises,
             'primaryMuscleIds' => $this->primaryMuscleIdsResolver->resolve($sortedExercises),
+            'secondaryMuscleIds' => $this->primaryMuscleIdsResolver->resolveSecondary($sortedExercises),
             'cancelUrl' => $this->generateUrl('app_routine_list'),
         ]);
     }

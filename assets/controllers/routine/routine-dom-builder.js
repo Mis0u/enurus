@@ -66,7 +66,7 @@ export function buildErrorElement(message) {
 function buildMuscleTags(muscles, type, escape) {
     const classes = type === 'primary'
         ? 'bg-rose-500/[0.10] border border-rose-500/20 text-rose-400'
-        : 'bg-orange-500/[0.10] border border-orange-500/20 text-orange-400';
+        : 'bg-cyan-500/[0.10] border border-cyan-500/20 text-cyan-400';
 
     return muscles.map(m =>
         `<span data-muscle-type="${type}" class="inline-flex px-[7px] py-[2px] rounded-[5px] text-[10.5px] font-medium ${classes}">${escape(m)}</span>`

@@ -1,0 +1,61 @@
+{#
+    templates/routine/create/_muscle_preview.html.twig
+
+    Panneau repliable — silhouette avant/arrière coloriée selon les muscles primaires/secondaires
+    des exercices actuellement sélectionnés. Coloriage géré en JS (create_controller.js), repeint
+    à chaque ajout/retrait d'exercice — jamais recalculé côté serveur après le chargement initial.
+    Réutilisée en création ET en édition via controllerName.
+
+    Paramètres :
+      - controllerName : string
+#}
+<div class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-[22px] mt-6">
+
+    <button
+        type="button"
+        class="flex items-center justify-between w-full bg-transparent border-none cursor-pointer p-0 text-left group"
+        data-{{ controllerName }}-target="musclePreviewToggle"
+        data-action="click->{{ controllerName }}#toggleMusclePreview"
+        aria-expanded="false"
+        aria-controls="muscle-preview-body"
+    >
+        <span class="font-rajdhani text-base font-bold text-[#f0f4ff] transition-colors duration-200 group-hover:text-white">
+            {{ 'routine.form.muscle_preview.title'|trans({}, 'navigation') }}
+        </span>
+        <span class="text-[#64748b] transition-transform duration-200" aria-hidden="true">
+            {% include 'partials/_svg/_down_arrow.html.twig' only %}
+        </span>
+    </button>
+
+    <div
+        id="muscle-preview-body"
+        data-{{ controllerName }}-target="musclePreviewBody"
+        style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;"
+    >
+        <div class="pt-5">
+            <div
+                class="svg-body-container flex items-center justify-center gap-10 mb-4 max-md:flex-col max-md:gap-5"
+                data-{{ controllerName }}-target="muscleBody"
+            >
+                <div class="w-[160px] max-md:w-[130px] [&_svg]:!h-auto [&_svg]:max-h-[300px]">
+                    {% include 'SVG_BODY/' ~ app.user.gender.value ~ '/front.html.twig' only %}
+                </div>
+                <div class="w-[160px] max-md:w-[130px] [&_svg]:!h-auto [&_svg]:max-h-[300px]">
+                    {% include 'SVG_BODY/' ~ app.user.gender.value ~ '/back.html.twig' only %}
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center gap-6 text-xs max-md:flex-col max-md:gap-2">
+                <div class="flex items-center gap-2">
+                    <span class="routine-muscle-dot-primary w-2.5 h-2.5 rounded-full shrink-0"></span>
+                    <span class="text-[#8b9bb4]">{{ 'workout.show.muscles_primary'|trans({}, 'navigation') }}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="routine-muscle-dot-secondary w-2.5 h-2.5 rounded-full shrink-0"></span>
+                    <span class="text-[#8b9bb4]">{{ 'workout.show.muscles_secondary'|trans({}, 'navigation') }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

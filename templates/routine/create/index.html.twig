@@ -47,6 +47,10 @@
             controllerName: 'routine--create',
         } only %}
 
+        {% include 'routine/create/_muscle_preview.html.twig' with {
+            controllerName: 'routine--create',
+        } only %}
+
         {# Zone 2 — Deux colonnes 50/50 #}
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
             <div class="min-w-0">
@@ -55,6 +59,7 @@
                     muscleGroups: muscleGroups,
                     exercises: exercises,
                     primaryMuscleIds: primaryMuscleIds,
+                    secondaryMuscleIds: secondaryMuscleIds,
                 } only %}
             </div>
             <div class="min-w-0">
