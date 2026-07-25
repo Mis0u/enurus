@@ -6,6 +6,7 @@ namespace App\Tests\Functional\Security;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
@@ -46,6 +47,43 @@ class SecurityControllerTest extends WebTestCase
             'Identifiants invalides.',
             'il n\'y a pas le texte d\'erreur'
         );
+    }
+
+    /**
+     * `BlockedUserChecker` (`checkPreAuth`) doit rejeter la connexion d'un compte bloqué avec un
+     * message dédié, même si les identifiants sont corrects — au lieu du générique "Identifiants
+     * invalides." déjà couvert par testLoginWithInvalidCredentialsShowsError().
+     */
+    public function testLoginWithBlockedAccountShowsBlockedMessage(): void
+    {
+        $client = static::createClient();
+
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        /** @var User $user */
+        $user = $userRepository->findOneBy([
+            'email' => 'user-fixture-0@test.com',
+        ]);
+        $user->accountBlockedAt = new \DateTimeImmutable();
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $entityManager->flush();
+
+        $crawler = $client->request(Request::METHOD_GET, '/fr/');
+        $buttonCrawlerNode = $crawler->selectButton('Se connecter');
+        $form = $buttonCrawlerNode->form();
+
+        $client->submit($form, [
+            '_username' => 'user-fixture-0@test.com',
+            '_password' => 'pass_1234',
+            '_remember_me' => false,
+        ]);
+
+        $this->assertResponseRedirects('/fr/');
+        $client->followRedirect();
+
+        $this->assertSelectorTextContains('.error-msg', 'Ton compte a été bloqué.');
     }
 
     public function testLoginWithValidCredentialsRedirectsToDashboard(): void

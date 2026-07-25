@@ -365,6 +365,10 @@ routine:
         title: Mijn routines
 
 settings:
+    account_blocked:
+        body: Hallo {nickname}, je {brand}-account is geblokkeerd.
+        subject: Account geblokkeerd
+        title: Account geblokkeerd
     account_deletion:
         cancelled:
             body: Hallo {nickname}, je bent opnieuw ingelogd op je account. Je verwijderingsverzoek is automatisch geannuleerd en je account blijft normaal actief.
@@ -379,6 +383,10 @@ settings:
             cancel_hint: Om deze verwijdering te annuleren, log je gewoon opnieuw in voor die datum — geen verdere actie nodig.
             subject: Je verzoek tot accountverwijdering is geregistreerd
             title: Accountverwijdering in behandeling
+    account_unblocked:
+        body: Hallo {nickname}, je {brand}-account is gedeblokkeerd, je kunt weer inloggen.
+        subject: Account gedeblokkeerd
+        title: Account gedeblokkeerd
     avatar:
         change: Foto wijzigen
         hint: JPEG, PNG of WebP · max. 5 MB

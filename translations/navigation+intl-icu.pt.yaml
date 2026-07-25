@@ -365,6 +365,10 @@ routine:
         title: As minhas rotinas
 
 settings:
+    account_blocked:
+        body: Olá {nickname}, a tua conta {brand} foi bloqueada.
+        subject: Conta bloqueada
+        title: Conta bloqueada
     account_deletion:
         cancelled:
             body: Olá {nickname}, voltaste a iniciar sessão na tua conta. O teu pedido de eliminação foi automaticamente cancelado e a tua conta continua ativa normalmente.
@@ -379,6 +383,10 @@ settings:
             cancel_hint: Para cancelar esta eliminação, basta voltares a iniciar sessão antes dessa data — nenhuma outra ação necessária.
             subject: O teu pedido de eliminação de conta foi registado
             title: Eliminação de conta em curso
+    account_unblocked:
+        body: Olá {nickname}, a tua conta {brand} foi desbloqueada, já podes voltar a iniciar sessão.
+        subject: Conta desbloqueada
+        title: Conta desbloqueada
     avatar:
         change: Alterar foto
         hint: JPEG, PNG ou WebP · 5 MB máx

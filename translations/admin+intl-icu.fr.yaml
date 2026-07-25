@@ -158,21 +158,25 @@ admin:
             title: "Débloquer {email}"
     user:
         action:
-            block: "Bloquer le contact"
+            block_account: "Bloquer le compte"
             cancel_deletion: "Annuler la suppression"
             force_delete: "Supprimer définitivement"
             force_logout: "Déconnecter partout"
+            lift_contact_restriction: "Débloquer la messagerie"
             resend_reset_email: "Renvoyer l'email de reset"
-            unblock: "Débloquer le contact"
-        block:
+            restrict_contact: "Bloquer la messagerie"
+            unblock_account: "Débloquer le compte"
+        block_account:
             button: Bloquer
-            title: "Bloquer {email}"
+            confirm: "Confirmer le blocage du compte de cet utilisateur ? Il sera immédiatement déconnecté de partout et ne pourra plus se reconnecter."
+            title: "Bloquer le compte — {email}"
         cancel_deletion:
             confirm: "Confirmer l'annulation de la demande de suppression de ce compte ?"
             title: "Annuler la suppression — {email}"
         error:
             wrong_password: "Mot de passe incorrect."
         field:
+            account_blocked_at: "Compte bloqué le"
             created_at: "Inscrit le"
             deletion_requested_at: "Suppression demandée le"
             gender: Genre
@@ -187,13 +191,15 @@ admin:
             deletion_requested: "Suppression demandée"
             email: Email
         flash:
-            blocked: "Utilisateur bloqué."
+            account_blocked: "Compte bloqué."
+            account_unblocked: "Compte débloqué."
             cannot_delete_self: "Vous ne pouvez pas supprimer votre propre compte depuis cette action."
+            contact_restricted: "Messagerie bloquée."
+            contact_restriction_lifted: "Messagerie débloquée."
             deleted: "Compte supprimé définitivement."
             deletion_cancelled: "Demande de suppression annulée."
             logged_out: "Sessions déconnectées."
             reset_email_sent: "Email de réinitialisation renvoyé."
-            unblocked: "Utilisateur débloqué."
         force_delete:
             button: "Supprimer définitivement"
             password_label: "Votre mot de passe"
@@ -206,14 +212,21 @@ admin:
         label:
             plural: Utilisateurs
             singular: Utilisateur
+        lift_contact_restriction:
+            button: Débloquer
+            confirm: "Confirmer le déblocage de la messagerie de cet utilisateur ?"
+            title: "Débloquer la messagerie — {email}"
         resend_reset_email:
             button: "Renvoyer l'email"
             confirm: "Confirmer l'envoi immédiat d'un nouvel email de réinitialisation de mot de passe à {email} ?"
             title: "Renvoyer l'email de reset — {email}"
-        unblock:
+        restrict_contact:
+            button: Bloquer
+            title: "Bloquer la messagerie — {email}"
+        unblock_account:
             button: Débloquer
-            confirm: "Confirmer le déblocage de cet utilisateur ?"
-            title: "Débloquer {email}"
+            confirm: "Confirmer le déblocage du compte de cet utilisateur ? Il pourra à nouveau se connecter."
+            title: "Débloquer le compte — {email}"
     workout:
         field:
             duration: Durée

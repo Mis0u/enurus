@@ -365,6 +365,10 @@ routine:
         title: Le mie routine
 
 settings:
+    account_blocked:
+        body: Ciao {nickname}, il tuo account {brand} è stato bloccato.
+        subject: Account bloccato
+        title: Account bloccato
     account_deletion:
         cancelled:
             body: Ciao {nickname}, hai effettuato nuovamente l'accesso al tuo account. La tua richiesta di eliminazione è stata automaticamente annullata e il tuo account resta attivo normalmente.
@@ -379,6 +383,10 @@ settings:
             cancel_hint: Per annullare questa eliminazione, ti basta accedere nuovamente prima di quella data — nessun'altra azione necessaria.
             subject: La tua richiesta di eliminazione dell'account è stata registrata
             title: Eliminazione dell'account in corso
+    account_unblocked:
+        body: Ciao {nickname}, il tuo account {brand} è stato sbloccato, puoi accedere di nuovo.
+        subject: Account sbloccato
+        title: Account sbloccato
     avatar:
         change: Cambia foto
         hint: JPEG, PNG o WebP · 5 MB max

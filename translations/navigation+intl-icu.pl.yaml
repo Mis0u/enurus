@@ -375,6 +375,10 @@ routine:
         title: Moje programy
 
 settings:
+    account_blocked:
+        body: Cześć {nickname}, Twoje konto {brand} zostało zablokowane.
+        subject: Konto zablokowane
+        title: Konto zablokowane
     account_deletion:
         cancelled:
             body: Cześć {nickname}, zalogowałeś się ponownie na swoje konto. Twoja prośba o usunięcie została automatycznie anulowana, a Twoje konto pozostaje aktywne.
@@ -389,6 +393,10 @@ settings:
             cancel_hint: Aby anulować to usunięcie, po prostu zaloguj się ponownie przed tą datą — żadne inne działanie nie jest wymagane.
             subject: Twoja prośba o usunięcie konta została zarejestrowana
             title: Usuwanie konta w toku
+    account_unblocked:
+        body: Cześć {nickname}, Twoje konto {brand} zostało odblokowane, możesz ponownie się zalogować.
+        subject: Konto odblokowane
+        title: Konto odblokowane
     avatar:
         change: Zmień zdjęcie
         hint: JPEG, PNG lub WebP · maks. 5 MB

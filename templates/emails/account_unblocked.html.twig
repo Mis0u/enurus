@@ -1,0 +1,17 @@
+{% extends 'emails/_base.html.twig' %}
+
+{% block title %}{{ 'settings.account_unblocked.subject'|trans({}, 'navigation', locale) }}{% endblock %}
+
+{% block content %}
+    <div style="text-align: center; margin-bottom: 24px;">
+        <span style="font-size: 64px;">✅</span>
+    </div>
+
+    <h2 style="margin: 0 0 16px; font-size: 24px; font-weight: bold; color: #ffffff; text-align: center;">
+        {{ 'settings.account_unblocked.title'|trans({}, 'navigation', locale) }}
+    </h2>
+
+    <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #cbd5e1; text-align: center;">
+        {{ 'settings.account_unblocked.body'|trans({'nickname': user.nickname, 'brand': brand_name}, 'navigation', locale) }}
+    </p>
+{% endblock %}
