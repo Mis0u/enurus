@@ -37,7 +37,9 @@ final class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('FitTracker Admin')
+            ->setTitle($this->trans('backend_title', [
+                'brand' => $this->translator->trans('name', [], 'brand', 'fr'),
+            ]))
             ->setLocales(['fr'])
         ;
     }
@@ -72,8 +74,11 @@ final class DashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(DeletedAccountTraceCrudController::class, $this->trans('admin.menu.deleted_account_trace'), 'fa fa-user-slash');
     }
 
-    private function trans(string $key): string
+    /**
+     * @param array<string, mixed> $params
+     */
+    private function trans(string $key, array $params = []): string
     {
-        return $this->translator->trans($key, [], 'admin', 'fr');
+        return $this->translator->trans($key, $params, 'admin', 'fr');
     }
 }
