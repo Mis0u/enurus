@@ -23,10 +23,8 @@ export default class extends Controller {
         options.plugins.tooltip.callbacks = options.plugins.tooltip.callbacks ?? {};
         options.plugins.tooltip.callbacks.label = (context) => {
             const label = context.label ?? context.dataset?.label ?? '';
-            const raw = context.parsed;
-            const value = raw && 'object' === typeof raw ? (raw.x ?? raw.y) : raw;
 
-            return `${label}: ${value}%`;
+            return `${label}: ${context.raw}%`;
         };
     };
 }
