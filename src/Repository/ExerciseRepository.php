@@ -74,4 +74,24 @@ final class ExerciseRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Valeurs distinctes pour peupler le sélecteur du filtre admin "nom" — restreint aux exercices
+     * personnalisés (`owner IS NOT NULL`), même périmètre que `ExerciseCrudController::createIndexQueryBuilder()`.
+     *
+     * @return list<string>
+     */
+    public function findDistinctPersonalizedNames(): array
+    {
+        /** @var list<array{name: string}> $rows */
+        $rows = $this->createQueryBuilder('e')
+            ->select('DISTINCT e.name AS name')
+            ->where('e.owner IS NOT NULL')
+            ->orderBy('e.name', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return array_column($rows, 'name');
+    }
 }

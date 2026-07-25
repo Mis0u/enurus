@@ -176,6 +176,43 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $this->countGroupedBy('u.unitOfMeasure');
     }
 
+    /**
+     * Valeurs distinctes pour peupler le sélecteur du filtre admin "email" — même exclusion des
+     * comptes ROLE_ADMIN que le reste de la section utilisateurs.
+     *
+     * @return list<string>
+     */
+    public function findDistinctEmails(): array
+    {
+        /** @var list<array{email: string}> $rows */
+        $rows = $this->excludingAdminsQueryBuilder()
+            ->select('DISTINCT u.email AS email')
+            ->orderBy('u.email', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return array_column($rows, 'email');
+    }
+
+    /**
+     * Valeurs distinctes pour peupler le sélecteur du filtre admin "pseudo".
+     *
+     * @return list<string>
+     */
+    public function findDistinctNicknames(): array
+    {
+        /** @var list<array{nickname: string}> $rows */
+        $rows = $this->excludingAdminsQueryBuilder()
+            ->select('DISTINCT u.nickname AS nickname')
+            ->orderBy('u.nickname', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return array_column($rows, 'nickname');
+    }
+
     public function countPendingDeletion(): int
     {
         /** @var int */

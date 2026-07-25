@@ -9,7 +9,6 @@ use App\Enum\Contact\ContactRestrictionDurationEnum;
 use App\Enum\Entity\User\GenderEnum;
 use App\Enum\Entity\User\UnitOfMeasureEnum;
 use App\Enum\Translations\LocaleAllowedEnum;
-use App\Filter\Admin\CaseInsensitiveTextFilter;
 use App\Filter\Admin\DayFilter;
 use App\Form\Admin\ContactRestrictionFormType;
 use App\Form\Admin\UserForceDeleteFormType;
@@ -147,8 +146,8 @@ final class UserCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add(CaseInsensitiveTextFilter::new('email', $this->trans('admin.user.filter.email')))
-            ->add(CaseInsensitiveTextFilter::new('nickname', $this->trans('admin.user.field.nickname')))
+            ->add(ChoiceFilter::new('email', $this->trans('admin.user.filter.email'))->setChoices($this->emailChoices()))
+            ->add(ChoiceFilter::new('nickname', $this->trans('admin.user.field.nickname'))->setChoices($this->nicknameChoices()))
             ->add(ChoiceFilter::new('locale', $this->trans('admin.user.field.locale'))->setChoices($this->localeChoices()))
             ->add(ChoiceFilter::new('gender', $this->trans('admin.user.field.gender'))->setChoices($this->enumChoices(GenderEnum::cases())))
             ->add(ChoiceFilter::new('unitOfMeasure', $this->trans('admin.user.field.unit_of_measure'))->setChoices($this->enumChoices(UnitOfMeasureEnum::cases())))
@@ -527,6 +526,34 @@ final class UserCrudController extends AbstractCrudController
 
         foreach ($cases as $case) {
             $choices[$case->name] = $case;
+        }
+
+        return $choices;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function emailChoices(): array
+    {
+        $choices = [];
+
+        foreach ($this->userRepository->findDistinctEmails() as $email) {
+            $choices[$email] = $email;
+        }
+
+        return $choices;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function nicknameChoices(): array
+    {
+        $choices = [];
+
+        foreach ($this->userRepository->findDistinctNicknames() as $nickname) {
+            $choices[$nickname] = $nickname;
         }
 
         return $choices;
