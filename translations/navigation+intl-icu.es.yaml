@@ -106,6 +106,7 @@ dashboard:
             year_delta_zero: Igual que el año anterior
             year_label: "{count, plural, =1 {sesión este año} other {sesiones este año}}"
         session:
+            annual_total_label: "Total del año {year}:"
             exercises: "{count, plural, =1 {# ejercicio} other {# ejercicios}}"
             filter:
                 last: Último entrenamiento

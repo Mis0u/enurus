@@ -1,6 +1,8 @@
 {#
     Variables attendues (toutes via `only`) :
     - sessionStats : array{
+          year: int,
+          annualTotal: int,
           last : array{exercises: int, sets: int, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string},
           week : array{exercises: int, sets: int, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string},
           month: array{exercises: int, sets: int, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string}
@@ -22,6 +24,20 @@
     </div>
 
     <div class="flex-1 flex flex-col justify-between gap-4">
+        {# Total annuel — fixe, indépendant du filtre actif #}
+        <div class="text-center">
+            <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-rose-ft flex flex-col md:block">
+                <span>
+                    {{ 'dashboard.widget.session.annual_total_label'|trans({
+                        year: sessionStats.year,
+                    }, 'navigation') }}
+                </span>
+                <span class="text-cyan-ft">
+                    {{ sessionStats.annualTotal }}
+                </span>
+            </div>
+        </div>
+
         {# Filtres #}
         <div class="flex items-center gap-1 bg-white/[0.04] border border-white/[0.07] rounded-lg p-1">
             <button type="button"
