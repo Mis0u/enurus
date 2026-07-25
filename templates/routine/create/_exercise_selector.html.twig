@@ -3,9 +3,10 @@
 
     Paramètres :
       - controllerName   : string
-      - muscleGroups     : list<MuscleGroup>
-      - exercises        : list<Exercise>
-      - primaryMuscleIds : array<string, string> exerciseId => IDs de muscles primaires séparés par virgule
+      - muscleGroups       : list<MuscleGroup>
+      - exercises          : list<Exercise>
+      - primaryMuscleIds   : array<string, string> exerciseId => IDs SVG des muscles primaires séparés par virgule
+      - secondaryMuscleIds : array<string, string> exerciseId => IDs SVG des muscles secondaires séparés par virgule
 #}
 <div class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-[22px] flex flex-col min-w-0 overflow-visible">
 
@@ -41,6 +42,7 @@
                 data-exercise-id="{{ exercise.id }}"
                 data-exercise-name="{{ exercise_name }}"
                 data-muscle-ids="{{ primaryMuscleIds[exercise.id] ?? '' }}"
+                data-secondary-muscle-ids="{{ secondaryMuscleIds[exercise.id] ?? '' }}"
             >
                 <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2 mb-1">
@@ -68,7 +70,7 @@
                             {% else %}
                                 <span
                                     data-muscle-type="secondary"
-                                    class="inline-flex px-[7px] py-[2px] rounded-[5px] text-[10.5px] font-medium bg-orange-500/[0.10] border border-orange-500/20 text-orange-400"
+                                    class="inline-flex px-[7px] py-[2px] rounded-[5px] text-[10.5px] font-medium bg-cyan-500/[0.10] border border-cyan-500/20 text-cyan-400"
                                 >{{ em.muscleGroup.name|trans({}, 'muscle') }}</span>
                             {% endif %}
                         {% endfor %}

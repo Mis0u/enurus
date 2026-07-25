@@ -36,7 +36,7 @@
         {% for exercise_muscle in exercise.exerciseMuscles %}
             {% set is_primary = exercise_muscle.type.value == 'primary' %}
             <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium
-                {{ is_primary ? 'bg-rose-500/[0.12] border border-rose-500/[0.3] text-rose-400' : 'bg-orange-500/[0.12] border border-orange-500/[0.3] text-orange-400' }}">
+                {{ is_primary ? 'bg-rose-500/[0.12] border border-rose-500/[0.3] text-rose-400' : 'bg-cyan-500/[0.12] border border-cyan-500/[0.3] text-cyan-400' }}">
                 {{ exercise_muscle.muscleGroup.name|trans({}, 'muscle') }}
             </span>
         {% endfor %}

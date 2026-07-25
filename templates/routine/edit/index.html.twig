@@ -5,11 +5,13 @@
     Controller : RoutineEditController (GET/POST /{_locale}/mes-routines/{id}/modifier)
 
     Variables passées par le controller :
-      - form         : FormView (RoutineType)
-      - routine      : Routine
-      - muscleGroups : list<MuscleGroup>
-      - exercises    : list<Exercise>
-      - cancelUrl    : string
+      - form               : FormView (RoutineType)
+      - routine            : Routine
+      - muscleGroups       : list<MuscleGroup>
+      - exercises          : list<Exercise>
+      - primaryMuscleIds   : array<string, string>
+      - secondaryMuscleIds : array<string, string>
+      - cancelUrl          : string
 #}
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
 
@@ -75,6 +77,7 @@
                     muscleGroups: muscleGroups,
                     exercises: exercises,
                     primaryMuscleIds: primaryMuscleIds,
+                    secondaryMuscleIds: secondaryMuscleIds,
                 } only %}
             </div>
 

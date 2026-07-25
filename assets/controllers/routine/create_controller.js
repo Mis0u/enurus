@@ -5,6 +5,7 @@ import Sortable from 'sortablejs';
 import { CSS, SVG } from './routine-constants.js';
 import { buildSelectedItem, buildErrorElement } from './routine-dom-builder.js';
 import { initNameChecker } from './routine-name-checker.js';
+import { paintMuscleGroupsByIds, resetBodymap } from '../../utils/muscle_colors.js';
 
 export default class extends Controller {
     static targets = [
@@ -18,6 +19,9 @@ export default class extends Controller {
         'summaryCount',
         'submitBtn',
         'accordionBody',
+        'musclePreviewToggle',
+        'musclePreviewBody',
+        'muscleBody',
     ];
 
     static values = {
@@ -29,11 +33,12 @@ export default class extends Controller {
         labelPlural:     String,
     };
 
-    #exerciseData    = new Map();
-    #selectedIds     = [];
-    #searchQuery     = '';
-    #sortable        = null;
-    #nameIsAvailable = true;
+    #exerciseData             = new Map();
+    #selectedIds              = [];
+    #searchQuery              = '';
+    #sortable                 = null;
+    #nameIsAvailable          = true;
+    #musclePreviewAutoOpened  = false;
 
     connect() {
         this.#buildExerciseDataMap();
@@ -63,10 +68,11 @@ export default class extends Controller {
     #buildExerciseDataMap() {
         this.exerciseItemTargets.forEach(item => {
             this.#exerciseData.set(item.dataset.exerciseId, {
-                name:             item.dataset.exerciseName ?? '',
-                muscleIds:        (item.dataset.muscleIds ?? '').split(',').filter(Boolean),
-                primaryMuscles:   this.#readMuscleTags(item, 'primary'),
-                secondaryMuscles: this.#readMuscleTags(item, 'secondary'),
+                name:               item.dataset.exerciseName ?? '',
+                primaryMuscleIds:   (item.dataset.muscleIds ?? '').split(',').filter(Boolean),
+                secondaryMuscleIds: (item.dataset.secondaryMuscleIds ?? '').split(',').filter(Boolean),
+                primaryMuscles:     this.#readMuscleTags(item, 'primary'),
+                secondaryMuscles:   this.#readMuscleTags(item, 'secondary'),
             });
         });
     }
@@ -158,6 +164,54 @@ export default class extends Controller {
 
         body.style.maxHeight = isOpen ? '0' : `${body.scrollHeight}px`;
         btn.setAttribute('aria-expanded', String(!isOpen));
+    }
+
+    // -------------------------------------------------------------------------
+    // Aperçu silhouette — coloriage muscles primaires/secondaires
+    // -------------------------------------------------------------------------
+
+    toggleMusclePreview(event) {
+        const isOpen = event.currentTarget.getAttribute('aria-expanded') === 'true';
+        this.#setMusclePreviewOpen(!isOpen);
+    }
+
+    /**
+     * Ouvre le panneau automatiquement une seule fois, au premier exercice ajouté — sert de
+     * point d'appel visuel sans que l'utilisateur ait à chercher le panneau. N'insiste pas s'il
+     * l'a refermé ensuite : le flag ne se réarme jamais dans la même session de page.
+     */
+    #autoOpenMusclePreviewOnFirstExercise() {
+        if (this.#musclePreviewAutoOpened || this.#selectedIds.length === 0) { return; }
+
+        this.#musclePreviewAutoOpened = true;
+        this.#setMusclePreviewOpen(true);
+    }
+
+    #setMusclePreviewOpen(open) {
+        if (!this.hasMusclePreviewToggleTarget || !this.hasMusclePreviewBodyTarget) { return; }
+
+        const body = this.musclePreviewBodyTarget;
+        body.style.maxHeight = open ? `${body.scrollHeight}px` : '0';
+        this.musclePreviewToggleTarget.setAttribute('aria-expanded', String(open));
+        this.musclePreviewToggleTarget.querySelector('svg')?.classList.toggle('rotate-180', open);
+    }
+
+    #paintMusclePreview() {
+        if (!this.hasMuscleBodyTarget) { return; }
+
+        const primaryIds   = new Set();
+        const secondaryIds = new Set();
+
+        this.#selectedIds.forEach(id => {
+            const data = this.#exerciseData.get(id);
+            data?.primaryMuscleIds.forEach(svgId => primaryIds.add(svgId));
+            data?.secondaryMuscleIds.forEach(svgId => secondaryIds.add(svgId));
+        });
+
+        const container = this.muscleBodyTarget;
+        resetBodymap(container);
+        paintMuscleGroupsByIds(container, Array.from(primaryIds), 'primary');
+        paintMuscleGroupsByIds(container, Array.from(secondaryIds), 'secondary');
     }
 
     // -------------------------------------------------------------------------
@@ -301,6 +355,8 @@ export default class extends Controller {
 
         this.#updateSummaryHeader();
         this.#renumberPositions();
+        this.#paintMusclePreview();
+        this.#autoOpenMusclePreviewOnFirstExercise();
     }
 
     #updateSummaryHeader() {

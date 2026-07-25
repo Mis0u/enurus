@@ -327,6 +327,8 @@ routine:
         exercise_count_plural: exercícios
         exercise_count_singular: exercício
         exercises_label: Exercícios
+        muscle_preview:
+            title: Pré-visualização muscular
         name: Nome da rotina
         name_placeholder: "Ex: Push Day, Full Body A…"
         optional: Opcional

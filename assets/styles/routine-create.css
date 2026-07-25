@@ -136,3 +136,9 @@
 .muscle-pills-wrapper::-webkit-scrollbar {
     display: none;
 }
+
+/* ------------------------------------------------------------------
+   APERÇU MUSCULAIRE — légende primaire/secondaire
+------------------------------------------------------------------ */
+.routine-muscle-dot-primary { background: #f43f5e; }
+.routine-muscle-dot-secondary { background: #06b6d4; }
