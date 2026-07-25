@@ -105,7 +105,7 @@ final class UserCrudControllerTest extends WebTestCase
         $client = $this->login(self::ADMIN);
         $user = $this->createTestUser('user-crud-block@test.com');
 
-        $client->request(Request::METHOD_GET, $this->actionUrl($client, $user, 'block'));
+        $client->request(Request::METHOD_GET, $this->actionUrl($client, $user, 'restrictContact'));
         $crawler = $client->getCrawler();
         $form = $crawler->selectButton('Bloquer')->form([
             'contact_restriction_form[duration]' => 'permanent',
@@ -130,12 +130,12 @@ final class UserCrudControllerTest extends WebTestCase
 
         $token = $this->csrfTokenFromPage(
             $client,
-            $this->actionUrl($client, $user, 'unblock'),
+            $this->actionUrl($client, $user, 'liftContactRestriction'),
             'input[name="_token"]',
             'value',
         );
 
-        $client->request(Request::METHOD_POST, $this->actionUrl($client, $user, 'unblock'), [
+        $client->request(Request::METHOD_POST, $this->actionUrl($client, $user, 'liftContactRestriction'), [
             '_token' => $token,
         ]);
 
@@ -143,6 +143,56 @@ final class UserCrudControllerTest extends WebTestCase
 
         $reloaded = $this->reloadUser($user);
         self::assertFalse($reloaded->isContactRestricted);
+
+        $this->deleteTestUser($reloaded);
+    }
+
+    public function testBlockAccountInvalidatesSessionsAndPreventsLogin(): void
+    {
+        $client = $this->login(self::ADMIN);
+        $user = $this->createTestUser('user-crud-block-account@test.com');
+
+        $token = $this->csrfTokenFromPage(
+            $client,
+            $this->actionUrl($client, $user, 'blockAccount'),
+            'input[name="_token"]',
+            'value',
+        );
+
+        $client->request(Request::METHOD_POST, $this->actionUrl($client, $user, 'blockAccount'), [
+            '_token' => $token,
+        ]);
+
+        self::assertResponseRedirects();
+
+        $reloaded = $this->reloadUser($user);
+        self::assertTrue($reloaded->isAccountBlocked);
+
+        $this->deleteTestUser($reloaded);
+    }
+
+    public function testUnblockAccountAllowsLoginAgain(): void
+    {
+        $client = $this->login(self::ADMIN);
+        $user = $this->createTestUser('user-crud-unblock-account@test.com');
+        $user->accountBlockedAt = new \DateTimeImmutable();
+        $this->flush();
+
+        $token = $this->csrfTokenFromPage(
+            $client,
+            $this->actionUrl($client, $user, 'unblockAccount'),
+            'input[name="_token"]',
+            'value',
+        );
+
+        $client->request(Request::METHOD_POST, $this->actionUrl($client, $user, 'unblockAccount'), [
+            '_token' => $token,
+        ]);
+
+        self::assertResponseRedirects();
+
+        $reloaded = $this->reloadUser($user);
+        self::assertFalse($reloaded->isAccountBlocked);
 
         $this->deleteTestUser($reloaded);
     }

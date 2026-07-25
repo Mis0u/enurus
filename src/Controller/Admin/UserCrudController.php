@@ -18,6 +18,7 @@ use App\Service\Contact\ContactRestrictionService;
 use App\Service\Entity\AccountDeletionService;
 use App\Service\Security\ResetPasswordService;
 use App\Service\Security\SessionInvalidationService;
+use App\Service\Security\UserAccountBlockService;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -53,9 +54,13 @@ final class UserCrudController extends AbstractCrudController
 {
     private const string ACTION_CANCEL_DELETION = 'cancelDeletion';
 
-    private const string ACTION_BLOCK = 'block';
+    private const string ACTION_RESTRICT_CONTACT = 'restrictContact';
 
-    private const string ACTION_UNBLOCK = 'unblock';
+    private const string ACTION_LIFT_CONTACT_RESTRICTION = 'liftContactRestriction';
+
+    private const string ACTION_BLOCK_ACCOUNT = 'blockAccount';
+
+    private const string ACTION_UNBLOCK_ACCOUNT = 'unblockAccount';
 
     private const string ACTION_FORCE_LOGOUT = 'forceLogout';
 
@@ -66,6 +71,7 @@ final class UserCrudController extends AbstractCrudController
     public function __construct(
         private readonly AccountDeletionService $accountDeletionService,
         private readonly ContactRestrictionService $contactRestrictionService,
+        private readonly UserAccountBlockService $userAccountBlockService,
         private readonly SessionInvalidationService $sessionInvalidationService,
         private readonly ResetPasswordService $resetPasswordService,
         private readonly CsrfTokenManagerInterface $csrfTokenManager,
@@ -103,6 +109,7 @@ final class UserCrudController extends AbstractCrudController
         yield DateTimeField::new('createdAt', $this->trans('admin.user.field.created_at'))->hideOnForm();
         yield DateTimeField::new('lastLogin', $this->trans('admin.user.field.last_login'))->hideOnForm();
         yield DateTimeField::new('deletionRequestedAt', $this->trans('admin.user.field.deletion_requested_at'))->hideOnForm();
+        yield DateTimeField::new('accountBlockedAt', $this->trans('admin.user.field.account_blocked_at'))->hideOnForm();
         /**
          * Lecture seule, à but de support — pas de CRUD séparé pour Routines/Workouts, éditer les
          * données d'entraînement d'un utilisateur depuis l'admin n'a pas de sens métier. Même
@@ -194,15 +201,27 @@ final class UserCrudController extends AbstractCrudController
             )
             ->add(
                 Crud::PAGE_DETAIL,
-                Action::new(self::ACTION_BLOCK, $this->trans('admin.user.action.block'))
-                    ->linkToCrudAction(self::ACTION_BLOCK)
+                Action::new(self::ACTION_RESTRICT_CONTACT, $this->trans('admin.user.action.restrict_contact'))
+                    ->linkToCrudAction(self::ACTION_RESTRICT_CONTACT)
                     ->displayIf(static fn (User $user): bool => ! $user->isContactRestricted)
             )
             ->add(
                 Crud::PAGE_DETAIL,
-                Action::new(self::ACTION_UNBLOCK, $this->trans('admin.user.action.unblock'))
-                    ->linkToCrudAction(self::ACTION_UNBLOCK)
+                Action::new(self::ACTION_LIFT_CONTACT_RESTRICTION, $this->trans('admin.user.action.lift_contact_restriction'))
+                    ->linkToCrudAction(self::ACTION_LIFT_CONTACT_RESTRICTION)
                     ->displayIf(static fn (User $user): bool => $user->isContactRestricted)
+            )
+            ->add(
+                Crud::PAGE_DETAIL,
+                Action::new(self::ACTION_BLOCK_ACCOUNT, $this->trans('admin.user.action.block_account'))
+                    ->linkToCrudAction(self::ACTION_BLOCK_ACCOUNT)
+                    ->displayIf(static fn (User $user): bool => ! $user->isAccountBlocked)
+            )
+            ->add(
+                Crud::PAGE_DETAIL,
+                Action::new(self::ACTION_UNBLOCK_ACCOUNT, $this->trans('admin.user.action.unblock_account'))
+                    ->linkToCrudAction(self::ACTION_UNBLOCK_ACCOUNT)
+                    ->displayIf(static fn (User $user): bool => $user->isAccountBlocked)
             )
             ->add(
                 Crud::PAGE_DETAIL,
@@ -246,7 +265,7 @@ final class UserCrudController extends AbstractCrudController
     /**
      * @param AdminContext<User> $context
      */
-    public function block(AdminContext $context, Request $request): Response
+    public function restrictContact(AdminContext $context, Request $request): Response
     {
         $user = $this->getUserEntity($context);
 
@@ -265,12 +284,12 @@ final class UserCrudController extends AbstractCrudController
             };
 
             $this->contactRestrictionService->restrict($user, $duration, $permanent);
-            $this->addFlash('success', $this->trans('admin.user.flash.blocked'));
+            $this->addFlash('success', $this->trans('admin.user.flash.contact_restricted'));
 
             return $this->redirect($this->detailUrl($user));
         }
 
-        return $this->render('admin/user/block.html.twig', [
+        return $this->render('admin/user/restrict_contact.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
@@ -279,20 +298,62 @@ final class UserCrudController extends AbstractCrudController
     /**
      * @param AdminContext<User> $context
      */
-    public function unblock(AdminContext $context, Request $request): Response
+    public function liftContactRestriction(AdminContext $context, Request $request): Response
     {
         $user = $this->getUserEntity($context);
 
         if ($request->isMethod('POST')) {
-            $this->denyUnlessValidCsrfToken($request, 'user_admin_unblock_' . $user->id);
+            $this->denyUnlessValidCsrfToken($request, 'user_admin_lift_contact_restriction_' . $user->id);
 
             $this->contactRestrictionService->liftRestriction($user);
-            $this->addFlash('success', $this->trans('admin.user.flash.unblocked'));
+            $this->addFlash('success', $this->trans('admin.user.flash.contact_restriction_lifted'));
 
             return $this->redirect($this->detailUrl($user));
         }
 
-        return $this->render('admin/user/unblock.html.twig', [
+        return $this->render('admin/user/lift_contact_restriction.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @param AdminContext<User> $context
+     */
+    public function blockAccount(AdminContext $context, Request $request): Response
+    {
+        $user = $this->getUserEntity($context);
+
+        if ($request->isMethod('POST')) {
+            $this->denyUnlessValidCsrfToken($request, 'user_admin_block_account_' . $user->id);
+
+            $this->userAccountBlockService->block($user);
+            $this->addFlash('success', $this->trans('admin.user.flash.account_blocked'));
+
+            return $this->redirect($this->detailUrl($user));
+        }
+
+        return $this->render('admin/user/block_account.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @param AdminContext<User> $context
+     */
+    public function unblockAccount(AdminContext $context, Request $request): Response
+    {
+        $user = $this->getUserEntity($context);
+
+        if ($request->isMethod('POST')) {
+            $this->denyUnlessValidCsrfToken($request, 'user_admin_unblock_account_' . $user->id);
+
+            $this->userAccountBlockService->unblock($user);
+            $this->addFlash('success', $this->trans('admin.user.flash.account_unblocked'));
+
+            return $this->redirect($this->detailUrl($user));
+        }
+
+        return $this->render('admin/user/unblock_account.html.twig', [
             'user' => $user,
         ]);
     }

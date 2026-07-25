@@ -365,6 +365,10 @@ routine:
         title: My routines
 
 settings:
+    account_blocked:
+        body: Hello {nickname}, your {brand} account has been blocked.
+        subject: Account blocked
+        title: Account blocked
     account_deletion:
         cancelled:
             body: Hello {nickname}, you logged back into your account. Your deletion request has been automatically cancelled, and your account remains active as normal.
@@ -379,6 +383,10 @@ settings:
             cancel_hint: To cancel this deletion, simply log back in before that date — no other action required.
             subject: Your account deletion request has been recorded
             title: Account deletion in progress
+    account_unblocked:
+        body: Hello {nickname}, your {brand} account has been unblocked, you can log in again.
+        subject: Account unblocked
+        title: Account unblocked
     avatar:
         change: Change photo
         hint: JPEG, PNG or WebP · 5 MB max

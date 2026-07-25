@@ -365,6 +365,10 @@ routine:
         title: Mes routines
 
 settings:
+    account_blocked:
+        body: Bonjour {nickname}, ton compte {brand} a été bloqué.
+        subject: Compte bloqué
+        title: Compte bloqué
     account_deletion:
         cancelled:
             body: Bonjour {nickname}, tu tes reconnecté à ton compte. Ta demande de suppression a donc été automatiquement annulée, et ton compte reste actif normalement.
@@ -379,6 +383,10 @@ settings:
             cancel_hint: Pour annuler cette suppression, il te suffit de te reconnecter avant cette date — aucune autre action nécessaire.
             subject: Ta demande de suppression de compte a été enregistrée
             title: Suppression de compte en cours
+    account_unblocked:
+        body: Bonjour {nickname}, ton compte {brand} a été débloqué, tu peux à nouveau te connecter.
+        subject: Compte débloqué
+        title: Compte débloqué
     avatar:
         change: Changer la photo
         hint: JPEG, PNG ou WebP · 5 Mo max

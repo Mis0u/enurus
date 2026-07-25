@@ -235,6 +235,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Blocage du compte (connexion) — distinct de la restriction de messagerie ci-dessus. Pas de
+     * durée pour le moment : levée uniquement manuelle par un admin (cf. BlockedUserChecker,
+     * UserAccountBlockService).
+     */
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    public ?\DateTimeImmutable $accountBlockedAt = null {
+        get {
+            return $this->accountBlockedAt;
+        }
+        set(?\DateTimeImmutable $accountBlockedAt) {
+            $this->accountBlockedAt = $accountBlockedAt;
+        }
+    }
+
+    public bool $isAccountBlocked {
+        get {
+            return null !== $this->accountBlockedAt;
+        }
+    }
+
+    /**
      * @var string[] $roles
      */
     #[ORM\Column]

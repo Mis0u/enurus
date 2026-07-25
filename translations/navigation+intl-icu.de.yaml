@@ -365,6 +365,10 @@ routine:
         title: Meine Routinen
 
 settings:
+    account_blocked:
+        body: Hallo {nickname}, dein {brand}-Konto wurde gesperrt.
+        subject: Konto gesperrt
+        title: Konto gesperrt
     account_deletion:
         cancelled:
             body: Hallo {nickname}, du hast dich erneut in dein Konto eingeloggt. Deine Löschanfrage wurde automatisch abgebrochen und dein Konto bleibt wie gewohnt aktiv.
@@ -379,6 +383,10 @@ settings:
             cancel_hint: Um diese Löschung abzubrechen, melde dich einfach vor diesem Datum erneut an — keine weitere Aktion erforderlich.
             subject: Deine Anfrage zur Kontolöschung wurde registriert
             title: Kontolöschung in Bearbeitung
+    account_unblocked:
+        body: Hallo {nickname}, dein {brand}-Konto wurde entsperrt, du kannst dich wieder anmelden.
+        subject: Konto entsperrt
+        title: Konto entsperrt
     avatar:
         change: Foto ändern
         hint: JPEG, PNG oder WebP · max. 5 MB
