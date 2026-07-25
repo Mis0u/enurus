@@ -6,12 +6,14 @@ namespace App\Tests\Functional\Security;
 
 use App\Entity\ResetPasswordRequest;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport;
 
 class ResetPasswordTest extends WebTestCase
 {
+    use MailerAssertionsTrait;
+
     public function testRequestPasswordResetPageIsAccessible(): void
     {
         $client = static::createClient();
@@ -53,14 +55,17 @@ class ResetPasswordTest extends WebTestCase
         ]);
 
         $this->assertResponseRedirects('/fr/reinitialiser-mot-de-passe/verifier-email');
+
+        /**
+         * Vérifié avant `followRedirect()` : celui-ci reboote le kernel de test, ce qui vide le
+         * listener mailer en mémoire (`mailer.message_logger_listener`, tag `kernel.reset`) — les
+         * événements de la requête POST seraient perdus si on les lisait après.
+         */
+        $this->assertQueuedEmailCount($countMessage);
+
         $client->followRedirect();
 
         $this->assertSame($countRequest, $resetPasswordRequestRepository->count());
-
-        /** @var InMemoryTransport $transport */
-        $transport = $client->getContainer()->get('messenger.transport.async');
-
-        $this->assertCount($countMessage, $transport->get());
 
         $this->assertSelectorExists('a[href="/fr/reinitialiser-mot-de-passe"]');
     }

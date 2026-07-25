@@ -10,6 +10,8 @@ use App\Repository\ResetPasswordRequestRepository;
 use App\Service\Email\SymfonyMailerEmailService;
 use App\Service\Entity\UserService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\ResetPassword\Exception\InvalidResetPasswordTokenException;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
@@ -25,6 +27,7 @@ final readonly class ResetPasswordService
         private SymfonyMailerEmailService $emailService,
         private TranslatorInterface $translator,
         private ResetPasswordRequestRepository $resetPasswordRequestRepository,
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -82,8 +85,7 @@ final readonly class ResetPasswordService
     /**
      * Renvoi admin d'un email de reset password (l'utilisateur signale ne pas l'avoir reçu) — le
      * throttle d'1h de `generateResetToken()` porte sur la demande existante, donc on la retire
-     * d'abord pour permettre un nouvel envoi immédiat. Envoyé en synchrone (hors file `async`) :
-     * un renvoi déclenché par un admin doit arriver tout de suite, pas attendre le prochain worker.
+     * d'abord pour permettre un nouvel envoi immédiat.
      */
     public function resendForAdmin(User $user, string $locale): void
     {
@@ -95,7 +97,7 @@ final readonly class ResetPasswordService
             throw new InvalidResetPasswordTokenException($e->getReason());
         }
 
-        $this->sendResetPasswordEmail($user, $resetToken, $locale, sync: true);
+        $this->sendResetPasswordEmail($user, $resetToken, $locale);
     }
 
     private function findUserByEmail(string $email): ?User
@@ -105,11 +107,16 @@ final readonly class ResetPasswordService
         ]);
     }
 
+    /**
+     * Envoyée en synchrone (hors file `async`) : l'utilisateur attend cet email juste après sa
+     * demande. Un échec d'envoi (mailer indisponible) ne doit jamais remonter à l'appelant — le
+     * controller doit afficher la même page "vérifiez vos emails" qu'un compte existe ou non
+     * (anti-énumération), capturé et loggé ici plutôt que propagé.
+     */
     private function sendResetPasswordEmail(
         User $user,
         ResetPasswordToken $resetToken,
         string $locale,
-        bool $sync = false,
     ): void {
         $email = $this->emailService->createEmail(
             $user->email,
@@ -122,10 +129,15 @@ final readonly class ResetPasswordService
             $locale
         );
 
-        if ($sync) {
-            $email->getHeaders()->addTextHeader('X-Bus-Transport', 'sync');
-        }
+        $email->getHeaders()->addTextHeader('X-Bus-Transport', 'sync');
 
-        $this->emailService->sendEmail($email);
+        try {
+            $this->emailService->sendEmail($email);
+        } catch (TransportExceptionInterface $e) {
+            $this->logger->error('Failed to send reset-password email.', [
+                'userId' => $user->id,
+                'exception' => $e,
+            ]);
+        }
     }
 }
