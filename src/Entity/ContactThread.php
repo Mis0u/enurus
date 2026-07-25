@@ -141,6 +141,20 @@ class ContactThread
         }
     }
 
+    /**
+     * Renseigné uniquement pour un fil de catégorie `VOTE`, une fois le destinataire voté — porte
+     * la contrainte d'unicité "un seul vote par destinataire" (cf. ContactPollVote).
+     */
+    #[ORM\OneToOne(mappedBy: 'thread', targetEntity: ContactPollVote::class, cascade: ['persist', 'remove'])]
+    public ?ContactPollVote $pollVote = null {
+        get {
+            return $this->pollVote;
+        }
+        set(?ContactPollVote $pollVote) {
+            $this->pollVote = $pollVote;
+        }
+    }
+
     public function __construct()
     {
         $now = new \DateTimeImmutable();

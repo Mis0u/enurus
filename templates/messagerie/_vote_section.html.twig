@@ -1,0 +1,38 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - thread : ContactThread
+    - canVote : bool
+    - voteForm : ?FormView — présent seulement si canVote est vrai
+#}
+{% if thread.pollVote is not null %}
+    <div class="flex flex-col items-center gap-2 text-center py-2">
+        <span class="text-3xl">🗳️</span>
+        <p class="text-[13.5px] text-[#8b9bb4]">
+            {{ 'messagerie.vote.confirmation'|trans({option: thread.pollVote.option.label}, 'navigation') }}
+        </p>
+    </div>
+{% elseif canVote and voteForm is not null %}
+    {% form_theme voteForm 'registration/theme/error_theme.html.twig' 'messagerie/theme/vote_option_theme.html.twig' %}
+
+    {{ form_start(voteForm, {
+        render_rest: false,
+        action: path('app_contact_thread_vote', {id: thread.id.toRfc4122}),
+    }) }}
+
+    <div class="mb-[18px]">
+        {{ form_widget(voteForm.option) }}
+        {{ form_errors(voteForm.option) }}
+    </div>
+
+    {{ form_row(voteForm._token) }}
+
+    <button type="submit"
+            class="cursor-pointer w-full min-h-11 py-3 px-4 bg-gradient-to-r from-cyan-500 to-cyan-700 hover:from-cyan-600 hover:to-cyan-800 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-200">
+        {{ 'messagerie.vote.submit'|trans({}, 'navigation') }}
+    </button>
+    {{ form_end(voteForm, {render_rest: false}) }}
+{% else %}
+    <p class="text-[13.5px] text-[#8b9bb4] text-center">
+        {{ 'messagerie.vote.closed'|trans({}, 'navigation') }}
+    </p>
+{% endif %}

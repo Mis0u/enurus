@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Helper;
 
+use App\Entity\ContactBroadcast;
 use App\Entity\ContactThread;
 use App\Entity\ContactThreadMessage;
 use App\Entity\User;
@@ -19,12 +20,14 @@ final class ContactThreadTestHelper
         string $subject = 'Sujet de test',
         ContactThreadStatusEnum $status = ContactThreadStatusEnum::AWAITING_ADMIN_REPLY,
         ContactCategoryEnum $category = ContactCategoryEnum::BUG,
+        ?ContactBroadcast $broadcast = null,
     ): ContactThread {
         $thread = new ContactThread();
         $thread->owner = $owner;
         $thread->category = $category;
         $thread->subject = $subject;
         $thread->status = $status;
+        $thread->broadcast = $broadcast;
 
         $message = new ContactThreadMessage();
         $message->author = $owner;

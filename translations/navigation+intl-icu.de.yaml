@@ -11,6 +11,7 @@ contact:
         other: Sonstiges
         question: Frage
         suggestion: Vorschlag
+        vote: Umfrage
     feedback:
         success: "Deine Nachricht wurde gesendet, danke!"
     field:
@@ -239,8 +240,13 @@ messagerie:
         awaiting_admin: Antwort ausstehend
         closed: Geschlossen
         informative: Informativ
+        vote: Umfrage
     thread_closed: "Diese Unterhaltung ist geschlossen, du kannst nicht mehr antworten."
     title: Nachrichten
+    vote:
+        closed: "Die Abstimmung ist beendet, du kannst nicht mehr abstimmen."
+        confirmation: "Deine Stimme für {option} wurde gespeichert, danke!"
+        submit: Abstimmen
 
 pagination:
     first: Erste Seite

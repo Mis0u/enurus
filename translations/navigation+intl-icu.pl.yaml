@@ -11,6 +11,7 @@ contact:
         other: Inne
         question: Pytanie
         suggestion: Sugestia
+        vote: Ankieta
     feedback:
         success: "Twoja wiadomość została wysłana, dziękuję!"
     field:
@@ -243,8 +244,13 @@ messagerie:
         awaiting_admin: Oczekuje na odpowiedź
         closed: Zamknięte
         informative: Informacyjny
+        vote: Ankieta
     thread_closed: "Ta rozmowa jest zamknięta, nie możesz już na nią odpowiadać."
     title: Wiadomości
+    vote:
+        closed: "Głosowanie jest zamknięte, nie możesz już głosować."
+        confirmation: "Twój głos na {option} został zarejestrowany, dziękujemy!"
+        submit: Głosuj
 
 pagination:
     first: Pierwsza strona

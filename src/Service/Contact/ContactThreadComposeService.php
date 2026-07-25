@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Contact;
 
 use App\Entity\ContactBroadcast;
+use App\Entity\ContactPollOption;
 use App\Entity\ContactThread;
 use App\Entity\User;
 use App\Enum\Contact\ContactBroadcastTargetEnum;
@@ -56,22 +57,29 @@ final readonly class ContactThreadComposeService
     }
 
     /**
-     * Un envoi groupé est toujours en catégorie `INFORMATIVE` (non répondable, cf. ContactThreadVoter)
-     * — la catégorie n'est donc jamais demandée à l'appelant ici, contrairement à composeToSingleUser().
+     * Catégorie choisie par l'appelant (`INFORMATIVE` ou `VOTE`, cf. ContactBroadcastComposeFormType)
+     * — non répondable dans les deux cas (cf. ContactThreadVoter). `$pollOptionLabels` et
+     * `$pollDurationDays` ne sont utilisés que pour `VOTE`, ignorés sinon.
      *
-     * Seuls le `ContactBroadcast` et l'upload (unique) de l'image sont synchrones, pour un retour
-     * immédiat à l'admin — la création des fils par destinataire (potentiellement des centaines)
-     * est déportée dans SendContactBroadcastMessageHandler, via Messenger (transport `async`, déjà
-     * utilisé pour les emails). Le nombre de destinataires est donc un compte rapide
-     * (`UserRepository::countForBroadcast()`), pas le résultat d'une boucle déjà exécutée.
+     * Seuls le `ContactBroadcast` (+ ses `ContactPollOption` pour un sondage) et l'upload (unique)
+     * de l'image sont synchrones, pour un retour immédiat à l'admin — la création des fils par
+     * destinataire (potentiellement des centaines) est déportée dans SendContactBroadcastMessageHandler,
+     * via Messenger (transport `async`, déjà utilisé pour les emails). Le nombre de destinataires est
+     * donc un compte rapide (`UserRepository::countForBroadcast()`), pas le résultat d'une boucle déjà
+     * exécutée.
+     *
+     * @param list<string> $pollOptionLabels
      */
     public function composeToAudience(
         User $admin,
+        ContactCategoryEnum $category,
         ContactBroadcastTargetEnum $target,
         ?LocaleAllowedEnum $locale,
         string $subject,
         string $body,
         ?UploadedFile $image,
+        array $pollOptionLabels = [],
+        ?int $pollDurationDays = null,
     ): int {
         if (null === $admin->id) {
             throw new \LogicException('Cannot compose a broadcast from an admin without a persisted id.');
@@ -82,11 +90,16 @@ final readonly class ContactThreadComposeService
 
         $broadcast = new ContactBroadcast();
         $broadcast->sentBy = $admin;
+        $broadcast->category = $category;
         $broadcast->subject = $subject;
         $broadcast->body = $body;
         $broadcast->target = $target;
         $broadcast->locale = $locale;
         $broadcast->recipientCount = $this->userRepository->countForBroadcast($admin->id, $locale?->value);
+
+        if (ContactCategoryEnum::VOTE === $category) {
+            $this->attachPoll($broadcast, $pollOptionLabels, $pollDurationDays);
+        }
 
         $this->entityManager->persist($broadcast);
         $this->entityManager->flush();
@@ -98,5 +111,24 @@ final readonly class ContactThreadComposeService
         $this->messageBus->dispatch(new SendContactBroadcastMessage($broadcast->id->toRfc4122(), $sourceImagePath));
 
         return $broadcast->recipientCount;
+    }
+
+    /**
+     * @param list<string> $pollOptionLabels
+     */
+    private function attachPoll(ContactBroadcast $broadcast, array $pollOptionLabels, ?int $pollDurationDays): void
+    {
+        if (null === $pollDurationDays) {
+            throw new \LogicException('A poll broadcast requires a closing duration.');
+        }
+
+        $broadcast->pollClosesAt = (new \DateTimeImmutable())->modify(sprintf('+%d days', $pollDurationDays));
+
+        foreach ($pollOptionLabels as $position => $label) {
+            $option = new ContactPollOption();
+            $option->label = $label;
+            $option->position = $position;
+            $broadcast->addPollOption($option);
+        }
     }
 }

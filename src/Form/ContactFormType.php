@@ -50,6 +50,7 @@ final class ContactFormType extends AbstractType
                     ContactCategoryEnum::LOVE => '❤️ ' . $this->translator->trans('contact.category.love', [], 'navigation'),
                     ContactCategoryEnum::OTHER => '📁 ' . $this->translator->trans('contact.category.other', [], 'navigation'),
                     ContactCategoryEnum::INFORMATIVE => throw new \LogicException('INFORMATIVE is a system-only category, excluded from this form via the explicit choices list.'),
+                    ContactCategoryEnum::VOTE => throw new \LogicException('VOTE is a system-only category, excluded from this form via the explicit choices list.'),
                 },
                 'placeholder' => $this->translator->trans('contact.field.category_placeholder', [], 'navigation'),
                 'label' => $this->translator->trans('contact.field.category', [], 'navigation'),

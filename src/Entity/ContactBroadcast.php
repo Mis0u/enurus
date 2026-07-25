@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Enum\Contact\ContactBroadcastTargetEnum;
+use App\Enum\Contact\ContactCategoryEnum;
 use App\Enum\Translations\LocaleAllowedEnum;
 use App\Repository\ContactBroadcastRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -64,6 +65,21 @@ class ContactBroadcast
         }
     }
 
+    /**
+     * Catégorie appliquée à chaque `ContactThread` fanned-out (cf. SendContactBroadcastMessageHandler)
+     * — limitée en pratique à `INFORMATIVE` (diffusion classique) ou `VOTE` (sondage), jamais aux
+     * catégories réservées aux fils initiés par un utilisateur (BUG, SUGGESTION, ...).
+     */
+    #[ORM\Column(type: 'string', enumType: ContactCategoryEnum::class)]
+    public ContactCategoryEnum $category = ContactCategoryEnum::INFORMATIVE {
+        get {
+            return $this->category;
+        }
+        set(ContactCategoryEnum $category) {
+            $this->category = $category;
+        }
+    }
+
     #[ORM\Column(type: 'string', enumType: ContactBroadcastTargetEnum::class)]
     public ContactBroadcastTargetEnum $target {
         get {
@@ -102,9 +118,25 @@ class ContactBroadcast
     }
 
     /**
+     * Renseigné uniquement pour une diffusion de catégorie `VOTE` — date de clôture du vote,
+     * calculée à l'envoi à partir de la durée choisie par l'admin. La clôture est vérifiée en
+     * temps réel (`pollClosesAt <= now()`), jamais par une tâche planifiée : pas de dérive possible
+     * entre deux passages d'un cron.
+     */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    public ?\DateTimeImmutable $pollClosesAt = null {
+        get {
+            return $this->pollClosesAt;
+        }
+        set(?\DateTimeImmutable $pollClosesAt) {
+            $this->pollClosesAt = $pollClosesAt;
+        }
+    }
+
+    /**
      * `cascade: remove` + `orphanRemoval` : supprimer une diffusion supprime aussi les fils
      * individuels qu'elle a créés chez chaque destinataire — ils n'existent que comme artefact de
-     * cet envoi et ne sont jamais répondables (cf. ContactThreadVoter, catégorie INFORMATIVE).
+     * cet envoi et ne sont jamais répondables (cf. ContactThreadVoter, catégories INFORMATIVE/VOTE).
      *
      * @var Collection<int, ContactThread>
      */
@@ -115,9 +147,44 @@ class ContactBroadcast
         }
     }
 
+    /**
+     * Renseigné uniquement pour une diffusion de catégorie `VOTE` — options proposées, dans
+     * l'ordre de saisie par l'admin (`position`).
+     *
+     * @var Collection<int, ContactPollOption>
+     */
+    #[ORM\OneToMany(targetEntity: ContactPollOption::class, mappedBy: 'broadcast', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OrderBy([
+        'position' => 'ASC',
+    ])]
+    public Collection $pollOptions {
+        get {
+            return $this->pollOptions;
+        }
+    }
+
     public function __construct()
     {
         $this->sentAt = new \DateTimeImmutable();
         $this->threads = new ArrayCollection();
+        $this->pollOptions = new ArrayCollection();
+    }
+
+    public function addPollOption(ContactPollOption $option): void
+    {
+        if (! $this->pollOptions->contains($option)) {
+            $this->pollOptions->add($option);
+            $option->broadcast = $this;
+        }
+    }
+
+    public function isPoll(): bool
+    {
+        return ContactCategoryEnum::VOTE === $this->category;
+    }
+
+    public function isPollClosed(\DateTimeImmutable $now): bool
+    {
+        return null !== $this->pollClosesAt && $this->pollClosesAt <= $now;
     }
 }

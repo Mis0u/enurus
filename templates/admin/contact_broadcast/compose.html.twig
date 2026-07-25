@@ -8,20 +8,44 @@
     {{ form_start(form, {render_rest: false}) }}
     {{ form_errors(form) }}
 
-    {{ form_row(form.target, {
-        row_attr: {
-            class: 'admin-target-radios',
-        },
-    }) }}
-    {{ form_row(form.subject) }}
+    <div
+        data-controller="admin--contact-poll-options"
+        data-admin--contact-poll-options-placeholder-value="{{ 'admin.broadcast.poll.option_placeholder'|trans({}, 'admin', 'fr') }}"
+        data-admin--contact-poll-options-remove-label-value="{{ 'admin.field.remove_button'|trans({}, 'admin', 'fr') }}"
+        data-admin--contact-poll-options-initial-options-value="{{ form.pollOptions.vars.value ?: '[]' }}"
+    >
+        {{ form_row(form.category, {
+            row_attr: {
+                class: 'admin-target-radios',
+            },
+        }) }}
+        {{ form_row(form.target, {
+            row_attr: {
+                class: 'admin-target-radios',
+            },
+        }) }}
+        {{ form_row(form.subject) }}
 
-    {% include 'admin/contact_thread/_wysiwyg_field.html.twig' with {
-        field: form.body,
-    } only %}
+        {% include 'admin/contact_thread/_wysiwyg_field.html.twig' with {
+            field: form.body,
+        } only %}
 
-    {% include 'admin/contact_thread/_image_field.html.twig' with {
-        fieldId: 'broadcastImage',
-    } only %}
+        {% include 'admin/contact_thread/_image_field.html.twig' with {
+            fieldId: 'broadcastImage',
+        } only %}
+
+        <div data-admin--contact-poll-options-target="pollFields" hidden class="mb-3">
+            <label class="form-label">{{ 'admin.broadcast.field.poll_options'|trans({}, 'admin', 'fr') }}</label>
+            <div data-admin--contact-poll-options-target="list"></div>
+            <button type="button" class="btn btn-sm btn-secondary mt-2" data-action="click->admin--contact-poll-options#addOption">
+                {{ 'admin.broadcast.poll.add_option'|trans({}, 'admin', 'fr') }}
+            </button>
+            {{ form_widget(form.pollOptions) }}
+            {{ form_errors(form.pollOptions) }}
+
+            {{ form_row(form.pollDurationDays) }}
+        </div>
+    </div>
 
     {{ form_row(form._token) }}
 

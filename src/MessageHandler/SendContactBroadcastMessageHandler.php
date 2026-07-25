@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\MessageHandler;
 
 use App\Entity\ContactBroadcast;
-use App\Enum\Contact\ContactCategoryEnum;
 use App\Enum\Contact\ContactThreadStatusEnum;
 use App\Message\SendContactBroadcastMessage;
 use App\Repository\ContactBroadcastRepository;
@@ -59,7 +58,7 @@ final readonly class SendContactBroadcastMessageHandler
             $thread = $this->buildThread(
                 $recipient,
                 $admin,
-                ContactCategoryEnum::INFORMATIVE,
+                $broadcast->category,
                 $broadcast->subject,
                 $broadcast->body,
                 $imagePath,

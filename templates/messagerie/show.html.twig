@@ -22,9 +22,13 @@
         love: '❤️',
         other: '📁',
         informative: '📌',
+        vote: '🗳️',
     }[thread.category.value] %}
 
-    {% if thread.category.value == 'informative' %}
+    {% if thread.category.value == 'vote' %}
+        {% set status_label = 'messagerie.status.vote'|trans({}, 'navigation') %}
+        {% set status_class = 'bg-[rgba(6,182,212,0.12)] text-[#06b6d4] border-[rgba(6,182,212,0.3)]' %}
+    {% elseif thread.category.value == 'informative' %}
         {% set status_label = 'messagerie.status.informative'|trans({}, 'navigation') %}
         {% set status_class = 'bg-[rgba(6,182,212,0.12)] text-[#06b6d4] border-[rgba(6,182,212,0.3)]' %}
     {% elseif thread.status.value == 'closed' %}
@@ -91,6 +95,14 @@
                         replyForm: replyForm,
                         imageMaxSizeBytes: imageMaxSizeBytes,
                         imageAllowedMimeTypes: imageAllowedMimeTypes,
+                    } only %}
+                </section>
+            {% elseif thread.category.value == 'vote' %}
+                <section class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-6">
+                    {% include 'messagerie/_vote_section.html.twig' with {
+                        thread: thread,
+                        canVote: canVote,
+                        voteForm: voteForm,
                     } only %}
                 </section>
             {% elseif thread.category.value == 'informative' %}

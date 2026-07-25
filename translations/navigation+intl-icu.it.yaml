@@ -11,6 +11,7 @@ contact:
         other: Altro
         question: Domanda
         suggestion: Suggerimento
+        vote: Sondaggio
     feedback:
         success: "Il tuo messaggio è stato inviato, grazie!"
     field:
@@ -239,8 +240,13 @@ messagerie:
         awaiting_admin: In attesa di risposta
         closed: Chiuso
         informative: Informativo
+        vote: Sondaggio
     thread_closed: "Questa conversazione è chiusa, non puoi più rispondere."
     title: Messaggistica
+    vote:
+        closed: "Il sondaggio è chiuso, non puoi più votare."
+        confirmation: "Il tuo voto per {option} è stato registrato, grazie!"
+        submit: Vota
 
 pagination:
     first: Prima pagina

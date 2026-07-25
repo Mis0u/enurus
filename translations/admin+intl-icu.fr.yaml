@@ -6,11 +6,20 @@ admin:
     broadcast:
         action:
             compose: Nouvelle diffusion
+        category:
+            informative: Diffusion classique
+            vote: Sondage
         compose:
             subject_label: Sujet
             title: Nouvelle diffusion
+        error:
+            poll_duration_required: "La durée du sondage est obligatoire."
+            poll_options_required: "Un sondage doit avoir au moins 2 options."
         field:
             body: Message
+            category: Type
+            poll_duration: "Durée du vote (jours)"
+            poll_options: Options
             recipient_count: "Nb. destinataires"
             sent_at: "Envoyé le"
             sent_by: "Envoyé par"
@@ -20,6 +29,16 @@ admin:
         label:
             plural: Diffusions
             singular: Diffusion
+        poll:
+            add_option: "Ajouter une option"
+            chart:
+                gender: "Participation par genre en %"
+                locale: "Participation par langue en %"
+                options: "Résultats par option"
+            closes_at: "Clôture du vote"
+            option_placeholder: "Libellé de l'option"
+            participation: "{count} vote(s) sur {total} destinataire(s) ({percent}%)"
+            results_title: "Résultats du sondage"
         target:
             all: "Tous les utilisateurs"
             locale: "Tous les utilisateurs ({locale})"
@@ -59,6 +78,7 @@ admin:
             plural: "Exercices personnalisés"
             singular: "Exercice personnalisé"
     field:
+        remove_button: Retirer
         send_button: Envoyer
     menu:
         broadcast: Diffusions

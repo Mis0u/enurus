@@ -11,6 +11,7 @@ contact:
         other: Anders
         question: Vraag
         suggestion: Suggestie
+        vote: Peiling
     feedback:
         success: "Je bericht is verzonden, bedankt!"
     field:
@@ -239,8 +240,13 @@ messagerie:
         awaiting_admin: In afwachting van antwoord
         closed: Gesloten
         informative: Informatief
+        vote: Peiling
     thread_closed: "Dit gesprek is gesloten, je kunt niet meer antwoorden."
     title: Berichten
+    vote:
+        closed: "De stemming is gesloten, je kunt niet meer stemmen."
+        confirmation: "Je stem voor {option} is geregistreerd, bedankt!"
+        submit: Stemmen
 
 pagination:
     first: Eerste pagina
