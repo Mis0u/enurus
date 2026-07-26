@@ -12,6 +12,7 @@ use App\Repository\MuscleGroupRepository;
 use App\Security\Voter\ExerciseVoter;
 use App\Service\Entity\ExerciseCreateService;
 use App\Service\Entity\ExerciseMuscleValidationService;
+use App\Service\Entity\MuscleGroupSorterService;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -38,6 +39,7 @@ final class ExerciseCreateController extends AbstractController
         private readonly ExerciseCreateService $exerciseCreateService,
         private readonly ExerciseMuscleValidationService $exerciseMuscleValidationService,
         private readonly MuscleGroupRepository $muscleGroupRepository,
+        private readonly MuscleGroupSorterService $muscleGroupSorter,
         private readonly TranslatorInterface $translator
     ) {
     }
@@ -55,7 +57,7 @@ final class ExerciseCreateController extends AbstractController
             return $this->handleValidForm($form, $exercise);
         }
 
-        return $this->renderCreateForm($form);
+        return $this->renderCreateForm($form, $request->getLocale());
     }
 
     /**
@@ -79,14 +81,17 @@ final class ExerciseCreateController extends AbstractController
     /**
      * @param FormInterface<Exercise> $form
      */
-    private function renderCreateForm(FormInterface $form): Response
+    private function renderCreateForm(FormInterface $form, string $locale): Response
     {
         /** @var User $user */
         $user = $this->getUser();
 
         return $this->render('exercise/create/index.html.twig', [
             'form' => $form,
-            'muscleGroups' => $this->muscleGroupRepository->findAllOrderedByPosition(),
+            'muscleGroups' => $this->muscleGroupSorter->sortByName(
+                $this->muscleGroupRepository->findAllOrderedByPosition(),
+                $locale,
+            ),
             'gender' => $user->gender,
         ]);
     }
