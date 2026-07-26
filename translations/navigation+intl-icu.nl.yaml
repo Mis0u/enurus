@@ -533,6 +533,8 @@ workout:
             message: "Je bent een training aan het maken: als je deze pagina verlaat, verlies je je huidige selectie."
             text: "Vind je jouw oefening niet? Maak hem aan!"
             title: Nieuwe oefening aanmaken?
+        muscle_filter:
+            toggle: "Filteren op spier"
         no_result: Geen oefening gevonden !
         placeholder: Naam van de oefening...
         title: Zoek een oefening

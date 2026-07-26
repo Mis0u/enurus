@@ -533,6 +533,8 @@ workout:
             message: "Estás creando un entrenamiento: si sales de esta página perderás tu selección actual."
             text: "¿No encuentras tu ejercicio? ¡Créalo!"
             title: ¿Crear un nuevo ejercicio?
+        muscle_filter:
+            toggle: "Filtrar por músculo"
         no_result: ¡Ningún ejercicio encontrado !
         placeholder: Nombre del ejercicio...
         title: Buscar un ejercicio

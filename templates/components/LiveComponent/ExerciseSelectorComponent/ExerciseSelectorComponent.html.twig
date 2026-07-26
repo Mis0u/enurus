@@ -15,7 +15,7 @@
                 data-controller="search-modal"
                 data-action="click->search-modal#stop"
             >
-               {% include 'components/LiveComponent/ExerciseSelectorComponent/_search_bar.html.twig' only %}
+               {% include 'components/LiveComponent/ExerciseSelectorComponent/_search_bar.html.twig' with {'this': this, 'muscleGroupFilters': muscleGroupFilters} only %}
 
                 <div class="max-h-[400px] overflow-y-auto mb-4 scrollbar-thin scrollbar-thumb-white/[0.07] scrollbar-track-transparent">
                     {% include 'components/LiveComponent/ExerciseSelectorComponent/_result.html.twig' with {'this': this} only %}

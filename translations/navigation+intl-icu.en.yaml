@@ -533,6 +533,8 @@ workout:
             message: "You're creating a workout: leaving this page will lose your current selection."
             text: "Can't find your exercise? Create it!"
             title: Create a new exercise?
+        muscle_filter:
+            toggle: "Filter by muscle"
         no_result: No exercise found !
         placeholder: Exercise name...
         title: Search for an exercise

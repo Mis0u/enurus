@@ -547,6 +547,8 @@ workout:
             message: "Tworzysz trening: opuszczenie tej strony spowoduje utratę bieżącego wyboru."
             text: "Nie możesz znaleźć swojego ćwiczenia? Utwórz je!"
             title: Utworzyć nowe ćwiczenie?
+        muscle_filter:
+            toggle: "Filtruj według mięśnia"
         no_result: Nie znaleziono żadnego ćwiczenia !
         placeholder: Nazwa ćwiczenia...
         title: Wyszukaj ćwiczenie

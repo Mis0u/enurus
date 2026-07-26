@@ -533,6 +533,8 @@ workout:
             message: "Du erstellst gerade ein Workout: Wenn du diese Seite verlässt, geht deine aktuelle Auswahl verloren."
             text: "Findest du deine Übung nicht? Erstelle sie!"
             title: Neue Übung erstellen?
+        muscle_filter:
+            toggle: "Nach Muskel filtern"
         no_result: Keine Übung gefunden !
         placeholder: Name der Übung...
         title: Übung suchen
