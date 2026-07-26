@@ -301,15 +301,18 @@ class WorkoutShowControllerTest extends WebTestCase
             $sexe = ['féminine', 'féminin'];
         }
 
+        // Scopé à .svg-body-container (silhouette visible) : la carte de partage hors-écran
+        // (_share_card.html.twig) réutilise le même partial SVG_BODY et porterait sinon les
+        // mêmes ids, ce qui fausserait le compte attendu de 1.
         $this->assertResponseIsSuccessful();
         $this->assertCount(
             1,
-            $crawler->filter(\sprintf('[id="front-%s"]', $gender)),
+            $crawler->filter(\sprintf('.svg-body-container [id="front-%s"]', $gender)),
             \sprintf('La silhouette %s face doit être affichée pour un user %s', $sexe[0], $sexe[1])
         );
         $this->assertCount(
             1,
-            $crawler->filter(\sprintf('[id="back-%s"]', $gender)),
+            $crawler->filter(\sprintf('.svg-body-container [id="back-%s"]', $gender)),
             \sprintf('La silhouette %s dos doit être affichée pour un user %s', $sexe[0], $sexe[1])
         );
     }

@@ -69,4 +69,7 @@ return [
         'version' => '2.0.3',
         'type' => 'css',
     ],
+    'html-to-image' => [
+        'version' => '1.11.13',
+    ],
 ];

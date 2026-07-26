@@ -568,6 +568,13 @@ workout:
         muscles_title: Trenowane mięśnie
         pr_badge: PR
         routine_badge: Rutyna
+        share:
+            button: "Udostępnij"
+            caption: "Udostępnij ten trening"
+            download_button: "Pobierz"
+            download_success: "Obraz pobrany !"
+            error: "Nie udało się wygenerować obrazu, spróbuj ponownie."
+            other_exercises: "{count, plural, =1 {+ # inne ćwiczenie} few {+ # inne ćwiczenia} many {+ # innych ćwiczeń} other {+ # innego ćwiczenia}}"
         sets_table:
             reps: Powt
             tonnage: Tonaż

@@ -554,6 +554,13 @@ workout:
         muscles_title: Trainierte Muskeln
         pr_badge: PR
         routine_badge: Routine
+        share:
+            button: "Teilen"
+            caption: "Dieses Workout teilen"
+            download_button: "Herunterladen"
+            download_success: "Bild heruntergeladen !"
+            error: "Bild konnte nicht erstellt werden, versuche es erneut."
+            other_exercises: "{count, plural, =1 {+ # weitere Übung} other {+ # weitere Übungen}}"
         sets_table:
             reps: Wdh
             tonnage: Tonnage

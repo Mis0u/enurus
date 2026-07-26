@@ -554,6 +554,13 @@ workout:
         muscles_title: Getrainde spieren
         pr_badge: PR
         routine_badge: Routine
+        share:
+            button: "Delen"
+            caption: "Deel deze training"
+            download_button: "Downloaden"
+            download_success: "Afbeelding gedownload !"
+            error: "Kon de afbeelding niet genereren, probeer opnieuw."
+            other_exercises: "{count, plural, =1 {+ # andere oefening} other {+ # andere oefeningen}}"
         sets_table:
             reps: Reps
             tonnage: Tonnage

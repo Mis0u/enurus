@@ -1,0 +1,131 @@
+{#
+    templates/workout/show/_share_card.html.twig
+
+    Carte hors-écran (jamais visible pour l'utilisateur) capturée en image par
+    assets/controllers/workout/share_controller.js via html-to-image. Largeur de conception
+    540px (format vertical), hauteur libre — s'adapte au contenu réel plutôt que de forcer un
+    cadre fixe. Capturée avec pixelRatio: 2 pour une sortie nette en 1080px de large.
+
+    Ordre du contenu : logo + nom du site + date, avatar/pseudo, titre de la séance, photo (si
+    présente), stats de la séance, liste compacte des exercices (avec badges PR/record de reps),
+    silhouette musculaire.
+
+    Paramètres :
+      - workout             : Workout
+      - exerciseData         : list<array{workoutExercise: WorkoutExercise, sets: array}>
+      - totalTonnage        : float
+      - totalSets           : int
+      - totalReps           : int
+      - unit                : UnitOfMeasureEnum
+      - user                : User (propriétaire de la séance)
+      - allPrimarySvgIds    : array<string>
+      - allSecondarySvgIds  : array<string>
+#}
+{% set visible_exercises = exerciseData|slice(0, 5) %}
+{% set remaining_exercises_count = (exerciseData|length) - (visible_exercises|length) %}
+
+<div
+    class="fixed top-0 -left-[10000px] w-[540px] bg-[#080e1a] text-[#f0f4ff] font-dm-sans flex flex-col px-8 py-9"
+    data-workout--share-target="card"
+>
+    <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-2">
+            <img src="{{ asset('images/favicon/android-chrome-192x192.png') }}" alt="" class="w-6 h-6 rounded-md">
+            <span class="font-rajdhani text-[22px] font-bold tracking-wide">FitTracker</span>
+        </div>
+        <span class="text-[13px] text-[#8b9bb4]">{{ workout.performedAt|format_datetime(pattern: 'd MMMM Y', locale: user.locale) }}</span>
+    </div>
+
+    <div class="flex items-center gap-3 mb-6">
+        <div class="w-11 h-11 rounded-full bg-gradient-to-br from-rose-ft to-cyan-ft flex items-center justify-center font-rajdhani font-bold text-[16px] border-2 border-[rgba(244,63,94,0.4)] overflow-hidden shrink-0">
+            {% if user.avatarPath %}
+                <img src="{{ '/uploads/' ~ user.avatarPath }}" alt="" crossorigin="anonymous" class="w-full h-full object-cover">
+            {% else %}
+                {{ user.nickname|formatInitials }}
+            {% endif %}
+        </div>
+        <span class="text-[14px] font-semibold">{{ user.nickname }}</span>
+    </div>
+
+    <h1 class="font-rajdhani text-[30px] font-bold mb-1 leading-tight">
+        {{ workout.routine is not null ? workout.routine.name : 'workout.list.free_session'|trans({}, 'navigation') }}
+    </h1>
+
+    {% if workout.photoPath is not null %}
+        <img
+            src="{{ '/uploads/' ~ workout.photoPath }}"
+            alt=""
+            crossorigin="anonymous"
+            class="w-full h-[200px] object-cover rounded-2xl border border-white/[0.07] mt-4"
+        >
+    {% endif %}
+
+    <div class="grid grid-cols-4 gap-2.5 mt-6">
+        <div class="bg-[rgba(6,182,212,0.12)] border border-[rgba(6,182,212,0.3)] rounded-xl px-2 py-3 text-center">
+            <div class="font-rajdhani text-[20px] font-bold text-[#06b6d4]">{{ totalTonnage|number_format(0, ',', ' ') }}</div>
+            <div class="text-[10px] text-[#8b9bb4] uppercase tracking-wide">{{ unit.value }}</div>
+        </div>
+        <div class="bg-white/[0.03] border border-white/[0.07] rounded-xl px-2 py-3 text-center">
+            <div class="font-rajdhani text-[20px] font-bold">{{ totalSets }}</div>
+            <div class="text-[10px] text-[#8b9bb4] uppercase tracking-wide">{{ 'workout.show.metrics.sets'|trans({}, 'navigation') }}</div>
+        </div>
+        <div class="bg-white/[0.03] border border-white/[0.07] rounded-xl px-2 py-3 text-center">
+            <div class="font-rajdhani text-[20px] font-bold">{{ totalReps }}</div>
+            <div class="text-[10px] text-[#8b9bb4] uppercase tracking-wide">{{ 'workout.show.sets_table.reps'|trans({}, 'navigation') }}</div>
+        </div>
+        <div class="bg-[rgba(34,197,94,0.12)] border border-[rgba(34,197,94,0.25)] rounded-xl px-2 py-3 text-center">
+            <div class="font-rajdhani text-[20px] font-bold text-[#22c55e]">
+                {{ workout.duration is not null ? workout.duration|format_hour : '—' }}
+            </div>
+            <div class="text-[10px] text-[#8b9bb4] uppercase tracking-wide">{{ 'workout.show.metrics.duration'|trans({}, 'navigation') }}</div>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-2.5 mt-6">
+        {% for item in visible_exercises %}
+            {% set exercise = item.workoutExercise.exercise %}
+            {% set exercise_name = exercise.isPublic ? (exercise.name|trans({}, 'exercise')) : exercise.name %}
+            {% set has_pr = item.sets|filter(set => set.isPr)|length > 0 %}
+            {% set has_reps_record = item.sets|filter(set => set.isRepsRecord)|length > 0 %}
+            <div class="flex items-center justify-between gap-3 bg-white/[0.03] border border-white/[0.07] rounded-xl px-4 py-3">
+                <span class="text-[14px] font-medium truncate">{{ exercise_name }}</span>
+                <span class="flex items-center gap-1.5 text-[12px] text-[#8b9bb4] shrink-0">
+                    {% if has_pr %}🏆{% endif %}
+                    {% if has_reps_record %}🔁{% endif %}
+                    {{ 'dashboard.widget.muscles.sets_count'|trans({'count': item.sets|length}, 'navigation') }}
+                </span>
+            </div>
+        {% endfor %}
+        {% if remaining_exercises_count > 0 %}
+            <div class="text-center text-[12px] text-[#8b9bb4] mt-1">
+                {{ 'workout.show.share.other_exercises'|trans({'count': remaining_exercises_count}, 'navigation') }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="flex flex-col items-center justify-center gap-4 mt-8 mb-2">
+        <div
+            class="flex items-center justify-center gap-8"
+            data-controller="workout--show--muscles"
+            data-workout--show--muscles-primary-value='{{ allPrimarySvgIds|json_encode }}'
+            data-workout--show--muscles-secondary-value='{{ allSecondarySvgIds|json_encode }}'
+        >
+            <div class="w-[140px] [&_svg]:!h-auto [&_svg]:max-h-[280px]">
+                {% include 'SVG_BODY/' ~ user.gender.value ~ '/front.html.twig' only %}
+            </div>
+            <div class="w-[140px] [&_svg]:!h-auto [&_svg]:max-h-[280px]">
+                {% include 'SVG_BODY/' ~ user.gender.value ~ '/back.html.twig' only %}
+            </div>
+        </div>
+        <div class="flex items-center gap-5 text-[11px] text-[#8b9bb4]">
+            <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-[#f43f5e] shrink-0"></span>
+                {{ 'workout.show.muscles_primary'|trans({}, 'navigation') }}
+            </div>
+            <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-[#06b6d4] shrink-0"></span>
+                {{ 'workout.show.muscles_secondary'|trans({}, 'navigation') }}
+            </div>
+        </div>
+    </div>
+</div>
