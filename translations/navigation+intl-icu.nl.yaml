@@ -334,10 +334,13 @@ routine:
         exercise_count_plural: oefeningen
         exercise_count_singular: oefening
         exercises_label: Oefeningen
+        muscle_filter:
+            toggle: "Filteren op spier"
         muscle_preview:
             title: Spiervoorbeeld
         name: Naam van de routine
         name_placeholder: "Bijv.: Push Day, Full Body A…"
+        no_result: "Geen oefening gevonden !"
         optional: Optioneel
         search_placeholder: Zoek een oefening…
         your_routine: Jouw routine
@@ -533,6 +536,8 @@ workout:
             message: "Je bent een training aan het maken: als je deze pagina verlaat, verlies je je huidige selectie."
             text: "Vind je jouw oefening niet? Maak hem aan!"
             title: Nieuwe oefening aanmaken?
+        muscle_filter:
+            toggle: "Filteren op spier"
         no_result: Geen oefening gevonden !
         placeholder: Naam van de oefening...
         title: Zoek een oefening

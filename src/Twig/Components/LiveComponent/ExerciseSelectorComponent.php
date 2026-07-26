@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Twig\Components\LiveComponent;
 
 use App\Entity\Exercise;
+use App\Entity\MuscleGroup;
 use App\Entity\User;
 use App\Repository\ExerciseRepository;
+use App\Repository\MuscleGroupRepository;
 use App\Service\Entity\ExerciseSorterService;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -29,8 +31,15 @@ final class ExerciseSelectorComponent
     #[LiveProp(writable: true)]
     public bool $isOpen = false;
 
+    /**
+     * @var list<string>
+     */
+    #[LiveProp(writable: true)]
+    public array $muscleGroupFilters = [];
+
     public function __construct(
         private readonly ExerciseRepository $exerciseRepository,
+        private readonly MuscleGroupRepository $muscleGroupRepository,
         private readonly Security $security,
         private readonly TranslatorInterface $translator,
         private readonly ExerciseSorterService $exerciseSorter,
@@ -48,6 +57,7 @@ final class ExerciseSelectorComponent
     {
         $this->isOpen = false;
         $this->search = '';
+        $this->muscleGroupFilters = [];
     }
 
     #[LiveAction]
@@ -72,10 +82,23 @@ final class ExerciseSelectorComponent
         $exercises = $this->exerciseRepository->findAvailableForUser($this->getUser());
         $sorted = $this->exerciseSorter->sortByName($exercises, $this->getUser()->locale);
 
-        if ('' === $this->search) {
-            return $sorted;
+        if ('' !== $this->search) {
+            $sorted = $this->filterByTranslatedName($sorted);
         }
-        return $this->filterByTranslatedName($sorted);
+
+        if ([] !== $this->muscleGroupFilters) {
+            $sorted = $this->filterByMuscleGroups($sorted);
+        }
+
+        return $sorted;
+    }
+
+    /**
+     * @return list<MuscleGroup>
+     */
+    public function getMuscleGroups(): array
+    {
+        return $this->muscleGroupRepository->findAllOrderedByPosition();
     }
 
     private function getUser(): User
@@ -102,6 +125,26 @@ final class ExerciseSelectorComponent
                     : mb_strtolower($exercise->name);
 
                 return str_contains($translatedName, $target);
+            }
+        ));
+    }
+
+    /**
+     * @param Exercise[] $exercises
+     * @return Exercise[]
+     */
+    private function filterByMuscleGroups(array $exercises): array
+    {
+        return array_values(array_filter(
+            $exercises,
+            function (Exercise $exercise): bool {
+                foreach ($exercise->exerciseMuscles as $exerciseMuscle) {
+                    if (\in_array((string) $exerciseMuscle->muscleGroup->id, $this->muscleGroupFilters, true)) {
+                        return true;
+                    }
+                }
+
+                return false;
             }
         ));
     }

@@ -338,10 +338,13 @@ routine:
         exercise_count_plural: ćwiczenia
         exercise_count_singular: ćwiczenie
         exercises_label: Ćwiczenia
+        muscle_filter:
+            toggle: "Filtruj według mięśnia"
         muscle_preview:
             title: Podgląd mięśni
         name: Nazwa rutyny
         name_placeholder: "Np.: Push Day, Full Body A…"
+        no_result: "Nie znaleziono żadnego ćwiczenia !"
         optional: Opcjonalne
         search_placeholder: Wyszukaj ćwiczenie…
         your_routine: Twoja rutyna
@@ -547,6 +550,8 @@ workout:
             message: "Tworzysz trening: opuszczenie tej strony spowoduje utratę bieżącego wyboru."
             text: "Nie możesz znaleźć swojego ćwiczenia? Utwórz je!"
             title: Utworzyć nowe ćwiczenie?
+        muscle_filter:
+            toggle: "Filtruj według mięśnia"
         no_result: Nie znaleziono żadnego ćwiczenia !
         placeholder: Nazwa ćwiczenia...
         title: Wyszukaj ćwiczenie

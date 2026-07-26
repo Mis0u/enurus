@@ -11,6 +11,7 @@ use App\Repository\MuscleGroupRepository;
 use App\Security\Voter\ExerciseVoter;
 use App\Service\Entity\ExerciseEditService;
 use App\Service\Entity\ExerciseMuscleValidationService;
+use App\Service\Entity\MuscleGroupSorterService;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -35,6 +36,7 @@ final class ExerciseEditController extends AbstractController
         private readonly ExerciseEditService $exerciseEditService,
         private readonly ExerciseMuscleValidationService $exerciseMuscleValidationService,
         private readonly MuscleGroupRepository $muscleGroupRepository,
+        private readonly MuscleGroupSorterService $muscleGroupSorter,
         private readonly TranslatorInterface $translator
     ) {
     }
@@ -48,16 +50,16 @@ final class ExerciseEditController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->handleValidForm($form, $exercise);
+            return $this->handleValidForm($form, $exercise, $request->getLocale());
         }
 
-        return $this->renderEditForm($form, $exercise);
+        return $this->renderEditForm($form, $exercise, $request->getLocale());
     }
 
     /**
      * @param FormInterface<Exercise> $form
      */
-    private function handleValidForm(FormInterface $form, Exercise $exercise): Response
+    private function handleValidForm(FormInterface $form, Exercise $exercise, string $locale): Response
     {
         $muscles = $form->get('muscles')->getData();
 
@@ -66,7 +68,7 @@ final class ExerciseEditController extends AbstractController
         }
 
         if (! $this->exerciseMuscleValidationService->hasPrimaryMuscle($muscles)) {
-            return $this->renderEditForm($form, $exercise);
+            return $this->renderEditForm($form, $exercise, $locale);
         }
 
         $this->exerciseEditService->edit($exercise, $muscles);
@@ -79,7 +81,7 @@ final class ExerciseEditController extends AbstractController
     /**
      * @param FormInterface<Exercise> $form
      */
-    private function renderEditForm(FormInterface $form, Exercise $exercise): Response
+    private function renderEditForm(FormInterface $form, Exercise $exercise, string $locale): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -88,7 +90,10 @@ final class ExerciseEditController extends AbstractController
             'form' => $form,
             'exercise' => $exercise,
             'gender' => $user->gender ?? 'male',
-            'muscleGroups' => $this->muscleGroupRepository->findAllOrderedByPosition(),
+            'muscleGroups' => $this->muscleGroupSorter->sortByName(
+                $this->muscleGroupRepository->findAllOrderedByPosition(),
+                $locale,
+            ),
             'user' => $user,
         ]);
     }
