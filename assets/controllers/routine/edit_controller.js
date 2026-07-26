@@ -5,7 +5,7 @@ import Sortable from 'sortablejs';
 import { CSS, SVG } from './routine-constants.js';
 import { buildSelectedItem, buildErrorElement } from './routine-dom-builder.js';
 import { initNameChecker } from './routine-name-checker.js';
-import { matchesFilters } from './routine-exercise-filter.js';
+import { matchesFilters, normalizeForSearch } from './routine-exercise-filter.js';
 import { MusclePills, updatePillVisual } from '../exercise/muscle_pills.js';
 
 export default class extends Controller {
@@ -75,6 +75,7 @@ export default class extends Controller {
         this.exerciseItemTargets.forEach(item => {
             this.#exerciseData.set(item.dataset.exerciseId, {
                 name:                    item.dataset.exerciseName ?? '',
+                normalizedName:          normalizeForSearch(item.dataset.exerciseName ?? ''),
                 muscleIds:               (item.dataset.muscleIds ?? '').split(',').filter(Boolean),
                 primaryMuscleGroupIds:   (item.dataset.primaryMuscleGroupIds ?? '').split(',').filter(Boolean),
                 secondaryMuscleGroupIds: (item.dataset.secondaryMuscleGroupIds ?? '').split(',').filter(Boolean),
@@ -196,7 +197,7 @@ export default class extends Controller {
     // -------------------------------------------------------------------------
 
     filterExercises(event) {
-        this.#searchQuery = event.currentTarget.value.toLowerCase().trim();
+        this.#searchQuery = normalizeForSearch(event.currentTarget.value.trim());
         this.#applyFilters();
     }
 
