@@ -142,3 +142,19 @@
 ------------------------------------------------------------------ */
 .routine-muscle-dot-primary { background: #f43f5e; }
 .routine-muscle-dot-secondary { background: #06b6d4; }
+
+/* ------------------------------------------------------------------
+   FILTRE PAR MUSCLE — états dynamiques JS (cycle none/primary/secondary),
+   mêmes couleurs que .exercise-pill (exercise-create.css)
+------------------------------------------------------------------ */
+.muscle-filter-chip.pill--primary {
+    background: rgba(244, 63, 94, 0.12);
+    border-color: rgba(244, 63, 94, 0.3);
+    color: #f43f5e;
+}
+
+.muscle-filter-chip.pill--secondary {
+    background: rgba(6, 182, 212, 0.12);
+    border-color: rgba(6, 182, 212, 0.3);
+    color: #06b6d4;
+}

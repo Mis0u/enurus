@@ -2,11 +2,13 @@
     templates/routine/create/_exercise_selector.html.twig
 
     Paramètres :
-      - controllerName   : string
-      - muscleGroups       : list<MuscleGroup>
-      - exercises          : list<Exercise>
-      - primaryMuscleIds   : array<string, string> exerciseId => IDs SVG des muscles primaires séparés par virgule
-      - secondaryMuscleIds : array<string, string> exerciseId => IDs SVG des muscles secondaires séparés par virgule
+      - controllerName          : string
+      - muscleGroups            : list<MuscleGroup> (triés alphabétiquement)
+      - exercises               : list<Exercise>
+      - primaryMuscleIds        : array<string, string> exerciseId => IDs SVG des muscles primaires séparés par virgule
+      - secondaryMuscleIds      : array<string, string> exerciseId => IDs SVG des muscles secondaires séparés par virgule
+      - primaryMuscleGroupIds   : array<string, string> exerciseId => IDs (UUID) des groupes musculaires primaires séparés par virgule
+      - secondaryMuscleGroupIds : array<string, string> exerciseId => IDs (UUID) des groupes musculaires secondaires séparés par virgule
 #}
 <div class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-[22px] flex flex-col min-w-0 overflow-visible">
 
@@ -28,6 +30,28 @@
         >
     </div>
 
+    {# Filtre par muscle — 1er clic = primaire (rouge), 2e clic = secondaire (cyan), 3e clic = aucun #}
+    <details class="mb-3.5">
+        <summary class="cursor-pointer text-[13px] font-medium text-white/60 hover:text-white/80 select-none">
+            {{ 'routine.form.muscle_filter.toggle'|trans({}, 'navigation') }}
+            <span data-{{ controllerName }}-target="muscleFilterCount" hidden class="text-[#f43f5e]"></span>
+        </summary>
+        <div class="flex flex-wrap gap-2 mt-3">
+            {% for muscle_group in muscleGroups %}
+                <button
+                    type="button"
+                    class="muscle-filter-chip inline-flex items-center px-3 py-1.5 rounded-full text-[13px] font-medium border border-white/[0.07] bg-[#080e1a] text-white/70 transition-colors duration-150 cursor-pointer select-none"
+                    data-state="none"
+                    data-muscle-id="{{ muscle_group.id }}"
+                    data-{{ controllerName }}-target="muscleFilterChip"
+                    data-action="click->{{ controllerName }}#cycleMuscleFilter"
+                >
+                    {{ muscle_group.name|trans({}, 'muscle') }}
+                </button>
+            {% endfor %}
+        </div>
+    </details>
+
     {# Liste d'exercices scrollable #}
     <div
         class="flex flex-col gap-2 overflow-y-auto"
@@ -43,6 +67,8 @@
                 data-exercise-name="{{ exercise_name }}"
                 data-muscle-ids="{{ primaryMuscleIds[exercise.id] ?? '' }}"
                 data-secondary-muscle-ids="{{ secondaryMuscleIds[exercise.id] ?? '' }}"
+                data-primary-muscle-group-ids="{{ primaryMuscleGroupIds[exercise.id] ?? '' }}"
+                data-secondary-muscle-group-ids="{{ secondaryMuscleGroupIds[exercise.id] ?? '' }}"
             >
                 <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2 mb-1">
@@ -50,11 +76,11 @@
                             {{ exercise_name }}
                         </span>
                         {% if exercise.isPublic %}
-                            <span class="inline-flex px-1.5 py-[2px] rounded text-[10px] font-semibold bg-cyan-500/[0.12] border border-cyan-500/25 text-cyan-400 whitespace-nowrap flex-shrink-0">
+                            <span class="text-[10px] font-semibold text-cyan-400 whitespace-nowrap flex-shrink-0">
                                 {{ 'routine.badge.base'|trans({}, 'navigation') }}
                             </span>
                         {% else %}
-                            <span class="inline-flex px-1.5 py-[2px] rounded text-[10px] font-semibold bg-rose-500/[0.15] border border-rose-500/25 text-rose-500 whitespace-nowrap flex-shrink-0">
+                            <span class="text-[10px] font-semibold text-rose-500 whitespace-nowrap flex-shrink-0">
                                 {{ 'routine.badge.mine'|trans({}, 'navigation') }}
                             </span>
                         {% endif %}
@@ -88,5 +114,13 @@
             </div>
         {% endfor %}
     </div>
+
+    <p
+        class="text-center text-[13px] text-white/40 py-6"
+        data-{{ controllerName }}-target="searchEmptyState"
+        hidden
+    >
+        {{ 'routine.form.no_result'|trans({}, 'navigation') }}
+    </p>
 
 </div>

@@ -334,10 +334,13 @@ routine:
         exercise_count_plural: exercices
         exercise_count_singular: exercice
         exercises_label: Exercices
+        muscle_filter:
+            toggle: "Filtrer par muscle"
         muscle_preview:
             title: Aperçu musculaire
         name: Nom de la routine
         name_placeholder: "Ex : Push Day, Full Body A…"
+        no_result: "Aucun exercice trouvé !"
         optional: Optionnel
         search_placeholder: Rechercher un exercice…
         your_routine: Ta routine

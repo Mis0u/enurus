@@ -9,9 +9,11 @@
       - routine            : Routine
       - muscleGroups       : list<MuscleGroup>
       - exercises          : list<Exercise>
-      - primaryMuscleIds   : array<string, string>
-      - secondaryMuscleIds : array<string, string>
-      - cancelUrl          : string
+      - primaryMuscleIds        : array<string, string>
+      - secondaryMuscleIds      : array<string, string>
+      - primaryMuscleGroupIds   : array<string, string>
+      - secondaryMuscleGroupIds : array<string, string>
+      - cancelUrl               : string
 #}
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
 
@@ -78,6 +80,8 @@
                     exercises: exercises,
                     primaryMuscleIds: primaryMuscleIds,
                     secondaryMuscleIds: secondaryMuscleIds,
+                    primaryMuscleGroupIds: primaryMuscleGroupIds,
+                    secondaryMuscleGroupIds: secondaryMuscleGroupIds,
                 } only %}
             </div>
 

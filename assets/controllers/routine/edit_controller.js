@@ -5,6 +5,8 @@ import Sortable from 'sortablejs';
 import { CSS, SVG } from './routine-constants.js';
 import { buildSelectedItem, buildErrorElement } from './routine-dom-builder.js';
 import { initNameChecker } from './routine-name-checker.js';
+import { matchesFilters } from './routine-exercise-filter.js';
+import { MusclePills, updatePillVisual } from '../exercise/muscle_pills.js';
 
 export default class extends Controller {
     static targets = [
@@ -18,6 +20,9 @@ export default class extends Controller {
         'summaryCount',
         'submitBtn',
         'accordionBody',
+        'searchEmptyState',
+        'muscleFilterChip',
+        'muscleFilterCount',
     ];
 
     static values = {
@@ -30,14 +35,18 @@ export default class extends Controller {
         labelPlural:     String,
     };
 
-    #exerciseData    = new Map();
-    #selectedIds     = [];
-    #searchQuery     = '';
-    #sortable        = null;
-    #nameIsAvailable = true;
+    #exerciseData       = new Map();
+    #selectedIds        = [];
+    #searchQuery        = '';
+    #sortable           = null;
+    #nameIsAvailable    = true;
+
+    /** @type {MusclePills} */
+    #muscleFilterPills;
 
     connect() {
         this.#buildExerciseDataMap();
+        this.#muscleFilterPills = new MusclePills(this.element, this.muscleFilterChipTargets);
         this.#initFromExistingData();
         this.#initSortable();
         this.#updateUI();
@@ -65,10 +74,12 @@ export default class extends Controller {
     #buildExerciseDataMap() {
         this.exerciseItemTargets.forEach(item => {
             this.#exerciseData.set(item.dataset.exerciseId, {
-                name:             item.dataset.exerciseName ?? '',
-                muscleIds:        (item.dataset.muscleIds ?? '').split(',').filter(Boolean),
-                primaryMuscles:   this.#readMuscleTags(item, 'primary'),
-                secondaryMuscles: this.#readMuscleTags(item, 'secondary'),
+                name:                    item.dataset.exerciseName ?? '',
+                muscleIds:               (item.dataset.muscleIds ?? '').split(',').filter(Boolean),
+                primaryMuscleGroupIds:   (item.dataset.primaryMuscleGroupIds ?? '').split(',').filter(Boolean),
+                secondaryMuscleGroupIds: (item.dataset.secondaryMuscleGroupIds ?? '').split(',').filter(Boolean),
+                primaryMuscles:          this.#readMuscleTags(item, 'primary'),
+                secondaryMuscles:        this.#readMuscleTags(item, 'secondary'),
             });
         });
     }
@@ -189,12 +200,34 @@ export default class extends Controller {
         this.#applyFilters();
     }
 
+    cycleMuscleFilter(event) {
+        const chip     = event.currentTarget;
+        const muscleId = chip.dataset.muscleId;
+        const next     = this.#muscleFilterPills.cycle(muscleId);
+
+        updatePillVisual(chip, next);
+        this.#updateMuscleFilterCount();
+        this.#applyFilters();
+    }
+
+    #updateMuscleFilterCount() {
+        const count = this.#muscleFilterPills.toAssignments().length;
+
+        this.muscleFilterCountTarget.hidden      = count === 0;
+        this.muscleFilterCountTarget.textContent = count > 0 ? `(${count})` : '';
+    }
+
     #applyFilters() {
-        this.exerciseItemTargets.forEach(item => {
+        const muscleFilters = this.#muscleFilterPills.toAssignments();
+        const anyVisible    = this.exerciseItemTargets.reduce((visible, item) => {
             const data    = this.#exerciseData.get(item.dataset.exerciseId);
-            const matches = !this.#searchQuery || data.name.toLowerCase().includes(this.#searchQuery);
+            const matches = matchesFilters(data, this.#searchQuery, muscleFilters);
             item.hidden   = !matches;
-        });
+
+            return visible || matches;
+        }, false);
+
+        this.searchEmptyStateTarget.hidden = anyVisible;
     }
 
     // -------------------------------------------------------------------------
