@@ -554,6 +554,13 @@ workout:
         muscles_title: Muscles worked
         pr_badge: PR
         routine_badge: Routine
+        share:
+            button: "Share"
+            caption: "Share this workout"
+            download_button: "Download"
+            download_success: "Image downloaded !"
+            error: "Couldn't generate the image, try again."
+            other_exercises: "{count, plural, =1 {+ # other exercise} other {+ # other exercises}}"
         sets_table:
             reps: Reps
             tonnage: Tonnage

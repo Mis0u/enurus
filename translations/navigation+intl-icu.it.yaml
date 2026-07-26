@@ -554,6 +554,13 @@ workout:
         muscles_title: Muscoli allenati
         pr_badge: PR
         routine_badge: Routine
+        share:
+            button: "Condividi"
+            caption: "Condividi questo allenamento"
+            download_button: "Scarica"
+            download_success: "Immagine scaricata !"
+            error: "Impossibile generare l'immagine, riprova."
+            other_exercises: "{count, plural, =1 {+ # altro esercizio} other {+ # altri esercizi}}"
         sets_table:
             reps: Rip
             tonnage: Tonnellaggio

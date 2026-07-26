@@ -18,3 +18,22 @@ export function showSuccessToast(message) {
         iconColor: '#22c55e',
     });
 }
+
+export function showErrorToast(message) {
+    if (typeof Swal === 'undefined') {
+        return;
+    }
+
+    Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'error',
+        title: message,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        background: '#0f1928',
+        color: '#f0f4ff',
+        iconColor: '#f43f5e',
+    });
+}
