@@ -115,18 +115,29 @@ final class ExerciseSelectorComponent
      */
     private function filterByTranslatedName(array $exercises): array
     {
-        $target = mb_strtolower($this->search);
+        $target = $this->normalizeForSearch($this->search);
 
         return array_values(array_filter(
             $exercises,
             function (Exercise $exercise) use ($target): bool {
                 $translatedName = $exercise->isPublic
-                    ? mb_strtolower($this->translator->trans($exercise->name, [], 'exercise'))
-                    : mb_strtolower($exercise->name);
+                    ? $this->translator->trans($exercise->name, [], 'exercise')
+                    : $exercise->name;
 
-                return str_contains($translatedName, $target);
+                return str_contains($this->normalizeForSearch($translatedName), $target);
             }
         ));
+    }
+
+    /**
+     * Insensible à la casse et aux accents, pour que "developpe" trouve "Développé".
+     */
+    private function normalizeForSearch(string $value): string
+    {
+        $decomposed = \Normalizer::normalize($value, \Normalizer::FORM_D) ?: $value;
+        $withoutDiacritics = preg_replace('/\p{Mn}/u', '', $decomposed) ?? $decomposed;
+
+        return mb_strtolower($withoutDiacritics);
     }
 
     /**
