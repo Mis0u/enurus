@@ -81,7 +81,14 @@ User (alias, email, password, gender: GenderEnum, locale, unit_of_measure)
 Règles :
 - Poids **toujours en kg en base**. Conversion lbs↔kg = responsabilité de la couche
   affichage/soumission (`WeightConverterService`), jamais du stockage.
-- `cascade: ['persist','remove']` + `orphanRemoval: true` sur toutes les relations parent→enfant.
+- `orphanRemoval: true` sur toutes les relations parent→enfant. `cascade: ['persist','remove']` pour les
+  **compositions internes construites en mémoire puis flushées ensemble** (`Workout→WorkoutExercise→
+  ExerciseSet`, `Routine→RoutineExercise` — ajoutées via `CollectionType`/DataTransformer, jamais
+  persistées individuellement). `cascade: ['remove']` seul pour les relations `User→{Exercise,Workout,
+  Routine,ContactThread}` : ces enfants sont toujours persistés indépendamment par leur propre service
+  (ex. `ExerciseCreateService::create()` fait `$em->persist($exercise)` directement), le cascade persist
+  depuis `User` ne servirait jamais — Doctrine Doctor flag ce cas comme "Bidirectional Association
+  Inconsistency", c'est un faux positif connu du tool sur ce pattern.
 - `performedAt` est `datetime_immutable`, sans timezone actuellement (TODO #10 — évaluation
   `datetimetz_immutable` non actée, ne pas anticiper : traiter les nouvelles features comme le
   reste de l'app, naive datetime, pour ne pas créer d'incohérence entre pages).
@@ -325,6 +332,7 @@ palier précise, préférer des dates fixes en dur.
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
 | 24 | Vérification d'email obligatoire avant premier accès (lien de confirmation, compte inactif tant que non cliqué) — renfort anti-bot le plus efficace, à coder seulement si de vraies inscriptions frauduleuses sont constatées |
+| 25 | Perf requêtes dashboard (`/fr/tableau-de-bord`) — Doctrine Doctor y détecte plusieurs cartésiens O(n²)/O(n³) (JOIN sur `workout_exercise`+`exercise_set`, puis +`exercise_muscle`), des requêtes à 5 JOINs, un JOIN inutile sur `exercise_set` (alias `e5_`), et 7 agrégations sans DTO hydration. À traiter comme chantier séparé, en lien avec `docs/dashboard-architecture.md` |
 
 ---
 
