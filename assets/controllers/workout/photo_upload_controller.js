@@ -110,6 +110,12 @@ export default class extends Controller {
     #showPreview(file) {
         const reader = new FileReader();
         reader.onload = (e) => {
+            // Upload rapide en échec (#upload) a pu entre-temps appeler #resetPreview()
+            // et vider #selectedFile — ne pas réafficher un aperçu périmé dans ce cas.
+            if (this.#selectedFile !== file) {
+                return;
+            }
+
             this.previewTarget.src = e.target.result;
             this.previewWrapperTarget.classList.remove('hidden');
             this.placeholderTarget.classList.add('hidden');

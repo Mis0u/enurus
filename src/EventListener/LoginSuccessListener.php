@@ -41,10 +41,8 @@ final readonly class LoginSuccessListener
 
     private function redirectTo(LoginSuccessEvent $event, User $user): void
     {
-        $locale = $user->locale ?? $event->getRequest()->getLocale();
-
         $url = $this->urlGenerator->generate('app_dashboard', [
-            '_locale' => $locale,
+            '_locale' => $user->locale,
         ]);
 
         $event->setResponse(new RedirectResponse($url));
