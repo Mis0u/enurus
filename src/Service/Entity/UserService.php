@@ -13,7 +13,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final readonly class UserService
+readonly class UserService
 {
     public function __construct(
         private UserPasswordHasherInterface $passwordHasher,

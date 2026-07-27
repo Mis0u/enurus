@@ -12,7 +12,7 @@ use Doctrine\ORM\AbstractQuery;
  * Requêtes de tonnage (poids × reps) — extrait de WorkoutRepository (split SRP, voir CLAUDE.md
  * TODO), responsabilité distincte de la pagination/des muscles sollicités/des comptages bruts.
  */
-final class WorkoutTonnageRepository
+class WorkoutTonnageRepository
 {
     /**
      * Sous-requête DQL de tonnage réutilisée par toutes les requêtes agrégeant le tonnage
