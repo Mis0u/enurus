@@ -40,4 +40,66 @@ final class DashboardTonnageChartBuilderTest extends TestCase
         $options = $chart->getOptions();
         self::assertFalse($options['plugins']['legend']['display']);
     }
+
+    public function testBuildProducesTheExactExpectedDataAndOptionsStructure(): void
+    {
+        $builder = new DashboardTonnageChartBuilder(new ChartBuilder());
+
+        $chart = $builder->build(['Lun', 'Mar'], [100.0, 150.5], 'kg');
+
+        self::assertSame([
+            'labels' => ['Lun', 'Mar'],
+            'datasets' => [
+                [
+                    'data' => [100.0, 150.5],
+                    'backgroundColor' => '#f43f5e',
+                    'borderRadius' => 4,
+                    'borderSkipped' => false,
+                ],
+            ],
+        ], $chart->getData());
+
+        self::assertSame([
+            'responsive' => true,
+            'maintainAspectRatio' => false,
+            'plugins' => [
+                'legend' => [
+                    'display' => false,
+                ],
+            ],
+            'scales' => [
+                'x' => [
+                    'grid' => [
+                        'color' => 'rgba(255,255,255,0.05)',
+                    ],
+                    'ticks' => [
+                        'color' => '#4a5568',
+                        'font' => [
+                            'size' => 10,
+                        ],
+                    ],
+                ],
+                'y' => [
+                    'beginAtZero' => true,
+                    'grid' => [
+                        'color' => 'rgba(255,255,255,0.05)',
+                    ],
+                    'ticks' => [
+                        'color' => '#4a5568',
+                        'font' => [
+                            'size' => 10,
+                        ],
+                    ],
+                    'title' => [
+                        'display' => true,
+                        'text' => 'kg',
+                        'color' => '#4a5568',
+                        'font' => [
+                            'size' => 10,
+                        ],
+                    ],
+                ],
+            ],
+        ], $chart->getOptions());
+    }
 }

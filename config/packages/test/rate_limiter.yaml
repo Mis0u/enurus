@@ -2,7 +2,12 @@ framework:
     rate_limiter:
         registration:
             policy: 'sliding_window'
-            limit: 3
+            # La suite E2E Playwright (tests/e2e/) fait de vraies requêtes HTTP (contrairement à
+            # PHPUnit, ce stockage n'est jamais reset entre elles — cf. commentaire ArrayAdapter
+            # plus bas) : plusieurs runs successifs pendant le développement d'un scénario
+            # épuisent vite une limite basse, faisant échouer le test sans rapport avec la logique
+            # testée. Prod reste à 3/15min (config/packages/rate_limiter.yaml).
+            limit: 100
             interval: '15 minutes'
             cache_pool: rate_limiter.storage
         password_change:

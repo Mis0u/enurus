@@ -75,6 +75,41 @@ final class DashboardTonnageServiceTest extends TestCase
         self::assertCount($expectedDays, $sessionsChart->getData()['labels']);
         self::assertCount($expectedDays, $sessionsChart->getData()['datasets'][0]['data']);
         self::assertSame(0.0, $sessionsChart->getData()['datasets'][0]['data'][0]);
+        // array_column($points, 'label') doit extraire la seule chaîne de label, pas la structure
+        // de point complète {label, value}.
+        self::assertIsString($sessionsChart->getData()['labels'][0]);
+    }
+
+    public function testReturnedYearAndChartMinWidthsAreExactComputedIntegers(): void
+    {
+        $user = $this->createUser(UnitOfMeasureEnum::KG);
+        $now = new \DateTimeImmutable();
+        $expectedYear = (int) $now->format('Y');
+
+        $service = $this->service([]);
+        $result = $service->getData($user);
+
+        self::assertSame($expectedYear, $result['year']);
+
+        $sessionsLabelCount = \count($result['charts']['sessions']->getData()['labels']);
+        $weekLabelCount = \count($result['charts']['week']->getData()['labels']);
+
+        self::assertSame($sessionsLabelCount * 28, $result['sessionsChartMinWidth']);
+        self::assertSame($weekLabelCount * 40, $result['weekChartMinWidth']);
+    }
+
+    public function testMonthlyChartIncludesTheCurrentInProgressMonth(): void
+    {
+        // La borne de fin (aujourd'hui) tombe exactement sur le premier jour normalisé du bucket
+        // du mois courant — seule une comparaison <= (et non <) inclut ce dernier bucket.
+        $user = $this->createUser(UnitOfMeasureEnum::KG);
+        $now = new \DateTimeImmutable();
+        $expectedMonths = (int) $now->format('n');
+
+        $service = $this->service([]);
+        $result = $service->getData($user);
+
+        self::assertCount($expectedMonths, $result['charts']['month']->getData()['labels']);
     }
 
     public function testMultipleSessionsOnTheSameDayAreAggregatedOnASingleBar(): void

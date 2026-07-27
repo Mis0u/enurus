@@ -1,0 +1,23 @@
+{
+    "$schema": "vendor/infection/infection/resources/schema.json",
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "logs": {
+        "text": "var/infection/infection.log",
+        "summary": "var/infection/summary.log"
+    },
+    "mutators": {
+        "@default": true
+    },
+    // Marge de sécurité sous le MSI global actuel (96%) pour détecter une vraie régression de
+    // qualité des tests sans être fragile au moindre nouveau fichier. minCoveredMsi porte
+    // uniquement sur le code déjà couvert par des tests (exclut le code jamais exécuté, un
+    // problème distinct de la couverture de lignes) : ce code-là doit rester quasi-parfaitement
+    // testé. Certains mutants restent délibérément équivalents/inoffensifs (documentés au fil des
+    // revues) — ne pas monter ces seuils juste pour les chasser.
+    "minMsi": 90,
+    "minCoveredMsi": 95
+}

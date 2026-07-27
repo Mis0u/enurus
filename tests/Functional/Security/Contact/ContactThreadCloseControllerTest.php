@@ -16,6 +16,8 @@ final class ContactThreadCloseControllerTest extends WebTestCase
 
     private const string OWNER = 'user-fixture-2@test.com';
 
+    private const string ADMIN = 'admin-fixture@test.com';
+
     /**
      * Le succès (admin authentifié + token CSRF valide) est couvert par
      * ContactThreadCloseServiceTest — aucune page ne rend encore ce token (pas d'interface admin),
@@ -34,6 +36,28 @@ final class ContactThreadCloseControllerTest extends WebTestCase
 
         $client->request(Request::METHOD_POST, \sprintf('/fr/messagerie/%s/cloturer', $thread->id), [
             '_token' => 'irrelevant-blocked-before-csrf-check',
+        ]);
+
+        self::assertResponseStatusCodeSame(403);
+    }
+
+    /**
+     * Contrairement au test ci-dessus (bloqué par #[IsGranted('ROLE_ADMIN')] avant même d'atteindre
+     * le controller), un admin passe la garde de classe et le Voter CLOSE — ce test exerce donc
+     * réellement la vérification CSRF explicite de App\Controller\Contact\ContactThreadCloseController.
+     */
+    public function testAdminWithInvalidCsrfTokenCannotCloseThread(): void
+    {
+        $client = $this->login(self::ADMIN);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::OWNER);
+
+        $thread = ContactThreadTestHelper::createThread($entityManager, $owner);
+
+        $client->request(Request::METHOD_POST, \sprintf('/fr/messagerie/%s/cloturer', $thread->id), [
+            '_token' => 'invalid-token',
         ]);
 
         self::assertResponseStatusCodeSame(403);

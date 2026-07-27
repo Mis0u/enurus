@@ -55,3 +55,11 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
+        firewalls:
+            main:
+                # La suite E2E Playwright (tests/e2e/) fait de vraies connexions HTTP (pas de
+                # transactions DAMA en rollback comme PHPUnit) : plusieurs specs se logguent
+                # réellement dans la même fenêtre d'une minute et dépassent vite la limite prod de
+                # 3/minute, faisant échouer des tests sans rapport avec le throttling lui-même.
+                login_throttling:
+                    max_attempts: 30 # PAR MINUTE — prod reste à 3, cf. bloc racine ci-dessus

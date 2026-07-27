@@ -42,6 +42,40 @@ function ecsFix(): void
     );
 }
 
+#[AsTask(description: 'Audit dependencies for known security vulnerabilities')]
+function composerAudit(): void
+{
+    execute(
+        'COMPOSER AUDIT',
+        '🛡️ Auditing dependencies for known vulnerabilities...',
+        'composer audit --locked',
+        'No known vulnerability found'
+    );
+}
+
+#[AsTask(description: 'Mutation testing with Infection')]
+function infection(?string $filter = null): void
+{
+    $filterOption = null !== $filter ? \sprintf('--filter=%s', $filter) : '';
+    execute(
+        'INFECTION',
+        '🧬 Running mutation testing...',
+        \sprintf('vendor/bin/infection --threads=max %s', $filterOption),
+        'Mutation testing passed'
+    );
+}
+
+#[AsTask(description: 'Taint analysis with Psalm (injection tracing)')]
+function psalmTaint(): void
+{
+    execute(
+        'PSALM TAINT',
+        '☣️ Tracing user input to dangerous sinks...',
+        'vendor/bin/psalm --config=tools/psalm/psalm.xml --taint-analysis --no-cache',
+        'No tainted data path found'
+    );
+}
+
 #[AsTask(description: 'Detect magic numbers with PHPMND')]
 function phpmnd(): void
 {
@@ -87,6 +121,17 @@ function testJs(): void
     );
 }
 
+#[AsTask(description: 'Execute end-to-end browser tests with Playwright')]
+function testE2e(): void
+{
+    execute(
+        'PLAYWRIGHT',
+        '🌐 Running end-to-end browser tests...',
+        'npm run test:e2e',
+        'All the end-to-end tests passed'
+    );
+}
+
 #[AsTask(description: 'Execute Eslint')]
 function eslint(): void
 {
@@ -104,10 +149,13 @@ function qa(): void
     test();
     testJs();
     phpstan();
+    psalmTaint();
     ecs();
     phpmnd();
     twigcs();
     eslint();
+    composerAudit();
+    schemaValidate(test: true);
     io()->success('✨ All checks passed! Ready to commit.');
 }
 
@@ -181,6 +229,18 @@ function migrate(bool $test = false): void
         '⬇🔁 Migration\'s migrating...',
         \sprintf('%sphp bin/console d:m:m -n', $env),
         \sprintf('Migrations are migrated in %s', $dbType)
+    );
+}
+
+#[AsTask(description: 'Check entities/migrations schema drift')]
+function schemaValidate(bool $test = false): void
+{
+    [$env, $dbType] = getDatabaseContext($test);
+    execute(
+        \sprintf('SCHEMA VALIDATE (%s)', $dbType),
+        '🗃️ Checking for schema drift between entities and migrations...',
+        \sprintf('%sphp bin/console doctrine:schema:validate --skip-mapping', $env),
+        'No schema drift found'
     );
 }
 

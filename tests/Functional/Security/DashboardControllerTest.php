@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security;
 
+use App\Repository\WorkoutRepository;
+use App\Service\Dashboard\DashboardSessionSummaryService;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -14,6 +16,10 @@ class DashboardControllerTest extends WebTestCase
     use FunctionalTestTrait;
 
     private const string USER_WITH_NO_DATA = 'user-fixture-0@test.com';
+
+    // 26 séances (>= 2, débloque régularité + muscles semaine/mois) — pas utilisé par la suite
+    // Playwright (tests/e2e/), donc pas de pollution possible entre les deux.
+    private const string USER_WITH_WORKOUTS = 'user-fixture-26-workout@test.com';
 
     private const string ADMIN = 'admin-fixture@test.com';
 
@@ -78,5 +84,51 @@ class DashboardControllerTest extends WebTestCase
         $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
 
         self::assertSelectorNotExists('a[href="/admin"]');
+    }
+
+    public function testDashboardWithWorkoutsRendersPopulatedWidgetsInsteadOfEmptyState(): void
+    {
+        $client = $this->login(self::USER_WITH_WORKOUTS);
+        $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorTextNotContains('body', 'commence ta première séance');
+        // Widget Régularité réellement rendu (>= 2 séances), pas le _locked_card.html.twig —
+        // "Last week" (widget de comparaison hebdomadaire) n'existe que côté widget débloqué.
+        self::assertSelectorExists('[data-dashboard--session-target="exercises"]');
+    }
+
+    public function testDashboardSessionStatsMatchLatestWorkout(): void
+    {
+        $client = $this->login(self::USER_WITH_WORKOUTS);
+        $user = $this->getUserByEmail(self::USER_WITH_WORKOUTS);
+
+        /** @var WorkoutRepository $workoutRepository */
+        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
+        $lastWorkout = $workoutRepository->findLatestByUser($user);
+        self::assertNotNull($lastWorkout, 'Le fixture user doit avoir au moins une séance');
+
+        /** @var DashboardSessionSummaryService $summaryService */
+        $summaryService = static::getContainer()->get(DashboardSessionSummaryService::class);
+        $summary = $summaryService->summarize($lastWorkout);
+
+        $crawler = $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertResponseIsSuccessful();
+        self::assertSame(
+            (string) $lastWorkout->workoutExercises->count(),
+            $crawler->filter('[data-dashboard--session-target="exercises"]')->text(),
+            'Le nombre d\'exercices affiché doit correspondre à la dernière séance'
+        );
+        self::assertSame(
+            (string) $summary['totalSets'],
+            $crawler->filter('[data-dashboard--session-target="sets"]')->text(),
+            'Le nombre de séries affiché doit correspondre à la dernière séance'
+        );
+        self::assertSame(
+            (string) $summary['totalReps'],
+            $crawler->filter('[data-dashboard--session-target="reps"]')->text(),
+            'Le nombre de répétitions affiché doit correspondre à la dernière séance'
+        );
     }
 }

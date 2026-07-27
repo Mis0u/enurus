@@ -164,6 +164,7 @@ final class ContactThreadComposeServiceTest extends TestCase
         );
 
         $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('A poll broadcast requires a closing duration.');
 
         $service->composeToAudience(
             $admin,
