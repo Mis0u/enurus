@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+    Utilisé uniquement pour son moteur de taint-analysis (traçage input utilisateur → sink
+    dangereux : SQL brut, |raw Twig, chemins fichiers), en complément de PHPStan niveau 9 qui ne
+    fait pas ce type de traçage de flux de données. errorLevel volontairement permissif pour éviter
+    la redondance avec PHPStan/dead-code-detector sur les erreurs de typage classiques.
+-->
+<psalm
+    errorLevel="6"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="../../src" />
+        <ignoreFiles>
+            <directory name="../../vendor" />
+        </ignoreFiles>
+    </projectFiles>
+</psalm>
