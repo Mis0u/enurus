@@ -86,7 +86,17 @@ final class UserServiceTest extends TestCase
         $emailService->method('sendEmail')->willThrowException(new TransportException('Mailer unavailable.'));
 
         $logger = $this->createMock(LoggerInterface::class);
-        $logger->expects(self::once())->method('error');
+        $logger->expects(self::once())->method('error')->with(
+            self::anything(),
+            self::callback(static function (array $context) use ($user): bool {
+                self::assertArrayHasKey('userId', $context);
+                self::assertSame($user->id, $context['userId']);
+                self::assertArrayHasKey('exception', $context);
+                self::assertInstanceOf(TransportException::class, $context['exception']);
+
+                return true;
+            }),
+        );
 
         $userService = new UserService($passwordHasher, $em, $emailService, $translator, $logger);
 
