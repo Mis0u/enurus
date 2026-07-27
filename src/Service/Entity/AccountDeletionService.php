@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use function Symfony\Component\Clock\now;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final readonly class AccountDeletionService
+readonly class AccountDeletionService
 {
     private const int RETENTION_DAYS = 30;
 

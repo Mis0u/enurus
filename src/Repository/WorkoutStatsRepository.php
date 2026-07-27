@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
  * SRP, voir CLAUDE.md TODO), regroupés ici car hétérogènes mais tous de nature "statistique"
  * plutôt que muscles/tonnage/pagination.
  */
-final class WorkoutStatsRepository
+class WorkoutStatsRepository
 {
     public function __construct(
         private readonly WorkoutRepository $workoutRepository,
