@@ -18,6 +18,11 @@ use Symfony\Component\Uid\Uuid;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    /**
+     * @var list<Uuid>|null
+     */
+    private ?array $adminIdsCache = null;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
@@ -113,17 +118,24 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * `roles` est stocké en colonne JSON — DQL ne sait pas comparer un JSON brut (`LIKE`/`IN`
      * échouent sans cast SQL non portable), d'où une requête native plutôt qu'un `QueryBuilder`.
      * Utilisé pour exclure les comptes admin de l'admin User (jamais gérables via cette UI).
+     * Mémoïsé pour la durée de la requête : `excludingAdminsQueryBuilder()` le rappelle à chaque
+     * usage (stats du dashboard admin, filtres...) — sans cache, jusqu'à 13 exécutions redondantes
+     * sur une seule page (détecté par Doctrine Doctor).
      *
      * @return list<Uuid>
      */
     public function findAdminIds(): array
     {
+        if (null !== $this->adminIdsCache) {
+            return $this->adminIdsCache;
+        }
+
         /** @var list<string> $rows */
         $rows = $this->getEntityManager()->getConnection()->fetchFirstColumn(
             "SELECT id FROM users WHERE roles::text LIKE '%ROLE_ADMIN%'",
         );
 
-        return array_map(static fn (string $id): Uuid => Uuid::fromString($id), $rows);
+        return $this->adminIdsCache = array_map(static fn (string $id): Uuid => Uuid::fromString($id), $rows);
     }
 
     /**
