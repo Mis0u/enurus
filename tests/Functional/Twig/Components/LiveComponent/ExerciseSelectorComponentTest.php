@@ -53,7 +53,9 @@ final class ExerciseSelectorComponentTest extends WebTestCase
         $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
             'search' => 'reverse',
             'isOpen' => true,
-            'muscleGroupFilters' => ['some-id'],
+            'muscleGroupFilters' => [
+                'some-id' => 'primary',
+            ],
         ]);
         $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
 
@@ -63,6 +65,88 @@ final class ExerciseSelectorComponentTest extends WebTestCase
         self::assertFalse($component->isOpen);
         self::assertSame('', $component->search);
         self::assertSame([], $component->muscleGroupFilters);
+    }
+
+    /**
+     * 1er clic = primaire, 2e clic = secondaire, 3e clic = retiré du filtre — même comportement
+     * que le filtre muscle des routines.
+     */
+    public function testCycleMuscleFilterCyclesThroughPrimarySecondaryThenNone(): void
+    {
+        $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
+            'isOpen' => true,
+        ]);
+        $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
+
+        $muscleGroupId = $this->component($testComponent)->getMuscleGroups()[0]->id;
+
+        $testComponent->call('cycleMuscleFilter', [
+            'id' => (string) $muscleGroupId,
+        ]);
+        self::assertSame('primary', $this->component($testComponent)->muscleGroupFilters[(string) $muscleGroupId]);
+
+        $testComponent->call('cycleMuscleFilter', [
+            'id' => (string) $muscleGroupId,
+        ]);
+        self::assertSame('secondary', $this->component($testComponent)->muscleGroupFilters[(string) $muscleGroupId]);
+
+        $testComponent->call('cycleMuscleFilter', [
+            'id' => (string) $muscleGroupId,
+        ]);
+        self::assertArrayNotHasKey((string) $muscleGroupId, $this->component($testComponent)->muscleGroupFilters);
+    }
+
+    public function testMuscleFilterOnlyMatchesRequestedType(): void
+    {
+        /** @var ExerciseRepository $exerciseRepository */
+        $exerciseRepository = static::getContainer()->get(ExerciseRepository::class);
+        $exercise = $exerciseRepository->findOneBy([
+            'name' => ExerciseFixtures::EXERCISE_REVERSE_FLY,
+        ]);
+        self::assertNotNull($exercise);
+
+        $primaryMuscleGroupId = null;
+        $secondaryMuscleGroupId = null;
+        foreach ($exercise->exerciseMuscles as $exerciseMuscle) {
+            if ('primary' === $exerciseMuscle->type->value) {
+                $primaryMuscleGroupId = (string) $exerciseMuscle->muscleGroup->id;
+            } else {
+                $secondaryMuscleGroupId = (string) $exerciseMuscle->muscleGroup->id;
+            }
+        }
+        self::assertNotNull($primaryMuscleGroupId, 'Fixture exercise must have a primary muscle group.');
+
+        // Filtré sur son groupe primaire réel : l'exercice apparaît
+        $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
+            'isOpen' => true,
+            'muscleGroupFilters' => [
+                $primaryMuscleGroupId => 'primary',
+            ],
+        ]);
+        $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
+
+        $names = array_map(
+            static fn ($e): string => $e->name,
+            $this->component($testComponent)->getFilteredExercises()
+        );
+        self::assertContains(ExerciseFixtures::EXERCISE_REVERSE_FLY, $names);
+
+        if (null !== $secondaryMuscleGroupId) {
+            // Même groupe, mais demandé en secondaire alors qu'il est réellement primaire : ne matche pas
+            $testComponentWrongType = $this->createLiveComponent(self::COMPONENT_NAME, [
+                'isOpen' => true,
+                'muscleGroupFilters' => [
+                    $primaryMuscleGroupId => 'secondary',
+                ],
+            ]);
+            $testComponentWrongType->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
+
+            $namesWrongType = array_map(
+                static fn ($e): string => $e->name,
+                $this->component($testComponentWrongType)->getFilteredExercises()
+            );
+            self::assertNotContains(ExerciseFixtures::EXERCISE_REVERSE_FLY, $namesWrongType);
+        }
     }
 
     public function testSelectExerciseClosesModalAndDispatchesBrowserEvent(): void

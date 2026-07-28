@@ -7,9 +7,11 @@ namespace App\Twig\Components\LiveComponent;
 use App\Entity\Exercise;
 use App\Entity\MuscleGroup;
 use App\Entity\User;
+use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
 use App\Repository\ExerciseRepository;
 use App\Repository\MuscleGroupRepository;
 use App\Service\Entity\ExerciseSorterService;
+use App\Service\Entity\MuscleGroupSorterService;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -32,7 +34,11 @@ final class ExerciseSelectorComponent
     public bool $isOpen = false;
 
     /**
-     * @var list<string>
+     * Groupe musculaire (id) => type de filtre actif — 1er clic = primaire, 2e clic = secondaire,
+     * 3e clic = retiré, cf. `cycleMuscleFilter()`. Même comportement que le filtre muscle des
+     * routines (`routine/create/_exercise_selector.html.twig`).
+     *
+     * @var array<string, value-of<MuscleTypeEnum>>
      */
     #[LiveProp(writable: true)]
     public array $muscleGroupFilters = [];
@@ -43,6 +49,7 @@ final class ExerciseSelectorComponent
         private readonly Security $security,
         private readonly TranslatorInterface $translator,
         private readonly ExerciseSorterService $exerciseSorter,
+        private readonly MuscleGroupSorterService $muscleGroupSorter,
     ) {
     }
 
@@ -68,6 +75,28 @@ final class ExerciseSelectorComponent
         $this->dispatchBrowserEvent('exercise:selected', [
             'id' => $id,
         ]);
+    }
+
+    /**
+     * 1er clic = primaire, 2e clic = secondaire, 3e clic = retiré du filtre — même comportement
+     * que le filtre muscle des routines.
+     */
+    #[LiveAction]
+    public function cycleMuscleFilter(#[LiveArg] string $id): void
+    {
+        $current = $this->muscleGroupFilters[$id] ?? null;
+
+        $next = match ($current) {
+            null => MuscleTypeEnum::PRIMARY->value,
+            MuscleTypeEnum::PRIMARY->value => MuscleTypeEnum::SECONDARY->value,
+            default => null,
+        };
+
+        if (null === $next) {
+            unset($this->muscleGroupFilters[$id]);
+        } else {
+            $this->muscleGroupFilters[$id] = $next;
+        }
     }
 
     /**
@@ -98,7 +127,10 @@ final class ExerciseSelectorComponent
      */
     public function getMuscleGroups(): array
     {
-        return $this->muscleGroupRepository->findAllOrderedByPosition();
+        return $this->muscleGroupSorter->sortByName(
+            $this->muscleGroupRepository->findAllOrderedByPosition(),
+            $this->getUser()->locale,
+        );
     }
 
     private function getUser(): User
@@ -150,7 +182,9 @@ final class ExerciseSelectorComponent
             $exercises,
             function (Exercise $exercise): bool {
                 foreach ($exercise->exerciseMuscles as $exerciseMuscle) {
-                    if (\in_array((string) $exerciseMuscle->muscleGroup->id, $this->muscleGroupFilters, true)) {
+                    $wantedType = $this->muscleGroupFilters[(string) $exerciseMuscle->muscleGroup->id] ?? null;
+
+                    if (null !== $wantedType && $wantedType === $exerciseMuscle->type->value) {
                         return true;
                     }
                 }
