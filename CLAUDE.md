@@ -350,7 +350,6 @@ palier précise, préférer des dates fixes en dur.
 | 10 | Évaluer `datetimetz_immutable` pour `Workout::$performedAt` — pas encore acté |
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
-| 25 | Perf requêtes dashboard (`/fr/tableau-de-bord`) — Doctrine Doctor y détecte plusieurs cartésiens O(n²)/O(n³) (JOIN sur `workout_exercise`+`exercise_set`, puis +`exercise_muscle`), des requêtes à 5 JOINs, un JOIN inutile sur `exercise_set` (alias `e5_`), et 7 agrégations sans DTO hydration. À traiter comme chantier séparé, en lien avec `docs/dashboard-architecture.md` |
 
 ---
 

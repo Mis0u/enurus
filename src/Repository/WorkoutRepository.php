@@ -58,9 +58,15 @@ class WorkoutRepository extends ServiceEntityRepository
     }
 
     /**
-     * Charge le workout le plus récent avec ses workoutExercises et exercises pré-jointés.
-     * Deux requêtes : la première isole l'ID (setMaxResults safe sans JOIN collection),
-     * la seconde charge les collections sans limite (règle CLAUDE.md).
+     * Charge le workout le plus récent avec ses workoutExercises, exercises, muscles et sets
+     * pré-jointés. Trois requêtes en multi-step hydration (TODO #25) : la première isole l'ID
+     * (setMaxResults safe sans JOIN collection, règle CLAUDE.md), la deuxième charge
+     * workoutExercises→exercise→exerciseMuscles→muscleGroup (chaîne, une seule collection au-delà
+     * de workoutExercises), la troisième charge exerciseSets séparément — `exerciseMuscles` et
+     * `exerciseSets` sont deux collections sœurs sous le même workoutExercise, les joindre
+     * ensemble produirait un produit cartésien O(n³) (détecté par Doctrine Doctor). Doctrine
+     * fusionne automatiquement le résultat de la 3e requête sur les entités déjà managées par
+     * identity map, sans requête supplémentaire ni duplication d'objets.
      */
     public function findLatestByUser(User $user): ?Workout
     {
@@ -78,7 +84,7 @@ class WorkoutRepository extends ServiceEntityRepository
             return null;
         }
 
-        // Step 2 : chargement complet avec eager join des collections (sans setMaxResults)
+        // Step 2 : workout + workoutExercises + exercise + exerciseMuscles + muscleGroup
         /** @var Workout|null $workout */
         $workout = $this->createQueryBuilder('w')
             ->leftJoin('w.workoutExercises', 'we')
@@ -89,13 +95,26 @@ class WorkoutRepository extends ServiceEntityRepository
             ->addSelect('em')
             ->leftJoin('em.muscleGroup', 'mg')
             ->addSelect('mg')
-            ->leftJoin('we.exerciseSets', 'es')
-            ->addSelect('es')
             ->andWhere('w.id = :id')
             ->setParameter('id', $row['id'])
             ->orderBy('we.position', 'ASC')
             ->getQuery()
             ->getOneOrNullResult();
+
+        if (null === $workout) {
+            return null;
+        }
+
+        // Step 3 : exerciseSets, fusionné sur les WorkoutExercise déjà managés de l'étape 2
+        $this->createQueryBuilder('w')
+            ->leftJoin('w.workoutExercises', 'we')
+            ->addSelect('we')
+            ->leftJoin('we.exerciseSets', 'es')
+            ->addSelect('es')
+            ->andWhere('w.id = :id')
+            ->setParameter('id', $row['id'])
+            ->getQuery()
+            ->getResult();
 
         return $workout;
     }
