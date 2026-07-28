@@ -77,6 +77,14 @@ class WorkoutMuscleRepository
      * sur un ensemble de workouts, avec le détail primaire/secondaire. Un groupe non sollicité
      * n'apparaît pas dans le résultat.
      *
+     * Multi-step hydration (TODO #25) : `exerciseMuscles` (via l'exercice) et `exerciseSets`
+     * (directement sous `workoutExercise`) sont deux collections sœurs sous le même
+     * `workoutExercise` — les joindre dans la même requête produit un produit cartésien
+     * (sets × muscles par workoutExercise), détecté par Doctrine Doctor comme
+     * "Cartesian Product" + "Unused JOIN" (le JOIN sur `exerciseSets` n'était là que pour son
+     * effet de bord multiplicatif, jamais sélectionné). Remplacé par 2 requêtes à collection
+     * unique, combinées en PHP.
+     *
      * @param string[] $workoutIds
      * @return array<int, array{id: string, name: string, sets: int, primarySets: int, secondarySets: int}>
      */
@@ -86,10 +94,11 @@ class WorkoutMuscleRepository
             return [];
         }
 
-        /** @var array<int, array{muscleGroupId: mixed, muscleGroupName: mixed, muscleType: mixed}> $rows */
+        $setCountsByWorkoutExerciseId = $this->countSetsByWorkoutExerciseId($workoutIds);
+
+        /** @var array<int, array{workoutExerciseId: mixed, muscleGroupId: mixed, muscleGroupName: mixed, muscleType: mixed}> $rows */
         $rows = $this->muscleGroupJoinQueryBuilder()
-            ->select('mg.id as muscleGroupId', 'mg.name as muscleGroupName', 'em.type as muscleType')
-            ->join('we.exerciseSets', 'es')
+            ->select('we.id as workoutExerciseId', 'mg.id as muscleGroupId', 'mg.name as muscleGroupName', 'em.type as muscleType')
             ->andWhere('w.id IN (:ids)')
             ->setParameter('ids', $workoutIds)
             ->getQuery()
@@ -99,6 +108,14 @@ class WorkoutMuscleRepository
         $grouped = [];
 
         foreach ($rows as $row) {
+            /** @var \Stringable|string $workoutExerciseId */
+            $workoutExerciseId = $row['workoutExerciseId'];
+            $setCount = $setCountsByWorkoutExerciseId[(string) $workoutExerciseId] ?? 0;
+
+            if (0 === $setCount) {
+                continue;
+            }
+
             /** @var \Stringable|string $muscleGroupId */
             $muscleGroupId = $row['muscleGroupId'];
             $id = (string) $muscleGroupId;
@@ -119,12 +136,12 @@ class WorkoutMuscleRepository
                 ];
             }
 
-            $grouped[$id]['sets']++;
+            $grouped[$id]['sets'] += $setCount;
 
             if (MuscleTypeEnum::PRIMARY->value === $typeValue) {
-                $grouped[$id]['primarySets']++;
+                $grouped[$id]['primarySets'] += $setCount;
             } else {
-                $grouped[$id]['secondarySets']++;
+                $grouped[$id]['secondarySets'] += $setCount;
             }
         }
 
@@ -183,6 +200,36 @@ class WorkoutMuscleRepository
         $grouped = $this->deduplicateMuscles($rows);
 
         return $this->sortMusclesByType($grouped);
+    }
+
+    /**
+     * @param string[] $workoutIds
+     * @return array<string, int> workoutExercise (id) => nombre de séries
+     */
+    private function countSetsByWorkoutExerciseId(array $workoutIds): array
+    {
+        /** @var array<int, array{workoutExerciseId: mixed, setCount: mixed}> $rows */
+        $rows = $this->workoutRepository->createQueryBuilder('w')
+            ->select('we.id as workoutExerciseId', 'COUNT(es.id) as setCount')
+            ->join('w.workoutExercises', 'we')
+            ->join('we.exerciseSets', 'es')
+            ->andWhere('w.id IN (:ids)')
+            ->setParameter('ids', $workoutIds)
+            ->groupBy('we.id')
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY);
+
+        $result = [];
+        foreach ($rows as $row) {
+            /** @var \Stringable|string $workoutExerciseId */
+            $workoutExerciseId = $row['workoutExerciseId'];
+            /** @var numeric $setCount */
+            $setCount = $row['setCount'];
+
+            $result[(string) $workoutExerciseId] = (int) $setCount;
+        }
+
+        return $result;
     }
 
     /**
