@@ -18,10 +18,11 @@ final class BlockedUserCheckerTest extends TestCase
         $this->checker = new BlockedUserChecker();
     }
 
-    public function testCheckPreAuthAllowsNonBlockedUser(): void
+    public function testCheckPreAuthAllowsNonBlockedVerifiedUser(): void
     {
         $user = new User();
         $user->email = 'not-blocked@test.com';
+        $user->isVerified = true;
 
         $this->checker->checkPreAuth($user);
 
@@ -32,6 +33,7 @@ final class BlockedUserCheckerTest extends TestCase
     {
         $user = new User();
         $user->email = 'blocked@test.com';
+        $user->isVerified = true;
         $user->accountBlockedAt = new \DateTimeImmutable();
 
         $this->expectException(CustomUserMessageAccountStatusException::class);
@@ -40,10 +42,22 @@ final class BlockedUserCheckerTest extends TestCase
         $this->checker->checkPreAuth($user);
     }
 
+    public function testCheckPreAuthRejectsUnverifiedUser(): void
+    {
+        $user = new User();
+        $user->email = 'unverified@test.com';
+
+        $this->expectException(CustomUserMessageAccountStatusException::class);
+        $this->expectExceptionMessage('account_not_verified');
+
+        $this->checker->checkPreAuth($user);
+    }
+
     public function testCheckPostAuthNeverThrows(): void
     {
         $user = new User();
         $user->email = 'blocked@test.com';
+        $user->isVerified = true;
         $user->accountBlockedAt = new \DateTimeImmutable();
 
         $this->checker->checkPostAuth($user);

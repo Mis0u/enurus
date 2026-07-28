@@ -16,6 +16,7 @@ final readonly class UserRegistrationService
 {
     public function __construct(
         private UserService $userService,
+        private EmailVerificationService $emailVerificationService,
         private EmailInterface $emailService,
         private TranslatorInterface $translator,
         private RegistrationWelcomeThreadService $welcomeThreadService,
@@ -24,23 +25,36 @@ final readonly class UserRegistrationService
     ) {
     }
 
+    /**
+     * Crée le compte (`isVerified = false`, TODO #24) et envoie l'email de confirmation. Le reste
+     * de l'accueil (email de bienvenue, fil de bienvenue, détection de réinscription, connexion
+     * auto) n'a lieu qu'au clic sur le lien de confirmation, cf. `completeRegistration()`.
+     */
     public function registerUser(User $user, string $plainPassword, string $locale): User
     {
         $this->userService->createUser($user, $plainPassword, $locale);
-        $this->sendRegistrationEmail($user, $locale);
-        $this->welcomeThreadService->create($user, $locale);
-        $this->reregistrationNotifier->notifyIfReregistration($user);
+        $this->emailVerificationService->sendConfirmationEmail($user, $locale);
 
         return $user;
     }
 
     /**
-     * Envoyée en synchrone (hors file `async`) : l'utilisateur attend cet email juste après son
-     * inscription. Un échec d'envoi (mailer indisponible) ne doit jamais faire échouer
-     * l'inscription elle-même (compte déjà créé à ce stade) — capturé et loggé plutôt que remonté
+     * Déclenché depuis `EmailVerificationController` une fois `User::$isVerified` passé à `true`.
+     */
+    public function completeRegistration(User $user, string $locale): void
+    {
+        $this->sendWelcomeEmail($user, $locale);
+        $this->welcomeThreadService->create($user, $locale);
+        $this->reregistrationNotifier->notifyIfReregistration($user);
+    }
+
+    /**
+     * Envoyée en synchrone (hors file `async`) : l'utilisateur attend cet email juste après avoir
+     * confirmé son adresse. Un échec d'envoi (mailer indisponible) ne doit jamais faire échouer la
+     * confirmation elle-même (compte déjà vérifié à ce stade) — capturé et loggé plutôt que remonté
      * à l'appelant.
      */
-    private function sendRegistrationEmail(User $user, string $locale): void
+    private function sendWelcomeEmail(User $user, string $locale): void
     {
         $mail = $this->emailService->createEmail(
             $user->email,

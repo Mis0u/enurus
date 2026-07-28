@@ -270,6 +270,7 @@ registration:
         receive_email: Recebes este email porque te inscreveste no {brand}
         registration_confirm: Confirma o teu registo no {brand}
         welcome: Bem-vindo ao {brand}! O teu primeiro treino está à tua espera
+    email_sent_to: "Um email de confirmação foi enviado para {email}."
     have_an_account: Já tens uma conta?
     nickname:
         label: Escolhe o teu alias

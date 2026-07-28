@@ -64,6 +64,23 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
+     * Comptes jamais confirmés (TODO #24) au-delà du délai de grâce — libère l'email pour une vraie
+     * réinscription, cf. `UnverifiedAccountPurgeService`.
+     *
+     * @return list<User>
+     */
+    public function findUnverifiedOlderThan(\DateTimeImmutable $threshold): array
+    {
+        /** @var list<User> */
+        return $this->createQueryBuilder('u')
+            ->where('u.isVerified = false')
+            ->andWhere('u.createdAt <= :threshold')
+            ->setParameter('threshold', $threshold)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Destinataires d'une diffusion admin (compose EasyAdmin) — exclut les comptes en attente de
      * suppression et l'auteur de la diffusion lui-même, filtre en plus par locale si fournie.
      *

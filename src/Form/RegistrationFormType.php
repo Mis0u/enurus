@@ -16,7 +16,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -74,7 +73,6 @@ final class RegistrationFormType extends AbstractFormSecurityType
                 'constraints' => [
                     new NotBlank(),
                     ...$this->passwordConstraints($this->translator),
-                    new NotCompromisedPassword(),
                 ],
             ])
             ->add('website', TextType::class, [

@@ -2,10 +2,10 @@ import { test, expect } from '@playwright/test';
 import { waitForCsrfControllerReady } from './helpers';
 
 // Même mot de passe que tests/Functional/Security/RegistrationControllerTest.php : satisfait
-// PasswordRuleEnum (longueur + regex) et n'est pas flaggé par NotCompromisedPassword.
+// PasswordRuleEnum (longueur + regex).
 const PASSWORD = 'pass_PASS?1234';
 
-test('a new user can register and lands on their dashboard', async ({ page }) => {
+test('a new user can register and is sent to the check-email page', async ({ page }) => {
     // Email unique par run pour éviter une collision "déjà inscrit" entre exécutions successives.
     const email = `e2e-registration-${Date.now()}@test.com`;
 
@@ -26,8 +26,9 @@ test('a new user can register and lands on their dashboard', async ({ page }) =>
 
     await page.getByRole('button', { name: 'Create my account' }).click();
 
-    // RegistrationController connecte automatiquement l'utilisateur après inscription et redirige
-    // vers son tableau de bord, dans la locale de la requête ('en' ici, contrairement au login où
-    // LoginSuccessListener utilise la locale déjà enregistrée sur le compte — cf. login.spec.ts).
-    await expect(page).toHaveURL(/\/en\/dashboard/, { timeout: 15_000 });
+    // TODO #24 : plus de connexion auto après inscription — le compte reste inactif tant que
+    // l'email n'est pas confirmé. RegistrationController redirige vers la page "vérifie ta boîte
+    // mail" (RegistrationCheckEmailController), dans la locale de la requête.
+    await expect(page).toHaveURL(/\/en\/register\/check-email/, { timeout: 15_000 });
+    await expect(page.getByText(email)).toBeVisible();
 });

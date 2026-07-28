@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'registration.confirm_email'|trans({}, 'navigation') }}{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('error') %}
+        <twig:Flash:Message:Message message="{{ message }}" type="error"/>
+    {% endfor %}
+    {% for message in app.flashes('success') %}
+        <twig:Flash:Message:Message message="{{ message }}" type="success"/>
+    {% endfor %}
+    <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">
+        <div class="max-w-lg w-full">
+            <div class="text-center mb-8">
+                {% include 'partials/_common/logo.html.twig' only %}
+            </div>
+
+            <div class="backdrop-blur-xl bg-white/10 rounded-3xl shadow-2xl border border-white/20 p-8 mb-6">
+                {% include 'reset_password/check_email/_success_icon.html.twig' only %}
+
+                <h2 class="text-2xl font-bold text-white text-center mb-4">{{ 'sentence.email.email_send'|trans({}, 'common') }}</h2>
+
+                <div class="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-5 mb-6 backdrop-blur-sm">
+                    <p class="text-slate-200 text-center leading-relaxed">
+                        {{ 'registration.email_sent_to'|trans({'email': email}, 'navigation') }}
+                    </p>
+                </div>
+
+                <p class="text-sm text-slate-300 text-center">{{ 'sentence.email.email_check'|trans({}, 'common') }}</p>
+            </div>
+
+            <div class="backdrop-blur-xl bg-white/10 rounded-2xl border border-white/20 p-6 mb-6">
+                {% include 'registration/check_email/_help_section.html.twig' only %}
+            </div>
+
+            <div class="text-center">
+                <a href="{{ path('app_login') }}" class="inline-flex items-center text-sm text-slate-400 hover:text-white transition-colors group">
+                    <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    {{ 'sentence.back_to_login'|trans({}, 'common') }}
+                </a>
+            </div>
+
+            {% include 'partials/_common/_footer.html.twig' only %}
+        </div>
+    </div>
+{% endblock %}

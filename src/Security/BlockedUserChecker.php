@@ -11,16 +11,26 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Rejette la connexion (formulaire ET reconnexion automatique via le cookie "se souvenir de moi")
- * d'un compte bloqué (`User::$isAccountBlocked`), avec un message dédié plutôt que
- * "Identifiants invalides" — cf. `templates/security/login.html.twig`
- * (`error.messageKey|trans(error.messageData, 'security')`).
+ * d'un compte bloqué (`User::$isAccountBlocked`) ou non encore vérifié par email
+ * (`User::$isVerified`), avec un message dédié plutôt que "Identifiants invalides" — cf.
+ * `templates/security/login.html.twig` (`error.messageKey|trans(error.messageData, 'security')`).
+ * Un seul `user_checker` par firewall (cf. `security.yaml`) : les deux gardes vivent ici plutôt
+ * que dans deux classes séparées.
  */
 final class BlockedUserChecker implements UserCheckerInterface
 {
     public function checkPreAuth(UserInterface $user): void
     {
-        if ($user instanceof User && $user->isAccountBlocked) {
+        if (! $user instanceof User) {
+            return;
+        }
+
+        if ($user->isAccountBlocked) {
             throw new CustomUserMessageAccountStatusException('account_blocked');
+        }
+
+        if (! $user->isVerified) {
+            throw new CustomUserMessageAccountStatusException('account_not_verified');
         }
     }
 

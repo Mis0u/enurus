@@ -108,6 +108,7 @@ class UserFixtures extends Fixture
         $user->gender = $gender;
         $user->lastLogin = $lastLogin ?? new \DateTimeImmutable();
         $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
+        $user->isVerified = true;
 
         return $user;
     }

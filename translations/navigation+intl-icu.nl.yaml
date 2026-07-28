@@ -270,6 +270,7 @@ registration:
         receive_email: Je ontvangt deze e-mail omdat je je hebt geregistreerd bij {brand}
         registration_confirm: Bevestig je registratie bij {brand}
         welcome: Welkom bij {brand}! Je eerste training wacht op je
+    email_sent_to: "Er is een bevestigingsmail verzonden naar {email}."
     have_an_account: Heb je al een account?
     nickname:
         label: Kies je alias
