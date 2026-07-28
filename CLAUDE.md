@@ -89,9 +89,15 @@ Règles :
   (ex. `ExerciseCreateService::create()` fait `$em->persist($exercise)` directement), le cascade persist
   depuis `User` ne servirait jamais — Doctrine Doctor flag ce cas comme "Bidirectional Association
   Inconsistency", c'est un faux positif connu du tool sur ce pattern.
-- `performedAt` est `datetime_immutable`, sans timezone actuellement (TODO #10 — évaluation
-  `datetimetz_immutable` non actée, ne pas anticiper : traiter les nouvelles features comme le
-  reste de l'app, naive datetime, pour ne pas créer d'incohérence entre pages).
+- `performedAt` est `datetime_immutable`, sans timezone — **décision actée**, pas un oubli :
+  `performedAt` représente une heure murale saisie par l'utilisateur ("séance à 8h"), pas un
+  instant absolu. Passer en `datetimetz_immutable` ferait glisser la date d'un jour pour un
+  utilisateur en fuseau extrême lors de la conversion UTC↔local. `datetimetz` reste réservé aux
+  champs sécurité/audit (`lastLogin`, expiration de token) qui représentent un vrai instant
+  absolu à comparer entre fuseaux. Doctrine Doctor signale ce mélange comme suspect
+  ("Inconsistent Timezone Usage") — faux positif connu, ne pas y toucher. Traiter les nouvelles
+  features de dates métier de la même façon (naive datetime), pour ne pas créer d'incohérence
+  entre pages.
 - Exercices publics (`isPublic = true`, `owner = null`) : jamais affectés par la cascade de
   suppression de compte utilisateur.
 
@@ -347,7 +353,6 @@ palier précise, préférer des dates fixes en dur.
 
 | # | Item |
 |---|------|
-| 10 | Évaluer `datetimetz_immutable` pour `Workout::$performedAt` — pas encore acté |
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
 
