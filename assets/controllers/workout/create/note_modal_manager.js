@@ -1,10 +1,16 @@
+import { swalError } from '../../swal/error/_error.js';
+
 export class NoteModalManager {
     #application;
     #uploadPhotoUrl;
+    #submitFailedTitle;
+    #submitFailedText;
 
-    constructor(application, uploadPhotoUrl) {
+    constructor(application, uploadPhotoUrl, submitFailedTitle, submitFailedText) {
         this.#application = application;
         this.#uploadPhotoUrl = uploadPhotoUrl;
+        this.#submitFailedTitle = submitFailedTitle;
+        this.#submitFailedText = submitFailedText;
         this.#bindBack();
         this.#bindSubmit();
     }
@@ -61,6 +67,7 @@ export class NoteModalManager {
 
         const { workoutId, redirectUrl } = await this.#submitForm();
         if (!workoutId || !redirectUrl) {
+            swalError(this.#submitFailedTitle, this.#submitFailedText, '#0f1928', '#f0f4ff', '#f43f5e');
             return;
         }
         await this.#uploadPhotoIfSelected(workoutId);

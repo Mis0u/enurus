@@ -474,6 +474,9 @@ workout:
             title: No exercise
         required_reps: Reps are required
         required_weight: Weight is required
+        submit_failed:
+            text: An error occurred while saving your workout. Please try again.
+            title: Save failed
         validation: An error occurred while submitting your data
     flash:
         created: Your workout has been saved

@@ -20,6 +20,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Twig\Environment;
 
 #[AsLiveComponent('LiveComponent:ExerciseSelectorComponent:ExerciseSelectorComponent')]
 final class ExerciseSelectorComponent
@@ -43,6 +44,14 @@ final class ExerciseSelectorComponent
     #[LiveProp(writable: true)]
     public array $muscleGroupFilters = [];
 
+    /**
+     * Nom du controller Stimulus consommateur de la carte rendue par `selectExercise()`
+     * (`exercise` en création, `workout--edit--exercise` en édition) — fixé une fois par la page
+     * hôte au moment du `component(...)`, jamais modifié en cours de vie du composant.
+     */
+    #[LiveProp]
+    public string $controllerName = 'exercise';
+
     public function __construct(
         private readonly ExerciseRepository $exerciseRepository,
         private readonly MuscleGroupRepository $muscleGroupRepository,
@@ -50,6 +59,7 @@ final class ExerciseSelectorComponent
         private readonly TranslatorInterface $translator,
         private readonly ExerciseSorterService $exerciseSorter,
         private readonly MuscleGroupSorterService $muscleGroupSorter,
+        private readonly Environment $twig,
     ) {
     }
 
@@ -67,13 +77,34 @@ final class ExerciseSelectorComponent
         $this->muscleGroupFilters = [];
     }
 
+    /**
+     * Rend la carte exercice côté serveur (i18n, MuscleTags, structure du formulaire — jamais
+     * dupliqué en JS) et l'envoie directement dans l'événement plutôt que de laisser le
+     * controller Stimulus consommateur refaire un aller-retour HTTP pour la récupérer (ancien
+     * `workout_exercise_block` / `workout_edit_exercise_block`, supprimés). L'`index` réel n'est
+     * connu que côté client (position dans la liste déjà affichée) : on rend avec un placeholder
+     * littéral `__EXERCISE_INDEX__`, substitué en JS avant insertion — même convention que
+     * `_template.html.twig` pour l'ajout de série.
+     */
     #[LiveAction]
     public function selectExercise(#[LiveArg] string $id): void
     {
+        $exercise = $this->exerciseRepository->find($id);
+
+        if (null === $exercise) {
+            return;
+        }
+
+        $html = $this->twig->render('workout/create/_exercise_card.html.twig', [
+            'exercise' => $exercise,
+            'index' => '__EXERCISE_INDEX__',
+            'controllerName' => $this->controllerName,
+        ]);
+
         $this->search = '';
         $this->isOpen = false;
         $this->dispatchBrowserEvent('exercise:selected', [
-            'id' => $id,
+            'html' => $html,
         ]);
     }
 

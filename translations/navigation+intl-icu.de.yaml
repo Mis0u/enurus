@@ -474,6 +474,9 @@ workout:
             title: Keine Übung
         required_reps: Die Wiederholungen sind erforderlich
         required_weight: Das Gewicht ist erforderlich
+        submit_failed:
+            text: Beim Speichern deines Trainings ist ein Fehler aufgetreten. Versuche es erneut.
+            title: Speichern fehlgeschlagen
         validation: Beim Absenden deiner Daten ist ein Fehler aufgetreten
     flash:
         created: Dein Training wurde gespeichert

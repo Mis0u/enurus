@@ -9,9 +9,10 @@ export default class extends Controller {
     static targets = ['exerciseList'];
 
     static values = {
-        blockUrl: String,
         noExerciseTitle: String,
         noExerciseText: String,
+        submitFailedTitle: String,
+        submitFailedText: String,
         uploadPhotoUrl: String,
     };
 
@@ -23,7 +24,9 @@ export default class extends Controller {
 
         this.#noteModalManager = new NoteModalManager(
             this.application,
-            this.uploadPhotoUrlValue
+            this.uploadPhotoUrlValue,
+            this.submitFailedTitleValue,
+            this.submitFailedTextValue,
         );
 
         this.sortable = new Sortable(this.exerciseListTarget, {
@@ -45,17 +48,11 @@ export default class extends Controller {
 
     // ─── Actions publiques ────────────────────────────────────────
 
-    async onExerciseSelected(event) {
-        const { id } = event.detail;
+    onExerciseSelected(event) {
+        const { html } = event.detail;
         const index = this.exerciseListTarget.children.length;
 
-        const response = await fetch(`${this.blockUrlValue}?exerciseId=${id}&index=${index}`);
-        if (!response.ok) {
-            return;
-        }
-
-        const html = await response.text();
-        this.exerciseListTarget.insertAdjacentHTML('beforeend', html);
+        this.exerciseListTarget.insertAdjacentHTML('beforeend', html.replaceAll('__EXERCISE_INDEX__', index));
     }
 
     addSet(event) {

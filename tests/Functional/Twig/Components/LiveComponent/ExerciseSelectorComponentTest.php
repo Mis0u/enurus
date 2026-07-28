@@ -6,11 +6,13 @@ namespace App\Tests\Functional\Twig\Components\LiveComponent;
 
 use App\DataFixtures\ExerciseFixtures;
 use App\DataFixtures\UserFixtures;
+use App\Entity\Exercise;
 use App\Entity\User;
 use App\Repository\ExerciseRepository;
 use App\Repository\UserRepository;
 use App\Twig\Components\LiveComponent\ExerciseSelectorComponent;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Test\InteractsWithLiveComponents;
 use Symfony\UX\LiveComponent\Test\TestLiveComponent;
 
@@ -166,10 +168,93 @@ final class ExerciseSelectorComponentTest extends WebTestCase
         self::assertFalse($component->isOpen);
         self::assertSame('', $component->search);
 
-        $this->assertComponentDispatchBrowserEvent($testComponent, 'exercise:selected')
-            ->withPayload([
-                'id' => $exerciseId,
-            ]);
+        $html = $this->dispatchedHtml($testComponent, 'exercise:selected');
+        self::assertStringContainsString('data-exercise-index="__EXERCISE_INDEX__"', $html);
+    }
+
+    /**
+     * Le HTML est rendu côté serveur et envoyé directement dans l'événement (ancien
+     * `workout_exercise_block`, supprimé — 2 aller-retours HTTP par exercice ajouté, réduit à 1).
+     * `index` reste un placeholder littéral : seul le controller Stimulus connaît la position
+     * réelle dans la liste déjà affichée au moment de l'insertion.
+     */
+    public function testSelectExercisePayloadContainsServerRenderedCard(): void
+    {
+        /** @var ExerciseRepository $exerciseRepository */
+        $exerciseRepository = static::getContainer()->get(ExerciseRepository::class);
+        $exercise = $exerciseRepository->findOneBy([
+            'name' => ExerciseFixtures::EXERCISE_REVERSE_FLY,
+        ]);
+        self::assertInstanceOf(Exercise::class, $exercise);
+
+        $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
+            'isOpen' => true,
+        ]);
+        $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
+
+        $testComponent->call('selectExercise', [
+            'id' => (string) $exercise->id,
+        ]);
+
+        $html = $this->dispatchedHtml($testComponent, 'exercise:selected');
+
+        self::assertStringContainsString(
+            'name="workout[workoutExercises][__EXERCISE_INDEX__][exercise]" value="' . $exercise->id . '"',
+            $html,
+        );
+        self::assertStringContainsString(
+            'name="workout[workoutExercises][__EXERCISE_INDEX__][exerciseSets][0][weight]"',
+            $html,
+        );
+        self::assertStringContainsString(
+            'name="workout[workoutExercises][__EXERCISE_INDEX__][position]"',
+            $html,
+        );
+
+        /** @var TranslatorInterface $translator */
+        $translator = static::getContainer()->get(TranslatorInterface::class);
+        $translatedName = $translator->trans($exercise->name, [], 'exercise', 'fr');
+        self::assertStringContainsString($translatedName, $html);
+
+        self::assertNotEmpty($exercise->exerciseMuscles);
+        self::assertStringContainsString('text-[#f43f5e]', $html);
+    }
+
+    /**
+     * Le composant est partagé entre la création (`exercise`) et l'édition
+     * (`workout--edit--exercise`) d'une séance — la carte rendue doit brancher ses `data-action`
+     * sur le bon controller Stimulus selon le contexte.
+     */
+    public function testSelectExercisePayloadUsesControllerNameFromEditContext(): void
+    {
+        $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
+            'isOpen' => true,
+            'controllerName' => 'workout--edit--exercise',
+        ]);
+        $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
+
+        $exerciseId = $this->getExerciseIdByName(ExerciseFixtures::EXERCISE_REVERSE_FLY);
+        $testComponent->call('selectExercise', [
+            'id' => $exerciseId,
+        ]);
+
+        $html = $this->dispatchedHtml($testComponent, 'exercise:selected');
+        self::assertStringContainsString('click->workout--edit--exercise#deleteExercise', $html);
+        self::assertStringNotContainsString('click->exercise#deleteExercise', $html);
+    }
+
+    public function testSelectExerciseWithUnknownIdDispatchesNoEvent(): void
+    {
+        $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
+            'isOpen' => true,
+        ]);
+        $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
+
+        $testComponent->call('selectExercise', [
+            'id' => '00000000-0000-0000-0000-000000000000',
+        ]);
+
+        $this->assertComponentNotDispatchBrowserEvent($testComponent, 'exercise:selected');
     }
 
     public function testSearchFiltersExercisesByName(): void
@@ -198,6 +283,21 @@ final class ExerciseSelectorComponentTest extends WebTestCase
         $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
 
         self::assertSame([], $this->component($testComponent)->getFilteredExercises());
+    }
+
+    private function dispatchedHtml(TestLiveComponent $testComponent, string $eventName): string
+    {
+        $event = $testComponent->getDispatchedBrowserEvent($testComponent->render(), $eventName);
+        self::assertNotNull($event, \sprintf('Expected browser event "%s" to be dispatched.', $eventName));
+
+        /**
+         * Le docblock vendor de `getDispatchedBrowserEvents()` (`array{data: ..., event: ...}`)
+         * ne correspond pas à la forme réelle du payload JSON décodé (`payload`, pas `data`,
+         * confirmé empiriquement — `AssertDispatchedEvent` du même bundle lit aussi `payload`).
+         *
+         * @var array{event: string, payload: array{html: string}} $event
+         */
+        return $event['payload']['html'];
     }
 
     private function component(TestLiveComponent $testComponent): ExerciseSelectorComponent

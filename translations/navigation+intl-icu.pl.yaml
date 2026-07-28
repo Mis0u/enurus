@@ -486,6 +486,9 @@ workout:
             title: Brak ćwiczenia
         required_reps: Powtórzenia są wymagane
         required_weight: Waga jest wymagana
+        submit_failed:
+            text: Wystąpił błąd podczas zapisywania treningu. Spróbuj ponownie.
+            title: Błąd zapisu
         validation: Wystąpił błąd podczas przesyłania danych
     flash:
         created: Twój trening został zapisany

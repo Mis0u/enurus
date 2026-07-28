@@ -474,6 +474,9 @@ workout:
             title: Aucun exercice
         required_reps: Les répétitions sont requises
         required_weight: Le poids est requis
+        submit_failed:
+            text: Une erreur est survenue lors de l'enregistrement de ta séance. Réessaie.
+            title: Échec de l'enregistrement
         validation: Une erreur est survenue lors de la saisie de vos données
     flash:
         created: Votre séance a bien été enregistrée
