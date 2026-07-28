@@ -35,4 +35,18 @@
 .scrollbar-thin::-webkit-scrollbar-track {
     background: transparent;
 }
+
+/* Filtre par muscle (ExerciseSelectorComponent) — états dynamiques cycle none/primary/secondary,
+   mêmes couleurs que .exercise-pill (exercise-create.css) / .muscle-filter-chip (routine-create.css) */
+.muscle-filter-chip.pill--primary {
+    background: rgba(244, 63, 94, 0.12);
+    border-color: rgba(244, 63, 94, 0.3);
+    color: #f43f5e;
+}
+
+.muscle-filter-chip.pill--secondary {
+    background: rgba(6, 182, 212, 0.12);
+    border-color: rgba(6, 182, 212, 0.3);
+    color: #06b6d4;
+}
 /*FIN MODAL AJOUT EXERCICE*/
