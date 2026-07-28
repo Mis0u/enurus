@@ -7,7 +7,6 @@ namespace App\Tests\Functional\Security\Workout;
 use App\Entity\ExerciseSet;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
-use App\Repository\ExerciseRepository;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Helper\WorkoutTestHelper;
@@ -212,45 +211,6 @@ class WorkoutEditControllerTest extends WebTestCase
     }
 
     // -------------------------------------------------------------------------
-    // Fragment endpoint
-    // -------------------------------------------------------------------------
-
-    public function testExerciseBlockIsAccessibleWhenLogged(): void
-    {
-        $client = $this->login(self::USER);
-        $exercise = $this->getAnyExercise();
-
-        $client->request(Request::METHOD_GET, \sprintf(
-            '/fr/seance/modifier/bloc-exercice?exerciseId=%s&index=0',
-            $exercise->id,
-        ));
-
-        $this->assertResponseIsSuccessful();
-        $this->assertResponseHeaderSame('Content-Type', 'text/html; charset=UTF-8');
-    }
-
-    public function testExerciseBlockRedirectsToLoginWhenNotLogged(): void
-    {
-        $client = static::createClient();
-        $exercise = $this->getAnyExercise();
-
-        $client->request(Request::METHOD_GET, \sprintf(
-            '/fr/seance/modifier/bloc-exercice?exerciseId=%s&index=0',
-            $exercise->id,
-        ));
-
-        $this->assertResponseRedirects();
-    }
-
-    public function testExerciseBlockWithInvalidIdReturnsNotFound(): void
-    {
-        $client = $this->login(self::USER);
-
-        $client->request(Request::METHOD_GET, '/fr/seance/modifier/bloc-exercice?exerciseId=invalid-id&index=0');
-        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
-    }
-
-    // -------------------------------------------------------------------------
     // Helpers privés
     // -------------------------------------------------------------------------
 
@@ -312,17 +272,6 @@ class WorkoutEditControllerTest extends WebTestCase
         $firstSet = $firstExercise->exerciseSets->first();
 
         return $firstSet;
-    }
-
-    private function getAnyExercise(): \App\Entity\Exercise
-    {
-        /** @var ExerciseRepository $exerciseRepository */
-        $exerciseRepository = static::getContainer()->get(ExerciseRepository::class);
-        $exercise = $exerciseRepository->findOneBy([]);
-        $this->assertNotNull($exercise);
-
-        /** @var \App\Entity\Exercise $exercise */
-        return $exercise;
     }
 
     /**

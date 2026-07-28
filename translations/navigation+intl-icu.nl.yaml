@@ -474,6 +474,9 @@ workout:
             title: Geen oefening
         required_reps: De herhalingen zijn verplicht
         required_weight: Het gewicht is verplicht
+        submit_failed:
+            text: Er is een fout opgetreden bij het opslaan van je training. Probeer het opnieuw.
+            title: Opslaan mislukt
         validation: Er is een fout opgetreden bij het verzenden van je gegevens
     flash:
         created: Je training is opgeslagen

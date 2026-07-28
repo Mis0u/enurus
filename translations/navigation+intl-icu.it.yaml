@@ -474,6 +474,9 @@ workout:
             title: Nessun esercizio
         required_reps: Le ripetizioni sono obbligatorie
         required_weight: Il peso è obbligatorio
+        submit_failed:
+            text: Si è verificato un errore durante il salvataggio del tuo allenamento. Riprova.
+            title: Salvataggio non riuscito
         validation: Si è verificato un errore durante l'inserimento dei dati
     flash:
         created: Il tuo allenamento è stato registrato

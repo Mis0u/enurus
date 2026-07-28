@@ -474,6 +474,9 @@ workout:
             title: Nenhum exercício
         required_reps: As repetições são obrigatórias
         required_weight: O peso é obrigatório
+        submit_failed:
+            text: Ocorreu um erro ao guardar o teu treino. Tenta novamente.
+            title: Falha ao guardar
         validation: Ocorreu um erro ao submeter os teus dados
     flash:
         created: O teu treino foi registado

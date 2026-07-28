@@ -8,7 +8,6 @@ export default class extends Controller {
     static targets = ['exerciseList'];
 
     static values = {
-        blockUrl:        String,
         noExerciseTitle: String,
         noExerciseText:  String,
     };
@@ -88,16 +87,11 @@ export default class extends Controller {
         window.dispatchEvent(new CustomEvent('exercise-selector:open'));
     }
 
-    async onExerciseSelected(event) {
-        const { id }   = event.detail;
+    onExerciseSelected(event) {
+        const { html } = event.detail;
         const index    = this.exerciseListTarget.children.length;
-        const url      = `${this.blockUrlValue}?exerciseId=${id}&index=${index}`;
-        const response = await fetch(url);
 
-        if (!response.ok) return;
-
-        const html = await response.text();
-        this.exerciseListTarget.insertAdjacentHTML('beforeend', html);
+        this.exerciseListTarget.insertAdjacentHTML('beforeend', html.replaceAll('__EXERCISE_INDEX__', index));
     }
 
     addSet(event) {

@@ -8,9 +8,11 @@
     {% include 'workout/create/_toggle_routine.html.twig' with {'user': user} only %}
 
 
+    {# Jamais de routine pré-sélectionnée en création — toujours masqué initialement, cf.
+       _toggle_routine.html.twig. #}
     <div
         id="routine-selector"
-        class="flex flex-col gap-1.5 flex-1 max-md:w-full {{ workout.routine is not defined or workout.routine is null ? 'hidden' : '' }}"
+        class="flex flex-col gap-1.5 flex-1 max-md:w-full hidden"
         data-controller="workout--routine-loader"
         data-workout--routine-loader-block-url-value="{{ path('workout_routine_exercises_block') }}"
         data-workout--routine-loader-warning-title-value="{{ 'workout.routine.change_warning_title'|trans({}, 'navigation') }}"

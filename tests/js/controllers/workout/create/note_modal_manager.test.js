@@ -1,5 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { NoteModalManager } from '../../../../../assets/controllers/workout/create/note_modal_manager.js';
+
+const fireMock = vi.fn();
+
+vi.mock('sweetalert2', () => ({
+    default: {
+        fire: fireMock,
+    },
+}));
+
+const { NoteModalManager } = await import('../../../../../assets/controllers/workout/create/note_modal_manager.js');
 
 function buildDom(dateValue) {
     document.body.innerHTML = `
@@ -33,7 +42,7 @@ describe('NoteModalManager', () => {
 
     it('submits only once even after the modal has been reopened (blank-date retry scenario)', async () => {
         buildDom('2026-01-29');
-        const manager = new NoteModalManager(fakeApplication, '/seance/__ID__/photo');
+        const manager = new NoteModalManager(fakeApplication, '/seance/__ID__/photo', 'Save failed', 'Try again');
 
         // Reproduit le scénario du bug : la modale est ouverte une première fois (date vide,
         // reportValidity() bloque et referme la modale), puis rouverte après correction.
@@ -44,5 +53,20 @@ describe('NoteModalManager', () => {
         await new Promise(resolve => setTimeout(resolve, 0));
 
         expect(global.fetch).toHaveBeenCalledTimes(1);
+    });
+
+    it('shows an error toast when the server rejects the submission', async () => {
+        buildDom('2026-01-29');
+        const manager = new NoteModalManager(fakeApplication, '/seance/__ID__/photo', 'Save failed', 'Try again');
+
+        manager.open();
+        document.getElementById('note-modal-submit').click();
+        await new Promise(resolve => setTimeout(resolve, 0));
+
+        expect(fireMock).toHaveBeenCalledTimes(1);
+        expect(fireMock).toHaveBeenCalledWith(expect.objectContaining({
+            title: 'Save failed',
+            text: 'Try again',
+        }));
     });
 });
