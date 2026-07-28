@@ -132,6 +132,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
     }
 
+    #[ORM\Column]
+    public bool $isVerified = false {
+        get {
+            return $this->isVerified;
+        }
+        set(bool $isVerified) {
+            $this->isVerified = $isVerified;
+        }
+    }
+
     #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE)]
     public \DateTimeImmutable $lastLogin {
         get {

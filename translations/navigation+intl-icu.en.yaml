@@ -270,6 +270,7 @@ registration:
         receive_email: You're receiving this email because you signed up on {brand}
         registration_confirm: Confirm your {brand} registration
         welcome: Welcome to {brand}! Your first workout is waiting for you
+    email_sent_to: "A confirmation email has been sent to {email}."
     have_an_account: Already have an account?
     nickname:
         label: Choose your alias

@@ -123,12 +123,31 @@ SHA-256 de l'email (jamais l'email en clair) dans `DeletedAccountTrace`, à la s
 effective du compte (pas à la demande). Purgé 6 mois après cette suppression effective par
 `app:deleted-account-trace:purge` (`DeletedAccountTracePurgeCommand`) — délibérément plus long que
 la rétention du compte lui-même (30 jours), pour une fenêtre de détection de réinscription
-réaliste. À l'inscription, `DeletedAccountReregistrationNotifierService::notifyIfReregistration()`
-(appelé depuis `UserRegistrationService::registerUser()`) compare le hash du nouvel email à
+réaliste. À la confirmation d'email (pas à l'inscription, cf. ci-dessous),
+`DeletedAccountReregistrationNotifierService::notifyIfReregistration()` (appelé depuis
+`UserRegistrationService::completeRegistration()`) compare le hash du nouvel email à
 `DeletedAccountTrace` et, en cas de correspondance, crée un `ContactThread` (message interne,
 même mécanisme que `RegistrationWelcomeThreadService`) **appartenant au compte admin**
 (`ADMIN_USER_EMAIL`, même paramètre env que le fil de bienvenue) plutôt qu'un email — apparaît
 comme non lu dans la messagerie de l'admin. Ne bloque jamais l'inscription.
+
+**Vérification d'email obligatoire** (`symfonycasts/verify-email-bundle`, pas de config dédiée —
+contrairement à `reset-password-bundle`, ce bundle ne persiste rien en base, tout est dans un lien
+signé avec expiration embarquée, 1h par défaut). `User::$isVerified` (défaut `false`) bloque le
+login via `BlockedUserChecker::checkPreAuth()` (même classe que le blocage de compte, un seul
+`user_checker` par firewall) — message dédié `security.account_not_verified`.
+`UserRegistrationService::registerUser()` ne fait que créer le compte + envoyer l'email de
+confirmation (`EmailVerificationService::sendConfirmationEmail()`) ; **aucune connexion auto**, pas
+de fil de bienvenue, pas de check anti-réinscription à ce stade — tout ça est déplacé dans
+`completeRegistration()`, déclenché uniquement par `EmailVerificationController` au clic sur le
+lien. `VerifyEmailHelperInterface::validateEmailConfirmationFromRequest()` n'étant pas déclarée sur
+l'interface (seulement `@method` sur la classe concrète `VerifyEmailHelper`, pour compat BC),
+`EmailVerificationService` type-hint la classe concrète tout en forçant l'autowiring sur l'alias
+public de l'interface via `#[Autowire(service: VerifyEmailHelperInterface::class)]` — évite
+`validateEmailConfirmation()` (dépréciée depuis 1.17). `generateSignature()` a besoin de `'id'`
+explicitement dans `$extraParams` (sinon absent de l'URL générée, faute d'erreur silencieuse à
+l'usage) et de `'_locale'` pour respecter le préfixe de route obligatoire. Comptes fixtures créés
+via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concernés par ce flux).
 
 ---
 
@@ -331,7 +350,6 @@ palier précise, préférer des dates fixes en dur.
 | 10 | Évaluer `datetimetz_immutable` pour `Workout::$performedAt` — pas encore acté |
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
-| 24 | Vérification d'email obligatoire avant premier accès (lien de confirmation, compte inactif tant que non cliqué) — renfort anti-bot le plus efficace, à coder seulement si de vraies inscriptions frauduleuses sont constatées |
 | 25 | Perf requêtes dashboard (`/fr/tableau-de-bord`) — Doctrine Doctor y détecte plusieurs cartésiens O(n²)/O(n³) (JOIN sur `workout_exercise`+`exercise_set`, puis +`exercise_muscle`), des requêtes à 5 JOINs, un JOIN inutile sur `exercise_set` (alias `e5_`), et 7 agrégations sans DTO hydration. À traiter comme chantier séparé, en lien avec `docs/dashboard-architecture.md` |
 
 ---

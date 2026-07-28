@@ -18,6 +18,7 @@ use Symfony\Component\Clock\MockClock;
 use function Symfony\Component\Clock\now;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 class RegistrationControllerTest extends WebTestCase
 {
@@ -61,12 +62,13 @@ class RegistrationControllerTest extends WebTestCase
     #[DataProvider('genderProvider')]
     public function testRegistrationSuccess(string $gender): void
     {
-        $user = $this->fillField($gender, 'no_bot@test.com', 5, '/fr/tableau-de-bord');
+        $user = $this->fillField($gender, 'no_bot@test.com', 5, '/fr/inscription/verifier-email');
         $this->assertNotNull($user);
         $this->assertInstanceOf(\DateTimeImmutable::class, $user->lastLogin);
         $this->assertSame($user->lastLogin->format('Y-m-d'), now()->format('Y-m-d'));
         $this->assertSame(GenderEnum::from($gender), $user->gender);
         $this->assertSame('fr', $user->locale);
+        $this->assertFalse($user->isVerified, 'A freshly registered account must stay unverified until the confirmation link is clicked (TODO #24).');
     }
 
     public function testReregistrationWithEmailOfDeletedAccountNotifiesAdminInternally(): void
@@ -101,6 +103,29 @@ class RegistrationControllerTest extends WebTestCase
             'registration_form[website]' => null,
         ]);
 
+        $this->assertResponseRedirects('/fr/inscription/verifier-email');
+
+        /** @var UserRepository $userRepositoryForConfirmation */
+        $userRepositoryForConfirmation = $entityManager->getRepository(User::class);
+        $registeredUser = $userRepositoryForConfirmation->findOneByEmail($email);
+
+        if (! $registeredUser instanceof User || null === $registeredUser->id) {
+            throw new \LogicException('Freshly registered user not found.');
+        }
+
+        /** @var VerifyEmailHelperInterface $verifyEmailHelper */
+        $verifyEmailHelper = $client->getContainer()->get(VerifyEmailHelperInterface::class);
+        $signature = $verifyEmailHelper->generateSignature(
+            'app_verify_email',
+            (string) $registeredUser->id,
+            $registeredUser->email,
+            [
+                '_locale' => 'fr',
+                'id' => (string) $registeredUser->id,
+            ],
+        );
+
+        $client->request(Request::METHOD_GET, $signature->getSignedUrl());
         $this->assertResponseRedirects('/fr/tableau-de-bord');
 
         /** @var ContactThreadRepository $contactThreadRepository */

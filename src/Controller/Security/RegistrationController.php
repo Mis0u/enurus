@@ -9,16 +9,21 @@ use App\Form\RegistrationFormType;
 use App\Service\Security\UserRegistrationService;
 use App\Service\Security\ValidateSecurityService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
+    /**
+     * Clé de session portant l'email en attente de confirmation — lue par
+     * `RegistrationCheckEmailController` et `RegistrationResendConfirmationController` (TODO #24 :
+     * plus de connexion auto à l'inscription, le compte reste inactif jusqu'au clic sur le lien).
+     */
+    public const string PENDING_EMAIL_SESSION_KEY = 'registration_pending_email';
+
     private const string BOT_DETECTED = 'bot_detected';
 
     private const string RATE_LIMIT = 'rate_limit';
@@ -45,7 +50,6 @@ class RegistrationController extends AbstractController
     )]
     public function register(
         Request $request,
-        Security $security,
         RateLimiterFactory $registrationLimiter,
     ): Response {
         if (null !== $this->getUser()) {
@@ -65,10 +69,9 @@ class RegistrationController extends AbstractController
             $plainPassword = $form->get('plainPassword')->getData();
             $this->registrationService->registerUser($user, $plainPassword, $request->getLocale());
 
-            return $security->login($user, 'form_login', 'main')
-                ?? throw new AuthenticationException(
-                    'L\'utilisateur n\'a pas pu se connecter automatiquement après inscription.'
-                );
+            $request->getSession()->set(self::PENDING_EMAIL_SESSION_KEY, $user->email);
+
+            return $this->redirectToRoute('app_registration_check_email');
         }
 
         return $this->render('registration/register.html.twig', [
