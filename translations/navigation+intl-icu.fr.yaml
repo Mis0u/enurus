@@ -252,6 +252,7 @@ messagerie:
     title: Messagerie
     vote:
         closed: "Le vote est clôturé, tu ne peux plus voter."
+        closes_in_days: "Se termine dans {days, plural, one {# jour} other {# jours}}."
         confirmation: "Ton vote pour {option} est bien enregistré, merci !"
         submit: Voter
 

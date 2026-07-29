@@ -252,6 +252,7 @@ messagerie:
     title: Nachrichten
     vote:
         closed: "Die Abstimmung ist beendet, du kannst nicht mehr abstimmen."
+        closes_in_days: "Endet in {days, plural, one {# Tag} other {# Tagen}}."
         confirmation: "Deine Stimme für {option} wurde gespeichert, danke!"
         submit: Abstimmen
 

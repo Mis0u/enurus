@@ -256,6 +256,7 @@ messagerie:
     title: Wiadomości
     vote:
         closed: "Głosowanie jest zamknięte, nie możesz już głosować."
+        closes_in_days: "Kończy się za {days, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}}."
         confirmation: "Twój głos na {option} został zarejestrowany, dziękujemy!"
         submit: Głosuj
 

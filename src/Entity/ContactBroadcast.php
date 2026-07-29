@@ -187,4 +187,31 @@ class ContactBroadcast
     {
         return null !== $this->pollClosesAt && $this->pollClosesAt <= $now;
     }
+
+    /**
+     * Jours pleins restants avant clôture, arrondis au jour supérieur dès qu'il reste une fraction
+     * de journée (ex. 2 jours et 3 heures restants → 3). Retourne 0 si le vote est déjà clos ou
+     * n'a pas de date de clôture — l'affichage doit alors basculer sur un message "se termine
+     * aujourd'hui" plutôt que d'interpréter ce 0 comme une valeur négative.
+     */
+    public function daysUntilPollCloses(\DateTimeImmutable $now): int
+    {
+        if (null === $this->pollClosesAt || $this->pollClosesAt <= $now) {
+            return 0;
+        }
+
+        $interval = $now->diff($this->pollClosesAt);
+
+        if (false === $interval->days) {
+            throw new \LogicException('DateInterval::$days is only false when not built via DateTimeImmutable::diff().');
+        }
+
+        $days = $interval->days;
+
+        if (0 < $interval->h || 0 < $interval->i || 0 < $interval->s) {
+            ++$days;
+        }
+
+        return $days;
+    }
 }

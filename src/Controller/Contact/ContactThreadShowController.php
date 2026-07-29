@@ -11,6 +11,7 @@ use App\Form\ContactVoteFormType;
 use App\Security\Voter\ContactThreadVoter;
 use App\Service\Contact\ContactThreadReadService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use function Symfony\Component\Clock\now;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -57,6 +58,7 @@ final class ContactThreadShowController extends AbstractController
                     'locale' => $thread->owner->locale,
                 ])
                 : null,
+            'daysUntilPollCloses' => $thread->broadcast?->daysUntilPollCloses(now()) ?? 0,
             'imageMaxSizeBytes' => ImageConstraints::MAX_SIZE_BYTES,
             'imageAllowedMimeTypes' => ImageConstraints::ALLOWED_MIME_TYPES,
         ]);

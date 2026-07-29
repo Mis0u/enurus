@@ -252,6 +252,7 @@ messagerie:
     title: Berichten
     vote:
         closed: "De stemming is gesloten, je kunt niet meer stemmen."
+        closes_in_days: "Eindigt over {days, plural, one {# dag} other {# dagen}}."
         confirmation: "Je stem voor {option} is geregistreerd, bedankt!"
         submit: Stemmen
 
