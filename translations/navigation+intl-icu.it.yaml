@@ -252,6 +252,7 @@ messagerie:
     title: Messaggistica
     vote:
         closed: "Il sondaggio è chiuso, non puoi più votare."
+        closes_in_days: "Termina tra {days, plural, one {# giorno} other {# giorni}}."
         confirmation: "Il tuo voto per {option} è stato registrato, grazie!"
         submit: Vota
 

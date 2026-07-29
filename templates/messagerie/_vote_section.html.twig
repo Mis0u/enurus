@@ -3,6 +3,10 @@
     - thread : ContactThread
     - canVote : bool
     - voteForm : ?FormView — présent seulement si canVote est vrai
+    - daysUntilPollCloses : int — jours pleins restants avant clôture, arrondi au jour supérieur,
+      cf. ContactBroadcast::daysUntilPollCloses() — 0 seulement si le vote s'est clos entre-temps
+      (n'arrive jamais côté formulaire, le Voter garantit déjà pollClosesAt > now à ce stade), dans
+      ce cas la ligne ne s'affiche simplement pas plutôt que d'afficher une information trompeuse.
 #}
 {% if thread.pollVote is not null %}
     <div class="flex flex-col items-center gap-2 text-center py-2">
@@ -10,9 +14,20 @@
         <p class="text-[13.5px] text-[#8b9bb4]">
             {{ 'messagerie.vote.confirmation'|trans({option: thread.pollVote.option.labelFor(thread.owner.locale)}, 'navigation') }}
         </p>
+        {% if daysUntilPollCloses > 0 %}
+            <p class="text-[12px] text-[#5c6b85]">
+                {{ 'messagerie.vote.closes_in_days'|trans({days: daysUntilPollCloses}, 'navigation') }}
+            </p>
+        {% endif %}
     </div>
 {% elseif canVote and voteForm is not null %}
     {% form_theme voteForm 'registration/theme/error_theme.html.twig' 'messagerie/theme/vote_option_theme.html.twig' %}
+
+    {% if daysUntilPollCloses > 0 %}
+        <p class="text-[12px] text-[#5c6b85] text-center mb-3">
+            {{ 'messagerie.vote.closes_in_days'|trans({days: daysUntilPollCloses}, 'navigation') }}
+        </p>
+    {% endif %}
 
     {{ form_start(voteForm, {
         render_rest: false,

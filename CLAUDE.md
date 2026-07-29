@@ -355,7 +355,6 @@ palier précise, préférer des dates fixes en dur.
 |---|------|
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
-| 19 | Afficher la date de fin de validité d'un sondage (`pollClosesAt`) côté user avant de voter — actuellement jamais transmise aux templates publics (`show.html.twig`/`_vote_section.html.twig`), visible uniquement en admin CRUD |
 
 ---
 

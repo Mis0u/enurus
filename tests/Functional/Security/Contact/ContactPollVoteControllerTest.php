@@ -113,6 +113,45 @@ final class ContactPollVoteControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(403);
     }
 
+    public function testPollShowsDaysRemainingBeforeVoting(): void
+    {
+        $client = $this->login(self::OWNER);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::OWNER);
+        $admin = $this->getUserByEmail(UserFixtures::USER_ADMIN);
+
+        [$thread] = $this->createVoteThread($entityManager, $owner, $admin, closesAt: '+3 days');
+
+        $crawler = $client->request(Request::METHOD_GET, \sprintf('/fr/messagerie/%s', $thread->id));
+
+        self::assertStringContainsString('Se termine dans 3 jours', $crawler->filter('body')->text());
+    }
+
+    public function testPollShowsDaysRemainingAfterVoting(): void
+    {
+        $client = $this->login(self::OWNER);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::OWNER);
+        $admin = $this->getUserByEmail(UserFixtures::USER_ADMIN);
+
+        [$thread, $options] = $this->createVoteThread($entityManager, $owner, $admin, closesAt: '+2 days');
+
+        $vote = new ContactPollVote();
+        $vote->thread = $thread;
+        $vote->option = $options[0];
+        $thread->pollVote = $vote;
+        $entityManager->persist($vote);
+        $entityManager->flush();
+
+        $crawler = $client->request(Request::METHOD_GET, \sprintf('/fr/messagerie/%s', $thread->id));
+
+        self::assertStringContainsString('Se termine dans 2 jours', $crawler->filter('body')->text());
+    }
+
     public function testReplyIsForbiddenOnVoteThread(): void
     {
         $client = $this->login(self::OWNER);

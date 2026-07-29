@@ -252,6 +252,7 @@ messagerie:
     title: Messages
     vote:
         closed: "Voting is closed, you can no longer vote."
+        closes_in_days: "Ends in {days, plural, one {# day} other {# days}}."
         confirmation: "Your vote for {option} has been recorded, thank you!"
         submit: Vote
 
