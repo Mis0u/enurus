@@ -1,4 +1,10 @@
 admin:
+    broadcast_translation_failed:
+        body: "La traduzione della diffusione «{broadcastSubject}» nella lingua {targetLocale} non è riuscita. Il sistema riproverà automaticamente."
+        investigate: "Per trovare questo messaggio nella coda dei falliti e riprovarlo una volta risolto il problema: `php bin/console messenger:failed:show --env=prod`."
+        reason: "Motivo: {reason}"
+        subject: "Traduzione della diffusione non riuscita"
+        title: "Traduzione non riuscita"
     reregistration:
         body: "L'indirizzo {email} corrisponde a un account eliminato il {deletedAt}. Verifica se si tratta di un abuso."
         subject: Nuova registrazione rilevata

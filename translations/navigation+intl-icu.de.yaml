@@ -1,4 +1,10 @@
 admin:
+    broadcast_translation_failed:
+        body: "Die Übersetzung der Rundmail „{broadcastSubject}“ in die Sprache {targetLocale} ist fehlgeschlagen. Das System versucht es automatisch erneut."
+        investigate: "Um diese Nachricht in der Fehlerwarteschlange zu finden und nach der Behebung erneut zu versuchen: `php bin/console messenger:failed:show --env=prod`."
+        reason: "Grund: {reason}"
+        subject: "Übersetzung der Rundmail fehlgeschlagen"
+        title: "Übersetzung fehlgeschlagen"
     reregistration:
         body: "Die E-Mail {email} entspricht einem am {deletedAt} gelöschten Konto. Prüfe, ob es sich um Missbrauch handelt."
         subject: Neuanmeldung erkannt

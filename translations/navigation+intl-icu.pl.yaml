@@ -1,4 +1,10 @@
 admin:
+    broadcast_translation_failed:
+        body: "Tłumaczenie wiadomości „{broadcastSubject}” na język {targetLocale} nie powiodło się. System spróbuje ponownie automatycznie."
+        investigate: "Aby znaleźć tę wiadomość w kolejce błędów i ponowić próbę po rozwiązaniu problemu: `php bin/console messenger:failed:show --env=prod`."
+        reason: "Powód: {reason}"
+        subject: "Błąd tłumaczenia wiadomości"
+        title: "Błąd tłumaczenia"
     reregistration:
         body: "Adres e-mail {email} odpowiada kontu usuniętemu {deletedAt}. Sprawdź, czy to nadużycie."
         subject: Wykryto ponowną rejestrację

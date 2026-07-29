@@ -54,6 +54,7 @@ final class ContactThreadShowController extends AbstractController
             'voteForm' => $canVote && null !== $thread->broadcast
                 ? $this->createForm(ContactVoteFormType::class, options: [
                     'broadcast' => $thread->broadcast,
+                    'locale' => $thread->owner->locale,
                 ])
                 : null,
             'imageMaxSizeBytes' => ImageConstraints::MAX_SIZE_BYTES,

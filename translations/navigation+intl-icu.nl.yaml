@@ -1,4 +1,10 @@
 admin:
+    broadcast_translation_failed:
+        body: "De vertaling van de uitzending \"{broadcastSubject}\" naar de taal {targetLocale} is mislukt. Het systeem probeert het automatisch opnieuw."
+        investigate: "Om dit bericht in de foutenwachtrij te vinden en opnieuw te proberen zodra het probleem is opgelost: `php bin/console messenger:failed:show --env=prod`."
+        reason: "Reden: {reason}"
+        subject: Vertaling van uitzending mislukt
+        title: Vertaling mislukt
     reregistration:
         body: "Het e-mailadres {email} komt overeen met een account dat op {deletedAt} is verwijderd. Controleer of dit misbruik betreft."
         subject: Herregistratie gedetecteerd

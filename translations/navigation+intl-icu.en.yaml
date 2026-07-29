@@ -1,4 +1,10 @@
 admin:
+    broadcast_translation_failed:
+        body: "Translation of the broadcast \"{broadcastSubject}\" into {targetLocale} failed. The system will retry automatically."
+        investigate: "To find this message in the failure queue and retry it once the issue is fixed: `php bin/console messenger:failed:show --env=prod`."
+        reason: "Reason: {reason}"
+        subject: Broadcast translation failed
+        title: Translation failed
     reregistration:
         body: "The email {email} matches an account deleted on {deletedAt}. Check whether this is abuse."
         subject: Re-registration detected

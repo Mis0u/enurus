@@ -21,12 +21,14 @@ final class ContactVoteFormType extends AbstractType
     {
         /** @var ContactBroadcast $broadcast */
         $broadcast = $options['broadcast'];
+        /** @var string $locale */
+        $locale = $options['locale'];
 
         $builder
             ->add('option', EntityType::class, [
                 'class' => ContactPollOption::class,
                 'choices' => $broadcast->pollOptions,
-                'choice_label' => 'label',
+                'choice_label' => static fn (ContactPollOption $option): string => $option->labelFor($locale),
                 'expanded' => true,
                 'multiple' => false,
                 'label' => false,
@@ -43,7 +45,8 @@ final class ContactVoteFormType extends AbstractType
         $resolver->setDefaults([
             'csrf_token_id' => 'contact_vote',
         ]);
-        $resolver->setRequired('broadcast');
+        $resolver->setRequired(['broadcast', 'locale']);
         $resolver->setAllowedTypes('broadcast', ContactBroadcast::class);
+        $resolver->setAllowedTypes('locale', 'string');
     }
 }

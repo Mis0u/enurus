@@ -29,6 +29,24 @@ services:
         arguments:
             $adminUserEmail: '%env(ADMIN_USER_EMAIL)%'
 
+    # Service dédié (plutôt que le HttpClientInterface autowiré par défaut) pour pouvoir le
+    # remplacer explicitement en test par un MockHttpClient — l'alias autowiré par défaut passe par
+    # une chaîne de décoration (debug, uri_template) qui rend `container->set()` inefficace en test.
+    deepl.http_client:
+        class: Symfony\Contracts\HttpClient\HttpClientInterface
+        factory: ['Symfony\Component\HttpClient\HttpClient', 'create']
+        public: true
+
+    App\Service\Translation\DeepLTranslationService:
+        arguments:
+            $httpClient: '@deepl.http_client'
+            $deeplApiKey: '%env(DEEPL_API_KEY)%'
+            $deeplApiUrl: '%env(DEEPL_API_URL)%'
+
+    App\Service\Translation\BroadcastTranslationFailureNotifierService:
+        arguments:
+            $adminUserEmail: '%env(ADMIN_USER_EMAIL)%'
+
     rate_limiter.storage:
         class: Symfony\Component\Cache\Adapter\ArrayAdapter
         autoconfigure: false
