@@ -1,0 +1,25 @@
+{% extends 'emails/_base.html.twig' %}
+
+{% block title %}{{ 'admin.broadcast_translation_failed.subject'|trans({}, 'navigation', locale) }}{% endblock %}
+
+{% block content %}
+    <div style="text-align: center; margin-bottom: 24px;">
+        <span style="font-size: 64px;">⚠️</span>
+    </div>
+
+    <h2 style="margin: 0 0 16px; font-size: 24px; font-weight: bold; color: #ffffff; text-align: center;">
+        {{ 'admin.broadcast_translation_failed.title'|trans({}, 'navigation', locale) }}
+    </h2>
+
+    <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #cbd5e1; text-align: center;">
+        {{ 'admin.broadcast_translation_failed.body'|trans({'broadcastSubject': broadcastSubject, 'targetLocale': targetLocale}, 'navigation', locale) }}
+    </p>
+
+    <p style="margin: 0 0 16px; font-size: 14px; line-height: 1.6; color: #cbd5e1; text-align: center;">
+        {{ 'admin.broadcast_translation_failed.reason'|trans({'reason': reason}, 'navigation', locale) }}
+    </p>
+
+    <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #94a3b8; text-align: center;">
+        {{ 'admin.broadcast_translation_failed.investigate'|trans({}, 'navigation', locale) }}
+    </p>
+{% endblock %}

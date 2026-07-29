@@ -1,4 +1,10 @@
 admin:
+    broadcast_translation_failed:
+        body: "La traduction de la diffusion « {broadcastSubject} » vers la langue {targetLocale} a échoué. Le système réessaiera automatiquement."
+        investigate: "Pour retrouver ce message dans la file d'échec et le rejouer une fois le problème résolu : `php bin/console messenger:failed:show --env=prod`."
+        reason: "Raison : {reason}"
+        subject: "Échec de traduction d'une diffusion"
+        title: "Échec de traduction"
     reregistration:
         body: "L'adresse {email} correspond à un compte supprimé le {deletedAt}. Vérifie s'il s'agit d'un abus."
         subject: Réinscription détectée

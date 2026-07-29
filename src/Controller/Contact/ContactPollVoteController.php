@@ -47,6 +47,7 @@ final class ContactPollVoteController extends AbstractController
 
         $form = $this->createForm(ContactVoteFormType::class, options: [
             'broadcast' => $thread->broadcast,
+            'locale' => $thread->owner->locale,
         ]);
         $form->handleRequest($request);
 

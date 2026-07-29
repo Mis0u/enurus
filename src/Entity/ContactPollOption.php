@@ -57,4 +57,28 @@ class ContactPollOption
             $this->position = $position;
         }
     }
+
+    /**
+     * Libellé traduit par langue (code `LocaleAllowedEnum`), rempli par
+     * `SendContactBroadcastMessageHandler` en même temps que le sujet/corps de la diffusion.
+     * Absent tant que la traduction n'a pas encore eu lieu pour cette langue.
+     *
+     * @var array<string, string>
+     */
+    #[ORM\Column(type: 'json', nullable: false, options: [
+        'default' => '[]',
+    ])]
+    public array $translatedLabels = [] {
+        get {
+            return $this->translatedLabels;
+        }
+        set(array $translatedLabels) {
+            $this->translatedLabels = $translatedLabels;
+        }
+    }
+
+    public function labelFor(string $locale): string
+    {
+        return $this->translatedLabels[$locale] ?? $this->label;
+    }
 }

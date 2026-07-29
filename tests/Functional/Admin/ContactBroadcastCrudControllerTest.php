@@ -11,6 +11,7 @@ use App\Entity\ContactThread;
 use App\Entity\ContactThreadMessage;
 use App\Entity\User;
 use App\Enum\Contact\ContactCategoryEnum;
+use App\Exception\Translation\TranslationFailedException;
 use App\Message\SendContactBroadcastMessage;
 use App\MessageHandler\SendContactBroadcastMessageHandler;
 use App\Repository\ContactBroadcastRepository;
@@ -20,12 +21,16 @@ use App\Tests\Functional\Helper\ImageTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpClient\MockHttpClient;
+use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 final class ContactBroadcastCrudControllerTest extends WebTestCase
 {
     use FunctionalTestTrait;
+    use MailerAssertionsTrait;
 
     private const string ADMIN = 'admin-fixture@test.com';
 
@@ -365,6 +370,90 @@ final class ContactBroadcastCrudControllerTest extends WebTestCase
         $this->deleteTestUser('broadcast-vote-create@test.com');
     }
 
+    public function testComposeToAllTranslatesOnceForAllRecipientsSharingTheSameLocale(): void
+    {
+        $client = $this->login(self::ADMIN);
+        $germanFirst = $this->createTestUser('broadcast-translate-de-1@test.com', 'de');
+        $germanSecond = $this->createTestUser('broadcast-translate-de-2@test.com', 'de');
+
+        $client->request(Request::METHOD_GET, $this->composeUrl());
+        $crawler = $client->getCrawler();
+        $form = $crawler->selectButton('Envoyer')->form([
+            'contact_broadcast_compose_form[target]' => 'all',
+            'contact_broadcast_compose_form[subject]' => 'Annonce multilingue',
+            'contact_broadcast_compose_form[body]' => 'Corps du message multilingue.',
+        ]);
+        $client->request($form->getMethod(), $form->getUri(), $form->getPhpValues(), $form->getPhpFiles());
+        self::assertResponseRedirects();
+
+        $callCountByTargetLang = [];
+        $this->processPendingBroadcast('Annonce multilingue', static function (array $payload) use (&$callCountByTargetLang): MockResponse {
+            $callCountByTargetLang[$payload['target_lang']] = ($callCountByTargetLang[$payload['target_lang']] ?? 0) + 1;
+
+            return new MockResponse(json_encode([
+                'translations' => [
+                    [
+                        'text' => 'Übersetzter Betreff',
+                    ],
+                    [
+                        'text' => 'Übersetzter Inhalt',
+                    ],
+                ],
+            ], JSON_THROW_ON_ERROR));
+        });
+
+        self::assertSame(1, $callCountByTargetLang['DE'] ?? 0, 'DeepL doit être appelé une seule fois par langue, jamais par destinataire.');
+
+        $firstMessage = $this->findThreadsForOwner($germanFirst)[0]->messages->first();
+        $secondMessage = $this->findThreadsForOwner($germanSecond)[0]->messages->first();
+
+        self::assertInstanceOf(ContactThreadMessage::class, $firstMessage);
+        self::assertInstanceOf(ContactThreadMessage::class, $secondMessage);
+        self::assertSame('Übersetzter Inhalt', $firstMessage->body);
+        self::assertSame('Übersetzter Inhalt', $secondMessage->body);
+
+        $this->deleteTestUser('broadcast-translate-de-1@test.com');
+        $this->deleteTestUser('broadcast-translate-de-2@test.com');
+    }
+
+    public function testComposeToAllCreatesNoThreadAndNotifiesAdminWhenATranslationFails(): void
+    {
+        $client = $this->login(self::ADMIN);
+        $frenchRecipient = $this->createTestUser('broadcast-fail-fr@test.com', 'fr');
+        $germanRecipient = $this->createTestUser('broadcast-fail-de@test.com', 'de');
+
+        $client->request(Request::METHOD_GET, $this->composeUrl());
+        $crawler = $client->getCrawler();
+        $form = $crawler->selectButton('Envoyer')->form([
+            'contact_broadcast_compose_form[target]' => 'all',
+            'contact_broadcast_compose_form[subject]' => 'Annonce en échec',
+            'contact_broadcast_compose_form[body]' => 'Ce message ne doit jamais partir.',
+        ]);
+        $client->request($form->getMethod(), $form->getUri(), $form->getPhpValues(), $form->getPhpFiles());
+        self::assertResponseRedirects();
+
+        $broadcast = $this->findBroadcastBySubject('Annonce en échec');
+
+        $this->expectException(TranslationFailedException::class);
+
+        try {
+            $this->processPendingBroadcast('Annonce en échec', static fn (): MockResponse => new MockResponse('', [
+                'http_code' => 403,
+            ]));
+        } finally {
+            self::assertCount(0, $this->findThreadsForOwner($frenchRecipient));
+            self::assertCount(0, $this->findThreadsForOwner($germanRecipient));
+
+            self::assertEmailCount(1);
+            $email = self::getMailerMessage();
+            self::assertNotNull($email);
+            self::assertEmailHtmlBodyContains($email, $broadcast->subject);
+
+            $this->deleteTestUser('broadcast-fail-fr@test.com');
+            $this->deleteTestUser('broadcast-fail-de@test.com');
+        }
+    }
+
     public function testComposeVoteRequiresAtLeastTwoOptions(): void
     {
         $client = $this->login(self::ADMIN);
@@ -424,8 +513,13 @@ final class ContactBroadcastCrudControllerTest extends WebTestCase
      * handler directement, comme le ferait le worker, plutôt que de compter sur une vraie
      * consommation de la queue.
      */
-    private function processPendingBroadcast(string $subject): ContactBroadcast
+    private function processPendingBroadcast(string $subject, ?callable $deeplResponseFactory = null): ContactBroadcast
     {
+        // Posé ici (juste avant l'invocation directe du handler) plutôt qu'après login() : le
+        // KernelBrowser reboote le kernel — donc reconstruit le container — avant chaque requête
+        // HTTP, ce qui effacerait un stub posé plus tôt dans le test.
+        $this->stubDeeplTranslation($deeplResponseFactory);
+
         $broadcast = $this->findBroadcastBySubject($subject);
 
         /** @var \Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport $transport */
@@ -493,6 +587,36 @@ final class ContactBroadcastCrudControllerTest extends WebTestCase
             ->setAction('compose')
             ->generateUrl()
         ;
+    }
+
+    /**
+     * Les fixtures de base (`UserFixtures::loadLocaleUsers()`) créent un destinataire par locale,
+     * toujours présents pour un ciblage "tous les utilisateurs" — remplace le client HTTP DeepL par
+     * un double qui renvoie le texte tel quel par défaut, pour ne jamais dépendre d'un vrai appel
+     * réseau dans les tests. `$responseFactory`, si fourni, reçoit le payload décodé
+     * `{text, source_lang, target_lang}` de chaque requête et permet de simuler un échec ciblé.
+     *
+     * @param (callable(array{text: list<string>, source_lang: string, target_lang: string}): MockResponse)|null $responseFactory
+     */
+    private function stubDeeplTranslation(?callable $responseFactory = null): void
+    {
+        $responseFactory ??= static fn (array $payload): MockResponse => new MockResponse(json_encode([
+            'translations' => array_map(
+                static fn (string $text): array => [
+                    'text' => $text,
+                ],
+                $payload['text'],
+            ),
+        ], JSON_THROW_ON_ERROR));
+
+        $mockHttpClient = new MockHttpClient(static function (string $method, string $url, array $options) use ($responseFactory): MockResponse {
+            /** @var array{text: list<string>, source_lang: string, target_lang: string} $payload */
+            $payload = json_decode((string) $options['body'], true, 512, JSON_THROW_ON_ERROR);
+
+            return $responseFactory($payload);
+        });
+
+        static::getContainer()->set('deepl.http_client', $mockHttpClient);
     }
 
     private function createTestUser(string $email, string $locale): User

@@ -1,4 +1,10 @@
 admin:
+    broadcast_translation_failed:
+        body: "La traducción de la difusión «{broadcastSubject}» al idioma {targetLocale} ha fallado. El sistema lo reintentará automáticamente."
+        investigate: "Para encontrar este mensaje en la cola de fallos y reintentarlo una vez resuelto el problema: `php bin/console messenger:failed:show --env=prod`."
+        reason: "Motivo: {reason}"
+        subject: "Fallo en la traducción de una difusión"
+        title: "Fallo de traducción"
     reregistration:
         body: "El correo {email} coincide con una cuenta eliminada el {deletedAt}. Verifica si se trata de un abuso."
         subject: Reinscripción detectada

@@ -1,4 +1,10 @@
 admin:
+    broadcast_translation_failed:
+        body: "A tradução da difusão «{broadcastSubject}» para o idioma {targetLocale} falhou. O sistema tentará novamente automaticamente."
+        investigate: "Para encontrar esta mensagem na fila de falhas e tentar novamente depois de resolver o problema: `php bin/console messenger:failed:show --env=prod`."
+        reason: "Motivo: {reason}"
+        subject: "Falha na tradução de uma difusão"
+        title: "Falha na tradução"
     reregistration:
         body: "O email {email} corresponde a uma conta eliminada em {deletedAt}. Verifica se se trata de abuso."
         subject: Reinscrição detetada
