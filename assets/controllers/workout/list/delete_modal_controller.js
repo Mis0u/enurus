@@ -17,7 +17,7 @@ export default class extends Controller {
             reverseButtons:    true,
             customClass: {
                 cancelButton: 'swal-cancel-btn',
-                popup:        'swal-fittracker-popup',
+                popup:        'swal-enurus-popup',
             },
         });
 

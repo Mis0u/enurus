@@ -25,7 +25,7 @@ final class ContactMessageBodySanitizerServiceTest extends TestCase
 
     public function testKeepsLinksWithHref(): void
     {
-        $html = '<p>Voir <a href="https://fittracker.test">le site</a>.</p>';
+        $html = '<p>Voir <a href="https://enurus.test">le site</a>.</p>';
 
         self::assertSame($html, $this->sanitizer->sanitize($html));
     }

@@ -60,7 +60,7 @@ contact:
             🏋️ Utwórz trening — tutaj dzieje się wszystko: wybierz swoje ćwiczenia (lub rutynę), wpisz ciężar/powtórzenia, i gotowe.
 
             Udanego treningu! 🔥
-        subject: "Witaj w FitTracker 🎉"
+        subject: "Witaj w {brand} 🎉"
 
 dashboard:
     contact: Kontakt
@@ -232,7 +232,7 @@ login:
 
 messagerie:
     author:
-        admin: FitTracker
+        admin: "{brand}"
         you: Ty
     back_to_list: Powrót do wiadomości
     delete:
@@ -400,7 +400,7 @@ settings:
             subject: Usunięcie Twojego konta zostało anulowane
             title: Witaj z powrotem!
         deleted:
-            body: Cześć {nickname}, zgodnie z Twoją prośbą, Twoje konto FitTracker i wszystkie powiązane dane (treningi, rutyny, niestandardowe ćwiczenia) zostały trwale usunięte. Dziękujemy za korzystanie z FitTracker.
+            body: Cześć {nickname}, zgodnie z Twoją prośbą, Twoje konto {brand} i wszystkie powiązane dane (treningi, rutyny, niestandardowe ćwiczenia) zostały trwale usunięte. Dziękujemy za korzystanie z {brand}.
             subject: Twoje konto zostało trwale usunięte
             title: Konto usunięte
         requested:

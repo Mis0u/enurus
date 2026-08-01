@@ -18,7 +18,7 @@ class FormatTitleTest extends TestCase
         $translator = $this->createStub(TranslatorInterface::class);
         $translator
             ->method('trans')
-            ->willReturn('FitTracker');
+            ->willReturn('Enurus');
 
         $this->extension = new FormatTitleExtension($translator);
     }
@@ -29,18 +29,18 @@ class FormatTitleTest extends TestCase
     public static function specialTitleFormat(): array
     {
         return [
-            ['Séance', 'Séance | FitTracker'],
-            ['Tableau de bord', 'Tableau de bord | FitTracker'],
-            ['ROUTINE', 'Routine | FitTracker'],
-            ['Évaluation', 'Évaluation | FitTracker'],
-            ['Ç\'EST DE LA BOMBE', 'Ç\'est de la bombe | FitTracker'],
-            ['😀test😀', '😀test😀 | FitTracker'],
-            [' Espace avant', 'Espace avant | FitTracker'],
-            ['Espace après ', 'Espace après | FitTracker'],
-            [' Espace avant après ', 'Espace avant après | FitTracker'],
-            ['minuscule', 'Minuscule | FitTracker'],
-            ['Дмитрий', 'Дмитрий | FitTracker'], // 🇷🇺
-            ['23cou', '23cou | FitTracker'],
+            ['Séance', 'Séance | Enurus'],
+            ['Tableau de bord', 'Tableau de bord | Enurus'],
+            ['ROUTINE', 'Routine | Enurus'],
+            ['Évaluation', 'Évaluation | Enurus'],
+            ['Ç\'EST DE LA BOMBE', 'Ç\'est de la bombe | Enurus'],
+            ['😀test😀', '😀test😀 | Enurus'],
+            [' Espace avant', 'Espace avant | Enurus'],
+            ['Espace après ', 'Espace après | Enurus'],
+            [' Espace avant après ', 'Espace avant après | Enurus'],
+            ['minuscule', 'Minuscule | Enurus'],
+            ['Дмитрий', 'Дмитрий | Enurus'], // 🇷🇺
+            ['23cou', '23cou | Enurus'],
         ];
     }
 

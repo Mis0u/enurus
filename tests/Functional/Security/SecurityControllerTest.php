@@ -22,7 +22,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains(
             'title',
-            'FitTracker',
+            'Enurus',
             'Le titre de la page ne contient pas le texte demandé'
         );
     }
@@ -93,7 +93,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertResponseRedirects('/fr/tableau-de-bord');
         $crawler = $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertSame('Tableau de bord | FitTracker', $crawler->filter('title')->text(), 'Le sélecteur title ne contient pas le texte attendu');
+        $this->assertSame('Tableau de bord | Enurus', $crawler->filter('title')->text(), 'Le sélecteur title ne contient pas le texte attendu');
     }
 
     public function testAlreadyAuthenticatedUserIsRedirectedFromLogin(): void
@@ -104,7 +104,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertResponseRedirects('/fr/tableau-de-bord');
         $crawler = $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertSame('Tableau de bord | FitTracker', $crawler->filter('title')->text(), 'Le sélecteur title ne contient pas le texte attendu');
+        $this->assertSame('Tableau de bord | Enurus', $crawler->filter('title')->text(), 'Le sélecteur title ne contient pas le texte attendu');
 
     }
 
@@ -164,7 +164,7 @@ class SecurityControllerTest extends WebTestCase
         $crawler = $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSame('Tableau de bord | FitTracker', $crawler->filter('title')->text());
+        $this->assertSame('Tableau de bord | Enurus', $crawler->filter('title')->text());
     }
 
     public function testRememberMeCookieIsDeletedOnLogout(): void
@@ -174,7 +174,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertResponseRedirects('/fr/tableau-de-bord');
         $crawler = $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertSame('Tableau de bord | FitTracker', $crawler->filter('title')->text());
+        $this->assertSame('Tableau de bord | Enurus', $crawler->filter('title')->text());
         $client->clickLink('Déconnexion');
 
         $cookie = $client->getCookieJar()->get('REMEMBERME');

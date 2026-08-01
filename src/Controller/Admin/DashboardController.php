@@ -37,7 +37,7 @@ final class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle($this->trans('backend_title', [
+            ->setTitle($this->trans('admin.backend_title', [
                 'brand' => $this->translator->trans('name', [], 'brand', 'fr'),
             ]))
             ->setLocales(['fr'])

@@ -33,7 +33,7 @@ class WorkoutShowControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER_WITH_NOTE);
         $url = $this->getWorkoutUrl(self::USER_WITH_NOTE);
-        $this->assertPageIsAccessibleWhenLogged(self::USER_WITH_NOTE, $url, 'Ma séance | FitTracker', $client);
+        $this->assertPageIsAccessibleWhenLogged(self::USER_WITH_NOTE, $url, 'Ma séance | Enurus', $client);
     }
 
     public function testIsRedirectToLoginIfNotLogged(): void

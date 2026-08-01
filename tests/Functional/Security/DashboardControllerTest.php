@@ -35,7 +35,7 @@ class DashboardControllerTest extends WebTestCase
 
     public function testDashboardIsAccessibleWhenLogged(): void
     {
-        $this->assertPageIsAccessibleWhenLogged(self::USER_WITH_NO_DATA, '/fr/tableau-de-bord', 'Tableau de bord | FitTracker');
+        $this->assertPageIsAccessibleWhenLogged(self::USER_WITH_NO_DATA, '/fr/tableau-de-bord', 'Tableau de bord | Enurus');
     }
 
     public function testDashboardIsNotAccessibleWhenNotLogged(): void

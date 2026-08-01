@@ -31,10 +31,14 @@ final readonly class RegistrationWelcomeThreadService
             throw new \LogicException(sprintf('Admin account "%s" not found — cannot author the welcome thread.', $this->adminEmail));
         }
 
+        $brand = $this->translator->trans('name', [], 'brand', $locale);
+
         $thread = new ContactThread();
         $thread->owner = $user;
         $thread->category = ContactCategoryEnum::INFORMATIVE;
-        $thread->subject = $this->translator->trans('contact.welcome_thread.subject', [], 'navigation', $locale);
+        $thread->subject = $this->translator->trans('contact.welcome_thread.subject', [
+            'brand' => $brand,
+        ], 'navigation', $locale);
         $thread->status = ContactThreadStatusEnum::CLOSED;
         $thread->closedAt = new \DateTimeImmutable();
 

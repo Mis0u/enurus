@@ -32,7 +32,7 @@
 {% endif %}
 
 {% set last_message = thread.messages|last %}
-{% set excerpt_prefix = last_message.fromAdmin ? 'messagerie.author.admin'|trans({}, 'navigation') ~ ' : ' : 'messagerie.author.you'|trans({}, 'navigation') ~ ' : ' %}
+{% set excerpt_prefix = last_message.fromAdmin ? 'messagerie.author.admin'|trans({'brand': 'name'|trans({}, 'brand')}, 'navigation') ~ ' : ' : 'messagerie.author.you'|trans({}, 'navigation') ~ ' : ' %}
 {% set excerpt_body = last_message.body|striptags|truncate(90) %}
 
 <a href="{{ path('app_contact_thread_show', {id: thread.id.toRfc4122}) }}"

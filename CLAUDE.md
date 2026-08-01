@@ -1,4 +1,4 @@
-# FitTracker — CLAUDE.md
+# Enurus — CLAUDE.md
 
 Application de suivi de musculation. Développeur solo (Misou). Symfony 7.4 / PHP 8.4.
 **Toujours discuter et valider l'architecture avant d'écrire du code** — ne jamais coder
@@ -354,8 +354,8 @@ palier précise, préférer des dates fixes en dur.
 | # | Item |
 |---|------|
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
-| 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
-| 20 | Renommage du produit (nom "FitTracker" déjà pris) + configuration d'un email no-reply en prod — en attente que Misou choisisse un nouveau nom disponible (domaine + marque), voir avec lui pour la suite : fournisseur d'envoi transactionnel (Brevo recommandé), DNS (SPF/DKIM/DMARC), puis extraction de `FROM_EMAIL` (`src/Service/Email/SymfonyMailerEmailService.php`) en variable d'environnement |
+| 18 | Sortir `enurus@gmail.com` en variable d'environnement |
+| 20 | Nom du produit acté : **Enurus** (remplace FitTracker, déjà pris). Renommage du code fait (`brand+intl-icu.*.yaml`, textes en dur, `FROM_EMAIL` provisoire `enurus@gmail.com`). Reste à faire côté Misou : dossier local et repo GitHub (`fit-tracker`) à renommer manuellement, puis choisir le fournisseur d'envoi transactionnel (Brevo recommandé), configurer le DNS (SPF/DKIM/DMARC), et extraire `FROM_EMAIL` (`src/Service/Email/SymfonyMailerEmailService.php`) en variable d'environnement |
 | 21 | Mettre en place une CI/CD — projet parti de zéro sur ce sujet, règles (déclencheurs, étapes, déploiement) à définir ensemble avant tout travail |
 
 ---
