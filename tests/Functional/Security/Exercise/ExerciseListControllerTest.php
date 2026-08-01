@@ -27,7 +27,7 @@ final class ExerciseListControllerTest extends WebTestCase
 
     public function testIsAccessibleWhenLogged(): void
     {
-        $this->assertPageIsAccessibleWhenLogged(self::USER, self::URL, 'Bibliothèque | FitTracker');
+        $this->assertPageIsAccessibleWhenLogged(self::USER, self::URL, 'Bibliothèque | Enurus');
     }
 
     // =========================================================

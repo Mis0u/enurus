@@ -29,7 +29,7 @@ class ExerciseCreateControllerTest extends WebTestCase
 
     public function testIsAccessibleWhenLogged(): void
     {
-        $this->assertPageIsAccessibleWhenLogged(self::USER, self::URL, 'Créer un exercice | FitTracker');
+        $this->assertPageIsAccessibleWhenLogged(self::USER, self::URL, 'Créer un exercice | Enurus');
     }
 
     public function testIsRedirectToLoginIfNotLogged(): void

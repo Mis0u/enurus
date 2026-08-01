@@ -60,7 +60,7 @@ contact:
             🏋️ Training aanmaken — hier gebeurt het allemaal: kies je oefeningen (of je routine), vul gewicht/herhalingen in, en klaar.
 
             Veel trainingsplezier! 🔥
-        subject: "Welkom bij FitTracker 🎉"
+        subject: "Welkom bij {brand} 🎉"
 
 dashboard:
     contact: Contact
@@ -228,7 +228,7 @@ login:
 
 messagerie:
     author:
-        admin: FitTracker
+        admin: "{brand}"
         you: Jij
     back_to_list: Terug naar berichten
     delete:
@@ -390,7 +390,7 @@ settings:
             subject: Je accountverwijdering is geannuleerd
             title: Welkom terug!
         deleted:
-            body: Hallo {nickname}, conform je verzoek zijn je FitTracker-account en alle bijbehorende gegevens (trainingen, routines, aangepaste oefeningen) definitief verwijderd. Bedankt dat je FitTracker hebt gebruikt.
+            body: Hallo {nickname}, conform je verzoek zijn je {brand}-account en alle bijbehorende gegevens (trainingen, routines, aangepaste oefeningen) definitief verwijderd. Bedankt dat je {brand} hebt gebruikt.
             subject: Je account is definitief verwijderd
             title: Account verwijderd
         requested:

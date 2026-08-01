@@ -60,7 +60,7 @@ contact:
             🏋️ Workout erstellen — hier passiert alles: wähle deine Übungen (oder deine Routine), trage Gewicht/Wiederholungen ein, und los geht's.
 
             Viel Erfolg beim Training! 🔥
-        subject: "Willkommen bei FitTracker 🎉"
+        subject: "Willkommen bei {brand} 🎉"
 
 dashboard:
     contact: Kontakt
@@ -228,7 +228,7 @@ login:
 
 messagerie:
     author:
-        admin: FitTracker
+        admin: "{brand}"
         you: Du
     back_to_list: Zurück zu den Nachrichten
     delete:
@@ -390,7 +390,7 @@ settings:
             subject: Deine Kontolöschung wurde abgebrochen
             title: Willkommen zurück!
         deleted:
-            body: Hallo {nickname}, gemäß deiner Anfrage wurden dein FitTracker-Konto und alle zugehörigen Daten (Trainings, Routinen, benutzerdefinierte Übungen) endgültig gelöscht. Vielen Dank, dass du FitTracker genutzt hast.
+            body: Hallo {nickname}, gemäß deiner Anfrage wurden dein {brand}-Konto und alle zugehörigen Daten (Trainings, Routinen, benutzerdefinierte Übungen) endgültig gelöscht. Vielen Dank, dass du {brand} genutzt hast.
             subject: Dein Konto wurde endgültig gelöscht
             title: Konto gelöscht
         requested:

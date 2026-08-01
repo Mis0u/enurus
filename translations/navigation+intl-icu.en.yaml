@@ -60,7 +60,7 @@ contact:
             🏋️ Log a workout — this is where it all happens: pick your exercises (or your routine), enter weight/reps, and you're set.
 
             Have a great workout! 🔥
-        subject: "Welcome to FitTracker 🎉"
+        subject: "Welcome to {brand} 🎉"
 
 dashboard:
     contact: Contact
@@ -228,7 +228,7 @@ login:
 
 messagerie:
     author:
-        admin: FitTracker
+        admin: "{brand}"
         you: You
     back_to_list: Back to messages
     delete:
@@ -390,7 +390,7 @@ settings:
             subject: Your account deletion has been cancelled
             title: Welcome back!
         deleted:
-            body: Hello {nickname}, as per your request, your FitTracker account and all associated data (workouts, routines, custom exercises) have been permanently deleted. Thank you for using FitTracker.
+            body: Hello {nickname}, as per your request, your {brand} account and all associated data (workouts, routines, custom exercises) have been permanently deleted. Thank you for using {brand}.
             subject: Your account has been permanently deleted
             title: Account deleted
         requested:

@@ -19,7 +19,7 @@ final class ContactShowControllerTest extends WebTestCase
 
     public function testIsAccessibleWhenLogged(): void
     {
-        $this->assertPageIsAccessibleWhenLogged(self::USER, self::URL, 'Contact | FitTracker');
+        $this->assertPageIsAccessibleWhenLogged(self::USER, self::URL, 'Contact | Enurus');
     }
 
     public function testIsRedirectToLoginIfNotLogged(): void

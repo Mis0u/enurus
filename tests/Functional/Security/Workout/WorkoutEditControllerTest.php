@@ -36,7 +36,7 @@ class WorkoutEditControllerTest extends WebTestCase
         $this->assertPageIsAccessibleWhenLogged(
             self::USER,
             $this->getEditUrl($workout),
-            'Modifier la séance | FitTracker',
+            'Modifier la séance | Enurus',
             $client,
         );
     }

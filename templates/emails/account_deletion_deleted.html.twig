@@ -12,6 +12,6 @@
     </h2>
 
     <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #cbd5e1; text-align: center;">
-        {{ 'settings.account_deletion.deleted.body'|trans({'nickname': user.nickname}, 'navigation', locale) }}
+        {{ 'settings.account_deletion.deleted.body'|trans({'nickname': user.nickname, 'brand': brand_name}, 'navigation', locale) }}
     </p>
 {% endblock %}

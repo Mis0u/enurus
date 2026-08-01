@@ -60,7 +60,7 @@ contact:
             🏋️ Créer une séance — c'est là que tout se joue : choisis tes exercices (ou ta routine), renseigne poids/répétitions, et voilà.
 
             Bon entraînement ! 🔥
-        subject: "Bienvenue sur FitTracker 🎉"
+        subject: "Bienvenue sur {brand} 🎉"
 
 dashboard:
     contact: Contact
@@ -228,7 +228,7 @@ login:
 
 messagerie:
     author:
-        admin: FitTracker
+        admin: "{brand}"
         you: Toi
     back_to_list: Retour à la messagerie
     delete:
@@ -390,7 +390,7 @@ settings:
             subject: Ta suppression de compte a été annulée
             title: Bon retour parmi nous !
         deleted:
-            body: Bonjour {nickname}, conformément à ta demande, ton compte FitTracker et toutes les données associées (séances, routines, exercices personnalisés) ont été définitivement supprimés. Merci davoir utilisé FitTracker.
+            body: Bonjour {nickname}, conformément à ta demande, ton compte {brand} et toutes les données associées (séances, routines, exercices personnalisés) ont été définitivement supprimés. Merci davoir utilisé {brand}.
             subject: Ton compte a été définitivement supprimé
             title: Compte supprimé
         requested:

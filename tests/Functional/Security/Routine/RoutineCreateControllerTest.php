@@ -38,7 +38,7 @@ final class RoutineCreateControllerTest extends WebTestCase
         $this->assertPageIsAccessibleWhenLogged(
             self::OWNER,
             self::ROUTE_FR,
-            'Créer une routine | FitTracker',
+            'Créer une routine | Enurus',
         );
     }
 

@@ -9,7 +9,7 @@ import { toBlob } from 'html-to-image';
 import { showErrorToast, showSuccessToast } from '../../utils/toast.js';
 
 const CAPTURE_PIXEL_RATIO = 2;
-const FILE_NAME = 'fittracker-workout.png';
+const FILE_NAME = 'enurus-workout.png';
 
 export default class extends Controller {
     static targets = ['card', 'button', 'modal', 'previewImage', 'shareButton', 'caption'];

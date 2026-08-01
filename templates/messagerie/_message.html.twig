@@ -2,12 +2,12 @@
     Variables attendues (toutes via `only`) :
     - message : ContactThreadMessage
 
-    message.fromAdmin = true  → auteur = FitTracker (Micka), aligné à gauche.
+    message.fromAdmin = true  → auteur = Enurus (Micka), aligné à gauche.
     message.fromAdmin = false → auteur = l'utilisateur, aligné à droite.
 #}
 <div class="flex flex-col gap-1.5 {{ message.fromAdmin ? 'items-start' : 'items-end' }}">
     <span class="flex items-center gap-1.5 text-[11px] font-semibold px-1 {{ message.fromAdmin ? 'text-[#06b6d4]' : 'text-[#8b9bb4]' }}">
-        {{ message.fromAdmin ? 'messagerie.author.admin'|trans({}, 'navigation') : 'messagerie.author.you'|trans({}, 'navigation') }}
+        {{ message.fromAdmin ? 'messagerie.author.admin'|trans({'brand': 'name'|trans({}, 'brand')}, 'navigation') : 'messagerie.author.you'|trans({}, 'navigation') }}
     </span>
 
     <div class="max-w-[78%] rounded-2xl px-4 py-3 border {{ message.fromAdmin ? 'bg-[rgba(6,182,212,0.06)] border-[rgba(6,182,212,0.2)] rounded-bl-md' : 'bg-[rgba(244,63,94,0.15)] border-[rgba(244,63,94,0.25)] rounded-br-md' }}">

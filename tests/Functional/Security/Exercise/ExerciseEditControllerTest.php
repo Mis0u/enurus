@@ -41,7 +41,7 @@ class ExerciseEditControllerTest extends WebTestCase
         ]);
         $client->loginUser($user);
 
-        $this->assertPageIsAccessibleWhenLogged(self::OWNER, $url, 'Modifier l\'exercice | FitTracker', $client);
+        $this->assertPageIsAccessibleWhenLogged(self::OWNER, $url, 'Modifier l\'exercice | Enurus', $client);
     }
 
     public function testIsRedirectToLoginIfNotLogged(): void

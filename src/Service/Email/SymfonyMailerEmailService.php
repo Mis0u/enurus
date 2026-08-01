@@ -11,7 +11,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class SymfonyMailerEmailService implements EmailInterface
 {
-    private const string FROM_EMAIL = 'fittracker@gmail.com';
+    private const string FROM_EMAIL = 'enurus@gmail.com';
 
     public function __construct(
         private TranslatorInterface $translator,

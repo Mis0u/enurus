@@ -17,7 +17,7 @@ final class SettingsIndexControllerTest extends WebTestCase
 
     public function testIsAccessibleWhenLogged(): void
     {
-        $this->assertPageIsAccessibleWhenLogged(self::USER, self::URL, 'Réglages | FitTracker');
+        $this->assertPageIsAccessibleWhenLogged(self::USER, self::URL, 'Réglages | Enurus');
     }
 
     public function testIsRedirectToLoginIfNotLogged(): void

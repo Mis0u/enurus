@@ -28,7 +28,7 @@ class WorkoutListControllerTest extends WebTestCase
 
     public function testIsAccessibleWhenLogged(): void
     {
-        $this->assertPageIsAccessibleWhenLogged(self::USER_11, self::URL, 'Mes séances | FitTracker');
+        $this->assertPageIsAccessibleWhenLogged(self::USER_11, self::URL, 'Mes séances | Enurus');
     }
 
     public function testIsRedirectToLoginIfNotLogged(): void
