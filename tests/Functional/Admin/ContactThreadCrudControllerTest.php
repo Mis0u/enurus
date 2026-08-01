@@ -165,6 +165,44 @@ final class ContactThreadCrudControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
     }
 
+    public function testDetailPageShowsHistoryAndEmbeddedReplyFormInsteadOfSeparateAction(): void
+    {
+        $client = $this->login(self::ADMIN);
+
+        $thread = $this->createThread();
+
+        $crawler = $client->request(Request::METHOD_GET, $this->actionUrl($client, $thread, 'detail'));
+
+        $firstMessage = $thread->messages->first();
+        self::assertInstanceOf(ContactThreadMessage::class, $firstMessage);
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists('form[name="contact_reply_form"]');
+        self::assertStringContainsString($firstMessage->body, $crawler->filter('body')->text());
+        self::assertSelectorNotExists('a[href="' . $this->actionUrl($client, $thread, 'reply') . '"]');
+    }
+
+    public function testReplyFromDetailPageFormUpdatesThreadWithoutLeavingDetailContext(): void
+    {
+        $client = $this->login(self::ADMIN);
+
+        $thread = $this->createThread();
+
+        $crawler = $client->request(Request::METHOD_GET, $this->actionUrl($client, $thread, 'detail'));
+        $form = $crawler->filter('form[name="contact_reply_form"]')->form([
+            'contact_reply_form[message]' => 'Réponse envoyée directement depuis la page détail.',
+        ]);
+
+        $client->request($form->getMethod(), $form->getUri(), $form->getPhpValues(), $form->getPhpFiles());
+
+        self::assertResponseRedirects($this->actionUrl($client, $thread, 'detail'));
+
+        $reloaded = $this->reloadThread($thread);
+        $adminMessage = $reloaded->messages->filter(static fn (ContactThreadMessage $message): bool => $message->fromAdmin)->first();
+        self::assertInstanceOf(ContactThreadMessage::class, $adminMessage);
+        self::assertSame('Réponse envoyée directement depuis la page détail.', $adminMessage->body);
+    }
+
     public function testReplyCreatesAdminMessageAndUpdatesStatus(): void
     {
         $client = $this->login(self::ADMIN);

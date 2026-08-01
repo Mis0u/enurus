@@ -7,9 +7,15 @@
         <div class="admin-message-body">{{ message.fromAdmin ? message.body|raw : message.body }}</div>
         {% if message.imagePath %}
             <div class="admin-message-attachment">
-                <a href="/uploads/{{ message.imagePath }}" target="_blank" rel="noopener">
-                    <img class="admin-message-thumb" src="/uploads/{{ message.imagePath }}" alt="">
-                </a>
+                <img class="admin-message-thumb"
+                     src="/uploads/{{ message.imagePath }}"
+                     alt=""
+                     onclick="document.getElementById('admin-message-lightbox-{{ message.id.toRfc4122 }}').classList.add('is-open')">
+            </div>
+            <div id="admin-message-lightbox-{{ message.id.toRfc4122 }}"
+                 class="admin-lightbox"
+                 onclick="this.classList.remove('is-open')">
+                <img src="/uploads/{{ message.imagePath }}" alt="">
             </div>
         {% endif %}
     </div>
