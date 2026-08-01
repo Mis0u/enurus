@@ -60,6 +60,9 @@ jobs:
             - name: Install Node dependencies
               run: npm ci
 
+            - name: Build Tailwind CSS
+              run: vendor/bin/castor tailwind-build --no-interaction
+
             - name: Create test database
               run: vendor/bin/castor create-db --test --no-interaction
 
