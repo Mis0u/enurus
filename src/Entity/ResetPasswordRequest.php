@@ -54,4 +54,13 @@ class ResetPasswordRequest implements ResetPasswordRequestInterface
         $this->user = $user;
         $this->initialize($expiresAt, $selector, $hashedToken);
     }
+
+    /**
+     * Contrat imposé par {@see ResetPasswordRequestInterface} (bundle tiers) — le property hook
+     * `$user` reste la vraie donnée, cette méthode ne fait que satisfaire l'interface.
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
 }
