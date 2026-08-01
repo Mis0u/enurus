@@ -356,6 +356,7 @@ palier précise, préférer des dates fixes en dur.
 | 15 | Migration stockage vers Scaleway Object Storage en prod (Flysystem) |
 | 18 | Sortir `fittracker@gmail.com` en variable d'environnement |
 | 20 | Renommage du produit (nom "FitTracker" déjà pris) + configuration d'un email no-reply en prod — en attente que Misou choisisse un nouveau nom disponible (domaine + marque), voir avec lui pour la suite : fournisseur d'envoi transactionnel (Brevo recommandé), DNS (SPF/DKIM/DMARC), puis extraction de `FROM_EMAIL` (`src/Service/Email/SymfonyMailerEmailService.php`) en variable d'environnement |
+| 21 | Mettre en place une CI/CD — projet parti de zéro sur ce sujet, règles (déclencheurs, étapes, déploiement) à définir ensemble avant tout travail |
 
 ---
 
