@@ -51,6 +51,9 @@ jobs:
             - name: Install PHP dependencies
               run: composer install --no-interaction --prefer-dist --no-progress
 
+            - name: Composer audit
+              run: vendor/bin/castor composer-audit --no-interaction
+
             - name: Setup Node
               uses: actions/setup-node@v4
               with:
