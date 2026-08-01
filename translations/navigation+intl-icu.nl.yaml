@@ -5,6 +5,9 @@ admin:
         reason: "Reden: {reason}"
         subject: Vertaling van uitzending mislukt
         title: Vertaling mislukt
+    registration_milestone:
+        body: "De site heeft zojuist zijn {count}e geregistreerde gebruiker bereikt."
+        subject: "Mijlpaal van {count} registraties bereikt 🎉"
     reregistration:
         body: "Het e-mailadres {email} komt overeen met een account dat op {deletedAt} is verwijderd. Controleer of dit misbruik betreft."
         subject: Herregistratie gedetecteerd

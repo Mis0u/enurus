@@ -170,11 +170,14 @@ final class DashboardRegularityServiceTest extends TestCase
 
     public function testWeekAndMonthDeltasAreDifferencesNotSums(): void
     {
-        // Même date en double (2 séances le même jour) plutôt que 2 jours distincts : le mois
-        // "élapsed" s'arrête à aujourd'hui, un +1 jour pourrait tomber hors mois selon le jour
-        // d'exécution du test. weekStart <= aujourd'hui est en revanche toujours vrai.
-        $weekStart = $this->currentWeekStart();
-        $allDates = [$weekStart, $weekStart];
+        // Même date en double (2 séances le même jour) plutôt que 2 jours distincts. Utiliser
+        // "aujourd'hui" plutôt que le lundi de la semaine en cours : ce lundi peut appartenir au
+        // mois précédent (ex. le 1er du mois tombant un samedi, comme le 2026-08-01), auquel cas
+        // il tomberait hors de currentMonthElapsed() (borné à [1er du mois, aujourd'hui]) et
+        // ferait échouer monthDelta pour une raison sans rapport avec ce que le test vérifie.
+        // "today" est en revanche toujours dans la semaine en cours ET dans le mois élapsed.
+        $today = new \DateTimeImmutable('today');
+        $allDates = [$today, $today];
 
         $result = $this->getData($allDates, previousCount: 5);
 

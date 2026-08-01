@@ -72,6 +72,7 @@ final class DashboardController extends AbstractDashboardController
         ;
         yield MenuItem::linkTo(ContactBroadcastCrudController::class, $this->trans('admin.menu.broadcast'), 'fa fa-bullhorn');
         yield MenuItem::linkTo(DeletedAccountTraceCrudController::class, $this->trans('admin.menu.deleted_account_trace'), 'fa fa-user-slash');
+        yield MenuItem::linkTo(RegistrationMilestoneSettingCrudController::class, $this->trans('admin.menu.registration_milestone'), 'fa fa-flag-checkered');
     }
 
     /**

@@ -5,6 +5,9 @@ admin:
         reason: "Grund: {reason}"
         subject: "Übersetzung der Rundmail fehlgeschlagen"
         title: "Übersetzung fehlgeschlagen"
+    registration_milestone:
+        body: "Die Website hat gerade ihren {count}. registrierten Nutzer erreicht."
+        subject: "Meilenstein von {count} Registrierungen erreicht 🎉"
     reregistration:
         body: "Die E-Mail {email} entspricht einem am {deletedAt} gelöschten Konto. Prüfe, ob es sich um Missbrauch handelt."
         subject: Neuanmeldung erkannt

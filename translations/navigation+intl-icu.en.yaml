@@ -5,6 +5,9 @@ admin:
         reason: "Reason: {reason}"
         subject: Broadcast translation failed
         title: Translation failed
+    registration_milestone:
+        body: "The site just reached its {count}th registered user."
+        subject: "{count} registrations milestone reached 🎉"
     reregistration:
         body: "The email {email} matches an account deleted on {deletedAt}. Check whether this is abuse."
         subject: Re-registration detected

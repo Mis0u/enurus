@@ -5,6 +5,9 @@ admin:
         reason: "Raison : {reason}"
         subject: "Échec de traduction d'une diffusion"
         title: "Échec de traduction"
+    registration_milestone:
+        body: "Le site vient d'atteindre son {count}ème utilisateur inscrit."
+        subject: "Palier de {count} inscriptions atteint 🎉"
     reregistration:
         body: "L'adresse {email} correspond à un compte supprimé le {deletedAt}. Vérifie s'il s'agit d'un abus."
         subject: Réinscription détectée

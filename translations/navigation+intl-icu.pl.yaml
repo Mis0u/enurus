@@ -5,6 +5,9 @@ admin:
         reason: "Powód: {reason}"
         subject: "Błąd tłumaczenia wiadomości"
         title: "Błąd tłumaczenia"
+    registration_milestone:
+        body: "Strona właśnie osiągnęła {count}. zarejestrowanego użytkownika."
+        subject: "Osiągnięto próg {count} rejestracji 🎉"
     reregistration:
         body: "Adres e-mail {email} odpowiada kontu usuniętemu {deletedAt}. Sprawdź, czy to nadużycie."
         subject: Wykryto ponowną rejestrację

@@ -21,6 +21,7 @@ final readonly class UserRegistrationService
         private TranslatorInterface $translator,
         private RegistrationWelcomeThreadService $welcomeThreadService,
         private DeletedAccountReregistrationNotifierService $reregistrationNotifier,
+        private RegistrationMilestoneNotifierService $milestoneNotifier,
         private LoggerInterface $logger,
     ) {
     }
@@ -46,6 +47,7 @@ final readonly class UserRegistrationService
         $this->sendWelcomeEmail($user, $locale);
         $this->welcomeThreadService->create($user, $locale);
         $this->reregistrationNotifier->notifyIfReregistration($user);
+        $this->milestoneNotifier->notifyIfMilestoneReached();
     }
 
     /**
