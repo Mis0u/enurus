@@ -5,6 +5,9 @@ admin:
         reason: "Motivo: {reason}"
         subject: "Traduzione della diffusione non riuscita"
         title: "Traduzione non riuscita"
+    registration_milestone:
+        body: "Il sito ha appena raggiunto il suo {count}° utente registrato."
+        subject: "Traguardo di {count} registrazioni raggiunto 🎉"
     reregistration:
         body: "L'indirizzo {email} corrisponde a un account eliminato il {deletedAt}. Verifica se si tratta di un abuso."
         subject: Nuova registrazione rilevata

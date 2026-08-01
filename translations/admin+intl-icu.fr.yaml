@@ -86,10 +86,19 @@ admin:
         deleted_account_trace: "Comptes supprimés"
         exercise: "Exercices personnalisés"
         home: "Tableau de bord"
+        registration_milestone: "Palier d'inscriptions"
         routine: Routines
         thread: Messagerie
         user: Utilisateurs
         workout: Séances
+    registration_milestone:
+        field:
+            step: "Nombre d'inscriptions entre deux notifications"
+        flash:
+            updated: "Palier mis à jour."
+        label:
+            plural: "Palier d'inscriptions"
+            singular: "Palier d'inscriptions"
     routine:
         field:
             created_at: "Créé le"

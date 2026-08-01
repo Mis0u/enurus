@@ -29,6 +29,10 @@ services:
         arguments:
             $adminUserEmail: '%env(ADMIN_USER_EMAIL)%'
 
+    App\Service\Security\RegistrationMilestoneNotifierService:
+        arguments:
+            $adminUserEmail: '%env(ADMIN_USER_EMAIL)%'
+
     # Service dédié (plutôt que le HttpClientInterface autowiré par défaut) pour pouvoir le
     # remplacer explicitement en test par un MockHttpClient — l'alias autowiré par défaut passe par
     # une chaîne de décoration (debug, uri_template) qui rend `container->set()` inefficace en test.

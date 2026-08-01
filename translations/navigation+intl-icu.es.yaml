@@ -5,6 +5,9 @@ admin:
         reason: "Motivo: {reason}"
         subject: "Fallo en la traducción de una difusión"
         title: "Fallo de traducción"
+    registration_milestone:
+        body: "El sitio acaba de alcanzar su usuario número {count} registrado."
+        subject: "Hito de {count} registros alcanzado 🎉"
     reregistration:
         body: "El correo {email} coincide con una cuenta eliminada el {deletedAt}. Verifica si se trata de un abuso."
         subject: Reinscripción detectada
