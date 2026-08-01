@@ -1,0 +1,14 @@
+cta:
+    dashboard: Terug naar dashboard
+    home: Terug naar home
+
+error:
+    "403":
+        message: Je hebt geen toestemming om deze pagina te bekijken.
+        title: Toegang geweigerd
+    "404":
+        message: De pagina die je zoekt bestaat niet of is verplaatst.
+        title: Pagina niet gevonden
+    "500":
+        message: Er is iets misgegaan aan onze kant. Probeer het over een moment opnieuw.
+        title: Er is een fout opgetreden

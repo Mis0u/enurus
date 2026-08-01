@@ -1,0 +1,14 @@
+cta:
+    dashboard: Back to dashboard
+    home: Back to home
+
+error:
+    "403":
+        message: You don't have permission to access this page.
+        title: Access denied
+    "404":
+        message: The page you're looking for doesn't exist or has been moved.
+        title: Page not found
+    "500":
+        message: Something went wrong on our end. Please try again in a moment.
+        title: Something went wrong

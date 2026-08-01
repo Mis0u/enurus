@@ -1,0 +1,14 @@
+cta:
+    dashboard: Retour au tableau de bord
+    home: Retour à l'accueil
+
+error:
+    "403":
+        message: Vous n'avez pas la permission d'accéder à cette page.
+        title: Accès refusé
+    "404":
+        message: La page que vous cherchez n'existe pas ou a été déplacée.
+        title: Page introuvable
+    "500":
+        message: Quelque chose s'est mal passé de notre côté. Réessayez dans quelques instants.
+        title: Une erreur est survenue
