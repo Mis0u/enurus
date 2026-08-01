@@ -5,6 +5,8 @@
 {% block content_title %}{{ 'admin.thread.reply.title'|trans({subject: thread.subject}, 'admin', 'fr') }}{% endblock %}
 
 {% block main %}
+    {% include 'admin/contact_thread/_messages.html.twig' with {field: {value: thread.messages}} only %}
+
     {{ form_start(form, {render_rest: false}) }}
     {{ form_errors(form) }}
 

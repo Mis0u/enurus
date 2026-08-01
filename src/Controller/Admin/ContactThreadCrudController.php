@@ -29,6 +29,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
@@ -95,6 +96,9 @@ final class ContactThreadCrudController extends AbstractCrudController
             ->setDefaultSort([
                 'updatedAt' => 'DESC',
             ])
+            // Historique + formulaire de réponse sur le même écran (comme messagerie/show.html.twig
+            // côté utilisateur) plutôt qu'une action "Répondre" séparée qui perdait le contexte.
+            ->overrideTemplate('crud/detail', 'admin/contact_thread/detail.html.twig')
         ;
     }
 
@@ -191,7 +195,6 @@ final class ContactThreadCrudController extends AbstractCrudController
                     ->linkToCrudAction(self::ACTION_COMPOSE)
                     ->createAsGlobalAction()
             )
-            ->add(Crud::PAGE_DETAIL, Action::new(self::ACTION_REPLY, $this->trans('admin.thread.action.reply'))->linkToCrudAction(self::ACTION_REPLY))
             ->add(
                 Crud::PAGE_DETAIL,
                 Action::new(self::ACTION_CLOSE, $this->trans('admin.thread.action.close'))
@@ -213,6 +216,31 @@ final class ContactThreadCrudController extends AbstractCrudController
         ;
 
         return $actions;
+    }
+
+    /**
+     * Injecte le formulaire de réponse (non lié) et son URL cible dans la vue détail — permet de
+     * répondre sans quitter l'écran qui affiche déjà l'historique (champ `messages`).
+     */
+    public function configureResponseParameters(KeyValueStore $responseParameters): KeyValueStore
+    {
+        if (Crud::PAGE_DETAIL !== $responseParameters->get('pageName')) {
+            return $responseParameters;
+        }
+
+        /** @var EntityDto<ContactThread> $entityDto */
+        $entityDto = $responseParameters->get('entity');
+        /** @var ContactThread $thread */
+        $thread = $entityDto->getInstance();
+
+        $responseParameters->set('replyForm', $this->createForm(ContactReplyFormType::class));
+        $responseParameters->set('replyActionUrl', $this->adminUrlGenerator
+            ->setController(self::class)
+            ->setAction(self::ACTION_REPLY)
+            ->setEntityId($thread->id)
+            ->generateUrl());
+
+        return $responseParameters;
     }
 
     /**
