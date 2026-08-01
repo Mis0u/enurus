@@ -1,0 +1,14 @@
+cta:
+    dashboard: Volver al panel
+    home: Volver al inicio
+
+error:
+    "403":
+        message: No tienes permiso para acceder a esta página.
+        title: Acceso denegado
+    "404":
+        message: La página que buscas no existe o ha sido movida.
+        title: Página no encontrada
+    "500":
+        message: Algo salió mal por nuestra parte. Inténtalo de nuevo en unos instantes.
+        title: Se ha producido un error

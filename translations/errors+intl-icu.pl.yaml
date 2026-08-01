@@ -1,0 +1,14 @@
+cta:
+    dashboard: Powrót do panelu
+    home: Powrót do strony głównej
+
+error:
+    "403":
+        message: Nie masz uprawnień do tej strony.
+        title: Odmowa dostępu
+    "404":
+        message: Strona, której szukasz, nie istnieje lub została przeniesiona.
+        title: Strona nie znaleziona
+    "500":
+        message: Coś poszło nie tak po naszej stronie. Spróbuj ponownie za chwilę.
+        title: Wystąpił błąd

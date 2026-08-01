@@ -1,0 +1,14 @@
+cta:
+    dashboard: Torna alla dashboard
+    home: Torna alla home
+
+error:
+    "403":
+        message: Non hai il permesso di accedere a questa pagina.
+        title: Accesso negato
+    "404":
+        message: La pagina che stai cercando non esiste o è stata spostata.
+        title: Pagina non trovata
+    "500":
+        message: Qualcosa è andato storto da parte nostra. Riprova tra qualche istante.
+        title: Si è verificato un errore
