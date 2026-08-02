@@ -26,6 +26,23 @@
     --font-dm-sans:  'DM Sans', sans-serif;
 }
 
+/*
+ * Tailwind Preflight remet volontairement le curseur des <button> à `default` (les form
+ * elements n'ont pas de cursor:pointer natif sur la plupart des OS) — on le réactive ici pour
+ * tous les boutons/liens actifs du site, sans y toucher composant par composant.
+ */
+@layer base {
+    button:not(:disabled):not([aria-disabled='true']),
+    a[href] {
+        cursor: pointer;
+    }
+
+    button:disabled,
+    [aria-disabled='true'] {
+        cursor: not-allowed;
+    }
+}
+
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-10px); }
