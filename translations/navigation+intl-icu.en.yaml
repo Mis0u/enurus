@@ -53,11 +53,11 @@ contact:
 
             A few pointers to help you find your way around:
 
-            📚 Library — this is where you create your own exercises, in addition to the ones already available in the app.
+            📚 <a href="{library_url}">Library</a> — this is where you create your own exercises, in addition to the ones already available in the app.
 
-            🗂️ Routine — groups a list of exercises you use often (e.g. "Push day"). Once created, you can select it directly when logging a new workout, so you don't have to re-enter your exercises every time.
+            🗂️ <a href="{routine_url}">Routine</a> — groups a list of exercises you use often (e.g. "Push day"). Once created, you can select it directly when logging a new workout, so you don't have to re-enter your exercises every time.
 
-            🏋️ Log a workout — this is where it all happens: pick your exercises (or your routine), enter weight/reps, and you're set.
+            🏋️ <a href="{workout_url}">Log a workout</a> — this is where it all happens: pick your exercises (or your routine), enter weight/reps, and you're set.
 
             Have a great workout! 🔥
         subject: "Welcome to {brand} 🎉"

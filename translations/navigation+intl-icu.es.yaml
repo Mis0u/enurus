@@ -53,11 +53,11 @@ contact:
 
             Algunas indicaciones para orientarte:
 
-            📚 Biblioteca — aquí es donde creas tus propios ejercicios, además de los que ya ofrece la app.
+            📚 <a href="{library_url}">Biblioteca</a> — aquí es donde creas tus propios ejercicios, además de los que ya ofrece la app.
 
-            🗂️ Rutina — agrupa una lista de ejercicios que usas a menudo (ej. "Push day"). Una vez creada, podrás seleccionarla directamente al crear un nuevo entrenamiento, para no tener que volver a añadir tus ejercicios cada vez.
+            🗂️ <a href="{routine_url}">Rutina</a> — agrupa una lista de ejercicios que usas a menudo (ej. "Push day"). Una vez creada, podrás seleccionarla directamente al crear un nuevo entrenamiento, para no tener que volver a añadir tus ejercicios cada vez.
 
-            🏋️ Crear un entrenamiento — aquí es donde ocurre todo: elige tus ejercicios (o tu rutina), indica peso/repeticiones, y listo.
+            🏋️ <a href="{workout_url}">Crear un entrenamiento</a> — aquí es donde ocurre todo: elige tus ejercicios (o tu rutina), indica peso/repeticiones, y listo.
 
             ¡Buen entrenamiento! 🔥
         subject: "Bienvenido a {brand} 🎉"
