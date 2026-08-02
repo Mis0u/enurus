@@ -29,11 +29,6 @@ export default class extends Controller {
     async onChange() {
         const routineId = this.selectTarget.value;
 
-        if ('' === routineId) {
-            this.#previousValue = routineId;
-            return;
-        }
-
         const exerciseList = document.getElementById('exercises-list');
         const hasExercises = exerciseList?.children.length > 0;
 
@@ -44,6 +39,14 @@ export default class extends Controller {
                 this.selectTarget.value = this.#previousValue;
                 return;
             }
+        }
+
+        if ('' === routineId) {
+            if (exerciseList) {
+                exerciseList.innerHTML = '';
+            }
+            this.#previousValue = routineId;
+            return;
         }
 
         await this.#loadRoutineExercises(routineId, exerciseList);

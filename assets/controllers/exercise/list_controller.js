@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
+import { normalizeForSearch } from '../../utils/search.js';
 
 /**
  * Controller Stimulus pour la bibliothèque d'exercices.
@@ -45,7 +46,14 @@ export default class extends Controller {
     /** Fenêtre glissante de pages, alignée sur `knp_paginator.page_range` (config/packages/knp_paginator.yaml). */
     #pageRange = 5;
 
+    /** Noms normalisés (accents/casse) des cards, calculés une fois pour éviter de renormaliser à chaque recherche. */
+    #normalizedNames = new WeakMap();
+
     connect() {
+        this.cardTargets.forEach(card => {
+            this.#normalizedNames.set(card, normalizeForSearch(card.dataset.name));
+        });
+
         this.#applyFilters();
     }
 
@@ -135,13 +143,13 @@ export default class extends Controller {
      * @returns {HTMLElement[]}
      */
     #getMatchingCards() {
-        const search = this.searchInputTarget.value.trim().toLowerCase();
+        const search = normalizeForSearch(this.searchInputTarget.value.trim());
 
         return this.cardTargets.filter(card => {
             if (this.#activeFilter && card.dataset.type !== this.#activeFilter) {
                 return false;
             }
-            if (search && !card.dataset.name.includes(search)) {
+            if (search && !this.#normalizedNames.get(card).includes(search)) {
                 return false;
             }
             return true;

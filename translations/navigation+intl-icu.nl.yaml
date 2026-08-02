@@ -116,7 +116,7 @@ dashboard:
             year_label: "{count, plural, =1 {training dit jaar} other {trainingen dit jaar}}"
         session:
             annual_total_label: "Totaal voor jaar {year}:"
-            exercises: "{count, plural, =1 {# oefening} other {# oefeningen}}"
+            exercises: "{count, plural, =1 {Oefening} other {Oefeningen}}"
             filter:
                 last: Laatste training
                 month: Huidige maand
@@ -502,7 +502,7 @@ workout:
         duration_unit: min
         edit: Training bewerken
         empty: Geen training gevonden
-        exercises: oefeningen
+        exercises: "{count, plural, =1 {oefening} other {oefeningen}}"
         filter:
             clear: Datum wissen
             month: Deze maand
@@ -560,8 +560,8 @@ workout:
         back: Terug naar mijn trainingen
         metrics:
             duration: Duur
-            exercises: Oefeningen
-            sets: Sets
+            exercises: "{count, plural, =1 {Oefening} other {Oefeningen}}"
+            sets: "{count, plural, =1 {Set} other {Sets}}"
             tonnage: Tonnage
         muscles_primary: Primaire spieren
         muscles_secondary: Secundaire spieren

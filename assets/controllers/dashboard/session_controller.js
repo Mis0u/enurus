@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import { switchDashboardTab } from '../../utils/dashboard_tabs.js';
 
-const DEFAULT_STATS = { exercises: 0, sets: 0, reps: 0, prCount: 0, prLabel: '', repsRecordCount: 0, repsRecordLabel: '' };
+const DEFAULT_STATS = { exercises: 0, exercisesLabel: '', sets: 0, setsLabel: '', reps: 0, prCount: 0, prLabel: '', repsRecordCount: 0, repsRecordLabel: '' };
 
 export default class extends Controller {
     static values = {
@@ -10,7 +10,7 @@ export default class extends Controller {
         month: { type: Object, default: DEFAULT_STATS },
     };
 
-    static targets = ['tab', 'exercises', 'sets', 'reps', 'prLabel', 'prIcon', 'repsRecordRow', 'repsRecordLabel'];
+    static targets = ['tab', 'exercises', 'exercisesLabel', 'sets', 'setsLabel', 'reps', 'prLabel', 'prIcon', 'repsRecordRow', 'repsRecordLabel'];
 
     connect() {
         this.#applyStats('last');
@@ -28,7 +28,9 @@ export default class extends Controller {
         const stats = this[`${filter}Value`];
 
         this.exercisesTarget.textContent = stats.exercises;
+        this.exercisesLabelTarget.textContent = stats.exercisesLabel;
         this.setsTarget.textContent = stats.sets;
+        this.setsLabelTarget.textContent = stats.setsLabel;
         this.repsTarget.textContent = stats.reps;
         this.prLabelTarget.textContent = stats.prLabel;
         this.prIconTarget.classList.toggle('hidden', stats.prCount === 0);

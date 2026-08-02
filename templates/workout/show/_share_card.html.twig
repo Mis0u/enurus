@@ -67,7 +67,7 @@
         </div>
         <div class="bg-white/[0.03] border border-white/[0.07] rounded-xl px-2 py-3 text-center">
             <div class="font-rajdhani text-[20px] font-bold">{{ totalSets }}</div>
-            <div class="text-[10px] text-[#8b9bb4] uppercase tracking-wide">{{ 'workout.show.metrics.sets'|trans({}, 'navigation') }}</div>
+            <div class="text-[10px] text-[#8b9bb4] uppercase tracking-wide">{{ 'workout.show.metrics.sets'|trans({'count': totalSets}, 'navigation') }}</div>
         </div>
         <div class="bg-white/[0.03] border border-white/[0.07] rounded-xl px-2 py-3 text-center">
             <div class="font-rajdhani text-[20px] font-bold">{{ totalReps }}</div>

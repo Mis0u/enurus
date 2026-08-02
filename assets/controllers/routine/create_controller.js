@@ -5,7 +5,8 @@ import Sortable from 'sortablejs';
 import { CSS, SVG } from './routine-constants.js';
 import { buildSelectedItem, buildErrorElement } from './routine-dom-builder.js';
 import { initNameChecker } from './routine-name-checker.js';
-import { matchesFilters, normalizeForSearch } from './routine-exercise-filter.js';
+import { matchesFilters } from './routine-exercise-filter.js';
+import { normalizeForSearch } from '../../utils/search.js';
 import { MusclePills, updatePillVisual } from '../exercise/muscle_pills.js';
 import { paintMuscleGroupsByIds, resetBodymap } from '../../utils/muscle_colors.js';
 
