@@ -3,9 +3,9 @@
     - sessionStats : array{
           year: int,
           annualTotal: int,
-          last : array{exercises: int, sets: int, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string},
-          week : array{exercises: int, sets: int, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string},
-          month: array{exercises: int, sets: int, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string}
+          last : array{exercises: int, exercisesLabel: string, sets: int, setsLabel: string, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string},
+          week : array{exercises: int, exercisesLabel: string, sets: int, setsLabel: string, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string},
+          month: array{exercises: int, exercisesLabel: string, sets: int, setsLabel: string, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string}
       }
 #}
 <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
@@ -69,8 +69,8 @@
                 <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-white" data-dashboard--session-target="exercises">
                     {{ sessionStats.last.exercises }}
                 </div>
-                <div class="text-[11px] text-[#4a5568] mt-0.5">
-                    {{ 'dashboard.widget.session.exercises'|trans({}, 'navigation') }}
+                <div class="text-[11px] text-[#4a5568] mt-0.5" data-dashboard--session-target="exercisesLabel">
+                    {{ sessionStats.last.exercisesLabel }}
                 </div>
             </div>
 
@@ -78,8 +78,8 @@
                 <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-white" data-dashboard--session-target="sets">
                     {{ sessionStats.last.sets }}
                 </div>
-                <div class="text-[11px] text-[#4a5568] mt-0.5">
-                    {{ 'workout.show.metrics.sets'|trans({}, 'navigation') }}
+                <div class="text-[11px] text-[#4a5568] mt-0.5" data-dashboard--session-target="setsLabel">
+                    {{ sessionStats.last.setsLabel }}
                 </div>
             </div>
 

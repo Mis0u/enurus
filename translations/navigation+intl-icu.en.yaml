@@ -116,7 +116,7 @@ dashboard:
             year_label: "{count, plural, =1 {session this year} other {sessions this year}}"
         session:
             annual_total_label: "Total for year {year}:"
-            exercises: "{count, plural, =1 {# exercise} other {# exercises}}"
+            exercises: "{count, plural, =1 {Exercise} other {Exercises}}"
             filter:
                 last: Last workout
                 month: Current month
@@ -502,7 +502,7 @@ workout:
         duration_unit: min
         edit: Edit workout
         empty: No workout found
-        exercises: exercises
+        exercises: "{count, plural, =1 {exercise} other {exercises}}"
         filter:
             clear: Clear date
             month: This month
@@ -560,8 +560,8 @@ workout:
         back: Back to my workouts
         metrics:
             duration: Duration
-            exercises: Exercises
-            sets: Sets
+            exercises: "{count, plural, =1 {Exercise} other {Exercises}}"
+            sets: "{count, plural, =1 {Set} other {Sets}}"
             tonnage: Tonnage
         muscles_primary: Primary muscles
         muscles_secondary: Secondary muscles

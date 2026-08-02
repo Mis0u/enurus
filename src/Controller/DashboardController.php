@@ -141,12 +141,18 @@ final class DashboardController extends AbstractController
         $annualSessionsTotal = $workoutStatsRepository->countByUserAndDate($user, $year->start, $year->end);
 
         // Stats du widget Séance (3 filtres, toujours débloqués dès 1 séance)
+        $lastExercises = $lastWorkout->workoutExercises->count();
+        $weekTotals = $workoutStatsRepository->findExerciseSetRepTotals($user, $week->start, $week->end);
+        $monthTotals = $workoutStatsRepository->findExerciseSetRepTotals($user, $month->start, $month->end);
+
         $sessionStats = [
             'year' => (int) $now->format('Y'),
             'annualTotal' => $annualSessionsTotal,
             'last' => [
-                'exercises' => $lastWorkout->workoutExercises->count(),
+                'exercises' => $lastExercises,
+                'exercisesLabel' => $this->buildExercisesLabel($lastExercises),
                 'sets' => $sessionSummary['totalSets'],
+                'setsLabel' => $this->buildSetsLabel($sessionSummary['totalSets']),
                 'reps' => $sessionSummary['totalReps'],
                 'prCount' => $prCounts['last'],
                 'prLabel' => $this->buildPrLabel($prCounts['last']),
@@ -154,14 +160,18 @@ final class DashboardController extends AbstractController
                 'repsRecordLabel' => $this->buildRepsRecordLabel($repsRecordCounts['last']),
             ],
             'week' => [
-                ...$workoutStatsRepository->findExerciseSetRepTotals($user, $week->start, $week->end),
+                ...$weekTotals,
+                'exercisesLabel' => $this->buildExercisesLabel($weekTotals['exercises']),
+                'setsLabel' => $this->buildSetsLabel($weekTotals['sets']),
                 'prCount' => $prCounts['week'],
                 'prLabel' => $this->buildPrLabel($prCounts['week']),
                 'repsRecordCount' => $repsRecordCounts['week'],
                 'repsRecordLabel' => $this->buildRepsRecordLabel($repsRecordCounts['week']),
             ],
             'month' => [
-                ...$workoutStatsRepository->findExerciseSetRepTotals($user, $month->start, $month->end),
+                ...$monthTotals,
+                'exercisesLabel' => $this->buildExercisesLabel($monthTotals['exercises']),
+                'setsLabel' => $this->buildSetsLabel($monthTotals['sets']),
                 'prCount' => $prCounts['month'],
                 'prLabel' => $this->buildPrLabel($prCounts['month']),
                 'repsRecordCount' => $repsRecordCounts['month'],
@@ -208,6 +218,20 @@ final class DashboardController extends AbstractController
     private function buildRepsRecordLabel(int $count): string
     {
         return $this->translator->trans('dashboard.widget.session.reps_record_count', [
+            'count' => $count,
+        ], 'navigation');
+    }
+
+    private function buildExercisesLabel(int $count): string
+    {
+        return $this->translator->trans('dashboard.widget.session.exercises', [
+            'count' => $count,
+        ], 'navigation');
+    }
+
+    private function buildSetsLabel(int $count): string
+    {
+        return $this->translator->trans('workout.show.metrics.sets', [
             'count' => $count,
         ], 'navigation');
     }

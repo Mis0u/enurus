@@ -13,7 +13,7 @@
     <span class="flex items-center gap-1.5 text-[#8b9bb4]">
         {% include 'partials/_svg/_list.html.twig' only %}
         <span class="font-semibold text-[#f0f4ff]">{{ exerciseCount }}</span>
-        {{ 'workout.list.exercises'|trans({}, 'navigation') }}
+        {{ 'workout.list.exercises'|trans({'count': exerciseCount}, 'navigation') }}
     </span>
     {% if workout.photoPath is not null %}
         <span class="flex items-center gap-1.5 text-[#8b9bb4]"

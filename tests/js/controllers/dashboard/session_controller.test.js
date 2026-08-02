@@ -12,16 +12,18 @@ describe('dashboard--session controller', () => {
     beforeEach(() => {
         document.body.innerHTML = `
             <div data-controller="dashboard--session"
-                 data-dashboard--session-last-value='{"exercises":5,"sets":20,"reps":180,"prCount":2,"prLabel":"2 PR battus","repsRecordCount":1,"repsRecordLabel":"+ 1 record de reps"}'
-                 data-dashboard--session-week-value='{"exercises":12,"sets":48,"reps":410,"prCount":0,"prLabel":"Aucun PR cette fois, continue comme ça !","repsRecordCount":0,"repsRecordLabel":""}'
-                 data-dashboard--session-month-value='{"exercises":30,"sets":110,"reps":900,"prCount":5,"prLabel":"5 PR battus","repsRecordCount":3,"repsRecordLabel":"+ 3 records de reps"}'>
+                 data-dashboard--session-last-value='{"exercises":5,"exercisesLabel":"Exercices","sets":20,"setsLabel":"Séries","reps":180,"prCount":2,"prLabel":"2 PR battus","repsRecordCount":1,"repsRecordLabel":"+ 1 record de reps"}'
+                 data-dashboard--session-week-value='{"exercises":12,"exercisesLabel":"Exercices","sets":48,"setsLabel":"Séries","reps":410,"prCount":0,"prLabel":"Aucun PR cette fois, continue comme ça !","repsRecordCount":0,"repsRecordLabel":""}'
+                 data-dashboard--session-month-value='{"exercises":1,"exercisesLabel":"Exercice","sets":110,"setsLabel":"Séries","reps":900,"prCount":5,"prLabel":"5 PR battus","repsRecordCount":3,"repsRecordLabel":"+ 3 records de reps"}'>
                 <button data-dashboard--session-target="tab" data-filter="last"
                         data-action="click->dashboard--session#switchFilter" class="dashboard-tab-active"></button>
                 <button data-dashboard--session-target="tab" data-filter="week"
                         data-action="click->dashboard--session#switchFilter" class="dashboard-tab-inactive"></button>
 
                 <span data-dashboard--session-target="exercises"></span>
+                <span data-dashboard--session-target="exercisesLabel"></span>
                 <span data-dashboard--session-target="sets"></span>
+                <span data-dashboard--session-target="setsLabel"></span>
                 <span data-dashboard--session-target="reps"></span>
                 <span data-dashboard--session-target="prIcon">🏆</span>
                 <span data-dashboard--session-target="prLabel"></span>
@@ -44,7 +46,9 @@ describe('dashboard--session controller', () => {
         await nextTick();
 
         expect(document.querySelector('[data-dashboard--session-target="exercises"]').textContent).toBe('5');
+        expect(document.querySelector('[data-dashboard--session-target="exercisesLabel"]').textContent).toBe('Exercices');
         expect(document.querySelector('[data-dashboard--session-target="sets"]').textContent).toBe('20');
+        expect(document.querySelector('[data-dashboard--session-target="setsLabel"]').textContent).toBe('Séries');
         expect(document.querySelector('[data-dashboard--session-target="reps"]').textContent).toBe('180');
         expect(document.querySelector('[data-dashboard--session-target="prLabel"]').textContent).toBe('2 PR battus');
         expect(document.querySelector('[data-dashboard--session-target="prIcon"]').classList.contains('hidden')).toBe(false);
@@ -58,7 +62,9 @@ describe('dashboard--session controller', () => {
         document.querySelector('[data-filter="week"]').click();
 
         expect(document.querySelector('[data-dashboard--session-target="exercises"]').textContent).toBe('12');
+        expect(document.querySelector('[data-dashboard--session-target="exercisesLabel"]').textContent).toBe('Exercices');
         expect(document.querySelector('[data-dashboard--session-target="sets"]').textContent).toBe('48');
+        expect(document.querySelector('[data-dashboard--session-target="setsLabel"]').textContent).toBe('Séries');
         expect(document.querySelector('[data-dashboard--session-target="reps"]').textContent).toBe('410');
         expect(document.querySelector('[data-dashboard--session-target="prLabel"]').textContent)
             .toBe('Aucun PR cette fois, continue comme ça !');
