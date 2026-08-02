@@ -1,15 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { normalizeForSearch, matchesFilters } from '../../../../assets/controllers/routine/routine-exercise-filter.js';
-
-describe('normalizeForSearch', () => {
-    it('strips accents and lowercases the value', () => {
-        expect(normalizeForSearch('Développé couché')).toBe('developpe couche');
-    });
-
-    it('leaves already-normalized text unchanged', () => {
-        expect(normalizeForSearch('squat')).toBe('squat');
-    });
-});
+import { matchesFilters } from '../../../../assets/controllers/routine/routine-exercise-filter.js';
 
 describe('matchesFilters', () => {
     const data = {

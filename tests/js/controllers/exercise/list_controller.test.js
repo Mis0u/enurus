@@ -89,6 +89,19 @@ describe('exercise--list controller', () => {
         expect(document.querySelector('[data-exercise--list-target="counterText"]').textContent).toBe('1 exercice');
     });
 
+    it('matches accented card names against an unaccented search query', async () => {
+        await buildDom([
+            card('c1', { name: 'développé couché', type: 'chest' }),
+            card('c2', { name: 'squat', type: 'legs' }),
+        ].join(''));
+
+        const input = document.querySelector('[data-exercise--list-target="searchInput"]');
+        input.value = 'developpe';
+        input.dispatchEvent(new Event('input'));
+
+        expect(visibleCardIds()).toEqual(['c1']);
+    });
+
     it('toggling the same filter twice clears it back to all cards', async () => {
         await buildDom([
             card('c1', { name: 'squat', type: 'legs' }),
