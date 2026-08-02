@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -43,6 +44,7 @@ final class WorkoutType extends AbstractType
         private readonly TranslatorInterface $translator,
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly Security $security,
+        private readonly RequestStack $requestStack,
     ) {
     }
 
@@ -76,7 +78,8 @@ final class WorkoutType extends AbstractType
     {
         return [
             'widget' => 'single_text',
-            'html5' => true,
+            'html5' => false,
+            'format' => 'yyyy-MM-dd',
             'input' => 'datetime_immutable',
             'label' => $this->translator->trans('workout.date', [], 'navigation'),
             'attr' => $isEdit ? $this->performedAtEditAttr() : $this->performedAtCreateAttr(),
@@ -104,8 +107,8 @@ final class WorkoutType extends AbstractType
     private function performedAtEditAttr(): array
     {
         return [
+            ...$this->datePickerAttr(),
             'class' => self::FIELD_CLASS,
-            'max' => new \DateTimeImmutable('today')->format('Y-m-d'),
         ];
     }
 
@@ -115,14 +118,41 @@ final class WorkoutType extends AbstractType
     private function performedAtCreateAttr(): array
     {
         return [
-            'max' => new \DateTimeImmutable('today')->format('Y-m-d'),
-            'data-controller' => 'date',
+            ...$this->datePickerAttr(),
+            'data-controller' => 'date workout--date-picker',
             'data-date-check-url-value' => $this->urlGenerator->generate('workout_check_date'),
             'data-date-message-value' => $this->translator->trans('workout.check_date.message', [
                 'count' => '__COUNT__',
             ], 'navigation'),
             'data-date-confirm-button-value' => $this->translator->trans('workout.check_date.confirm', [], 'navigation'),
         ];
+    }
+
+    /**
+     * Attributs communs création/édition du calendrier — la clé `data-controller` de ce tableau
+     * est écrasée par `performedAtCreateAttr()` pour y ajouter le controller `date` (vérif doublon,
+     * uniquement en création).
+     *
+     * @return array<string, mixed>
+     */
+    private function datePickerAttr(): array
+    {
+        return [
+            'placeholder' => $this->translator->trans('workout.date_placeholder', [], 'navigation'),
+            'data-controller' => 'workout--date-picker',
+            'data-workout--date-picker-locale-value' => $this->currentLocale(),
+        ];
+    }
+
+    private function currentLocale(): string
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        if (null === $request) {
+            throw new \LogicException('Building the workout form requires an active HTTP request.');
+        }
+
+        return $request->getLocale();
     }
 
     /**

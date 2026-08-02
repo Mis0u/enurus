@@ -461,6 +461,7 @@ workout:
             }
     created: Votre séance a bien été enregistrée
     date: Date
+    date_placeholder: Choisir une date
     duration_optional: Durée (Optionnel)
     duration_placeholder: Durée (min)
     edit:
@@ -479,6 +480,9 @@ workout:
         topbar_title: Édition de séance
         type_readonly: Le type de séance ne peut pas être modifié
     error:
+        no_date:
+            text: Choisis une date avant de valider ta séance
+            title: Aucune date sélectionnée
         no_exercise:
             text: Ajoute au moins un exercice avant de valider ta séance
             title: Aucun exercice

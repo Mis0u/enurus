@@ -461,6 +461,7 @@ workout:
             }
     created: Il tuo allenamento è stato registrato
     date: Data
+    date_placeholder: Seleziona una data
     duration_optional: Durata (Facoltativo)
     duration_placeholder: Durata (min)
     edit:
@@ -479,6 +480,9 @@ workout:
         topbar_title: Modifica dell'allenamento
         type_readonly: Il tipo di allenamento non può essere modificato
     error:
+        no_date:
+            text: Scegli una data prima di convalidare il tuo allenamento
+            title: Nessuna data selezionata
         no_exercise:
             text: Aggiungi almeno un esercizio prima di convalidare il tuo allenamento
             title: Nessun esercizio

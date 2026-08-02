@@ -72,4 +72,32 @@ return [
     'html-to-image' => [
         'version' => '1.11.13',
     ],
+    'flatpickr' => [
+        'version' => '4.6.13',
+    ],
+    'flatpickr/dist/flatpickr.min.css' => [
+        'version' => '4.6.13',
+        'type' => 'css',
+    ],
+    'flatpickr/dist/l10n/fr.js' => [
+        'version' => '4.6.13',
+    ],
+    'flatpickr/dist/l10n/es.js' => [
+        'version' => '4.6.13',
+    ],
+    'flatpickr/dist/l10n/it.js' => [
+        'version' => '4.6.13',
+    ],
+    'flatpickr/dist/l10n/de.js' => [
+        'version' => '4.6.13',
+    ],
+    'flatpickr/dist/l10n/nl.js' => [
+        'version' => '4.6.13',
+    ],
+    'flatpickr/dist/l10n/pl.js' => [
+        'version' => '4.6.13',
+    ],
+    'flatpickr/dist/l10n/pt.js' => [
+        'version' => '4.6.13',
+    ],
 ];

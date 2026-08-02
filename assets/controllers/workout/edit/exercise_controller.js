@@ -8,6 +8,8 @@ export default class extends Controller {
     static targets = ['exerciseList'];
 
     static values = {
+        noDateTitle: String,
+        noDateText: String,
         noExerciseTitle: String,
         noExerciseText:  String,
     };
@@ -65,6 +67,20 @@ export default class extends Controller {
 
     onSubmitClick(event) {
         event.preventDefault();
+
+        const dateInput = document.getElementById('workout_performedAt');
+
+        if (dateInput && !dateInput.value) {
+            Swal.fire({
+                icon:               'error',
+                title:              this.noDateTitleValue,
+                text:               this.noDateTextValue,
+                background:         '#0f1928',
+                color:              '#f0f4ff',
+                confirmButtonColor: '#f43f5e',
+            });
+            return;
+        }
 
         if (this.exerciseListTarget.children.length === 0) {
             Swal.fire({
