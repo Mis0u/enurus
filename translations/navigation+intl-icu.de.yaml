@@ -461,6 +461,7 @@ workout:
             }
     created: Dein Training wurde gespeichert
     date: Datum
+    date_placeholder: Datum auswählen
     duration_optional: Dauer (Optional)
     duration_placeholder: Dauer (Min)
     edit:
@@ -479,6 +480,9 @@ workout:
         topbar_title: Training bearbeiten
         type_readonly: Die Trainingsart kann nicht geändert werden
     error:
+        no_date:
+            text: Wähle ein Datum, bevor du dein Training bestätigst
+            title: Kein Datum ausgewählt
         no_exercise:
             text: Füge mindestens eine Übung hinzu, bevor du dein Training bestätigst
             title: Keine Übung

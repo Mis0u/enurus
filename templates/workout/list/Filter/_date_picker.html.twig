@@ -7,12 +7,15 @@
     ">
 
     <input
-        type="date"
-        data-workout--list--workout-filters-target="dateInput"="dateInput"
-    data-action="change->workout--list--workout-filters#onDateChange"
-    value="{{ filterDate ?? '' }}"
-    max="{{ 'now'|date('Y-m-d') }}"
-    class="bg-transparent border-none text-[#f0f4ff] text-[13px] font-medium outline-none w-[130px] cursor-pointer [color-scheme:dark]"
+        type="text"
+        autocomplete="off"
+        data-controller="workout--date-picker"
+        data-workout--date-picker-locale-value="{{ app.request.locale }}"
+        data-workout--list--workout-filters-target="dateInput"
+        data-action="change->workout--list--workout-filters#onDateChange"
+        value="{{ filterDate ?? '' }}"
+        placeholder="{{ 'workout.date_placeholder'|trans({}, 'navigation') }}"
+        class="bg-transparent border-none text-[#f0f4ff] text-[13px] font-medium outline-none w-[130px] cursor-pointer"
     >
     {% if filterDate is not null and filterDate != '' %}
         <button

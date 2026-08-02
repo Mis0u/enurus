@@ -9,6 +9,8 @@ export default class extends Controller {
     static targets = ['exerciseList'];
 
     static values = {
+        noDateTitle: String,
+        noDateText: String,
         noExerciseTitle: String,
         noExerciseText: String,
         submitFailedTitle: String,
@@ -91,6 +93,13 @@ export default class extends Controller {
     async validateAndSubmit(event) {
         event.preventDefault();
         event.stopPropagation();
+
+        const dateInput = document.getElementById('workout_performedAt');
+
+        if (dateInput && !dateInput.value) {
+            swalError(this.noDateTitleValue, this.noDateTextValue, '#0f1928', '#f0f4ff', '#f43f5e');
+            return;
+        }
 
         if (this.exerciseListTarget.children.length === 0) {
             swalError(this.noExerciseTitleValue, this.noExerciseTextValue, '#0f1928', '#f0f4ff', '#f43f5e');

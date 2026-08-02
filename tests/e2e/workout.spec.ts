@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { FIXTURE_USERS, loginAs } from './helpers';
+import { FIXTURE_USERS, fillDatePicker, loginAs } from './helpers';
 
 // Un seul utilisateur, deux tests dépendants (le second supprime la séance créée par le premier) :
 // serial pour éviter qu'un run parallèle (playwright.config.ts a `fullyParallel: true`) ne fasse
@@ -12,7 +12,7 @@ test('user can create a workout with an exercise and a set', async ({ page }) =>
     await page.goto('/en/log-workout');
     await page.waitForLoadState('networkidle');
 
-    await page.locator('#workout_performedAt').fill('2026-01-15');
+    await fillDatePicker(page, '#workout_performedAt', '2026-01-15');
     // date_controller.js affiche une info (pas bloquante) si l'utilisateur a déjà une séance ce
     // jour-là (fixtures générées sur des dates aléatoires, cf. CLAUDE.md) — à fermer si présente,
     // sinon elle intercepte le clic suivant.
@@ -49,7 +49,7 @@ test('user can delete a workout from the list', async ({ page }) => {
 
     await page.goto('/en/log-workout');
     await page.waitForLoadState('networkidle');
-    await page.locator('#workout_performedAt').fill('2026-02-10');
+    await fillDatePicker(page, '#workout_performedAt', '2026-02-10');
     const dateInfoModal = page.locator('.swal2-confirm');
     if (await dateInfoModal.isVisible().catch(() => false)) {
         await dateInfoModal.click();

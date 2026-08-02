@@ -1,6 +1,7 @@
 {% block date_widget %}
     <input
-        type="date"
+        type="text"
+        autocomplete="off"
         {{ block('widget_attributes') }}
         class="px-3.5 py-2.25 bg-white/[0.03] border border-white/[0.07] rounded-lg text-[#f0f4ff] text-[13.5px] outline-none transition-colors duration-250 min-w-[140px] max-md:w-full max-md:min-w-0 focus:border-[rgba(244,63,94,0.4)]"
         {% if value is not empty %}value="{{ value }}"{% endif %}

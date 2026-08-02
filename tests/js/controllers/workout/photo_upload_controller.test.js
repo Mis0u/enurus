@@ -175,9 +175,14 @@ describe('workout--photo-upload controller', () => {
         const dropEvent = new Event('drop', { cancelable: true });
         Object.defineProperty(dropEvent, 'dataTransfer', { value: { files: [jpeg('dropped.jpg')] } });
         zone.dispatchEvent(dropEvent);
-        await nextTick();
 
-        expect(document.querySelector('[data-workout--photo-upload-target="filename"]').textContent).toBe('dropped.jpg');
+        // FileReader.readAsDataURL() résout via une IO task dont la durée réelle varie selon la
+        // charge de la machine (CI plus lent que le poste local) : un délai fixe (nextTick())
+        // peut se déclencher avant que #showPreview() n'ait fini d'écrire le DOM. vi.waitFor()
+        // poll la condition réelle au lieu de parier sur une durée devinée.
+        await vi.waitFor(() => {
+            expect(document.querySelector('[data-workout--photo-upload-target="filename"]').textContent).toBe('dropped.jpg');
+        });
     });
 
     it('uploadIfSelected uploads a pending file and returns the response data', async () => {

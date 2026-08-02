@@ -265,6 +265,21 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
   DOM custom — pattern uniforme sur tout le projet.
 - Cache AssetMapper : si un `console.log` fraîchement ajouté n'apparaît jamais malgré un controller
   qui se connecte bien, suspecter le cache avant la logique (`asset-map:compile` + vidage cache navigateur).
+- **flatpickr** (`assets/controllers/workout/date-picker_controller.js`) pose `readonly` sur l'input
+  tant que `allowInput` n'est pas explicitement activé (comportement par défaut, volontaire pour
+  forcer la saisie via calendrier) — un champ `readonly` est barré de la validation de contrainte
+  HTML5 par la spec W3C, donc `required` + `form.reportValidity()` ne s'y déclenchent jamais, même
+  si le HTML généré côté serveur ne montre pas `readonly` (ajouté par flatpickr au runtime, invisible
+  en vue source). Pour tout champ requis piloté par flatpickr : garde JS explicite (SweetAlert dédiée,
+  même pattern que `workout.error.no_exercise`) plutôt que de compter sur la validation native. Idem
+  côté Playwright : `.fill()` échoue son check d'editability sur ce champ — utiliser
+  `input._flatpickr.setDate(date, true)` (cf. `tests/e2e/helpers.ts:fillDatePicker()`), qui déclenche
+  un vrai `change`/`input` DOM comme une sélection manuelle.
+- Thème CSS d'une lib importée en JS (ex. `import 'flatpickr/dist/flatpickr.min.css'`, même pattern
+  que Quill) : ce CSS s'injecte après les `<link>` statiques du `<head>`, donc après tout thème
+  custom qui le précède — à spécificité égale, la lib gagne la cascade. Surcharges en `!important`
+  dans le fichier de thème custom (`assets/styles/date-picker.css`), pas de contournement plus propre
+  trouvé pour ce cas précis.
 
 ### CSS / Tailwind v4
 - `!important` = **suffixe** (`hidden!`), pas préfixe (`!hidden` = syntaxe v3 invalide).
@@ -359,7 +374,6 @@ palier précise, préférer des dates fixes en dur.
 | 21 | CI en place (GitHub Actions : PHPStan, ECS, TwigCS, PHPMND, ESLint, PHPUnit, Vitest, composer audit — branche protégée sur `main` avec check `qa` requis). Psalm taint, mutation testing (Infection) et Playwright e2e restent volontairement locaux/manuels (lancés avant push), pas en CI. Reste à définir : la CD (déploiement) |
 | 22 | Mise en ligne du site — plan validé avec Misou (aucune connaissance devops, préférence PaaS managée) : (1) nom de domaine à acheter (Gandi pressenti, mais `.com` cher au renouvellement ~35-38€/an — comparer avec un `.fr` ou un autre registrar avant d'acheter) ; (2) hébergement **Scalingo** (PaaS FR, Postgres managé en add-on, ~15-25€/mois estimé, à vérifier sur scalingo.com/pricing) ; (3) email transactionnel **Brevo**, DNS SPF/DKIM/DMARC à configurer chez le registrar, puis extraction de `FROM_EMAIL` en variable d'environnement (recoupe #18/#20) ; (4) photos → bucket **Scaleway Object Storage** (quasi gratuit, cf. #15) ; (5) **Cloudflare** (plan gratuit) devant le domaine pour CDN/absorption de pics de trafic. Une fois stabilisé, brancher la CD (déploiement auto GitHub Actions → Scalingo sur merge `main`), cf. #21. |
 | 23 | Résilience en cas d'afflux massif (scénario "influenceur" : ~100k inscriptions en une journée) — décisions actées avec Misou : **compte Brevo payant** dès le lancement (le plan gratuit à 300 emails/jour bloquerait la quasi-totalité des utilisateurs à l'étape de vérification d'email obligatoire, `BlockedUserChecker` + `isVerified`). Points à anticiper avant tout pic prévisible (à traiter le moment venu, pas dans l'immédiat) : dimensionnement du tier Postgres Scalingo (connexions/IOPS — chaque requête écrit une session via `DoctrineSessionHandler`, en plus des `User` créés), nombre de workers `messenger:consume` (actuellement un seul consommateur pour la queue Doctrine des emails, deviendrait le goulot d'étranglement même avec Brevo payant), et scaling des containers Scalingo (réactif, pas instantané face à un pic soudain). |
-| 24 | Curseur différencié (pointer/not-allowed) sur les dates sélectionnables vs non sélectionnables du calendrier de `WorkoutType::performedAt` — impossible en l'état car `<input type="date" html5="true">` natif (`src/Form/WorkoutType.php`), calendrier rendu par le navigateur/OS, non stylable en CSS. Nécessiterait de remplacer ce champ par un composant de calendrier JS custom (Stimulus + lib type flatpickr) — chantier à part, non démarré. |
 
 ---
 

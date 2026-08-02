@@ -25,6 +25,19 @@ export async function waitForCsrfControllerReady(page: Page): Promise<void> {
  * tableau de bord (LoginSuccessListener redirige vers la locale du compte, 'fr' pour toutes les
  * fixtures existantes — cf. login.spec.ts).
  */
+/**
+ * Renseigne un champ de date piloté par flatpickr (assets/controllers/workout/date-picker_controller.js)
+ * — le `.fill()` natif de Playwright échoue car flatpickr pose `readonly` sur l'input tant que
+ * `allowInput` n'est pas activé (comportement volontaire : calendrier seul, pas de saisie libre),
+ * ce qui fait échouer le contrôle d'"editability" de Playwright. `setDate(..., true)` déclenche un
+ * vrai `change`/`input` DOM sur l'input, comme une sélection manuelle dans le calendrier.
+ */
+export async function fillDatePicker(page: Page, selector: string, date: string): Promise<void> {
+    await page.locator(selector).evaluate((input: HTMLInputElement & { _flatpickr?: { setDate: (date: string, triggerChange: boolean) => void } }, value) => {
+        input._flatpickr?.setDate(value, true);
+    }, date);
+}
+
 export async function loginAs(page: Page, email: string, password = FIXTURE_PASSWORD): Promise<void> {
     await page.goto('/en/');
     await waitForCsrfControllerReady(page);

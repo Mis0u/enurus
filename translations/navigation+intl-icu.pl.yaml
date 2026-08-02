@@ -473,6 +473,7 @@ workout:
             }
     created: Twój trening został zapisany
     date: Data
+    date_placeholder: Wybierz datę
     duration_optional: Czas trwania (Opcjonalnie)
     duration_placeholder: Czas trwania (min)
     edit:
@@ -491,6 +492,9 @@ workout:
         topbar_title: Edycja treningu
         type_readonly: Rodzaj treningu nie może być zmieniony
     error:
+        no_date:
+            text: Wybierz datę przed zatwierdzeniem treningu
+            title: Nie wybrano daty
         no_exercise:
             text: Dodaj przynajmniej jedno ćwiczenie przed zatwierdzeniem treningu
             title: Brak ćwiczenia
