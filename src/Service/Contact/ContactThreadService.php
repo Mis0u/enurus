@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Contact;
 
 use App\Entity\ContactThread;
+use App\Entity\ContactThreadMessage;
 use App\Entity\User;
 use App\Enum\Contact\ContactCategoryEnum;
 use App\Service\Utils\ImageUploadService;
@@ -19,6 +20,7 @@ final readonly class ContactThreadService
     public function __construct(
         private EntityManagerInterface $entityManager,
         private ImageUploadService $imageUploadService,
+        private ContactThreadAdminNotifierService $adminNotifier,
     ) {
     }
 
@@ -38,6 +40,12 @@ final readonly class ContactThreadService
 
         $this->entityManager->persist($thread);
         $this->entityManager->flush();
+
+        $message = $thread->messages->first();
+
+        if ($message instanceof ContactThreadMessage) {
+            $this->adminNotifier->notifyNewMessage($thread, $message);
+        }
 
         return $thread;
     }

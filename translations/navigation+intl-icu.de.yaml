@@ -5,6 +5,12 @@ admin:
         reason: "Grund: {reason}"
         subject: "Übersetzung der Rundmail fehlgeschlagen"
         title: "Übersetzung fehlgeschlagen"
+    new_thread_message:
+        category: "Kategorie: {category}"
+        from: "Von: {email}"
+        link: "Thread ansehen → {url}"
+        subject: "Betreff: {subject}"
+        title: "📩 Neue Nachricht — Enurus"
     registration_milestone:
         body: "Die Website hat gerade ihren {count}. registrierten Nutzer erreicht."
         subject: "Meilenstein von {count} Registrierungen erreicht 🎉"

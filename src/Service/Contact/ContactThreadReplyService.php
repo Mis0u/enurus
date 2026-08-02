@@ -20,6 +20,7 @@ final readonly class ContactThreadReplyService
         private EntityManagerInterface $entityManager,
         private ImageUploadService $imageUploadService,
         private ContactMessageBodySanitizerService $contactMessageBodySanitizerService,
+        private ContactThreadAdminNotifierService $adminNotifier,
     ) {
     }
 
@@ -45,6 +46,10 @@ final readonly class ContactThreadReplyService
         $thread->updatedAt = new \DateTimeImmutable();
 
         $this->entityManager->flush();
+
+        if (! $fromAdmin) {
+            $this->adminNotifier->notifyNewMessage($thread, $message);
+        }
 
         return $message;
     }

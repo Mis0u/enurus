@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service\Contact;
 
 use App\Entity\User;
 use App\Enum\Contact\ContactCategoryEnum;
+use App\Service\Contact\ContactThreadAdminNotifierService;
 use App\Service\Contact\ContactThreadService;
 use App\Service\Utils\ImageUploadService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,7 +24,10 @@ final class ContactThreadServiceTest extends TestCase
         $em->expects(self::once())->method('persist');
         $em->expects(self::once())->method('flush');
 
-        $service = new ContactThreadService($em, $this->createStub(ImageUploadService::class));
+        $adminNotifier = $this->createMock(ContactThreadAdminNotifierService::class);
+        $adminNotifier->expects(self::once())->method('notifyNewMessage');
+
+        $service = new ContactThreadService($em, $this->createStub(ImageUploadService::class), $adminNotifier);
         $thread = $service->create($user, ContactCategoryEnum::BUG, 'Sujet', 'Un souci rencontré', null);
 
         self::assertSame($user, $thread->owner);
@@ -53,7 +57,7 @@ final class ContactThreadServiceTest extends TestCase
             ->willReturn('contact/uploaded.jpg');
 
         $em = $this->createStub(EntityManagerInterface::class);
-        $service = new ContactThreadService($em, $imageUploadService);
+        $service = new ContactThreadService($em, $imageUploadService, $this->createStub(ContactThreadAdminNotifierService::class));
         $thread = $service->create($user, ContactCategoryEnum::BUG, 'Sujet', 'Corps', $image);
 
         $message = $thread->messages->first();
@@ -70,6 +74,7 @@ final class ContactThreadServiceTest extends TestCase
         $service = new ContactThreadService(
             $this->createStub(EntityManagerInterface::class),
             $this->createStub(ImageUploadService::class),
+            $this->createStub(ContactThreadAdminNotifierService::class),
         );
 
         $this->expectException(\LogicException::class);

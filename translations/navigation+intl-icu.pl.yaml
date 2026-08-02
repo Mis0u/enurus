@@ -5,6 +5,12 @@ admin:
         reason: "Powód: {reason}"
         subject: "Błąd tłumaczenia wiadomości"
         title: "Błąd tłumaczenia"
+    new_thread_message:
+        category: "Kategoria: {category}"
+        from: "Od: {email}"
+        link: "Zobacz wątek → {url}"
+        subject: "Temat: {subject}"
+        title: "📩 Nowa wiadomość — Enurus"
     registration_milestone:
         body: "Strona właśnie osiągnęła {count}. zarejestrowanego użytkownika."
         subject: "Osiągnięto próg {count} rejestracji 🎉"

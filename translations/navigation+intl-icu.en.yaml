@@ -5,6 +5,12 @@ admin:
         reason: "Reason: {reason}"
         subject: Broadcast translation failed
         title: Translation failed
+    new_thread_message:
+        category: "Category: {category}"
+        from: "From: {email}"
+        link: "View thread → {url}"
+        subject: "Subject: {subject}"
+        title: "📩 New message — Enurus"
     registration_milestone:
         body: "The site just reached its {count}th registered user."
         subject: "{count} registrations milestone reached 🎉"
