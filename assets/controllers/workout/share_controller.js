@@ -21,9 +21,10 @@ export default class extends Controller {
 
     #blob = null;
     #previewUrl = null;
+    #loaderEl = null;
 
     async share() {
-        this.buttonTarget.disabled = true;
+        this.#showLoader();
 
         try {
             const blob = await this.#captureCard();
@@ -31,7 +32,7 @@ export default class extends Controller {
         } catch {
             showErrorToast(this.errorValue);
         } finally {
-            this.buttonTarget.disabled = false;
+            this.#hideLoader();
         }
     }
 
@@ -119,5 +120,24 @@ export default class extends Controller {
         const probe = new File([], FILE_NAME, { type: 'image/png' });
 
         return Boolean(navigator.canShare?.({ files: [probe] }));
+    }
+
+    // Loader visuel — Tailwind pur (animate-spin natif, pas de CSS custom),
+    // même pattern que workout--routine-loader.
+    #showLoader() {
+        this.buttonTarget.disabled = true;
+        this.buttonTarget.classList.add('opacity-50', 'cursor-wait');
+
+        this.#loaderEl = document.createElement('span');
+        this.#loaderEl.className = 'inline-block w-4 h-4 border-2 border-rose-500/20 border-t-rose-500 rounded-full animate-spin';
+        this.#loaderEl.setAttribute('aria-hidden', 'true');
+        this.buttonTarget.appendChild(this.#loaderEl);
+    }
+
+    #hideLoader() {
+        this.buttonTarget.disabled = false;
+        this.buttonTarget.classList.remove('opacity-50', 'cursor-wait');
+        this.#loaderEl?.remove();
+        this.#loaderEl = null;
     }
 }
