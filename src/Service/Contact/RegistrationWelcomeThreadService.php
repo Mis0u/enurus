@@ -11,6 +11,7 @@ use App\Enum\Contact\ContactCategoryEnum;
 use App\Enum\Contact\ContactThreadStatusEnum;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class RegistrationWelcomeThreadService
@@ -19,6 +20,7 @@ final readonly class RegistrationWelcomeThreadService
         private EntityManagerInterface $entityManager,
         private UserRepository $userRepository,
         private TranslatorInterface $translator,
+        private UrlGeneratorInterface $urlGenerator,
         private string $adminEmail,
     ) {
     }
@@ -49,6 +51,15 @@ final readonly class RegistrationWelcomeThreadService
             'contact.welcome_thread.body',
             [
                 'nickname' => $user->nickname,
+                'library_url' => $this->urlGenerator->generate('app_exercise_list', [
+                    '_locale' => $locale,
+                ]),
+                'routine_url' => $this->urlGenerator->generate('app_routine_list', [
+                    '_locale' => $locale,
+                ]),
+                'workout_url' => $this->urlGenerator->generate('app_workout', [
+                    '_locale' => $locale,
+                ]),
             ],
             'navigation',
             $locale,
