@@ -31,7 +31,7 @@
     <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-2">
             <img src="{{ asset('images/favicon/android-chrome-192x192.png') }}" alt="" class="w-6 h-6 rounded-md">
-            <span class="font-rajdhani text-[22px] font-bold tracking-wide">{{ 'name'|trans({}, 'brand') }}</span>
+            <span class="font-rajdhani text-[22px] font-bold tracking-wide brand-gradient-text">{{ 'name'|trans({}, 'brand') }}</span>
         </div>
         <span class="text-[13px] text-[#8b9bb4]">{{ workout.performedAt|format_datetime(pattern: 'd MMMM Y', locale: user.locale) }}</span>
     </div>

@@ -82,3 +82,14 @@
     animation: fade-out 0.3s ease-out;
 }
 
+/*
+ * Nom de marque en dégradé blanc → rose, partagé par toutes les surfaces qui affichent le nom
+ * du site en grand (sidebar dashboard, pages auth, carte de partage) — au lieu d'un blanc plat
+ * sans identité de marque.
+ */
+.brand-gradient-text {
+    background: linear-gradient(90deg, #fff 40%, #f43f5e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+

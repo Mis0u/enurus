@@ -13,10 +13,9 @@ html, body { overflow: hidden; font-family: 'DM Sans', sans-serif; }
 .sidebar.collapsed .sidebar-toggle { transform: rotate(180deg); }
 
 /* ---- Gradient texts (non supporté en classes Tailwind) ---- */
+/* Le dégradé lui-même vient de .brand-gradient-text (assets/styles/app.css) — cette classe
+   n'ajoute que le comportement propre à la sidebar (fade au collapse). */
 .logo-text {
-    background: linear-gradient(90deg, #fff 40%, #f43f5e);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     transition: opacity 0.25s cubic-bezier(0.4,0,0.2,1);
 }
 .hero-title span {
