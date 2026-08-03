@@ -7,7 +7,7 @@ namespace App\Controller\Exercise;
 use App\Controller\Trait\ValidatesDeleteRequestTrait;
 use App\Entity\Exercise;
 use App\Security\Voter\ExerciseVoter;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\Entity\ExerciseDeletionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +31,7 @@ final class ExerciseDeleteController extends AbstractController
     use ValidatesDeleteRequestTrait;
 
     public function __construct(
-        private readonly EntityManagerInterface $em,
+        private readonly ExerciseDeletionService $exerciseDeletionService,
         private readonly TranslatorInterface $translator,
     ) {
     }
@@ -50,12 +50,16 @@ final class ExerciseDeleteController extends AbstractController
 
         $this->denyUnlessValidCsrfToken($request, 'exercise_delete_' . $exercise->id->toRfc4122());
 
-        $this->em->remove($exercise);
-        $this->em->flush();
+        $archived = $this->exerciseDeletionService->delete($exercise);
 
         return $this->json([
             'success' => true,
-            'message' => $this->translator->trans('exercise.flash.deleted', [], 'navigation'),
+            'archived' => $archived,
+            'message' => $this->translator->trans(
+                $archived ? 'exercise.flash.archived' : 'exercise.flash.deleted',
+                [],
+                'navigation',
+            ),
         ]);
     }
 }

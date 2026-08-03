@@ -155,7 +155,7 @@ exercise:
     delete:
         cancel_button: Cancelar
         confirm_button: Eliminar
-        confirm_text: ¿Estás seguro de que quieres eliminar « {name} »? Esta acción es irreversible.
+        confirm_text: ¿Estás seguro de que quieres eliminar « {name} »? Si se usa en sesiones pasadas, se archivará (se retira de tu biblioteca, se conserva el historial) en lugar de eliminarse.
         confirm_title: Eliminar el ejercicio
         error_text: Se produjo un error durante la eliminación. Inténtalo de nuevo.
     edit:
@@ -163,8 +163,10 @@ exercise:
         subtitle: Modifica la información de tu ejercicio
         title: Modificar el ejercicio
     flash:
+        archived: Ejercicio archivado — ya no aparece en tu biblioteca, pero tu historial de sesiones se conserva.
         created: Ejercicio creado con éxito.
         deleted: Ejercicio eliminado con éxito.
+        restored: Ejercicio restaurado con éxito.
         updated: EEjercicio modificado con éxito.
     form:
         description_placeholder: Describe los puntos técnicos, la postura, los errores a evitar…
@@ -186,7 +188,9 @@ exercise:
         actions:
             delete: Eliminar
             edit: Modificar
+            restore: Restaurar
         badge:
+            archived: Archivado
             base: Base
             mine: Mi ejercicio
         create_btn: Crear un ejercicio
@@ -195,6 +199,7 @@ exercise:
             subtitle: Modifica tu búsqueda o reinicia los filtros.
             title: Ningún ejercicio encontrado
         filter:
+            archived: Archivados
             base: Base
             count: >-
                 {count, plural,
@@ -220,6 +225,8 @@ exercise:
             }
         title: Biblioteca
 
+    restore:
+        error_text: Se produjo un error durante la restauración. Inténtalo de nuevo.
 footer:
     copyright: "© {year} {brand}. Todos los derechos reservados."
 

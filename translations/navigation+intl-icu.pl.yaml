@@ -155,7 +155,7 @@ exercise:
     delete:
         cancel_button: Anuluj
         confirm_button: Usuń
-        confirm_text: Czy na pewno chcesz usunąć « {name} »? Tej akcji nie można cofnąć.
+        confirm_text: Czy na pewno chcesz usunąć « {name} »? Jeśli jest używane w przeszłych treningach, zostanie zarchiwizowane (usunięte z biblioteki, historia zachowana) zamiast usunięte.
         confirm_title: Usuń ćwiczenie
         error_text: Wystąpił błąd podczas usuwania. Spróbuj ponownie.
     edit:
@@ -163,8 +163,10 @@ exercise:
         subtitle: Zmień informacje o swoim ćwiczeniu
         title: Edytuj ćwiczenie
     flash:
+        archived: Ćwiczenie zarchiwizowane — nie pojawia się już w Twojej bibliotece, ale historia treningów została zachowana.
         created: Ćwiczenie utworzone pomyślnie.
         deleted: Ćwiczenie usunięte pomyślnie.
+        restored: Ćwiczenie przywrócone pomyślnie.
         updated: Ćwiczenie zmienione pomyślnie.
     form:
         description_placeholder: Opisz kluczowe punkty, postawę, błędy do unikania…
@@ -186,7 +188,9 @@ exercise:
         actions:
             delete: Usuń
             edit: Edytuj
+            restore: Przywróć
         badge:
+            archived: Zarchiwizowane
             base: Bazowe
             mine: Moje ćwiczenie
         create_btn: Utwórz ćwiczenie
@@ -195,6 +199,7 @@ exercise:
             subtitle: Zmień wyszukiwanie lub zresetuj filtry.
             title: Nie znaleziono żadnego ćwiczenia
         filter:
+            archived: Zarchiwizowane
             base: Bazowe
             count: >-
                 {count, plural,
@@ -224,6 +229,8 @@ exercise:
             }
         title: Biblioteka
 
+    restore:
+        error_text: Wystąpił błąd podczas przywracania. Spróbuj ponownie.
 footer:
     copyright: "© {year} {brand}. Wszelkie prawa zastrzeżone."
 

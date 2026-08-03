@@ -40,8 +40,11 @@ final class ExerciseListController extends AbstractController
         $exercises = $this->exerciseRepository->findAvailableForUser($user);
         $sorted = $this->exerciseSorter->sortByName($exercises, $user->locale ?? LocaleAllowedEnum::EN->value);
 
+        $archived = $this->exerciseRepository->findArchivedByUser($user);
+        $sortedArchived = $this->exerciseSorter->sortByName($archived, $user->locale ?? LocaleAllowedEnum::EN->value);
+
         return $this->render('exercise/list/index.html.twig', [
-            'exercises' => $sorted,
+            'exercises' => [...$sorted, ...$sortedArchived],
             'totalCount' => count($sorted),
         ]);
     }

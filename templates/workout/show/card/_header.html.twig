@@ -5,6 +5,11 @@
 
     <h4 class="font-['Rajdhani'] text-[20px] font-bold text-[var(--text-primary)] mb-2 max-md:text-[18px]">
         {{ exercise.name|trans({}, 'exercise') }}
+        {% if exercise.archived %}
+            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10.5px] font-medium bg-white/[0.06] border border-white/[0.15] text-slate-400 align-middle ml-1">
+                {{ 'exercise.list.badge.archived'|trans({}, 'navigation') }}
+            </span>
+        {% endif %}
     </h4>
 
     <div class="flex flex-wrap gap-1.5">

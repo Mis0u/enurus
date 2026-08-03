@@ -155,7 +155,7 @@ exercise:
     delete:
         cancel_button: Abbrechen
         confirm_button: Löschen
-        confirm_text: Bist du sicher, dass du « {name} » löschen möchtest? Diese Aktion ist unwiderruflich.
+        confirm_text: Bist du sicher, dass du « {name} » löschen möchtest? Wenn sie in vergangenen Trainingseinheiten verwendet wird, wird sie archiviert (aus deiner Bibliothek entfernt, Verlauf bleibt erhalten) statt gelöscht.
         confirm_title: Übung löschen
         error_text: Beim Löschen ist ein Fehler aufgetreten. Bitte versuche es erneut.
     edit:
@@ -163,8 +163,10 @@ exercise:
         subtitle: Bearbeite die Informationen deiner Übung
         title: Übung bearbeiten
     flash:
+        archived: Übung archiviert — sie erscheint nicht mehr in deiner Bibliothek, aber dein Trainingsverlauf bleibt erhalten.
         created: Übung erfolgreich erstellt.
         deleted: Übung erfolgreich gelöscht.
+        restored: Übung erfolgreich wiederhergestellt.
         updated: Übung erfolgreich geändert.
     form:
         description_placeholder: Beschreibe die technischen Punkte, Haltung, zu vermeidende Fehler…
@@ -186,7 +188,9 @@ exercise:
         actions:
             delete: Löschen
             edit: Bearbeiten
+            restore: Wiederherstellen
         badge:
+            archived: Archiviert
             base: Standard
             mine: Meine Übung
         create_btn: Übung erstellen
@@ -195,6 +199,7 @@ exercise:
             subtitle: Ändere deine Suche oder setze die Filter zurück.
             title: Keine Übung gefunden
         filter:
+            archived: Archiviert
             base: Standard
             count: >-
                 {count, plural,
@@ -220,6 +225,8 @@ exercise:
             }
         title: Bibliothek
 
+    restore:
+        error_text: Beim Wiederherstellen ist ein Fehler aufgetreten. Bitte versuche es erneut.
 footer:
     copyright: "© {year} {brand}. Alle Rechte vorbehalten."
 

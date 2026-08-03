@@ -155,7 +155,7 @@ exercise:
     delete:
         cancel_button: Annuleren
         confirm_button: Verwijderen
-        confirm_text: Weet je zeker dat je « {name} » wilt verwijderen? Deze actie is onomkeerbaar.
+        confirm_text: Weet je zeker dat je « {name} » wilt verwijderen? Als deze wordt gebruikt in eerdere trainingen, wordt hij gearchiveerd (verwijderd uit je bibliotheek, geschiedenis blijft bewaard) in plaats van verwijderd.
         confirm_title: Oefening verwijderen
         error_text: Er is een fout opgetreden bij het verwijderen. Probeer het opnieuw.
     edit:
@@ -163,8 +163,10 @@ exercise:
         subtitle: Bewerk de informatie van je oefening
         title: Oefening bewerken
     flash:
+        archived: Oefening gearchiveerd — verschijnt niet meer in je bibliotheek, maar je trainingsgeschiedenis blijft bewaard.
         created: Oefening succesvol aangemaakt.
         deleted: Oefening succesvol verwijderd.
+        restored: Oefening succesvol hersteld.
         updated: Oefening succesvol gewijzigd.
     form:
         description_placeholder: Beschrijf de technische punten, houding, fouten om te vermijden…
@@ -186,7 +188,9 @@ exercise:
         actions:
             delete: Verwijderen
             edit: Bewerken
+            restore: Herstellen
         badge:
+            archived: Gearchiveerd
             base: Standaard
             mine: Mijn oefening
         create_btn: Oefening aanmaken
@@ -195,6 +199,7 @@ exercise:
             subtitle: Wijzig je zoekopdracht of reset de filters.
             title: Geen oefening gevonden
         filter:
+            archived: Gearchiveerd
             base: Standaard
             count: >-
                 {count, plural,
@@ -220,6 +225,8 @@ exercise:
             }
         title: Bibliotheek
 
+    restore:
+        error_text: Er is een fout opgetreden bij het herstellen. Probeer het opnieuw.
 footer:
     copyright: "© {year} {brand}. Alle rechten voorbehouden."
 
