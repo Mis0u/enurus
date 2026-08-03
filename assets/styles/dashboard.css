@@ -6,18 +6,21 @@ html, body { overflow: hidden; font-family: 'DM Sans', sans-serif; }
     min-width 0.25s cubic-bezier(0.4,0,0.2,1);
 }
 .sidebar.collapsed { width: 68px; min-width: 68px; }
-.sidebar.collapsed .logo-text,
 .sidebar.collapsed .nav-label,
 .sidebar.collapsed .nav-badge,
 .sidebar.collapsed .sidebar-bottom-label { opacity: 0; pointer-events: none; }
 .sidebar.collapsed .sidebar-toggle { transform: rotate(180deg); }
 
-/* ---- Gradient texts (non supporté en classes Tailwind) ---- */
-/* Le dégradé lui-même vient de .brand-gradient-text (assets/styles/app.css) — cette classe
-   n'ajoute que le comportement propre à la sidebar (fade au collapse). */
-.logo-text {
+/* ---- Logo sidebar : lockup horizontal étendu <-> icône seule repliée ---- */
+/* logo.png (icône carrée) n'a pas de contenu textuel, contrairement à enurus_logo_horizontal.png
+   (lockup complet) — on fait un fondu croisé entre les deux plutôt que de figer une seule image,
+   pour garder un logo lisible en mode replié (68px). */
+.logo-collapsed, .logo-expanded {
     transition: opacity 0.25s cubic-bezier(0.4,0,0.2,1);
 }
+.logo-collapsed { opacity: 0; pointer-events: none; }
+.sidebar.collapsed .logo-collapsed { opacity: 1; pointer-events: auto; }
+.sidebar.collapsed .logo-expanded { opacity: 0; pointer-events: none; }
 .hero-title span {
     background: linear-gradient(90deg, #f43f5e, #fb7185);
     -webkit-background-clip: text;
