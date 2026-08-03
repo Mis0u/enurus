@@ -154,6 +154,30 @@ class RegistrationControllerTest extends WebTestCase
         self::assertStringContainsString($email, $message->body);
     }
 
+    public function testDuplicateEmailShowsTranslatedErrorInFrench(): void
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request(Request::METHOD_GET, '/fr/inscription');
+        $buttonCrawlerNode = $crawler->selectButton('Créer mon compte');
+        $form = $buttonCrawlerNode->form();
+
+        $client->submit($form, [
+            'registration_form[gender]' => 'male',
+            'registration_form[nickname]' => 'Toto',
+            'registration_form[email]' => 'user-fixture-0@test.com',
+            'registration_form[plainPassword]' => self::PASSWORD,
+            'registration_form[website]' => null,
+        ]);
+
+        $this->assertResponseStatusCodeSame(422);
+        $this->assertSelectorTextContains(
+            'body',
+            'Il existe déjà un compte avec cet email.',
+            'Le message de doublon email doit être traduit dans la locale courante, pas en anglais.'
+        );
+    }
+
     public function testRedirectToDashboardIfUserIsAuthenticated(): void
     {
         $client = static::createClient();

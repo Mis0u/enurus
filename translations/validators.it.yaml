@@ -19,6 +19,7 @@ settings:
         too_large: Il file supera la dimensione massima consentita di {{ limit }} MB
 
 user:
+    email_exists: Esiste già un account con questa email.
     nickname:
         length:
             max: Il tuo alias è troppo lungo. Deve avere al massimo {{ limit }} caratteri
