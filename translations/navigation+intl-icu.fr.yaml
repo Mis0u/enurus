@@ -399,7 +399,7 @@ settings:
         title: Compte bloqué
     account_deletion:
         cancelled:
-            body: Bonjour {nickname}, tu tes reconnecté à ton compte. Ta demande de suppression a donc été automatiquement annulée, et ton compte reste actif normalement.
+            body: Bonjour {nickname}, tu t'es reconnecté à ton compte. Ta demande de suppression a donc été automatiquement annulée, et ton compte reste actif normalement.
             subject: Ta suppression de compte a été annulée
             title: Bon retour parmi nous !
         deleted:
@@ -408,7 +408,7 @@ settings:
             title: Compte supprimé
         requested:
             body: Bonjour {nickname}, ta demande de suppression de compte a bien été prise en compte. Ton compte sera définitivement supprimé le {deadline} si tu ne te reconnectes pas avant cette date.
-            cancel_hint: Pour annuler cette suppression, il te suffit de te reconnecter avant cette date — aucune autre action nécessaire.
+            cancel_hint: Pour annuler cette suppression, il te suffit de te reconnecter avant cette date.
             subject: Ta demande de suppression de compte a été enregistrée
             title: Suppression de compte en cours
     account_unblocked:

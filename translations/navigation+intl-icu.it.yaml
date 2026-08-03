@@ -408,7 +408,7 @@ settings:
             title: Account eliminato
         requested:
             body: Ciao {nickname}, la tua richiesta di eliminazione dell'account è stata presa in carico. Il tuo account verrà eliminato definitivamente il {deadline} se non effettui l'accesso prima di quella data.
-            cancel_hint: Per annullare questa eliminazione, ti basta accedere nuovamente prima di quella data — nessun'altra azione necessaria.
+            cancel_hint: Per annullare questa eliminazione, ti basta accedere nuovamente prima di quella data.
             subject: La tua richiesta di eliminazione dell'account è stata registrata
             title: Eliminazione dell'account in corso
     account_unblocked:

@@ -408,7 +408,7 @@ settings:
             title: Konto gelöscht
         requested:
             body: Hallo {nickname}, deine Anfrage zur Kontolöschung wurde registriert. Dein Konto wird am {deadline} endgültig gelöscht, wenn du dich nicht vorher erneut anmeldest.
-            cancel_hint: Um diese Löschung abzubrechen, melde dich einfach vor diesem Datum erneut an — keine weitere Aktion erforderlich.
+            cancel_hint: Um diese Löschung abzubrechen, melde dich einfach vor diesem Datum erneut an.
             subject: Deine Anfrage zur Kontolöschung wurde registriert
             title: Kontolöschung in Bearbeitung
     account_unblocked:

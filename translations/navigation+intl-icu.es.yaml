@@ -408,7 +408,7 @@ settings:
             title: Cuenta eliminada
         requested:
             body: Hola {nickname}, tu solicitud de eliminación de cuenta ha sido registrada. Tu cuenta será eliminada definitivamente el {deadline} si no vuelves a iniciar sesión antes de esa fecha.
-            cancel_hint: Para cancelar esta eliminación, simplemente vuelve a iniciar sesión antes de esa fecha — ninguna otra acción necesaria.
+            cancel_hint: Para cancelar esta eliminación, simplemente vuelve a iniciar sesión antes de esa fecha.
             subject: Tu solicitud de eliminación de cuenta ha sido registrada
             title: Eliminación de cuenta en curso
     account_unblocked:

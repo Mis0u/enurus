@@ -418,7 +418,7 @@ settings:
             title: Konto usunięte
         requested:
             body: Cześć {nickname}, Twoja prośba o usunięcie konta została zarejestrowana. Twoje konto zostanie trwale usunięte {deadline}, jeśli nie zalogujesz się ponownie przed tą datą.
-            cancel_hint: Aby anulować to usunięcie, po prostu zaloguj się ponownie przed tą datą — żadne inne działanie nie jest wymagane.
+            cancel_hint: Aby anulować to usunięcie, po prostu zaloguj się ponownie przed tą datą.
             subject: Twoja prośba o usunięcie konta została zarejestrowana
             title: Usuwanie konta w toku
     account_unblocked:

@@ -408,7 +408,7 @@ settings:
             title: Account verwijderd
         requested:
             body: Hallo {nickname}, je verzoek tot accountverwijdering is geregistreerd. Je account wordt definitief verwijderd op {deadline} als je niet opnieuw inlogt voor die datum.
-            cancel_hint: Om deze verwijdering te annuleren, log je gewoon opnieuw in voor die datum — geen verdere actie nodig.
+            cancel_hint: Om deze verwijdering te annuleren, log je gewoon opnieuw in voor die datum.
             subject: Je verzoek tot accountverwijdering is geregistreerd
             title: Accountverwijdering in behandeling
     account_unblocked:
