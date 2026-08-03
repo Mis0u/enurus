@@ -96,7 +96,7 @@
                 data-exercise--delete-csrf-token-value="{{ csrf_token('exercise_delete_' ~ exercise.id) }}"
                 data-exercise--delete-name-value="{{ exercise_name }}"
                 data-exercise--delete-confirm-title-value="{{ 'exercise.delete.confirm_title'|trans({}, 'navigation') }}"
-                data-exercise--delete-confirm-text-value="{{ 'exercise.delete.confirm_text'|trans({'name': exercise_name}, 'navigation') }}"
+                data-exercise--delete-confirm-text-value="{{ 'exercise.delete.confirm_text'|trans({'name': exercise_name, 'gender': app.user.gender.value}, 'navigation') }}"
                 data-exercise--delete-confirm-button-value="{{ 'exercise.delete.confirm_button'|trans({}, 'navigation') }}"
                 data-exercise--delete-cancel-button-value="{{ 'exercise.delete.cancel_button'|trans({}, 'navigation') }}"
                 data-exercise--delete-error-text-value="{{ 'exercise.delete.error_text'|trans({}, 'navigation') }}"

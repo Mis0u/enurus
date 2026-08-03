@@ -29,7 +29,7 @@
 
 {% block footer %}
     <p style="margin: 0 0 8px; font-size: 12px; color: #475569;">
-        {{ 'registration.email.receive_email'|trans({'brand': brand_name}, 'navigation', locale) }}
+        {{ 'registration.email.receive_email'|trans({'brand': brand_name, 'gender': user.gender.value}, 'navigation', locale) }}
     </p>
     <p style="margin: 0; font-size: 12px; color: #475569;">
         {{ 'footer.copyright'|trans({'year': "now"|date("Y"), 'brand': brand_name}, 'navigation', locale) }}

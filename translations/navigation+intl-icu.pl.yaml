@@ -294,7 +294,7 @@ registration:
         click_activate: Jesteś o jedno kliknięcie od rozpoczęcia swojej transformacji! Kliknij przycisk poniżej, aby aktywować swoje konto.
         info_link_life: Ten link wygasa za {hour}
         not_created_account: Jeśli nie zakładałeś konta w {brand}, po prostu zignoruj tę wiadomość.
-        receive_email: Otrzymujesz tego e-maila, ponieważ zarejestrowałeś się na {brand}
+        receive_email: Otrzymujesz tego e-maila, ponieważ {gender, select, female {zarejestrowałaś} other {zarejestrowałeś}} się na {brand}
         registration_confirm: Potwierdź rejestrację w {brand}
         welcome: Witaj na {brand}! Twój pierwszy trening na Ciebie czeka
     email_sent_to: "Email potwierdzający został wysłany na adres {email}."

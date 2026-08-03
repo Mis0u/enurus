@@ -155,7 +155,7 @@ exercise:
     delete:
         cancel_button: Annuler
         confirm_button: Supprimer
-        confirm_text: Es-tu sûr de vouloir supprimer « {name} » ? S'il est utilisé dans des séances passées, il sera archivé (retiré de ta bibliothèque, historique conservé) plutôt que supprimé.
+        confirm_text: "{gender, select, female {Es-tu sûre} other {Es-tu sûr}} de vouloir supprimer « {name} » ? S'il est utilisé dans des séances passées, il sera archivé (retiré de ta bibliothèque, historique conservé) plutôt que supprimé."
         confirm_title: Supprimer l'exercice
         error_text: Une erreur est survenue lors de la suppression. Veuillez réessayer.
     edit:
@@ -247,7 +247,7 @@ messagerie:
     delete:
         cancel_button: Annuler
         confirm_button: Supprimer
-        confirm_text: "Es-tu sûr de vouloir supprimer ce fil de discussion ? Cette action est irréversible et ne concerne que ta messagerie."
+        confirm_text: "{gender, select, female {Es-tu sûre} other {Es-tu sûr}} de vouloir supprimer ce fil de discussion ? Cette action est irréversible et ne concerne que ta messagerie."
         confirm_title: Supprimer le fil de discussion
         error_text: "Une erreur est survenue lors de la suppression. Veuillez réessayer."
         success: Le fil de discussion a été supprimé de ta messagerie.
@@ -290,7 +290,7 @@ registration:
         click_activate: Vous êtes à un clic de commencer votre transformation ! Cliquez sur le bouton ci-dessous pour activer votre compte.
         info_link_life: Ce lien expire dans {hour}
         not_created_account: Si vous n'avez pas créé de compte sur {brand}, ignorez simplement cet email.
-        receive_email: Tu reçois cet email car tu t'es inscrit sur {brand}
+        receive_email: Tu reçois cet email car tu t'es {gender, select, female {inscrite} other {inscrit}} sur {brand}
         registration_confirm: Confirmez votre inscription {brand}
         welcome: Bienvenue sur {brand} ! Ta première séance t'attend
     email_sent_to: "Un email de confirmation a été envoyé à {email}."
@@ -335,7 +335,7 @@ routine:
     delete:
         cancel_button: Annuler
         confirm_button: Supprimer
-        confirm_text: Es-tu sûr de vouloir supprimer {name} ? Cette action est irréversible. Les séances utilisant cette routine deviendront des séances libres.
+        confirm_text: "{gender, select, female {Es-tu sûre} other {Es-tu sûr}} de vouloir supprimer {name} ? Cette action est irréversible. Les séances utilisant cette routine deviendront des séances libres."
         confirm_title: Supprimer la routine
         error_text: Une erreur est survenue lors de la suppression.
     edit:
@@ -427,7 +427,7 @@ settings:
             confirm: Supprimer définitivement
             mismatch: L'alias ne correspond pas
             placeholder: Ton alias
-            title: Es-tu sûr ?
+            title: "{gender, select, female {Es-tu sûre ?} other {Es-tu sûr ?}}"
         request_error: Une erreur est survenue, réessaie plus tard
         title: Suppression du compte
     email:
@@ -514,7 +514,7 @@ workout:
             cancel: Annuler
             confirm: Supprimer
             error_text: Une erreur est survenue lors de la suppression. Veuillez réessayer.
-            message: Es-tu sûr de vouloir supprimer cette séance ? Cette action est irréversible.
+            message: "{gender, select, female {Es-tu sûre} other {Es-tu sûr}} de vouloir supprimer cette séance ? Cette action est irréversible."
             title: Supprimer cette séance ?
         duration_unit: min
         edit: Modifier la séance

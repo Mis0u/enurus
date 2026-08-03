@@ -155,7 +155,7 @@ exercise:
     delete:
         cancel_button: Annulla
         confirm_button: Elimina
-        confirm_text: Sei sicuro di voler eliminare « {name} »? Se è utilizzato in allenamenti passati, verrà archiviato (rimosso dalla tua biblioteca, cronologia conservata) anziché eliminato.
+        confirm_text: "{gender, select, female {Sei sicura} other {Sei sicuro}} di voler eliminare « {name} »? Se è utilizzato in allenamenti passati, verrà archiviato (rimosso dalla tua biblioteca, cronologia conservata) anziché eliminato."
         confirm_title: Elimina l'esercizio
         error_text: Si è verificato un errore durante l'eliminazione. Riprova.
     edit:
@@ -247,7 +247,7 @@ messagerie:
     delete:
         cancel_button: Annulla
         confirm_button: Elimina
-        confirm_text: "Sei sicuro di voler eliminare questa conversazione? Questa azione è irreversibile e riguarda solo la tua messaggistica."
+        confirm_text: "{gender, select, female {Sei sicura} other {Sei sicuro}} di voler eliminare questa conversazione? Questa azione è irreversibile e riguarda solo la tua messaggistica."
         confirm_title: Elimina la conversazione
         error_text: "Si è verificato un errore durante l'eliminazione. Riprova."
         success: La conversazione è stata eliminata dalla tua messaggistica.
@@ -290,7 +290,7 @@ registration:
         click_activate: Sei a un clic dall'iniziare la tua trasformazione! Clicca il pulsante qui sotto per attivare il tuo account.
         info_link_life: Questo link scade tra {hour}
         not_created_account: Se non hai creato un account su {brand}, ignora semplicemente questa email.
-        receive_email: Ricevi questa email perché ti sei iscritto su {brand}
+        receive_email: Ricevi questa email perché ti sei {gender, select, female {iscritta} other {iscritto}} su {brand}
         registration_confirm: Conferma la tua iscrizione {brand}
         welcome: Benvenuto su {brand}! Il tuo primo allenamento ti aspetta
     email_sent_to: "Un'email di conferma è stata inviata a {email}."
@@ -335,7 +335,7 @@ routine:
     delete:
         cancel_button: Annulla
         confirm_button: Elimina
-        confirm_text: Sei sicuro di voler eliminare {name}? Questa azione è irreversibile. Gli allenamenti che usano questa routine diventeranno sessioni libere.
+        confirm_text: "{gender, select, female {Sei sicura} other {Sei sicuro}} di voler eliminare {name}? Questa azione è irreversibile. Gli allenamenti che usano questa routine diventeranno sessioni libere."
         confirm_title: Elimina la routine
         error_text: Si è verificato un errore durante l'eliminazione.
     edit:
@@ -427,7 +427,7 @@ settings:
             confirm: Elimina definitivamente
             mismatch: L'alias non corrisponde
             placeholder: Il tuo alias
-            title: Sei sicuro?
+            title: "{gender, select, female {Sei sicura?} other {Sei sicuro?}}"
         request_error: Si è verificato un errore, riprova più tardi
         title: Eliminazione dell'account
     email:
@@ -514,7 +514,7 @@ workout:
             cancel: Annulla
             confirm: Elimina
             error_text: Si è verificato un errore durante l'eliminazione. Riprova.
-            message: Sei sicuro di voler eliminare questo allenamento? Questa azione è irreversibile.
+            message: "{gender, select, female {Sei sicura} other {Sei sicuro}} di voler eliminare questo allenamento? Questa azione è irreversibile."
             title: Eliminare questo allenamento?
         duration_unit: min
         edit: Modifica allenamento

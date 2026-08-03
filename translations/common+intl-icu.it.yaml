@@ -68,9 +68,9 @@ sentence:
             special_char: "Almeno uno dei seguenti caratteri speciali ! ? % $ * & # @ _ -"
             upper_lower: Una maiuscola e una minuscola
             valid_new_password: Conferma la nuova password
-    ready: Pronto a iniziare?
-    ready_to_start: Pronto a iniziare? I tuoi progressi partono da qui
-    ready_to_transform: Pronto a trasformarti?
+    ready: "{gender, select, female {Pronta a iniziare?} other {Pronto a iniziare?}}"
+    ready_to_start: "{gender, select, female {Pronta a iniziare? I tuoi progressi partono da qui} other {Pronto a iniziare? I tuoi progressi partono da qui}}"
+    ready_to_transform: "{gender, select, female {Pronta a trasformarti?} other {Pronto a trasformarti?}}"
     see_datas: Visualizza il tuo tonnellaggio, i tuoi record e la tua evoluzione
     see_working_muscles: Scopri esattamente quali muscoli stai allenando
     welcome: Benvenuto nella tua avventura fitness!
