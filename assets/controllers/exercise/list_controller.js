@@ -146,6 +146,11 @@ export default class extends Controller {
         const search = normalizeForSearch(this.searchInputTarget.value.trim());
 
         return this.cardTargets.filter(card => {
+            // Les exercices archivés ne sont jamais visibles hors du filtre dédié — ils ne
+            // doivent pas polluer la vue par défaut ni les autres filtres (custom/officiel).
+            if (card.dataset.type === 'archived' && this.#activeFilter !== 'archived') {
+                return false;
+            }
             if (this.#activeFilter && card.dataset.type !== this.#activeFilter) {
                 return false;
             }

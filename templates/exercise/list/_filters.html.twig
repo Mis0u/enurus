@@ -17,7 +17,7 @@
     </div>
 
     {# Boutons de filtrage par type #}
-    <div class="flex gap-1.5">
+    <div class="flex flex-wrap gap-1.5">
         <button
             type="button"
             class="exercise-filter-btn"
@@ -44,6 +44,18 @@
         >
             {% include 'partials/_svg/_profile.html.twig' with {'width': 3.5, 'height': 3.5, 'ariaHidden': true} only %}
             {{ 'exercise.list.filter.mine'|trans({}, 'navigation') }}
+        </button>
+
+        <button
+            type="button"
+            class="exercise-filter-btn"
+            id="filterArchived"
+            data-filter-type="archived"
+            data-exercise--list-target="filterBtn"
+            data-action="click->exercise--list#toggleFilter"
+            aria-pressed="false"
+        >
+            {{ 'exercise.list.filter.archived'|trans({}, 'navigation') }}
         </button>
     </div>
 

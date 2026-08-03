@@ -62,6 +62,21 @@ class Exercise
         }
     }
 
+    /**
+     * Un exercice archivé n'apparaît plus dans la bibliothèque ni les sélecteurs (nouvelle routine/
+     * séance), mais reste résolvable pour l'historique existant (WorkoutExercise/RoutineExercise) —
+     * cf. ExerciseDeletionService.
+     */
+    #[ORM\Column]
+    public bool $archived = false {
+        get {
+            return $this->archived;
+        }
+        set(bool $archived) {
+            $this->archived = $archived;
+        }
+    }
+
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: true)]
     public ?User $owner = null {

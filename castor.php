@@ -159,6 +159,16 @@ function qa(): void
     io()->success('✨ All checks passed! Ready to commit.');
 }
 
+#[AsTask(description: 'Run qa, e2e tests, reset the test DB, then mutation testing — full pre-push suite')]
+function prePush(): void
+{
+    qa();
+    testE2e();
+    resetDB(test: true);
+    infection();
+    io()->success('🚀 Full pre-push suite passed!');
+}
+
 // ============================================
 // DB
 // ============================================

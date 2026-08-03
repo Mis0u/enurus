@@ -38,15 +38,17 @@ export async function confirmDeletion(options) {
 }
 
 /**
- * Envoie la requête DELETE avec le header XHR attendu par les controllers de suppression back-end,
- * et le header CSRF si un token est fourni. N'échoue jamais silencieusement côté appelant : une
- * erreur réseau ou une réponse HTTP non-ok retourne simplement `{ ok: false }`.
+ * Envoie une requête mutative avec le header XHR attendu par les controllers back-end protégés par
+ * `ValidatesDeleteRequestTrait`, et le header CSRF si un token est fourni. N'échoue jamais
+ * silencieusement côté appelant : une erreur réseau ou une réponse HTTP non-ok retourne simplement
+ * `{ ok: false }`.
  *
  * @param {string} url
+ * @param {string} method
  * @param {string} [csrfToken]
  * @returns {Promise<{ok: boolean, data?: any}>}
  */
-export async function sendDeleteRequest(url, csrfToken) {
+export async function sendActionRequest(url, method, csrfToken) {
     const headers = { 'X-Requested-With': 'XMLHttpRequest' };
 
     if (csrfToken) {
@@ -54,7 +56,7 @@ export async function sendDeleteRequest(url, csrfToken) {
     }
 
     try {
-        const response = await fetch(url, { method: 'DELETE', headers });
+        const response = await fetch(url, { method, headers });
 
         if (!response.ok) {
             return { ok: false };
@@ -66,6 +68,15 @@ export async function sendDeleteRequest(url, csrfToken) {
     } catch {
         return { ok: false };
     }
+}
+
+/**
+ * @param {string} url
+ * @param {string} [csrfToken]
+ * @returns {Promise<{ok: boolean, data?: any}>}
+ */
+export async function sendDeleteRequest(url, csrfToken) {
+    return sendActionRequest(url, 'DELETE', csrfToken);
 }
 
 /**

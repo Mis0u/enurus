@@ -37,7 +37,8 @@ class ExerciseRepository extends ServiceEntityRepository
     }
 
     /**
-     * Returns all custom exercises created by a specific user.
+     * Returns all custom exercises created by a specific user (archived excluded — cf.
+     * ExerciseDeletionService).
      *
      * @return list<Exercise>
      */
@@ -47,15 +48,18 @@ class ExerciseRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->where('e.isPublic = :public')
             ->andWhere('e.owner = :owner')
+            ->andWhere('e.archived = :archived')
             ->setParameter('public', false)
             ->setParameter('owner', $user)
+            ->setParameter('archived', false)
             ->getQuery()
             ->getResult();
     }
 
     /**
-     * Returns all exercises available for a user:
-     * public exercises + the user's own custom exercises.
+     * Returns all exercises available for a user (public exercises + the user's own custom
+     * exercises), archived exercises excluded — they're no longer offered for new use, cf.
+     * ExerciseDeletionService.
      *
      * @return list<Exercise>
      */
@@ -67,10 +71,33 @@ class ExerciseRepository extends ServiceEntityRepository
             ->addSelect('em')
             ->leftJoin('em.muscleGroup', 'mg')
             ->addSelect('mg')
-            ->where('e.isPublic = :public')
-            ->orWhere('e.owner = :owner')
+            ->where('(e.isPublic = :public OR e.owner = :owner)')
+            ->andWhere('e.archived = :archived')
             ->setParameter('public', true)
             ->setParameter('owner', $user)
+            ->setParameter('archived', false)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Returns the user's archived custom exercises — only shown in the dedicated "Archivés"
+     * filter of the library, never in the pickers.
+     *
+     * @return list<Exercise>
+     */
+    public function findArchivedByUser(User $user): array
+    {
+        /** @var list<Exercise> */
+        return $this->createQueryBuilder('e')
+            ->leftJoin('e.exerciseMuscles', 'em')
+            ->addSelect('em')
+            ->leftJoin('em.muscleGroup', 'mg')
+            ->addSelect('mg')
+            ->where('e.owner = :owner')
+            ->andWhere('e.archived = :archived')
+            ->setParameter('owner', $user)
+            ->setParameter('archived', true)
             ->getQuery()
             ->getResult();
     }

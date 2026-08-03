@@ -6,7 +6,10 @@ import { showSuccessToast } from '../../utils/toast.js';
  * Exercise delete controller.
  *
  * Displays a SweetAlert2 confirmation, then sends a DELETE XHR request.
- * On success, removes the exercise card from the DOM.
+ * On success, removes the exercise card from the DOM — unless the exercise was archived rather
+ * than deleted (still used in a past workout), in which case the page is reloaded so the card
+ * re-renders in its archived state (badge + restore action), immediately reachable via the
+ * "Archivés" filter.
  *
  * File: assets/controllers/exercise/delete_controller.js
  * Stimulus name: exercise--delete
@@ -65,6 +68,12 @@ export default class extends Controller {
         }
 
         showSuccessToast(data.message);
+
+        if (data.archived) {
+            setTimeout(() => window.location.reload(), 1200);
+            return;
+        }
+
         this.#removeCard();
     }
 

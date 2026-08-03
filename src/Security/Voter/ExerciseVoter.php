@@ -21,10 +21,13 @@ final class ExerciseVoter extends Voter
 
     public const string DELETE = 'EXERCISE_DELETE';
 
+    public const string RESTORE = 'EXERCISE_RESTORE';
+
     private const array SUPPORTED_ATTRIBUTES = [
         self::CREATE,
         self::EDIT,
         self::DELETE,
+        self::RESTORE,
     ];
 
     protected function supports(string $attribute, mixed $subject): bool
@@ -50,7 +53,7 @@ final class ExerciseVoter extends Voter
 
         return match ($attribute) {
             self::CREATE => true,
-            self::EDIT, self::DELETE => $subject instanceof Exercise && $subject->owner === $user,
+            self::EDIT, self::DELETE, self::RESTORE => $subject instanceof Exercise && $subject->owner === $user,
             default => false,
         };
     }

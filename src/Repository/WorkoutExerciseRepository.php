@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Entity\Exercise;
 use App\Entity\ExerciseSet;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
@@ -54,6 +55,16 @@ final class WorkoutExerciseRepository extends ServiceEntityRepository
         }
 
         return $result;
+    }
+
+    public function countByExercise(Exercise $exercise): int
+    {
+        return (int) $this->createQueryBuilder('we')
+            ->select('COUNT(we.id)')
+            ->where('we.exercise = :exercise')
+            ->setParameter('exercise', $exercise)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     /**

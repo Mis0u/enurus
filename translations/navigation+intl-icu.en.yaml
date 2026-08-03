@@ -155,7 +155,7 @@ exercise:
     delete:
         cancel_button: Cancel
         confirm_button: Delete
-        confirm_text: Are you sure you want to delete "{name}"? This action is irreversible.
+        confirm_text: Are you sure you want to delete "{name}"? If it's used in past workouts, it will be archived (removed from your library, history kept) instead of deleted.
         confirm_title: Delete exercise
         error_text: An error occurred while deleting. Please try again.
     edit:
@@ -163,8 +163,10 @@ exercise:
         subtitle: Edit your exercise information
         title: Edit exercise
     flash:
+        archived: Exercise archived — it no longer appears in your library, but your workout history is kept.
         created: Exercise created successfully.
         deleted: Exercise deleted successfully.
+        restored: Exercise restored successfully.
         updated: Exercise updated successfully.
     form:
         description_placeholder: Describe the key points, posture, mistakes to avoid…
@@ -186,7 +188,9 @@ exercise:
         actions:
             delete: Delete
             edit: Edit
+            restore: Restore
         badge:
+            archived: Archived
             base: Default
             mine: My exercise
         create_btn: Create an exercise
@@ -195,6 +199,7 @@ exercise:
             subtitle: Change your search or reset the filters.
             title: No exercise found
         filter:
+            archived: Archived
             base: Default
             count: >-
                 {count, plural,
@@ -220,6 +225,8 @@ exercise:
             }
         title: Library
 
+    restore:
+        error_text: An error occurred while restoring. Please try again.
 footer:
     copyright: "© {year} {brand}. All rights reserved."
 

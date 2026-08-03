@@ -18,6 +18,8 @@ async function buildDom(cardsHtml) {
                     data-action="click->exercise--list#toggleFilter"></button>
             <button data-exercise--list-target="filterBtn" data-filter-type="back"
                     data-action="click->exercise--list#toggleFilter"></button>
+            <button data-exercise--list-target="filterBtn" data-filter-type="archived"
+                    data-action="click->exercise--list#toggleFilter"></button>
             <button data-exercise--list-target="resetBtn" data-action="click->exercise--list#resetFilters"></button>
 
             <span data-exercise--list-target="counter">
@@ -116,6 +118,22 @@ describe('exercise--list controller', () => {
         chestBtn.click();
         expect(visibleCardIds()).toEqual(['c1', 'c2']);
         expect(chestBtn.classList.contains('is-active')).toBe(false);
+    });
+
+    it('never shows archived cards unless the archived filter is explicitly active', async () => {
+        await buildDom([
+            card('c1', { name: 'squat', type: 'legs' }),
+            card('c2', { name: 'old bench press', type: 'archived' }),
+        ].join(''));
+
+        expect(visibleCardIds()).toEqual(['c1']);
+
+        document.querySelector('[data-filter-type="chest"]').click();
+        expect(visibleCardIds()).toEqual([]);
+
+        document.querySelector('[data-filter-type="chest"]').click();
+        document.querySelector('[data-filter-type="archived"]').click();
+        expect(visibleCardIds()).toEqual(['c2']);
     });
 
     it('resetFilters clears both the search input and the active type filter', async () => {

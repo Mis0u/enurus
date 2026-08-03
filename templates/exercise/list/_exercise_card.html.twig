@@ -1,10 +1,11 @@
 {% set is_custom = not exercise.isPublic %}
 {% set exercise_name = is_custom ? exercise.name : exercise.name|trans({}, 'exercise')
 %}
+{% set card_type = exercise.archived ? 'archived' : (is_custom ? 'custom' : 'official') %}
 
 <div
     class="exercise-list-card {{ is_custom ? 'exercise-list-card--custom' : 'exercise-list-card--official' }}"
-    data-type="{{ is_custom ? 'custom' : 'official' }}"
+    data-type="{{ card_type }}"
     data-name="{{ exercise_name|lower }}"
     data-exercise--list-target="card"
 >
@@ -14,7 +15,12 @@
             {{ exercise_name }}
         </span>
 
-        {% if is_custom %}
+        {% if exercise.archived %}
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium whitespace-nowrap
+                         bg-white/[0.06] border border-white/[0.15] text-slate-400">
+                {{ 'exercise.list.badge.archived'|trans({}, 'navigation') }}
+            </span>
+        {% elseif is_custom %}
             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium whitespace-nowrap
                          bg-rose-500/[0.12] border border-rose-500/[0.3] text-rose-400">
                 {% include 'partials/_svg/_profile.html.twig' with {'width': 2.5, 'height': 2.5, 'ariaHidden': true} only %}
@@ -54,7 +60,26 @@
     {% endif %}
 
     {# Actions — custom uniquement #}
-    {% if is_custom %}
+    {% if exercise.archived %}
+        <div class="flex items-center gap-2 mt-3.5 pt-3 pl-2.5 border-t border-white/[0.07]">
+            <div
+                data-controller="exercise--restore"
+                data-exercise--restore-url-value="{{ path('app_exercise_restore', {id: exercise.id}) }}"
+                data-exercise--restore-csrf-token-value="{{ csrf_token('exercise_restore_' ~ exercise.id) }}"
+                data-exercise--restore-error-text-value="{{ 'exercise.restore.error_text'|trans({}, 'navigation') }}"
+            >
+                <button
+                    type="button"
+                    class="exercise-action-btn exercise-action-btn--edit"
+                    title="{{ 'exercise.list.actions.restore'|trans({}, 'navigation') }}"
+                    aria-label="{{ 'exercise.list.actions.restore'|trans({}, 'navigation') }} {{ exercise_name }}"
+                    data-action="click->exercise--restore#confirmRestore"
+                >
+                    {% include 'partials/_svg/_add.html.twig' with {'width': 3.75, 'height': 3.75, 'ariaHidden': true} only %}
+                </button>
+            </div>
+        </div>
+    {% elseif is_custom %}
         <div class="flex items-center gap-2 mt-3.5 pt-3 pl-2.5 border-t border-white/[0.07]">
             <a
                 href="{{ path('app_exercise_edit', {id: exercise.id}) }}"
