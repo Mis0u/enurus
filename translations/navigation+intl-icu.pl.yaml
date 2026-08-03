@@ -332,7 +332,7 @@ routine:
     delete:
         cancel_button: Anuluj
         confirm_button: Usuń
-        confirm_text: Czy na pewno chcesz usunąć {name}? Tej akcji nie można cofnąć.
+        confirm_text: Czy na pewno chcesz usunąć {name}? Tej akcji nie można cofnąć. Treningi korzystające z tej rutyny staną się sesjami dowolnymi.
         confirm_title: Usuń rutynę
         error_text: Wystąpił błąd podczas usuwania.
     edit:

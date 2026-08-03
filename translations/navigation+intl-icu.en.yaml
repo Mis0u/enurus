@@ -328,7 +328,7 @@ routine:
     delete:
         cancel_button: Cancel
         confirm_button: Delete
-        confirm_text: Are you sure you want to delete {name}? This action is irreversible.
+        confirm_text: Are you sure you want to delete {name}? This action is irreversible. Workouts using this routine will become free sessions.
         confirm_title: Delete routine
         error_text: An error occurred while deleting.
     edit:

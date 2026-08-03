@@ -6,10 +6,13 @@ namespace App\Tests\Functional\Security\Routine;
 
 use App\DataFixtures\UserFixtures;
 use App\Entity\Routine;
+use App\Entity\Workout;
 use App\Repository\RoutineExerciseRepository;
 use App\Repository\RoutineRepository;
 use App\Repository\UserRepository;
+use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -142,6 +145,42 @@ final class RoutineDeleteControllerTest extends WebTestCase
         $content = json_decode((string) $client->getResponse()->getContent(), true);
         self::assertIsArray($content);
         self::assertTrue($content['success']);
+    }
+
+    public function testWorkoutUsingRoutineBecomesFreeSessionAfterDeletion(): void
+    {
+        $client = $this->login(self::OWNER);
+        $routine = $this->getOwnerRoutine();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+
+        /** @var UserRepository $userRepo */
+        $userRepo = static::getContainer()->get(UserRepository::class);
+        $owner = $userRepo->findOneBy([
+            'email' => self::OWNER,
+        ]);
+        self::assertNotNull($owner);
+
+        $workout = new Workout();
+        $workout->owner = $owner;
+        $workout->routine = $routine;
+        $em->persist($workout);
+        $em->flush();
+        $workoutId = $workout->id;
+
+        $this->sendDeleteRequest($client, $routine);
+
+        self::assertResponseIsSuccessful();
+
+        $em->clear();
+
+        /** @var WorkoutRepository $workoutRepo */
+        $workoutRepo = static::getContainer()->get(WorkoutRepository::class);
+        $reloaded = $workoutRepo->find($workoutId);
+
+        self::assertNotNull($reloaded);
+        self::assertNull($reloaded->routine);
     }
 
     // -------------------------------------------------------------------------
