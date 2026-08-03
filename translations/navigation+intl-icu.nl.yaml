@@ -5,6 +5,12 @@ admin:
         reason: "Reden: {reason}"
         subject: Vertaling van uitzending mislukt
         title: Vertaling mislukt
+    new_thread_message:
+        category: "Categorie: {category}"
+        from: "Van: {email}"
+        link: "Bekijk gesprek → {url}"
+        subject: "Onderwerp: {subject}"
+        title: "📩 Nieuw bericht — Enurus"
     registration_milestone:
         body: "De site heeft zojuist zijn {count}e geregistreerde gebruiker bereikt."
         subject: "Mijlpaal van {count} registraties bereikt 🎉"

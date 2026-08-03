@@ -5,6 +5,12 @@ admin:
         reason: "Motivo: {reason}"
         subject: "Traduzione della diffusione non riuscita"
         title: "Traduzione non riuscita"
+    new_thread_message:
+        category: "Categoria: {category}"
+        from: "Da: {email}"
+        link: "Vedi discussione → {url}"
+        subject: "Oggetto: {subject}"
+        title: "📩 Nuovo messaggio — Enurus"
     registration_milestone:
         body: "Il sito ha appena raggiunto il suo {count}° utente registrato."
         subject: "Traguardo di {count} registrazioni raggiunto 🎉"

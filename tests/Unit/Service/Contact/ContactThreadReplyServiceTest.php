@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Enum\Contact\ContactCategoryEnum;
 use App\Enum\Contact\ContactThreadStatusEnum;
 use App\Service\Contact\ContactMessageBodySanitizerService;
+use App\Service\Contact\ContactThreadAdminNotifierService;
 use App\Service\Contact\ContactThreadReplyService;
 use App\Service\Utils\ImageUploadService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,7 +26,9 @@ final class ContactThreadReplyServiceTest extends TestCase
         $thread = $this->createThread($admin);
 
         $imageUploadService = $this->createStub(ImageUploadService::class);
-        $service = $this->service($imageUploadService);
+        $adminNotifier = $this->createMock(ContactThreadAdminNotifierService::class);
+        $adminNotifier->expects(self::never())->method('notifyNewMessage');
+        $service = $this->service($imageUploadService, $adminNotifier);
 
         $message = $service->reply($admin, $thread, '<script>alert(1)</script><p>Réponse</p>', null, fromAdmin: true);
 
@@ -41,7 +44,9 @@ final class ContactThreadReplyServiceTest extends TestCase
         $thread->status = ContactThreadStatusEnum::ANSWERED_BY_ADMIN;
 
         $imageUploadService = $this->createStub(ImageUploadService::class);
-        $service = $this->service($imageUploadService);
+        $adminNotifier = $this->createMock(ContactThreadAdminNotifierService::class);
+        $adminNotifier->expects(self::once())->method('notifyNewMessage')->with($thread, self::isInstanceOf(ContactThreadMessage::class));
+        $service = $this->service($imageUploadService, $adminNotifier);
 
         // Le body utilisateur n'est jamais assaini (texte brut échappé à l'affichage) : la balise
         // reste telle quelle en base, contrairement à une réponse admin.
@@ -86,12 +91,13 @@ final class ContactThreadReplyServiceTest extends TestCase
         self::assertCount(2, $thread->messages);
     }
 
-    private function service(ImageUploadService $imageUploadService): ContactThreadReplyService
+    private function service(ImageUploadService $imageUploadService, ?ContactThreadAdminNotifierService $adminNotifier = null): ContactThreadReplyService
     {
         return new ContactThreadReplyService(
             $this->createStub(EntityManagerInterface::class),
             $imageUploadService,
             new ContactMessageBodySanitizerService(),
+            $adminNotifier ?? $this->createStub(ContactThreadAdminNotifierService::class),
         );
     }
 

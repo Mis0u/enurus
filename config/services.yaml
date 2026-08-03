@@ -25,6 +25,10 @@ services:
         arguments:
             $adminEmail: '%env(ADMIN_USER_EMAIL)%'
 
+    App\Service\Contact\ContactThreadAdminNotifierService:
+        arguments:
+            $adminUserEmail: '%env(ADMIN_USER_EMAIL)%'
+
     App\Service\Security\DeletedAccountReregistrationNotifierService:
         arguments:
             $adminUserEmail: '%env(ADMIN_USER_EMAIL)%'
