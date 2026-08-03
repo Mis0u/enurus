@@ -51,9 +51,10 @@ final class WorkoutType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $isEdit = (bool) $options['is_edit'];
+        $workout = $builder->getData();
 
         $builder
-            ->add('performedAt', DateType::class, $this->performedAtOptions($isEdit))
+            ->add('performedAt', DateType::class, $this->performedAtOptions($isEdit, $isEdit && $workout instanceof Workout ? $workout : null))
             ->add('duration', IntegerType::class, $this->durationOptions())
             ->add('routine', EntityType::class, $this->routineOptions())
             ->add('workoutExercises', CollectionType::class, $this->workoutExercisesOptions())
@@ -74,7 +75,7 @@ final class WorkoutType extends AbstractType
     /**
      * @return array<string, mixed>
      */
-    private function performedAtOptions(bool $isEdit): array
+    private function performedAtOptions(bool $isEdit, ?Workout $workout): array
     {
         return [
             'widget' => 'single_text',
@@ -82,7 +83,7 @@ final class WorkoutType extends AbstractType
             'format' => 'yyyy-MM-dd',
             'input' => 'datetime_immutable',
             'label' => $this->translator->trans('workout.date', [], 'navigation'),
-            'attr' => $isEdit ? $this->performedAtEditAttr() : $this->performedAtCreateAttr(),
+            'attr' => $isEdit && null !== $workout ? $this->performedAtEditAttr($workout) : $this->performedAtCreateAttr(),
             'label_attr' => [
                 'class' => self::LABEL_CLASS,
             ],
@@ -104,11 +105,13 @@ final class WorkoutType extends AbstractType
     /**
      * @return array<string, mixed>
      */
-    private function performedAtEditAttr(): array
+    private function performedAtEditAttr(Workout $workout): array
     {
         return [
             ...$this->datePickerAttr(),
+            ...$this->dateDuplicateCheckAttr(),
             'class' => self::FIELD_CLASS,
+            'data-date-exclude-id-value' => (string) $workout->id,
         ];
     }
 
@@ -119,6 +122,20 @@ final class WorkoutType extends AbstractType
     {
         return [
             ...$this->datePickerAttr(),
+            ...$this->dateDuplicateCheckAttr(),
+        ];
+    }
+
+    /**
+     * Vérif doublon de date (controller `date`) — en édition, `data-date-exclude-id-value`
+     * (ajouté par `performedAtEditAttr()`) exclut la séance en cours d'édition du comptage, sinon
+     * sa propre date serait systématiquement signalée comme doublon.
+     *
+     * @return array<string, mixed>
+     */
+    private function dateDuplicateCheckAttr(): array
+    {
+        return [
             'data-controller' => 'date workout--date-picker',
             'data-date-check-url-value' => $this->urlGenerator->generate('workout_check_date'),
             'data-date-message-value' => $this->translator->trans('workout.check_date.message', [
@@ -130,8 +147,7 @@ final class WorkoutType extends AbstractType
 
     /**
      * Attributs communs création/édition du calendrier — la clé `data-controller` de ce tableau
-     * est écrasée par `performedAtCreateAttr()` pour y ajouter le controller `date` (vérif doublon,
-     * uniquement en création).
+     * est écrasée par `dateDuplicateCheckAttr()` pour y ajouter le controller `date`.
      *
      * @return array<string, mixed>
      */

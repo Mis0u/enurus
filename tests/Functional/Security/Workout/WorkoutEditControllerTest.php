@@ -127,6 +127,18 @@ class WorkoutEditControllerTest extends WebTestCase
         $this->assertSame('2025-01-15 00:00:00', $updated->performedAt->format('Y-m-d H:i:s'));
     }
 
+    public function testEditFormRendersDateDuplicateCheckExcludingCurrentWorkout(): void
+    {
+        $client = $this->login(self::USER);
+        $workout = $this->getFirstWorkout(self::USER);
+
+        $crawler = $client->request(Request::METHOD_GET, $this->getEditUrl($workout));
+        $dateInput = $crawler->filter('#workout_performedAt');
+
+        self::assertStringContainsString('date', (string) $dateInput->attr('data-controller'));
+        self::assertSame((string) $workout->id, $dateInput->attr('data-date-exclude-id-value'));
+    }
+
     // -------------------------------------------------------------------------
     // Suppression d'un set
     // -------------------------------------------------------------------------
