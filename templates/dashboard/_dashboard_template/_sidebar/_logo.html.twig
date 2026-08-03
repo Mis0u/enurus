@@ -1,10 +1,12 @@
-<div class="flex items-center gap-[10px] px-[18px] py-[22px] border-b border-white/[0.07] whitespace-nowrap overflow-hidden">
+<div class="relative flex items-center px-[18px] py-[22px] border-b border-white/[0.07] whitespace-nowrap overflow-hidden">
     <img
         src="{{ asset('images/logo.png') }}"
-        alt="logo {{ 'name'|trans({}, 'brand') }}"
-        class="w-[34px] h-[34px] min-w-[34px] object-contain flex-shrink-0"
+        alt="{{ 'name'|trans({}, 'brand') }}"
+        class="logo-collapsed absolute w-[34px] h-[34px] object-contain"
     >
-    <span class="logo-text brand-gradient-text nav-label font-rajdhani text-xl font-bold tracking-[0.5px]">
-        {{ 'name'|trans({}, 'brand') }}
-    </span>
+    <img
+        src="{{ asset('images/enurus_logo_horizontal.png') }}"
+        alt="{{ 'name'|trans({}, 'brand') }}"
+        class="logo-expanded h-[48px] w-auto"
+    >
 </div>
