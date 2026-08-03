@@ -32,7 +32,7 @@
                     message="{{ 'sentence.password.security.valid_new_password'|trans({}, 'common') }}"
                     icon="check"
                     :disabled="true"
-                    data="data-password-validator-target=submitButton"
+                    data="data-password-validator-target=submitButton data-controller=form--submit-spinner"
                 />
 
                 {{ form_end(resetForm) }}
