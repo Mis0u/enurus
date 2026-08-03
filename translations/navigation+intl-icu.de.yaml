@@ -328,7 +328,7 @@ routine:
     delete:
         cancel_button: Abbrechen
         confirm_button: Löschen
-        confirm_text: Bist du sicher, dass du {name} löschen möchtest? Diese Aktion ist unwiderruflich.
+        confirm_text: Bist du sicher, dass du {name} löschen möchtest? Diese Aktion ist unwiderruflich. Trainingseinheiten, die diese Routine verwenden, werden zu freien Einheiten.
         confirm_title: Routine löschen
         error_text: Beim Löschen ist ein Fehler aufgetreten.
     edit:

@@ -328,7 +328,7 @@ routine:
     delete:
         cancel_button: Cancelar
         confirm_button: Eliminar
-        confirm_text: ¿Estás seguro de que quieres eliminar {name}? Esta acción es irreversible.
+        confirm_text: ¿Estás seguro de que quieres eliminar {name}? Esta acción es irreversible. Las sesiones que usan esta rutina pasarán a ser sesiones libres.
         confirm_title: Eliminar la rutina
         error_text: Se produjo un error durante la eliminación.
     edit:

@@ -328,7 +328,7 @@ routine:
     delete:
         cancel_button: Cancelar
         confirm_button: Eliminar
-        confirm_text: Tens a certeza de que queres eliminar {name}? Esta ação é irreversível.
+        confirm_text: Tens a certeza de que queres eliminar {name}? Esta ação é irreversível. Os treinos que usam esta rotina passarão a ser sessões livres.
         confirm_title: Eliminar a rotina
         error_text: Ocorreu um erro durante a eliminação.
     edit:
