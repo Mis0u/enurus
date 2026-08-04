@@ -31,7 +31,7 @@ contact:
         success: "Ton message a bien été envoyé, merci !"
     field:
         category: Catégorie
-        category_placeholder: Choisissez une catégorie
+        category_placeholder: Choisis une catégorie
         image: Image
         image_optional: "(facultatif — pour illustrer un bug ou une suggestion)"
         message: Message
@@ -150,17 +150,17 @@ exercise:
     create:
         breadcrumb: Nouvel exercice
         submit: Créer l'exercice
-        subtitle: Personnalisez votre bibliothèque
+        subtitle: Personnalise ta bibliothèque
         title: Créer un exercice
     delete:
         cancel_button: Annuler
         confirm_button: Supprimer
         confirm_text: "{gender, select, female {Es-tu sûre} other {Es-tu sûr}} de vouloir supprimer « {name} » ? S'il est utilisé dans des séances passées, il sera archivé (retiré de ta bibliothèque, historique conservé) plutôt que supprimé."
         confirm_title: Supprimer l'exercice
-        error_text: Une erreur est survenue lors de la suppression. Veuillez réessayer.
+        error_text: Une erreur est survenue lors de la suppression. Réessaie.
     edit:
         submit: Enregistrer
-        subtitle: Modifiez les informations de votre exercice
+        subtitle: Modifie les informations de ton exercice
         title: Modifier l'exercice
     flash:
         archived: Exercice archivé — il n'apparaît plus dans ta bibliothèque, mais ton historique de séances est conservé.
@@ -169,11 +169,11 @@ exercise:
         restored: Exercice restauré avec succès.
         updated: Exercice modifié avec succès.
     form:
-        description_placeholder: Décrivez les points techniques, la posture, les erreurs à éviter…
+        description_placeholder: Décris les points techniques, la posture, les erreurs à éviter…
         description_toggle: Ajouter une description
         legend_primary: Muscles primaires
         legend_secondary: Muscles secondaires
-        muscles_hint: Cliquez pour assigner (primaire → secondaire → aucun)
+        muscles_hint: Clique pour assigner (primaire → secondaire → aucun)
         muscles_label: Muscles travaillés
         name_label: Nom de l'exercice
         name_placeholder: "Ex: Développé couché prise serrée"
@@ -226,7 +226,7 @@ exercise:
         title: Bibliothèque
 
     restore:
-        error_text: Une erreur est survenue lors de la restauration. Veuillez réessayer.
+        error_text: Une erreur est survenue lors de la restauration. Réessaie.
 footer:
     copyright: © {year} {brand}. Tous droits réservés.
 
@@ -249,7 +249,7 @@ messagerie:
         confirm_button: Supprimer
         confirm_text: "{gender, select, female {Es-tu sûre} other {Es-tu sûr}} de vouloir supprimer ce fil de discussion ? Cette action est irréversible et ne concerne que ta messagerie."
         confirm_title: Supprimer le fil de discussion
-        error_text: "Une erreur est survenue lors de la suppression. Veuillez réessayer."
+        error_text: "Une erreur est survenue lors de la suppression. Réessaie."
         success: Le fil de discussion a été supprimé de ta messagerie.
     empty:
         text: "Cet espace te permet de recevoir mes réponses à tes messages de contact, ainsi que d'éventuelles communications ponctuelles liées à des mises à jour du site — jamais de messages d'autres membres, jamais de spam."
@@ -283,18 +283,18 @@ pagination:
 
 registration:
     account_created: Ton compte est créé et prêt à l'emploi
-    confirm_email: Confirmation de votre email
+    confirm_email: Confirmation de ton email
     create_account: Créer un compte
     email:
         activate_account: Activer mon compte
-        click_activate: Vous êtes à un clic de commencer votre transformation ! Cliquez sur le bouton ci-dessous pour activer votre compte.
+        click_activate: Tu es à un clic de commencer ta transformation ! Clique sur le bouton ci-dessous pour activer ton compte.
         info_link_life: Ce lien expire dans {hour}
-        not_created_account: Si vous n'avez pas créé de compte sur {brand}, ignorez simplement cet email.
+        not_created_account: Si tu n'as pas créé de compte sur {brand}, ignore simplement cet email.
         receive_email: Tu reçois cet email car tu t'es {gender, select, female {inscrite} other {inscrit}} sur {brand}
-        registration_confirm: Confirmez votre inscription {brand}
+        registration_confirm: Confirme ton inscription {brand}
         welcome: Bienvenue sur {brand} ! Ta première séance t'attend
     email_sent_to: "Un email de confirmation a été envoyé à {email}."
-    have_an_account: Vous avez déjà un compte ?
+    have_an_account: Tu as déjà un compte ?
     nickname:
         label: Choisis ton alias
         placeholder: Sous quel nom veux-tu briller ?
@@ -303,23 +303,23 @@ registration:
     website: Website
 
 reset_password_request:
-    asking_reset: Vous avez demandé la réinitialisation de votre mot de passe. Cliquez sur le bouton ci-dessous pour créer un nouveau mot de passe
+    asking_reset: Tu as demandé la réinitialisation de ton mot de passe. Clique sur le bouton ci-dessous pour créer un nouveau mot de passe
     back_to_connexion: Retour à la connexion
-    email_link: Cliquez sur le lien de réinitialisation
+    email_link: Clique sur le lien de réinitialisation
     expire_link: Ce lien expirera dans
     forgot_password: Mot de passe oublié
     identical_password: Mot de passe identique
-    info_email: Vous recevez cet email car une demande de réinitialisation de mot de passe a été effectuée sur votre compte
-    info_link_life: Ce lien expire dans {hour}. Une fois votre mot de passe changé, vous serez redirigé vers la page de connexion.
-    info_reset_password: Entrez votre adresse email et vous recevrez un lien pour réinitialiser votre mot de passe.
-    message_problem_handle: Un problème est survenu lors du traitement de votre demande de réinitialisation de mot de passe
-    message_problem_validate: Un problème est survenu lors de la validation de votre demande de réinitialisation de mot de passe
-    new_password: Créez votre nouveau mot de passe
-    not_asking_reset: Si vous n'avez pas demandé cette réinitialisation, ignorez cet email. Votre mot de passe actuel reste inchangé.
+    info_email: Tu reçois cet email car une demande de réinitialisation de mot de passe a été effectuée sur ton compte
+    info_link_life: Ce lien expire dans {hour}. Une fois ton mot de passe changé, tu seras redirigé vers la page de connexion.
+    info_reset_password: Entre ton adresse email et tu recevras un lien pour réinitialiser ton mot de passe.
+    message_problem_handle: Un problème est survenu lors du traitement de ta demande de réinitialisation de mot de passe
+    message_problem_validate: Un problème est survenu lors de la validation de ta demande de réinitialisation de mot de passe
+    new_password: Crée ton nouveau mot de passe
+    not_asking_reset: Si tu n'as pas demandé cette réinitialisation, ignore cet email. Ton mot de passe actuel reste inchangé.
     reset_email_password_send: Email de réinitialisation envoyé
     reset_my_password: Réinitialiser mon mot de passe
-    reset_password: Réinitialiser votre mot de passe
-    reseting_password: Réinitialisation de votre mot de passe
+    reset_password: Réinitialiser ton mot de passe
+    reseting_password: Réinitialisation de ton mot de passe
     send_link: Envoyer le lien de réinitialisation
 
 routine:
@@ -451,8 +451,8 @@ settings:
         edit_password: Modifier le mot de passe
         title: Mot de passe
     password_changed:
-        body: Bonjour {nickname}, vous venez de modifier le mot de passe de votre compte {brand}.
-        not_you_hint: Si vous n'êtes pas à l'origine de cette modification, contactez-nous immédiatement.
+        body: Bonjour {nickname}, tu viens de modifier le mot de passe de ton compte {brand}.
+        not_you_hint: Si tu n'es pas à l'origine de cette modification, contacte-nous immédiatement.
         subject: Mot de passe modifié
         title: Mot de passe modifié
     profile:
@@ -473,7 +473,7 @@ workout:
                 =1    {Tu as déjà # séance enregistrée à ce jour.}
                 other {Tu as déjà # séances enregistrées à ce jour.}
             }
-    created: Votre séance a bien été enregistrée
+    created: Ta séance a bien été enregistrée
     date: Date
     date_placeholder: Choisir une date
     duration_optional: Durée (Optionnel)
@@ -505,16 +505,16 @@ workout:
         submit_failed:
             text: Une erreur est survenue lors de l'enregistrement de ta séance. Réessaie.
             title: Échec de l'enregistrement
-        validation: Une erreur est survenue lors de la saisie de vos données
+        validation: Une erreur est survenue lors de la saisie de tes données
     flash:
-        created: Votre séance a bien été enregistrée
-        deleted: Votre séance a bien été supprimée
-        updated: Votre séance a bien été modifiée
+        created: Ta séance a bien été enregistrée
+        deleted: Ta séance a bien été supprimée
+        updated: Ta séance a bien été modifiée
     list:
         delete:
             cancel: Annuler
             confirm: Supprimer
-            error_text: Une erreur est survenue lors de la suppression. Veuillez réessayer.
+            error_text: Une erreur est survenue lors de la suppression. Réessaie.
             message: "{gender, select, female {Es-tu sûre} other {Es-tu sûr}} de vouloir supprimer cette séance ? Cette action est irréversible."
             title: Supprimer cette séance ?
         duration_unit: min
@@ -559,7 +559,7 @@ workout:
         change_confirm: Continue
         change_warning_text: Changer de routine effacera les exercices déjà ajoutés à ta séance. Veux-tu continuer ?
         change_warning_title: Changer de routine ?
-        select: Choisissez votre routine
+        select: Choisis ta routine
         title: Routine
     search_exercise:
         create_link:

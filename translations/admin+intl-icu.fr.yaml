@@ -134,7 +134,7 @@ admin:
             title: "Nouveau message"
         error:
             no_valid_recipient: "Aucun utilisateur valide trouvé pour ce destinataire."
-            recipient_required: "Veuillez choisir un destinataire."
+            recipient_required: "Choisis un destinataire."
         field:
             closed_at: "Clôturé le"
             conversation: Conversation
@@ -203,7 +203,7 @@ admin:
         flash:
             account_blocked: "Compte bloqué."
             account_unblocked: "Compte débloqué."
-            cannot_delete_self: "Vous ne pouvez pas supprimer votre propre compte depuis cette action."
+            cannot_delete_self: "Tu ne peux pas supprimer ton propre compte depuis cette action."
             contact_restricted: "Messagerie bloquée."
             contact_restriction_lifted: "Messagerie débloquée."
             deleted: "Compte supprimé définitivement."
@@ -212,7 +212,7 @@ admin:
             reset_email_sent: "Email de réinitialisation renvoyé."
         force_delete:
             button: "Supprimer définitivement"
-            password_label: "Votre mot de passe"
+            password_label: "Ton mot de passe"
             title: "Supprimer définitivement — {email}"
             warning: "Cette action supprime définitivement le compte de {email} ainsi que toutes ses données associées (séances, routines, exercices personnalisés, messagerie). Elle est irréversible."
         force_logout:

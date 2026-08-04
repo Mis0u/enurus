@@ -4,11 +4,11 @@ cta:
 
 error:
     "403":
-        message: Vous n'avez pas la permission d'accéder à cette page.
+        message: Tu n'as pas la permission d'accéder à cette page.
         title: Accès refusé
     "404":
-        message: La page que vous cherchez n'existe pas ou a été déplacée.
+        message: La page que tu cherches n'existe pas ou a été déplacée.
         title: Page introuvable
     "500":
-        message: Quelque chose s'est mal passé de notre côté. Réessayez dans quelques instants.
+        message: Quelque chose s'est mal passé de notre côté. Réessaie dans quelques instants.
         title: Une erreur est survenue

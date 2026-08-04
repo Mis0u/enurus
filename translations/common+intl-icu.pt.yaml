@@ -3,7 +3,7 @@ field:
     confirm_new_password: Confirmar palavra-passe
     criteria_password: "Critérios de segurança:"
     email: Email
-    email_placeholder: seu@email.com
+    email_placeholder: teu@email.com
     form:
         button:
             cancel: Cancelar
