@@ -149,6 +149,32 @@ final class RoutineCrudControllerTest extends WebTestCase
     }
 
     /**
+     * Les routes /admin n'ont pas de préfixe _locale (contrairement au reste de l'app) et le
+     * serveur tourne en UTC — sans AdminLocaleListener + Crud::setTimezone('Europe/Paris')
+     * (cf. RoutineCrudController::configureCrud()), ce champ s'afficherait en anglais et en heure
+     * UTC brute plutôt qu'en français à l'heure de Paris.
+     */
+    public function testIndexDisplaysCreatedAtInFrenchAndParisTimezone(): void
+    {
+        $client = $this->login(self::ADMIN);
+        [$owner, $routine] = $this->createRoutine('routine-crud-timezone@test.com', 'Routine fuseau');
+
+        $expectedParisTime = $routine->createdAt
+            ->setTimezone(new \DateTimeZone('Europe/Paris'))
+            ->format('H:i');
+
+        $crawler = $client->request(Request::METHOD_GET, $this->indexUrl());
+        $body = $crawler->filter('body')->text();
+
+        self::assertResponseIsSuccessful();
+        self::assertStringContainsString($expectedParisTime, $body, 'La date affichée doit être convertie en heure de Paris.');
+        self::assertStringNotContainsString('AM', $body);
+        self::assertStringNotContainsString('PM', $body);
+
+        $this->cleanup($owner, $routine);
+    }
+
+    /**
      * @return array{0: User, 1: Routine}
      */
     private function createRoutine(string $email, string $name, ?string $description = null): array

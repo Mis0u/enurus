@@ -117,6 +117,23 @@ class DashboardControllerTest extends WebTestCase
         self::assertSelectorExists('[data-dashboard--session-target="exercises"]');
     }
 
+    /**
+     * `dashboard.html.twig` surchargeait `block body` en appelant `parent()` puis en redéclarant
+     * `block state` dans le même bloc — Twig affiche un tag `block` à l'endroit où il est rencontré,
+     * donc le contenu de `state` était rendu deux fois (une fois via `parent()`, une fois via la
+     * redéclaration). Verrouille le rendu unique de chaque widget.
+     */
+    public function testDashboardDoesNotRenderWidgetsTwice(): void
+    {
+        $client = $this->login(self::USER_WITH_WORKOUTS);
+        $crawler = $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertResponseIsSuccessful();
+        self::assertCount(1, $crawler->filter('[data-controller="dashboard--session"]'));
+        self::assertCount(1, $crawler->filter('[data-controller="dashboard--tonnage"]'));
+        self::assertCount(1, $crawler->filter('[data-controller="dashboard--muscles"]'));
+    }
+
     public function testDashboardSessionStatsMatchLastTrainingDay(): void
     {
         $client = $this->login(self::USER_WITH_WORKOUTS);
