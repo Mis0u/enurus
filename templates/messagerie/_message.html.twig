@@ -23,7 +23,11 @@
         {% endif %}
     </div>
 
-    <span class="text-[10.5px] text-[#4a5568] px-1">
+    <span class="text-[10.5px] text-[#4a5568] px-1"
+          data-controller="local-datetime"
+          data-local-datetime-iso-value="{{ message.createdAt|date('c') }}"
+          data-local-datetime-locale-value="{{ app.user.locale }}"
+          data-local-datetime-style-value="datetime">
         {{ message.createdAt|format_datetime(pattern: 'd MMM yyyy, HH:mm', locale: app.user.locale) }}
     </span>
 </div>
