@@ -39,7 +39,7 @@ final class ContactCreateControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertResponseRedirects(self::URL);
+        $this->assertResponseRedirects('/fr/messagerie');
 
         $thread = $this->findLastThread();
 
@@ -74,7 +74,7 @@ final class ContactCreateControllerTest extends WebTestCase
             'image' => ImageTestHelper::createFakeImage('bug.jpg', 'image/jpeg'),
         ]);
 
-        $this->assertResponseRedirects(self::URL);
+        $this->assertResponseRedirects('/fr/messagerie');
 
         $thread = $this->findLastThread();
 
