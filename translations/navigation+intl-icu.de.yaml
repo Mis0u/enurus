@@ -312,8 +312,8 @@ reset_password_request:
     info_email: Du erhältst diese E-Mail, weil eine Passwortzurücksetzung für dein Konto angefordert wurde
     info_link_life: Dieser Link läuft in {hour} ab. Nach der Änderung deines Passworts wirst du zur Anmeldeseite weitergeleitet.
     info_reset_password: Gib deine E-Mail-Adresse ein und du erhältst einen Link zum Zurücksetzen deines Passworts.
-    message_problem_handle: Bei der Verarbeitung Ihrer Anfrage zur Passwortzurücksetzung ist ein Problem aufgetreten
-    message_problem_validate: Bei der Überprüfung Ihrer Anfrage zur Passwortzurücksetzung ist ein Problem aufgetreten
+    message_problem_handle: Bei der Verarbeitung deiner Anfrage zur Passwortzurücksetzung ist ein Problem aufgetreten
+    message_problem_validate: Bei der Überprüfung deiner Anfrage zur Passwortzurücksetzung ist ein Problem aufgetreten
     new_password: Erstelle dein neues Passwort
     not_asking_reset: Wenn du diese Zurücksetzung nicht angefordert hast, ignoriere diese E-Mail. Dein aktuelles Passwort bleibt unverändert.
     reset_email_password_send: Zurücksetzungs-E-Mail gesendet
@@ -408,7 +408,7 @@ settings:
             title: Konto gelöscht
         requested:
             body: Hallo {nickname}, deine Anfrage zur Kontolöschung wurde registriert. Dein Konto wird am {deadline} endgültig gelöscht, wenn du dich nicht vorher erneut anmeldest.
-            cancel_hint: Um diese Löschung abzubrechen, melde dich einfach vor diesem Datum erneut an — keine weitere Aktion erforderlich.
+            cancel_hint: Um diese Löschung abzubrechen, melde dich einfach vor diesem Datum erneut an.
             subject: Deine Anfrage zur Kontolöschung wurde registriert
             title: Kontolöschung in Bearbeitung
     account_unblocked:
@@ -434,6 +434,7 @@ settings:
         label: E-Mail
         not_editable: Nicht änderbar
     feedback:
+        error: Ein Fehler ist aufgetreten, bitte versuche es später erneut
         success: Änderung gespeichert
     gender:
         female: Frau

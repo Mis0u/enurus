@@ -4,7 +4,7 @@
          data-settings--account-deletion-url-value="{{ path('app_settings_account_deletion_request') }}"
          data-settings--account-deletion-csrf-token-value="{{ csrf_token('account_deletion') }}"
          data-settings--account-deletion-nickname-value="{{ user.nickname }}"
-         data-settings--account-deletion-title-value="{{ 'settings.danger_zone.modal.title'|trans({}, 'navigation') }}"
+         data-settings--account-deletion-title-value="{{ 'settings.danger_zone.modal.title'|trans({gender: user.gender.value}, 'navigation') }}"
          data-settings--account-deletion-body-value="{{ 'settings.danger_zone.modal.body'|trans({}, 'navigation') }}"
          data-settings--account-deletion-placeholder-value="{{ 'settings.danger_zone.modal.placeholder'|trans({}, 'navigation') }}"
          data-settings--account-deletion-mismatch-error-value="{{ 'settings.danger_zone.modal.mismatch'|trans({}, 'navigation') }}"

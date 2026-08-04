@@ -1,10 +1,11 @@
 import { Controller } from '@hotwired/stimulus';
-import { showSuccessToast } from '../../utils/toast.js';
+import { showSuccessToast, showErrorToast } from '../../utils/toast.js';
 
 export default class extends Controller {
     static values = {
         url: String,
         successMessage: String,
+        errorMessage: String,
     };
 
     async submit(event) {
@@ -28,11 +29,23 @@ export default class extends Controller {
             }
 
             showSuccessToast(this.successMessageValue);
-            this.element.reset();
-            this.submitButtonTarget?.setAttribute('disabled', 'disabled');
+            this.#resetForm();
         } catch {
-            // Échec silencieux volontaire
+            showErrorToast(this.errorMessageValue);
         }
+    }
+
+    /**
+     * `form.reset()` ne déclenche pas d'event `input` sur les champs — sans ce dispatch manuel,
+     * `password-validator` (qui écoute `input` pour activer/désactiver le bouton submit) ne revoit
+     * jamais la validation et laisse le bouton dans son état d'avant reset, malgré des champs
+     * redevenus vides.
+     */
+    #resetForm() {
+        this.element.reset();
+        this.element.querySelectorAll('input[type="password"]').forEach((input) => {
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+        });
     }
 
     #clearErrors() {

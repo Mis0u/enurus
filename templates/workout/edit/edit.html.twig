@@ -30,7 +30,11 @@
 
         {% include 'workout/edit/_note.html.twig' with {'form': form} only %}
 
-        {% include 'workout/edit/_upload_placeholder.html.twig' with {'workout': workout} only %}
+        {% include 'workout/edit/_upload_placeholder.html.twig' with {
+            'workout': workout,
+            'imageMaxSizeBytes': imageMaxSizeBytes,
+            'imageAllowedMimeTypes': imageAllowedMimeTypes,
+        } only %}
 
         {% include 'workout/edit/_exercises_list.html.twig' with {'exerciseData': exerciseData} only %}
 

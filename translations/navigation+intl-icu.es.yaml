@@ -155,7 +155,7 @@ exercise:
     delete:
         cancel_button: Cancelar
         confirm_button: Eliminar
-        confirm_text: ¿Estás seguro de que quieres eliminar « {name} »? Si se usa en sesiones pasadas, se archivará (se retira de tu biblioteca, se conserva el historial) en lugar de eliminarse.
+        confirm_text: "¿{gender, select, female {Estás segura} other {Estás seguro}} de que quieres eliminar « {name} »? Si se usa en sesiones pasadas, se archivará (se retira de tu biblioteca, se conserva el historial) en lugar de eliminarse."
         confirm_title: Eliminar el ejercicio
         error_text: Se produjo un error durante la eliminación. Inténtalo de nuevo.
     edit:
@@ -247,7 +247,7 @@ messagerie:
     delete:
         cancel_button: Cancelar
         confirm_button: Eliminar
-        confirm_text: "¿Seguro que quieres eliminar esta conversación? Esta acción es irreversible y solo afecta a tu mensajería."
+        confirm_text: "¿{gender, select, female {Segura} other {Seguro}} que quieres eliminar esta conversación? Esta acción es irreversible y solo afecta a tu mensajería."
         confirm_title: Eliminar la conversación
         error_text: "Se ha producido un error al eliminar. Inténtalo de nuevo."
         success: La conversación se ha eliminado de tu mensajería.
@@ -335,7 +335,7 @@ routine:
     delete:
         cancel_button: Cancelar
         confirm_button: Eliminar
-        confirm_text: ¿Estás seguro de que quieres eliminar {name}? Esta acción es irreversible. Las sesiones que usan esta rutina pasarán a ser sesiones libres.
+        confirm_text: "¿{gender, select, female {Estás segura} other {Estás seguro}} de que quieres eliminar {name}? Esta acción es irreversible. Las sesiones que usan esta rutina pasarán a ser sesiones libres."
         confirm_title: Eliminar la rutina
         error_text: Se produjo un error durante la eliminación.
     edit:
@@ -408,7 +408,7 @@ settings:
             title: Cuenta eliminada
         requested:
             body: Hola {nickname}, tu solicitud de eliminación de cuenta ha sido registrada. Tu cuenta será eliminada definitivamente el {deadline} si no vuelves a iniciar sesión antes de esa fecha.
-            cancel_hint: Para cancelar esta eliminación, simplemente vuelve a iniciar sesión antes de esa fecha — ninguna otra acción necesaria.
+            cancel_hint: Para cancelar esta eliminación, simplemente vuelve a iniciar sesión antes de esa fecha.
             subject: Tu solicitud de eliminación de cuenta ha sido registrada
             title: Eliminación de cuenta en curso
     account_unblocked:
@@ -427,13 +427,14 @@ settings:
             confirm: Eliminar definitivamente
             mismatch: El alias no coincide
             placeholder: Tu alias
-            title: ¿Estás seguro?
+            title: "¿{gender, select, female {Estás segura?} other {Estás seguro?}}"
         request_error: Se produjo un error, inténtalo de nuevo más tarde
         title: Eliminación de la cuenta
     email:
         label: Correo electrónico
         not_editable: No modificable
     feedback:
+        error: Se produjo un error, inténtalo de nuevo más tarde
         success: Cambio realizado
     gender:
         female: Mujer
@@ -514,7 +515,7 @@ workout:
             cancel: Cancelar
             confirm: Eliminar
             error_text: Se produjo un error durante la eliminación. Inténtalo de nuevo.
-            message: ¿Estás seguro de que quieres eliminar este entrenamiento? Esta acción es irreversible.
+            message: "¿{gender, select, female {Estás segura} other {Estás seguro}} de que quieres eliminar este entrenamiento? Esta acción es irreversible."
             title: ¿Eliminar este entrenamiento?
         duration_unit: min
         edit: Modificar entrenamiento

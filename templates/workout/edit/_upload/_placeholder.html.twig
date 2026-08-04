@@ -1,7 +1,8 @@
 <div data-workout--photo-upload-target="placeholder">
-    {% if workout.photoPath is not null %}
+    <div data-workout--photo-upload-target="existingPhotoBlock" class="{% if workout.photoPath is null %}hidden{% endif %}">
         {% include 'workout/edit/_upload/_existing_photo.html.twig' with {'workout': workout} only %}
-    {% else %}
+    </div>
+    <div data-workout--photo-upload-target="addPromptBlock" class="{% if workout.photoPath is not null %}hidden{% endif %}">
         {% include 'partials/_svg/_upload.html.twig' only %}
         <p class="text-slate-400 text-sm font-medium mt-3">
             {{ 'workout.edit.photo_add'|trans({}, 'navigation') }}
@@ -9,12 +10,12 @@
         <p class="text-slate-600 text-xs mt-1.5">
             {{ 'workout.edit.photo_constraints'|trans({}, 'navigation') }}
         </p>
-    {% endif %}
+    </div>
 
     <label class="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-400 text-[13px] font-semibold cursor-pointer hover:bg-rose-500/20 transition-colors duration-200">
         {{ 'workout.edit.photo_select'|trans({}, 'navigation') }}
         <input type="file"
-               accept="image/jpeg,image/png,image/webp"
+               accept="{{ imageAllowedMimeTypes|join(',') }}"
                class="hidden"
                data-workout--photo-upload-target="input"
                data-action="change->workout--photo-upload#onFileChange">

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Workout;
 
+use App\Constraint\ImageConstraints;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Form\WorkoutType;
@@ -59,6 +60,8 @@ final class WorkoutController extends AbstractController
         return $this->render('workout/create/index.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'imageMaxSizeBytes' => ImageConstraints::MAX_SIZE_BYTES,
+            'imageAllowedMimeTypes' => ImageConstraints::ALLOWED_MIME_TYPES,
         ]);
     }
 

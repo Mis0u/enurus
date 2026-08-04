@@ -3,7 +3,7 @@
     data-action="click->workout--list--delete-modal#deleteWorkout"
     data-workout-id="{{ workout.id }}"
     data-title="{{ 'workout.list.delete.title'|trans({}, 'navigation') }}"
-    data-message="{{ 'workout.list.delete.message'|trans({}, 'navigation') }}"
+    data-message="{{ 'workout.list.delete.message'|trans({gender: app.user.gender.value}, 'navigation') }}"
     data-confirm="{{ 'workout.list.delete.confirm'|trans({}, 'navigation') }}"
     data-cancel="{{ 'workout.list.delete.cancel'|trans({}, 'navigation') }}"
     data-error-text="{{ 'workout.list.delete.error_text'|trans({}, 'navigation') }}"

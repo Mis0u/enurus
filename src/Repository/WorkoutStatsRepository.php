@@ -8,6 +8,7 @@ use App\Entity\User;
 use DateTimeImmutable;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Comptages/dates/totaux exercices-séries-reps agrégés — extrait de WorkoutRepository (split
@@ -63,18 +64,32 @@ class WorkoutStatsRepository
         return array_map(static fn (array $row): \DateTimeImmutable => $row['performedAt'], $rows);
     }
 
-    public function countByUserAndDate(User $user, DateTimeImmutable $start, DateTimeImmutable $end): int
-    {
-        return (int) $this->workoutRepository->createQueryBuilder('w')
+    /**
+     * `$excludeWorkoutId` permet à l'édition d'une séance de vérifier les doublons sans compter la
+     * séance en cours d'édition elle-même (sinon toute date déjà utilisée par CE workout serait
+     * systématiquement signalée comme doublon).
+     */
+    public function countByUserAndDate(
+        User $user,
+        DateTimeImmutable $start,
+        DateTimeImmutable $end,
+        ?Uuid $excludeWorkoutId = null,
+    ): int {
+        $qb = $this->workoutRepository->createQueryBuilder('w')
             ->select('COUNT(w.id)')
             ->andWhere('w.owner = :user')
             ->andWhere('w.performedAt >= :start')
             ->andWhere('w.performedAt <= :end')
             ->setParameter('user', $user)
             ->setParameter('start', $start)
-            ->setParameter('end', $end)
-            ->getQuery()
-            ->getSingleScalarResult();
+            ->setParameter('end', $end);
+
+        if (null !== $excludeWorkoutId) {
+            $qb->andWhere('w.id != :excludeId')
+                ->setParameter('excludeId', $excludeWorkoutId);
+        }
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
     /**

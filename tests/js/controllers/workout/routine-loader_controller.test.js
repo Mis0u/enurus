@@ -20,7 +20,7 @@ function buildDom({ exercisesHtml = '' } = {}) {
                 data-workout--routine-loader-confirm-button-value="Continuer"
                 data-workout--routine-loader-cancel-button-value="Annuler"
                 data-action="change->workout--routine-loader#onChange">
-            <option value="">Choisissez votre routine</option>
+            <option value="">Choisis ta routine</option>
             <option value="routine-1">Push day</option>
             <option value="routine-2">Full body</option>
         </select>

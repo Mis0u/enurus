@@ -65,7 +65,7 @@ export default class extends Controller {
         }
     }
 
-    onSubmitClick(event) {
+    async onSubmitClick(event) {
         event.preventDefault();
 
         const dateInput = document.getElementById('workout_performedAt');
@@ -96,7 +96,21 @@ export default class extends Controller {
 
         const valid = handleErrorField(this.exerciseListTarget);
         if (!valid) return;
+
+        // Photo (upload d'un nouveau fichier ou suppression) reste en attente jusqu'ici — jamais
+        // appliquée tant que le formulaire n'est pas réellement soumis (cf. bug "Annuler" gardant
+        // quand même la modification de photo).
+        await this._commitPendingPhotoChanges();
+
         document.getElementById('workout-edit-form').requestSubmit();
+    }
+
+    async _commitPendingPhotoChanges() {
+        const photoUploadEl = document.querySelector('[data-controller~="workout--photo-upload"]');
+        if (!photoUploadEl) return;
+
+        const photoController = this.application.getControllerForElementAndIdentifier(photoUploadEl, 'workout--photo-upload');
+        await photoController?.commitPendingChanges();
     }
 
     openModal() {

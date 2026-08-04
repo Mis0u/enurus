@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[IsGranted('ROLE_USER')]
@@ -39,10 +40,17 @@ class WorkoutCheckDateController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
+        $excludeId = $request->query->get('excludeId');
+        $excludeUuid = null;
+
+        if (null !== $excludeId && Uuid::isValid((string) $excludeId)) {
+            $excludeUuid = Uuid::fromString((string) $excludeId);
+        }
+
         $start = new \DateTimeImmutable($date . ' 00:00:00');
         $end = new \DateTimeImmutable($date . ' 23:59:59');
 
-        $count = $workoutStatsRepository->countByUserAndDate($user, $start, $end);
+        $count = $workoutStatsRepository->countByUserAndDate($user, $start, $end, $excludeUuid);
 
         return $this->json([
             'exists' => 0 < $count,

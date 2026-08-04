@@ -4,11 +4,11 @@ cta:
 
 error:
     "403":
-        message: Sie haben keine Berechtigung, auf diese Seite zuzugreifen.
+        message: Du hast keine Berechtigung, auf diese Seite zuzugreifen.
         title: Zugriff verweigert
     "404":
         message: Die gesuchte Seite existiert nicht oder wurde verschoben.
         title: Seite nicht gefunden
     "500":
-        message: Auf unserer Seite ist etwas schiefgelaufen. Bitte versuchen Sie es in Kürze erneut.
+        message: Auf unserer Seite ist etwas schiefgelaufen. Bitte versuche es in Kürze erneut.
         title: Ein Fehler ist aufgetreten

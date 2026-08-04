@@ -294,7 +294,7 @@ registration:
         click_activate: Jesteś o jedno kliknięcie od rozpoczęcia swojej transformacji! Kliknij przycisk poniżej, aby aktywować swoje konto.
         info_link_life: Ten link wygasa za {hour}
         not_created_account: Jeśli nie zakładałeś konta w {brand}, po prostu zignoruj tę wiadomość.
-        receive_email: Otrzymujesz tego e-maila, ponieważ zarejestrowałeś się na {brand}
+        receive_email: Otrzymujesz tego e-maila, ponieważ {gender, select, female {zarejestrowałaś} other {zarejestrowałeś}} się na {brand}
         registration_confirm: Potwierdź rejestrację w {brand}
         welcome: Witaj na {brand}! Twój pierwszy trening na Ciebie czeka
     email_sent_to: "Email potwierdzający został wysłany na adres {email}."
@@ -418,7 +418,7 @@ settings:
             title: Konto usunięte
         requested:
             body: Cześć {nickname}, Twoja prośba o usunięcie konta została zarejestrowana. Twoje konto zostanie trwale usunięte {deadline}, jeśli nie zalogujesz się ponownie przed tą datą.
-            cancel_hint: Aby anulować to usunięcie, po prostu zaloguj się ponownie przed tą datą — żadne inne działanie nie jest wymagane.
+            cancel_hint: Aby anulować to usunięcie, po prostu zaloguj się ponownie przed tą datą.
             subject: Twoja prośba o usunięcie konta została zarejestrowana
             title: Usuwanie konta w toku
     account_unblocked:
@@ -444,6 +444,7 @@ settings:
         label: E-mail
         not_editable: Nie można edytować
     feedback:
+        error: Wystąpił błąd, spróbuj ponownie później
         success: Zmiana zapisana
     gender:
         female: Kobieta

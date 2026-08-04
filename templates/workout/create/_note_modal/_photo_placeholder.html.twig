@@ -4,7 +4,7 @@
     <label class="cursor-pointer px-4 py-1.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-400 text-[12px] font-medium hover:bg-rose-500/20 transition-colors duration-200">
         {{ 'workout.photo.select'|trans({}, 'navigation') }}
         <input type="file"
-               accept="image/jpeg,image/png,image/webp"
+               accept="{{ imageAllowedMimeTypes|join(',') }}"
                class="hidden"
                data-workout--photo-upload-target="input"
                data-action="change->workout--photo-upload#onFileChange">

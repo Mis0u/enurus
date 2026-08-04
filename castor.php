@@ -166,6 +166,7 @@ function prePush(): void
     testE2e();
     resetDB(test: true);
     infection();
+    resetDB(test: true);
     io()->success('🚀 Full pre-push suite passed!');
 }
 

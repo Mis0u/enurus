@@ -3,7 +3,7 @@ field:
     confirm_new_password: Confirmer le mot de passe
     criteria_password: "Critères de sécurité :"
     email: Email
-    email_placeholder: votre@email.com
+    email_placeholder: ton@email.com
     form:
         button:
             cancel: Annuler
@@ -18,13 +18,13 @@ field:
     open_menu: Ouvrir le menu
     password: Mot de passe
     reduce: Réduire
-    security_password: Choisissez un mot de passe sécurisé
+    security_password: Choisis un mot de passe sécurisé
 
 rate_limiter:
     too_many_attempt: >-
         {minutes, plural,
-            =1    {Trop de tentatives. Réessayez dans # minute.}
-            other {Trop de tentatives. Réessayez dans # minutes.}
+            =1    {Trop de tentatives. Réessaie dans # minute.}
+            other {Trop de tentatives. Réessaie dans # minutes.}
         }
 
 sentence:
@@ -37,17 +37,17 @@ sentence:
         }
     back_to_login: Retour à la connexion
     email:
-        button_failed: Si le bouton ne fonctionne pas, copiez et collez ce lien dans votre navigateur
-        email_check: Consultez votre boîte de réception
-        email_correct: Vérifiez que l'adresse email est correcte
-        email_exist: Si un compte correspond à votre adresse email, vous recevrez un email contenant un lien pour réinitialiser votre mot de passe.
-        email_not_received: Vous ne recevez pas l'email ?
-        email_received_explanation: Vous recevez cet email car vous avez créé un compte sur {brand}.
+        button_failed: Si le bouton ne fonctionne pas, copie et colle ce lien dans ton navigateur
+        email_check: Consulte ta boîte de réception
+        email_correct: Vérifie que l'adresse email est correcte
+        email_exist: Si un compte correspond à ton adresse email, tu recevras un email contenant un lien pour réinitialiser ton mot de passe.
+        email_not_received: Tu ne reçois pas l'email ?
+        email_received_explanation: Tu reçois cet email car tu as créé un compte sur {brand}.
         email_send: Email envoyé avec succès !
-        email_spam: Vérifiez votre dossier spam/courrier indésirable
-        info_email_send: Si vous ne recevez pas l'email, vérifiez vos spams.
+        email_spam: Vérifie ton dossier spam/courrier indésirable
+        info_email_send: Si tu ne reçois pas l'email, vérifie tes spams.
         send_back_email: Renvoyer un email
-        wait: Attendez quelques minutes (le délai peut varier)
+        wait: Attends quelques minutes (le délai peut varier)
     empty_dashboard: Ton dashboard est vide pour l'instant mais pas pour longtemps. Enregistre ta première séance et regarde tes stats prendre vie.
     enjoy: Regarde ton tableau de bord prendre vie
     evolution_real_time: Progression en temps réel
@@ -61,19 +61,19 @@ sentence:
     password:
         security:
             at_least_number: Au moins un chiffre
-            confirmation: Votre mot de passe a bien été modifié
+            confirmation: Ton mot de passe a bien été modifié
             criteria_min_char: Au moins {min} caractères
             min_char: Minimum {min} caractères avec majuscules, minuscules et chiffres
             regex: "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial (! ? % $ * & # @ _ -)"
             special_char: "Au moins un des caractères spéciaux suivant ! ? % $ * & # @ _ -"
             upper_lower: Une majuscule et une minuscule
             valid_new_password: Valider le nouveau mot de passe
-    ready: Prêt à commencer ?
-    ready_to_start: Prêt à démarrer ? Ta progression commence ici
-    ready_to_transform: Prêt à vous transformer ?
+    ready: "{gender, select, female {Prête à commencer ?} other {Prêt à commencer ?}}"
+    ready_to_start: "{gender, select, female {Prête à démarrer ? Ta progression commence ici} other {Prêt à démarrer ? Ta progression commence ici}}"
+    ready_to_transform: "{gender, select, female {Prête à te transformer ?} other {Prêt à te transformer ?}}"
     see_datas: Visualise ton tonnage, tes records et ton évolution
     see_working_muscles: Vois exactement quels muscles tu travailles
-    welcome: Bienvenue dans votre aventure fitness !
+    welcome: Bienvenue dans ton aventure fitness !
     welcome_to: Bienvenue sur {brand}
     what_next: Ce qui t'attend
     where_to_start: Par où commencer ?

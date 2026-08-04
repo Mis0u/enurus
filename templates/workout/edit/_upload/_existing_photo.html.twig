@@ -12,3 +12,8 @@
 <p class="text-[#8b9bb4] text-[12px] mb-3">
     {{ 'workout.edit.photo_replace'|trans({}, 'navigation') }}
 </p>
+<button type="button"
+        data-action="click->workout--photo-upload#onRemoveExisting"
+        class="block mx-auto mb-3 text-[#8b9bb4] hover:text-rose-400 text-[12px] font-medium transition-colors duration-200">
+    {{ 'workout.photo.remove'|trans({}, 'navigation') }}
+</button>

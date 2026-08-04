@@ -68,7 +68,7 @@
                             data-contact--delete-csrf-token-value="{{ csrf_token('contact_thread_delete_' ~ thread.id.toRfc4122) }}"
                             data-contact--delete-redirect-url-value="{{ path('app_contact_thread_list') }}"
                             data-contact--delete-confirm-title-value="{{ 'messagerie.delete.confirm_title'|trans({}, 'navigation') }}"
-                            data-contact--delete-confirm-text-value="{{ 'messagerie.delete.confirm_text'|trans({}, 'navigation') }}"
+                            data-contact--delete-confirm-text-value="{{ 'messagerie.delete.confirm_text'|trans({gender: app.user.gender.value}, 'navigation') }}"
                             data-contact--delete-confirm-button-value="{{ 'messagerie.delete.confirm_button'|trans({}, 'navigation') }}"
                             data-contact--delete-cancel-button-value="{{ 'messagerie.delete.cancel_button'|trans({}, 'navigation') }}"
                             data-contact--delete-error-text-value="{{ 'messagerie.delete.error_text'|trans({}, 'navigation') }}"

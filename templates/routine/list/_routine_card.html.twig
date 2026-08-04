@@ -39,7 +39,7 @@ Paramètres :
                 data-routine--delete-url-value="{{ path('app_routine_delete', {id: routine.id}) }}"
                 data-routine--delete-csrf-token-value="{{ csrf_token('routine_delete_' ~ routine.id) }}"
                 data-routine--delete-confirm-title-value="{{ 'routine.delete.confirm_title'|trans({}, 'navigation') }}"
-                data-routine--delete-confirm-text-value="{{ 'routine.delete.confirm_text'|trans({name: routine.name}, 'navigation') }}"
+                data-routine--delete-confirm-text-value="{{ 'routine.delete.confirm_text'|trans({name: routine.name, gender: app.user.gender.value}, 'navigation') }}"
                 data-routine--delete-confirm-button-value="{{ 'routine.delete.confirm_button'|trans({}, 'navigation') }}"
                 data-routine--delete-cancel-button-value="{{ 'routine.delete.cancel_button'|trans({}, 'navigation') }}"
                 data-routine--delete-error-text-value="{{ 'routine.delete.error_text'|trans({}, 'navigation') }}"

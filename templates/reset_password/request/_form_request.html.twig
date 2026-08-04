@@ -8,6 +8,10 @@
         {{ form_widget(requestForm.email) }}
     </div>
 </div>
-<twig:Button:Secondary:Secondary message="{{ 'reset_password_request.send_link'|trans({}, 'navigation') }}" icon="envelope"/>
+<twig:Button:Secondary:Secondary
+    message="{{ 'reset_password_request.send_link'|trans({}, 'navigation') }}"
+    icon="envelope"
+    data="data-controller=form--submit-spinner"
+/>
 
 {{ form_end(requestForm) }}

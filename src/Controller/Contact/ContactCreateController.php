@@ -120,6 +120,6 @@ final class ContactCreateController extends AbstractController
 
         $this->addFlash('success', $this->translator->trans('contact.feedback.success', [], 'navigation'));
 
-        return $this->redirectToRoute('app_contact');
+        return $this->redirectToRoute('app_contact_thread_list');
     }
 }

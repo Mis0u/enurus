@@ -19,6 +19,7 @@ settings:
         too_large: Het bestand overschrijdt de maximaal toegestane grootte van {{ limit }} MB
 
 user:
+    email_exists: Er bestaat al een account met dit e-mailadres.
     nickname:
         length:
             max: Je alias is te lang. Het mag maximaal {{ limit }} tekens bevatten

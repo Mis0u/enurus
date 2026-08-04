@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Workout;
 
+use App\Constraint\ImageConstraints;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
@@ -89,6 +90,8 @@ class WorkoutEditController extends AbstractController
             'totalTonnage' => $totalTonnage,
             'unit' => $user->unitOfMeasure,
             'user' => $user,
+            'imageMaxSizeBytes' => ImageConstraints::MAX_SIZE_BYTES,
+            'imageAllowedMimeTypes' => ImageConstraints::ALLOWED_MIME_TYPES,
         ]);
     }
 

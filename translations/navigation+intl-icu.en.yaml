@@ -408,7 +408,7 @@ settings:
             title: Account deleted
         requested:
             body: Hello {nickname}, your account deletion request has been registered. Your account will be permanently deleted on {deadline} if you don't log back in before that date.
-            cancel_hint: To cancel this deletion, simply log back in before that date — no other action required.
+            cancel_hint: To cancel this deletion, simply log back in before that date.
             subject: Your account deletion request has been recorded
             title: Account deletion in progress
     account_unblocked:
@@ -434,6 +434,7 @@ settings:
         label: Email
         not_editable: Not editable
     feedback:
+        error: An error occurred, please try again later
         success: Change saved
     gender:
         female: Female

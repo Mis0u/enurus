@@ -47,7 +47,7 @@
                     message="{{ 'login.create_my_account'|trans({}, 'navigation') }}"
                     icon="add_people"
                     :disabled="true"
-                    data="data-password-validator-target=submitButton"
+                    data="data-password-validator-target=submitButton data-controller=form--submit-spinner"
                 />
                 {{ form_end(registrationForm) }}
 

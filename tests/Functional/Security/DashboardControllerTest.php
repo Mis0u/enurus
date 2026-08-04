@@ -43,6 +43,24 @@ class DashboardControllerTest extends WebTestCase
         $this->assertPageIsRedirectToLoginWhenNotLogged('fr/tableau-de-bord');
     }
 
+    public function testEmptyDashboardGreetingIsFeminineForFemaleUser(): void
+    {
+        // user-fixture-0@test.com is female (cf. UserFixtures::loadIndexedUsers).
+        $client = $this->login(self::USER_WITH_NO_DATA);
+        $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertSelectorTextContains('h2', 'prête à commencer');
+    }
+
+    public function testEmptyDashboardGreetingIsMasculineForMaleUser(): void
+    {
+        // user-fixture-1@test.com is male (cf. UserFixtures::loadIndexedUsers).
+        $client = $this->login('user-fixture-1@test.com');
+        $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertSelectorTextContains('h2', 'prêt à commencer');
+    }
+
     #[DataProvider('navProvider')]
     public function testLinkNav(string $link, string $route): void
     {

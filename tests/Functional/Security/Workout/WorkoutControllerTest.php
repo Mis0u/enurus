@@ -371,7 +371,7 @@ class WorkoutControllerTest extends WebTestCase
 
         $options = $crawler->filter('select#workout_routine option');
 
-        // Seul le placeholder ("Choisissez votre routine") doit être présent
+        // Seul le placeholder ("Choisis ta routine") doit être présent
         $this->assertCount(1, $options);
     }
 

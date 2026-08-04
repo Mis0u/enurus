@@ -80,6 +80,7 @@ final class ChangePasswordFormType extends AbstractFormSecurityType
                 'data-action' => 'submit->settings--password-submit#submit',
                 'data-settings--password-submit-url-value' => $updateUrl,
                 'data-settings--password-submit-success-message-value' => $this->translator->trans('settings.feedback.success', [], 'navigation'),
+                'data-settings--password-submit-error-message-value' => $this->translator->trans('settings.feedback.error', [], 'navigation'),
             ],
             'csrf_token_id' => 'change_password',
             'action' => $updateUrl,

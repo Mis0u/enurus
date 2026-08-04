@@ -8,10 +8,15 @@ function nextTick() {
     return new Promise(resolve => setTimeout(resolve, 10));
 }
 
-async function buildDom(uploadUrl = '') {
+async function buildDom(uploadUrl = '', { deleteUrl = '', hasExistingPhoto = false } = {}) {
     document.body.innerHTML = `
         <div data-controller="workout--photo-upload"
-             data-workout--photo-upload-upload-url-value="${uploadUrl}">
+             data-workout--photo-upload-upload-url-value="${uploadUrl}"
+             data-workout--photo-upload-delete-url-value="${deleteUrl}"
+             data-workout--photo-upload-delete-csrf-token-value="token"
+             data-workout--photo-upload-has-existing-photo-value="${hasExistingPhoto}"
+             data-workout--photo-upload-max-size-value="5242880"
+             data-workout--photo-upload-accepted-types-value='["image/jpeg","image/png","image/webp"]'>
             <div data-workout--photo-upload-target="zone"
                  data-error-type="Type de fichier invalide"
                  data-error-size="Fichier trop volumineux"
@@ -26,7 +31,12 @@ async function buildDom(uploadUrl = '') {
                 <button data-action="click->workout--photo-upload#onRemove"></button>
                 <button data-action="click->workout--photo-upload#openLightbox"></button>
             </div>
-            <div data-workout--photo-upload-target="placeholder"></div>
+            <div data-workout--photo-upload-target="placeholder">
+                <div data-workout--photo-upload-target="existingPhotoBlock" class="${hasExistingPhoto ? '' : 'hidden'}">
+                    <button data-action="click->workout--photo-upload#onRemoveExisting"></button>
+                </div>
+                <div data-workout--photo-upload-target="addPromptBlock" class="${hasExistingPhoto ? 'hidden' : ''}"></div>
+            </div>
             <div data-workout--photo-upload-target="error" class="hidden"></div>
             <div data-workout--photo-upload-target="lightbox" class="hidden">
                 <img data-workout--photo-upload-target="lightboxImg">
@@ -98,30 +108,18 @@ describe('workout--photo-upload controller', () => {
         expect(global.fetch).not.toHaveBeenCalled();
     });
 
-    it('uploads immediately and dispatches the uploaded event when an upload URL is configured', async () => {
+    it('does not upload immediately even when an upload URL is configured — stays pending until uploadIfSelected()/commitPendingChanges()', async () => {
         await buildDom('/seance/123/photo');
-        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
-            ok: true,
-            json: async () => ({ path: 'workout/123/photo.jpg', url: '/media/workout/123/photo.jpg' }),
-        }));
-
-        const listener = vi.fn();
-        document.querySelector('[data-controller="workout--photo-upload"]')
-            .addEventListener('workout--photo-upload:uploaded', listener);
+        vi.stubGlobal('fetch', vi.fn());
 
         setInputFile(jpeg('photo.jpg'));
         await nextTick();
-        await nextTick();
 
-        expect(global.fetch).toHaveBeenCalledWith('/seance/123/photo', expect.objectContaining({ method: 'POST' }));
-        expect(listener).toHaveBeenCalledTimes(1);
-        expect(listener.mock.calls[0][0].detail).toEqual({
-            path: 'workout/123/photo.jpg',
-            url: '/media/workout/123/photo.jpg',
-        });
+        expect(document.querySelector('[data-workout--photo-upload-target="previewWrapper"]').classList.contains('hidden')).toBe(false);
+        expect(global.fetch).not.toHaveBeenCalled();
     });
 
-    it('shows a server error on upload failure (known race: a slower FileReader can re-show the preview after resetPreview() already ran)', async () => {
+    it('shows a server error when the deferred upload (uploadIfSelected) fails', async () => {
         await buildDom('/seance/123/photo');
         vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
             ok: false,
@@ -130,12 +128,13 @@ describe('workout--photo-upload controller', () => {
 
         setInputFile(jpeg('photo.jpg'));
         await nextTick();
-        await nextTick();
 
-        // #upload() résout en microtasks (fetch mocké) donc son resetPreview() s'exécute avant
-        // que le FileReader.onload de #showPreview() (macrotask) ne remette le wrapper visible :
-        // le message d'erreur est fiable, mais l'état visuel de la preview ne l'est pas — piège
-        // non corrigé ici (hors périmètre), signalé tel quel plutôt que masqué par le test.
+        const controller = application.getControllerForElementAndIdentifier(
+            document.querySelector('[data-controller="workout--photo-upload"]'),
+            'workout--photo-upload',
+        );
+        await controller.uploadIfSelected();
+
         expect(document.querySelector('[data-workout--photo-upload-target="error"]').textContent).toBe('Erreur serveur');
     });
 
@@ -149,6 +148,71 @@ describe('workout--photo-upload controller', () => {
         expect(document.querySelector('[data-workout--photo-upload-target="previewWrapper"]').classList.contains('hidden')).toBe(true);
         expect(document.querySelector('[data-workout--photo-upload-target="placeholder"]').classList.contains('hidden')).toBe(false);
         expect(fileInput().value).toBe('');
+    });
+
+    it('onRemoveExisting only toggles to the add-prompt block, without calling the server — actual deletion is deferred', async () => {
+        await buildDom('', { deleteUrl: '/seance/123/photo', hasExistingPhoto: true });
+        vi.stubGlobal('fetch', vi.fn());
+
+        document.querySelector('[data-workout--photo-upload-target="existingPhotoBlock"] button').click();
+
+        expect(document.querySelector('[data-workout--photo-upload-target="existingPhotoBlock"]').classList.contains('hidden')).toBe(true);
+        expect(document.querySelector('[data-workout--photo-upload-target="addPromptBlock"]').classList.contains('hidden')).toBe(false);
+        expect(global.fetch).not.toHaveBeenCalled();
+    });
+
+    it('commitPendingChanges deletes the existing photo when marked for removal and no new file was selected', async () => {
+        await buildDom('', { deleteUrl: '/seance/123/photo', hasExistingPhoto: true });
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({ success: true }) }));
+
+        const zone = document.querySelector('[data-controller="workout--photo-upload"]');
+        const controller = application.getControllerForElementAndIdentifier(zone, 'workout--photo-upload');
+
+        document.querySelector('[data-workout--photo-upload-target="existingPhotoBlock"] button').click();
+        await controller.commitPendingChanges();
+
+        expect(global.fetch).toHaveBeenCalledWith('/seance/123/photo', expect.objectContaining({ method: 'DELETE' }));
+    });
+
+    it('commitPendingChanges does nothing when no file was selected and no deletion is pending', async () => {
+        await buildDom('', { deleteUrl: '/seance/123/photo', hasExistingPhoto: true });
+        vi.stubGlobal('fetch', vi.fn());
+
+        const zone = document.querySelector('[data-controller="workout--photo-upload"]');
+        const controller = application.getControllerForElementAndIdentifier(zone, 'workout--photo-upload');
+        await controller.commitPendingChanges();
+
+        expect(global.fetch).not.toHaveBeenCalled();
+    });
+
+    it('commitPendingChanges uploads the newly selected file instead of deleting, when a deletion was also pending', async () => {
+        await buildDom('/seance/123/photo', { deleteUrl: '/seance/123/photo', hasExistingPhoto: true });
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+            ok: true,
+            json: async () => ({ path: 'workout/123/photo.jpg', url: '/media/workout/123/photo.jpg' }),
+        }));
+
+        document.querySelector('[data-workout--photo-upload-target="existingPhotoBlock"] button').click();
+        setInputFile(jpeg('photo.jpg'));
+        await nextTick();
+
+        const zone = document.querySelector('[data-controller="workout--photo-upload"]');
+        const controller = application.getControllerForElementAndIdentifier(zone, 'workout--photo-upload');
+        await controller.commitPendingChanges();
+
+        expect(global.fetch).toHaveBeenCalledWith('/seance/123/photo', expect.objectContaining({ method: 'POST' }));
+        expect(global.fetch).not.toHaveBeenCalledWith('/seance/123/photo', expect.objectContaining({ method: 'DELETE' }));
+    });
+
+    it('onRemove after cancelling a replacement restores the existing-photo view when no deletion was pending', async () => {
+        await buildDom('', { hasExistingPhoto: true });
+        setInputFile(jpeg('photo.jpg'));
+        await nextTick();
+
+        document.querySelectorAll('[data-workout--photo-upload-target="previewWrapper"] button')[0].click();
+
+        expect(document.querySelector('[data-workout--photo-upload-target="existingPhotoBlock"]').classList.contains('hidden')).toBe(false);
+        expect(document.querySelector('[data-workout--photo-upload-target="addPromptBlock"]').classList.contains('hidden')).toBe(true);
     });
 
     it('openLightbox and closeLightbox toggle the lightbox visibility', async () => {

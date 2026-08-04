@@ -312,8 +312,8 @@ reset_password_request:
     info_email: Je ontvangt deze e-mail omdat er een wachtwoordherstel is aangevraagd voor je account
     info_link_life: Deze link verloopt over {hour}. Na het wijzigen van je wachtwoord word je doorgestuurd naar de inlogpagina.
     info_reset_password: Voer je e-mailadres in en je ontvangt een link om je wachtwoord te herstellen.
-    message_problem_handle: Er is een probleem opgetreden bij het verwerken van uw verzoek om wachtwoordherstel
-    message_problem_validate: Er is een probleem opgetreden bij het valideren van uw verzoek om wachtwoordherstel
+    message_problem_handle: Er is een probleem opgetreden bij het verwerken van je verzoek om wachtwoordherstel
+    message_problem_validate: Er is een probleem opgetreden bij het valideren van je verzoek om wachtwoordherstel
     new_password: Maak je nieuwe wachtwoord aan
     not_asking_reset: Als je dit herstel niet hebt aangevraagd, negeer dan deze e-mail. Je huidige wachtwoord blijft ongewijzigd.
     reset_email_password_send: Herstel-e-mail verzonden
@@ -408,7 +408,7 @@ settings:
             title: Account verwijderd
         requested:
             body: Hallo {nickname}, je verzoek tot accountverwijdering is geregistreerd. Je account wordt definitief verwijderd op {deadline} als je niet opnieuw inlogt voor die datum.
-            cancel_hint: Om deze verwijdering te annuleren, log je gewoon opnieuw in voor die datum — geen verdere actie nodig.
+            cancel_hint: Om deze verwijdering te annuleren, log je gewoon opnieuw in voor die datum.
             subject: Je verzoek tot accountverwijdering is geregistreerd
             title: Accountverwijdering in behandeling
     account_unblocked:
@@ -434,6 +434,7 @@ settings:
         label: E-mail
         not_editable: Niet bewerkbaar
     feedback:
+        error: Er is een fout opgetreden, probeer het later opnieuw
         success: Wijziging opgeslagen
     gender:
         female: Vrouw

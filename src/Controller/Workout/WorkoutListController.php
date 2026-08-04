@@ -11,6 +11,7 @@ use App\Repository\WorkoutRepository;
 use App\Repository\WorkoutStatsRepository;
 use App\Repository\WorkoutTonnageRepository;
 use App\Service\Utils\WeightConverterService;
+use App\Service\Workout\WorkoutRecordDetectionService;
 use DateTimeImmutable;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -46,7 +47,8 @@ class WorkoutListController extends AbstractController
         WorkoutMuscleRepository $workoutMuscleRepository,
         WorkoutStatsRepository $workoutStatsRepository,
         PaginatorInterface $paginator,
-        WeightConverterService $weightConverter
+        WeightConverterService $weightConverter,
+        WorkoutRecordDetectionService $workoutRecordDetectionService,
     ): Response {
         /** @var User $user */
         $user = $this->getUser();
@@ -69,6 +71,8 @@ class WorkoutListController extends AbstractController
 
         $hiddenCountMap = $this->computeHiddenMuscleCountMap($musclesMap);
         $exerciseCountMap = $workoutStatsRepository->findExerciseCountByWorkoutIds($workoutIds);
+        $hasPrMap = $workoutRecordDetectionService->hasPrByWorkoutId($user, $workoutIds);
+        $hasRepsRecordMap = $workoutRecordDetectionService->hasRepsRecordByWorkoutId($user, $workoutIds);
 
         return $this->render('workout/list/index.html.twig', [
             'user' => $user,
@@ -80,6 +84,8 @@ class WorkoutListController extends AbstractController
             'filterDate' => $filterDate,
             'limitAllowed' => self::DISPLAY_LIMIT_ALLOWED,
             'exerciseCountMap' => $exerciseCountMap,
+            'hasPrMap' => $hasPrMap,
+            'hasRepsRecordMap' => $hasRepsRecordMap,
         ]);
     }
 

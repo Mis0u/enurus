@@ -235,8 +235,8 @@ login:
     connexion: Login
     create_an_account: Criar uma conta
     create_my_account: Criar a minha conta
-    forgot_password: Esqueceu a sua palavra-passe?
-    no_account_yet: Ainda não tem conta?
+    forgot_password: Esqueceste-te da tua palavra-passe?
+    no_account_yet: Ainda não tens conta?
     remember_me: Lembrar-me
 
 messagerie:
@@ -408,7 +408,7 @@ settings:
             title: Conta eliminada
         requested:
             body: Olá {nickname}, o teu pedido de eliminação de conta foi registado. A tua conta será definitivamente eliminada em {deadline} se não voltares a iniciar sessão antes dessa data.
-            cancel_hint: Para cancelar esta eliminação, basta voltares a iniciar sessão antes dessa data — nenhuma outra ação necessária.
+            cancel_hint: Para cancelar esta eliminação, basta voltares a iniciar sessão antes dessa data.
             subject: O teu pedido de eliminação de conta foi registado
             title: Eliminação de conta em curso
     account_unblocked:
@@ -434,6 +434,7 @@ settings:
         label: Email
         not_editable: Não modificável
     feedback:
+        error: Ocorreu um erro, tenta novamente mais tarde
         success: Alteração efetuada
     gender:
         female: Mulher
