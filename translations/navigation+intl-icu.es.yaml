@@ -93,7 +93,7 @@ dashboard:
             breakdown: "{primaryCount, plural, =1 {# serie primaria} other {# series primarias}} · {secondaryCount, plural, =1 {# serie secundaria} other {# series secundarias}}"
             filter:
                 month: Mes
-                session: Último entrenamiento
+                session: Último día de entrenamiento
                 week: Semana
             last_solicited: "{days, plural, =0 {Trabajado hoy} =1 {Última vez: hace 1 día} other {Última vez: hace # días}}"
             more_muscles: "{count, plural, =1 {+ # músculo trabajado adicional} other {+ # músculos trabajados adicionales}}"

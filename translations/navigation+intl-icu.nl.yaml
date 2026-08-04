@@ -93,7 +93,7 @@ dashboard:
             breakdown: "{primaryCount, plural, =1 {# primaire set} other {# primaire sets}} · {secondaryCount, plural, =1 {# secundaire set} other {# secundaire sets}}"
             filter:
                 month: Maand
-                session: Laatste training
+                session: Laatste trainingsdag
                 week: Week
             last_solicited: "{days, plural, =0 {Vandaag getraind} =1 {Laatste keer: 1 dag geleden} other {Laatste keer: # dagen geleden}}"
             more_muscles: "{count, plural, =1 {+ # andere getrainde spier} other {+ # andere getrainde spieren}}"

@@ -93,7 +93,7 @@ dashboard:
             breakdown: "{primaryCount, plural, =1 {# primary set} other {# primary sets}} · {secondaryCount, plural, =1 {# secondary set} other {# secondary sets}}"
             filter:
                 month: Month
-                session: Last workout
+                session: Last day trained
                 week: Week
             last_solicited: "{days, plural, =0 {Worked today} =1 {Last time: 1 day ago} other {Last time: # days ago}}"
             more_muscles: "{count, plural, =1 {+ # more muscle worked} other {+ # more muscles worked}}"
