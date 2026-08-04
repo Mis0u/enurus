@@ -21,7 +21,10 @@
         {{ form_start(form) }}
         {% include 'workout/create/_config-bar.html.twig' with {'form': form, 'user': user} only %}
         {% include 'workout/create/_exercise_list.html.twig' only %}
-        {% include 'workout/create/_note_modal.html.twig' only %}
+        {% include 'workout/create/_note_modal.html.twig' with {
+            'imageMaxSizeBytes': imageMaxSizeBytes,
+            'imageAllowedMimeTypes': imageAllowedMimeTypes,
+        } only %}
         {{ component('LiveComponent:ExerciseSelectorComponent:ExerciseSelectorComponent') }}
         {{ form_end(form) }}
     </div>

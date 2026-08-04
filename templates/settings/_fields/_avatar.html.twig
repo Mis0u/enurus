@@ -33,7 +33,7 @@
             </label>
             <input type="file"
                    id="avatarInput"
-                   accept="image/jpeg,image/png,image/webp"
+                   accept="{{ avatarAllowedMimeTypes|join(',') }}"
                    class="hidden"
                    data-settings--avatar-target="input"
                    data-action="change->settings--avatar#upload">

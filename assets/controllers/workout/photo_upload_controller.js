@@ -12,8 +12,8 @@ export default class extends Controller {
         deleteUrl: { type: String, default: '' },
         deleteCsrfToken: { type: String, default: '' },
         hasExistingPhoto: { type: Boolean, default: false },
-        maxSize: { type: Number, default: 5242880 }, // 5 Mo
-        acceptedTypes: { type: Array, default: ['image/jpeg', 'image/png', 'image/webp'] },
+        maxSize: Number,
+        acceptedTypes: Array,
     };
 
     #selectedFile = null;

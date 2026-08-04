@@ -14,7 +14,9 @@ async function buildDom(uploadUrl = '', { deleteUrl = '', hasExistingPhoto = fal
              data-workout--photo-upload-upload-url-value="${uploadUrl}"
              data-workout--photo-upload-delete-url-value="${deleteUrl}"
              data-workout--photo-upload-delete-csrf-token-value="token"
-             data-workout--photo-upload-has-existing-photo-value="${hasExistingPhoto}">
+             data-workout--photo-upload-has-existing-photo-value="${hasExistingPhoto}"
+             data-workout--photo-upload-max-size-value="5242880"
+             data-workout--photo-upload-accepted-types-value='["image/jpeg","image/png","image/webp"]'>
             <div data-workout--photo-upload-target="zone"
                  data-error-type="Type de fichier invalide"
                  data-error-size="Fichier trop volumineux"

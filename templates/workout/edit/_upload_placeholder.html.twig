@@ -4,11 +4,11 @@
      data-workout--photo-upload-delete-url-value="{{ path('workout_delete_photo', {'id': workout.id, '_locale': app.request.locale}) }}"
      data-workout--photo-upload-delete-csrf-token-value="{{ csrf_token('workout_photo_delete_' ~ workout.id) }}"
      data-workout--photo-upload-has-existing-photo-value="{{ workout.photoPath is not null ? 'true' : 'false' }}"
-     data-workout--photo-upload-accepted-types-value='["image/jpeg","image/png","image/webp"]'
-     data-workout--photo-upload-max-size-value="5242880">
+     data-workout--photo-upload-accepted-types-value="{{ imageAllowedMimeTypes|json_encode }}"
+     data-workout--photo-upload-max-size-value="{{ imageMaxSizeBytes }}">
 
     {% include 'workout/edit/_upload/_header.html.twig' only %}
-    {% include 'workout/edit/_upload/_zone.html.twig' with {'workout': workout} only %}
+    {% include 'workout/edit/_upload/_zone.html.twig' with {'workout': workout, 'imageAllowedMimeTypes': imageAllowedMimeTypes} only %}
 
     <p data-workout--photo-upload-target="error"
        class="hidden text-rose-400 text-[12px] mt-2"></p>
