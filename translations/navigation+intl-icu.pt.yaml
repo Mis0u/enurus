@@ -124,7 +124,7 @@ dashboard:
             annual_total_label: "Total do ano {year}:"
             exercises: "{count, plural, =1 {Exercício} other {Exercícios}}"
             filter:
-                last: Último treino
+                last: Último dia de treino
                 month: Mês atual
                 week: Semana
             pr_count: "{count, plural, =1 {# PR batido} other {# PR batidos}}"
@@ -133,6 +133,7 @@ dashboard:
             reps_record_badge: Recorde de repetições
             reps_record_count: "{count, plural, =1 {+ # recorde de repetições} other {+ # recordes de repetições}}"
             reps_record_tooltip: "Um recorde de repetições é atingido quando fazes mais repetições do que antes com um peso que já levantaste."
+            sessions: "{count, plural, =1 {Sessão} other {Sessões}}"
             title: Sessão
         tonnage:
             annual_total_label: "Total do ano {year}:"

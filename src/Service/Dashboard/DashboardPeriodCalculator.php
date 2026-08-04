@@ -12,6 +12,14 @@ namespace App\Service\Dashboard;
  */
 final readonly class DashboardPeriodCalculator
 {
+    public function dayOf(\DateTimeImmutable $date): DashboardPeriod
+    {
+        return new DashboardPeriod(
+            $date->setTime(0, 0, 0),
+            $date->setTime(23, 59, 59),
+        );
+    }
+
     public function currentWeek(\DateTimeImmutable $now): DashboardPeriod
     {
         $start = $this->weekStartOf($now);

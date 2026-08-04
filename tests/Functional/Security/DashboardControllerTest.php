@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Security;
 
 use App\Repository\WorkoutRepository;
-use App\Service\Dashboard\DashboardSessionSummaryService;
+use App\Repository\WorkoutStatsRepository;
+use App\Service\Dashboard\DashboardPeriodCalculator;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -116,37 +117,47 @@ class DashboardControllerTest extends WebTestCase
         self::assertSelectorExists('[data-dashboard--session-target="exercises"]');
     }
 
-    public function testDashboardSessionStatsMatchLatestWorkout(): void
+    public function testDashboardSessionStatsMatchLastTrainingDay(): void
     {
         $client = $this->login(self::USER_WITH_WORKOUTS);
         $user = $this->getUserByEmail(self::USER_WITH_WORKOUTS);
 
         /** @var WorkoutRepository $workoutRepository */
         $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
-        $lastWorkout = $workoutRepository->findLatestByUser($user);
-        self::assertNotNull($lastWorkout, 'Le fixture user doit avoir au moins une séance');
+        $lastPerformedAt = $workoutRepository->findLastPerformedAtByUser($user);
+        self::assertNotNull($lastPerformedAt, 'Le fixture user doit avoir au moins une séance');
 
-        /** @var DashboardSessionSummaryService $summaryService */
-        $summaryService = static::getContainer()->get(DashboardSessionSummaryService::class);
-        $summary = $summaryService->summarize($lastWorkout);
+        /** @var DashboardPeriodCalculator $periodCalculator */
+        $periodCalculator = static::getContainer()->get(DashboardPeriodCalculator::class);
+        $day = $periodCalculator->dayOf($lastPerformedAt);
+
+        /** @var WorkoutStatsRepository $workoutStatsRepository */
+        $workoutStatsRepository = static::getContainer()->get(WorkoutStatsRepository::class);
+        $dayTotals = $workoutStatsRepository->findExerciseSetRepTotals($user, $day->start, $day->end);
+        $daySessionsCount = $workoutStatsRepository->countByUserAndDate($user, $day->start, $day->end);
 
         $crawler = $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
 
         self::assertResponseIsSuccessful();
         self::assertSame(
-            (string) $lastWorkout->workoutExercises->count(),
+            (string) $daySessionsCount,
+            $crawler->filter('[data-dashboard--session-target="sessions"]')->text(),
+            'Le nombre de séances affiché doit correspondre à la dernière journée d\'entraînement'
+        );
+        self::assertSame(
+            (string) $dayTotals['exercises'],
             $crawler->filter('[data-dashboard--session-target="exercises"]')->text(),
-            'Le nombre d\'exercices affiché doit correspondre à la dernière séance'
+            'Le nombre d\'exercices affiché doit correspondre à la dernière journée d\'entraînement'
         );
         self::assertSame(
-            (string) $summary['totalSets'],
+            (string) $dayTotals['sets'],
             $crawler->filter('[data-dashboard--session-target="sets"]')->text(),
-            'Le nombre de séries affiché doit correspondre à la dernière séance'
+            'Le nombre de séries affiché doit correspondre à la dernière journée d\'entraînement'
         );
         self::assertSame(
-            (string) $summary['totalReps'],
+            (string) $dayTotals['reps'],
             $crawler->filter('[data-dashboard--session-target="reps"]')->text(),
-            'Le nombre de répétitions affiché doit correspondre à la dernière séance'
+            'Le nombre de répétitions affiché doit correspondre à la dernière journée d\'entraînement'
         );
     }
 }

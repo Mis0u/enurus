@@ -124,7 +124,7 @@ dashboard:
             annual_total_label: "Łącznie w roku {year}:"
             exercises: "{count, plural, =1 {Ćwiczenie} few {Ćwiczenia} many {Ćwiczeń} other {Ćwiczeń}}"
             filter:
-                last: Ostatni trening
+                last: Ostatni dzień treningowy
                 month: Bieżący miesiąc
                 week: Tydzień
             pr_count: "{count, plural, =1 {# pobity rekord} few {# pobite rekordy} many {# pobitych rekordów} other {# pobitego rekordu}}"
@@ -133,6 +133,7 @@ dashboard:
             reps_record_badge: Rekord powtórzeń
             reps_record_count: "{count, plural, =1 {+ # rekord powtórzeń} few {+ # rekordy powtórzeń} many {+ # rekordów powtórzeń} other {+ # rekordu powtórzeń}}"
             reps_record_tooltip: "Rekord powtórzeń zostaje osiągnięty, gdy wykonujesz więcej powtórzeń niż wcześniej przy ciężarze, który już podniosłeś."
+            sessions: "{count, plural, =1 {Sesja} few {Sesje} many {Sesji} other {Sesji}}"
             title: Trening
         tonnage:
             annual_total_label: "Łącznie w roku {year}:"

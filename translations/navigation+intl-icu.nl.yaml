@@ -124,7 +124,7 @@ dashboard:
             annual_total_label: "Totaal voor jaar {year}:"
             exercises: "{count, plural, =1 {Oefening} other {Oefeningen}}"
             filter:
-                last: Laatste training
+                last: Laatste trainingsdag
                 month: Huidige maand
                 week: Week
             pr_count: "{count, plural, =1 {# PR verbroken} other {# PR's verbroken}}"
@@ -133,6 +133,7 @@ dashboard:
             reps_record_badge: Herhalingsrecord
             reps_record_count: "{count, plural, =1 {+ # herhalingsrecord} other {+ # herhalingsrecords}}"
             reps_record_tooltip: "Een herhalingsrecord behaal je wanneer je meer herhalingen doet dan voorheen bij een gewicht dat je al hebt getild."
+            sessions: "{count, plural, =1 {Sessie} other {Sessies}}"
             title: Training
         tonnage:
             annual_total_label: "Totaal voor jaar {year}:"

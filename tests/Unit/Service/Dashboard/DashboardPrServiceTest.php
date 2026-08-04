@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 final class DashboardPrServiceTest extends TestCase
 {
-    public function testCountPrsByFilterCountsOnlyEventsMatchingTheLastWorkoutId(): void
+    public function testCountPrsByFilterCountsOnlyEventsMatchingTheDayPeriod(): void
     {
         $detectionService = $this->createStub(WorkoutRecordDetectionService::class);
         $detectionService->method('findPrEvents')->willReturn([
@@ -28,10 +28,11 @@ final class DashboardPrServiceTest extends TestCase
 
         $service = new DashboardPrService($detectionService);
         $week = new DashboardPeriod(new \DateTimeImmutable('-7 days'), new \DateTimeImmutable('+1 day'));
+        $day = new DashboardPeriod(new \DateTimeImmutable('now')->setTime(0, 0, 0), new \DateTimeImmutable('now')->setTime(23, 59, 59));
 
         $result = $service->countPrsByFilter(
             $this->createStub(User::class),
-            'workout-2',
+            $day,
             $week,
             $week,
         );
@@ -40,7 +41,7 @@ final class DashboardPrServiceTest extends TestCase
         self::assertSame(1, $result['last']);
     }
 
-    public function testCountRepsRecordsByFilterCountsOnlyEventsMatchingTheLastWorkoutId(): void
+    public function testCountRepsRecordsByFilterCountsOnlyEventsMatchingTheDayPeriod(): void
     {
         $detectionService = $this->createStub(WorkoutRecordDetectionService::class);
         $detectionService->method('findRepsRecordEvents')->willReturn([
@@ -52,10 +53,11 @@ final class DashboardPrServiceTest extends TestCase
 
         $service = new DashboardPrService($detectionService);
         $week = new DashboardPeriod(new \DateTimeImmutable('-7 days'), new \DateTimeImmutable('+1 day'));
+        $day = new DashboardPeriod(new \DateTimeImmutable('now')->setTime(0, 0, 0), new \DateTimeImmutable('now')->setTime(23, 59, 59));
 
         $result = $service->countRepsRecordsByFilter(
             $this->createStub(User::class),
-            'workout-2',
+            $day,
             $week,
             $week,
         );
@@ -104,7 +106,7 @@ final class DashboardPrServiceTest extends TestCase
 
         $result = $service->countPrsByFilter(
             $this->createStub(User::class),
-            'workout-none',
+            $farPeriod,
             $week,
             $farPeriod,
         );
@@ -148,7 +150,7 @@ final class DashboardPrServiceTest extends TestCase
 
         $result = $service->countPrsByFilter(
             $this->createStub(User::class),
-            'workout-none',
+            $this->farPeriod(),
             $this->farPeriod(),
             $month,
         );
