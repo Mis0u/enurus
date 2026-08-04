@@ -47,6 +47,7 @@ final class RoutineCrudController extends AbstractCrudController
             ->setDefaultSort([
                 'createdAt' => 'DESC',
             ])
+            ->setTimezone('Europe/Paris')
         ;
     }
 

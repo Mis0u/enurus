@@ -42,6 +42,7 @@ final class DeletedAccountTraceCrudController extends AbstractCrudController
             ->setDefaultSort([
                 'deletedAt' => 'DESC',
             ])
+            ->setTimezone('Europe/Paris')
         ;
     }
 

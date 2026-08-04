@@ -41,7 +41,11 @@
         <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md border text-[10.5px] font-semibold whitespace-nowrap {{ category_class }}">
             {{ category_emoji }} {{ category_label }}
         </span>
-        <span class="text-[11.5px] text-[#4a5568] whitespace-nowrap shrink-0">
+        <span class="text-[11.5px] text-[#4a5568] whitespace-nowrap shrink-0"
+              data-controller="local-datetime"
+              data-local-datetime-iso-value="{{ thread.updatedAt|date('c') }}"
+              data-local-datetime-locale-value="{{ app.user.locale }}"
+              data-local-datetime-style-value="date">
             {{ thread.updatedAt|format_datetime(pattern: 'd MMMM yyyy', locale: app.user.locale) }}
         </span>
     </div>

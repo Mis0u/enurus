@@ -2,7 +2,10 @@
     <div class="admin-message {{ message.fromAdmin ? 'admin-message--admin' }}">
         <div class="admin-message-meta">
             <strong>{{ message.fromAdmin ? 'admin.thread.message.author_admin'|trans({}, 'admin', 'fr') : 'admin.thread.message.author_user'|trans({}, 'admin', 'fr') }}</strong>
-            — {{ message.createdAt|date('d/m/Y H:i') }}
+            — <span data-controller="local-datetime"
+                     data-local-datetime-iso-value="{{ message.createdAt|date('c') }}"
+                     data-local-datetime-locale-value="fr"
+                     data-local-datetime-style-value="datetime-numeric">{{ message.createdAt|date('d/m/Y H:i') }}</span>
         </div>
         <div class="admin-message-body">{{ message.fromAdmin ? message.body|raw : message.body }}</div>
         {% if message.imagePath %}
