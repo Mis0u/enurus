@@ -39,4 +39,18 @@ final readonly class WorkoutPhotoService
     {
         $this->imageUploadService->delete($workout->photoPath);
     }
+
+    /**
+     * Retire la photo d'une séance sans la supprimer elle-même — contrairement à
+     * `deletePhoto()`, appelé quand le workout entier disparaît (pas de flush nécessaire là).
+     */
+    public function remove(Workout $workout): void
+    {
+        $oldPath = $workout->photoPath;
+
+        $workout->photoPath = null;
+        $this->em->flush();
+
+        $this->imageUploadService->delete($oldPath);
+    }
 }

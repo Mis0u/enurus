@@ -1,15 +1,27 @@
 import { Controller } from '@hotwired/stimulus';
+import { sendDeleteRequest } from '../../utils/delete_confirmation.js';
 
 export default class extends Controller {
-    static targets = ['zone', 'input', 'preview', 'previewWrapper', 'placeholder', 'error', 'filename', 'lightbox', 'lightboxImg'];
+    static targets = [
+        'zone', 'input', 'preview', 'previewWrapper', 'placeholder', 'error', 'filename', 'lightbox', 'lightboxImg',
+        'existingPhotoBlock', 'addPromptBlock',
+    ];
 
     static values = {
         uploadUrl: { type: String, default: '' },
+        deleteUrl: { type: String, default: '' },
+        deleteCsrfToken: { type: String, default: '' },
+        hasExistingPhoto: { type: Boolean, default: false },
         maxSize: { type: Number, default: 5242880 }, // 5 Mo
         acceptedTypes: { type: Array, default: ['image/jpeg', 'image/png', 'image/webp'] },
     };
 
     #selectedFile = null;
+
+    // Retirer une photo déjà enregistrée (édition) ne doit rien envoyer au serveur tout de suite —
+    // seulement au moment où le formulaire est réellement soumis (cf. commitPendingChanges()),
+    // sinon "Annuler" laisse la suppression appliquée malgré tout (bug corrigé ici).
+    #pendingDelete = false;
 
     connect() {
         this.#preventDefaultDragBehavior();
@@ -51,6 +63,35 @@ export default class extends Controller {
         this.#resetPreview();
         this.inputTarget.value = '';
         this.#selectedFile = null;
+        this.#refreshExistingPhotoSubState();
+    }
+
+    /**
+     * Marque la photo déjà enregistrée pour suppression — purement local, aucun appel serveur.
+     * La suppression réelle n'a lieu qu'à la soumission du formulaire (commitPendingChanges()),
+     * sinon cliquer "Annuler" ensuite laisserait la suppression appliquée malgré tout.
+     */
+    onRemoveExisting() {
+        this.#pendingDelete = true;
+        this.#refreshExistingPhotoSubState();
+    }
+
+    /**
+     * Applique les changements de photo en attente — appelé juste avant la soumission réelle du
+     * formulaire d'édition (jamais si l'utilisateur clique "Annuler", qui ne fait que naviguer).
+     * Un nouveau fichier sélectionné prend toujours priorité sur une suppression en attente
+     * (remplacer == la photo existante disparaît de toute façon).
+     */
+    async commitPendingChanges() {
+        if (this.#selectedFile) {
+            return this.uploadIfSelected();
+        }
+
+        if (this.#pendingDelete && this.deleteUrlValue) {
+            await sendDeleteRequest(this.deleteUrlValue, this.deleteCsrfTokenValue);
+        }
+
+        return null;
     }
 
     // ─── Lightbox ────────────────────────────────────────────────
@@ -88,11 +129,9 @@ export default class extends Controller {
         this.#selectedFile = file;
         this.#showPreview(file);
 
-        // Si l'URL est déjà connue (page d'édition), upload immédiat
-        // Sinon (modale création), l'upload sera déclenché par uploadIfSelected()
-        if (this.uploadUrlValue) {
-            this.#upload(file);
-        }
+        // Upload toujours différé (édition comme création) jusqu'à uploadIfSelected()/
+        // commitPendingChanges(), appelés à la soumission réelle du formulaire — jamais au choix
+        // du fichier lui-même, sinon "Annuler" ne peut plus annuler ce changement (bug corrigé).
     }
 
     #validate(file) {
@@ -122,6 +161,21 @@ export default class extends Controller {
             this.filenameTarget.textContent = file.name;
         };
         reader.readAsDataURL(file);
+    }
+
+    /**
+     * Bascule entre "photo déjà enregistrée" et "aucune photo, en ajouter une" à l'intérieur du
+     * placeholder — sans effet en création, qui n'a pas ces deux targets (aucune photo ne peut
+     * déjà exister pour une séance pas encore créée).
+     */
+    #refreshExistingPhotoSubState() {
+        if (!this.hasExistingPhotoBlockTarget || !this.hasAddPromptBlockTarget) {
+            return;
+        }
+
+        const showExisting = this.hasExistingPhotoValue && !this.#pendingDelete;
+        this.existingPhotoBlockTarget.classList.toggle('hidden', !showExisting);
+        this.addPromptBlockTarget.classList.toggle('hidden', showExisting);
     }
 
     #resetPreview() {

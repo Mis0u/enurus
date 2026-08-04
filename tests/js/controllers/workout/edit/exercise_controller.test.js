@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { Application } from '@hotwired/stimulus';
+import { Application, Controller } from '@hotwired/stimulus';
 
 const fireMock = vi.fn();
 vi.mock('sweetalert2', () => ({ default: { fire: fireMock } }));
@@ -66,8 +66,29 @@ describe('workout--edit--exercise controller', () => {
         const requestSubmit = vi.spyOn(form, 'requestSubmit').mockImplementation(() => {});
 
         document.getElementById('workout-edit-submit-btn').click();
+        await nextTick();
 
         expect(fireMock).not.toHaveBeenCalled();
         expect(requestSubmit).toHaveBeenCalledTimes(1);
+    });
+
+    it('commits pending photo changes before submitting when a photo-upload controller is present', async () => {
+        buildDom({ dateValue: '2026-08-02', exerciseCards: '<div data-exercise-index="0"></div>' });
+        document.body.insertAdjacentHTML('beforeend', '<div data-controller="workout--photo-upload"></div>');
+        await nextTick();
+
+        const form = document.getElementById('workout-edit-form');
+        vi.spyOn(form, 'requestSubmit').mockImplementation(() => {});
+
+        const commitPendingChanges = vi.fn().mockResolvedValue(null);
+        application.register('workout--photo-upload', class extends Controller {
+            commitPendingChanges = commitPendingChanges;
+        });
+        await nextTick();
+
+        document.getElementById('workout-edit-submit-btn').click();
+        await nextTick();
+
+        expect(commitPendingChanges).toHaveBeenCalledTimes(1);
     });
 });
