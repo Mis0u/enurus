@@ -119,12 +119,15 @@ class WorkoutEditControllerTest extends WebTestCase
     public function testEditUpdatesPerformedAt(): void
     {
         [$client, $workout, $url, $payload] = $this->prepareEditRequest(self::USER);
+        $originalTime = $workout->performedAt->format('H:i:s');
         $payload['workout']['performedAt'] = '2025-01-15';
 
         $client->request(Request::METHOD_POST, $url, $payload);
 
         $updated = $this->findUpdatedWorkout($workout->id);
-        $this->assertSame('2025-01-15 00:00:00', $updated->performedAt->format('Y-m-d H:i:s'));
+        // La date change, mais l'heure d'origine est préservée (pas de sélecteur d'heure dans le
+        // formulaire) — éditer une séance ne doit jamais changer son tri parmi celles du même jour.
+        $this->assertSame('2025-01-15 ' . $originalTime, $updated->performedAt->format('Y-m-d H:i:s'));
     }
 
     public function testEditFormRendersDateDuplicateCheckExcludingCurrentWorkout(): void

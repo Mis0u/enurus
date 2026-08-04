@@ -54,6 +54,8 @@ class WorkoutEditController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
+        $originalPerformedAt = $workout->performedAt;
+
         $form = $this->createForm(WorkoutType::class, $workout, [
             'is_edit' => true,
         ]);
@@ -61,6 +63,14 @@ class WorkoutEditController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', $translator->trans('workout.flash.updated', [], 'navigation'));
+            // `DateType` reconstruit performedAt à minuit (pas de sélecteur d'heure) — on restaure
+            // l'heure d'origine sur la date (potentiellement modifiée) pour qu'éditer une séance ne
+            // change jamais son tri parmi les séances du même jour.
+            $workout->performedAt = $workout->performedAt->setTime(
+                (int) $originalPerformedAt->format('H'),
+                (int) $originalPerformedAt->format('i'),
+                (int) $originalPerformedAt->format('s'),
+            );
             $weightConverter->convertWorkoutSetsToKg($workout, $user->unitOfMeasure);
             $em->flush();
 

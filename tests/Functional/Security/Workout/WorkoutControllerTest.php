@@ -65,6 +65,22 @@ class WorkoutControllerTest extends WebTestCase
         $this->assertSame(self::USER, $workout->owner->email);
     }
 
+    public function testPerformedAtIsStampedWithCurrentTimeNotMidnight(): void
+    {
+        $client = $this->login(self::USER);
+        $before = new \DateTimeImmutable();
+        $this->submitWorkout($client);
+        $after = new \DateTimeImmutable();
+
+        $workout = $this->getLatestWorkout(self::USER);
+
+        // Pas de sélecteur d'heure dans le formulaire — sans ce comportement, performedAt tomberait
+        // à minuit et plusieurs séances loguées le même jour ne pourraient plus se départager par
+        // ordre d'ajout dans le tri `performedAt DESC` (cf. WorkoutController::stampCurrentTime()).
+        $this->assertGreaterThanOrEqual($before->getTimestamp(), $workout->performedAt->getTimestamp());
+        $this->assertLessThanOrEqual($after->getTimestamp(), $workout->performedAt->getTimestamp());
+    }
+
     public function testWorkoutWithoutRoutineHasNullRoutine(): void
     {
         $client = $this->login(self::USER);

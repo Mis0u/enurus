@@ -71,6 +71,7 @@ final class WorkoutController extends AbstractController
         Request $request,
     ): Response {
         $workout->owner = $user;
+        $workout->performedAt = $this->stampCurrentTime($workout->performedAt);
         $this->weightConverterService->convertWorkoutSetsToKg($workout, $user->unitOfMeasure);
 
         $this->em->persist($workout);
@@ -83,6 +84,23 @@ final class WorkoutController extends AbstractController
         }
 
         return $this->redirectToRoute('app_dashboard');
+    }
+
+    /**
+     * Le champ date du formulaire n'a pas de sélecteur d'heure : `DateType` reconstruit
+     * `performedAt` à minuit pile. On y substitue l'heure réelle de l'enregistrement pour que
+     * plusieurs séances loguées le même jour se trient par ordre d'ajout plutôt que de partager
+     * toutes minuit (ordre alors indéfini côté tri DESC).
+     */
+    private function stampCurrentTime(\DateTimeImmutable $performedAt): \DateTimeImmutable
+    {
+        $now = new \DateTimeImmutable();
+
+        return $performedAt->setTime(
+            (int) $now->format('H'),
+            (int) $now->format('i'),
+            (int) $now->format('s'),
+        );
     }
 
     private function handleInvalidForm(Request $request): Response
