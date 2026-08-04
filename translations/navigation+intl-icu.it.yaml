@@ -434,6 +434,7 @@ settings:
         label: Email
         not_editable: Non modificabile
     feedback:
+        error: Si è verificato un errore, riprova più tardi
         success: Modifica effettuata
     gender:
         female: Donna

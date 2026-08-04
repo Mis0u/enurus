@@ -444,6 +444,7 @@ settings:
         label: E-mail
         not_editable: Nie można edytować
     feedback:
+        error: Wystąpił błąd, spróbuj ponownie później
         success: Zmiana zapisana
     gender:
         female: Kobieta

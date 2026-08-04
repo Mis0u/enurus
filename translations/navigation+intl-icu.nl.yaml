@@ -434,6 +434,7 @@ settings:
         label: E-mail
         not_editable: Niet bewerkbaar
     feedback:
+        error: Er is een fout opgetreden, probeer het later opnieuw
         success: Wijziging opgeslagen
     gender:
         female: Vrouw

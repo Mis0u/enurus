@@ -434,6 +434,7 @@ settings:
         label: Email
         not_editable: Não modificável
     feedback:
+        error: Ocorreu um erro, tenta novamente mais tarde
         success: Alteração efetuada
     gender:
         female: Mulher
