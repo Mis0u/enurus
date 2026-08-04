@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import { switchDashboardTab } from '../../utils/dashboard_tabs.js';
 
-const DEFAULT_STATS = { exercises: 0, exercisesLabel: '', sets: 0, setsLabel: '', reps: 0, prCount: 0, prLabel: '', repsRecordCount: 0, repsRecordLabel: '' };
+const DEFAULT_STATS = { sessions: 0, sessionsLabel: '', exercises: 0, exercisesLabel: '', sets: 0, setsLabel: '', reps: 0, prCount: 0, prLabel: '', repsRecordCount: 0, repsRecordLabel: '' };
 
 export default class extends Controller {
     static values = {
@@ -10,7 +10,7 @@ export default class extends Controller {
         month: { type: Object, default: DEFAULT_STATS },
     };
 
-    static targets = ['tab', 'exercises', 'exercisesLabel', 'sets', 'setsLabel', 'reps', 'prLabel', 'prIcon', 'repsRecordRow', 'repsRecordLabel'];
+    static targets = ['tab', 'sessions', 'sessionsLabel', 'exercises', 'exercisesLabel', 'sets', 'setsLabel', 'reps', 'prLabel', 'prIcon', 'repsRecordRow', 'repsRecordLabel'];
 
     connect() {
         this.#applyStats('last');
@@ -27,6 +27,8 @@ export default class extends Controller {
     #applyStats(filter) {
         const stats = this[`${filter}Value`];
 
+        this.sessionsTarget.textContent = stats.sessions;
+        this.sessionsLabelTarget.textContent = stats.sessionsLabel;
         this.exercisesTarget.textContent = stats.exercises;
         this.exercisesLabelTarget.textContent = stats.exercisesLabel;
         this.setsTarget.textContent = stats.sets;

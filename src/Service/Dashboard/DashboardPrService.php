@@ -16,7 +16,7 @@ final readonly class DashboardPrService
 
     /**
      * Nombre de nouveaux records personnels (PR) de poids battus par filtre du widget Séance
-     * (Dernière séance/Semaine/Mois courant) — même définition de PR que WorkoutShowController
+     * (Dernière journée/Semaine/Mois courant) — même définition de PR que WorkoutShowController
      * (poids max sur un exercice, jamais poids × reps, un seul PR possible par séance et par
      * exercice), détectée progressivement sur tout l'historique chronologique (2 séances distinctes
      * battant chacune le record sur le même exercice pendant la période comptent pour 2, pas 1).
@@ -26,13 +26,13 @@ final readonly class DashboardPrService
      */
     public function countPrsByFilter(
         User $user,
-        string $lastWorkoutId,
+        DashboardPeriod $day,
         DashboardPeriod $week,
         DashboardPeriod $month,
     ): array {
         $events = $this->workoutRecordDetectionService->findPrEvents($user);
 
-        return $this->countEventsByFilter($events, $lastWorkoutId, $week, $month);
+        return $this->countEventsByFilter($events, $day, $week, $month);
     }
 
     /**
@@ -46,13 +46,13 @@ final readonly class DashboardPrService
      */
     public function countRepsRecordsByFilter(
         User $user,
-        string $lastWorkoutId,
+        DashboardPeriod $day,
         DashboardPeriod $week,
         DashboardPeriod $month,
     ): array {
         $events = $this->workoutRecordDetectionService->findRepsRecordEvents($user);
 
-        return $this->countEventsByFilter($events, $lastWorkoutId, $week, $month);
+        return $this->countEventsByFilter($events, $day, $week, $month);
     }
 
     /**
@@ -61,17 +61,17 @@ final readonly class DashboardPrService
      */
     private function countEventsByFilter(
         array $events,
-        string $lastWorkoutId,
+        DashboardPeriod $day,
         DashboardPeriod $week,
         DashboardPeriod $month,
     ): array {
-        $last = 0;
+        $dayCount = 0;
         $weekCount = 0;
         $monthCount = 0;
 
         foreach ($events as $event) {
-            if ($event['workoutId'] === $lastWorkoutId) {
-                $last++;
+            if ($event['performedAt'] >= $day->start && $event['performedAt'] <= $day->end) {
+                $dayCount++;
             }
 
             if ($event['performedAt'] >= $week->start && $event['performedAt'] <= $week->end) {
@@ -84,7 +84,7 @@ final readonly class DashboardPrService
         }
 
         return [
-            'last' => $last,
+            'last' => $dayCount,
             'week' => $weekCount,
             'month' => $monthCount,
         ];

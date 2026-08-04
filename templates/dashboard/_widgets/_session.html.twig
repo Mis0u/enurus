@@ -3,9 +3,9 @@
     - sessionStats : array{
           year: int,
           annualTotal: int,
-          last : array{exercises: int, exercisesLabel: string, sets: int, setsLabel: string, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string},
-          week : array{exercises: int, exercisesLabel: string, sets: int, setsLabel: string, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string},
-          month: array{exercises: int, exercisesLabel: string, sets: int, setsLabel: string, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string}
+          last : array{sessions: int, sessionsLabel: string, exercises: int, exercisesLabel: string, sets: int, setsLabel: string, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string},
+          week : array{sessions: int, sessionsLabel: string, exercises: int, exercisesLabel: string, sets: int, setsLabel: string, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string},
+          month: array{sessions: int, sessionsLabel: string, exercises: int, exercisesLabel: string, sets: int, setsLabel: string, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string}
       }
 #}
 <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
@@ -61,6 +61,16 @@
                     class="dashboard-tab-inactive flex-1 px-3 py-1.5 text-[12px] font-semibold rounded-md transition-ft">
                 {{ 'dashboard.widget.session.filter.month'|trans({}, 'navigation') }}
             </button>
+        </div>
+
+        {# Nombre de séances sur la période active — pleine largeur, distinct de la grille 3 colonnes #}
+        <div class="bg-white/[0.03] border border-white/[0.07] rounded-[10px] p-[10px_12px] text-center">
+            <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-white" data-dashboard--session-target="sessions">
+                {{ sessionStats.last.sessions }}
+            </div>
+            <div class="text-[11px] text-[#4a5568] mt-0.5" data-dashboard--session-target="sessionsLabel">
+                {{ sessionStats.last.sessionsLabel }}
+            </div>
         </div>
 
         {# Métriques : exercices | séries | reps #}

@@ -12,7 +12,6 @@ use App\Service\Dashboard\DashboardMuscleDistributionService;
 use App\Service\Dashboard\DashboardPeriodCalculator;
 use App\Service\Dashboard\DashboardPrService;
 use App\Service\Dashboard\DashboardRegularityService;
-use App\Service\Dashboard\DashboardSessionSummaryService;
 use App\Service\Dashboard\DashboardTonnageService;
 use App\Service\Dashboard\DashboardUnlockService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +28,6 @@ final class DashboardController extends AbstractController
         private readonly DashboardMuscleDistributionService $muscleDistributionService,
         private readonly DashboardTonnageService $tonnageService,
         private readonly DashboardPrService $prService,
-        private readonly DashboardSessionSummaryService $sessionSummaryService,
         private readonly DashboardPeriodCalculator $periodCalculator,
         private readonly TranslatorInterface $translator,
     ) {
@@ -69,21 +67,25 @@ final class DashboardController extends AbstractController
             ]);
         }
 
-        $lastWorkout = $workoutRepository->findLatestByUser($user);
+        $lastPerformedAt = $workoutRepository->findLastPerformedAtByUser($user);
 
-        if (null === $lastWorkout) {
+        if (null === $lastPerformedAt) {
             throw new \LogicException('Expected a workout for user with non-zero workout count.');
         }
 
-        // Résumé du widget Séance (totaux sets/reps + SVG IDs) depuis le workout déjà chargé
-        $sessionSummary = $this->sessionSummaryService->summarize($lastWorkout);
-        $sessionPrimary = $sessionSummary['primarySvgIds'];
-        $sessionSecondary = $sessionSummary['secondarySvgIds'];
-
-        // Bornes de la semaine et du mois courant, réutilisées pour le widget Muscles et le widget Séance
+        // Bornes de la semaine, du mois courant et de la dernière journée d'entraînement,
+        // réutilisées pour le widget Muscles et le widget Séance
         $now = new \DateTimeImmutable();
+        $day = $this->periodCalculator->dayOf($lastPerformedAt);
         $week = $this->periodCalculator->currentWeek($now);
         $month = $this->periodCalculator->currentMonthElapsed($now);
+
+        // Résumé du widget Séance pour la dernière journée (totaux sets/reps + SVG IDs), même
+        // mécanique que les filtres Semaine/Mois — plusieurs séances peuvent partager cette date.
+        $dayIds = $workoutStatsRepository->findIdsByUserAndDateRange($user, $day->start, $day->end);
+        $daySvgIds = $workoutMuscleRepository->findSvgIdsByWorkoutIds($dayIds);
+        $sessionPrimary = $daySvgIds['primary'];
+        $sessionSecondary = $daySvgIds['secondary'];
 
         // SVG IDs + répartition par groupe musculaire pour les filtres Semaine/Mois du widget Muscles (uniquement si débloqué)
         $weekSvgIds = [
@@ -117,20 +119,20 @@ final class DashboardController extends AbstractController
             $monthBars = $this->muscleDistributionService->getBars($monthIds, $lastSolicitationDates);
         }
 
-        // Répartition par groupe musculaire pour le filtre Séance (depuis le workout déjà chargé)
-        $sessionBars = $this->muscleDistributionService->getBars([(string) $lastWorkout->id]);
+        // Répartition par groupe musculaire pour le filtre Séance (dernière journée)
+        $sessionBars = $this->muscleDistributionService->getBars($dayIds);
 
-        // PR de poids et records de reps par filtre (Dernière séance/Semaine/Mois courant), même
+        // PR de poids et records de reps par filtre (Dernière journée/Semaine/Mois courant), même
         // définition que WorkoutShowController, détectés sur tout l'historique.
         $prCounts = $this->prService->countPrsByFilter(
             $user,
-            (string) $lastWorkout->id,
+            $day,
             $week,
             $month,
         );
         $repsRecordCounts = $this->prService->countRepsRecordsByFilter(
             $user,
-            (string) $lastWorkout->id,
+            $day,
             $week,
             $month,
         );
@@ -140,8 +142,12 @@ final class DashboardController extends AbstractController
         $year = $this->periodCalculator->currentYearElapsed($now);
         $annualSessionsTotal = $workoutStatsRepository->countByUserAndDate($user, $year->start, $year->end);
 
-        // Stats du widget Séance (3 filtres, toujours débloqués dès 1 séance)
-        $lastExercises = $lastWorkout->workoutExercises->count();
+        // Stats du widget Séance (3 filtres, toujours débloqués dès 1 séance) — "last" traité
+        // comme les autres filtres, sur la période de la dernière journée d'entraînement.
+        $daySessionsCount = \count($dayIds);
+        $weekSessionsCount = $workoutStatsRepository->countByUserAndDate($user, $week->start, $week->end);
+        $monthSessionsCount = $workoutStatsRepository->countByUserAndDate($user, $month->start, $month->end);
+        $dayTotals = $workoutStatsRepository->findExerciseSetRepTotals($user, $day->start, $day->end);
         $weekTotals = $workoutStatsRepository->findExerciseSetRepTotals($user, $week->start, $week->end);
         $monthTotals = $workoutStatsRepository->findExerciseSetRepTotals($user, $month->start, $month->end);
 
@@ -149,11 +155,11 @@ final class DashboardController extends AbstractController
             'year' => (int) $now->format('Y'),
             'annualTotal' => $annualSessionsTotal,
             'last' => [
-                'exercises' => $lastExercises,
-                'exercisesLabel' => $this->buildExercisesLabel($lastExercises),
-                'sets' => $sessionSummary['totalSets'],
-                'setsLabel' => $this->buildSetsLabel($sessionSummary['totalSets']),
-                'reps' => $sessionSummary['totalReps'],
+                ...$dayTotals,
+                'sessions' => $daySessionsCount,
+                'sessionsLabel' => $this->buildSessionsLabel($daySessionsCount),
+                'exercisesLabel' => $this->buildExercisesLabel($dayTotals['exercises']),
+                'setsLabel' => $this->buildSetsLabel($dayTotals['sets']),
                 'prCount' => $prCounts['last'],
                 'prLabel' => $this->buildPrLabel($prCounts['last']),
                 'repsRecordCount' => $repsRecordCounts['last'],
@@ -161,6 +167,8 @@ final class DashboardController extends AbstractController
             ],
             'week' => [
                 ...$weekTotals,
+                'sessions' => $weekSessionsCount,
+                'sessionsLabel' => $this->buildSessionsLabel($weekSessionsCount),
                 'exercisesLabel' => $this->buildExercisesLabel($weekTotals['exercises']),
                 'setsLabel' => $this->buildSetsLabel($weekTotals['sets']),
                 'prCount' => $prCounts['week'],
@@ -170,6 +178,8 @@ final class DashboardController extends AbstractController
             ],
             'month' => [
                 ...$monthTotals,
+                'sessions' => $monthSessionsCount,
+                'sessionsLabel' => $this->buildSessionsLabel($monthSessionsCount),
                 'exercisesLabel' => $this->buildExercisesLabel($monthTotals['exercises']),
                 'setsLabel' => $this->buildSetsLabel($monthTotals['sets']),
                 'prCount' => $prCounts['month'],
@@ -218,6 +228,13 @@ final class DashboardController extends AbstractController
     private function buildRepsRecordLabel(int $count): string
     {
         return $this->translator->trans('dashboard.widget.session.reps_record_count', [
+            'count' => $count,
+        ], 'navigation');
+    }
+
+    private function buildSessionsLabel(int $count): string
+    {
+        return $this->translator->trans('dashboard.widget.session.sessions', [
             'count' => $count,
         ], 'navigation');
     }
