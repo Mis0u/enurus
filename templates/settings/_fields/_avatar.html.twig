@@ -9,7 +9,7 @@
      data-settings--avatar-invalid-type-error-value="{{ 'settings.avatar.invalid_type'|trans({}, 'validators') }}"
 >
 
-    <div class="relative w-23 h-23 rounded-full bg-gradient-to-br from-[#f43f5e] to-[#06b6d4] border-[3px] border-[rgba(244,63,94,0.4)] flex items-center justify-center shrink-0 overflow-hidden">
+    <div class="relative w-23 h-23 rounded-full bg-gradient-to-br from-[#f43f5e] to-[#06b6d4] border-2 border-rose-ft flex items-center justify-center shrink-0 overflow-hidden">
         <span data-settings--avatar-target="initials"
               class="font-['Rajdhani'] font-bold text-2xl text-white {% if user.avatarPath %}hidden{% endif %}">
             {{ user.nickname|formatInitials }}
