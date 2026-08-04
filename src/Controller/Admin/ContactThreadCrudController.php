@@ -99,6 +99,7 @@ final class ContactThreadCrudController extends AbstractCrudController
             // Historique + formulaire de réponse sur le même écran (comme messagerie/show.html.twig
             // côté utilisateur) plutôt qu'une action "Répondre" séparée qui perdait le contexte.
             ->overrideTemplate('crud/detail', 'admin/contact_thread/detail.html.twig')
+            ->setTimezone('Europe/Paris')
         ;
     }
 

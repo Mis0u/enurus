@@ -95,6 +95,7 @@ final class UserCrudController extends AbstractCrudController
                 'createdAt' => 'DESC',
             ])
             ->setDefaultRowAction(Action::DETAIL)
+            ->setTimezone('Europe/Paris')
         ;
     }
 

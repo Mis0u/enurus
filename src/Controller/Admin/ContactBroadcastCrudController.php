@@ -66,6 +66,7 @@ final class ContactBroadcastCrudController extends AbstractCrudController
             ->setDefaultSort([
                 'sentAt' => 'DESC',
             ])
+            ->setTimezone('Europe/Paris')
         ;
     }
 
