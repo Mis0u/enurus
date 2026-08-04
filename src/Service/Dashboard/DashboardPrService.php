@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Service\Dashboard;
 
 use App\Entity\User;
-use App\Repository\ExerciseSetRepository;
+use App\Service\Workout\WorkoutRecordDetectionService;
 
 final readonly class DashboardPrService
 {
     public function __construct(
-        private ExerciseSetRepository $exerciseSetRepository,
+        private WorkoutRecordDetectionService $workoutRecordDetectionService,
     ) {
     }
 
@@ -30,19 +30,7 @@ final readonly class DashboardPrService
         DashboardPeriod $week,
         DashboardPeriod $month,
     ): array {
-        $rows = $this->exerciseSetRepository->findMaxWeightPerWorkoutAndExerciseChronologicallyByUser($user);
-
-        $entries = array_map(
-            static fn (array $row): array => [
-                'key' => $row['exerciseId'],
-                'value' => $row['weight'],
-                'workoutId' => $row['workoutId'],
-                'performedAt' => $row['performedAt'],
-            ],
-            $rows,
-        );
-
-        $events = $this->detectNewRecordEvents($entries, firstAttemptCounts: true);
+        $events = $this->workoutRecordDetectionService->findPrEvents($user);
 
         return $this->countEventsByFilter($events, $lastWorkoutId, $week, $month);
     }
@@ -62,57 +50,9 @@ final readonly class DashboardPrService
         DashboardPeriod $week,
         DashboardPeriod $month,
     ): array {
-        $rows = $this->exerciseSetRepository->findMaxRepsPerWorkoutExerciseAndWeightChronologicallyByUser($user);
-
-        $entries = array_map(
-            static fn (array $row): array => [
-                'key' => $row['exerciseId'] . '|' . ExerciseSetRepository::weightKey($row['weight']),
-                'value' => (float) $row['reps'],
-                'workoutId' => $row['workoutId'],
-                'performedAt' => $row['performedAt'],
-            ],
-            $rows,
-        );
-
-        $events = $this->detectNewRecordEvents($entries, firstAttemptCounts: false);
+        $events = $this->workoutRecordDetectionService->findRepsRecordEvents($user);
 
         return $this->countEventsByFilter($events, $lastWorkoutId, $week, $month);
-    }
-
-    /**
-     * Détecte, en parcourant des entrées déjà triées chronologiquement, chaque fois que la valeur
-     * dépasse strictement le record précédent pour sa clé — une égalité n'est jamais un nouveau
-     * record. `$firstAttemptCounts` décide si l'absence totale d'historique pour une clé compte
-     * comme un record immédiat (poids : oui, premier essai = record) ou non (reps à un poids donné :
-     * non, sans quoi tout nouveau poids max déclencherait aussi un "record de reps" trivial et
-     * redondant avec le PR de poids).
-     *
-     * @param array<int, array{key: string, value: float, workoutId: string, performedAt: \DateTimeImmutable}> $entries
-     * @return array<int, array{workoutId: string, performedAt: \DateTimeImmutable}>
-     */
-    private function detectNewRecordEvents(array $entries, bool $firstAttemptCounts): array
-    {
-        /** @var array<string, float> $runningMaxByKey */
-        $runningMaxByKey = [];
-        $events = [];
-
-        foreach ($entries as $entry) {
-            $currentMax = $runningMaxByKey[$entry['key']] ?? null;
-            $isNewRecord = null === $currentMax ? $firstAttemptCounts : $entry['value'] > $currentMax;
-
-            if (null === $currentMax || $entry['value'] > $currentMax) {
-                $runningMaxByKey[$entry['key']] = $entry['value'];
-            }
-
-            if ($isNewRecord) {
-                $events[] = [
-                    'workoutId' => $entry['workoutId'],
-                    'performedAt' => $entry['performedAt'],
-                ];
-            }
-        }
-
-        return $events;
     }
 
     /**

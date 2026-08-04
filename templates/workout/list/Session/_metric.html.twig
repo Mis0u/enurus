@@ -22,4 +22,14 @@
         {% include 'partials/_svg/_picture.html.twig' with {'weight': 3, 'height': 3, 'color': '[#8b9bb4]'} only %}
     </span>
     {% endif %}
+    {% if hasPr %}
+        <span class="text-[13px] leading-none cursor-help"
+              aria-label="{{ 'dashboard.widget.session.pr_tooltip'|trans({}, 'navigation') }}"
+              title="{{ 'dashboard.widget.session.pr_tooltip'|trans({}, 'navigation') }}">🏆</span>
+    {% endif %}
+    {% if hasRepsRecord %}
+        <span class="text-[13px] leading-none cursor-help"
+              aria-label="{{ 'dashboard.widget.session.reps_record_tooltip'|trans({}, 'navigation') }}"
+              title="{{ 'dashboard.widget.session.reps_record_tooltip'|trans({}, 'navigation') }}">🔁</span>
+    {% endif %}
 </div>

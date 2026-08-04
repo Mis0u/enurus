@@ -40,6 +40,8 @@
                         muscles: musclesMap[workout.id] ?? [],
                         hiddenCount: hiddenCountMap[workout.id] ?? 0,
                         exerciseCount: exerciseCountMap[workout.id ~ ''] ?? 0,
+                        hasPr: hasPrMap[workout.id] ?? false,
+                        hasRepsRecord: hasRepsRecordMap[workout.id] ?? false,
                         user: user,
                     } only %}
                 {% endfor %}
