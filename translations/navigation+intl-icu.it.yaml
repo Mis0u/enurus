@@ -81,7 +81,6 @@ dashboard:
     setting: Impostazioni
     title: Cruscotto
     widget:
-        coming_soon: Presto disponibile
         locked:
             need_days: "{count, plural, =1 {+ # giorno di storico} other {+ # giorni di storico}}"
             need_workouts: "{count, plural, =1 {Ancora # allenamento} other {Ancora # allenamenti}}"
@@ -446,7 +445,6 @@ settings:
     nickname:
         label: Alias
     password:
-        coming_soon: Disponibile a breve
         current_password: Password attuale
         current_password_invalid: La password attuale non è corretta
         edit_password: Modifica la password

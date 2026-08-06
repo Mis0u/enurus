@@ -81,7 +81,6 @@ dashboard:
     setting: Settings
     title: Dashboard
     widget:
-        coming_soon: Coming soon
         locked:
             need_days: "{count, plural, =1 {+ # day of history} other {+ # days of history}}"
             need_workouts: "{count, plural, =1 {# more workout} other {# more workouts}}"
@@ -446,7 +445,6 @@ settings:
     nickname:
         label: Alias
     password:
-        coming_soon: Coming soon
         current_password: Current password
         current_password_invalid: The current password is incorrect
         edit_password: Change password

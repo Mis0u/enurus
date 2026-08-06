@@ -81,7 +81,6 @@ dashboard:
     setting: Ustawienia
     title: Panel
     widget:
-        coming_soon: Wkrótce dostępne
         locked:
             need_days: "{count, plural, =1 {+ # dzień historii} few {+ # dni historii} many {+ # dni historii} other {+ # dni historii}}"
             need_workouts: "{count, plural, =1 {Jeszcze # trening} few {Jeszcze # treningi} many {Jeszcze # treningów} other {Jeszcze # treningów}}"
@@ -456,7 +455,6 @@ settings:
     nickname:
         label: Alias
     password:
-        coming_soon: Wkrótce dostępne
         current_password: Aktualne hasło
         current_password_invalid: Aktualne hasło jest nieprawidłowe
         edit_password: Zmień hasło

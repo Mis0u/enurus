@@ -81,7 +81,6 @@ dashboard:
     setting: Einstellungen
     title: Übersicht
     widget:
-        coming_soon: Demnächst verfügbar
         locked:
             need_days: "{count, plural, =1 {+ # Tag Aktivität} other {+ # Tage Aktivität}}"
             need_workouts: "{count, plural, =1 {Noch # Training} other {Noch # Trainings}}"
@@ -446,7 +445,6 @@ settings:
     nickname:
         label: Alias
     password:
-        coming_soon: Demnächst verfügbar
         current_password: Aktuelles Passwort
         current_password_invalid: Das aktuelle Passwort ist nicht korrekt
         edit_password: Passwort ändern

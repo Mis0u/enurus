@@ -81,7 +81,6 @@ dashboard:
     setting: Instellingen
     title: Overzicht
     widget:
-        coming_soon: Binnenkort beschikbaar
         locked:
             need_days: "{count, plural, =1 {+ # dag geschiedenis} other {+ # dagen geschiedenis}}"
             need_workouts: "{count, plural, =1 {Nog # training} other {Nog # trainingen}}"
@@ -446,7 +445,6 @@ settings:
     nickname:
         label: Alias
     password:
-        coming_soon: Binnenkort beschikbaar
         current_password: Huidig wachtwoord
         current_password_invalid: Het huidige wachtwoord is niet correct
         edit_password: Wachtwoord wijzigen
