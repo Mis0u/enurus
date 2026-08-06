@@ -95,6 +95,14 @@ final class DashboardController extends AbstractDashboardController
         yield MenuItem::section($this->trans('admin.menu.section.settings'), 'fa fa-flag-checkered');
         yield MenuItem::linkTo(RegistrationMilestoneSettingCrudController::class, $this->trans('admin.menu.registration_milestone'), 'fa fa-flag-checkered');
         yield MenuItem::linkTo(ContactNotificationSettingCrudController::class, $this->trans('admin.menu.contact_notification_setting'), 'fa fa-bell-slash');
+
+        /**
+         * En plus du menu utilisateur (coin haut-droit, fourni nativement par
+         * `configureUserMenu()` d'EasyAdmin) — lien direct en bas du menu latéral, pour une
+         * déconnexion accessible sans ouvrir ce dropdown.
+         */
+        yield MenuItem::section();
+        yield MenuItem::linkToLogout($this->trans('admin.menu.logout'), 'fa fa-right-from-bracket');
     }
 
     /**

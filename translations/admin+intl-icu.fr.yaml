@@ -96,6 +96,7 @@ admin:
         deleted_account_trace: "Comptes supprimés"
         exercise: "Exercices personnalisés"
         home: "Tableau de bord"
+        logout: Déconnexion
         registration_milestone: "Palier d'inscriptions"
         routine: Routines
         section:
