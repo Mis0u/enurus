@@ -34,6 +34,7 @@ final readonly class AdminDashboardStatsService
         private AdminUnitOfMeasureChartBuilder $unitOfMeasureChartBuilder,
         private AdminGenderChartBuilder $genderChartBuilder,
         private AdminRegistrationTrendChartBuilder $registrationTrendChartBuilder,
+        private MessengerQueueStatsService $messengerQueueStatsService,
         private TranslatorInterface $translator,
         private ClockInterface $clock,
     ) {
@@ -47,6 +48,7 @@ final readonly class AdminDashboardStatsService
      *     newThisMonth: int,
      *     pendingDeletions: int,
      *     workoutsLast30Days: int,
+     *     messengerQueue: array{pending: int, failed: int},
      *     localeChart: Chart,
      *     unitOfMeasureChart: Chart,
      *     genderChart: Chart,
@@ -64,6 +66,7 @@ final readonly class AdminDashboardStatsService
             'newThisMonth' => $this->userRepository->countCreatedSince($now->modify('-30 days')),
             'pendingDeletions' => $this->userRepository->countPendingDeletion(),
             'workoutsLast30Days' => $this->workoutRepository->countPerformedSince($now->modify('-30 days'), $this->userRepository->findAdminIds()),
+            'messengerQueue' => $this->messengerQueueStatsService->getData(),
             'localeChart' => $this->buildLocaleChart(),
             'unitOfMeasureChart' => $this->buildUnitOfMeasureChart(),
             'genderChart' => $this->buildGenderChart(),

@@ -62,6 +62,8 @@ admin:
             registration_trend_title: "Tendance des inscriptions (12 semaines)"
             unit_of_measure_title: "Répartition par unité de mesure en %"
         stat:
+            messenger_failed: "Messages en échec"
+            messenger_pending: "Messages en attente"
             new_this_month: "Nouveaux ce mois-ci"
             new_this_week: "Nouveaux cette semaine"
             new_today: "Nouveaux aujourd'hui"
