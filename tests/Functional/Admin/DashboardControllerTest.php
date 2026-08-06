@@ -53,8 +53,8 @@ final class DashboardControllerTest extends WebTestCase
         $client->request(Request::METHOD_GET, '/admin');
 
         self::assertResponseIsSuccessful();
-        self::assertSelectorTextContains('.menu-item-label', 'Tableau de bord');
-        self::assertSelectorTextNotContains('.menu-item-label', 'Accueil');
+        self::assertSelectorTextContains('a[href$="/admin"] .menu-item-label', 'Tableau de bord');
+        self::assertSelectorTextNotContains('a[href$="/admin"] .menu-item-label', 'Accueil');
     }
 
     public function testStatTilesReflectRecentRegistrations(): void

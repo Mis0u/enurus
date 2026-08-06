@@ -29,6 +29,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
@@ -110,6 +111,15 @@ final class UserCrudController extends AbstractCrudController
         yield DateTimeField::new('lastLogin', $this->trans('admin.user.field.last_login'))->hideOnForm();
         yield DateTimeField::new('deletionRequestedAt', $this->trans('admin.user.field.deletion_requested_at'))->hideOnForm();
         yield DateTimeField::new('accountBlockedAt', $this->trans('admin.user.field.account_blocked_at'))->hideOnForm();
+        /**
+         * `renderAsSwitch` bascule la valeur en Ajax (PATCH) directement depuis la liste, sans
+         * passer par la fiche détail — géré nativement par EasyAdmin (`BooleanConfigurator`),
+         * flush inclus. `hideOnForm()` évite un doublon avec le formulaire d'édition complet.
+         */
+        yield BooleanField::new('telegramNotificationsMuted', $this->trans('admin.user.field.telegram_notifications_muted'))
+            ->renderAsSwitch(true)
+            ->hideOnForm()
+        ;
         /**
          * Lecture seule, à but de support — pas de CRUD séparé pour Routines/Workouts, éditer les
          * données d'entraînement d'un utilisateur depuis l'admin n'a pas de sens métier. Même

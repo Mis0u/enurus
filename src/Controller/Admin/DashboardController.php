@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Contracts\Menu\MenuItemInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -23,6 +24,7 @@ final class DashboardController extends AbstractDashboardController
         private readonly ContactThreadRepository $contactThreadRepository,
         private readonly AdminDashboardStatsService $adminDashboardStatsService,
         private readonly TranslatorInterface $translator,
+        private readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
@@ -62,6 +64,9 @@ final class DashboardController extends AbstractDashboardController
     {
         $awaitingReplyCount = $this->contactThreadRepository->countAwaitingAdminReply();
 
+        yield MenuItem::linkToUrl($this->trans('admin.menu.back_to_app'), 'fa fa-arrow-left', $this->urlGenerator->generate('app_dashboard', [
+            '_locale' => 'fr',
+        ]));
         yield MenuItem::linkToDashboard($this->trans('admin.menu.home'), 'fa fa-home');
         yield MenuItem::linkTo(UserCrudController::class, $this->trans('admin.menu.user'), 'fa fa-users');
         yield MenuItem::linkTo(ExerciseCrudController::class, $this->trans('admin.menu.exercise'), 'fa fa-dumbbell');
@@ -73,6 +78,7 @@ final class DashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(ContactBroadcastCrudController::class, $this->trans('admin.menu.broadcast'), 'fa fa-bullhorn');
         yield MenuItem::linkTo(DeletedAccountTraceCrudController::class, $this->trans('admin.menu.deleted_account_trace'), 'fa fa-user-slash');
         yield MenuItem::linkTo(RegistrationMilestoneSettingCrudController::class, $this->trans('admin.menu.registration_milestone'), 'fa fa-flag-checkered');
+        yield MenuItem::linkTo(ContactNotificationSettingCrudController::class, $this->trans('admin.menu.contact_notification_setting'), 'fa fa-bell-slash');
     }
 
     /**

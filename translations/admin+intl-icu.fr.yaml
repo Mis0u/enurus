@@ -43,6 +43,12 @@ admin:
         target:
             all: "Tous les utilisateurs"
             locale: "Tous les utilisateurs ({locale})"
+    contact_notification_setting:
+        field:
+            telegram_notifications_enabled: "Notifications Telegram activées"
+        label:
+            plural: "Notifications Telegram"
+            singular: "Notifications Telegram"
     contact_restriction:
         duration:
             label: "Durée du blocage"
@@ -82,7 +88,9 @@ admin:
         remove_button: Retirer
         send_button: Envoyer
     menu:
+        back_to_app: "Retour à l'application"
         broadcast: Diffusions
+        contact_notification_setting: "Notifications Telegram"
         deleted_account_trace: "Comptes supprimés"
         exercise: "Exercices personnalisés"
         home: "Tableau de bord"
@@ -194,6 +202,7 @@ admin:
             locale: Langue
             nickname: Pseudo
             routines: Routines
+            telegram_notifications_muted: "Notifications Telegram coupées"
             unit_of_measure: Unité
             workouts: Séances
         filter:
