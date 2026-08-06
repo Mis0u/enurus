@@ -6,6 +6,7 @@
 // et le DOM (donc le bouton) est reconstruit depuis zéro.
 
 import { Controller } from '@hotwired/stimulus';
+import { showSpinner } from '../../utils/submit_spinner.js';
 
 export default class extends Controller {
     #form = null;
@@ -20,12 +21,6 @@ export default class extends Controller {
     }
 
     #showSpinner = () => {
-        this.element.disabled = true;
-        this.element.classList.add('cursor-wait');
-
-        const spinner = document.createElement('span');
-        spinner.className = 'inline-block w-4 h-4 ml-2 align-middle border-2 border-white/30 border-t-white rounded-full animate-spin';
-        spinner.setAttribute('aria-hidden', 'true');
-        this.element.appendChild(spinner);
+        showSpinner(this.element);
     };
 }

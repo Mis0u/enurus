@@ -29,7 +29,7 @@ describe('settings--password-submit controller', () => {
                 <input type="password" name="change_password_form[plainPassword][first]">
                 <input type="password" name="change_password_form[plainPassword][second]">
                 <p data-field-error="currentPassword" class="hidden"></p>
-                <button type="submit"></button>
+                <button type="submit" data-settings--password-submit-target="submitButton"></button>
             </form>
         `;
 
@@ -51,8 +51,12 @@ describe('settings--password-submit controller', () => {
         return document.querySelector('[name="change_password_form[currentPassword]"]');
     }
 
+    function submitButton() {
+        return form().querySelector('button[type="submit"]');
+    }
+
     function submit() {
-        return form().querySelector('button[type="submit"]').click();
+        return submitButton().click();
     }
 
     it('shows a success toast and resets the form on success', async () => {
@@ -124,5 +128,56 @@ describe('settings--password-submit controller', () => {
 
         expect(showErrorToast).toHaveBeenCalledWith('Une erreur est survenue, réessaie plus tard');
         expect(showSuccessToast).not.toHaveBeenCalled();
+    });
+
+    it('disables the button and shows a spinner while the request is in flight', async () => {
+        let resolveFetch;
+        vi.stubGlobal('fetch', vi.fn(() => new Promise((resolve) => {
+            resolveFetch = resolve;
+        })));
+
+        submit();
+        await nextTick();
+
+        expect(submitButton().disabled).toBe(true);
+        expect(submitButton().querySelector('[data-submit-spinner]')).not.toBeNull();
+
+        resolveFetch({ ok: true, json: async () => ({ success: true }) });
+        await nextTick();
+    });
+
+    it('removes the spinner once the request resolves', async () => {
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+            ok: true,
+            json: async () => ({ success: true }),
+        }));
+
+        submit();
+        await nextTick();
+
+        expect(submitButton().querySelector('[data-submit-spinner]')).toBeNull();
+    });
+
+    it('removes the spinner and re-enables the button on validation error', async () => {
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+            ok: false,
+            json: async () => ({ errors: { currentPassword: ['Le mot de passe actuel n\'est pas correct'] } }),
+        }));
+
+        submit();
+        await nextTick();
+
+        expect(submitButton().querySelector('[data-submit-spinner]')).toBeNull();
+        expect(submitButton().disabled).toBe(false);
+    });
+
+    it('removes the spinner and re-enables the button on network error', async () => {
+        vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('network down')));
+
+        submit();
+        await nextTick();
+
+        expect(submitButton().querySelector('[data-submit-spinner]')).toBeNull();
+        expect(submitButton().disabled).toBe(false);
     });
 });

@@ -1,7 +1,10 @@
 import { Controller } from '@hotwired/stimulus';
 import { showSuccessToast, showErrorToast } from '../../utils/toast.js';
+import { showSpinner, hideSpinner } from '../../utils/submit_spinner.js';
 
 export default class extends Controller {
+    static targets = ['submitButton'];
+
     static values = {
         url: String,
         successMessage: String,
@@ -10,6 +13,8 @@ export default class extends Controller {
 
     async submit(event) {
         event.preventDefault();
+
+        showSpinner(this.submitButtonTarget);
 
         const formData = new FormData(this.element);
 
@@ -25,6 +30,7 @@ export default class extends Controller {
 
             if (!response.ok) {
                 this.#displayErrors(data.errors ?? {});
+                this.submitButtonTarget.disabled = false;
                 return;
             }
 
@@ -32,6 +38,9 @@ export default class extends Controller {
             this.#resetForm();
         } catch {
             showErrorToast(this.errorMessageValue);
+            this.submitButtonTarget.disabled = false;
+        } finally {
+            hideSpinner(this.submitButtonTarget);
         }
     }
 
