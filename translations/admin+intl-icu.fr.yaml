@@ -200,6 +200,7 @@ admin:
             created_at: "Inscrit le"
             deletion_requested_at: "Suppression demandée le"
             gender: Genre
+            is_verified: "Email vérifié"
             last_login: "Dernière connexion"
             locale: Langue
             nickname: Pseudo

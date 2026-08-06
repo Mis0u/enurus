@@ -35,6 +35,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NullFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Intl\IntlFormatter;
@@ -117,6 +118,20 @@ final class UserCrudController extends AbstractCrudController
         yield ChoiceField::new('gender', $this->trans('admin.user.field.gender'))->setChoices($this->enumChoices(GenderEnum::cases()));
         yield ChoiceField::new('locale', $this->trans('admin.user.field.locale'))->setChoices($this->localeChoices());
         yield ChoiceField::new('unitOfMeasure', $this->trans('admin.user.field.unit_of_measure'))->setChoices($this->enumChoices(UnitOfMeasureEnum::cases()));
+        /**
+         * Lecture seule — sert au support ("je n'arrive pas à me connecter") pour distinguer un
+         * compte jamais vérifié d'un autre problème, sans exposer de bascule manuelle : forcer la
+         * vérification depuis l'admin court-circuiterait `EmailVerificationService`, décision hors
+         * scope ici. `renderAsSwitch(false)` est indispensable pour ça : `BooleanField` rend un
+         * switch Ajax **par défaut** (contrairement à ce que `hideOnForm()` seul laisse penser),
+         * qui modifierait la valeur en base au clic sans passer par le formulaire ni par
+         * `EmailVerificationService` — même piège que `telegramNotificationsMuted` ci-dessous, sauf
+         * que celui-là active le switch volontairement.
+         */
+        yield BooleanField::new('isVerified', $this->trans('admin.user.field.is_verified'))
+            ->renderAsSwitch(false)
+            ->hideOnForm()
+        ;
         yield DateTimeField::new('createdAt', $this->trans('admin.user.field.created_at'))->hideOnForm();
         yield DateTimeField::new('lastLogin', $this->trans('admin.user.field.last_login'))->hideOnForm();
         yield DateTimeField::new('deletionRequestedAt', $this->trans('admin.user.field.deletion_requested_at'))->hideOnForm();
@@ -203,6 +218,7 @@ final class UserCrudController extends AbstractCrudController
             ->add(ChoiceFilter::new('locale', $this->trans('admin.user.field.locale'))->setChoices($this->localeChoices()))
             ->add(ChoiceFilter::new('gender', $this->trans('admin.user.field.gender'))->setChoices($this->enumChoices(GenderEnum::cases())))
             ->add(ChoiceFilter::new('unitOfMeasure', $this->trans('admin.user.field.unit_of_measure'))->setChoices($this->enumChoices(UnitOfMeasureEnum::cases())))
+            ->add(BooleanFilter::new('isVerified', $this->trans('admin.user.field.is_verified')))
             ->add(DayFilter::new('createdAt', $this->trans('admin.user.field.created_at')))
             ->add(DayFilter::new('lastLogin', $this->trans('admin.user.field.last_login')))
             ->add(
