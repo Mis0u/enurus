@@ -195,6 +195,8 @@ admin:
             wrong_password: "Mot de passe incorrect."
         field:
             account_blocked_at: "Compte bloqué le"
+            contact_restricted_until: "Messagerie bloquée jusqu'au"
+            contact_restriction_duration: "Durée de la restriction d'origine"
             created_at: "Inscrit le"
             deletion_requested_at: "Suppression demandée le"
             gender: Genre

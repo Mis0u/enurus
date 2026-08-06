@@ -26,6 +26,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Contracts\Intl\IntlFormatterInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
@@ -36,7 +37,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NullFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Intl\IntlFormatter;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,6 +82,13 @@ final class UserCrudController extends AbstractCrudController
         private readonly UserPasswordHasherInterface $userPasswordHasher,
         private readonly TranslatorInterface $translator,
         private readonly UserRepository $userRepository,
+        /**
+         * `IntlFormatterInterface` n'a pas d'alias de service public dans EasyAdminBundle (seule
+         * la classe concrète `IntlFormatter` est enregistrée) — même pattern que
+         * `EmailVerificationService::$verifyEmailHelper` pour un cas similaire.
+         */
+        #[Autowire(service: IntlFormatter::class)]
+        private readonly IntlFormatterInterface $intlFormatter,
     ) {
     }
 
@@ -111,6 +121,37 @@ final class UserCrudController extends AbstractCrudController
         yield DateTimeField::new('lastLogin', $this->trans('admin.user.field.last_login'))->hideOnForm();
         yield DateTimeField::new('deletionRequestedAt', $this->trans('admin.user.field.deletion_requested_at'))->hideOnForm();
         yield DateTimeField::new('accountBlockedAt', $this->trans('admin.user.field.account_blocked_at'))->hideOnForm();
+        /**
+         * État de la restriction de messagerie (posée/levée via les actions `restrictContact`/
+         * `liftContactRestriction` ci-dessous, jamais éditée directement ici) — sans ces champs,
+         * un admin ne peut savoir ni jusqu'à quand ni sous quelle forme un compte est restreint une
+         * fois l'action posée, seul le bouton "lever" reste visible (`isContactRestricted`). Visible
+         * en liste (pas seulement en détail) comme `accountBlockedAt` ci-dessus, même besoin de
+         * visibilité rapide. `formatValue` affiche "Permanent" plutôt que `null` quand
+         * `contactRestrictedPermanently` est vrai — une restriction permanente ne porte jamais de
+         * date de fin (cf. `ContactRestrictionService`). `formatValue` court-circuite le formatage
+         * intl automatique de `DateTimeField` (il reçoit toujours la valeur brute, jamais la chaîne
+         * déjà formatée) — la branche non permanente doit donc reformater elle-même la date via
+         * `IntlFormatterInterface`, sous peine de renvoyer un `DateTimeImmutable` brut au template
+         * (`Object of class DateTimeImmutable could not be converted to string`).
+         */
+        yield DateTimeField::new('contactRestrictedUntil', $this->trans('admin.user.field.contact_restricted_until'))
+            ->formatValue(function (mixed $value, User $user): ?string {
+                if ($user->contactRestrictedPermanently) {
+                    return $this->trans('admin.contact_restriction.duration.permanent');
+                }
+
+                if (! $value instanceof \DateTimeInterface) {
+                    return null;
+                }
+
+                return $this->intlFormatter->formatDateTime($value, 'medium', 'medium', '', 'Europe/Paris');
+            })
+        ;
+        yield ChoiceField::new('contactRestrictionDuration', $this->trans('admin.user.field.contact_restriction_duration'))
+            ->setChoices($this->enumChoices(ContactRestrictionDurationEnum::cases()))
+            ->onlyOnDetail()
+        ;
         /**
          * `renderAsSwitch` bascule la valeur en Ajax (PATCH) directement depuis la liste, sans
          * passer par la fiche détail — géré nativement par EasyAdmin (`BooleanConfigurator`),
