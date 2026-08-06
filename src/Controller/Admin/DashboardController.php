@@ -76,15 +76,23 @@ final class DashboardController extends AbstractDashboardController
             '_locale' => 'fr',
         ]));
         yield MenuItem::linkToDashboard($this->trans('admin.menu.home'), 'fa fa-home');
+
+        yield MenuItem::section($this->trans('admin.menu.section.user'), 'fa fa-users');
         yield MenuItem::linkTo(UserCrudController::class, $this->trans('admin.menu.user'), 'fa fa-users');
+        yield MenuItem::linkTo(DeletedAccountTraceCrudController::class, $this->trans('admin.menu.deleted_account_trace'), 'fa fa-user-slash');
+
+        yield MenuItem::section($this->trans('admin.menu.section.content'), 'fa fa-dumbbell');
         yield MenuItem::linkTo(ExerciseCrudController::class, $this->trans('admin.menu.exercise'), 'fa fa-dumbbell');
         yield MenuItem::linkTo(RoutineCrudController::class, $this->trans('admin.menu.routine'), 'fa fa-list-check');
         yield MenuItem::linkTo(WorkoutCrudController::class, $this->trans('admin.menu.workout'), 'fa fa-calendar-days');
+
+        yield MenuItem::section($this->trans('admin.menu.section.thread'), 'fa fa-envelope');
         yield MenuItem::linkTo(ContactThreadCrudController::class, $this->trans('admin.menu.thread'), 'fa fa-envelope')
             ->setBadge(0 < $awaitingReplyCount ? $awaitingReplyCount : false, 'danger')
         ;
         yield MenuItem::linkTo(ContactBroadcastCrudController::class, $this->trans('admin.menu.broadcast'), 'fa fa-bullhorn');
-        yield MenuItem::linkTo(DeletedAccountTraceCrudController::class, $this->trans('admin.menu.deleted_account_trace'), 'fa fa-user-slash');
+
+        yield MenuItem::section($this->trans('admin.menu.section.settings'), 'fa fa-flag-checkered');
         yield MenuItem::linkTo(RegistrationMilestoneSettingCrudController::class, $this->trans('admin.menu.registration_milestone'), 'fa fa-flag-checkered');
         yield MenuItem::linkTo(ContactNotificationSettingCrudController::class, $this->trans('admin.menu.contact_notification_setting'), 'fa fa-bell-slash');
     }
