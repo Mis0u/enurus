@@ -265,6 +265,7 @@ messagerie:
         informative: Informative
         vote: Poll
     thread_closed: "This conversation is closed, you can no longer reply."
+    thread_deletion_notice: "This thread will be automatically deleted on {date}."
     title: Messages
     vote:
         closed: "Voting is closed, you can no longer vote."

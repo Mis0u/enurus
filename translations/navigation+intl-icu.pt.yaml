@@ -265,6 +265,7 @@ messagerie:
         informative: Informativo
         vote: Sondagem
     thread_closed: "Esta conversa está encerrada, já não podes responder."
+    thread_deletion_notice: "Esta conversa será eliminada automaticamente a {date}."
     title: Mensagens
     vote:
         closed: "A votação está encerrada, já não podes votar."

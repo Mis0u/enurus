@@ -265,6 +265,7 @@ messagerie:
         informative: Informativo
         vote: Encuesta
     thread_closed: "Esta conversación está cerrada, ya no puedes responder."
+    thread_deletion_notice: "Este hilo se eliminará automáticamente el {date}."
     title: Mensajería
     vote:
         closed: "La votación está cerrada, ya no puedes votar."

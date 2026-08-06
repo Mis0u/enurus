@@ -265,6 +265,7 @@ messagerie:
         informative: Informatief
         vote: Peiling
     thread_closed: "Dit gesprek is gesloten, je kunt niet meer antwoorden."
+    thread_deletion_notice: "Dit gesprek wordt automatisch verwijderd op {date}."
     title: Berichten
     vote:
         closed: "De stemming is gesloten, je kunt niet meer stemmen."

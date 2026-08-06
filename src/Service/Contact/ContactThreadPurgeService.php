@@ -11,7 +11,12 @@ use function Symfony\Component\Clock\now;
 
 final readonly class ContactThreadPurgeService
 {
-    private const int RETENTION_MONTHS = 3;
+    /**
+     * Public : seule source de vérité de la durée de rétention, réutilisée par
+     * `ContactThreadShowController` pour annoncer la date de suppression à l'utilisateur sur un
+     * fil clôturé.
+     */
+    public const int RETENTION_MONTHS = 3;
 
     public function __construct(
         private EntityManagerInterface $entityManager,

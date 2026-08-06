@@ -269,6 +269,7 @@ messagerie:
         informative: Informacyjny
         vote: Ankieta
     thread_closed: "Ta rozmowa jest zamknięta, nie możesz już na nią odpowiadać."
+    thread_deletion_notice: "Ten wątek zostanie automatycznie usunięty {date}."
     title: Wiadomości
     vote:
         closed: "Głosowanie jest zamknięte, nie możesz już głosować."

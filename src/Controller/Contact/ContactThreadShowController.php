@@ -9,6 +9,7 @@ use App\Entity\ContactThread;
 use App\Form\ContactReplyFormType;
 use App\Form\ContactVoteFormType;
 use App\Security\Voter\ContactThreadVoter;
+use App\Service\Contact\ContactThreadPurgeService;
 use App\Service\Contact\ContactThreadReadService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use function Symfony\Component\Clock\now;
@@ -49,6 +50,7 @@ final class ContactThreadShowController extends AbstractController
 
         return $this->render('messagerie/show.html.twig', [
             'thread' => $thread,
+            'deletionDate' => $thread->closedAt?->modify('+' . ContactThreadPurgeService::RETENTION_MONTHS . ' months'),
             'canReply' => $canReply,
             'replyForm' => $canReply ? $this->createForm(ContactReplyFormType::class) : null,
             'canVote' => $canVote,

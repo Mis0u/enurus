@@ -265,6 +265,7 @@ messagerie:
         informative: Informativ
         vote: Umfrage
     thread_closed: "Diese Unterhaltung ist geschlossen, du kannst nicht mehr antworten."
+    thread_deletion_notice: "Dieser Thread wird automatisch am {date} gelöscht."
     title: Nachrichten
     vote:
         closed: "Die Abstimmung ist beendet, du kannst nicht mehr abstimmen."

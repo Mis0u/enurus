@@ -265,6 +265,7 @@ messagerie:
         informative: Informatif
         vote: Sondage
     thread_closed: "Ce fil de discussion est clôturé, tu ne peux plus y répondre."
+    thread_deletion_notice: "Ce fil sera supprimé automatiquement le {date}."
     title: Messagerie
     vote:
         closed: "Le vote est clôturé, tu ne peux plus voter."
