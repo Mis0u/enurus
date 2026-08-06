@@ -15,7 +15,9 @@ use App\Service\Entity\AccountDeletionService;
 use App\Service\Utils\ImageUploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class AccountDeletionServiceTest extends TestCase
@@ -41,9 +43,74 @@ final class AccountDeletionServiceTest extends TestCase
         $imageUploadService = $this->createStub(ImageUploadService::class);
 
         $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
-        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
+        $logger = $this->createStub(LoggerInterface::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService, $logger);
 
         self::assertNull($user->deletionRequestedAt);
+
+        $service->requestDeletion($user);
+
+        self::assertNotNull($user->deletionRequestedAt);
+    }
+
+    public function testRequestDeletionSendsEmailSynchronously(): void
+    {
+        $user = new User();
+        $user->email = 'test@example.com';
+        $user->nickname = 'TestUser';
+        $user->locale = 'fr';
+
+        $em = $this->createStub(EntityManagerInterface::class);
+
+        $templatedEmail = new TemplatedEmail();
+        $emailService = $this->createStub(EmailInterface::class);
+        $emailService->method('createEmail')->willReturn($templatedEmail);
+
+        $translator = $this->createStub(TranslatorInterface::class);
+        $userRepository = $this->createStub(UserRepository::class);
+        $imageUploadService = $this->createStub(ImageUploadService::class);
+        $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
+        $logger = $this->createStub(LoggerInterface::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService, $logger);
+
+        $service->requestDeletion($user);
+
+        self::assertSame('sync', $templatedEmail->getHeaders()->get('X-Bus-Transport')?->getBodyAsString());
+    }
+
+    public function testRequestDeletionSucceedsEvenWhenNotificationEmailFails(): void
+    {
+        $user = new User();
+        $user->email = 'test@example.com';
+        $user->nickname = 'TestUser';
+        $user->locale = 'fr';
+
+        $em = $this->createMock(EntityManagerInterface::class);
+        $em->expects(self::once())->method('flush');
+
+        $emailService = $this->createStub(EmailInterface::class);
+        $emailService->method('createEmail')->willReturn(new TemplatedEmail());
+        $emailService->method('sendEmail')->willThrowException(new TransportException('Mailer unavailable.'));
+
+        $translator = $this->createStub(TranslatorInterface::class);
+        $userRepository = $this->createStub(UserRepository::class);
+        $imageUploadService = $this->createStub(ImageUploadService::class);
+        $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::once())->method('error')->with(
+            self::anything(),
+            self::callback(static function (array $context) use ($user): bool {
+                self::assertArrayHasKey('userId', $context);
+                self::assertSame($user->id, $context['userId']);
+                self::assertArrayHasKey('exception', $context);
+                self::assertInstanceOf(TransportException::class, $context['exception']);
+
+                return true;
+            }),
+        );
+
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService, $logger);
 
         $service->requestDeletion($user);
 
@@ -72,7 +139,8 @@ final class AccountDeletionServiceTest extends TestCase
         $imageUploadService = $this->createStub(ImageUploadService::class);
 
         $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
-        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
+        $logger = $this->createStub(LoggerInterface::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService, $logger);
 
         $service->cancelDeletion($user);
 
@@ -95,7 +163,8 @@ final class AccountDeletionServiceTest extends TestCase
         $imageUploadService = $this->createStub(ImageUploadService::class);
 
         $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
-        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
+        $logger = $this->createStub(LoggerInterface::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService, $logger);
 
         $service->cancelDeletion($user);
 
@@ -118,7 +187,8 @@ final class AccountDeletionServiceTest extends TestCase
         $imageUploadService = $this->createStub(ImageUploadService::class);
 
         $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
-        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
+        $logger = $this->createStub(LoggerInterface::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService, $logger);
 
         self::assertSame(0, $service->purgeExpired());
     }
@@ -166,7 +236,8 @@ final class AccountDeletionServiceTest extends TestCase
             });
 
         $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
-        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
+        $logger = $this->createStub(LoggerInterface::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService, $logger);
 
         $service->purgeExpired();
 
@@ -187,7 +258,8 @@ final class AccountDeletionServiceTest extends TestCase
         $imageUploadService = $this->createStub(ImageUploadService::class);
 
         $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
-        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
+        $logger = $this->createStub(LoggerInterface::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService, $logger);
 
         self::assertNull($service->getDeletionDeadline($user));
     }
@@ -204,7 +276,8 @@ final class AccountDeletionServiceTest extends TestCase
         $imageUploadService = $this->createStub(ImageUploadService::class);
 
         $deletedAccountTraceRepository = $this->createStub(DeletedAccountTraceRepository::class);
-        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
+        $logger = $this->createStub(LoggerInterface::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService, $logger);
 
         $deadline = $service->getDeletionDeadline($user);
 
@@ -230,7 +303,8 @@ final class AccountDeletionServiceTest extends TestCase
             }))
             ->willReturn(3);
 
-        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService);
+        $logger = $this->createStub(LoggerInterface::class);
+        $service = new AccountDeletionService($em, $userRepository, $deletedAccountTraceRepository, $emailService, $translator, $imageUploadService, $logger);
 
         self::assertSame(3, $service->purgeExpiredTraces());
     }

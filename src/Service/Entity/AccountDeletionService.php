@@ -11,7 +11,9 @@ use App\Repository\UserRepository;
 use App\Service\Email\EmailInterface;
 use App\Service\Utils\ImageUploadService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use function Symfony\Component\Clock\now;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 readonly class AccountDeletionService
@@ -32,6 +34,7 @@ readonly class AccountDeletionService
         private EmailInterface $emailService,
         private TranslatorInterface $translator,
         private ImageUploadService $imageUploadService,
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -104,6 +107,12 @@ readonly class AccountDeletionService
     }
 
     /**
+     * Envoyée en synchrone (hors file `async`) : une notification de sécurité doit arriver
+     * immédiatement, sans dépendre du prochain passage d'un worker Messenger — même raisonnement
+     * que `UserService::sendPasswordChangedEmail()`. Un échec d'envoi (mailer indisponible) ne
+     * doit jamais faire échouer la demande/annulation/suppression elle-même (déjà persistée à ce
+     * stade) — capturé et loggé plutôt que remonté à l'appelant.
+     *
      * @param array<string, mixed> $extraContext
      */
     private function sendEmail(User $user, string $subjectKey, string $template, array $extraContext = []): void
@@ -119,7 +128,17 @@ readonly class AccountDeletionService
             $user->locale,
         );
 
-        $this->emailService->sendEmail($email);
+        $email->getHeaders()->addTextHeader('X-Bus-Transport', 'sync');
+
+        try {
+            $this->emailService->sendEmail($email);
+        } catch (TransportExceptionInterface $e) {
+            $this->logger->error('Failed to send account-deletion email.', [
+                'userId' => $user->id,
+                'subjectKey' => $subjectKey,
+                'exception' => $e,
+            ]);
+        }
     }
 
     private function purgeUser(User $user): void
