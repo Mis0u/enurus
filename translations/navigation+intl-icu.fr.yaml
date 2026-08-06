@@ -81,7 +81,6 @@ dashboard:
     setting: Réglages
     title: Tableau de bord
     widget:
-        coming_soon: Bientôt disponible
         locked:
             need_days: "{count, plural, =1 {+ # jour d'ancienneté} other {+ # jours d'ancienneté}}"
             need_workouts: "{count, plural, =1 {Encore # séance} other {Encore # séances}}"
@@ -446,7 +445,6 @@ settings:
     nickname:
         label: Alias
     password:
-        coming_soon: Bientôt disponible
         current_password: Mot de passe actuel
         current_password_invalid: Le mot de passe actuel n'est pas correct
         edit_password: Modifier le mot de passe
