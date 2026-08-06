@@ -177,6 +177,15 @@ final class UserCrudController extends AbstractCrudController
             ->hideOnForm()
         ;
         /**
+         * Détail uniquement, à but de modération — même pattern que `WorkoutCrudController::$photoPath`
+         * (`_photo.html.twig`) : un avatar signalé inapproprié doit rester visible depuis l'admin
+         * sans avoir à requêter la base.
+         */
+        yield Field::new('avatarPath', $this->trans('admin.user.field.avatar'))
+            ->onlyOnDetail()
+            ->setTemplatePath('admin/user/_avatar.html.twig')
+        ;
+        /**
          * Lecture seule, à but de support — pas de CRUD séparé pour Routines/Workouts, éditer les
          * données d'entraînement d'un utilisateur depuis l'admin n'a pas de sens métier. Même
          * pattern que `ContactThreadCrudController::$messages` : propriété réelle + template dédié,

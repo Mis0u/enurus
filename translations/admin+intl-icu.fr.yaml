@@ -195,6 +195,7 @@ admin:
             wrong_password: "Mot de passe incorrect."
         field:
             account_blocked_at: "Compte bloqué le"
+            avatar: Avatar
             contact_restricted_until: "Messagerie bloquée jusqu'au"
             contact_restriction_duration: "Durée de la restriction d'origine"
             created_at: "Inscrit le"
@@ -238,6 +239,7 @@ admin:
             button: Débloquer
             confirm: "Confirmer le déblocage de la messagerie de cet utilisateur ?"
             title: "Débloquer la messagerie — {email}"
+        no_avatar: "Aucun avatar."
         resend_reset_email:
             button: "Renvoyer l'email"
             confirm: "Confirmer l'envoi immédiat d'un nouvel email de réinitialisation de mot de passe à {email} ?"
