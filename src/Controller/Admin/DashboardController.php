@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Menu\MenuItemInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -25,6 +26,7 @@ final class DashboardController extends AbstractDashboardController
         private readonly AdminDashboardStatsService $adminDashboardStatsService,
         private readonly TranslatorInterface $translator,
         private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly Packages $assetPackages,
     ) {
     }
 
@@ -38,10 +40,16 @@ final class DashboardController extends AbstractDashboardController
 
     public function configureDashboard(): Dashboard
     {
+        $logoUrl = $this->assetPackages->getUrl('images/enurus_logo_horizontal.png');
+
         return Dashboard::new()
-            ->setTitle($this->trans('admin.backend_title', [
-                'brand' => $this->translator->trans('name', [], 'brand', 'fr'),
-            ]))
+            ->setTitle(sprintf(
+                '<img src="%s" alt="%s" style="height: 26px; width: auto; vertical-align: middle; margin-right: 8px;"> %s',
+                htmlspecialchars($logoUrl, ENT_QUOTES),
+                htmlspecialchars($this->translator->trans('name', [], 'brand', 'fr'), ENT_QUOTES),
+                htmlspecialchars($this->trans('admin.backend_title'), ENT_QUOTES),
+            ))
+            ->setFaviconPath('images/favicon/favicon.ico')
             ->setLocales(['fr'])
         ;
     }
