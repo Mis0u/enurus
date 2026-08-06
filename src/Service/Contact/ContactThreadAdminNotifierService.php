@@ -7,6 +7,7 @@ namespace App\Service\Contact;
 use App\Controller\Admin\ContactThreadCrudController;
 use App\Entity\ContactThread;
 use App\Entity\ContactThreadMessage;
+use App\Repository\ContactNotificationSettingRepository;
 use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
@@ -30,6 +31,7 @@ readonly class ContactThreadAdminNotifierService
         private ChatterInterface $chatter,
         private AdminUrlGenerator $adminUrlGenerator,
         private UserRepository $userRepository,
+        private ContactNotificationSettingRepository $contactNotificationSettingRepository,
         private TranslatorInterface $translator,
         private LoggerInterface $logger,
         private string $adminUserEmail,
@@ -38,6 +40,14 @@ readonly class ContactThreadAdminNotifierService
 
     public function notifyNewMessage(ContactThread $thread, ContactThreadMessage $message): void
     {
+        if (! $this->contactNotificationSettingRepository->getSingleton()->telegramNotificationsEnabled) {
+            return;
+        }
+
+        if ($message->author->telegramNotificationsMuted) {
+            return;
+        }
+
         $admin = $this->userRepository->findOneByEmail($this->adminUserEmail);
 
         if (null === $admin) {

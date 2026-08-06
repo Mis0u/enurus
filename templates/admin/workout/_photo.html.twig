@@ -1,7 +1,11 @@
 {% if field.value %}
-    <a href="/uploads/{{ field.value }}" target="_blank" rel="noopener">
-        <img class="admin-message-thumb" src="/uploads/{{ field.value }}" alt="">
-    </a>
+    <img class="admin-message-thumb"
+         src="/uploads/{{ field.value }}"
+         alt=""
+         onclick="document.getElementById('admin-workout-photo-lightbox').classList.add('is-open')">
+    <div id="admin-workout-photo-lightbox" class="admin-lightbox" onclick="this.classList.remove('is-open')">
+        <img src="/uploads/{{ field.value }}" alt="">
+    </div>
 {% else %}
     <p>{{ 'admin.workout.no_photo'|trans({}, 'admin', 'fr') }}</p>
 {% endif %}

@@ -42,6 +42,28 @@
         </div>
     </div>
 
+    {#
+        Visibilité sur `messenger_messages` (transports `async`/`failed` partagés, cf. CLAUDE.md
+        TODO #23/#24) — sans worker `messenger:consume` actif, ni les emails ni les notifications
+        Telegram admin ne partent réellement, sans que rien ne le signale ailleurs dans l'admin.
+        Tuile "échecs" mise en évidence dès qu'elle est non nulle, un message en `failed` a déjà
+        épuisé ses 3 tentatives de retry (cf. `config/packages/messenger.yaml`).
+    #}
+    <div class="row row-cols-2 g-3 mb-4">
+        <div class="col">
+            <div class="card card-body text-center">
+                <div class="admin-stat-tile-value">{{ stats.messengerQueue.pending }}</div>
+                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.messenger_pending'|trans({}, 'admin', 'fr') }}</div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-body text-center {{ stats.messengerQueue.failed > 0 ? 'text-bg-danger' }}">
+                <div class="admin-stat-tile-value">{{ stats.messengerQueue.failed }}</div>
+                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.messenger_failed'|trans({}, 'admin', 'fr') }}</div>
+            </div>
+        </div>
+    </div>
+
     <div class="row mb-3">
         <div class="col-12">
             <div class="card">

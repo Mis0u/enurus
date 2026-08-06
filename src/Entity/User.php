@@ -266,6 +266,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Coupe uniquement la notification Telegram admin à l'arrivée d'un nouveau message de cet
+     * utilisateur (cf. ContactThreadAdminNotifierService) — n'affecte ni l'envoi d'emails, ni la
+     * capacité de l'utilisateur à écrire (contrairement à `contactRestrictedPermanently`).
+     */
+    #[ORM\Column]
+    public bool $telegramNotificationsMuted = false {
+        get {
+            return $this->telegramNotificationsMuted;
+        }
+        set(bool $telegramNotificationsMuted) {
+            $this->telegramNotificationsMuted = $telegramNotificationsMuted;
+        }
+    }
+
+    /**
      * @var string[] $roles
      */
     #[ORM\Column]

@@ -11,8 +11,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Menu\MenuItemInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -23,6 +25,8 @@ final class DashboardController extends AbstractDashboardController
         private readonly ContactThreadRepository $contactThreadRepository,
         private readonly AdminDashboardStatsService $adminDashboardStatsService,
         private readonly TranslatorInterface $translator,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly Packages $assetPackages,
     ) {
     }
 
@@ -36,10 +40,16 @@ final class DashboardController extends AbstractDashboardController
 
     public function configureDashboard(): Dashboard
     {
+        $logoUrl = $this->assetPackages->getUrl('images/enurus_logo_horizontal.png');
+
         return Dashboard::new()
-            ->setTitle($this->trans('admin.backend_title', [
-                'brand' => $this->translator->trans('name', [], 'brand', 'fr'),
-            ]))
+            ->setTitle(sprintf(
+                '<img src="%s" alt="%s" style="height: 26px; width: auto; vertical-align: middle; margin-right: 8px;"> %s',
+                htmlspecialchars($logoUrl, ENT_QUOTES),
+                htmlspecialchars($this->translator->trans('name', [], 'brand', 'fr'), ENT_QUOTES),
+                htmlspecialchars($this->trans('admin.backend_title'), ENT_QUOTES),
+            ))
+            ->setFaviconPath('images/favicon/favicon.ico')
             ->setLocales(['fr'])
         ;
     }
@@ -62,17 +72,37 @@ final class DashboardController extends AbstractDashboardController
     {
         $awaitingReplyCount = $this->contactThreadRepository->countAwaitingAdminReply();
 
+        yield MenuItem::linkToUrl($this->trans('admin.menu.back_to_app'), 'fa fa-arrow-left', $this->urlGenerator->generate('app_dashboard', [
+            '_locale' => 'fr',
+        ]));
         yield MenuItem::linkToDashboard($this->trans('admin.menu.home'), 'fa fa-home');
+
+        yield MenuItem::section($this->trans('admin.menu.section.user'), 'fa fa-users');
         yield MenuItem::linkTo(UserCrudController::class, $this->trans('admin.menu.user'), 'fa fa-users');
+        yield MenuItem::linkTo(DeletedAccountTraceCrudController::class, $this->trans('admin.menu.deleted_account_trace'), 'fa fa-user-slash');
+
+        yield MenuItem::section($this->trans('admin.menu.section.content'), 'fa fa-dumbbell');
         yield MenuItem::linkTo(ExerciseCrudController::class, $this->trans('admin.menu.exercise'), 'fa fa-dumbbell');
         yield MenuItem::linkTo(RoutineCrudController::class, $this->trans('admin.menu.routine'), 'fa fa-list-check');
         yield MenuItem::linkTo(WorkoutCrudController::class, $this->trans('admin.menu.workout'), 'fa fa-calendar-days');
+
+        yield MenuItem::section($this->trans('admin.menu.section.thread'), 'fa fa-envelope');
         yield MenuItem::linkTo(ContactThreadCrudController::class, $this->trans('admin.menu.thread'), 'fa fa-envelope')
             ->setBadge(0 < $awaitingReplyCount ? $awaitingReplyCount : false, 'danger')
         ;
         yield MenuItem::linkTo(ContactBroadcastCrudController::class, $this->trans('admin.menu.broadcast'), 'fa fa-bullhorn');
-        yield MenuItem::linkTo(DeletedAccountTraceCrudController::class, $this->trans('admin.menu.deleted_account_trace'), 'fa fa-user-slash');
+
+        yield MenuItem::section($this->trans('admin.menu.section.settings'), 'fa fa-flag-checkered');
         yield MenuItem::linkTo(RegistrationMilestoneSettingCrudController::class, $this->trans('admin.menu.registration_milestone'), 'fa fa-flag-checkered');
+        yield MenuItem::linkTo(ContactNotificationSettingCrudController::class, $this->trans('admin.menu.contact_notification_setting'), 'fa fa-bell-slash');
+
+        /**
+         * En plus du menu utilisateur (coin haut-droit, fourni nativement par
+         * `configureUserMenu()` d'EasyAdmin) — lien direct en bas du menu latéral, pour une
+         * déconnexion accessible sans ouvrir ce dropdown.
+         */
+        yield MenuItem::section();
+        yield MenuItem::linkToLogout($this->trans('admin.menu.logout'), 'fa fa-right-from-bracket');
     }
 
     /**

@@ -93,14 +93,14 @@ final class ContactBroadcastCrudController extends AbstractCrudController
             ->onlyOnDetail()
             ->setTemplatePath('admin/contact_broadcast/_body.html.twig')
         ;
-        yield Field::new('pollResults', $this->trans('admin.broadcast.poll.results_title'))
-            ->onlyOnDetail()
-            ->setVirtual(true)
-            ->formatValue(fn (mixed $value, ContactBroadcast $broadcast): mixed => $broadcast->isPoll()
-                ? $this->contactPollStatsService->getData($broadcast)
-                : null)
-            ->setTemplatePath('admin/contact_broadcast/_poll_results.html.twig')
-        ;
+        if (Crud::PAGE_DETAIL === $pageName && $this->getDetailBroadcast()?->isPoll()) {
+            yield Field::new('pollResults', $this->trans('admin.broadcast.poll.results_title'))
+                ->onlyOnDetail()
+                ->setVirtual(true)
+                ->formatValue(fn (mixed $value, ContactBroadcast $broadcast): mixed => $this->contactPollStatsService->getData($broadcast))
+                ->setTemplatePath('admin/contact_broadcast/_poll_results.html.twig')
+            ;
+        }
     }
 
     public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void
@@ -171,6 +171,17 @@ final class ContactBroadcastCrudController extends AbstractCrudController
         return $this->render('admin/contact_broadcast/compose.html.twig', [
             'form' => $form,
         ]);
+    }
+
+    /**
+     * Uniquement défini sur la page de détail — pas d'accès à l'entité courante ailleurs
+     * (index/compose n'ont pas de ContactBroadcast résolu dans le contexte).
+     */
+    private function getDetailBroadcast(): ?ContactBroadcast
+    {
+        $broadcast = $this->getContext()?->getEntity()->getInstance();
+
+        return $broadcast instanceof ContactBroadcast ? $broadcast : null;
     }
 
     private function describeCategory(ContactBroadcast $broadcast): string

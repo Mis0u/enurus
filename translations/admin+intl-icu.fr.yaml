@@ -3,7 +3,7 @@
 # Centralise ici plutôt qu'en dur dans les controllers/formulaires/templates, au cas où un jour
 # le besoin de traduire le back-office se présenterait malgré tout.
 admin:
-    backend_title: "{brand} Admin"
+    backend_title: Admin
     broadcast:
         action:
             compose: Nouvelle diffusion
@@ -43,6 +43,12 @@ admin:
         target:
             all: "Tous les utilisateurs"
             locale: "Tous les utilisateurs ({locale})"
+    contact_notification_setting:
+        field:
+            telegram_notifications_enabled: "Notifications Telegram activées"
+        label:
+            plural: "Notifications Telegram"
+            singular: "Notifications Telegram"
     contact_restriction:
         duration:
             label: "Durée du blocage"
@@ -56,6 +62,8 @@ admin:
             registration_trend_title: "Tendance des inscriptions (12 semaines)"
             unit_of_measure_title: "Répartition par unité de mesure en %"
         stat:
+            messenger_failed: "Messages en échec"
+            messenger_pending: "Messages en attente"
             new_this_month: "Nouveaux ce mois-ci"
             new_this_week: "Nouveaux cette semaine"
             new_today: "Nouveaux aujourd'hui"
@@ -82,12 +90,20 @@ admin:
         remove_button: Retirer
         send_button: Envoyer
     menu:
+        back_to_app: "Retour à l'application"
         broadcast: Diffusions
+        contact_notification_setting: "Notifications Telegram"
         deleted_account_trace: "Comptes supprimés"
         exercise: "Exercices personnalisés"
         home: "Tableau de bord"
+        logout: Déconnexion
         registration_milestone: "Palier d'inscriptions"
         routine: Routines
+        section:
+            content: Contenu
+            settings: Réglages
+            thread: Messagerie
+            user: Utilisateurs
         thread: Messagerie
         user: Utilisateurs
         workout: Séances
@@ -187,13 +203,18 @@ admin:
             wrong_password: "Mot de passe incorrect."
         field:
             account_blocked_at: "Compte bloqué le"
+            avatar: Avatar
+            contact_restricted_until: "Messagerie bloquée jusqu'au"
+            contact_restriction_duration: "Durée de la restriction d'origine"
             created_at: "Inscrit le"
             deletion_requested_at: "Suppression demandée le"
             gender: Genre
+            is_verified: "Email vérifié"
             last_login: "Dernière connexion"
             locale: Langue
             nickname: Pseudo
             routines: Routines
+            telegram_notifications_muted: "Notifications Telegram coupées"
             unit_of_measure: Unité
             workouts: Séances
         filter:
@@ -226,6 +247,7 @@ admin:
             button: Débloquer
             confirm: "Confirmer le déblocage de la messagerie de cet utilisateur ?"
             title: "Débloquer la messagerie — {email}"
+        no_avatar: "Aucun avatar."
         resend_reset_email:
             button: "Renvoyer l'email"
             confirm: "Confirmer l'envoi immédiat d'un nouvel email de réinitialisation de mot de passe à {email} ?"
