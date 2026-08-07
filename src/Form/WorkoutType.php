@@ -55,8 +55,16 @@ final class WorkoutType extends AbstractType
 
         $builder
             ->add('performedAt', DateType::class, $this->performedAtOptions($isEdit, $isEdit && $workout instanceof Workout ? $workout : null))
-            ->add('duration', IntegerType::class, $this->durationOptions())
-            ->add('routine', EntityType::class, $this->routineOptions())
+            ->add('duration', IntegerType::class, $this->durationOptions());
+
+        // Aucune UI pour changer la routine d'une séance déjà enregistrée — absent du formulaire
+        // d'édition, sinon un champ mappé jamais rendu dans les templates d'édition serait traité
+        // comme soumis vide par Symfony et écraserait silencieusement Workout::$routine à null.
+        if (! $isEdit) {
+            $builder->add('routine', EntityType::class, $this->routineOptions());
+        }
+
+        $builder
             ->add('workoutExercises', CollectionType::class, $this->workoutExercisesOptions())
             ->add('note', $isEdit ? TextareaType::class : HiddenType::class, $this->noteOptions($isEdit));
 
