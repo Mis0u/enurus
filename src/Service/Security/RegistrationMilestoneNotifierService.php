@@ -98,6 +98,8 @@ final readonly class RegistrationMilestoneNotifierService
             $admin->locale,
         );
 
+        $mail->getHeaders()->addTextHeader('X-Bus-Transport', 'sync');
+
         try {
             $this->emailService->sendEmail($mail);
         } catch (TransportExceptionInterface $e) {
