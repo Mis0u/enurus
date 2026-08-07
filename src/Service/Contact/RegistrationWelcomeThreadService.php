@@ -37,6 +37,7 @@ final readonly class RegistrationWelcomeThreadService
 
         $thread = new ContactThread();
         $thread->owner = $user;
+        $thread->isWelcomeMessage = true;
         $thread->category = ContactCategoryEnum::INFORMATIVE;
         $thread->subject = $this->translator->trans('contact.welcome_thread.subject', [
             'brand' => $brand,

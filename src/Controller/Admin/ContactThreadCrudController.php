@@ -141,12 +141,15 @@ final class ContactThreadCrudController extends AbstractCrudController
     /**
      * Un envoi groupé est toujours `INFORMATIVE`, donc jamais répondu (cf. ContactThreadVoter) — les
      * fils qu'il génère n'ont donc jamais besoin d'apparaître ici : ils restent consultables en
-     * agrégé via ContactBroadcastCrudController ("Diffusions").
+     * agrégé via ContactBroadcastCrudController ("Diffusions"). Les fils de bienvenue automatiques
+     * (RegistrationWelcomeThreadService) sont exclus pour la même raison : jamais répondables, un
+     * par inscription, ils pollueraient la liste sans limite à mesure que la base grandit.
      */
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
         return parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
             ->andWhere('entity.broadcast IS NULL')
+            ->andWhere('entity.isWelcomeMessage = false')
         ;
     }
 
