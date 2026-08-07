@@ -18,12 +18,19 @@
 {% endblock %}
 
 {% block choice_widget_collapsed %}
+    {#
+        Le popup ouvert d'un <select> natif reste rendu par le système/navigateur — les classes
+        Tailwind ci-dessous ne contrôlent que ce que Chrome/Edge exposent (fond et texte des
+        <option>), pas le survol/la sélection surlignée. Support partiel Firefox, quasi nul Safari
+        — atténue le blanc criant sans prétendre à un style complet, cf. discussion sur le
+        sélecteur de routine (workout/create/_config-bar.html.twig).
+    #}
     <select {{ block('widget_attributes') }} class="px-3.5 py-2.25 bg-white/[0.03] border border-white/[0.07] rounded-lg text-[#f0f4ff] text-[13.5px] outline-none transition-colors duration-250 cursor-pointer max-md:w-full focus:border-[rgba(244,63,94,0.4)]">
         {% if placeholder is not none %}
-            <option value="">{{ placeholder }}</option>
+            <option value="" class="bg-[#0f1928] text-[#f0f4ff]">{{ placeholder }}</option>
         {% endif %}
         {% for choice in choices %}
-            <option value="{{ choice.value }}" {% if choice.value == value %}selected{% endif %}>{{ choice.label }}</option>
+            <option value="{{ choice.value }}" class="bg-[#0f1928] text-[#f0f4ff]" {% if choice.value == value %}selected{% endif %}>{{ choice.label }}</option>
         {% endfor %}
     </select>
 {% endblock %}
