@@ -36,7 +36,9 @@
                 {% endif %}
             </div>
 
-            {% include 'partials/_common/_footer.html.twig' only %}
+            {% include 'partials/_common/_footer.html.twig' with {
+                locale: locale,
+            } only %}
         </div>
     </div>
 {% endblock %}
