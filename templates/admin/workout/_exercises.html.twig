@@ -1,7 +1,8 @@
 {% set fr = enum('App\\Enum\\Translations\\LocaleAllowedEnum').FR.value %}
 {% for workout_exercise in field.value|sort((a, b) => a.position <=> b.position) %}
+    {% set exercise = workout_exercise.exercise %}
     <div class="admin-card">
-        {{ workout_exercise.exercise.name }}
+        {{ exercise.isPublic ? exercise.name|trans({}, 'exercise', fr) : exercise.name }}
     </div>
 {% else %}
     <p>{{ 'admin.workout.no_exercise'|trans({}, 'admin', fr) }}</p>
