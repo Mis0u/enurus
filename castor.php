@@ -341,6 +341,46 @@ function start(): void
     resetAllDB();
 }
 
+// ============================================
+// PROD
+// ============================================
+
+#[AsTask(description: 'Build cache and assets in prod mode for a local prod-like smoke test')]
+function prodBuild(): void
+{
+    // Tailwind (symfonycasts_tailwind) n'est configuré qu'en dev (config/packages/dev/) : le
+    // CSS est construit une fois via `castor tailwind-build` et son output (var/tailwind/
+    // app.built.css) est ensuite consommé tel quel par l'asset mapper, quel que soit l'env.
+    tailwindBuild();
+
+    execute(
+        'PROD CACHE',
+        '🏭 Clearing and warming prod cache...',
+        'php bin/console cache:clear --env=prod --no-debug',
+        'Prod cache is ready'
+    );
+
+    execute(
+        'PROD ASSET MAP',
+        '⚙️ Compiling asset map for prod...',
+        'php bin/console asset-map:compile --env=prod --no-debug',
+        'Asset map compiled for prod'
+    );
+
+    io()->note('Lance ensuite : symfony server:stop puis APP_ENV=prod APP_DEBUG=0 symfony server:start -d — la CLI Symfony ne gère qu\'une instance par projet, donc le serveur dev doit être arrêté le temps du test (cache et assets restent séparés dans var/cache/{dev,prod}, aucun risque de collision là-dessus).');
+}
+
+#[AsTask(description: 'Remove the local prod cache built by prodBuild')]
+function prodClear(): void
+{
+    execute(
+        'PROD CACHE CLEANUP',
+        '🧹 Removing local prod cache...',
+        'rm -rf var/cache/prod',
+        'Prod cache removed'
+    );
+}
+
 function execute(string $title, string $section, string $command, string $success): void
 {
     io()->title($title);
