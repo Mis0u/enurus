@@ -1,3 +1,8 @@
+{#
+    Paramètres :
+      - locale : string|null — force la locale de traduction (ex. page d'erreur, cf.
+        ErrorPageController::resolveLocale()). Par défaut : locale ambiante de la requête.
+#}
 <p class="text-center text-slate-500 text-sm mt-8">
-    {{ 'footer.copyright'|trans({'year': "now"|date("Y"), 'brand': 'name'|trans({}, 'brand')}, 'navigation') }}
+    {{ 'footer.copyright'|trans({'year': "now"|date("Y"), 'brand': 'name'|trans({}, 'brand')}, 'navigation', locale ?? null) }}
 </p>

@@ -50,6 +50,11 @@ final class ErrorPageController extends AbstractController
 
         $request = $this->requestStack->getCurrentRequest();
         if (Response::HTTP_NOT_FOUND === $statusCode) {
+            // Ce branch n'est plus atteint que par les URLs sans préfixe de locale valide
+            // (NotFoundController capte tout le reste via une route catch-all réelle, qui
+            // traverse le firewall et rend getUser() fiable — cf. sa docblock). Ici, la requête
+            // n'a jamais matché de route, donc ni le firewall ni Request::setLocale() n'ont
+            // tourné : getUser() est toujours null et on se rabat sur l'Accept-Language.
             return $request?->getPreferredLanguage(LocaleAllowedEnum::getAllowedLocale()) ?? 'en';
         }
 
