@@ -69,6 +69,11 @@
             controllerName: 'routine--edit',
         } only %}
 
+        {# Aperçu silhouette — partial partagé avec create #}
+        {% include 'routine/create/_muscle_preview.html.twig' with {
+            controllerName: 'routine--edit',
+        } only %}
+
         {# Zone 2 — Deux colonnes 50/50 #}
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
 

@@ -8,7 +8,7 @@ import { initNameChecker } from './routine-name-checker.js';
 import { matchesFilters } from './routine-exercise-filter.js';
 import { normalizeForSearch } from '../../utils/search.js';
 import { MusclePills, updatePillVisual } from '../exercise/muscle_pills.js';
-import { paintMuscleGroupsByIds, resetBodymap } from '../../utils/muscle_colors.js';
+import { paintMusclePreview } from '../../utils/muscle_colors.js';
 
 export default class extends Controller {
     static targets = [
@@ -221,10 +221,7 @@ export default class extends Controller {
             data?.secondaryMuscleIds.forEach(svgId => secondaryIds.add(svgId));
         });
 
-        const container = this.muscleBodyTarget;
-        resetBodymap(container);
-        paintMuscleGroupsByIds(container, Array.from(primaryIds), 'primary');
-        paintMuscleGroupsByIds(container, Array.from(secondaryIds), 'secondary');
+        paintMusclePreview(this.muscleBodyTarget, primaryIds, secondaryIds);
     }
 
     // -------------------------------------------------------------------------

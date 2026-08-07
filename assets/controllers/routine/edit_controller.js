@@ -8,6 +8,7 @@ import { initNameChecker } from './routine-name-checker.js';
 import { matchesFilters } from './routine-exercise-filter.js';
 import { normalizeForSearch } from '../../utils/search.js';
 import { MusclePills, updatePillVisual } from '../exercise/muscle_pills.js';
+import { paintMusclePreview } from '../../utils/muscle_colors.js';
 
 export default class extends Controller {
     static targets = [
@@ -24,6 +25,9 @@ export default class extends Controller {
         'searchEmptyState',
         'muscleFilterChip',
         'muscleFilterCount',
+        'musclePreviewToggle',
+        'musclePreviewBody',
+        'muscleBody',
     ];
 
     static values = {
@@ -41,6 +45,7 @@ export default class extends Controller {
     #searchQuery        = '';
     #sortable           = null;
     #nameIsAvailable    = true;
+    #musclePreviewAutoOpened = false;
 
     /** @type {MusclePills} */
     #muscleFilterPills;
@@ -77,7 +82,8 @@ export default class extends Controller {
             this.#exerciseData.set(item.dataset.exerciseId, {
                 name:                    item.dataset.exerciseName ?? '',
                 normalizedName:          normalizeForSearch(item.dataset.exerciseName ?? ''),
-                muscleIds:               (item.dataset.muscleIds ?? '').split(',').filter(Boolean),
+                primaryMuscleIds:        (item.dataset.muscleIds ?? '').split(',').filter(Boolean),
+                secondaryMuscleIds:      (item.dataset.secondaryMuscleIds ?? '').split(',').filter(Boolean),
                 primaryMuscleGroupIds:   (item.dataset.primaryMuscleGroupIds ?? '').split(',').filter(Boolean),
                 secondaryMuscleGroupIds: (item.dataset.secondaryMuscleGroupIds ?? '').split(',').filter(Boolean),
                 primaryMuscles:          this.#readMuscleTags(item, 'primary'),
@@ -178,6 +184,51 @@ export default class extends Controller {
 
     updateHeader() {
         this.#updateSummaryHeader();
+    }
+
+    // -------------------------------------------------------------------------
+    // Aperçu silhouette — coloriage muscles primaires/secondaires
+    // -------------------------------------------------------------------------
+
+    toggleMusclePreview(event) {
+        const isOpen = event.currentTarget.getAttribute('aria-expanded') === 'true';
+        this.#setMusclePreviewOpen(!isOpen);
+    }
+
+    /**
+     * Ouvre le panneau automatiquement une seule fois, dès qu'un exercice est sélectionné —
+     * couvre aussi bien l'état initial (routine existante déjà pourvue d'exercices) que le
+     * premier ajout depuis une routine vidée. N'insiste pas si l'utilisateur l'a refermé ensuite.
+     */
+    #autoOpenMusclePreviewOnFirstExercise() {
+        if (this.#musclePreviewAutoOpened || this.#selectedIds.length === 0) { return; }
+
+        this.#musclePreviewAutoOpened = true;
+        this.#setMusclePreviewOpen(true);
+    }
+
+    #setMusclePreviewOpen(open) {
+        if (!this.hasMusclePreviewToggleTarget || !this.hasMusclePreviewBodyTarget) { return; }
+
+        const body = this.musclePreviewBodyTarget;
+        body.style.maxHeight = open ? `${body.scrollHeight}px` : '0';
+        this.musclePreviewToggleTarget.setAttribute('aria-expanded', String(open));
+        this.musclePreviewToggleTarget.querySelector('svg')?.classList.toggle('rotate-180', open);
+    }
+
+    #paintMusclePreview() {
+        if (!this.hasMuscleBodyTarget) { return; }
+
+        const primaryIds   = new Set();
+        const secondaryIds = new Set();
+
+        this.#selectedIds.forEach(id => {
+            const data = this.#exerciseData.get(id);
+            data?.primaryMuscleIds.forEach(svgId => primaryIds.add(svgId));
+            data?.secondaryMuscleIds.forEach(svgId => secondaryIds.add(svgId));
+        });
+
+        paintMusclePreview(this.muscleBodyTarget, primaryIds, secondaryIds);
     }
 
     // -------------------------------------------------------------------------
@@ -356,6 +407,8 @@ export default class extends Controller {
 
         this.#updateSummaryHeader();
         this.#renumberPositions();
+        this.#paintMusclePreview();
+        this.#autoOpenMusclePreviewOnFirstExercise();
     }
 
     #updateSummaryHeader() {

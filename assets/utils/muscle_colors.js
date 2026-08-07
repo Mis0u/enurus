@@ -43,3 +43,21 @@ export function paintMuscleGroupsByIds(container, ids, state) {
 export function resetBodymap(container) {
     container.querySelectorAll('g.bodymap').forEach(g => paintMuscleGroup(g, 'none'));
 }
+
+/**
+ * Reset + coloriage complet d'une silhouette à partir des IDs primaires/secondaires cumulés
+ * de plusieurs exercices. Un muscle primaire pour un exercice et secondaire pour un autre garde
+ * la couleur primaire — le rôle le plus engageant l'emporte, jamais l'ordre de peinture.
+ *
+ * @param {Element} container
+ * @param {Iterable<string>} primaryIds
+ * @param {Iterable<string>} secondaryIds
+ */
+export function paintMusclePreview(container, primaryIds, secondaryIds) {
+    const primary         = new Set(primaryIds);
+    const secondaryOnly   = Array.from(secondaryIds).filter(id => !primary.has(id));
+
+    resetBodymap(container);
+    paintMuscleGroupsByIds(container, Array.from(primary), 'primary');
+    paintMuscleGroupsByIds(container, secondaryOnly, 'secondary');
+}
