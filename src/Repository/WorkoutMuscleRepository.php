@@ -30,8 +30,8 @@ class WorkoutMuscleRepository
     {
         if ([] === $workoutIds) {
             return [
-                'primary' => [],
-                'secondary' => [],
+                MuscleTypeEnum::PRIMARY->value => [],
+                MuscleTypeEnum::SECONDARY->value => [],
             ];
         }
 
@@ -67,8 +67,8 @@ class WorkoutMuscleRepository
         $secondary = array_values(array_diff(array_unique($secondary), $primary));
 
         return [
-            'primary' => $primary,
-            'secondary' => $secondary,
+            MuscleTypeEnum::PRIMARY->value => $primary,
+            MuscleTypeEnum::SECONDARY->value => $secondary,
         ];
     }
 

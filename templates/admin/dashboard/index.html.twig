@@ -1,43 +1,44 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
+{% set fr = enum('App\\Enum\\Translations\\LocaleAllowedEnum').FR.value %}
 
-{% block content_title %}{{ 'admin.dashboard.title'|trans({}, 'admin', 'fr') }}{% endblock %}
+{% block content_title %}{{ 'admin.dashboard.title'|trans({}, 'admin', fr) }}{% endblock %}
 
 {% block main %}
     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3 mb-4">
         <div class="col">
             <div class="card card-body text-center">
                 <div class="admin-stat-tile-value">{{ stats.totalUsers }}</div>
-                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.total_users'|trans({}, 'admin', 'fr') }}</div>
+                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.total_users'|trans({}, 'admin', fr) }}</div>
             </div>
         </div>
         <div class="col">
             <div class="card card-body text-center">
                 <div class="admin-stat-tile-value">{{ stats.newToday }}</div>
-                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.new_today'|trans({}, 'admin', 'fr') }}</div>
+                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.new_today'|trans({}, 'admin', fr) }}</div>
             </div>
         </div>
         <div class="col">
             <div class="card card-body text-center">
                 <div class="admin-stat-tile-value">{{ stats.newThisWeek }}</div>
-                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.new_this_week'|trans({}, 'admin', 'fr') }}</div>
+                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.new_this_week'|trans({}, 'admin', fr) }}</div>
             </div>
         </div>
         <div class="col">
             <div class="card card-body text-center">
                 <div class="admin-stat-tile-value">{{ stats.newThisMonth }}</div>
-                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.new_this_month'|trans({}, 'admin', 'fr') }}</div>
+                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.new_this_month'|trans({}, 'admin', fr) }}</div>
             </div>
         </div>
         <div class="col">
             <div class="card card-body text-center">
                 <div class="admin-stat-tile-value">{{ stats.pendingDeletions }}</div>
-                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.pending_deletions'|trans({}, 'admin', 'fr') }}</div>
+                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.pending_deletions'|trans({}, 'admin', fr) }}</div>
             </div>
         </div>
         <div class="col">
             <div class="card card-body text-center">
                 <div class="admin-stat-tile-value">{{ stats.workoutsLast30Days }}</div>
-                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.workouts_last_30_days'|trans({}, 'admin', 'fr') }}</div>
+                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.workouts_last_30_days'|trans({}, 'admin', fr) }}</div>
             </div>
         </div>
     </div>
@@ -53,13 +54,13 @@
         <div class="col">
             <div class="card card-body text-center">
                 <div class="admin-stat-tile-value">{{ stats.messengerQueue.pending }}</div>
-                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.messenger_pending'|trans({}, 'admin', 'fr') }}</div>
+                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.messenger_pending'|trans({}, 'admin', fr) }}</div>
             </div>
         </div>
         <div class="col">
             <div class="card card-body text-center {{ stats.messengerQueue.failed > 0 ? 'text-bg-danger' }}">
                 <div class="admin-stat-tile-value">{{ stats.messengerQueue.failed }}</div>
-                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.messenger_failed'|trans({}, 'admin', 'fr') }}</div>
+                <div class="admin-stat-tile-label">{{ 'admin.dashboard.stat.messenger_failed'|trans({}, 'admin', fr) }}</div>
             </div>
         </div>
     </div>
@@ -67,7 +68,7 @@
     <div class="row mb-3">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">{{ 'admin.dashboard.chart.registration_trend_title'|trans({}, 'admin', 'fr') }}</div>
+                <div class="card-header">{{ 'admin.dashboard.chart.registration_trend_title'|trans({}, 'admin', fr) }}</div>
                 <div class="card-body admin-chart-card-body">
                     {{ render_chart(stats.registrationTrendChart) }}
                 </div>
@@ -78,7 +79,7 @@
     <div class="row">
         <div class="col-12 col-lg-4 mb-3">
             <div class="card">
-                <div class="card-header">{{ 'admin.dashboard.chart.locale_title'|trans({}, 'admin', 'fr') }}</div>
+                <div class="card-header">{{ 'admin.dashboard.chart.locale_title'|trans({}, 'admin', fr) }}</div>
                 <div class="card-body admin-chart-card-body">
                     {{ render_chart(stats.localeChart, {'data-controller': 'admin--chart-percent-tooltip'}) }}
                 </div>
@@ -86,7 +87,7 @@
         </div>
         <div class="col-12 col-lg-4 mb-3">
             <div class="card">
-                <div class="card-header">{{ 'admin.dashboard.chart.unit_of_measure_title'|trans({}, 'admin', 'fr') }}</div>
+                <div class="card-header">{{ 'admin.dashboard.chart.unit_of_measure_title'|trans({}, 'admin', fr) }}</div>
                 <div class="card-body admin-chart-card-body">
                     {{ render_chart(stats.unitOfMeasureChart, {'data-controller': 'admin--chart-percent-tooltip'}) }}
                 </div>
@@ -94,7 +95,7 @@
         </div>
         <div class="col-12 col-lg-4 mb-3">
             <div class="card">
-                <div class="card-header">{{ 'admin.dashboard.chart.gender_title'|trans({}, 'admin', 'fr') }}</div>
+                <div class="card-header">{{ 'admin.dashboard.chart.gender_title'|trans({}, 'admin', fr) }}</div>
                 <div class="card-body admin-chart-card-body">
                     {{ render_chart(stats.genderChart, {'data-controller': 'admin--chart-percent-tooltip'}) }}
                 </div>

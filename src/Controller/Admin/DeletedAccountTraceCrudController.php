@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\DeletedAccountTrace;
+use App\Enum\Translations\LocaleAllowedEnum;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -62,6 +63,6 @@ final class DeletedAccountTraceCrudController extends AbstractCrudController
 
     private function trans(string $key): string
     {
-        return $this->translator->trans($key, [], 'admin', 'fr');
+        return $this->translator->trans($key, [], 'admin', LocaleAllowedEnum::FR->value);
     }
 }

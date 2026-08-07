@@ -1,3 +1,4 @@
+{% set fr = enum('App\\Enum\\Translations\\LocaleAllowedEnum').FR.value %}
 {% if field.value %}
     <img class="admin-message-thumb"
          src="/uploads/{{ field.value }}"
@@ -7,5 +8,5 @@
         <img src="/uploads/{{ field.value }}" alt="">
     </div>
 {% else %}
-    <p>{{ 'admin.user.no_avatar'|trans({}, 'admin', 'fr') }}</p>
+    <p>{{ 'admin.user.no_avatar'|trans({}, 'admin', fr) }}</p>
 {% endif %}

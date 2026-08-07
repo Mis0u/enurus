@@ -8,6 +8,7 @@ use App\Entity\ExerciseMuscle;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
+use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
 use App\Repository\ExerciseSetRepository;
 use App\Repository\WorkoutExerciseRepository;
 use App\Repository\WorkoutTonnageRepository;
@@ -198,7 +199,7 @@ final readonly class WorkoutShowDataService
             if ($a->type->value === $b->type->value) {
                 return 0;
             }
-            return 'primary' === $a->type->value ? -1 : 1;
+            return MuscleTypeEnum::PRIMARY->value === $a->type->value ? -1 : 1;
         });
 
         return $muscles;
@@ -295,7 +296,7 @@ final readonly class WorkoutShowDataService
         $secondarySvgIds = [];
 
         foreach ($we->exercise->exerciseMuscles as $em) {
-            if ('primary' === $em->type->value) {
+            if (MuscleTypeEnum::PRIMARY->value === $em->type->value) {
                 $primarySvgIds = array_merge($primarySvgIds, $em->muscleGroup->svgIds);
             } else {
                 $secondarySvgIds = array_merge($secondarySvgIds, $em->muscleGroup->svgIds);

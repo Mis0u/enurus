@@ -1,4 +1,5 @@
 {% extends '@EasyAdmin/crud/detail.html.twig' %}
+{% set fr = enum('App\\Enum\\Translations\\LocaleAllowedEnum').FR.value %}
 
 {% form_theme replyForm with ea().crud.formThemes only %}
 
@@ -8,7 +9,7 @@
     {% block reply_form %}
         <div class="content-panel">
             <div class="content-panel-header">
-                <div class="content-panel-title">{{ 'admin.thread.action.reply'|trans({}, 'admin', 'fr') }}</div>
+                <div class="content-panel-title">{{ 'admin.thread.action.reply'|trans({}, 'admin', fr) }}</div>
             </div>
             <div class="content-panel-body">
                 {{ form_start(replyForm, {action: replyActionUrl, render_rest: false}) }}
@@ -25,8 +26,8 @@
                 {{ form_row(replyForm._token) }}
 
                 <div class="flex gap-3">
-                    <button type="submit" class="btn btn-primary">{{ 'admin.thread.reply.send_button'|trans({}, 'admin', 'fr') }}</button>
-                    <button type="submit" name="closeAfterReply" value="1" class="btn btn-secondary">{{ 'admin.thread.reply.send_and_close_button'|trans({}, 'admin', 'fr') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ 'admin.thread.reply.send_button'|trans({}, 'admin', fr) }}</button>
+                    <button type="submit" name="closeAfterReply" value="1" class="btn btn-secondary">{{ 'admin.thread.reply.send_and_close_button'|trans({}, 'admin', fr) }}</button>
                 </div>
                 {{ form_end(replyForm, {render_rest: false}) }}
             </div>

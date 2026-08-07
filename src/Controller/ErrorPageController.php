@@ -55,9 +55,9 @@ final class ErrorPageController extends AbstractController
             // traverse le firewall et rend getUser() fiable — cf. sa docblock). Ici, la requête
             // n'a jamais matché de route, donc ni le firewall ni Request::setLocale() n'ont
             // tourné : getUser() est toujours null et on se rabat sur l'Accept-Language.
-            return $request?->getPreferredLanguage(LocaleAllowedEnum::getAllowedLocale()) ?? 'en';
+            return $request?->getPreferredLanguage(LocaleAllowedEnum::getAllowedLocale()) ?? LocaleAllowedEnum::EN->value;
         }
 
-        return $request?->getLocale() ?? 'en';
+        return $request?->getLocale() ?? LocaleAllowedEnum::EN->value;
     }
 }

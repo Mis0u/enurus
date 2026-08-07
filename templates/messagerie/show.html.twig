@@ -25,16 +25,21 @@
         vote: '🗳️',
     }[thread.category.value] %}
 
-    {% if thread.category.value == 'vote' %}
+    {% set category_vote = enum('App\\Enum\\Contact\\ContactCategoryEnum').VOTE.value %}
+    {% set category_informative = enum('App\\Enum\\Contact\\ContactCategoryEnum').INFORMATIVE.value %}
+    {% set status_closed = enum('App\\Enum\\Contact\\ContactThreadStatusEnum').CLOSED.value %}
+    {% set status_answered = enum('App\\Enum\\Contact\\ContactThreadStatusEnum').ANSWERED_BY_ADMIN.value %}
+
+    {% if thread.category.value == category_vote %}
         {% set status_label = 'messagerie.status.vote'|trans({}, 'navigation') %}
         {% set status_class = 'bg-[rgba(6,182,212,0.12)] text-[#06b6d4] border-[rgba(6,182,212,0.3)]' %}
-    {% elseif thread.category.value == 'informative' %}
+    {% elseif thread.category.value == category_informative %}
         {% set status_label = 'messagerie.status.informative'|trans({}, 'navigation') %}
         {% set status_class = 'bg-[rgba(6,182,212,0.12)] text-[#06b6d4] border-[rgba(6,182,212,0.3)]' %}
-    {% elseif thread.status.value == 'closed' %}
+    {% elseif thread.status.value == status_closed %}
         {% set status_label = 'messagerie.status.closed'|trans({}, 'navigation') %}
         {% set status_class = 'bg-white/[0.05] text-[#8b9bb4] border-white/[0.07]' %}
-    {% elseif thread.status.value == 'answered_by_admin' %}
+    {% elseif thread.status.value == status_answered %}
         {% set status_label = 'messagerie.status.answered'|trans({}, 'navigation') %}
         {% set status_class = 'bg-[rgba(34,197,94,0.12)] text-[#22c55e] border-[rgba(34,197,94,0.3)]' %}
     {% else %}
@@ -97,7 +102,7 @@
                         imageAllowedMimeTypes: imageAllowedMimeTypes,
                     } only %}
                 </section>
-            {% elseif thread.category.value == 'vote' %}
+            {% elseif thread.category.value == category_vote %}
                 <section class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-6">
                     {% include 'messagerie/_vote_section.html.twig' with {
                         thread: thread,
@@ -106,11 +111,11 @@
                         daysUntilPollCloses: daysUntilPollCloses,
                     } only %}
                 </section>
-            {% elseif thread.category.value == 'informative' %}
+            {% elseif thread.category.value == category_informative %}
                 <section class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-4.5 text-center">
                     <p class="text-[13px] text-[#8b9bb4]">{{ 'messagerie.reply_informative'|trans({}, 'navigation') }}</p>
                 </section>
-            {% elseif thread.status.value == 'closed' %}
+            {% elseif thread.status.value == status_closed %}
                 <section class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-4.5 text-center">
                     <p class="text-[13px] text-[#8b9bb4]">{{ 'messagerie.thread_closed'|trans({}, 'navigation') }}</p>
                     {% if deletionDate %}

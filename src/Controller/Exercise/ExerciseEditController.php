@@ -89,7 +89,7 @@ final class ExerciseEditController extends AbstractController
         return $this->render('exercise/edit/index.html.twig', [
             'form' => $form,
             'exercise' => $exercise,
-            'gender' => $user->gender ?? 'male',
+            'gender' => $user->gender,
             'muscleGroups' => $this->muscleGroupSorter->sortByName(
                 $this->muscleGroupRepository->findAllOrderedByPosition(),
                 $locale,

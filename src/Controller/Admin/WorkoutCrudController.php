@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Entity\Routine;
 use App\Entity\User;
 use App\Entity\Workout;
+use App\Enum\Translations\LocaleAllowedEnum;
 use App\Filter\Admin\DayFilter;
 use App\Service\Entity\WorkoutPhotoService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -126,6 +127,6 @@ final class WorkoutCrudController extends AbstractCrudController
 
     private function trans(string $key): string
     {
-        return $this->translator->trans($key, [], 'admin', 'fr');
+        return $this->translator->trans($key, [], 'admin', LocaleAllowedEnum::FR->value);
     }
 }

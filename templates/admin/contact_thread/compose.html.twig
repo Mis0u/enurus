@@ -1,8 +1,9 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
+{% set fr = enum('App\\Enum\\Translations\\LocaleAllowedEnum').FR.value %}
 
 {% form_theme form with ea().crud.formThemes only %}
 
-{% block content_title %}{{ 'admin.thread.compose.title'|trans({}, 'admin', 'fr') }}{% endblock %}
+{% block content_title %}{{ 'admin.thread.compose.title'|trans({}, 'admin', fr) }}{% endblock %}
 
 {% block main %}
     {{ form_start(form, {render_rest: false}) }}
@@ -11,11 +12,11 @@
     <div class="mb-3 admin-recipient-autocomplete"
          data-controller="admin--recipient-autocomplete"
          data-admin--recipient-autocomplete-search-url-value="{{ recipientSearchUrl }}"
-         data-admin--recipient-autocomplete-locale-label-value="{{ 'admin.thread.compose.locale_label'|trans({}, 'admin', 'fr') }}">
-        <label class="form-label">{{ 'admin.thread.compose.recipient_label'|trans({}, 'admin', 'fr') }}</label>
+         data-admin--recipient-autocomplete-locale-label-value="{{ 'admin.thread.compose.locale_label'|trans({}, 'admin', fr) }}">
+        <label class="form-label">{{ 'admin.thread.compose.recipient_label'|trans({}, 'admin', fr) }}</label>
         <input type="text"
                class="form-control"
-               placeholder="{{ 'admin.thread.compose.recipient_placeholder'|trans({}, 'admin', 'fr') }}"
+               placeholder="{{ 'admin.thread.compose.recipient_placeholder'|trans({}, 'admin', fr) }}"
                autocomplete="off"
                data-admin--recipient-autocomplete-target="query"
                data-action="input->admin--recipient-autocomplete#search">
@@ -41,6 +42,6 @@
 
     {{ form_row(form._token) }}
 
-    <button type="submit" class="btn btn-primary">{{ 'admin.field.send_button'|trans({}, 'admin', 'fr') }}</button>
+    <button type="submit" class="btn btn-primary">{{ 'admin.field.send_button'|trans({}, 'admin', fr) }}</button>
     {{ form_end(form, {render_rest: false}) }}
 {% endblock %}

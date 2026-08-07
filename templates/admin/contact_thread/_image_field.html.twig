@@ -2,8 +2,9 @@
     Variables attendues (toutes via `only`) :
     - fieldId : string — id unique de l'input file sur la page
 #}
+{% set fr = enum('App\\Enum\\Translations\\LocaleAllowedEnum').FR.value %}
 <div class="mb-3">
-    <label class="form-label" for="{{ fieldId }}">{{ 'admin.thread.image_field.label'|trans({}, 'admin', 'fr') }}</label>
+    <label class="form-label" for="{{ fieldId }}">{{ 'admin.thread.image_field.label'|trans({}, 'admin', fr) }}</label>
     <input type="file"
            id="{{ fieldId }}"
            name="image"

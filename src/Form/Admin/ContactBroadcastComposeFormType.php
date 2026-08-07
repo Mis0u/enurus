@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Enum\Contact\ContactBroadcastTargetEnum;
 use App\Enum\Contact\ContactCategoryEnum;
 use App\Enum\Translations\LocaleAllowedEnum;
 use Symfony\Component\Form\AbstractType;
@@ -31,7 +32,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class ContactBroadcastComposeFormType extends AbstractType
 {
-    public const string TARGET_ALL = 'all';
+    public const string TARGET_ALL = ContactBroadcastTargetEnum::ALL->value;
 
     private const int MIN_POLL_DURATION_DAYS = 1;
 
@@ -42,14 +43,14 @@ final class ContactBroadcastComposeFormType extends AbstractType
      * pour l'association locale → drapeau dans le projet.
      */
     private const array LOCALE_FLAGS = [
-        'fr' => '🇫🇷',
-        'en' => '🇬🇧',
-        'it' => '🇮🇹',
-        'es' => '🇪🇸',
-        'pt' => '🇵🇹',
-        'de' => '🇩🇪',
-        'nl' => '🇳🇱',
-        'pl' => '🇵🇱',
+        LocaleAllowedEnum::FR->value => '🇫🇷',
+        LocaleAllowedEnum::EN->value => '🇬🇧',
+        LocaleAllowedEnum::IT->value => '🇮🇹',
+        LocaleAllowedEnum::ES->value => '🇪🇸',
+        LocaleAllowedEnum::PT->value => '🇵🇹',
+        LocaleAllowedEnum::DE->value => '🇩🇪',
+        LocaleAllowedEnum::NL->value => '🇳🇱',
+        LocaleAllowedEnum::PL->value => '🇵🇱',
     ];
 
     public function __construct(
@@ -61,10 +62,10 @@ final class ContactBroadcastComposeFormType extends AbstractType
     {
         $builder
             ->add('category', ChoiceType::class, [
-                'label' => $this->translator->trans('admin.broadcast.field.category', [], 'admin', 'fr'),
+                'label' => $this->translator->trans('admin.broadcast.field.category', [], 'admin', LocaleAllowedEnum::FR->value),
                 'choices' => [
-                    '📢 ' . $this->translator->trans('admin.broadcast.category.informative', [], 'admin', 'fr') => ContactCategoryEnum::INFORMATIVE->value,
-                    '🗳️ ' . $this->translator->trans('admin.broadcast.category.vote', [], 'admin', 'fr') => ContactCategoryEnum::VOTE->value,
+                    '📢 ' . $this->translator->trans('admin.broadcast.category.informative', [], 'admin', LocaleAllowedEnum::FR->value) => ContactCategoryEnum::INFORMATIVE->value,
+                    '🗳️ ' . $this->translator->trans('admin.broadcast.category.vote', [], 'admin', LocaleAllowedEnum::FR->value) => ContactCategoryEnum::VOTE->value,
                 ],
                 'choice_translation_domain' => false,
                 'choice_attr' => static fn (): array => [
@@ -86,7 +87,7 @@ final class ContactBroadcastComposeFormType extends AbstractType
                 ],
             ])
             ->add('pollDurationDays', IntegerType::class, [
-                'label' => $this->translator->trans('admin.broadcast.field.poll_duration', [], 'admin', 'fr'),
+                'label' => $this->translator->trans('admin.broadcast.field.poll_duration', [], 'admin', LocaleAllowedEnum::FR->value),
                 'required' => false,
                 'attr' => [
                     'min' => self::MIN_POLL_DURATION_DAYS,
@@ -95,7 +96,7 @@ final class ContactBroadcastComposeFormType extends AbstractType
                 'mapped' => false,
             ])
             ->add('target', ChoiceType::class, [
-                'label' => $this->translator->trans('admin.broadcast.field.target', [], 'admin', 'fr'),
+                'label' => $this->translator->trans('admin.broadcast.field.target', [], 'admin', LocaleAllowedEnum::FR->value),
                 'choices' => $this->targetChoices(),
                 'choice_translation_domain' => false,
                 'expanded' => true,
@@ -105,7 +106,7 @@ final class ContactBroadcastComposeFormType extends AbstractType
                 'mapped' => false,
             ])
             ->add('subject', TextType::class, [
-                'label' => $this->translator->trans('admin.broadcast.compose.subject_label', [], 'admin', 'fr'),
+                'label' => $this->translator->trans('admin.broadcast.compose.subject_label', [], 'admin', LocaleAllowedEnum::FR->value),
                 'constraints' => [
                     new NotBlank(),
                     new Length(min: 3, max: 150),
@@ -113,7 +114,7 @@ final class ContactBroadcastComposeFormType extends AbstractType
                 'mapped' => false,
             ])
             ->add('body', TextareaType::class, [
-                'label' => $this->translator->trans('admin.broadcast.field.body', [], 'admin', 'fr'),
+                'label' => $this->translator->trans('admin.broadcast.field.body', [], 'admin', LocaleAllowedEnum::FR->value),
                 'constraints' => [
                     new NotBlank(),
                     new Length(min: 10, max: 5000),

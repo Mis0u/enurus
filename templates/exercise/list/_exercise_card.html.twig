@@ -40,7 +40,7 @@
     {# Muscles pills #}
     <div class="flex flex-wrap gap-1.5 mt-2.5 pl-2.5">
         {% for exercise_muscle in exercise.exerciseMuscles %}
-            {% set is_primary = exercise_muscle.type.value == 'primary' %}
+            {% set is_primary = exercise_muscle.type.value == enum('App\\Enum\\Entity\\ExerciceMuscle\\MuscleTypeEnum').PRIMARY.value %}
             <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium
                 {{ is_primary ? 'bg-rose-500/[0.12] border border-rose-500/[0.3] text-rose-400' : 'bg-cyan-500/[0.12] border border-cyan-500/[0.3] text-cyan-400' }}">
                 {{ exercise_muscle.muscleGroup.name|trans({}, 'muscle') }}

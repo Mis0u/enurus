@@ -19,7 +19,7 @@
                 {{ 'contact.restricted.text_permanent'|trans({}, 'navigation') }}
             </p>
         {% else %}
-            {% if user.contactRestrictionDuration.value == 'one_month' %}
+            {% if user.contactRestrictionDuration.value == enum('App\\Enum\\Contact\\ContactRestrictionDurationEnum').ONE_MONTH.value %}
                 {% set duration_label = 'contact.restricted.duration.one_month'|trans({}, 'navigation') %}
             {% else %}
                 {% set duration_label = 'contact.restricted.duration.one_week'|trans({}, 'navigation') %}

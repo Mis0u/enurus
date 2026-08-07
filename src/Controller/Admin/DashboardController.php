@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Enum\Translations\LocaleAllowedEnum;
 use App\Repository\ContactThreadRepository;
 use App\Service\Dashboard\Admin\AdminDashboardStatsService;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -46,11 +47,11 @@ final class DashboardController extends AbstractDashboardController
             ->setTitle(sprintf(
                 '<img src="%s" alt="%s" style="height: 26px; width: auto; vertical-align: middle; margin-right: 8px;"> %s',
                 htmlspecialchars($logoUrl, ENT_QUOTES),
-                htmlspecialchars($this->translator->trans('name', [], 'brand', 'fr'), ENT_QUOTES),
+                htmlspecialchars($this->translator->trans('name', [], 'brand', LocaleAllowedEnum::FR->value), ENT_QUOTES),
                 htmlspecialchars($this->trans('admin.backend_title'), ENT_QUOTES),
             ))
             ->setFaviconPath('images/favicon/favicon.ico')
-            ->setLocales(['fr'])
+            ->setLocales([LocaleAllowedEnum::FR->value])
         ;
     }
 
@@ -73,7 +74,7 @@ final class DashboardController extends AbstractDashboardController
         $awaitingReplyCount = $this->contactThreadRepository->countAwaitingAdminReply();
 
         yield MenuItem::linkToUrl($this->trans('admin.menu.back_to_app'), 'fa fa-arrow-left', $this->urlGenerator->generate('app_dashboard', [
-            '_locale' => 'fr',
+            '_locale' => LocaleAllowedEnum::FR->value,
         ]));
         yield MenuItem::linkToDashboard($this->trans('admin.menu.home'), 'fa fa-home');
 
@@ -110,6 +111,6 @@ final class DashboardController extends AbstractDashboardController
      */
     private function trans(string $key, array $params = []): string
     {
-        return $this->translator->trans($key, $params, 'admin', 'fr');
+        return $this->translator->trans($key, $params, 'admin', LocaleAllowedEnum::FR->value);
     }
 }

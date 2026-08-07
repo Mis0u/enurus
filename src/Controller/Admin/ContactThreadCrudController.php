@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Enum\Contact\ContactCategoryEnum;
 use App\Enum\Contact\ContactRestrictionDurationEnum;
 use App\Enum\Contact\ContactThreadStatusEnum;
+use App\Enum\Translations\LocaleAllowedEnum;
 use App\Form\Admin\ContactRestrictionFormType;
 use App\Form\Admin\ContactThreadComposeFormType;
 use App\Form\ContactReplyFormType;
@@ -489,7 +490,7 @@ final class ContactThreadCrudController extends AbstractCrudController
 
     private function trans(string $key): string
     {
-        return $this->translator->trans($key, [], 'admin', 'fr');
+        return $this->translator->trans($key, [], 'admin', LocaleAllowedEnum::FR->value);
     }
 
     /**

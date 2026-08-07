@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Entity;
 
 use App\Entity\User;
+use App\Enum\Translations\LocaleAllowedEnum;
 use App\Repository\ExerciseRepository;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -100,8 +101,8 @@ final readonly class ExerciseCheckDuplicateService
     private function getDateFormat(string $locale): string
     {
         return match ($locale) {
-            'en' => 'm/d/Y',
-            'de' => 'd.m.Y',
+            LocaleAllowedEnum::EN->value => 'm/d/Y',
+            LocaleAllowedEnum::DE->value => 'd.m.Y',
             default => 'd/m/Y',
         };
     }

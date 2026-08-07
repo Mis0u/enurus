@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
 use App\Repository\WorkoutMuscleRepository;
 use App\Repository\WorkoutRepository;
 use App\Repository\WorkoutStatsRepository;
@@ -84,17 +85,17 @@ final class DashboardController extends AbstractController
         // mécanique que les filtres Semaine/Mois — plusieurs séances peuvent partager cette date.
         $dayIds = $workoutStatsRepository->findIdsByUserAndDateRange($user, $day->start, $day->end);
         $daySvgIds = $workoutMuscleRepository->findSvgIdsByWorkoutIds($dayIds);
-        $sessionPrimary = $daySvgIds['primary'];
-        $sessionSecondary = $daySvgIds['secondary'];
+        $sessionPrimary = $daySvgIds[MuscleTypeEnum::PRIMARY->value];
+        $sessionSecondary = $daySvgIds[MuscleTypeEnum::SECONDARY->value];
 
         // SVG IDs + répartition par groupe musculaire pour les filtres Semaine/Mois du widget Muscles (uniquement si débloqué)
         $weekSvgIds = [
-            'primary' => [],
-            'secondary' => [],
+            MuscleTypeEnum::PRIMARY->value => [],
+            MuscleTypeEnum::SECONDARY->value => [],
         ];
         $monthSvgIds = [
-            'primary' => [],
-            'secondary' => [],
+            MuscleTypeEnum::PRIMARY->value => [],
+            MuscleTypeEnum::SECONDARY->value => [],
         ];
         $weekBars = [
             'bars' => [],
@@ -205,10 +206,10 @@ final class DashboardController extends AbstractController
             'tonnageData' => $tonnageData,
             'sessionPrimary' => $sessionPrimary,
             'sessionSecondary' => $sessionSecondary,
-            'weekPrimary' => $weekSvgIds['primary'],
-            'weekSecondary' => $weekSvgIds['secondary'],
-            'monthPrimary' => $monthSvgIds['primary'],
-            'monthSecondary' => $monthSvgIds['secondary'],
+            'weekPrimary' => $weekSvgIds[MuscleTypeEnum::PRIMARY->value],
+            'weekSecondary' => $weekSvgIds[MuscleTypeEnum::SECONDARY->value],
+            'monthPrimary' => $monthSvgIds[MuscleTypeEnum::PRIMARY->value],
+            'monthSecondary' => $monthSvgIds[MuscleTypeEnum::SECONDARY->value],
             'sessionBars' => $sessionBars,
             'weekBars' => $weekBars,
             'monthBars' => $monthBars,
