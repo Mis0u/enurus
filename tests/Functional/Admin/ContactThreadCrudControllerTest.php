@@ -91,6 +91,37 @@ final class ContactThreadCrudControllerTest extends WebTestCase
         self::assertSelectorExists('td[data-column="status"] .badge-warning');
     }
 
+    /**
+     * Régression : un fil de bienvenue automatique (RegistrationWelcomeThreadService) est créé à
+     * chaque inscription — sans cette exclusion, la liste admin grandirait indéfiniment avec le
+     * nombre d'utilisateurs (cf. ContactThreadCrudController::createIndexQueryBuilder()).
+     */
+    public function testIndexExcludesWelcomeMessageThreads(): void
+    {
+        $client = $this->login(self::ADMIN);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+
+        $realThread = $this->createThread(subject: 'Vrai fil utilisateur');
+        $welcomeThread = ContactThreadTestHelper::createThread(
+            $entityManager,
+            $this->reloadUser(self::OWNER),
+            subject: 'Bienvenue sur Enurus',
+            isWelcomeMessage: true,
+        );
+
+        /** @var AdminUrlGenerator $adminUrlGenerator */
+        $adminUrlGenerator = static::getContainer()->get(AdminUrlGenerator::class);
+        $indexUrl = $adminUrlGenerator->setController(ContactThreadCrudController::class)->setAction('index')->generateUrl();
+
+        $client->request(Request::METHOD_GET, $indexUrl);
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists('a[href="' . $this->actionUrl($client, $realThread, 'detail') . '"]');
+        self::assertSelectorNotExists('a[href="' . $this->actionUrl($client, $welcomeThread, 'detail') . '"]');
+    }
+
     public function testDeleteRemovesThread(): void
     {
         $client = $this->login(self::ADMIN);

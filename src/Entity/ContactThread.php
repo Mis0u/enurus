@@ -129,6 +129,22 @@ class ContactThread
     }
 
     /**
+     * Positionné uniquement par RegistrationWelcomeThreadService — exclut ce fil de la liste
+     * admin (ContactThreadCrudController::createIndexQueryBuilder()), sinon chaque inscription
+     * y ajoute une ligne indéfiniment. Le fil reste intact et visible côté utilisateur : contrairement
+     * à `hiddenByUserAt`, ce champ ne masque rien pour son propriétaire.
+     */
+    #[ORM\Column]
+    public bool $isWelcomeMessage = false {
+        get {
+            return $this->isWelcomeMessage;
+        }
+        set(bool $isWelcomeMessage) {
+            $this->isWelcomeMessage = $isWelcomeMessage;
+        }
+    }
+
+    /**
      * @var Collection<int, ContactThreadMessage>
      */
     #[ORM\OneToMany(targetEntity: ContactThreadMessage::class, mappedBy: 'thread', cascade: ['persist', 'remove'], orphanRemoval: true)]

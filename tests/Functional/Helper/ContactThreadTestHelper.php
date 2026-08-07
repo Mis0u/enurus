@@ -21,6 +21,7 @@ final class ContactThreadTestHelper
         ContactThreadStatusEnum $status = ContactThreadStatusEnum::AWAITING_ADMIN_REPLY,
         ContactCategoryEnum $category = ContactCategoryEnum::BUG,
         ?ContactBroadcast $broadcast = null,
+        bool $isWelcomeMessage = false,
     ): ContactThread {
         $thread = new ContactThread();
         $thread->owner = $owner;
@@ -28,6 +29,7 @@ final class ContactThreadTestHelper
         $thread->subject = $subject;
         $thread->status = $status;
         $thread->broadcast = $broadcast;
+        $thread->isWelcomeMessage = $isWelcomeMessage;
 
         $message = new ContactThreadMessage();
         $message->author = $owner;
