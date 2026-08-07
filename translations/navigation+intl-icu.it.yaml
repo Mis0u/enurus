@@ -265,6 +265,7 @@ messagerie:
         informative: Informativo
         vote: Sondaggio
     thread_closed: "Questa conversazione è chiusa, non puoi più rispondere."
+    thread_deletion_notice: "Questa discussione verrà eliminata automaticamente il {date}."
     title: Messaggistica
     vote:
         closed: "Il sondaggio è chiuso, non puoi più votare."

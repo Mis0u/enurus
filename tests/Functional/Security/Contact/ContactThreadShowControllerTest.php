@@ -8,6 +8,7 @@ use App\DataFixtures\UserFixtures;
 use App\Enum\Contact\ContactCategoryEnum;
 use App\Enum\Contact\ContactThreadStatusEnum;
 use App\Repository\ContactThreadMessageRepository;
+use App\Service\Contact\ContactThreadPurgeService;
 use App\Tests\Functional\Helper\ContactThreadTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -93,6 +94,29 @@ final class ContactThreadShowControllerTest extends WebTestCase
 
         self::assertSelectorNotExists('form[name="contact_reply_form"]');
         self::assertStringContainsString('clôturé', $crawler->filter('body')->text());
+    }
+
+    public function testClosedThreadShowsDeletionDate(): void
+    {
+        $client = $this->login(self::OWNER);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::OWNER);
+
+        $thread = ContactThreadTestHelper::createThread(
+            $entityManager,
+            $owner,
+            status: ContactThreadStatusEnum::CLOSED,
+        );
+        $thread->closedAt = new \DateTimeImmutable('2026-01-15');
+        $entityManager->flush();
+
+        self::assertSame(3, ContactThreadPurgeService::RETENTION_MONTHS);
+
+        $crawler = $client->request(Request::METHOD_GET, \sprintf('/fr/messagerie/%s', $thread->id));
+
+        self::assertStringContainsString('15 avril 2026', $crawler->filter('body')->text());
     }
 
     public function testReplyFormIsHiddenWhenRestricted(): void
