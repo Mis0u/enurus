@@ -76,7 +76,7 @@
                     </p>
                     <div class="flex gap-1 flex-wrap">
                         {% for em in exercise.exerciseMuscles %}
-                            {% if em.type.value == 'primary' %}
+                            {% if em.type.value == enum('App\\Enum\\Entity\\ExerciceMuscle\\MuscleTypeEnum').PRIMARY.value %}
                                 <span data-muscle-type="primary" class="inline-flex px-[7px] py-[2px] rounded-[5px] text-[10.5px] font-medium bg-rose-500/[0.10] border border-rose-500/20 text-rose-400">
                                     {{ em.muscleGroup.name|trans({}, 'muscle') }}
                                 </span>

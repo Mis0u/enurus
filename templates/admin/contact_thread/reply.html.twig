@@ -1,8 +1,9 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
+{% set fr = enum('App\\Enum\\Translations\\LocaleAllowedEnum').FR.value %}
 
 {% form_theme form with ea().crud.formThemes only %}
 
-{% block content_title %}{{ 'admin.thread.reply.title'|trans({subject: thread.subject}, 'admin', 'fr') }}{% endblock %}
+{% block content_title %}{{ 'admin.thread.reply.title'|trans({subject: thread.subject}, 'admin', fr) }}{% endblock %}
 
 {% block main %}
     {% include 'admin/contact_thread/_messages.html.twig' with {field: {value: thread.messages}} only %}
@@ -21,8 +22,8 @@
     {{ form_row(form._token) }}
 
     <div class="flex gap-3">
-        <button type="submit" class="btn btn-primary">{{ 'admin.thread.reply.send_button'|trans({}, 'admin', 'fr') }}</button>
-        <button type="submit" name="closeAfterReply" value="1" class="btn btn-secondary">{{ 'admin.thread.reply.send_and_close_button'|trans({}, 'admin', 'fr') }}</button>
+        <button type="submit" class="btn btn-primary">{{ 'admin.thread.reply.send_button'|trans({}, 'admin', fr) }}</button>
+        <button type="submit" name="closeAfterReply" value="1" class="btn btn-secondary">{{ 'admin.thread.reply.send_and_close_button'|trans({}, 'admin', fr) }}</button>
     </div>
     {{ form_end(form, {render_rest: false}) }}
 {% endblock %}

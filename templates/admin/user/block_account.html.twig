@@ -1,11 +1,12 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
+{% set fr = enum('App\\Enum\\Translations\\LocaleAllowedEnum').FR.value %}
 
-{% block content_title %}{{ 'admin.user.block_account.title'|trans({email: user.email}, 'admin', 'fr') }}{% endblock %}
+{% block content_title %}{{ 'admin.user.block_account.title'|trans({email: user.email}, 'admin', fr) }}{% endblock %}
 
 {% block main %}
-    <p>{{ 'admin.user.block_account.confirm'|trans({}, 'admin', 'fr') }}</p>
+    <p>{{ 'admin.user.block_account.confirm'|trans({}, 'admin', fr) }}</p>
     <form method="post">
         <input type="hidden" name="_token" value="{{ csrf_token('user_admin_block_account_' ~ user.id) }}">
-        <button type="submit" class="btn btn-primary">{{ 'admin.user.block_account.button'|trans({}, 'admin', 'fr') }}</button>
+        <button type="submit" class="btn btn-primary">{{ 'admin.user.block_account.button'|trans({}, 'admin', fr) }}</button>
     </form>
 {% endblock %}

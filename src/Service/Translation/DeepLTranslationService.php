@@ -23,8 +23,8 @@ final readonly class DeepLTranslationService
      * (variantes régionales obligatoires) — les autres langues du projet correspondent 1:1.
      */
     private const array DEEPL_TARGET_LANG_OVERRIDES = [
-        'en' => 'EN-GB',
-        'pt' => 'PT-PT',
+        LocaleAllowedEnum::EN->value => 'EN-GB',
+        LocaleAllowedEnum::PT->value => 'PT-PT',
     ];
 
     public function __construct(

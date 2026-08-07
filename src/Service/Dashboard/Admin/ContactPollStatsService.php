@@ -114,7 +114,7 @@ final readonly class ContactPollStatsService
     {
         $labels = [];
         foreach (GenderEnum::cases() as $gender) {
-            $labels[$gender->value] = $this->translator->trans('field.gender.' . $gender->value, [], 'common', 'fr');
+            $labels[$gender->value] = $this->translator->trans('field.gender.' . $gender->value, [], 'common', LocaleAllowedEnum::FR->value);
         }
 
         return $labels;

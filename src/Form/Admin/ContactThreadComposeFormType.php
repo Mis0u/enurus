@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Enum\Contact\ContactCategoryEnum;
+use App\Enum\Translations\LocaleAllowedEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -36,18 +37,18 @@ final class ContactThreadComposeFormType extends AbstractType
         $builder
             ->add('recipientId', HiddenType::class, [
                 'constraints' => [
-                    new NotBlank(message: $this->translator->trans('admin.thread.error.recipient_required', [], 'admin', 'fr')),
+                    new NotBlank(message: $this->translator->trans('admin.thread.error.recipient_required', [], 'admin', LocaleAllowedEnum::FR->value)),
                 ],
                 'mapped' => false,
             ])
             ->add('category', EnumType::class, [
                 'class' => ContactCategoryEnum::class,
-                'label' => $this->translator->trans('admin.thread.compose.category_label', [], 'admin', 'fr'),
+                'label' => $this->translator->trans('admin.thread.compose.category_label', [], 'admin', LocaleAllowedEnum::FR->value),
                 'choice_label' => fn (ContactCategoryEnum $category): string => $this->translator->trans(
                     'contact.category.' . $category->value,
                     [],
                     'navigation',
-                    'fr',
+                    LocaleAllowedEnum::FR->value,
                 ),
                 'constraints' => [
                     new NotBlank(),
@@ -55,7 +56,7 @@ final class ContactThreadComposeFormType extends AbstractType
                 'mapped' => false,
             ])
             ->add('subject', TextType::class, [
-                'label' => $this->translator->trans('admin.thread.compose.subject_label', [], 'admin', 'fr'),
+                'label' => $this->translator->trans('admin.thread.compose.subject_label', [], 'admin', LocaleAllowedEnum::FR->value),
                 'constraints' => [
                     new NotBlank(),
                     new Length(min: 3, max: 150),
@@ -63,7 +64,7 @@ final class ContactThreadComposeFormType extends AbstractType
                 'mapped' => false,
             ])
             ->add('body', TextareaType::class, [
-                'label' => $this->translator->trans('admin.thread.compose.body_label', [], 'admin', 'fr'),
+                'label' => $this->translator->trans('admin.thread.compose.body_label', [], 'admin', LocaleAllowedEnum::FR->value),
                 'constraints' => [
                     new NotBlank(),
                     new Length(min: 10, max: 5000),

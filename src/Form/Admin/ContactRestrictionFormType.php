@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Enum\Contact\ContactRestrictionDurationEnum;
+use App\Enum\Translations\LocaleAllowedEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,9 +21,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class ContactRestrictionFormType extends AbstractType
 {
-    public const string CHOICE_ONE_WEEK = 'one_week';
+    public const string CHOICE_ONE_WEEK = ContactRestrictionDurationEnum::ONE_WEEK->value;
 
-    public const string CHOICE_ONE_MONTH = 'one_month';
+    public const string CHOICE_ONE_MONTH = ContactRestrictionDurationEnum::ONE_MONTH->value;
 
     public const string CHOICE_PERMANENT = 'permanent';
 
@@ -33,11 +35,11 @@ final class ContactRestrictionFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('duration', ChoiceType::class, [
-            'label' => $this->translator->trans('admin.contact_restriction.duration.label', [], 'admin', 'fr'),
+            'label' => $this->translator->trans('admin.contact_restriction.duration.label', [], 'admin', LocaleAllowedEnum::FR->value),
             'choices' => [
-                $this->translator->trans('admin.contact_restriction.duration.one_week', [], 'admin', 'fr') => self::CHOICE_ONE_WEEK,
-                $this->translator->trans('admin.contact_restriction.duration.one_month', [], 'admin', 'fr') => self::CHOICE_ONE_MONTH,
-                $this->translator->trans('admin.contact_restriction.duration.permanent', [], 'admin', 'fr') => self::CHOICE_PERMANENT,
+                $this->translator->trans('admin.contact_restriction.duration.one_week', [], 'admin', LocaleAllowedEnum::FR->value) => self::CHOICE_ONE_WEEK,
+                $this->translator->trans('admin.contact_restriction.duration.one_month', [], 'admin', LocaleAllowedEnum::FR->value) => self::CHOICE_ONE_MONTH,
+                $this->translator->trans('admin.contact_restriction.duration.permanent', [], 'admin', LocaleAllowedEnum::FR->value) => self::CHOICE_PERMANENT,
             ],
             'expanded' => true,
             'constraints' => [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Enum\Translations\LocaleAllowedEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,7 +29,7 @@ final class UserForceDeleteFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('password', PasswordType::class, [
-            'label' => $this->translator->trans('admin.user.force_delete.password_label', [], 'admin', 'fr'),
+            'label' => $this->translator->trans('admin.user.force_delete.password_label', [], 'admin', LocaleAllowedEnum::FR->value),
             'constraints' => [
                 new NotBlank(),
             ],

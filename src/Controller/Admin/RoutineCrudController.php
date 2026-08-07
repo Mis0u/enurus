@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Routine;
 use App\Entity\User;
+use App\Enum\Translations\LocaleAllowedEnum;
 use App\Filter\Admin\DayFilter;
 use App\Repository\RoutineRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -97,7 +98,7 @@ final class RoutineCrudController extends AbstractCrudController
 
     private function trans(string $key): string
     {
-        return $this->translator->trans($key, [], 'admin', 'fr');
+        return $this->translator->trans($key, [], 'admin', LocaleAllowedEnum::FR->value);
     }
 
     /**

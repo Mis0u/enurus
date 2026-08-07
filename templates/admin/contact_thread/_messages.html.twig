@@ -1,10 +1,11 @@
+{% set fr = enum('App\\Enum\\Translations\\LocaleAllowedEnum').FR.value %}
 {% for message in field.value %}
     <div class="admin-message {{ message.fromAdmin ? 'admin-message--admin' }}">
         <div class="admin-message-meta">
-            <strong>{{ message.fromAdmin ? 'admin.thread.message.author_admin'|trans({}, 'admin', 'fr') : 'admin.thread.message.author_user'|trans({}, 'admin', 'fr') }}</strong>
+            <strong>{{ message.fromAdmin ? 'admin.thread.message.author_admin'|trans({}, 'admin', fr) : 'admin.thread.message.author_user'|trans({}, 'admin', fr) }}</strong>
             — <span data-controller="local-datetime"
                      data-local-datetime-iso-value="{{ message.createdAt|date('c') }}"
-                     data-local-datetime-locale-value="fr"
+                     data-local-datetime-locale-value="{{ fr }}"
                      data-local-datetime-style-value="datetime-numeric">{{ message.createdAt|date('d/m/Y H:i') }}</span>
         </div>
         <div class="admin-message-body">{{ message.fromAdmin ? message.body|raw : message.body }}</div>
@@ -23,5 +24,5 @@
         {% endif %}
     </div>
 {% else %}
-    <p>{{ 'admin.thread.message.none'|trans({}, 'admin', 'fr') }}</p>
+    <p>{{ 'admin.thread.message.none'|trans({}, 'admin', fr) }}</p>
 {% endfor %}

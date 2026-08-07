@@ -160,7 +160,7 @@ final class ContactBroadcastCrudController extends AbstractCrudController
                 $count = $this->handleCompose($form, $admin, $image);
                 $this->addFlash('success', $this->translator->trans('admin.broadcast.flash.sending', [
                     'count' => $count,
-                ], 'admin', 'fr'));
+                ], 'admin', LocaleAllowedEnum::FR->value));
 
                 return $this->redirect($this->indexUrl());
             }
@@ -196,7 +196,7 @@ final class ContactBroadcastCrudController extends AbstractCrudController
         if (ContactBroadcastTargetEnum::LOCALE === $broadcast->target && null !== $broadcast->locale) {
             return $this->translator->trans('admin.broadcast.target.locale', [
                 'locale' => strtoupper($broadcast->locale->value),
-            ], 'admin', 'fr');
+            ], 'admin', LocaleAllowedEnum::FR->value);
         }
 
         return $this->trans('admin.broadcast.target.all');
@@ -325,6 +325,6 @@ final class ContactBroadcastCrudController extends AbstractCrudController
 
     private function trans(string $key): string
     {
-        return $this->translator->trans($key, [], 'admin', 'fr');
+        return $this->translator->trans($key, [], 'admin', LocaleAllowedEnum::FR->value);
     }
 }

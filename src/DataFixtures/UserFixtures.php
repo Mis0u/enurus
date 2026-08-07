@@ -61,13 +61,13 @@ class UserFixtures extends Fixture
     public const string USER_RESTRICTED_PERMANENT = 'user-fixture-restricted-permanent@test.com';
 
     private const array USERS_ETHNIES = [
-        'en' => 'user-fixture-english@test.com',
-        'es' => 'user-fixture-spanish@test.com',
-        'de' => 'user-fixture-german@test.com',
-        'pt' => 'user-fixture-portuguese@test.com',
-        'pl' => 'user-fixture-polish@test.com',
-        'nl' => 'user-fixture-dutch@test.com',
-        'it' => 'user-fixture-italian@test.com',
+        LocaleAllowedEnum::EN->value => 'user-fixture-english@test.com',
+        LocaleAllowedEnum::ES->value => 'user-fixture-spanish@test.com',
+        LocaleAllowedEnum::DE->value => 'user-fixture-german@test.com',
+        LocaleAllowedEnum::PT->value => 'user-fixture-portuguese@test.com',
+        LocaleAllowedEnum::PL->value => 'user-fixture-polish@test.com',
+        LocaleAllowedEnum::NL->value => 'user-fixture-dutch@test.com',
+        LocaleAllowedEnum::IT->value => 'user-fixture-italian@test.com',
     ];
 
     public function __construct(

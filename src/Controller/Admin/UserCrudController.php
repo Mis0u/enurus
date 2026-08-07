@@ -573,7 +573,7 @@ final class UserCrudController extends AbstractCrudController
      */
     private function trans(string $key, array $params = []): string
     {
-        return $this->translator->trans($key, $params, 'admin', 'fr');
+        return $this->translator->trans($key, $params, 'admin', LocaleAllowedEnum::FR->value);
     }
 
     /**

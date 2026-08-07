@@ -14,7 +14,7 @@
 
     <div class="flex flex-wrap gap-1.5">
         {% for em in item.muscles %}
-            <span class="{{ em.type.value == 'primary' ? 'show-muscle-tag-primary' : 'show-muscle-tag-secondary' }} px-2 py-0.5 rounded-md text-[10.5px] border">
+            <span class="{{ em.type.value == enum('App\\Enum\\Entity\\ExerciceMuscle\\MuscleTypeEnum').PRIMARY.value ? 'show-muscle-tag-primary' : 'show-muscle-tag-secondary' }} px-2 py-0.5 rounded-md text-[10.5px] border">
                         {{ em.muscleGroup.name|trans({}, 'muscle') }}
                     </span>
         {% endfor %}

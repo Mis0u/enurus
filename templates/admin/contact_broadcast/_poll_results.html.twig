@@ -1,22 +1,23 @@
+{% set fr = enum('App\\Enum\\Translations\\LocaleAllowedEnum').FR.value %}
 {% set data = field.formattedValue %}
 {% if data is null %}
     <span class="text-muted">—</span>
 {% else %}
     <p class="mb-4">
-        <strong>{{ 'admin.broadcast.poll.participation'|trans({count: data.votedCount, total: data.recipientCount, percent: data.participationPercent}, 'admin', 'fr') }}</strong>
+        <strong>{{ 'admin.broadcast.poll.participation'|trans({count: data.votedCount, total: data.recipientCount, percent: data.participationPercent}, 'admin', fr) }}</strong>
     </p>
 
     <div class="row">
         <div class="col-md-4 mb-4">
-            <h6>{{ 'admin.broadcast.poll.chart.options'|trans({}, 'admin', 'fr') }}</h6>
+            <h6>{{ 'admin.broadcast.poll.chart.options'|trans({}, 'admin', fr) }}</h6>
             <div style="height: 240px;">{{ render_chart(data.optionsChart) }}</div>
         </div>
         <div class="col-md-4 mb-4">
-            <h6>{{ 'admin.broadcast.poll.chart.locale'|trans({}, 'admin', 'fr') }}</h6>
+            <h6>{{ 'admin.broadcast.poll.chart.locale'|trans({}, 'admin', fr) }}</h6>
             <div style="height: 240px;">{{ render_chart(data.localeChart, {'data-controller': 'admin--chart-percent-tooltip'}) }}</div>
         </div>
         <div class="col-md-4 mb-4">
-            <h6>{{ 'admin.broadcast.poll.chart.gender'|trans({}, 'admin', 'fr') }}</h6>
+            <h6>{{ 'admin.broadcast.poll.chart.gender'|trans({}, 'admin', fr) }}</h6>
             <div style="height: 240px;">{{ render_chart(data.genderChart, {'data-controller': 'admin--chart-percent-tooltip'}) }}</div>
         </div>
     </div>

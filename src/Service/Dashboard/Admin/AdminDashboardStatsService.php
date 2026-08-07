@@ -118,7 +118,7 @@ final readonly class AdminDashboardStatsService
         $labels = [];
         $values = [];
         foreach (GenderEnum::cases() as $gender) {
-            $labels[] = $this->translator->trans('field.gender.' . $gender->value, [], 'common', 'fr');
+            $labels[] = $this->translator->trans('field.gender.' . $gender->value, [], 'common', LocaleAllowedEnum::FR->value);
             $values[] = $this->percent($counts[$gender->value] ?? 0, $total);
         }
 
@@ -141,7 +141,7 @@ final readonly class AdminDashboardStatsService
             $counts[$key] = ($counts[$key] ?? 0) + 1;
         }
 
-        $formatter = new \IntlDateFormatter('fr', \IntlDateFormatter::NONE, \IntlDateFormatter::NONE, null, null, 'd MMM');
+        $formatter = new \IntlDateFormatter(LocaleAllowedEnum::FR->value, \IntlDateFormatter::NONE, \IntlDateFormatter::NONE, null, null, 'd MMM');
 
         $labels = [];
         $values = [];

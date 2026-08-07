@@ -1,3 +1,11 @@
+{% set fr = enum('App\\Enum\\Translations\\LocaleAllowedEnum').FR.value %}
+{% set en = enum('App\\Enum\\Translations\\LocaleAllowedEnum').EN.value %}
+{% set it = enum('App\\Enum\\Translations\\LocaleAllowedEnum').IT.value %}
+{% set es = enum('App\\Enum\\Translations\\LocaleAllowedEnum').ES.value %}
+{% set pt = enum('App\\Enum\\Translations\\LocaleAllowedEnum').PT.value %}
+{% set de = enum('App\\Enum\\Translations\\LocaleAllowedEnum').DE.value %}
+{% set nl = enum('App\\Enum\\Translations\\LocaleAllowedEnum').NL.value %}
+{% set pl = enum('App\\Enum\\Translations\\LocaleAllowedEnum').PL.value %}
 <div class="mb-4.5"
      data-controller="settings--language"
      data-settings--language-url-value="{{ path('app_settings_language_update') }}"
@@ -11,14 +19,14 @@
                 data-settings--language-target="select"
                 data-action="change->settings--language#save"
                 class="w-full appearance-none min-h-11 px-3.5 pr-10 py-3 rounded-lg bg-[#080e1a] border border-white/[0.07] text-[#f0f4ff] text-sm outline-none cursor-pointer focus:border-[rgba(244,63,94,0.5)] focus:ring-4 focus:ring-[rgba(244,63,94,0.08)] transition-colors">
-            <option value="fr" {% if user.locale == 'fr' %}selected{% endif %}>🇫🇷 Français</option>
-            <option value="en" {% if user.locale == 'en' %}selected{% endif %}>🇬🇧 English</option>
-            <option value="it" {% if user.locale == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
-            <option value="es" {% if user.locale == 'es' %}selected{% endif %}>🇪🇸 Español</option>
-            <option value="pt" {% if user.locale == 'pt' %}selected{% endif %}>🇵🇹 Português</option>
-            <option value="de" {% if user.locale == 'de' %}selected{% endif %}>🇩🇪 Deutsch</option>
-            <option value="nl" {% if user.locale == 'nl' %}selected{% endif %}>🇳🇱 Nederlands</option>
-            <option value="pl" {% if user.locale == 'pl' %}selected{% endif %}>🇵🇱 Polski</option>
+            <option value="{{ fr }}" {% if user.locale == fr %}selected{% endif %}>🇫🇷 Français</option>
+            <option value="{{ en }}" {% if user.locale == en %}selected{% endif %}>🇬🇧 English</option>
+            <option value="{{ it }}" {% if user.locale == it %}selected{% endif %}>🇮🇹 Italiano</option>
+            <option value="{{ es }}" {% if user.locale == es %}selected{% endif %}>🇪🇸 Español</option>
+            <option value="{{ pt }}" {% if user.locale == pt %}selected{% endif %}>🇵🇹 Português</option>
+            <option value="{{ de }}" {% if user.locale == de %}selected{% endif %}>🇩🇪 Deutsch</option>
+            <option value="{{ nl }}" {% if user.locale == nl %}selected{% endif %}>🇳🇱 Nederlands</option>
+            <option value="{{ pl }}" {% if user.locale == pl %}selected{% endif %}>🇵🇱 Polski</option>
         </select>
         <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8b9bb4] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>

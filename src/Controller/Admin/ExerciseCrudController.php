@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Exercise;
 use App\Entity\User;
+use App\Enum\Translations\LocaleAllowedEnum;
 use App\Repository\ExerciseRepository;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
@@ -94,7 +95,7 @@ final class ExerciseCrudController extends AbstractCrudController
 
     private function trans(string $key): string
     {
-        return $this->translator->trans($key, [], 'admin', 'fr');
+        return $this->translator->trans($key, [], 'admin', LocaleAllowedEnum::FR->value);
     }
 
     /**

@@ -15,17 +15,23 @@
 
 {% set category_label = ('contact.category.' ~ thread.category.value)|trans({}, 'navigation') %}
 
-{% if thread.category.value == 'bug' %}
+{% set category_bug = enum('App\\Enum\\Contact\\ContactCategoryEnum').BUG.value %}
+{% set category_suggestion = enum('App\\Enum\\Contact\\ContactCategoryEnum').SUGGESTION.value %}
+{% set category_question = enum('App\\Enum\\Contact\\ContactCategoryEnum').QUESTION.value %}
+{% set category_love = enum('App\\Enum\\Contact\\ContactCategoryEnum').LOVE.value %}
+{% set category_informative = enum('App\\Enum\\Contact\\ContactCategoryEnum').INFORMATIVE.value %}
+{% set category_vote = enum('App\\Enum\\Contact\\ContactCategoryEnum').VOTE.value %}
+{% if thread.category.value == category_bug %}
     {% set category_class = 'bg-[rgba(239,68,68,0.14)] border-[rgba(239,68,68,0.3)] text-[#f87171]' %}
-{% elseif thread.category.value == 'suggestion' %}
+{% elseif thread.category.value == category_suggestion %}
     {% set category_class = 'bg-[rgba(6,182,212,0.12)] border-[rgba(6,182,212,0.3)] text-[#06b6d4]' %}
-{% elseif thread.category.value == 'question' %}
+{% elseif thread.category.value == category_question %}
     {% set category_class = 'bg-[rgba(168,85,247,0.12)] border-[rgba(168,85,247,0.3)] text-[#a855f7]' %}
-{% elseif thread.category.value == 'love' %}
+{% elseif thread.category.value == category_love %}
     {% set category_class = 'bg-[rgba(244,63,94,0.15)] border-[rgba(244,63,94,0.3)] text-[#f43f5e]' %}
-{% elseif thread.category.value == 'informative' %}
+{% elseif thread.category.value == category_informative %}
     {% set category_class = 'bg-[rgba(34,197,94,0.12)] border-[rgba(34,197,94,0.3)] text-[#22c55e]' %}
-{% elseif thread.category.value == 'vote' %}
+{% elseif thread.category.value == category_vote %}
     {% set category_class = 'bg-[rgba(6,182,212,0.12)] border-[rgba(6,182,212,0.3)] text-[#06b6d4]' %}
 {% else %}
     {% set category_class = 'bg-white/[0.05] border-white/[0.07] text-[#4a5568]' %}

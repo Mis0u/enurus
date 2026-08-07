@@ -1,11 +1,12 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
+{% set fr = enum('App\\Enum\\Translations\\LocaleAllowedEnum').FR.value %}
 
-{% block content_title %}{{ 'admin.thread.close.title'|trans({subject: thread.subject}, 'admin', 'fr') }}{% endblock %}
+{% block content_title %}{{ 'admin.thread.close.title'|trans({subject: thread.subject}, 'admin', fr) }}{% endblock %}
 
 {% block main %}
-    <p>{{ 'admin.thread.close.confirm'|trans({}, 'admin', 'fr') }}</p>
+    <p>{{ 'admin.thread.close.confirm'|trans({}, 'admin', fr) }}</p>
     <form method="post">
         <input type="hidden" name="_token" value="{{ csrf_token('contact_thread_admin_close_' ~ thread.id) }}">
-        <button type="submit" class="btn btn-primary">{{ 'admin.thread.action.close'|trans({}, 'admin', 'fr') }}</button>
+        <button type="submit" class="btn btn-primary">{{ 'admin.thread.action.close'|trans({}, 'admin', fr) }}</button>
     </form>
 {% endblock %}
