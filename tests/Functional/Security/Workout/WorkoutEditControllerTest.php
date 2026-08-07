@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Security\Workout;
 
 use App\Entity\ExerciseSet;
+use App\Entity\Routine;
+use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -130,6 +133,36 @@ class WorkoutEditControllerTest extends WebTestCase
         $this->assertSame('2025-01-15 ' . $originalTime, $updated->performedAt->format('Y-m-d H:i:s'));
     }
 
+    /**
+     * Régression : le champ `routine` du formulaire n'est jamais rendu en édition (aucune UI pour
+     * changer la routine d'une séance déjà enregistrée) — un mapped field absent des données
+     * soumises est traité par Symfony comme soumis vide, ce qui écrasait silencieusement
+     * Workout::$routine à null à chaque édition, quel que soit le champ réellement modifié.
+     */
+    public function testEditPreservesRoutine(): void
+    {
+        $client = $this->login(self::USER);
+        $workout = $this->getFirstWorkout(self::USER);
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $routine = $this->attachRoutineToWorkout($em, $workout);
+
+        $url = $this->getEditUrl($workout);
+        $crawler = $client->request(Request::METHOD_GET, $url);
+        $csrfToken = $crawler->filter('input[name="workout[_token]"]')->attr('value');
+        $this->assertNotNull($csrfToken);
+
+        $payload = $this->buildValidPayload($workout, $csrfToken);
+        $payload['workout']['duration'] = 99;
+
+        $client->request(Request::METHOD_POST, $url, $payload);
+
+        $updated = $this->findUpdatedWorkout($workout->id);
+        $this->assertNotNull($updated->routine);
+        $this->assertSame((string) $routine->id, (string) $updated->routine->id);
+    }
+
     public function testEditFormRendersDateDuplicateCheckExcludingCurrentWorkout(): void
     {
         $client = $this->login(self::USER);
@@ -246,6 +279,23 @@ class WorkoutEditControllerTest extends WebTestCase
         $this->assertNotNull($csrfToken);
 
         return [$client, $workout, $url, $this->buildValidPayload($workout, $csrfToken)];
+    }
+
+    private function attachRoutineToWorkout(EntityManagerInterface $em, Workout $workout): Routine
+    {
+        /** @var User $owner */
+        $owner = $workout->owner;
+
+        $routine = new Routine();
+        $routine->owner = $owner;
+        $routine->name = 'Fessier';
+
+        $workout->routine = $routine;
+
+        $em->persist($routine);
+        $em->flush();
+
+        return $routine;
     }
 
     private function getFirstWorkout(string $email): Workout
