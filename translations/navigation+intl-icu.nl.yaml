@@ -124,7 +124,7 @@ dashboard:
             exercises: "{count, plural, =1 {Oefening} other {Oefeningen}}"
             filter:
                 last: Laatste trainingsdag
-                month: Huidige maand
+                month: Maand
                 week: Week
             pr_count: "{count, plural, =1 {# PR verbroken} other {# PR's verbroken}}"
             pr_count_zero: Geen PR deze keer, ga zo door!

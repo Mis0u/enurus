@@ -124,7 +124,7 @@ dashboard:
             exercises: "{count, plural, =1 {Übung} other {Übungen}}"
             filter:
                 last: Letzter Trainingstag
-                month: Aktueller Monat
+                month: Monat
                 week: Woche
             pr_count: "{count, plural, =1 {# persönlicher Rekord gebrochen} other {# persönliche Rekorde gebrochen}}"
             pr_count_zero: Diesmal kein PR, weiter so!
