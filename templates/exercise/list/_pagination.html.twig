@@ -1,9 +1,9 @@
 <div
-    class="flex items-center justify-between mt-2 pt-5 border-t border-white/[0.07]"
+    class="flex items-center justify-between mt-2 pt-5 border-t border-white/[0.07] max-md:flex-col max-md:items-stretch max-md:gap-3"
     data-exercise--list-target="paginationWrapper"
 >
     {# Sélecteur de résultats par page #}
-    <div class="flex items-center gap-2 text-[12px] text-slate-400">
+    <div class="flex items-center gap-2 text-[12px] text-slate-400 max-md:justify-center">
         <span>{{ 'exercise.list.pagination.show'|trans({}, 'navigation') }}</span>
         <select
             class="bg-[#0f1928] border border-white/[0.07] rounded-md px-2 py-1
@@ -21,7 +21,7 @@
     </div>
 
     {# Navigation pages #}
-    <div class="flex items-center gap-1" role="navigation" aria-label="{{ 'exercise.list.pagination.navigation'|trans({}, 'navigation') }}">
+    <div class="flex items-center gap-1 max-md:justify-center max-md:flex-wrap" role="navigation" aria-label="{{ 'exercise.list.pagination.navigation'|trans({}, 'navigation') }}">
         <button
             type="button"
             class="exercise-page-btn exercise-page-btn--nav"

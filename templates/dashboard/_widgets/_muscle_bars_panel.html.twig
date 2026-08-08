@@ -24,7 +24,12 @@
             <div class="flex-1 h-2 bg-white/[0.06] rounded-full overflow-hidden">
                 <div class="h-full rounded-full transition-ft{{ is_mixed ? ' cursor-help' : '' }}"
                      style="width: {{ bar.percentage }}%; background: {{ fill }};"
-                     {% if is_mixed %}title="{{ 'dashboard.widget.muscles.breakdown'|trans({primaryCount: bar.primarySets, secondaryCount: bar.secondarySets}, 'navigation') }}"{% endif %}></div>
+                     {% if is_mixed %}
+                         data-controller="tooltip"
+                         data-tooltip-text-value="{{ 'dashboard.widget.muscles.breakdown'|trans({primaryCount: bar.primarySets, secondaryCount: bar.secondarySets}, 'navigation') }}"
+                         data-action="click->tooltip#toggle"
+                         title="{{ 'dashboard.widget.muscles.breakdown'|trans({primaryCount: bar.primarySets, secondaryCount: bar.secondarySets}, 'navigation') }}"
+                     {% endif %}></div>
             </div>
             <span class="text-[11px] text-[#4a5568] w-[60px] text-right shrink-0">
                 {{ 'dashboard.widget.muscles.sets_count'|trans({count: bar.sets}, 'navigation') }}

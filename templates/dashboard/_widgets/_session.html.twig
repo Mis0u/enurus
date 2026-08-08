@@ -109,7 +109,10 @@
             <span class="font-rajdhani text-[14px] font-bold text-cyan-ft" data-dashboard--session-target="prLabel">
                 {{ sessionStats.last.prLabel }}
             </span>
-            <span class="inline-flex items-center justify-center w-4 h-4 shrink-0 cursor-help text-cyan-ft/70 hover:text-cyan-ft transition-ft"
+            <span class="relative inline-flex items-center justify-center w-4 h-4 shrink-0 cursor-help text-cyan-ft/70 hover:text-cyan-ft transition-ft"
+                  data-controller="tooltip"
+                  data-tooltip-text-value="{{ 'dashboard.widget.session.pr_tooltip'|trans({}, 'navigation') }}"
+                  data-action="click->tooltip#toggle"
                   title="{{ 'dashboard.widget.session.pr_tooltip'|trans({}, 'navigation') }}">
                 <svg class="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"></circle>
@@ -126,7 +129,10 @@
             <span class="font-rajdhani text-[13px] font-semibold text-cyan-ft/90" data-dashboard--session-target="repsRecordLabel">
                 {{ sessionStats.last.repsRecordLabel }}
             </span>
-            <span class="inline-flex items-center justify-center w-3.5 h-3.5 shrink-0 cursor-help text-cyan-ft/50 hover:text-cyan-ft/80 transition-ft"
+            <span class="relative inline-flex items-center justify-center w-3.5 h-3.5 shrink-0 cursor-help text-cyan-ft/50 hover:text-cyan-ft/80 transition-ft"
+                  data-controller="tooltip"
+                  data-tooltip-text-value="{{ 'dashboard.widget.session.reps_record_tooltip'|trans({}, 'navigation') }}"
+                  data-action="click->tooltip#toggle"
                   title="{{ 'dashboard.widget.session.reps_record_tooltip'|trans({}, 'navigation') }}">
                 <svg class="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"></circle>

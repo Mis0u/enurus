@@ -28,6 +28,9 @@
             {{ 'dashboard.widget.muscles.title'|trans({}, 'navigation') }}
         </span>
         <span class="inline-flex items-center justify-center w-4 h-4 shrink-0 cursor-help text-[#4a5568] hover:text-[#8b9bb4] transition-ft"
+              data-controller="tooltip"
+              data-tooltip-text-value="{{ 'dashboard.widget.muscles.sort_info'|trans({}, 'navigation') }}"
+              data-action="click->tooltip#toggle"
               title="{{ 'dashboard.widget.muscles.sort_info'|trans({}, 'navigation') }}">
             <svg class="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"></circle>
