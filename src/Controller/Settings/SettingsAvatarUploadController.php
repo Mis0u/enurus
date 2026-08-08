@@ -7,6 +7,7 @@ namespace App\Controller\Settings;
 use App\Constraint\ImageConstraints;
 use App\Entity\User;
 use App\Service\Entity\UserAvatarService;
+use League\Flysystem\FilesystemOperator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,6 +22,7 @@ final class SettingsAvatarUploadController extends AbstractController
 {
     public function __construct(
         private readonly UserAvatarService $userAvatarService,
+        private readonly FilesystemOperator $defaultStorage,
     ) {
     }
 
@@ -62,7 +64,7 @@ final class SettingsAvatarUploadController extends AbstractController
 
         return $this->json([
             'path' => $path,
-            'url' => '/uploads/' . $path,
+            'url' => $this->defaultStorage->publicUrl($path),
         ]);
     }
 }

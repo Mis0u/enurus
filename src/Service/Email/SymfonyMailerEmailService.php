@@ -11,11 +11,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class SymfonyMailerEmailService implements EmailInterface
 {
-    private const string FROM_EMAIL = 'enurus@gmail.com';
-
     public function __construct(
         private TranslatorInterface $translator,
         private MailerInterface $mailer,
+        private string $fromEmail,
     ) {
     }
 
@@ -26,7 +25,7 @@ final readonly class SymfonyMailerEmailService implements EmailInterface
     {
         return new TemplatedEmail()
             ->from(new Address(
-                self::FROM_EMAIL,
+                $this->fromEmail,
                 $this->translator->trans('name', [], 'brand', $locale)
             ))
             ->to($to)

@@ -21,6 +21,10 @@ services:
 
     League\Flysystem\FilesystemOperator $defaultStorage: '@default.storage'
 
+    App\Service\Email\SymfonyMailerEmailService:
+        arguments:
+            $fromEmail: '%env(FROM_EMAIL)%'
+
     App\Service\Contact\RegistrationWelcomeThreadService:
         arguments:
             $adminEmail: '%env(ADMIN_USER_EMAIL)%'

@@ -4,8 +4,159 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2dc7f2961793d96ed66356854d76d878",
+    "content-hash": "a13486be510c9289afffccd3d9914f3d",
     "packages": [
+        {
+            "name": "aws/aws-crt-php",
+            "version": "v1.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/awslabs/aws-crt-php.git",
+                "reference": "d71d9906c7bb63a28295447ba12e74723bd3730e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/awslabs/aws-crt-php/zipball/d71d9906c7bb63a28295447ba12e74723bd3730e",
+                "reference": "d71d9906c7bb63a28295447ba12e74723bd3730e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35||^5.6.3||^9.5",
+                "yoast/phpunit-polyfills": "^1.0"
+            },
+            "suggest": {
+                "ext-awscrt": "Make sure you install awscrt native extension to use any of the functionality."
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "AWS SDK Common Runtime Team",
+                    "email": "aws-sdk-common-runtime@amazon.com"
+                }
+            ],
+            "description": "AWS Common Runtime for PHP",
+            "homepage": "https://github.com/awslabs/aws-crt-php",
+            "keywords": [
+                "amazon",
+                "aws",
+                "crt",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/awslabs/aws-crt-php/issues",
+                "source": "https://github.com/awslabs/aws-crt-php/tree/v1.2.7"
+            },
+            "time": "2024-10-18T22:15:13+00:00"
+        },
+        {
+            "name": "aws/aws-sdk-php",
+            "version": "3.391.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php.git",
+                "reference": "90920ce5518aa864e04da0224bb0ba0ee9e31d7f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/90920ce5518aa864e04da0224bb0ba0ee9e31d7f",
+                "reference": "90920ce5518aa864e04da0224bb0ba0ee9e31d7f",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-crt-php": "^1.2.3",
+                "ext-json": "*",
+                "ext-pcre": "*",
+                "ext-simplexml": "*",
+                "guzzlehttp/guzzle": "^7.8.2 || ^8.0",
+                "guzzlehttp/promises": "^2.0.3 || ^3.0",
+                "guzzlehttp/psr7": "^2.6.3 || ^3.0",
+                "mtdowling/jmespath.php": "^2.9.1",
+                "php": ">=8.1",
+                "psr/http-message": "^1.0 || ^2.0",
+                "symfony/filesystem": "^v5.4.45 || ^v6.4.3 || ^v7.1.0 || ^v8.0.0"
+            },
+            "require-dev": {
+                "andrewsville/php-token-reflection": "^1.4",
+                "aws/aws-php-sns-message-validator": "~1.0",
+                "behat/behat": "~3.0",
+                "composer/composer": "^2.7.8",
+                "dms/phpunit-arraysubset-asserts": "^v0.5.0",
+                "doctrine/cache": "~1.4",
+                "ext-dom": "*",
+                "ext-openssl": "*",
+                "ext-sockets": "*",
+                "phpunit/phpunit": "^10.0",
+                "psr/cache": "^2.0 || ^3.0",
+                "psr/simple-cache": "^2.0 || ^3.0",
+                "sebastian/comparator": "^1.2.3 || ^4.0 || ^5.0",
+                "yoast/phpunit-polyfills": "^2.0"
+            },
+            "suggest": {
+                "aws/aws-php-sns-message-validator": "To validate incoming SNS notifications",
+                "doctrine/cache": "To use the DoctrineCacheAdapter",
+                "ext-curl": "To send requests using cURL",
+                "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
+                "ext-pcntl": "To use client-side monitoring",
+                "ext-sockets": "To use client-side monitoring"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "Aws\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "src/data/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Amazon Web Services",
+                    "homepage": "https://aws.amazon.com"
+                }
+            ],
+            "description": "AWS SDK for PHP - Use Amazon Web Services in your PHP project",
+            "homepage": "https://aws.amazon.com/sdk-for-php",
+            "keywords": [
+                "amazon",
+                "aws",
+                "cloud",
+                "dynamodb",
+                "ec2",
+                "glacier",
+                "s3",
+                "sdk"
+            ],
+            "support": {
+                "forum": "https://github.com/aws/aws-sdk-php/discussions",
+                "issues": "https://github.com/aws/aws-sdk-php/issues",
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.391.1"
+            },
+            "time": "2026-08-07T20:18:18+00:00"
+        },
         {
             "name": "composer/semver",
             "version": "3.4.4",
@@ -1502,6 +1653,394 @@
             "time": "2025-12-13T19:37:35+00:00"
         },
         {
+            "name": "guzzlehttp/guzzle",
+            "version": "8.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "d1cbca76970939a9c2ced55b1e25ea26f34fc773"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/d1cbca76970939a9c2ced55b1e25ea26f34fc773",
+                "reference": "d1cbca76970939a9c2ced55b1e25ea26f34fc773",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/promises": "^3.0.1",
+                "guzzlehttp/psr7": "^3.0",
+                "php": "^7.4 || ^8.0",
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0",
+                "symfony/polyfill-php80": "^1.25",
+                "symfony/polyfill-php82": "^1.27"
+            },
+            "provide": {
+                "psr/http-client-implementation": "1.0"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.8.2",
+                "ext-curl": "*",
+                "guzzle/client-integration-tests": "4.0.1",
+                "guzzlehttp/test-server": "^1.0",
+                "php-http/message-factory": "^1.1",
+                "phpunit/phpunit": "^9.6.34",
+                "psr/log": "^1.1 || ^2.0 || ^3.0"
+            },
+            "suggest": {
+                "ext-curl": "Required for CURL handler support",
+                "ext-intl": "Required for Internationalized Domain Name (IDN) support",
+                "psr/log": "Required for using the Log middleware"
+            },
+            "type": "library",
+            "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": false
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                },
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Jeremy Lindblom",
+                    "email": "jeremeamia@gmail.com",
+                    "homepage": "https://github.com/jeremeamia"
+                },
+                {
+                    "name": "George Mponos",
+                    "email": "gmponos@gmail.com",
+                    "homepage": "https://github.com/gmponos"
+                },
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com",
+                    "homepage": "https://github.com/Nyholm"
+                },
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com",
+                    "homepage": "https://github.com/sagikazarmark"
+                },
+                {
+                    "name": "Tobias Schultze",
+                    "email": "webmaster@tubo-world.de",
+                    "homepage": "https://github.com/Tobion"
+                }
+            ],
+            "description": "Guzzle is a PHP HTTP client library",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "psr-18",
+                "psr-7",
+                "rest",
+                "web service"
+            ],
+            "support": {
+                "issues": "https://github.com/guzzle/guzzle/issues",
+                "source": "https://github.com/guzzle/guzzle/tree/8.0.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/Nyholm",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/guzzlehttp/guzzle",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-08-05T19:50:26+00:00"
+        },
+        {
+            "name": "guzzlehttp/promises",
+            "version": "3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/promises.git",
+                "reference": "64f38b87fa7d371853804161bfc701c9bc2cc00a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/64f38b87fa7d371853804161bfc701c9bc2cc00a",
+                "reference": "64f38b87fa7d371853804161bfc701c9bc2cc00a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.8.2",
+                "phpunit/phpunit": "^9.6.34"
+            },
+            "type": "library",
+            "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": false
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Promise\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                },
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com",
+                    "homepage": "https://github.com/Nyholm"
+                },
+                {
+                    "name": "Tobias Schultze",
+                    "email": "webmaster@tubo-world.de",
+                    "homepage": "https://github.com/Tobion"
+                }
+            ],
+            "description": "Guzzle promises library",
+            "keywords": [
+                "promise"
+            ],
+            "support": {
+                "issues": "https://github.com/guzzle/promises/issues",
+                "source": "https://github.com/guzzle/promises/tree/3.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/Nyholm",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/guzzlehttp/promises",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-08-05T19:35:04+00:00"
+        },
+        {
+            "name": "guzzlehttp/psr7",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/psr7.git",
+                "reference": "b094ded77ee97a6027ad6cf0e8c7b9f88381814c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/b094ded77ee97a6027ad6cf0e8c7b9f88381814c",
+                "reference": "b094ded77ee97a6027ad6cf0e8c7b9f88381814c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0",
+                "psr/http-factory": "^1.1",
+                "psr/http-message": "^2.0",
+                "symfony/polyfill-php80": "^1.25",
+                "symfony/polyfill-php82": "^1.27"
+            },
+            "provide": {
+                "psr/http-factory-implementation": "1.1",
+                "psr/http-message-implementation": "2.0"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.8.2",
+                "http-interop/http-factory-tests": "1.1.0",
+                "jshttp/mime-db": "1.54.0.1",
+                "php-http/psr7-integration-tests": "^1.5.1",
+                "phpunit/phpunit": "^9.6.34"
+            },
+            "suggest": {
+                "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
+            },
+            "type": "library",
+            "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": false
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Psr7\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                },
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "George Mponos",
+                    "email": "gmponos@gmail.com",
+                    "homepage": "https://github.com/gmponos"
+                },
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com",
+                    "homepage": "https://github.com/Nyholm"
+                },
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com",
+                    "homepage": "https://github.com/sagikazarmark"
+                },
+                {
+                    "name": "Tobias Schultze",
+                    "email": "webmaster@tubo-world.de",
+                    "homepage": "https://github.com/Tobion"
+                },
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com",
+                    "homepage": "https://sagikazarmark.hu"
+                }
+            ],
+            "description": "PSR-7 message implementation that also provides common utility methods",
+            "keywords": [
+                "http",
+                "message",
+                "psr-7",
+                "request",
+                "response",
+                "stream",
+                "uri",
+                "url"
+            ],
+            "support": {
+                "issues": "https://github.com/guzzle/psr7/issues",
+                "source": "https://github.com/guzzle/psr7/tree/3.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/Nyholm",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/guzzlehttp/psr7",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-20T13:48:31+00:00"
+        },
+        {
+            "name": "jean85/pretty-package-versions",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Jean85/pretty-package-versions.git",
+                "reference": "4d7aa5dab42e2a76d99559706022885de0e18e1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Jean85/pretty-package-versions/zipball/4d7aa5dab42e2a76d99559706022885de0e18e1a",
+                "reference": "4d7aa5dab42e2a76d99559706022885de0e18e1a",
+                "shasum": ""
+            },
+            "require": {
+                "composer-runtime-api": "^2.1.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.2",
+                "jean85/composer-provided-replaced-stub-package": "^1.0",
+                "phpstan/phpstan": "^2.0",
+                "phpunit/phpunit": "^7.5|^8.5|^9.6",
+                "rector/rector": "^2.0",
+                "vimeo/psalm": "^4.3 || ^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Jean85\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alessandro Lai",
+                    "email": "alessandro.lai85@gmail.com"
+                }
+            ],
+            "description": "A library to get pretty versions strings of installed dependencies",
+            "keywords": [
+                "composer",
+                "package",
+                "release",
+                "versions"
+            ],
+            "support": {
+                "issues": "https://github.com/Jean85/pretty-package-versions/issues",
+                "source": "https://github.com/Jean85/pretty-package-versions/tree/2.1.1"
+            },
+            "time": "2025-03-19T14:43:43+00:00"
+        },
+        {
             "name": "knplabs/knp-components",
             "version": "v5.2.0",
             "source": {
@@ -1747,6 +2286,61 @@
                 "source": "https://github.com/thephpleague/flysystem/tree/3.34.0"
             },
             "time": "2026-05-14T10:28:08+00:00"
+        },
+        {
+            "name": "league/flysystem-aws-s3-v3",
+            "version": "3.35.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem-aws-s3-v3.git",
+                "reference": "8475ef9adfc6498b85469e2abec6fe3118cd08c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/8475ef9adfc6498b85469e2abec6fe3118cd08c4",
+                "reference": "8475ef9adfc6498b85469e2abec6fe3118cd08c4",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "^3.371.5",
+                "league/flysystem": "^3.10.0",
+                "league/mime-type-detection": "^1.0.0",
+                "php": "^8.0.2"
+            },
+            "conflict": {
+                "guzzlehttp/guzzle": "<7.0",
+                "guzzlehttp/ringphp": "<1.1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\AwsS3V3\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "AWS S3 filesystem adapter for Flysystem.",
+            "keywords": [
+                "Flysystem",
+                "aws",
+                "file",
+                "files",
+                "filesystem",
+                "s3",
+                "storage"
+            ],
+            "support": {
+                "source": "https://github.com/thephpleague/flysystem-aws-s3-v3/tree/3.35.2"
+            },
+            "time": "2026-07-01T23:25:49+00:00"
         },
         {
             "name": "league/flysystem-bundle",
@@ -2276,6 +2870,72 @@
             "time": "2026-01-02T08:56:05+00:00"
         },
         {
+            "name": "mtdowling/jmespath.php",
+            "version": "2.9.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jmespath/jmespath.php.git",
+                "reference": "2157c5e50e813ec6a96c1eed3be7f64a20fb32a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jmespath/jmespath.php/zipball/2157c5e50e813ec6a96c1eed3be7f64a20fb32a8",
+                "reference": "2157c5e50e813ec6a96c1eed3be7f64a20fb32a8",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2.5 || ^8.0",
+                "symfony/polyfill-mbstring": "^1.17"
+            },
+            "require-dev": {
+                "composer/xdebug-handler": "^3.0.3",
+                "phpunit/phpunit": "^8.5.52"
+            },
+            "bin": [
+                "bin/jp.php"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.9-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/JmesPath.php"
+                ],
+                "psr-4": {
+                    "JmesPath\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                },
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Declaratively specify how to extract elements from a JSON document",
+            "keywords": [
+                "json",
+                "jsonpath"
+            ],
+            "support": {
+                "issues": "https://github.com/jmespath/jmespath.php/issues",
+                "source": "https://github.com/jmespath/jmespath.php/tree/2.9.2"
+            },
+            "time": "2026-07-06T18:56:19+00:00"
+        },
+        {
             "name": "phpdocumentor/reflection-common",
             "version": "2.2.0",
             "source": {
@@ -2699,6 +3359,58 @@
             "time": "2019-01-08T18:20:26+00:00"
         },
         {
+            "name": "psr/http-client",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-client.git",
+                "reference": "bb5906edc1c324c9a05aa0873d40117941e5fa90"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-client/zipball/bb5906edc1c324c9a05aa0873d40117941e5fa90",
+                "reference": "bb5906edc1c324c9a05aa0873d40117941e5fa90",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0 || ^8.0",
+                "psr/http-message": "^1.0 || ^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Client\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP clients",
+            "homepage": "https://github.com/php-fig/http-client",
+            "keywords": [
+                "http",
+                "http-client",
+                "psr",
+                "psr-18"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/http-client"
+            },
+            "time": "2023-09-23T14:17:50+00:00"
+        },
+        {
             "name": "psr/http-factory",
             "version": "1.1.0",
             "source": {
@@ -2911,6 +3623,204 @@
                 "source": "https://github.com/php-fig/log/tree/3.0.2"
             },
             "time": "2024-09-11T13:17:53+00:00"
+        },
+        {
+            "name": "sentry/sentry",
+            "version": "4.30.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/getsentry/sentry-php.git",
+                "reference": "95a26e7c946651cacd69d1ded95a8190f952a3ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/95a26e7c946651cacd69d1ded95a8190f952a3ae",
+                "reference": "95a26e7c946651cacd69d1ded95a8190f952a3ae",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "guzzlehttp/psr7": "^1.8.4|^2.1.1|^3.0.0",
+                "jean85/pretty-package-versions": "^1.5|^2.0.4",
+                "php": "^7.2|^8.0",
+                "psr/log": "^1.0|^2.0|^3.0",
+                "symfony/options-resolver": "^4.4.30|^5.0.11|^6.0|^7.0|^8.0"
+            },
+            "conflict": {
+                "raven/raven": "*"
+            },
+            "require-dev": {
+                "carthage-software/mago": "1.30.0",
+                "friendsofphp/php-cs-fixer": "^3.4",
+                "guzzlehttp/guzzle": "^7.0|^8.0",
+                "guzzlehttp/promises": "^2.0.3|^3.0.0",
+                "monolog/monolog": "^1.6|^2.0|^3.0",
+                "nyholm/psr7": "^1.8",
+                "open-telemetry/api": "^1.1",
+                "open-telemetry/context": "^1.1",
+                "open-telemetry/exporter-otlp": "^1.1",
+                "open-telemetry/sdk": "^1.1",
+                "open-telemetry/sem-conv": "^1.27",
+                "phpstan/phpstan": "^1.3",
+                "phpunit/phpunit": "^8.5.52|^9.6.34",
+                "spiral/roadrunner-http": "^3.6",
+                "spiral/roadrunner-worker": "^3.6"
+            },
+            "suggest": {
+                "ext-excimer": "Enable Sentry profiling with the Excimer PHP extension.",
+                "monolog/monolog": "Allow sending log messages to Sentry by using the included Monolog handler."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "Sentry\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sentry",
+                    "email": "accounts@sentry.io"
+                }
+            ],
+            "description": "PHP SDK for Sentry (http://sentry.io)",
+            "homepage": "http://sentry.io",
+            "keywords": [
+                "crash-reporting",
+                "crash-reports",
+                "error-handler",
+                "error-monitoring",
+                "log",
+                "logging",
+                "profiling",
+                "sentry",
+                "tracing"
+            ],
+            "support": {
+                "issues": "https://github.com/getsentry/sentry-php/issues",
+                "source": "https://github.com/getsentry/sentry-php/tree/4.30.0"
+            },
+            "funding": [
+                {
+                    "url": "https://sentry.io/",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://sentry.io/pricing/",
+                    "type": "custom"
+                }
+            ],
+            "time": "2026-08-05T14:54:26+00:00"
+        },
+        {
+            "name": "sentry/sentry-symfony",
+            "version": "5.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/getsentry/sentry-symfony.git",
+                "reference": "20786d4d1d7aa35d4b695a6bba14924c8e596370"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/20786d4d1d7aa35d4b695a6bba14924c8e596370",
+                "reference": "20786d4d1d7aa35d4b695a6bba14924c8e596370",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/psr7": "^2.1.1|^3.0",
+                "jean85/pretty-package-versions": "^1.5||^2.0",
+                "php": "^7.2||^8.0",
+                "sentry/sentry": "^4.23.0",
+                "symfony/cache-contracts": "^1.1||^2.4||^3.0",
+                "symfony/config": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/console": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/dependency-injection": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/event-dispatcher": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/http-kernel": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/polyfill-php80": "^1.22",
+                "symfony/psr-http-message-bridge": "^1.2||^2.0||^6.4||^7.0||^8.0",
+                "symfony/yaml": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0"
+            },
+            "require-dev": {
+                "doctrine/dbal": "^2.13||^3.3||^4.0",
+                "doctrine/doctrine-bundle": "^2.6||^3.0",
+                "friendsofphp/php-cs-fixer": "^2.19||^3.40",
+                "masterminds/html5": "^2.8",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "1.12.5",
+                "phpstan/phpstan-phpunit": "1.4.0",
+                "phpstan/phpstan-symfony": "1.4.10",
+                "phpunit/phpunit": "^8.5.52||^9.6.34",
+                "symfony/browser-kit": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/cache": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/dom-crawler": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/framework-bundle": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/http-client": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/messenger": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/monolog-bundle": "^3.4||^4.0",
+                "symfony/phpunit-bridge": "^5.2.6||^6.0||^7.0||^8.0",
+                "symfony/process": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/security-core": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/security-http": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "symfony/twig-bundle": "^4.4.20||^5.0.11||^6.0||^7.0||^8.0",
+                "vimeo/psalm": "^4.3||^5.16.0"
+            },
+            "suggest": {
+                "doctrine/doctrine-bundle": "Allow distributed tracing of database queries using Sentry.",
+                "monolog/monolog": "Allow sending log messages to Sentry by using the included Monolog handler.",
+                "symfony/cache": "Allow distributed tracing of cache pools using Sentry.",
+                "symfony/twig-bundle": "Allow distributed tracing of Twig template rendering using Sentry."
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "files": [
+                    "src/aliases.php"
+                ],
+                "psr-4": {
+                    "Sentry\\SentryBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sentry",
+                    "email": "accounts@sentry.io"
+                }
+            ],
+            "description": "Symfony integration for Sentry (http://getsentry.com)",
+            "homepage": "http://getsentry.com",
+            "keywords": [
+                "errors",
+                "logging",
+                "sentry",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/getsentry/sentry-symfony/issues",
+                "source": "https://github.com/getsentry/sentry-symfony/tree/5.12.0"
+            },
+            "funding": [
+                {
+                    "url": "https://sentry.io/",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://sentry.io/pricing/",
+                    "type": "custom"
+                }
+            ],
+            "time": "2026-08-06T11:43:28+00:00"
         },
         {
             "name": "symfony/asset",
@@ -6891,6 +7801,94 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/property-info/tree/v7.4.8"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-03-24T13:12:05+00:00"
+        },
+        {
+            "name": "symfony/psr-http-message-bridge",
+            "version": "v7.4.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/psr-http-message-bridge.git",
+                "reference": "76f1a57719a4a04c0ea18678a6c9305b5dcb9da8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/psr-http-message-bridge/zipball/76f1a57719a4a04c0ea18678a6c9305b5dcb9da8",
+                "reference": "76f1a57719a4a04c0ea18678a6c9305b5dcb9da8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "psr/http-message": "^1.0|^2.0",
+                "symfony/http-foundation": "^6.4|^7.0|^8.0"
+            },
+            "conflict": {
+                "php-http/discovery": "<1.15",
+                "symfony/http-kernel": "<6.4"
+            },
+            "require-dev": {
+                "nyholm/psr7": "^1.1",
+                "php-http/discovery": "^1.15",
+                "psr/log": "^1.1.4|^2|^3",
+                "symfony/browser-kit": "^6.4|^7.0|^8.0",
+                "symfony/config": "^6.4|^7.0|^8.0",
+                "symfony/event-dispatcher": "^6.4|^7.0|^8.0",
+                "symfony/framework-bundle": "^6.4.13|^7.1.6|^8.0",
+                "symfony/http-kernel": "^6.4.13|^7.1.6|^8.0",
+                "symfony/runtime": "^6.4.13|^7.1.6|^8.0"
+            },
+            "type": "symfony-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Bridge\\PsrHttpMessage\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "PSR HTTP message bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr-17",
+                "psr-7"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/psr-http-message-bridge/tree/v7.4.8"
             },
             "funding": [
                 {

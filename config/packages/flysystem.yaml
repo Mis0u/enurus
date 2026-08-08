@@ -5,3 +5,32 @@ flysystem:
             adapter: 'local'
             options:
                 directory: '%kernel.project_dir%/public/uploads'
+            public_url: '/uploads'
+
+# Prod : fichiers uploadés (photos de séance, avatars) sur Scaleway Object Storage (API compatible
+# S3) plutôt qu'en local — le disque d'un conteneur Scalingo n'est pas persistant entre
+# déploiements, tout fichier écrit en local y disparaîtrait au redéploiement suivant.
+# SCALEWAY_ACCESS_KEY / SCALEWAY_SECRET_KEY / SCALEWAY_BUCKET_NAME / SCALEWAY_REGION /
+# SCALEWAY_ENDPOINT / SCALEWAY_PUBLIC_URL à définir dans les variables d'environnement Scalingo
+# (jamais en .env commité).
+when@prod:
+    flysystem:
+        storages:
+            default.storage:
+                adapter: 'aws'
+                options:
+                    client: 'scaleway.s3_client'
+                    bucket: '%env(SCALEWAY_BUCKET_NAME)%'
+                public_url: '%env(SCALEWAY_PUBLIC_URL)%'
+
+    services:
+        scaleway.s3_client:
+            class: Aws\S3\S3Client
+            arguments:
+                -
+                    version: 'latest'
+                    region: '%env(SCALEWAY_REGION)%'
+                    endpoint: '%env(SCALEWAY_ENDPOINT)%'
+                    credentials:
+                        key: '%env(SCALEWAY_ACCESS_KEY)%'
+                        secret: '%env(SCALEWAY_SECRET_KEY)%'

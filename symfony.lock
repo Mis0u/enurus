@@ -126,6 +126,9 @@
             "bin/phpunit"
         ]
     },
+    "sentry/sentry-symfony": {
+        "version": "5.12.0"
+    },
     "symfony/asset-mapper": {
         "version": "7.4",
         "recipe": {
