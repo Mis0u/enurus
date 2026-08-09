@@ -7,6 +7,11 @@
 /public/bundles/
 /public/uploads/
 /var/
+# Exception : var/tailwind/app.built.css est commité malgré cette règle (git ne permet pas de
+# ré-inclure un fichier dont un dossier parent est exclu par un pattern glob — ajouté via
+# `git add -f`). Le CSS Tailwind est buildé une seule fois en local (symfonycasts_tailwind n'est
+# configuré qu'en dev, cf. config/packages/dev/) et son output est ensuite consommé tel quel par
+# l'asset mapper dans tous les environnements, y compris la prod.
 /vendor/
 /node_modules/
 /.castor.stub.php
