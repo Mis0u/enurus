@@ -31,6 +31,13 @@ when@test:
 
 when@prod:
     doctrine:
+        dbal:
+            # DATABASE_URL injecté par l'addon Scalingo ne porte pas de paramètre serverVersion
+            # (contrairement au DSN local, cf. .env) — sans cette valeur explicite, Doctrine tente
+            # de se connecter à la base pour l'auto-détecter, échoue silencieusement pendant la
+            # phase de build Scalingo (pas d'accès réseau à l'addon à ce moment) et casse
+            # cache:clear avec "Invalid platform version """.
+            server_version: '17.9.0'
         orm:
             query_cache_driver:
                 type: pool
