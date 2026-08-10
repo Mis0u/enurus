@@ -1,4 +1,5 @@
 import { swalError } from '../../swal/error/_error.js';
+import { showSpinner, hideSpinner } from '../../../utils/submit_spinner.js';
 
 export class NoteModalManager {
     #application;
@@ -51,11 +52,11 @@ export class NoteModalManager {
     #bindSubmit() {
         const submitBtn = document.getElementById('note-modal-submit');
         submitBtn.addEventListener('click', async () => {
-            await this.#handleSubmit();
+            await this.#handleSubmit(submitBtn);
         });
     }
 
-    async #handleSubmit() {
+    async #handleSubmit(submitBtn) {
         this.#injectNote();
 
         const form = document.querySelector('form');
@@ -65,8 +66,14 @@ export class NoteModalManager {
             return;
         }
 
+        // Empêche toute soumission concurrente pendant l'enregistrement (impatience de l'utilisateur
+        // sur ce qui peut prendre plusieurs secondes : requête réseau puis upload photo éventuel) —
+        // sans ça, chaque clic supplémentaire créait une nouvelle séance en doublon.
+        showSpinner(submitBtn);
+
         const { workoutId, redirectUrl } = await this.#submitForm();
         if (!workoutId || !redirectUrl) {
+            hideSpinner(submitBtn);
             swalError(this.#submitFailedTitle, this.#submitFailedText, '#0f1928', '#f0f4ff', '#f43f5e');
             return;
         }
