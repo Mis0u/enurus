@@ -98,3 +98,24 @@ jobs:
 
             - name: Vitest
               run: vendor/bin/castor test-js --no-interaction
+
+    deploy:
+        needs: qa
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Deploy to Scalingo
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "$SCALINGO_SSH_KEY" > ~/.ssh/id_ed25519
+                  chmod 600 ~/.ssh/id_ed25519
+                  ssh-keyscan -H ssh.osc-fr1.scalingo.com >> ~/.ssh/known_hosts
+                  git push git@ssh.osc-fr1.scalingo.com:enurus.git HEAD:main
+              env:
+                  SCALINGO_SSH_KEY: ${{ secrets.SCALINGO_SSH_KEY }}
