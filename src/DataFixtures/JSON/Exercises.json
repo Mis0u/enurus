@@ -160,7 +160,7 @@
     "secondary": [
       "name.biceps",
       "name.traps_middle",
-      "name.traps"
+      "name.traps_lower"
     ]
   },
   {
@@ -221,7 +221,7 @@
     "secondary": [
       "name.glutes",
       "name.hamstrings",
-      "name.traps"
+      "name.traps_upper"
     ]
   },
   {
@@ -229,7 +229,7 @@
     "description": "barbell_shrug.description",
     "isPublic": true,
     "primary": [
-      "name.traps"
+      "name.traps_upper"
     ],
     "secondary": []
   },
@@ -238,7 +238,7 @@
     "description": "dumbbell_shrug.description",
     "isPublic": true,
     "primary": [
-      "name.traps"
+      "name.traps_upper"
     ],
     "secondary": []
   },
@@ -248,7 +248,7 @@
     "isPublic": true,
     "primary": [
       "name.posterior_deltoid",
-      "name.traps"
+      "name.traps_lower"
     ],
     "secondary": [
       "name.traps_middle"
@@ -286,7 +286,7 @@
       "name.lateral_deltoid"
     ],
     "secondary": [
-      "name.traps"
+      "name.traps_upper"
     ]
   },
   {
@@ -309,7 +309,7 @@
     ],
     "secondary": [
       "name.traps_middle",
-      "name.traps"
+      "name.traps_lower"
     ]
   },
   {
@@ -515,7 +515,7 @@
       "name.forearms"
     ],
     "secondary": [
-      "name.traps",
+      "name.traps_upper",
       "name.abs"
     ]
   },

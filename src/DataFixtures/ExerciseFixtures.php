@@ -110,7 +110,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
         $exercise->owner = $owner;
 
         $this->attachMuscleGroup($exercise, 'name.posterior_deltoid', MuscleTypeEnum::PRIMARY);
-        $this->attachMuscleGroup($exercise, 'name.traps', MuscleTypeEnum::SECONDARY);
+        $this->attachMuscleGroup($exercise, 'name.traps_lower', MuscleTypeEnum::SECONDARY);
 
         $manager->persist($exercise);
     }
