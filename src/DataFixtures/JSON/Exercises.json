@@ -4,11 +4,11 @@
     "description": "bench_press_bar.description",
     "isPublic": true,
     "primary": [
-      "name.chest"
+      "name.chest",
+      "name.anterior_deltoid"
     ],
     "secondary": [
-      "name.triceps",
-      "name.anterior_deltoid"
+      "name.triceps"
     ]
   },
   {
@@ -16,11 +16,11 @@
     "description": "incline_bench_press_bar.description",
     "isPublic": true,
     "primary": [
-      "name.chest"
+      "name.chest",
+      "name.anterior_deltoid"
     ],
     "secondary": [
-      "name.triceps",
-      "name.anterior_deltoid"
+      "name.triceps"
     ]
   },
   {
@@ -31,6 +31,7 @@
       "name.chest"
     ],
     "secondary": [
+      "name.anterior_deltoid",
       "name.triceps"
     ]
   },
@@ -39,11 +40,11 @@
     "description": "bench_press_dumbbell.description",
     "isPublic": true,
     "primary": [
-      "name.chest"
+      "name.chest",
+      "name.anterior_deltoid"
     ],
     "secondary": [
-      "name.triceps",
-      "name.anterior_deltoid"
+      "name.triceps"
     ]
   },
   {
@@ -51,11 +52,11 @@
     "description": "incline_bench_press_dumbbell.description",
     "isPublic": true,
     "primary": [
-      "name.chest"
+      "name.chest",
+      "name.anterior_deltoid"
     ],
     "secondary": [
-      "name.triceps",
-      "name.anterior_deltoid"
+      "name.triceps"
     ]
   },
   {
@@ -108,11 +109,12 @@
     "description": "push_up.description",
     "isPublic": true,
     "primary": [
-      "name.chest"
+      "name.chest",
+      "name.anterior_deltoid"
     ],
     "secondary": [
       "name.triceps",
-      "name.anterior_deltoid"
+      "name.abs"
     ]
   },
   {
@@ -120,11 +122,12 @@
     "description": "pullover.description",
     "isPublic": true,
     "primary": [
-      "name.chest"
+      "name.lats"
     ],
     "secondary": [
-      "name.lats",
-      "name.triceps"
+      "name.chest",
+      "name.triceps",
+      "name.posterior_deltoid"
     ]
   },
   {
@@ -136,7 +139,10 @@
     ],
     "secondary": [
       "name.biceps",
-      "name.traps_middle"
+      "name.forearms",
+      "name.traps_middle",
+      "name.traps_lower",
+      "name.posterior_deltoid"
     ]
   },
   {
@@ -144,10 +150,15 @@
     "description": "chin_up.description",
     "isPublic": true,
     "primary": [
-      "name.lats"
+      "name.lats",
+      "name.biceps"
     ],
     "secondary": [
-      "name.biceps"
+      "name.forearms",
+      "name.traps_middle",
+      "name.traps_lower",
+      "name.posterior_deltoid",
+      "name.chest"
     ]
   },
   {
@@ -155,12 +166,15 @@
     "description": "barbell_row.description",
     "isPublic": true,
     "primary": [
-      "name.lats"
+      "name.lats",
+      "name.traps_middle"
     ],
     "secondary": [
       "name.biceps",
-      "name.traps_middle",
-      "name.traps_lower"
+      "name.posterior_deltoid",
+      "name.traps_lower",
+      "name.lower_back",
+      "name.forearms"
     ]
   },
   {
@@ -168,11 +182,14 @@
     "description": "dumbbell_row.description",
     "isPublic": true,
     "primary": [
-      "name.lats"
+      "name.lats",
+      "name.traps_middle"
     ],
     "secondary": [
       "name.biceps",
-      "name.traps_middle"
+      "name.posterior_deltoid",
+      "name.traps_lower",
+      "name.forearms"
     ]
   },
   {
@@ -180,11 +197,14 @@
     "description": "cable_row.description",
     "isPublic": true,
     "primary": [
-      "name.lats"
+      "name.lats",
+      "name.traps_middle"
     ],
     "secondary": [
       "name.biceps",
-      "name.traps_middle"
+      "name.posterior_deltoid",
+      "name.traps_lower",
+      "name.forearms"
     ]
   },
   {
@@ -195,7 +215,11 @@
       "name.lats"
     ],
     "secondary": [
-      "name.biceps"
+      "name.biceps",
+      "name.traps_middle",
+      "name.traps_lower",
+      "name.posterior_deltoid",
+      "name.forearms"
     ]
   },
   {
@@ -203,11 +227,14 @@
     "description": "horizontal_cable_row.description",
     "isPublic": true,
     "primary": [
-      "name.lats"
+      "name.lats",
+      "name.traps_middle"
     ],
     "secondary": [
       "name.biceps",
-      "name.traps_middle"
+      "name.posterior_deltoid",
+      "name.traps_lower",
+      "name.forearms"
     ]
   },
   {
@@ -215,13 +242,17 @@
     "description": "deadlift.description",
     "isPublic": true,
     "primary": [
-      "name.lats",
-      "name.lower_back"
+      "name.lower_back",
+      "name.glutes",
+      "name.hamstrings"
     ],
     "secondary": [
-      "name.glutes",
-      "name.hamstrings",
-      "name.traps_upper"
+      "name.quads",
+      "name.traps_upper",
+      "name.traps_middle",
+      "name.lats",
+      "name.forearms",
+      "name.abs"
     ]
   },
   {
@@ -231,7 +262,10 @@
     "primary": [
       "name.traps_upper"
     ],
-    "secondary": []
+    "secondary": [
+      "name.traps_middle",
+      "name.forearms"
+    ]
   },
   {
     "name": "dumbbell_shrug.name",
@@ -240,7 +274,10 @@
     "primary": [
       "name.traps_upper"
     ],
-    "secondary": []
+    "secondary": [
+      "name.traps_middle",
+      "name.forearms"
+    ]
   },
   {
     "name": "face_pull.name",
@@ -248,10 +285,11 @@
     "isPublic": true,
     "primary": [
       "name.posterior_deltoid",
-      "name.traps_lower"
+      "name.traps_middle"
     ],
     "secondary": [
-      "name.traps_middle"
+      "name.traps_lower",
+      "name.biceps"
     ]
   },
   {
@@ -263,7 +301,9 @@
       "name.lateral_deltoid"
     ],
     "secondary": [
-      "name.triceps"
+      "name.triceps",
+      "name.traps_upper",
+      "name.chest"
     ]
   },
   {
@@ -275,7 +315,8 @@
       "name.lateral_deltoid"
     ],
     "secondary": [
-      "name.triceps"
+      "name.triceps",
+      "name.traps_upper"
     ]
   },
   {
@@ -286,6 +327,8 @@
       "name.lateral_deltoid"
     ],
     "secondary": [
+      "name.anterior_deltoid",
+      "name.posterior_deltoid",
       "name.traps_upper"
     ]
   },
@@ -297,6 +340,7 @@
       "name.anterior_deltoid"
     ],
     "secondary": [
+      "name.lateral_deltoid",
       "name.chest"
     ]
   },
@@ -320,7 +364,8 @@
       "name.posterior_deltoid"
     ],
     "secondary": [
-      "name.traps_middle"
+      "name.traps_middle",
+      "name.traps_lower"
     ]
   },
   {
@@ -332,7 +377,8 @@
       "name.lateral_deltoid"
     ],
     "secondary": [
-      "name.triceps"
+      "name.triceps",
+      "name.traps_upper"
     ]
   },
   {
@@ -373,11 +419,10 @@
     "description": "hammer_curl.description",
     "isPublic": true,
     "primary": [
-      "name.biceps"
-    ],
-    "secondary": [
+      "name.biceps",
       "name.forearms"
-    ]
+    ],
+    "secondary": []
   },
   {
     "name": "ez_bar_curl.name",
@@ -397,7 +442,9 @@
     "primary": [
       "name.biceps"
     ],
-    "secondary": []
+    "secondary": [
+      "name.forearms"
+    ]
   },
   {
     "name": "preacher_curl.name",
@@ -467,7 +514,9 @@
     "primary": [
       "name.triceps"
     ],
-    "secondary": []
+    "secondary": [
+      "name.posterior_deltoid"
+    ]
   },
   {
     "name": "dumbbell_overhead_triceps_extension.name",
@@ -483,10 +532,12 @@
     "description": "push_up_diamond.description",
     "isPublic": true,
     "primary": [
-      "name.triceps"
+      "name.triceps",
+      "name.chest"
     ],
     "secondary": [
-      "name.chest"
+      "name.anterior_deltoid",
+      "name.abs"
     ]
   },
   {
@@ -512,11 +563,14 @@
     "description": "farmer_walk.description",
     "isPublic": true,
     "primary": [
-      "name.forearms"
+      "name.forearms",
+      "name.traps_upper"
     ],
     "secondary": [
-      "name.traps_upper",
-      "name.abs"
+      "name.abs",
+      "name.obliques",
+      "name.glutes",
+      "name.quads"
     ]
   },
   {
@@ -524,12 +578,14 @@
     "description": "barbell_squat.description",
     "isPublic": true,
     "primary": [
-      "name.quads"
+      "name.quads",
+      "name.glutes"
     ],
     "secondary": [
-      "name.glutes",
       "name.hamstrings",
-      "name.lower_back"
+      "name.adductors",
+      "name.lower_back",
+      "name.abs"
     ]
   },
   {
@@ -541,6 +597,8 @@
     ],
     "secondary": [
       "name.glutes",
+      "name.adductors",
+      "name.lower_back",
       "name.abs"
     ]
   },
@@ -549,10 +607,12 @@
     "description": "leg_press.description",
     "isPublic": true,
     "primary": [
-      "name.quads"
+      "name.quads",
+      "name.glutes"
     ],
     "secondary": [
-      "name.glutes"
+      "name.hamstrings",
+      "name.adductors"
     ]
   },
   {
@@ -569,11 +629,12 @@
     "description": "lunge.description",
     "isPublic": true,
     "primary": [
-      "name.quads"
+      "name.quads",
+      "name.glutes"
     ],
     "secondary": [
-      "name.glutes",
-      "name.hamstrings"
+      "name.hamstrings",
+      "name.adductors"
     ]
   },
   {
@@ -581,11 +642,13 @@
     "description": "walking_lunge.description",
     "isPublic": true,
     "primary": [
-      "name.quads"
+      "name.quads",
+      "name.glutes"
     ],
     "secondary": [
-      "name.glutes",
-      "name.hamstrings"
+      "name.hamstrings",
+      "name.adductors",
+      "name.calves"
     ]
   },
   {
@@ -596,7 +659,9 @@
       "name.quads"
     ],
     "secondary": [
-      "name.glutes"
+      "name.glutes",
+      "name.adductors",
+      "name.hamstrings"
     ]
   },
   {
@@ -606,7 +671,9 @@
     "primary": [
       "name.quads"
     ],
-    "secondary": []
+    "secondary": [
+      "name.abs"
+    ]
   },
   {
     "name": "leg_curl_lying.name",
@@ -626,18 +693,21 @@
     "primary": [
       "name.hamstrings"
     ],
-    "secondary": []
+    "secondary": [
+      "name.calves"
+    ]
   },
   {
     "name": "stiff_leg_deadlift.name",
     "description": "stiff_leg_deadlift.description",
     "isPublic": true,
     "primary": [
-      "name.hamstrings"
+      "name.hamstrings",
+      "name.glutes"
     ],
     "secondary": [
-      "name.glutes",
-      "name.lower_back"
+      "name.lower_back",
+      "name.forearms"
     ]
   },
   {
@@ -645,11 +715,13 @@
     "description": "romanian_deadlift.description",
     "isPublic": true,
     "primary": [
-      "name.hamstrings"
+      "name.hamstrings",
+      "name.glutes"
     ],
     "secondary": [
-      "name.glutes",
-      "name.lower_back"
+      "name.lower_back",
+      "name.lats",
+      "name.forearms"
     ]
   },
   {
@@ -657,10 +729,10 @@
     "description": "good_morning.description",
     "isPublic": true,
     "primary": [
-      "name.hamstrings"
+      "name.hamstrings",
+      "name.lower_back"
     ],
     "secondary": [
-      "name.lower_back",
       "name.glutes"
     ]
   },
@@ -672,7 +744,9 @@
       "name.glutes"
     ],
     "secondary": [
-      "name.hamstrings"
+      "name.hamstrings",
+      "name.quads",
+      "name.abs"
     ]
   },
   {
@@ -683,7 +757,8 @@
       "name.glutes"
     ],
     "secondary": [
-      "name.hamstrings"
+      "name.hamstrings",
+      "name.quads"
     ]
   },
   {
@@ -694,7 +769,8 @@
       "name.glutes"
     ],
     "secondary": [
-      "name.hamstrings"
+      "name.hamstrings",
+      "name.abs"
     ]
   },
   {
@@ -705,7 +781,8 @@
       "name.glutes"
     ],
     "secondary": [
-      "name.hamstrings"
+      "name.hamstrings",
+      "name.lower_back"
     ]
   },
   {
@@ -722,11 +799,12 @@
     "description": "sumo_squat.description",
     "isPublic": true,
     "primary": [
-      "name.adductors"
+      "name.quads",
+      "name.adductors",
+      "name.glutes"
     ],
     "secondary": [
-      "name.quads",
-      "name.glutes"
+      "name.hamstrings"
     ]
   },
   {
@@ -763,7 +841,9 @@
     "primary": [
       "name.abs"
     ],
-    "secondary": []
+    "secondary": [
+      "name.obliques"
+    ]
   },
   {
     "name": "cable_crunch.name",
@@ -772,7 +852,9 @@
     "primary": [
       "name.abs"
     ],
-    "secondary": []
+    "secondary": [
+      "name.obliques"
+    ]
   },
   {
     "name": "suspended_leg_raise.name",
@@ -782,7 +864,9 @@
       "name.abs"
     ],
     "secondary": [
-      "name.obliques"
+      "name.obliques",
+      "name.forearms",
+      "name.quads"
     ]
   },
   {
@@ -793,8 +877,9 @@
       "name.abs"
     ],
     "secondary": [
-      "name.lower_back",
-      "name.obliques"
+      "name.obliques",
+      "name.glutes",
+      "name.lower_back"
     ]
   },
   {
@@ -827,6 +912,8 @@
       "name.abs"
     ],
     "secondary": [
+      "name.obliques",
+      "name.lats",
       "name.lower_back"
     ]
   },
@@ -850,7 +937,8 @@
       "name.lower_back"
     ],
     "secondary": [
-      "name.glutes"
+      "name.glutes",
+      "name.hamstrings"
     ]
   }
 ]
