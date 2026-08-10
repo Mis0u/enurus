@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DoctrineMigrations;
 
 use App\DataFixtures\Service\Type\TypeService;
+use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 use Symfony\Component\Uid\Uuid;
@@ -99,8 +100,8 @@ final class Version20260810061845 extends AbstractMigration
                 ]
             );
 
-            $this->insertExerciseMuscles($exerciseId, $typeService->getStringArray($data, 'primary'), 'PRIMARY', $muscleGroupIds);
-            $this->insertExerciseMuscles($exerciseId, $typeService->getStringArray($data, 'secondary'), 'SECONDARY', $muscleGroupIds);
+            $this->insertExerciseMuscles($exerciseId, $typeService->getStringArray($data, 'primary'), MuscleTypeEnum::PRIMARY->value, $muscleGroupIds);
+            $this->insertExerciseMuscles($exerciseId, $typeService->getStringArray($data, 'secondary'), MuscleTypeEnum::SECONDARY->value, $muscleGroupIds);
         }
     }
 
