@@ -12,6 +12,12 @@ framework:
 when@prod:
     framework:
         error_controller: App\Controller\ErrorPageController
+        # The app container only ever sees requests from Scalingo's own reverse proxy
+        # (itself behind Cloudflare) — never directly from the internet — so trusting
+        # whoever connects directly (REMOTE_ADDR) and reading its X-Forwarded-* headers
+        # is safe and is Symfony's documented pattern for this kind of PaaS setup.
+        trusted_proxies: '127.0.0.1,REMOTE_ADDR'
+        trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
 
 when@test:
     framework:
