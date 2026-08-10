@@ -46,7 +46,12 @@ readonly class ImageUploadService
         $filename = '' === $extension ? Uuid::v4()->toRfc4122() : \sprintf('%s.%s', Uuid::v4()->toRfc4122(), $extension);
         $destination = \sprintf('%s/%s/%s', $context, $ownerId, $filename);
 
-        $this->defaultStorage->copy($sourcePath, $destination);
+        // Cloudflare R2 doesn't implement the S3 GetObjectAcl API (501 Not Implemented) — Flysystem's
+        // AWS S3 adapter calls it by default before a copy to preserve the source's visibility,
+        // which breaks every copy() in prod. Uploads are never public/private per-file here anyway.
+        $this->defaultStorage->copy($sourcePath, $destination, [
+            'retain_visibility' => false,
+        ]);
 
         return $destination;
     }
