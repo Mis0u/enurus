@@ -9,11 +9,17 @@ use App\Entity\User;
 use App\Enum\Translations\LocaleAllowedEnum;
 use App\Filter\Admin\DayFilter;
 use App\Repository\RoutineRepository;
+use App\Repository\UserRepository;
+use Doctrine\ORM\QueryBuilder;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -32,12 +38,26 @@ final class RoutineCrudController extends AbstractCrudController
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly RoutineRepository $routineRepository,
+        private readonly UserRepository $userRepository,
     ) {
     }
 
     public static function getEntityFqcn(): string
     {
         return Routine::class;
+    }
+
+    public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
+    {
+        $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
+
+        $adminIds = $this->userRepository->findAdminIds();
+
+        if ([] !== $adminIds) {
+            $qb->andWhere('entity.owner NOT IN (:adminIds)')->setParameter('adminIds', $adminIds);
+        }
+
+        return $qb;
     }
 
     public function configureCrud(Crud $crud): Crud
