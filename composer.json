@@ -100,10 +100,12 @@
             "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "[ \"$APP_ENV\" = \"prod\" ] && php bin/console asset-map:compile --no-debug || true"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "[ \"$APP_ENV\" = \"prod\" ] && php bin/console asset-map:compile --no-debug || true"
         ]
     },
     "conflict": {
