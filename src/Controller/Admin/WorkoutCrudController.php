@@ -9,13 +9,19 @@ use App\Entity\User;
 use App\Entity\Workout;
 use App\Enum\Translations\LocaleAllowedEnum;
 use App\Filter\Admin\DayFilter;
+use App\Repository\UserRepository;
 use App\Service\Entity\WorkoutPhotoService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
@@ -36,12 +42,26 @@ final class WorkoutCrudController extends AbstractCrudController
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly WorkoutPhotoService $workoutPhotoService,
+        private readonly UserRepository $userRepository,
     ) {
     }
 
     public static function getEntityFqcn(): string
     {
         return Workout::class;
+    }
+
+    public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
+    {
+        $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
+
+        $adminIds = $this->userRepository->findAdminIds();
+
+        if ([] !== $adminIds) {
+            $qb->andWhere('entity.owner NOT IN (:adminIds)')->setParameter('adminIds', $adminIds);
+        }
+
+        return $qb;
     }
 
     public function configureCrud(Crud $crud): Crud

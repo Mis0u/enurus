@@ -1,11 +1,11 @@
 {% set fr = enum('App\\Enum\\Translations\\LocaleAllowedEnum').FR.value %}
 {% if field.value %}
     <img class="admin-message-thumb"
-         src="/uploads/{{ field.value }}"
+         src="{{ field.value|storage_url }}"
          alt=""
          onclick="document.getElementById('admin-user-avatar-lightbox').classList.add('is-open')">
     <div id="admin-user-avatar-lightbox" class="admin-lightbox" onclick="this.classList.remove('is-open')">
-        <img src="/uploads/{{ field.value }}" alt="">
+        <img src="{{ field.value|storage_url }}" alt="">
     </div>
 {% else %}
     <p>{{ 'admin.user.no_avatar'|trans({}, 'admin', fr) }}</p>

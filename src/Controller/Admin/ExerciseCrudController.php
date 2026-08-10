@@ -8,6 +8,7 @@ use App\Entity\Exercise;
 use App\Entity\User;
 use App\Enum\Translations\LocaleAllowedEnum;
 use App\Repository\ExerciseRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -39,6 +40,7 @@ final class ExerciseCrudController extends AbstractCrudController
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly ExerciseRepository $exerciseRepository,
+        private readonly UserRepository $userRepository,
     ) {
     }
 
@@ -60,9 +62,17 @@ final class ExerciseCrudController extends AbstractCrudController
 
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
-        return parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
+        $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
             ->andWhere('entity.owner IS NOT NULL')
         ;
+
+        $adminIds = $this->userRepository->findAdminIds();
+
+        if ([] !== $adminIds) {
+            $qb->andWhere('entity.owner NOT IN (:adminIds)')->setParameter('adminIds', $adminIds);
+        }
+
+        return $qb;
     }
 
     public function configureFields(string $pageName): iterable
