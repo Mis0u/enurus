@@ -55,6 +55,32 @@ describe('NoteModalManager', () => {
         expect(global.fetch).toHaveBeenCalledTimes(1);
     });
 
+    it('disables the submit button during submission so a second click cannot create a duplicate workout', async () => {
+        buildDom('2026-01-29');
+        let resolveFetch;
+        global.fetch = vi.fn().mockReturnValue(new Promise(resolve => {
+            resolveFetch = resolve;
+        }));
+
+        const manager = new NoteModalManager(fakeApplication, '/seance/__ID__/photo', 'Save failed', 'Try again');
+        manager.open();
+
+        const submitBtn = document.getElementById('note-modal-submit');
+        submitBtn.click();
+        await Promise.resolve();
+
+        expect(submitBtn.disabled).toBe(true);
+
+        // Impatience de l'utilisateur : re-clique pendant que la première requête est toujours en cours.
+        submitBtn.click();
+        await Promise.resolve();
+
+        expect(global.fetch).toHaveBeenCalledTimes(1);
+
+        resolveFetch({ ok: false, json: async () => ({ error: 'validation failed' }) });
+        await new Promise(resolve => setTimeout(resolve, 0));
+    });
+
     it('shows an error toast when the server rejects the submission', async () => {
         buildDom('2026-01-29');
         const manager = new NoteModalManager(fakeApplication, '/seance/__ID__/photo', 'Save failed', 'Try again');
