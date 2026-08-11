@@ -15,7 +15,7 @@
             {{ user.nickname|formatInitials }}
         </span>
         <img data-settings--avatar-target="image"
-             src="{% if user.avatarPath %}/uploads/{{ user.avatarPath }}{% endif %}"
+             src="{{ user.avatarPath|storage_url }}"
              alt=""
              class="w-full h-full object-cover {% if not user.avatarPath %}hidden{% endif %}">
         <div data-settings--avatar-target="spinner"

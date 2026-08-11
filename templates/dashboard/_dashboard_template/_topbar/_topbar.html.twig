@@ -29,7 +29,7 @@
                 {{ subtitle }}
             </span>
             <img data-dashboard--topbar--avatar-target="image"
-                 src="{% if app.user.avatarPath %}/uploads/{{ app.user.avatarPath }}{% endif %}"
+                 src="{{ app.user.avatarPath|storage_url }}"
                  alt=""
                  class="w-full h-full object-cover {% if not app.user.avatarPath %}hidden{% endif %}">
         </div>
