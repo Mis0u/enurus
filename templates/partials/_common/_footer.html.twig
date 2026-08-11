@@ -5,4 +5,6 @@
 #}
 <p class="text-center text-slate-500 text-sm mt-8">
     {{ 'footer.copyright'|trans({'year': "now"|date("Y"), 'brand': 'name'|trans({}, 'brand')}, 'navigation', locale ?? null) }}
+    ·
+    <a href="{{ path('app_terms', {'_locale': locale ?? app.request.locale}) }}" class="underline hover:text-slate-300">{{ 'legal.terms.title'|trans({}, 'legal', locale ?? null) }}</a>
 </p>

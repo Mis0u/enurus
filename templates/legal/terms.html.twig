@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'legal.terms.title'|trans({}, 'legal') }} — {{ 'name'|trans({}, 'brand') }}{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">
+        <div class="max-w-3xl w-full">
+            <div class="text-center mb-6">
+                {% include 'partials/_common/logo.html.twig' only %}
+            </div>
+
+            <div class="backdrop-blur-xl bg-white/10 rounded-3xl shadow-2xl border border-white/20 p-8 text-slate-200">
+                <h1 class="text-2xl font-bold text-white mb-6">{{ 'legal.terms.title'|trans({}, 'legal') }}</h1>
+
+                {% if app.request.locale != 'fr' %}
+                    <p class="text-amber-300 text-sm mb-6">{{ 'legal.terms.only_french_notice'|trans({}, 'legal') }}</p>
+                {% endif %}
+
+                <div class="space-y-6 text-sm leading-relaxed">
+                    <section>
+                        <h2 class="text-lg font-semibold text-white mb-2">Article 1 — Objet</h2>
+                        <p>Les présentes Conditions Générales d'Utilisation (« CGU ») définissent les modalités d'accès et d'utilisation de l'application de suivi de musculation Enurus (le « Service »), accessible à l'adresse enurus.com. L'utilisation du Service implique l'acceptation sans réserve des présentes CGU.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-lg font-semibold text-white mb-2">Article 2 — Éditeur</h2>
+                        <p>Le Service est édité à titre personnel, dans le cadre d'un projet individuel non commercial, sous le nom Enurus. Toute question peut être adressée via le formulaire de contact de l'application, après connexion.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-lg font-semibold text-white mb-2">Article 3 — Hébergement</h2>
+                        <p>Hébergement applicatif : Scalingo SAS. Stockage des fichiers utilisateurs : Cloudflare R2. Nom de domaine : enregistré auprès de Cloudflare, Inc.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-lg font-semibold text-white mb-2">Article 4 — Accès au Service</h2>
+                        <p>Le Service est accessible gratuitement. Les frais d'accès à Internet restent à la charge de l'Utilisateur. L'Éditeur met en œuvre des moyens raisonnables pour assurer la continuité du Service, sans obligation de résultat ; l'accès peut être interrompu, notamment pour maintenance.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-lg font-semibold text-white mb-2">Article 5 — Compte utilisateur</h2>
+                        <p>La création d'un compte nécessite une adresse email valide et vérifiée. L'Utilisateur est responsable de la confidentialité de ses identifiants et garantit l'exactitude des informations fournies. Il peut demander la suppression de son compte à tout moment depuis les paramètres ; cette suppression entraîne, après le délai de rétractation applicable, l'effacement définitif des données associées.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-lg font-semibold text-white mb-2">Article 6 — Comportement de l'Utilisateur</h2>
+                        <p>L'Utilisateur s'interdit de porter atteinte aux droits de tiers, de contourner les mesures de sécurité du Service, d'en extraire massivement les données (« scraping »), ou d'usurper l'identité d'un tiers. Tout manquement peut entraîner la suspension ou la suppression du compte sans préavis.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-lg font-semibold text-white mb-2">Article 7 — Contenus de l'Utilisateur</h2>
+                        <p>L'Utilisateur reste seul propriétaire des contenus qu'il crée ou importe (séances, exercices, photographies...) et garantit disposer des droits nécessaires. Il concède à l'Éditeur le droit strictement nécessaire à leur hébergement et affichage, aux seules fins de fonctionnement du Service.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-lg font-semibold text-white mb-2">Article 8 — Propriété intellectuelle</h2>
+                        <p>La structure du Service ainsi que ses éléments graphiques et logiciels sont protégés par le droit de la propriété intellectuelle. Toute reproduction non autorisée est interdite.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-lg font-semibold text-white mb-2">Article 9 — Données personnelles</h2>
+                        <p>Une politique de confidentialité dédiée est en cours de rédaction. Dans l'attente, l'Éditeur s'engage à ne traiter les données collectées que dans la mesure nécessaire au fonctionnement du Service, conformément au RGPD.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-lg font-semibold text-white mb-2">Article 10 — Limitation de responsabilité</h2>
+                        <p>Le Service est fourni « en l'état », dans le cadre d'un projet personnel non commercial, sans garantie de disponibilité ou d'adéquation à un besoin particulier. Les données de suivi sont informatives et ne remplacent pas un avis médical ou sportif professionnel. L'Éditeur ne saurait être tenu responsable des dommages résultant de l'utilisation ou de l'impossibilité d'utiliser le Service.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-lg font-semibold text-white mb-2">Article 11 — Modification des CGU</h2>
+                        <p>L'Éditeur peut modifier les présentes CGU à tout moment ; les Utilisateurs seront informés de toute modification substantielle. La poursuite de l'utilisation du Service après modification vaut acceptation.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-lg font-semibold text-white mb-2">Article 12 — Droit applicable</h2>
+                        <p>Les présentes CGU sont soumises au droit français ; à défaut de résolution amiable, les tribunaux français compétents seront seuls saisis.</p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-lg font-semibold text-white mb-2">Article 13 — Contact</h2>
+                        <p>Pour toute question, formulaire de contact disponible dans l'application après connexion.</p>
+                    </section>
+                </div>
+            </div>
+
+            {% include 'partials/_common/_footer.html.twig' only %}
+        </div>
+    </div>
+{% endblock %}
