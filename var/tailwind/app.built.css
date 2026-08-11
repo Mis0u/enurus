@@ -45,6 +45,7 @@
     --container-sm: 24rem;
     --container-md: 28rem;
     --container-lg: 32rem;
+    --container-3xl: 48rem;
     --text-xs: 0.75rem;
     --text-xs--line-height: calc(1 / 0.75);
     --text-sm: 0.875rem;
@@ -907,6 +908,9 @@
   }
   .w-screen {
     width: 100vw;
+  }
+  .max-w-3xl {
+    max-width: var(--container-3xl);
   }
   .max-w-\[78\%\] {
     max-width: 78%;
@@ -2841,6 +2845,16 @@
       }
     }
   }
+  .group-hover\:border-white\/20 {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        border-color: color-mix(in srgb, #fff 20%, transparent);
+        @supports (color: color-mix(in lab, red, red)) {
+          border-color: color-mix(in oklab, var(--color-white) 20%, transparent);
+        }
+      }
+    }
+  }
   .group-hover\:bg-cyan-500\/20 {
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
@@ -2932,6 +2946,11 @@
       }
     }
   }
+  .peer-checked\:border-\[\#f43f5e\] {
+    &:is(:where(.peer):checked ~ *) {
+      border-color: #f43f5e;
+    }
+  }
   .peer-checked\:border-cyan-500 {
     &:is(:where(.peer):checked ~ *) {
       border-color: var(--color-cyan-500);
@@ -2940,6 +2959,11 @@
   .peer-checked\:border-rose-500 {
     &:is(:where(.peer):checked ~ *) {
       border-color: var(--color-rose-500);
+    }
+  }
+  .peer-checked\:bg-\[\#f43f5e\]\/10 {
+    &:is(:where(.peer):checked ~ *) {
+      background-color: color-mix(in oklab, #f43f5e 10%, transparent);
     }
   }
   .peer-checked\:bg-cyan-500 {
@@ -2961,6 +2985,11 @@
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-rose-500) 20%, transparent);
       }
+    }
+  }
+  .peer-checked\:text-\[\#f1f5f9\] {
+    &:is(:where(.peer):checked ~ *) {
+      color: #f1f5f9;
     }
   }
   .peer-checked\:text-cyan-200 {
@@ -3418,6 +3447,13 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-rose-ft);
+      }
+    }
+  }
+  .hover\:text-slate-300 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-slate-300);
       }
     }
   }

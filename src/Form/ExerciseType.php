@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\Exercise;
+use App\Enum\Entity\Exercise\MeasurementType;
 use App\Form\Type\ExerciseMusclesType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -43,6 +45,13 @@ final class ExerciseType extends AbstractType
                     'data-exercise--edit-target' => 'musclesInput',
                 ],
             ])
+            ->add('measurementType', EnumType::class, [
+                'class' => MeasurementType::class,
+                'label' => false,
+                'expanded' => true,
+                'multiple' => false,
+                'disabled' => $options['measurement_type_locked'],
+            ])
             ->add('description', TextareaType::class, [
                 'label' => false,
                 'required' => false,
@@ -59,6 +68,8 @@ final class ExerciseType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Exercise::class,
             'translation_domain' => 'messages',
+            'measurement_type_locked' => false,
         ]);
+        $resolver->setAllowedTypes('measurement_type_locked', 'bool');
     }
 }

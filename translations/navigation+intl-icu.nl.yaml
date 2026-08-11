@@ -173,6 +173,10 @@ exercise:
         description_toggle: Beschrijving toevoegen
         legend_primary: Primaire spieren
         legend_secondary: Secundaire spieren
+        measurement_type_label: Gemeten in
+        measurement_type_locked_hint: "Vergrendeld: voor deze oefening zijn al sets geregistreerd."
+        measurement_type_time: Duur
+        measurement_type_weight_reps: Gewicht / herhalingen
         muscles_hint: Klik om toe te wijzen (primair → secundair → geen)
         muscles_label: Getrainde spieren
         name_label: Naam van de oefening
@@ -500,6 +504,7 @@ workout:
         no_exercise:
             text: Voeg minstens één oefening toe voordat je je training bevestigt
             title: Geen oefening
+        required_duration: De duur is verplicht
         required_reps: De herhalingen zijn verplicht
         required_weight: Het gewicht is verplicht
         submit_failed:
@@ -574,6 +579,8 @@ workout:
         placeholder: Naam van de oefening...
         title: Zoek een oefening
     series: Sets
+    series_duration: Duur (seconden)
+    series_duration_abbreviate: sec
     show:
         back: Terug naar mijn trainingen
         metrics:
@@ -595,6 +602,7 @@ workout:
             error: "Kon de afbeelding niet genereren, probeer opnieuw."
             other_exercises: "{count, plural, =1 {+ # andere oefening} other {+ # andere oefeningen}}"
         sets_table:
+            duration: Duur
             reps: Reps
             tonnage: Tonnage
             weight: Gewicht

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Entity\Trait\TimestampTrait;
+use App\Enum\Entity\Exercise\MeasurementType;
 use App\Repository\ExerciseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -74,6 +75,22 @@ class Exercise
         }
         set(bool $archived) {
             $this->archived = $archived;
+        }
+    }
+
+    /**
+     * Pilote quels champs de série sont exigés/affichés (poids+reps vs. durée) — voir
+     * `ExerciseSet::duration`. Verrouillé côté formulaire dès que l'exercice a au moins une série
+     * enregistrée (cf. ExerciseSetRepository::existsForExercise), pour ne pas laisser un historique
+     * incohérent (des séries reps sans durée, ou l'inverse).
+     */
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: false, enumType: MeasurementType::class)]
+    public MeasurementType $measurementType = MeasurementType::WEIGHT_REPS {
+        get {
+            return $this->measurementType;
+        }
+        set(?MeasurementType $measurementType) {
+            $this->measurementType = $measurementType ?? $this->measurementType;
         }
     }
 

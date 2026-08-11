@@ -7,6 +7,12 @@ exercise:
     muscle_primary_required: Au moins un muscle primaire est requis.
     name_not_blank: Un nom doit être renseigné
 
+exercise_set:
+    duration_required: La durée doit être renseignée et positive.
+    reps_required: Les répétitions doivent être renseignées et positives.
+    weight_positive_or_zero: Le poids ne peut pas être négatif.
+    weight_required: Le poids doit être renseigné et positif.
+
 routine:
     name_exists: Tu as déjà une routine avec ce nom.
     name_not_blank: Le nom de la routine est obligatoire.

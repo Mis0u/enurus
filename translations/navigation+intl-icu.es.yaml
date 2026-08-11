@@ -173,6 +173,10 @@ exercise:
         description_toggle: Añadir una descripción
         legend_primary: Músculos primarios
         legend_secondary: Músculos secundarios
+        measurement_type_label: Medido por
+        measurement_type_locked_hint: "Bloqueado: este ejercicio ya tiene series registradas."
+        measurement_type_time: Duración
+        measurement_type_weight_reps: Peso / repeticiones
         muscles_hint: Haz clic para asignar (primario → secundario → ninguno)
         muscles_label: Músculos trabajados
         name_label: Nombre del ejercicio
@@ -500,6 +504,7 @@ workout:
         no_exercise:
             text: Añade al menos un ejercicio antes de validar tu entrenamiento
             title: Ningún ejercicio
+        required_duration: La duración es obligatoria
         required_reps: Las repeticiones son obligatorias
         required_weight: El peso es obligatorio
         submit_failed:
@@ -574,6 +579,8 @@ workout:
         placeholder: Nombre del ejercicio...
         title: Buscar un ejercicio
     series: Series
+    series_duration: Duración (segundos)
+    series_duration_abbreviate: seg
     show:
         back: Volver a mis entrenamientos
         metrics:
@@ -595,6 +602,7 @@ workout:
             error: "No se pudo generar la imagen, inténtalo de nuevo."
             other_exercises: "{count, plural, =1 {+ # otro ejercicio} other {+ # otros ejercicios}}"
         sets_table:
+            duration: Duración
             reps: Reps
             tonnage: Tonelaje
             weight: Peso

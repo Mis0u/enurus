@@ -20,7 +20,12 @@ final class ExerciseSetType extends AbstractType
     {
         $builder
             ->add('weight', NumberType::class)
-            ->add('reps', IntegerType::class)
+            ->add('reps', IntegerType::class, [
+                'required' => false,
+            ])
+            ->add('duration', IntegerType::class, [
+                'required' => false,
+            ])
             ->add('position', IntegerType::class, [
                 'label' => false,
                 'attr' => [

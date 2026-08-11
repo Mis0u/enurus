@@ -1,0 +1,31 @@
+{# Params: form #}
+<div class="bg-[#111827] border border-white/[0.07] rounded-xl p-6">
+    <label class="block font-rajdhani text-[13px] font-semibold text-[#64748b] uppercase tracking-[0.3px] mb-2">
+        {{ 'exercise.form.measurement_type_label'|trans({}, 'navigation') }}
+    </label>
+
+    {% if form.measurementType.vars.disabled %}
+        <p class="text-sm text-[#f1f5f9] font-medium">
+            {{ ('exercise.form.measurement_type_' ~ form.vars.value.measurementType.value)|trans({}, 'navigation') }}
+        </p>
+        <p class="mt-1.5 text-[12.5px] text-[#64748b]">
+            {{ 'exercise.form.measurement_type_locked_hint'|trans({}, 'navigation') }}
+        </p>
+    {% else %}
+        {# Le radio est imbriqué dans son propre <label> (même pattern que
+           registration/theme/gender_theme.html.twig) : "peer-checked:" ne réagit alors qu'au radio
+           de CE label, sans avoir besoin d'un named peer group (non utilisé ailleurs dans le
+           projet, non généré par ce build Tailwind — vérifié dans var/tailwind/app.built.css).
+           Classes toujours écrites en dur : jamais construites par interpolation Twig (CLAUDE.md). #}
+        <div class="grid grid-cols-2 gap-3">
+            {% for choice_form in form.measurementType %}
+                <label class="relative cursor-pointer group">
+                    {{ form_widget(choice_form, {attr: {class: 'peer sr-only'}}) }}
+                    <div class="text-center px-4 py-3 bg-white/5 border-2 border-white/10 rounded-lg text-sm font-medium text-[#8b9bb4] transition-all duration-200 peer-checked:bg-[#f43f5e]/10 peer-checked:border-[#f43f5e] peer-checked:text-[#f1f5f9] group-hover:border-white/20">
+                        {{ (0 == loop.index0 ? 'exercise.form.measurement_type_weight_reps' : 'exercise.form.measurement_type_time')|trans({}, 'navigation') }}
+                    </div>
+                </label>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>

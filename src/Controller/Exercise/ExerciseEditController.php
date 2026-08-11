@@ -7,6 +7,7 @@ namespace App\Controller\Exercise;
 use App\Entity\Exercise;
 use App\Entity\User;
 use App\Form\ExerciseType;
+use App\Repository\ExerciseSetRepository;
 use App\Repository\MuscleGroupRepository;
 use App\Security\Voter\ExerciseVoter;
 use App\Service\Entity\ExerciseEditService;
@@ -35,6 +36,7 @@ final class ExerciseEditController extends AbstractController
     public function __construct(
         private readonly ExerciseEditService $exerciseEditService,
         private readonly ExerciseMuscleValidationService $exerciseMuscleValidationService,
+        private readonly ExerciseSetRepository $exerciseSetRepository,
         private readonly MuscleGroupRepository $muscleGroupRepository,
         private readonly MuscleGroupSorterService $muscleGroupSorter,
         private readonly TranslatorInterface $translator
@@ -45,7 +47,9 @@ final class ExerciseEditController extends AbstractController
     {
         $this->denyAccessUnlessGranted(ExerciseVoter::EDIT, $exercise);
 
-        $form = $this->createForm(ExerciseType::class, $exercise);
+        $form = $this->createForm(ExerciseType::class, $exercise, [
+            'measurement_type_locked' => $this->exerciseSetRepository->existsForExercise($exercise),
+        ]);
         $form->get('muscles')->setData($exercise->exerciseMuscles);
         $form->handleRequest($request);
 

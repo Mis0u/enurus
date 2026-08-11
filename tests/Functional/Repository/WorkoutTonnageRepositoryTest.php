@@ -9,6 +9,7 @@ use App\Entity\ExerciseSet;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
+use App\Enum\Entity\Exercise\MeasurementType;
 use App\Repository\WorkoutTonnageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -99,6 +100,101 @@ final class WorkoutTonnageRepositoryTest extends KernelTestCase
         $em->flush();
     }
 
+    public function testFindTonnageByWorkoutIdsCountsTimeBasedSetWeightAloneAsOneRep(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var WorkoutTonnageRepository $workoutTonnageRepository */
+        $workoutTonnageRepository = static::getContainer()->get(WorkoutTonnageRepository::class);
+
+        $user = $this->createTestUser($em);
+        $weightExercise = $this->createTestExercise($em);
+        $timeExercise = $this->createTestExercise($em, MeasurementType::TIME);
+
+        $workout = new Workout();
+        $workout->owner = $user;
+        $workout->performedAt = new \DateTimeImmutable('-1 day');
+
+        $weightWorkoutExercise = new WorkoutExercise();
+        $weightWorkoutExercise->exercise = $weightExercise;
+        $weightWorkoutExercise->position = 0;
+        $workout->addWorkoutExercise($weightWorkoutExercise);
+
+        $weightSet = new ExerciseSet();
+        $weightSet->position = 0;
+        $weightSet->weight = 100.0;
+        $weightSet->reps = 5;
+        $weightWorkoutExercise->addExerciseSet($weightSet);
+
+        $timeWorkoutExercise = new WorkoutExercise();
+        $timeWorkoutExercise->exercise = $timeExercise;
+        $timeWorkoutExercise->position = 1;
+        $workout->addWorkoutExercise($timeWorkoutExercise);
+
+        // Gainage lesté à 20kg : compte pour 20 dans le tonnage (poids seul, comme une série à 1
+        // rep), jamais poids × durée — les unités ne seraient pas comparables au reste du total.
+        $timeSet = new ExerciseSet();
+        $timeSet->position = 0;
+        $timeSet->weight = 20.0;
+        $timeSet->duration = 480;
+        $timeWorkoutExercise->addExerciseSet($timeSet);
+
+        $em->persist($workout);
+        $em->flush();
+
+        $result = $workoutTonnageRepository->findTonnageByWorkoutIds([(string) $workout->id]);
+
+        // 100kg × 5 (weight_reps) + 20kg (time, poids seul) = 520.
+        self::assertSame(520.0, $result[(string) $workout->id]);
+
+        $em->remove($workout);
+        $em->remove($weightExercise);
+        $em->remove($timeExercise);
+        $em->remove($user);
+        $em->flush();
+    }
+
+    public function testFindTonnageByWorkoutIdsTreatsBodyweightTimeSetAsZeroTonnage(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var WorkoutTonnageRepository $workoutTonnageRepository */
+        $workoutTonnageRepository = static::getContainer()->get(WorkoutTonnageRepository::class);
+
+        $user = $this->createTestUser($em);
+        $timeExercise = $this->createTestExercise($em, MeasurementType::TIME);
+
+        $workout = new Workout();
+        $workout->owner = $user;
+        $workout->performedAt = new \DateTimeImmutable('-1 day');
+
+        $timeWorkoutExercise = new WorkoutExercise();
+        $timeWorkoutExercise->exercise = $timeExercise;
+        $timeWorkoutExercise->position = 0;
+        $workout->addWorkoutExercise($timeWorkoutExercise);
+
+        $timeSet = new ExerciseSet();
+        $timeSet->position = 0;
+        $timeSet->duration = 480;
+        $timeWorkoutExercise->addExerciseSet($timeSet);
+
+        $em->persist($workout);
+        $em->flush();
+
+        $result = $workoutTonnageRepository->findTonnageByWorkoutIds([(string) $workout->id]);
+
+        self::assertSame(0.0, $result[(string) $workout->id]);
+
+        $em->remove($workout);
+        $em->remove($timeExercise);
+        $em->remove($user);
+        $em->flush();
+    }
+
     private function createTestUser(EntityManagerInterface $em): User
     {
         $user = new User();
@@ -114,11 +210,12 @@ final class WorkoutTonnageRepositoryTest extends KernelTestCase
         return $user;
     }
 
-    private function createTestExercise(EntityManagerInterface $em): Exercise
+    private function createTestExercise(EntityManagerInterface $em, MeasurementType $measurementType = MeasurementType::WEIGHT_REPS): Exercise
     {
         $exercise = new Exercise();
         $exercise->name = 'Tonnage test exercise ' . uniqid();
         $exercise->isPublic = true;
+        $exercise->measurementType = $measurementType;
 
         $em->persist($exercise);
         $em->flush();

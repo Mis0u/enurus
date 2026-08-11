@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Exercise;
 use App\Entity\ExerciseSet;
 use App\Entity\User;
+use App\Enum\Entity\Exercise\MeasurementType;
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\AbstractQuery;
@@ -21,6 +22,23 @@ class ExerciseSetRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ExerciseSet::class);
+    }
+
+    /**
+     * Détermine si un exercice a déjà au moins une série enregistrée — sert à verrouiller
+     * `Exercise::measurementType` une fois l'exercice utilisé (cf. ExerciseType), pour ne jamais
+     * mélanger des séries reps et des séries durée sur le même exercice.
+     */
+    public function existsForExercise(Exercise $exercise): bool
+    {
+        return null !== $this->createQueryBuilder('es')
+            ->select('es.id')
+            ->join('es.workoutExercise', 'we')
+            ->andWhere('we.exercise = :exercise')
+            ->setParameter('exercise', $exercise)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**
@@ -44,8 +62,10 @@ class ExerciseSetRepository extends ServiceEntityRepository
         $results = $this->queryForUser($user)
             ->select('e.id AS exerciseId, MAX(es.weight) AS maxWeight')
             ->andWhere('e IN (:exercises)')
+            ->andWhere('e.measurementType != :timeType')
             ->andWhere('w.performedAt < :before')
             ->setParameter('exercises', $exercises)
+            ->setParameter('timeType', MeasurementType::TIME)
             ->setParameter('before', $before)
             ->groupBy('e.id')
             ->getQuery()
@@ -58,6 +78,45 @@ class ExerciseSetRepository extends ServiceEntityRepository
             /** @var numeric|null $maxWeight */
             $maxWeight = $row['maxWeight'];
             $map[(string) $exerciseId] = null !== $maxWeight ? (float) $maxWeight : 0.0;
+        }
+
+        return $map;
+    }
+
+    /**
+     * Pendant de `findMaxWeightPerExerciseBeforeDate` pour les exercices `TIME` : durée max (en
+     * secondes) au lieu du poids max — sert de référence au badge PR sur la page de détail d'une
+     * séance pour ces exercices.
+     *
+     * @param array<Exercise> $exercises
+     * @return array<string, int>
+     */
+    public function findMaxDurationPerExerciseBeforeDate(User $user, array $exercises, DateTimeImmutable $before): array
+    {
+        if (empty($exercises)) {
+            return [];
+        }
+
+        /** @var array<int, array{exerciseId: mixed, maxDuration: mixed}> $results */
+        $results = $this->queryForUser($user)
+            ->select('e.id AS exerciseId, MAX(es.duration) AS maxDuration')
+            ->andWhere('e IN (:exercises)')
+            ->andWhere('e.measurementType = :timeType')
+            ->andWhere('w.performedAt < :before')
+            ->setParameter('exercises', $exercises)
+            ->setParameter('timeType', MeasurementType::TIME)
+            ->setParameter('before', $before)
+            ->groupBy('e.id')
+            ->getQuery()
+            ->getArrayResult();
+
+        $map = [];
+        foreach ($results as $row) {
+            /** @var string|\Stringable $exerciseId */
+            $exerciseId = $row['exerciseId'];
+            /** @var numeric|null $maxDuration */
+            $maxDuration = $row['maxDuration'];
+            $map[(string) $exerciseId] = null !== $maxDuration ? (int) $maxDuration : 0;
         }
 
         return $map;
@@ -83,8 +142,10 @@ class ExerciseSetRepository extends ServiceEntityRepository
         $results = $this->queryForUser($user)
             ->select('e.id AS exerciseId, es.weight AS weight, MAX(es.reps) AS maxReps')
             ->andWhere('e IN (:exercises)')
+            ->andWhere('e.measurementType != :timeType')
             ->andWhere('w.performedAt < :before')
             ->setParameter('exercises', $exercises)
+            ->setParameter('timeType', MeasurementType::TIME)
             ->setParameter('before', $before)
             ->groupBy('e.id')
             ->addGroupBy('es.weight')
@@ -122,6 +183,8 @@ class ExerciseSetRepository extends ServiceEntityRepository
         /** @var array<int, array{workoutId: mixed, exerciseId: mixed, weight: mixed, performedAt: mixed}> $rows */
         $rows = $this->queryForUser($user)
             ->select('w.id as workoutId', 'e.id as exerciseId', 'MAX(es.weight) as weight', 'w.performedAt as performedAt')
+            ->andWhere('e.measurementType != :timeType')
+            ->setParameter('timeType', MeasurementType::TIME)
             ->groupBy('w.id')
             ->addGroupBy('e.id')
             ->addGroupBy('w.performedAt')
@@ -152,6 +215,49 @@ class ExerciseSetRepository extends ServiceEntityRepository
     }
 
     /**
+     * Pendant de `findMaxWeightPerWorkoutAndExerciseChronologicallyByUser` pour les exercices
+     * `TIME` : durée max (en secondes) au lieu du poids max — même définition de PR (le meilleur
+     * set de la séance sur l'exercice), le poids éventuellement ajouté est ignoré du calcul.
+     *
+     * @return array<int, array{workoutId: string, exerciseId: string, duration: int, performedAt: DateTimeImmutable}>
+     */
+    public function findMaxDurationPerWorkoutAndExerciseChronologicallyByUser(User $user): array
+    {
+        /** @var array<int, array{workoutId: mixed, exerciseId: mixed, duration: mixed, performedAt: mixed}> $rows */
+        $rows = $this->queryForUser($user)
+            ->select('w.id as workoutId', 'e.id as exerciseId', 'MAX(es.duration) as duration', 'w.performedAt as performedAt')
+            ->andWhere('e.measurementType = :timeType')
+            ->setParameter('timeType', MeasurementType::TIME)
+            ->groupBy('w.id')
+            ->addGroupBy('e.id')
+            ->addGroupBy('w.performedAt')
+            ->orderBy('w.performedAt', 'ASC')
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY);
+
+        $result = [];
+        foreach ($rows as $row) {
+            /** @var \Stringable|string $workoutId */
+            $workoutId = $row['workoutId'];
+            /** @var \Stringable|string $exerciseId */
+            $exerciseId = $row['exerciseId'];
+            /** @var numeric $duration */
+            $duration = $row['duration'];
+            /** @var DateTimeImmutable $performedAt */
+            $performedAt = $row['performedAt'];
+
+            $result[] = [
+                'workoutId' => (string) $workoutId,
+                'exerciseId' => (string) $exerciseId,
+                'duration' => (int) $duration,
+                'performedAt' => $performedAt,
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
      * Reps max par (séance, exercice, poids exact), triées chronologiquement — même principe que
      * `findMaxWeightPerWorkoutAndExerciseChronologicallyByUser`, mais pour détecter les records de
      * répétitions à poids égal.
@@ -163,6 +269,8 @@ class ExerciseSetRepository extends ServiceEntityRepository
         /** @var array<int, array{workoutId: mixed, exerciseId: mixed, weight: mixed, reps: mixed, performedAt: mixed}> $rows */
         $rows = $this->queryForUser($user)
             ->select('w.id as workoutId', 'e.id as exerciseId', 'es.weight as weight', 'MAX(es.reps) as reps', 'w.performedAt as performedAt')
+            ->andWhere('e.measurementType != :timeType')
+            ->setParameter('timeType', MeasurementType::TIME)
             ->groupBy('w.id')
             ->addGroupBy('e.id')
             ->addGroupBy('es.weight')

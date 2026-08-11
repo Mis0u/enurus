@@ -8,6 +8,7 @@ use App\Constraint\ImageConstraints;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
+use App\Enum\Entity\Exercise\MeasurementType;
 use App\Form\WorkoutType;
 use App\Repository\WorkoutExerciseRepository;
 use App\Security\Voter\WorkoutVoter;
@@ -109,7 +110,7 @@ class WorkoutEditController extends AbstractController
      * @param  array<int, WorkoutExercise> $workoutExercises
      * @return array<int, array{
      *     workoutExercise: WorkoutExercise,
-     *     sets: array<int, array{position: int, weight: float, reps: int}>,
+     *     sets: array<int, array{position: int, weight: float, reps: int, duration: ?int}>,
      *     tonnage: float,
      * }>
      */
@@ -124,13 +125,18 @@ class WorkoutEditController extends AbstractController
             $sets = [];
             $tonnage = 0.0;
 
+            $isWeightReps = MeasurementType::WEIGHT_REPS === $workoutExercise->exercise->measurementType;
+
             foreach ($workoutExercise->exerciseSets as $set) {
                 $sets[] = [
                     'position' => $set->position,
                     'weight' => $weightConverter->convertToLbs($set->weight, $user->unitOfMeasure),
                     'reps' => $set->reps,
+                    'duration' => $set->duration,
                 ];
-                $tonnage += $set->weight * $set->reps;
+                // Poids × reps pour un exercice classique, poids seul (comme une série à 1 rep)
+                // pour un exercice `TIME` — voir WorkoutTonnageRepository::TONNAGE_SUBQUERY_DQL.
+                $tonnage += $isWeightReps ? $set->weight * $set->reps : $set->weight;
             }
 
             $data[] = [
