@@ -3,9 +3,10 @@
     <img class="admin-message-thumb"
          src="{{ field.value|storage_url }}"
          alt=""
+         crossorigin="anonymous"
          onclick="document.getElementById('admin-workout-photo-lightbox').classList.add('is-open')">
     <div id="admin-workout-photo-lightbox" class="admin-lightbox" onclick="this.classList.remove('is-open')">
-        <img src="{{ field.value|storage_url }}" alt="">
+        <img src="{{ field.value|storage_url }}" alt="" crossorigin="anonymous">
     </div>
 {% else %}
     <p>{{ 'admin.workout.no_photo'|trans({}, 'admin', fr) }}</p>

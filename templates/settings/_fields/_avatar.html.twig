@@ -17,6 +17,7 @@
         <img data-settings--avatar-target="image"
              src="{{ user.avatarPath|storage_url }}"
              alt=""
+             crossorigin="anonymous"
              class="w-full h-full object-cover {% if not user.avatarPath %}hidden{% endif %}">
         <div data-settings--avatar-target="spinner"
              class="hidden absolute inset-0 bg-[rgba(8,14,26,0.75)] items-center justify-center">
