@@ -44,6 +44,7 @@ final readonly class AdminDashboardStatsService
      * @return array{
      *     totalUsers: int,
      *     newToday: int,
+     *     loggedInToday: int,
      *     newThisWeek: int,
      *     newThisMonth: int,
      *     pendingDeletions: int,
@@ -62,6 +63,7 @@ final readonly class AdminDashboardStatsService
         return [
             'totalUsers' => $this->userRepository->countExcludingAdmins(),
             'newToday' => $this->userRepository->countCreatedSince($now->setTime(0, 0)),
+            'loggedInToday' => $this->userRepository->countLoggedInSince($now->setTime(0, 0)),
             'newThisWeek' => $this->userRepository->countCreatedSince($now->modify('-7 days')),
             'newThisMonth' => $this->userRepository->countCreatedSince($now->modify('-30 days')),
             'pendingDeletions' => $this->userRepository->countPendingDeletion(),

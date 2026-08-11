@@ -41,13 +41,43 @@ final class UserRepositoryTest extends KernelTestCase
         $em->flush();
     }
 
-    private function createTestUser(EntityManagerInterface $em, string $email, ?\DateTimeImmutable $deletionRequestedAt): User
+    public function testCountLoggedInSinceCountsOnlyUsersLoggedInAfterThreshold(): void
     {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+
+        $recentLogin = $this->createTestUser($em, 'recent-login-user@test.com', null, new \DateTimeImmutable('-1 hour'));
+        $oldLogin = $this->createTestUser($em, 'old-login-user@test.com', null, new \DateTimeImmutable('-3 days'));
+
+        $threshold = new \DateTimeImmutable('-1 day');
+        $countBefore = $userRepository->countLoggedInSince($threshold);
+
+        self::assertGreaterThanOrEqual(1, $countBefore);
+
+        $em->remove($recentLogin);
+        $em->remove($oldLogin);
+        $em->flush();
+
+        $countAfter = $userRepository->countLoggedInSince($threshold);
+
+        self::assertSame($countBefore - 1, $countAfter);
+    }
+
+    private function createTestUser(
+        EntityManagerInterface $em,
+        string $email,
+        ?\DateTimeImmutable $deletionRequestedAt,
+        ?\DateTimeImmutable $lastLogin = null,
+    ): User {
         $user = new User();
         $user->email = $email;
         $user->password = 'hashed';
         $user->nickname = 'TestUser';
-        $user->lastLogin = new \DateTimeImmutable();
+        $user->lastLogin = $lastLogin ?? new \DateTimeImmutable();
         $user->deletionRequestedAt = $deletionRequestedAt;
 
         $em->persist($user);

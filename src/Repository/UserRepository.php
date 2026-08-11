@@ -181,6 +181,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
 
+    public function countLoggedInSince(\DateTimeImmutable $since): int
+    {
+        /** @var int */
+        return $this->excludingAdminsQueryBuilder()
+            ->select('COUNT(u.id)')
+            ->andWhere('u.lastLogin >= :since')
+            ->setParameter('since', $since)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
     /**
      * @return array<string, int>
      */
