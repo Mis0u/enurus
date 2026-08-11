@@ -2,6 +2,7 @@
      onclick="document.getElementById('edit-photo-lightbox').classList.remove('hidden'); document.getElementById('edit-photo-lightbox').classList.add('flex')">
     <img src="{{ workout.photoPath|storage_url }}"
          alt="{{ 'workout.photo.alt'|trans({}, 'navigation') }}"
+         crossorigin="anonymous"
          class="max-h-48 w-auto rounded-xl border border-white/[0.07] transition-all duration-200 group-hover:brightness-90 block mx-auto">
     <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-xl">
         <span class="bg-black/60 text-white text-[12px] font-medium px-3 py-1.5 rounded-lg backdrop-blur-sm">

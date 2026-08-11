@@ -14,12 +14,13 @@
                 <img class="admin-message-thumb"
                      src="{{ message.imagePath|storage_url }}"
                      alt=""
+                     crossorigin="anonymous"
                      onclick="document.getElementById('admin-message-lightbox-{{ message.id.toRfc4122 }}').classList.add('is-open')">
             </div>
             <div id="admin-message-lightbox-{{ message.id.toRfc4122 }}"
                  class="admin-lightbox"
                  onclick="this.classList.remove('is-open')">
-                <img src="{{ message.imagePath|storage_url }}" alt="">
+                <img src="{{ message.imagePath|storage_url }}" alt="" crossorigin="anonymous">
             </div>
         {% endif %}
     </div>
