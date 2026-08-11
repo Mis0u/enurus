@@ -603,6 +603,7 @@ workout:
         share:
             button: "Udostępnij"
             caption: "Udostępnij ten trening"
+            caption_download_only: "Pobierz obraz, a następnie udostępnij go w swojej aplikacji (WhatsApp, Wiadomości…)"
             download_button: "Pobierz"
             download_success: "Obraz pobrany !"
             error: "Nie udało się wygenerować obrazu, spróbuj ponownie."

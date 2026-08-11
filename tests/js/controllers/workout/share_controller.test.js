@@ -26,7 +26,9 @@ describe('workout--share controller', () => {
         document.body.innerHTML = `
             <div data-controller="workout--share"
                  data-workout--share-download-success-value="Téléchargé"
-                 data-workout--share-error-value="Erreur">
+                 data-workout--share-error-value="Erreur"
+                 data-workout--share-caption-share-value="Partager cette séance"
+                 data-workout--share-caption-download-only-value="Télécharge puis partage manuellement">
                 <div data-workout--share-target="card"></div>
                 <button data-workout--share-target="button" data-action="click->workout--share#share"></button>
                 <div data-workout--share-target="modal" class="hidden">
@@ -73,7 +75,7 @@ describe('workout--share controller', () => {
         expect(controllerButton().disabled).toBe(false);
     });
 
-    it('shows the share button only when the browser can share files', async () => {
+    it('shows the share button only when the browser can share files, with a download-only hint otherwise', async () => {
         const blob = new Blob(['fake'], { type: 'image/png' });
         toBlobMock.mockResolvedValue(blob);
         vi.stubGlobal('navigator', { ...navigator, canShare: () => false });
@@ -83,7 +85,7 @@ describe('workout--share controller', () => {
         await nextTick();
 
         expect(document.querySelector('[data-workout--share-target="shareButton"]').hidden).toBe(true);
-        expect(document.querySelector('[data-workout--share-target="caption"]').hidden).toBe(true);
+        expect(document.querySelector('[data-workout--share-target="caption"]').textContent).toBe('Télécharge puis partage manuellement');
     });
 
     it('shows an error toast and re-enables the button when capture fails', async () => {

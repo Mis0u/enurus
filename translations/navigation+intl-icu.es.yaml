@@ -589,6 +589,7 @@ workout:
         share:
             button: "Compartir"
             caption: "Comparte este entrenamiento"
+            caption_download_only: "Descarga la imagen y compártela desde tu aplicación (WhatsApp, Mensajes…)"
             download_button: "Descargar"
             download_success: "¡Imagen descargada !"
             error: "No se pudo generar la imagen, inténtalo de nuevo."

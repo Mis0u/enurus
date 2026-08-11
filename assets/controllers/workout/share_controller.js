@@ -17,6 +17,8 @@ export default class extends Controller {
     static values = {
         downloadSuccess: String,
         error: String,
+        captionShare: String,
+        captionDownloadOnly: String,
     };
 
     #blob = null;
@@ -109,9 +111,11 @@ export default class extends Controller {
         this.#previewUrl = URL.createObjectURL(blob);
         this.previewImageTarget.src = this.#previewUrl;
         this.shareButtonTarget.hidden = !canShare;
-        // La légende invite à partager sur les réseaux — sans navigator.share (desktop), seul
-        // le téléchargement est possible, la mention n'a donc plus de sens.
-        this.captionTarget.hidden = !canShare;
+        // Sans navigator.share/canShare pour les fichiers (desktop, Firefox mobile — l'API ne
+        // supporte que le partage de texte/URL là-bas, jamais de fichier), la légende explique
+        // qu'il faut télécharger puis partager manuellement, plutôt que de disparaître sans
+        // explication.
+        this.captionTarget.textContent = canShare ? this.captionShareValue : this.captionDownloadOnlyValue;
         this.modalTarget.classList.remove('hidden');
         this.modalTarget.classList.add('flex');
     }
