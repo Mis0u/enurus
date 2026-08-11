@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Enum\Entity\Exercise\MeasurementType;
 use DateTimeImmutable;
 use Doctrine\ORM\AbstractQuery;
 
@@ -15,14 +16,24 @@ use Doctrine\ORM\AbstractQuery;
 class WorkoutTonnageRepository
 {
     /**
-     * Sous-requête DQL de tonnage réutilisée par toutes les requêtes agrégeant le tonnage
-     * (poids × reps) d'une séance — évite de la dupliquer dans chaque méthode.
+     * Sous-requête DQL de tonnage réutilisée par toutes les requêtes agrégeant le tonnage d'une
+     * séance — évite de la dupliquer dans chaque méthode. Deux formules selon le type de mesure de
+     * l'exercice : `poids × reps` pour `WEIGHT_REPS` (convention musculation habituelle), et
+     * `poids` seul pour `TIME` (ex. gainage lesté) — traité comme une série à 1 répétition, pour
+     * rester dans le même ordre de grandeur que le tonnage classique et pouvoir s'additionner au
+     * total de la séance sans le fausser. Un exercice `TIME` sans poids ajouté (0.0, poids du
+     * corps) contribue naturellement 0 au tonnage, sans cas particulier à gérer.
      */
-    private const string TONNAGE_SUBQUERY_DQL = '(SELECT COALESCE(SUM(s.weight * s.reps), 0)
+    private const string TONNAGE_SUBQUERY_DQL = "(SELECT COALESCE(SUM(
+                CASE WHEN ex2.measurementType = '" . MeasurementType::WEIGHT_REPS->value . "' THEN s.weight * s.reps
+                     ELSE s.weight
+                END
+              ), 0)
               FROM App\Entity\ExerciseSet s
               JOIN s.workoutExercise we2
+              JOIN we2.exercise ex2
               WHERE we2.workout = w
-            ) as tonnage';
+            ) as tonnage";
 
     public function __construct(
         private readonly WorkoutRepository $workoutRepository,

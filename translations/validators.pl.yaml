@@ -7,6 +7,12 @@ exercise:
     muscle_primary_required: Wymagany jest przynajmniej jeden mięsień główny.
     name_not_blank: Nazwa jest wymagana
 
+exercise_set:
+    duration_required: Czas trwania musi być podany i dodatni.
+    reps_required: Powtórzenia muszą być podane i dodatnie.
+    weight_positive_or_zero: Ciężar nie może być ujemny.
+    weight_required: Ciężar musi być podany i dodatni.
+
 routine:
     name_exists: Masz już rutynę o tej nazwie.
     name_not_blank: Nazwa rutyny jest wymagana.

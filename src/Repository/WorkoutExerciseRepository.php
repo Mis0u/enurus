@@ -8,6 +8,7 @@ use App\Entity\Exercise;
 use App\Entity\ExerciseSet;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
+use App\Enum\Entity\Exercise\MeasurementType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -22,6 +23,10 @@ final class WorkoutExerciseRepository extends ServiceEntityRepository
     }
 
     /**
+     * `poids × reps` pour un exercice `WEIGHT_REPS`, `poids` seul (comme une série à 1 rep) pour
+     * un exercice `TIME` — même formule que `WorkoutTonnageRepository::TONNAGE_SUBQUERY_DQL`, dont
+     * la responsabilité est différente (tonnage par séance entière, pas par workoutExercice).
+     *
      * @param string[] $workoutExerciseIds
      * @return array<string, float>
      */
@@ -34,9 +39,15 @@ final class WorkoutExerciseRepository extends ServiceEntityRepository
         /** @var array<int, array{workoutExerciseId: mixed, tonnage: mixed}> $rows */
         $rows = $this->createQueryBuilder('we')
             ->select('we.id as workoutExerciseId')
+            ->join('we.exercise', 'e')
             ->addSelect(
                 sprintf(
-                    '(SELECT SUM(s.weight * s.reps) FROM %s s WHERE s.workoutExercise = we) as tonnage',
+                    "(SELECT COALESCE(SUM(
+                        CASE WHEN e.measurementType = '%s' THEN s.weight * s.reps
+                             ELSE s.weight
+                        END
+                    ), 0) FROM %s s WHERE s.workoutExercise = we) as tonnage",
+                    MeasurementType::WEIGHT_REPS->value,
                     ExerciseSet::class
                 )
             )

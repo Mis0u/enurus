@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
 use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
+use App\Enum\Entity\Exercise\MeasurementType;
 use App\Repository\ExerciseSetRepository;
 use App\Repository\WorkoutExerciseRepository;
 use App\Repository\WorkoutTonnageRepository;
@@ -33,7 +34,7 @@ final readonly class WorkoutShowDataService
      * @return array{
      *     exerciseData: array<int, array{
      *         workoutExercise: WorkoutExercise,
-     *         sets: array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>,
+     *         sets: array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, isTimeBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>,
      *         tonnage: float,
      *         primarySvgIds: array<string>,
      *         secondarySvgIds: array<string>,
@@ -56,10 +57,11 @@ final readonly class WorkoutShowDataService
         $exerciseTonnageMap = $this->workoutExerciseRepository->findTonnageByWorkoutExerciseIds($workoutExerciseIds);
         $priorMaxWeightPerExercise = $this->exerciseSetRepository->findMaxWeightPerExerciseBeforeDate($user, $exercises, $workout->performedAt);
         $priorMaxRepsPerWeight = $this->exerciseSetRepository->findMaxRepsPerWeightBeforeDate($user, $exercises, $workout->performedAt);
+        $priorMaxDurationPerExercise = $this->exerciseSetRepository->findMaxDurationPerExerciseBeforeDate($user, $exercises, $workout->performedAt);
 
         $totalTonnageKg = $tonnageMap[(string) $workout->id] ?? 0.0;
         $totalTonnage = $this->weightConverter->convertToLbs($totalTonnageKg, $user->unitOfMeasure);
-        $exerciseData = $this->buildExerciseData($workoutExercises, $priorMaxWeightPerExercise, $priorMaxRepsPerWeight, $exerciseTonnageMap, $user);
+        $exerciseData = $this->buildExerciseData($workoutExercises, $priorMaxWeightPerExercise, $priorMaxRepsPerWeight, $priorMaxDurationPerExercise, $exerciseTonnageMap, $user);
         [$totalSets, $totalReps] = $this->countSetsAndReps($exerciseData);
 
         return [
@@ -120,10 +122,11 @@ final readonly class WorkoutShowDataService
      * @param array<WorkoutExercise> $workoutExercises
      * @param array<string, float> $priorMaxWeightPerExercise
      * @param array<string, array<string, int>> $priorMaxRepsPerWeight
+     * @param array<string, int> $priorMaxDurationPerExercise
      * @param array<string, float> $exerciseTonnageMap
      * @return array<int, array{
      *     workoutExercise: WorkoutExercise,
-     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>,
+     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, isTimeBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>,
      *     tonnage: float,
      *     primarySvgIds: array<string>,
      *     secondarySvgIds: array<string>,
@@ -134,6 +137,7 @@ final readonly class WorkoutShowDataService
         array $workoutExercises,
         array $priorMaxWeightPerExercise,
         array $priorMaxRepsPerWeight,
+        array $priorMaxDurationPerExercise,
         array $exerciseTonnageMap,
         User $user,
     ): array {
@@ -142,6 +146,7 @@ final readonly class WorkoutShowDataService
                 $we,
                 $priorMaxWeightPerExercise,
                 $priorMaxRepsPerWeight,
+                $priorMaxDurationPerExercise,
                 $exerciseTonnageMap,
                 $user,
             ),
@@ -152,10 +157,11 @@ final readonly class WorkoutShowDataService
     /**
      * @param array<string, float> $priorMaxWeightPerExercise
      * @param array<string, array<string, int>> $priorMaxRepsPerWeight
+     * @param array<string, int> $priorMaxDurationPerExercise
      * @param array<string, float> $exerciseTonnageMap
      * @return array{
      *     workoutExercise: WorkoutExercise,
-     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>,
+     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, isTimeBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>,
      *     tonnage: float,
      *     primarySvgIds: array<string>,
      *     secondarySvgIds: array<string>,
@@ -166,16 +172,18 @@ final readonly class WorkoutShowDataService
         WorkoutExercise $we,
         array $priorMaxWeightPerExercise,
         array $priorMaxRepsPerWeight,
+        array $priorMaxDurationPerExercise,
         array $exerciseTonnageMap,
         User $user,
     ): array {
         $priorMaxWeight = $priorMaxWeightPerExercise[(string) $we->exercise->id] ?? null;
         $priorMaxRepsByWeight = $priorMaxRepsPerWeight[(string) $we->exercise->id] ?? [];
+        $priorMaxDuration = $priorMaxDurationPerExercise[(string) $we->exercise->id] ?? null;
         $tonnage = $this->weightConverter->convertToLbs(
             $exerciseTonnageMap[(string) $we->id] ?? 0.0,
             $user->unitOfMeasure
         );
-        $sets = $this->buildSets($we, $priorMaxWeight, $priorMaxRepsByWeight, $user);
+        $sets = $this->buildSets($we, $priorMaxWeight, $priorMaxRepsByWeight, $priorMaxDuration, $user);
         [$primarySvgIds, $secondarySvgIds] = $this->resolveSvgIds($we);
         $sortedMuscles = $this->sortMusclesByType($we->exercise->exerciseMuscles->toArray());
 
@@ -216,15 +224,25 @@ final readonly class WorkoutShowDataService
      * exercice, et ne s'applique jamais à un set déjà PR poids ni à un poids jamais fait avant
      * (sans quoi un nouveau poids max déclencherait aussi un record de reps trivial et redondant).
      *
+     * Pour un exercice `TIME` (ex. gainage), le badge PR suit la même règle stricte mais porte sur
+     * `duration` (durée max tenue) plutôt que `weight` — le poids éventuellement ajouté est ignoré
+     * du calcul, exactement comme les reps le sont pour le PR de poids. Pas de badge "record"
+     * secondaire pour ces exercices (pas d'équivalent au record de reps).
+     *
      * @param array<string, int> $priorMaxRepsByWeight poids (chaîne) => reps max avant cette séance
-     * @return array<int, array{position: int, weightFormatted: string, reps: int, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>
+     * @return array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, isTimeBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>
      */
     private function buildSets(
         WorkoutExercise $we,
         ?float $priorMaxWeight,
         array $priorMaxRepsByWeight,
+        ?int $priorMaxDuration,
         User $user,
     ): array {
+        if (MeasurementType::TIME === $we->exercise->measurementType) {
+            return $this->buildTimeBasedSets($we, $priorMaxDuration, $user);
+        }
+
         $workoutMaxWeight = 0.0;
         /** @var array<string, int> $workoutMaxRepsByWeight */
         $workoutMaxRepsByWeight = [];
@@ -264,10 +282,51 @@ final readonly class WorkoutShowDataService
                 'position' => $set->position,
                 'weightFormatted' => $this->weightConverter->format($set->weight, $user->unitOfMeasure),
                 'reps' => $set->reps,
+                'duration' => null,
+                'isTimeBased' => false,
                 'tonnage' => $this->weightConverter->convertToLbs($rawTonnage, $user->unitOfMeasure),
                 'tonnageUnit' => $user->unitOfMeasure->value,
                 'isPr' => $isPr,
                 'isRepsRecord' => $isRepsRecord,
+            ];
+        }
+
+        usort($sets, static fn ($a, $b) => $a['position'] <=> $b['position']);
+
+        return $sets;
+    }
+
+    /**
+     * @return array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, isTimeBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>
+     */
+    private function buildTimeBasedSets(WorkoutExercise $we, ?int $priorMaxDuration, User $user): array
+    {
+        $workoutMaxDuration = 0;
+
+        foreach ($we->exerciseSets as $set) {
+            $workoutMaxDuration = max($workoutMaxDuration, $set->duration ?? 0);
+        }
+
+        $isDurationPr = $this->beatsRecord(
+            null !== $priorMaxDuration ? (float) $priorMaxDuration : null,
+            (float) $workoutMaxDuration,
+            firstAttemptCounts: true,
+        );
+
+        $sets = [];
+
+        foreach ($we->exerciseSets as $set) {
+            $sets[] = [
+                'position' => $set->position,
+                'weightFormatted' => $this->weightConverter->format($set->weight, $user->unitOfMeasure),
+                'reps' => 0,
+                'duration' => $set->duration,
+                'isTimeBased' => true,
+                // Poids seul (comme une série à 1 rep) : 0 pour un exercice au poids du corps.
+                'tonnage' => $this->weightConverter->convertToLbs($set->weight, $user->unitOfMeasure),
+                'tonnageUnit' => $user->unitOfMeasure->value,
+                'isPr' => $isDurationPr && $set->duration === $workoutMaxDuration,
+                'isRepsRecord' => false,
             ];
         }
 

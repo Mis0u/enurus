@@ -9,6 +9,7 @@ use App\Entity\ExerciseSet;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
+use App\Enum\Entity\Exercise\MeasurementType;
 use App\Repository\ExerciseSetRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -75,6 +76,62 @@ final class ExerciseSetRepositoryTest extends KernelTestCase
         $em->flush();
     }
 
+    public function testExistsForExerciseIsFalseBeforeAnySetAndTrueAfterOne(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var ExerciseSetRepository $exerciseSetRepository */
+        $exerciseSetRepository = static::getContainer()->get(ExerciseSetRepository::class);
+
+        $user = $this->createTestUser($em, 'exercise-set-repo-test-exists@test.com');
+        $exercise = $this->createTestExercise($em);
+
+        self::assertFalse($exerciseSetRepository->existsForExercise($exercise));
+
+        $workout = $this->createTestWorkout($em, $user, $exercise, new \DateTimeImmutable('-1 day'), 60.0);
+
+        self::assertTrue($exerciseSetRepository->existsForExercise($exercise));
+
+        $em->remove($workout);
+        $em->remove($exercise);
+        $em->remove($user);
+        $em->flush();
+    }
+
+    public function testFindMaxDurationPerExerciseBeforeDateExcludesTheWorkoutItself(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var ExerciseSetRepository $exerciseSetRepository */
+        $exerciseSetRepository = static::getContainer()->get(ExerciseSetRepository::class);
+
+        $user = $this->createTestUser($em, 'exercise-set-repo-test-duration@test.com');
+        $exercise = $this->createTestExercise($em, MeasurementType::TIME);
+
+        $olderWorkout = $this->createTestTimeWorkout($em, $user, $exercise, new \DateTimeImmutable('-10 days'), 300);
+        $recentWorkout = $this->createTestTimeWorkout($em, $user, $exercise, new \DateTimeImmutable('-2 days'), 480);
+
+        $result = $exerciseSetRepository->findMaxDurationPerExerciseBeforeDate(
+            $user,
+            [$exercise],
+            $recentWorkout->performedAt,
+        );
+
+        // Le max avant la séance récente ne doit inclure que l'ancienne séance (300s), jamais la
+        // séance récente elle-même (480s).
+        self::assertSame(300, $result[(string) $exercise->id]);
+
+        $em->remove($olderWorkout);
+        $em->remove($recentWorkout);
+        $em->remove($exercise);
+        $em->remove($user);
+        $em->flush();
+    }
+
     private function createTestUser(EntityManagerInterface $em, string $email): User
     {
         $user = new User();
@@ -90,11 +147,12 @@ final class ExerciseSetRepositoryTest extends KernelTestCase
         return $user;
     }
 
-    private function createTestExercise(EntityManagerInterface $em): Exercise
+    private function createTestExercise(EntityManagerInterface $em, MeasurementType $measurementType = MeasurementType::WEIGHT_REPS): Exercise
     {
         $exercise = new Exercise();
         $exercise->name = 'Test exercise ' . uniqid();
         $exercise->isPublic = true;
+        $exercise->measurementType = $measurementType;
 
         $em->persist($exercise);
         $em->flush();
@@ -122,6 +180,35 @@ final class ExerciseSetRepositoryTest extends KernelTestCase
         $set->position = 0;
         $set->weight = $weight;
         $set->reps = 10;
+        $workoutExercise->addExerciseSet($set);
+
+        $em->persist($workout);
+        $em->persist($workoutExercise);
+        $em->persist($set);
+        $em->flush();
+
+        return $workout;
+    }
+
+    private function createTestTimeWorkout(
+        EntityManagerInterface $em,
+        User $user,
+        Exercise $exercise,
+        \DateTimeImmutable $performedAt,
+        int $duration,
+    ): Workout {
+        $workout = new Workout();
+        $workout->owner = $user;
+        $workout->performedAt = $performedAt;
+
+        $workoutExercise = new WorkoutExercise();
+        $workoutExercise->exercise = $exercise;
+        $workoutExercise->position = 0;
+        $workout->addWorkoutExercise($workoutExercise);
+
+        $set = new ExerciseSet();
+        $set->position = 0;
+        $set->duration = $duration;
         $workoutExercise->addExerciseSet($set);
 
         $em->persist($workout);

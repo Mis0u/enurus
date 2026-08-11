@@ -331,4 +331,110 @@ final class WorkoutRecordDetectionServiceTest extends TestCase
             'workout-2' => true,
         ], $map);
     }
+
+    public function testADurationRecordForATimeBasedExerciseCountsAsAPr(): void
+    {
+        $exerciseSetRepository = $this->createStub(ExerciseSetRepository::class);
+        $exerciseSetRepository->method('findMaxDurationPerWorkoutAndExerciseChronologicallyByUser')->willReturn([
+            [
+                'workoutId' => 'workout-1',
+                'exerciseId' => 'plank',
+                'duration' => 480,
+                'performedAt' => new \DateTimeImmutable('now'),
+            ],
+        ]);
+
+        $service = new WorkoutRecordDetectionService($exerciseSetRepository);
+        $events = $service->findPrEvents($this->createStub(User::class));
+
+        // Un exercice `TIME` jamais fait avant compte automatiquement comme un premier record,
+        // exactement comme un poids jamais soulevé (firstAttemptCounts: true).
+        self::assertCount(1, $events);
+        self::assertSame('workout-1', $events[0]['workoutId']);
+    }
+
+    public function testRunningMaxForDurationIsNeverLoweredByASubsequentSmallerValue(): void
+    {
+        $exerciseSetRepository = $this->createStub(ExerciseSetRepository::class);
+        $exerciseSetRepository->method('findMaxDurationPerWorkoutAndExerciseChronologicallyByUser')->willReturn([
+            [
+                'workoutId' => 'workout-1',
+                'exerciseId' => 'plank',
+                'duration' => 480,
+                'performedAt' => new \DateTimeImmutable('-2 days'),
+            ],
+            [
+                'workoutId' => 'workout-2',
+                'exerciseId' => 'plank',
+                'duration' => 300,
+                'performedAt' => new \DateTimeImmutable('-1 day'),
+            ],
+            [
+                'workoutId' => 'workout-3',
+                'exerciseId' => 'plank',
+                'duration' => 480,
+                'performedAt' => new \DateTimeImmutable('now'),
+            ],
+        ]);
+
+        $service = new WorkoutRecordDetectionService($exerciseSetRepository);
+        $events = $service->findPrEvents($this->createStub(User::class));
+
+        // 5 min après 8 min n'est jamais un record, et retrouver 8 min ensuite n'en est pas un
+        // non plus (déjà atteint) — un seul événement, celui des 8 min initiales.
+        self::assertCount(1, $events);
+        self::assertSame('workout-1', $events[0]['workoutId']);
+    }
+
+    public function testWeightAndDurationPrStreamsAreMergedAndTrackedIndependently(): void
+    {
+        $exerciseSetRepository = $this->createStub(ExerciseSetRepository::class);
+        $exerciseSetRepository->method('findMaxWeightPerWorkoutAndExerciseChronologicallyByUser')->willReturn([
+            [
+                'workoutId' => 'workout-1',
+                'exerciseId' => 'squat',
+                'weight' => 100.0,
+                'performedAt' => new \DateTimeImmutable('-1 day'),
+            ],
+        ]);
+        $exerciseSetRepository->method('findMaxDurationPerWorkoutAndExerciseChronologicallyByUser')->willReturn([
+            [
+                'workoutId' => 'workout-2',
+                'exerciseId' => 'plank',
+                'duration' => 480,
+                'performedAt' => new \DateTimeImmutable('now'),
+            ],
+        ]);
+
+        $service = new WorkoutRecordDetectionService($exerciseSetRepository);
+        $events = $service->findPrEvents($this->createStub(User::class));
+
+        // Deux exercices de types différents (poids vs durée), chacun à son premier essai : les
+        // deux flux fusionnés produisent bien 2 événements distincts, sans interférence entre eux.
+        self::assertCount(2, $events);
+        $workoutIds = array_column($events, 'workoutId');
+        self::assertContains('workout-1', $workoutIds);
+        self::assertContains('workout-2', $workoutIds);
+    }
+
+    public function testHasPrByWorkoutIdIncludesDurationBasedRecords(): void
+    {
+        $exerciseSetRepository = $this->createStub(ExerciseSetRepository::class);
+        $exerciseSetRepository->method('findMaxDurationPerWorkoutAndExerciseChronologicallyByUser')->willReturn([
+            [
+                'workoutId' => 'workout-1',
+                'exerciseId' => 'plank',
+                'duration' => 480,
+                'performedAt' => new \DateTimeImmutable('now'),
+            ],
+        ]);
+
+        $service = new WorkoutRecordDetectionService($exerciseSetRepository);
+        $map = $service->hasPrByWorkoutId($this->createStub(User::class), ['workout-1', 'workout-2']);
+
+        self::assertSame([
+            'workout-1' => true,
+            'workout-2' => false,
+        ], $map);
+    }
 }

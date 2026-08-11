@@ -7,6 +7,12 @@ exercise:
     muscle_primary_required: Minstens één primaire spier is vereist.
     name_not_blank: Er moet een naam worden opgegeven
 
+exercise_set:
+    duration_required: De duur moet worden ingevuld en positief zijn.
+    reps_required: De herhalingen moeten worden ingevuld en positief zijn.
+    weight_positive_or_zero: Het gewicht mag niet negatief zijn.
+    weight_required: Het gewicht moet worden ingevuld en positief zijn.
+
 routine:
     name_exists: Je hebt al een routine met deze naam.
     name_not_blank: De naam van de routine is verplicht.

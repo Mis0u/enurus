@@ -173,6 +173,10 @@ exercise:
         description_toggle: Add a description
         legend_primary: Primary muscles
         legend_secondary: Secondary muscles
+        measurement_type_label: Measured by
+        measurement_type_locked_hint: "Locked: this exercise already has recorded sets."
+        measurement_type_time: Duration
+        measurement_type_weight_reps: Weight / reps
         muscles_hint: Click to assign (primary → secondary → none)
         muscles_label: Muscles worked
         name_label: Exercise name
@@ -500,6 +504,7 @@ workout:
         no_exercise:
             text: Add at least one exercise before submitting your workout
             title: No exercise
+        required_duration: Duration is required
         required_reps: Reps are required
         required_weight: Weight is required
         submit_failed:
@@ -574,6 +579,8 @@ workout:
         placeholder: Exercise name...
         title: Search for an exercise
     series: Sets
+    series_duration: Duration (seconds)
+    series_duration_abbreviate: sec
     show:
         back: Back to my workouts
         metrics:
@@ -595,6 +602,7 @@ workout:
             error: "Couldn't generate the image, try again."
             other_exercises: "{count, plural, =1 {+ # other exercise} other {+ # other exercises}}"
         sets_table:
+            duration: Duration
             reps: Reps
             tonnage: Tonnage
             weight: Weight

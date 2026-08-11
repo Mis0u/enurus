@@ -8,6 +8,7 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\Exercise;
 use App\Entity\MuscleGroup;
 use App\Entity\User;
+use App\Enum\Entity\Exercise\MeasurementType;
 use App\Repository\ExerciseRepository;
 use App\Repository\MuscleGroupRepository;
 use App\Repository\UserRepository;
@@ -141,6 +142,28 @@ class ExerciseCreateControllerTest extends WebTestCase
         $this->assertNull($this->findExercise(self::USER, 'Test Exercise'));
     }
 
+    public function testExerciseDefaultsToWeightRepsMeasurementType(): void
+    {
+        $client = $this->login(self::USER);
+        $this->submitExercise($client);
+
+        /** @var Exercise $exercise */
+        $exercise = $this->findExercise(self::USER, 'Test Exercise');
+
+        $this->assertSame(MeasurementType::WEIGHT_REPS, $exercise->measurementType);
+    }
+
+    public function testExerciseCanBeCreatedWithTimeMeasurementType(): void
+    {
+        $client = $this->login(self::USER);
+        $this->submitExercise($client, measurementType: 'time');
+
+        /** @var Exercise $exercise */
+        $exercise = $this->findExercise(self::USER, 'Test Exercise');
+
+        $this->assertSame(MeasurementType::TIME, $exercise->measurementType);
+    }
+
     public function testExerciseIsIsolatedFromOtherUser(): void
     {
         $client = $this->login(self::USER);
@@ -156,6 +179,7 @@ class ExerciseCreateControllerTest extends WebTestCase
         string $name = 'Test Exercise',
         ?string $muscles = null,
         ?string $description = null,
+        ?string $measurementType = null,
     ): void {
         $crawler = $client->request(Request::METHOD_GET, self::URL);
         $csrfToken = $crawler->filter('input[name="exercise[_token]"]')->attr('value');
@@ -166,6 +190,7 @@ class ExerciseCreateControllerTest extends WebTestCase
                 'name' => $name,
                 'muscles' => $muscles ?? $this->buildMusclesJson(),
                 'description' => $description,
+                'measurementType' => $measurementType,
             ],
         ]);
     }

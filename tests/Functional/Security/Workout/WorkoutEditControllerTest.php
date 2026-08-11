@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security\Workout;
 
+use App\Entity\Exercise;
+use App\Entity\ExerciseMuscle;
 use App\Entity\ExerciseSet;
+use App\Entity\MuscleGroup;
 use App\Entity\Routine;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
+use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
+use App\Enum\Entity\Exercise\MeasurementType;
+use App\Repository\MuscleGroupRepository;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Helper\WorkoutTestHelper;
@@ -259,6 +265,96 @@ class WorkoutEditControllerTest extends WebTestCase
     }
 
     // -------------------------------------------------------------------------
+    // Exercice mesuré par durée (TIME)
+    // -------------------------------------------------------------------------
+
+    public function testEditUpdatesSetDurationForATimeBasedExercise(): void
+    {
+        $client = $this->login(self::USER);
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $workout = $this->createTimeBasedWorkout($em, self::USER);
+
+        $url = $this->getEditUrl($workout);
+        $crawler = $client->request(Request::METHOD_GET, $url);
+        $csrfToken = $crawler->filter('input[name="workout[_token]"]')->attr('value');
+        $this->assertNotNull($csrfToken);
+
+        // Régression : la page d'édition affiche bien le champ durée (pré-rempli avec la valeur
+        // existante), et non le champ reps — WorkoutEditController::buildExerciseData() doit donc
+        // exposer `duration` dans le tableau `existingSets` consommé par _table.html.twig.
+        $durationInput = $crawler->filter('input[name*="[exerciseSets]"][name$="[duration]"]');
+        $this->assertGreaterThan(0, $durationInput->count());
+        $this->assertSame('480', $durationInput->attr('value'));
+
+        $payload = [
+            'workout' => [
+                '_token' => $csrfToken,
+                'performedAt' => $workout->performedAt->format('Y-m-d\TH:i'),
+                'duration' => $workout->duration,
+                'workoutExercises' => [[
+                    'exercise' => (string) $this->firstWorkoutExercise($workout)->exercise->id,
+                    'position' => 0,
+                    'exerciseSets' => [[
+                        'weight' => 0,
+                        'duration' => 600,
+                        'position' => 0,
+                    ]],
+                ]],
+            ],
+        ];
+
+        $client->request(Request::METHOD_POST, $url, $payload);
+        $this->assertResponseRedirects();
+
+        $updated = $this->findUpdatedWorkout($workout->id);
+        $firstSet = $this->getFirstSet($updated);
+        $this->assertSame(600, $firstSet->duration);
+        // reps reste à sa valeur par défaut, sans objet pour un exercice `TIME` — voir
+        // ExerciseSet::validateByMeasurementType().
+        $this->assertSame(0, $firstSet->reps);
+    }
+
+    public function testEmptyDurationLeavesThePreviousValueUnchanged(): void
+    {
+        $client = $this->login(self::USER);
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $workout = $this->createTimeBasedWorkout($em, self::USER);
+
+        $url = $this->getEditUrl($workout);
+        $crawler = $client->request(Request::METHOD_GET, $url);
+        $csrfToken = $crawler->filter('input[name="workout[_token]"]')->attr('value');
+        $this->assertNotNull($csrfToken);
+
+        $payload = [
+            'workout' => [
+                '_token' => $csrfToken,
+                'performedAt' => $workout->performedAt->format('Y-m-d\TH:i'),
+                'duration' => $workout->duration,
+                'workoutExercises' => [[
+                    'exercise' => (string) $this->firstWorkoutExercise($workout)->exercise->id,
+                    'position' => 0,
+                    'exerciseSets' => [[
+                        'weight' => 0,
+                        'duration' => '',
+                        'position' => 0,
+                    ]],
+                ]],
+            ],
+        ];
+
+        $client->request(Request::METHOD_POST, $url, $payload);
+        $this->assertResponseRedirects();
+
+        $updated = $this->findUpdatedWorkout($workout->id);
+        $firstSet = $this->getFirstSet($updated);
+        // Setter défensif `$duration ?? $this->duration` (même convention que `weight`/`reps`) :
+        // une soumission vide ne peut jamais écraser la valeur existante par null en base.
+        $this->assertSame(480, $firstSet->duration);
+    }
+
+    // -------------------------------------------------------------------------
     // Helpers privés
     // -------------------------------------------------------------------------
 
@@ -298,6 +394,56 @@ class WorkoutEditControllerTest extends WebTestCase
         return $routine;
     }
 
+    private function createTimeBasedWorkout(EntityManagerInterface $em, string $email): Workout
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        /** @var User $owner */
+        $owner = $userRepository->findOneBy([
+            'email' => $email,
+        ]);
+
+        $exercise = new Exercise();
+        $exercise->name = 'Time-based test exercise ' . uniqid();
+        $exercise->owner = $owner;
+        $exercise->measurementType = MeasurementType::TIME;
+
+        // WorkoutExerciseRepository::findWithExercisesAndSets() fait un INNER JOIN sur
+        // exerciseMuscles : sans muscle attaché, l'exercice n'apparaîtrait jamais dans la liste
+        // de la page d'édition, faussant silencieusement le test.
+        /** @var MuscleGroupRepository $muscleGroupRepository */
+        $muscleGroupRepository = static::getContainer()->get(MuscleGroupRepository::class);
+        /** @var MuscleGroup $muscleGroup */
+        $muscleGroup = $muscleGroupRepository->findOneBy([
+            'name' => 'name.chest',
+        ]);
+        $exerciseMuscle = new ExerciseMuscle();
+        $exerciseMuscle->exercise = $exercise;
+        $exerciseMuscle->muscleGroup = $muscleGroup;
+        $exerciseMuscle->type = MuscleTypeEnum::PRIMARY;
+        $exercise->exerciseMuscles->add($exerciseMuscle);
+
+        $workout = new Workout();
+        $workout->owner = $owner;
+        $workout->performedAt = new \DateTimeImmutable('-1 day');
+
+        $workoutExercise = new WorkoutExercise();
+        $workoutExercise->exercise = $exercise;
+        $workoutExercise->position = 0;
+        $workout->addWorkoutExercise($workoutExercise);
+
+        $set = new ExerciseSet();
+        $set->position = 0;
+        $set->duration = 480;
+        $workoutExercise->addExerciseSet($set);
+
+        $em->persist($exercise);
+        $em->persist($workout);
+        $em->flush();
+
+        return $workout;
+    }
+
     private function getFirstWorkout(string $email): Workout
     {
         /** @var UserRepository $userRepository */
@@ -331,12 +477,19 @@ class WorkoutEditControllerTest extends WebTestCase
 
     private function getFirstSet(Workout $workout): ExerciseSet
     {
-        /** @var WorkoutExercise $firstExercise */
-        $firstExercise = $workout->workoutExercises->first();
+        $firstExercise = $this->firstWorkoutExercise($workout);
         /** @var ExerciseSet $firstSet */
         $firstSet = $firstExercise->exerciseSets->first();
 
         return $firstSet;
+    }
+
+    private function firstWorkoutExercise(Workout $workout): WorkoutExercise
+    {
+        /** @var WorkoutExercise $firstExercise */
+        $firstExercise = $workout->workoutExercises->first();
+
+        return $firstExercise;
     }
 
     /**

@@ -173,6 +173,10 @@ exercise:
         description_toggle: Dodaj opis
         legend_primary: Mięśnie główne
         legend_secondary: Mięśnie wspomagające
+        measurement_type_label: Mierzone w
+        measurement_type_locked_hint: "Zablokowane: to ćwiczenie ma już zarejestrowane serie."
+        measurement_type_time: Czas trwania
+        measurement_type_weight_reps: Ciężar / powtórzenia
         muscles_hint: Kliknij, aby przypisać (główny → wspomagający → brak)
         muscles_label: Trenowane mięśnie
         name_label: Nazwa ćwiczenia
@@ -512,6 +516,7 @@ workout:
         no_exercise:
             text: Dodaj przynajmniej jedno ćwiczenie przed zatwierdzeniem treningu
             title: Brak ćwiczenia
+        required_duration: Czas trwania jest wymagany
         required_reps: Powtórzenia są wymagane
         required_weight: Waga jest wymagana
         submit_failed:
@@ -588,6 +593,8 @@ workout:
         placeholder: Nazwa ćwiczenia...
         title: Wyszukaj ćwiczenie
     series: Serie
+    series_duration: Czas trwania (sekundy)
+    series_duration_abbreviate: sek
     show:
         back: Powrót do moich treningów
         metrics:
@@ -609,6 +616,7 @@ workout:
             error: "Nie udało się wygenerować obrazu, spróbuj ponownie."
             other_exercises: "{count, plural, =1 {+ # inne ćwiczenie} few {+ # inne ćwiczenia} many {+ # innych ćwiczeń} other {+ # innego ćwiczenia}}"
         sets_table:
+            duration: Czas
             reps: Powt
             tonnage: Tonaż
             weight: Waga
