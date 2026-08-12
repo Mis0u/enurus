@@ -19,7 +19,13 @@
             <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5">#</th>
             <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5">{{ 'workout.show.sets_table.weight'|trans({}, 'navigation') }}</th>
             <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5">
-                {{ (exercise.measurementType.value == 'time' ? 'workout.show.sets_table.duration' : 'workout.show.sets_table.reps')|trans({}, 'navigation') }}
+                {% if exercise.measurementType.value == 'time' %}
+                    {{ 'workout.show.sets_table.duration'|trans({}, 'navigation') }}
+                {% elseif exercise.measurementType.value == 'distance' %}
+                    {{ 'workout.show.sets_table.distance'|trans({}, 'navigation') }}
+                {% else %}
+                    {{ 'workout.show.sets_table.reps'|trans({}, 'navigation') }}
+                {% endif %}
             </th>
             <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5 max-md:hidden">{{ 'workout.show.sets_table.tonnage'|trans({}, 'navigation') }}</th>
             <th class="show-table-th text-right text-[11px] font-semibold uppercase px-3 py-2.5"></th>
@@ -33,6 +39,8 @@
                 <td class="show-table-td-value px-3 py-2.5 font-['Rajdhani'] text-[15px] font-semibold">
                     {% if set.isTimeBased %}
                         {{ set.duration|format_set_duration }}
+                    {% elseif set.isDistanceBased %}
+                        {{ set.distance }} {{ 'workout.series_distance_abbreviate'|trans({}, 'navigation') }}
                     {% else %}
                         × {{ set.reps }}
                     {% endif %}
