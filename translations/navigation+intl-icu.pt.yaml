@@ -527,9 +527,11 @@ workout:
         empty: Nenhum treino encontrado
         exercises: "{count, plural, =1 {exercício} other {exercícios}}"
         filter:
+            all_sessions: Todos os treinos
             clear: Limpar data
             month: Este mês
             reset: Reiniciar
+            routine_label: Filtrar por rotina
             week: Esta semana
         free_session: Treino livre
         kg: Kg

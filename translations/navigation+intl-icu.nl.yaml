@@ -527,9 +527,11 @@ workout:
         empty: Geen training gevonden
         exercises: "{count, plural, =1 {oefening} other {oefeningen}}"
         filter:
+            all_sessions: Alle trainingen
             clear: Datum wissen
             month: Deze maand
             reset: Resetten
+            routine_label: Filteren op routine
             week: Deze week
         free_session: Vrije training
         kg: Kg
