@@ -11,6 +11,7 @@ use App\Entity\ExerciseMuscle;
 use App\Entity\MuscleGroup;
 use App\Entity\User;
 use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
+use App\Enum\Entity\Exercise\MeasurementType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -39,6 +40,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             $exercise->name = $this->typeService->getString($data, 'name');
             $exercise->description = $this->typeService->getString($data, 'description');
             $exercise->isPublic = $this->typeService->getBool($data, 'isPublic');
+            $exercise->measurementType = $this->resolveMeasurementType($data);
 
             $this->addMuscleToExercise($data, $exercise, MuscleTypeEnum::PRIMARY);
             $this->addMuscleToExercise($data, $exercise, MuscleTypeEnum::SECONDARY);
@@ -58,6 +60,21 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             MuscleGroupFixtures::class,
             UserFixtures::class,
         ];
+    }
+
+    /**
+     * Clé facultative dans Exercises.json — absente pour la quasi-totalité des exercices,
+     * qui restent WEIGHT_REPS (valeur par défaut de l'entité).
+     *
+     * @param array<string, mixed> $data
+     */
+    private function resolveMeasurementType(array $data): MeasurementType
+    {
+        if (! isset($data['measurementType'])) {
+            return MeasurementType::WEIGHT_REPS;
+        }
+
+        return MeasurementType::from($this->typeService->getString($data, 'measurementType'));
     }
 
     /**
