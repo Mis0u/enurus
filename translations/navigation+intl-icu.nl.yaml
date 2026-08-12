@@ -212,6 +212,7 @@ exercise:
                     other {# oefeningen}
                 }
             mine: Mijn oefeningen
+            muscle_label: Filteren op spier
             reset: Filters resetten
             search_placeholder: Zoek een oefening…
         pagination:

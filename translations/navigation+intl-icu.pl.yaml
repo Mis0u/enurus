@@ -214,6 +214,7 @@ exercise:
                     other {# ćwiczeń}
                 }
             mine: Moje ćwiczenia
+            muscle_label: Filtruj według mięśnia
             reset: Zresetuj filtry
             search_placeholder: Wyszukaj ćwiczenie…
         pagination:
