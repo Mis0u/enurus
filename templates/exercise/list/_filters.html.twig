@@ -91,3 +91,27 @@
     </div>
 
 </div>
+
+{% if muscleGroups is not empty %}
+    {# Filtre par muscle — 1er clic = primaire (rose), 2e clic = secondaire (cyan), 3e clic = aucun #}
+    <details class="mb-2">
+        <summary class="cursor-pointer text-[13px] font-medium text-white/60 hover:text-white/80 select-none">
+            {{ 'exercise.list.filter.muscle_label'|trans({}, 'navigation') }}
+            <span data-exercise--list-target="muscleFilterCount" hidden class="text-[#f43f5e]"></span>
+        </summary>
+        <div class="flex flex-wrap gap-2 mt-3">
+            {% for muscle_group in muscleGroups %}
+                <button
+                    type="button"
+                    class="muscle-filter-chip inline-flex items-center px-3 py-1.5 rounded-full text-[13px] font-medium border border-white/[0.07] bg-[#0f1928] text-white/70 transition-colors duration-150 cursor-pointer select-none"
+                    data-state="none"
+                    data-muscle-id="{{ muscle_group.id }}"
+                    data-exercise--list-target="muscleFilterChip"
+                    data-action="click->exercise--list#cycleMuscleFilter"
+                >
+                    {{ muscle_group.name|trans({}, 'muscle') }}
+                </button>
+            {% endfor %}
+        </div>
+    </details>
+{% endif %}

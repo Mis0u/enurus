@@ -26,7 +26,7 @@
             data-exercise--list-total-count-value="{{ totalCount }}"
         >
 
-            {% include 'exercise/list/_filters.html.twig' with {'totalCount': totalCount} only %}
+            {% include 'exercise/list/_filters.html.twig' with {'totalCount': totalCount, 'muscleGroups': muscleGroups} only %}
 
             {% include 'exercise/list/_empty_state.html.twig' only %}
 
@@ -36,7 +36,11 @@
                 data-exercise--list-target="grid"
             >
                 {% for exercise in exercises %}
-                    {% include 'exercise/list/_exercise_card.html.twig' with {exercise: exercise} only %}
+                    {% include 'exercise/list/_exercise_card.html.twig' with {
+                        exercise: exercise,
+                        primaryMuscleGroupIds: primaryMuscleGroupIds,
+                        secondaryMuscleGroupIds: secondaryMuscleGroupIds,
+                    } only %}
                 {% endfor %}
             </div>
 

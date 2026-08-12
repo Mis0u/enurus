@@ -1,12 +1,13 @@
 import { Controller } from '@hotwired/stimulus';
 import { normalizeForSearch } from '../../utils/search.js';
+import { MusclePills, updatePillVisual } from './muscle_pills.js';
 
 /**
  * Controller Stimulus pour la bibliothèque d'exercices.
  * Nom généré : exercise--list
  *
  * Responsabilités (SRP) :
- * - Filtrage client-side (type + recherche textuelle)
+ * - Filtrage client-side (type + recherche textuelle + muscle)
  * - Mise à jour du compteur
  * - Pagination client-side
  * - Visibilité du bouton reset et de l'état vide
@@ -16,6 +17,8 @@ export default class extends Controller {
         'card',
         'searchInput',
         'filterBtn',
+        'muscleFilterChip',
+        'muscleFilterCount',
         'resetBtn',
         'counter',
         'counterText',
@@ -49,10 +52,22 @@ export default class extends Controller {
     /** Noms normalisés (accents/casse) des cards, calculés une fois pour éviter de renormaliser à chaque recherche. */
     #normalizedNames = new WeakMap();
 
+    /** Groupes musculaires (primaire/secondaire) de chaque card, calculés une fois — même raison que #normalizedNames. */
+    #muscleGroupIdsByCard = new WeakMap();
+
+    /** @type {MusclePills} */
+    #muscleFilterPills;
+
     connect() {
         this.cardTargets.forEach(card => {
             this.#normalizedNames.set(card, normalizeForSearch(card.dataset.name));
+            this.#muscleGroupIdsByCard.set(card, {
+                primary: (card.dataset.primaryMuscleGroupIds ?? '').split(',').filter(Boolean),
+                secondary: (card.dataset.secondaryMuscleGroupIds ?? '').split(',').filter(Boolean),
+            });
         });
+
+        this.#muscleFilterPills = new MusclePills(this.element, this.muscleFilterChipTargets);
 
         this.#applyFilters();
     }
@@ -76,10 +91,26 @@ export default class extends Controller {
         this.#applyFilters();
     }
 
+    cycleMuscleFilter(event) {
+        const chip = event.currentTarget;
+        const next = this.#muscleFilterPills.cycle(chip.dataset.muscleId);
+
+        updatePillVisual(chip, next);
+        this.#currentPage = 1;
+        this.#updateMuscleFilterCount();
+        this.#applyFilters();
+    }
+
     resetFilters() {
         this.searchInputTarget.value = '';
         this.#activeFilter           = null;
         this.#currentPage            = 1;
+
+        this.muscleFilterChipTargets.forEach(chip => {
+            this.#muscleFilterPills.set(chip.dataset.muscleId, 'none');
+            updatePillVisual(chip, 'none');
+        });
+        this.#updateMuscleFilterCount();
 
         this.#updateFilterBtns();
         this.#applyFilters();
@@ -139,11 +170,12 @@ export default class extends Controller {
     }
 
     /**
-     * Retourne toutes les cards correspondant aux filtres actifs (search + type).
+     * Retourne toutes les cards correspondant aux filtres actifs (search + type + muscle).
      * @returns {HTMLElement[]}
      */
     #getMatchingCards() {
         const search = normalizeForSearch(this.searchInputTarget.value.trim());
+        const muscleFilters = this.#muscleFilterPills.toAssignments();
 
         return this.cardTargets.filter(card => {
             // Les exercices archivés ne sont jamais visibles hors du filtre dédié — ils ne
@@ -157,8 +189,24 @@ export default class extends Controller {
             if (search && !this.#normalizedNames.get(card).includes(search)) {
                 return false;
             }
+            if (muscleFilters.length > 0 && !this.#matchesMuscleFilters(card, muscleFilters)) {
+                return false;
+            }
             return true;
         });
+    }
+
+    /**
+     * Un exercice matche si au moins un des filtres muscle actifs (OR) est assigné avec le
+     * type demandé (primaire ou secondaire) sur cet exercice.
+     * @param {HTMLElement} card
+     * @param {Array<{id: string, type: 'primary'|'secondary'}>} muscleFilters
+     * @returns {boolean}
+     */
+    #matchesMuscleFilters(card, muscleFilters) {
+        const ids = this.#muscleGroupIdsByCard.get(card);
+
+        return muscleFilters.some(({ id, type }) => ids[type].includes(id));
     }
 
     /**
@@ -189,12 +237,27 @@ export default class extends Controller {
     }
 
     /**
+     * Met à jour le compteur affiché à côté du toggle "Filtrer par muscle" (ex. "(2)"),
+     * masqué quand aucun filtre muscle n'est actif. Absent du DOM si l'utilisateur n'a aucun
+     * exercice (donc aucun groupe musculaire à filtrer) — cf. `_filters.html.twig`.
+     */
+    #updateMuscleFilterCount() {
+        if (!this.hasMuscleFilterCountTarget) return;
+
+        const count = this.#muscleFilterPills.toAssignments().length;
+
+        this.muscleFilterCountTarget.hidden = count === 0;
+        this.muscleFilterCountTarget.textContent = count > 0 ? `(${count})` : '';
+    }
+
+    /**
      * Affiche/masque le bouton reset selon l'état actif des filtres.
      * Gestion via hidden uniquement — pas de classes display Tailwind conflictuelles.
      */
     #updateResetBtn() {
         const hasFilter = this.#activeFilter !== null
-            || this.searchInputTarget.value.trim() !== '';
+            || this.searchInputTarget.value.trim() !== ''
+            || this.#muscleFilterPills.toAssignments().length > 0;
 
         this.resetBtnTarget.hidden = !hasFilter;
     }

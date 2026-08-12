@@ -7,6 +7,8 @@
     class="exercise-list-card {{ is_custom ? 'exercise-list-card--custom' : 'exercise-list-card--official' }}"
     data-type="{{ card_type }}"
     data-name="{{ exercise_name|lower }}"
+    data-primary-muscle-group-ids="{{ primaryMuscleGroupIds[exercise.id] ?? '' }}"
+    data-secondary-muscle-group-ids="{{ secondaryMuscleGroupIds[exercise.id] ?? '' }}"
     data-exercise--list-target="card"
 >
     {# En-tête : nom + badge #}
