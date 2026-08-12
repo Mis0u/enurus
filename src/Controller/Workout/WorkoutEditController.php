@@ -56,6 +56,7 @@ class WorkoutEditController extends AbstractController
         $user = $this->getUser();
 
         $originalPerformedAt = $workout->performedAt;
+        $previousWeightsById = $this->snapshotWeightsById($workout);
 
         $form = $this->createForm(WorkoutType::class, $workout, [
             'is_edit' => true,
@@ -72,7 +73,7 @@ class WorkoutEditController extends AbstractController
                 (int) $originalPerformedAt->format('i'),
                 (int) $originalPerformedAt->format('s'),
             );
-            $weightConverter->convertWorkoutSetsToKg($workout, $user->unitOfMeasure);
+            $weightConverter->convertWorkoutSetsToKg($workout, $user->unitOfMeasure, $previousWeightsById);
             $em->flush();
 
             return $this->redirectToRoute('app_workout_show', [
@@ -107,10 +108,31 @@ class WorkoutEditController extends AbstractController
     }
 
     /**
+     * Capture, avant `$form->handleRequest()`, le poids (déjà en kg) de chaque série existante —
+     * voir `WeightConverterService::convertWorkoutSetsToKg()` pour l'usage.
+     *
+     * @return array<string, float>
+     */
+    private function snapshotWeightsById(Workout $workout): array
+    {
+        $previousWeightsById = [];
+
+        foreach ($workout->workoutExercises as $workoutExercise) {
+            foreach ($workoutExercise->exerciseSets as $set) {
+                if (null !== $set->id) {
+                    $previousWeightsById[(string) $set->id] = $set->weight;
+                }
+            }
+        }
+
+        return $previousWeightsById;
+    }
+
+    /**
      * @param  array<int, WorkoutExercise> $workoutExercises
      * @return array<int, array{
      *     workoutExercise: WorkoutExercise,
-     *     sets: array<int, array{position: int, weight: float, reps: int, duration: ?int}>,
+     *     sets: array<int, array{position: int, weight: float, reps: int, duration: ?int, distance: ?int}>,
      *     tonnage: float,
      * }>
      */
@@ -133,9 +155,10 @@ class WorkoutEditController extends AbstractController
                     'weight' => $weightConverter->convertToLbs($set->weight, $user->unitOfMeasure),
                     'reps' => $set->reps,
                     'duration' => $set->duration,
+                    'distance' => $set->distance,
                 ];
                 // Poids × reps pour un exercice classique, poids seul (comme une série à 1 rep)
-                // pour un exercice `TIME` — voir WorkoutTonnageRepository::TONNAGE_SUBQUERY_DQL.
+                // pour un exercice `TIME`/`DISTANCE` — voir WorkoutTonnageRepository::TONNAGE_SUBQUERY_DQL.
                 $tonnage += $isWeightReps ? $set->weight * $set->reps : $set->weight;
             }
 

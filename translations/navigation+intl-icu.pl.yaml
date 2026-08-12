@@ -173,6 +173,7 @@ exercise:
         description_toggle: Dodaj opis
         legend_primary: Mięśnie główne
         legend_secondary: Mięśnie wspomagające
+        measurement_type_distance: Dystans (metry)
         measurement_type_label: Mierzone w
         measurement_type_locked_hint: "Zablokowane: to ćwiczenie ma już zarejestrowane serie."
         measurement_type_time: Czas trwania
@@ -516,6 +517,7 @@ workout:
         no_exercise:
             text: Dodaj przynajmniej jedno ćwiczenie przed zatwierdzeniem treningu
             title: Brak ćwiczenia
+        required_distance: Dystans jest wymagany
         required_duration: Czas trwania jest wymagany
         required_reps: Powtórzenia są wymagane
         required_weight: Waga jest wymagana
@@ -595,6 +597,8 @@ workout:
         placeholder: Nazwa ćwiczenia...
         title: Wyszukaj ćwiczenie
     series: Serie
+    series_distance: Dystans (metry)
+    series_distance_abbreviate: m
     series_duration: Czas trwania (sekundy)
     series_duration_abbreviate: sek
     show:
@@ -618,6 +622,7 @@ workout:
             error: "Nie udało się wygenerować obrazu, spróbuj ponownie."
             other_exercises: "{count, plural, =1 {+ # inne ćwiczenie} few {+ # inne ćwiczenia} many {+ # innych ćwiczeń} other {+ # innego ćwiczenia}}"
         sets_table:
+            distance: Dystans
             duration: Czas
             reps: Powt
             tonnage: Tonaż

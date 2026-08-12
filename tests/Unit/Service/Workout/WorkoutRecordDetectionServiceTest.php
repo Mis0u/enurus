@@ -437,4 +437,110 @@ final class WorkoutRecordDetectionServiceTest extends TestCase
             'workout-2' => false,
         ], $map);
     }
+
+    public function testADistanceRecordForADistanceBasedExerciseCountsAsAPr(): void
+    {
+        $exerciseSetRepository = $this->createStub(ExerciseSetRepository::class);
+        $exerciseSetRepository->method('findMaxDistancePerWorkoutAndExerciseChronologicallyByUser')->willReturn([
+            [
+                'workoutId' => 'workout-1',
+                'exerciseId' => 'farmer-walk',
+                'distance' => 100,
+                'performedAt' => new \DateTimeImmutable('now'),
+            ],
+        ]);
+
+        $service = new WorkoutRecordDetectionService($exerciseSetRepository);
+        $events = $service->findPrEvents($this->createStub(User::class));
+
+        // Un exercice `DISTANCE` jamais fait avant compte automatiquement comme un premier
+        // record, exactement comme un poids jamais soulevé (firstAttemptCounts: true).
+        self::assertCount(1, $events);
+        self::assertSame('workout-1', $events[0]['workoutId']);
+    }
+
+    public function testRunningMaxForDistanceIsNeverLoweredByASubsequentSmallerValue(): void
+    {
+        $exerciseSetRepository = $this->createStub(ExerciseSetRepository::class);
+        $exerciseSetRepository->method('findMaxDistancePerWorkoutAndExerciseChronologicallyByUser')->willReturn([
+            [
+                'workoutId' => 'workout-1',
+                'exerciseId' => 'farmer-walk',
+                'distance' => 100,
+                'performedAt' => new \DateTimeImmutable('-2 days'),
+            ],
+            [
+                'workoutId' => 'workout-2',
+                'exerciseId' => 'farmer-walk',
+                'distance' => 50,
+                'performedAt' => new \DateTimeImmutable('-1 day'),
+            ],
+            [
+                'workoutId' => 'workout-3',
+                'exerciseId' => 'farmer-walk',
+                'distance' => 100,
+                'performedAt' => new \DateTimeImmutable('now'),
+            ],
+        ]);
+
+        $service = new WorkoutRecordDetectionService($exerciseSetRepository);
+        $events = $service->findPrEvents($this->createStub(User::class));
+
+        // 50m après 100m n'est jamais un record, et retrouver 100m ensuite n'en est pas un
+        // non plus (déjà atteint) — un seul événement, celui des 100m initiaux.
+        self::assertCount(1, $events);
+        self::assertSame('workout-1', $events[0]['workoutId']);
+    }
+
+    public function testWeightAndDistancePrStreamsAreMergedAndTrackedIndependently(): void
+    {
+        $exerciseSetRepository = $this->createStub(ExerciseSetRepository::class);
+        $exerciseSetRepository->method('findMaxWeightPerWorkoutAndExerciseChronologicallyByUser')->willReturn([
+            [
+                'workoutId' => 'workout-1',
+                'exerciseId' => 'squat',
+                'weight' => 100.0,
+                'performedAt' => new \DateTimeImmutable('-1 day'),
+            ],
+        ]);
+        $exerciseSetRepository->method('findMaxDistancePerWorkoutAndExerciseChronologicallyByUser')->willReturn([
+            [
+                'workoutId' => 'workout-2',
+                'exerciseId' => 'farmer-walk',
+                'distance' => 100,
+                'performedAt' => new \DateTimeImmutable('now'),
+            ],
+        ]);
+
+        $service = new WorkoutRecordDetectionService($exerciseSetRepository);
+        $events = $service->findPrEvents($this->createStub(User::class));
+
+        // Deux exercices de types différents (poids vs distance), chacun à son premier essai :
+        // les deux flux fusionnés produisent bien 2 événements distincts, sans interférence.
+        self::assertCount(2, $events);
+        $workoutIds = array_column($events, 'workoutId');
+        self::assertContains('workout-1', $workoutIds);
+        self::assertContains('workout-2', $workoutIds);
+    }
+
+    public function testHasPrByWorkoutIdIncludesDistanceBasedRecords(): void
+    {
+        $exerciseSetRepository = $this->createStub(ExerciseSetRepository::class);
+        $exerciseSetRepository->method('findMaxDistancePerWorkoutAndExerciseChronologicallyByUser')->willReturn([
+            [
+                'workoutId' => 'workout-1',
+                'exerciseId' => 'farmer-walk',
+                'distance' => 100,
+                'performedAt' => new \DateTimeImmutable('now'),
+            ],
+        ]);
+
+        $service = new WorkoutRecordDetectionService($exerciseSetRepository);
+        $map = $service->hasPrByWorkoutId($this->createStub(User::class), ['workout-1', 'workout-2']);
+
+        self::assertSame([
+            'workout-1' => true,
+            'workout-2' => false,
+        ], $map);
+    }
 }

@@ -8,6 +8,7 @@ exercise:
     name_not_blank: Nazwa jest wymagana
 
 exercise_set:
+    distance_required: Dystans musi być podany i dodatni.
     duration_required: Czas trwania musi być podany i dodatni.
     reps_required: Powtórzenia muszą być podane i dodatnie.
     weight_positive_or_zero: Ciężar nie może być ujemny.

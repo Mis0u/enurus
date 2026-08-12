@@ -173,6 +173,7 @@ exercise:
         description_toggle: Beschrijving toevoegen
         legend_primary: Primaire spieren
         legend_secondary: Secundaire spieren
+        measurement_type_distance: Afstand (meter)
         measurement_type_label: Gemeten in
         measurement_type_locked_hint: "Vergrendeld: voor deze oefening zijn al sets geregistreerd."
         measurement_type_time: Duur
@@ -504,6 +505,7 @@ workout:
         no_exercise:
             text: Voeg minstens één oefening toe voordat je je training bevestigt
             title: Geen oefening
+        required_distance: De afstand is verplicht
         required_duration: De duur is verplicht
         required_reps: De herhalingen zijn verplicht
         required_weight: Het gewicht is verplicht
@@ -581,6 +583,8 @@ workout:
         placeholder: Naam van de oefening...
         title: Zoek een oefening
     series: Sets
+    series_distance: Afstand (meter)
+    series_distance_abbreviate: m
     series_duration: Duur (seconden)
     series_duration_abbreviate: sec
     show:
@@ -604,6 +608,7 @@ workout:
             error: "Kon de afbeelding niet genereren, probeer opnieuw."
             other_exercises: "{count, plural, =1 {+ # andere oefening} other {+ # andere oefeningen}}"
         sets_table:
+            distance: Afstand
             duration: Duur
             reps: Reps
             tonnage: Tonnage

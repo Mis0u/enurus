@@ -33,6 +33,10 @@ class WorkoutEditControllerTest extends WebTestCase
 
     private const string OTHER_USER = 'user-fixture-11-workout@test.com';
 
+    // Seul user fixture en lbs (cf. UserFixtures::loadWorkoutUsers) — nécessaire pour reproduire
+    // le bug de double conversion sur un poids de série laissé vide à l'édition.
+    private const string LBS_USER = 'user-fixture-51-workout@test.com';
+
     // -------------------------------------------------------------------------
     // Accès / Sécurité
     // -------------------------------------------------------------------------
@@ -354,6 +358,149 @@ class WorkoutEditControllerTest extends WebTestCase
         $this->assertSame(480, $firstSet->duration);
     }
 
+    public function testEmptyWeightForLbsUserIsNotDoubleConvertedOnEdit(): void
+    {
+        $client = $this->login(self::LBS_USER);
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        // Poids déjà en kg en base — équivalents affichés en lbs à l'édition (round-trip via
+        // WeightConverterService::convertToLbs), sans lien exact volontaire avec un lbs "rond".
+        $workout = $this->createTwoSetWeightBasedWorkout($em, self::LBS_USER, firstSetWeightKg: 181.44, secondSetWeightKg: 90.72);
+
+        $url = $this->getEditUrl($workout);
+        $crawler = $client->request(Request::METHOD_GET, $url);
+        $csrfToken = $crawler->filter('input[name="workout[_token]"]')->attr('value');
+        $this->assertNotNull($csrfToken);
+
+        $workoutExercise = $this->firstWorkoutExercise($workout);
+
+        $payload = [
+            'workout' => [
+                '_token' => $csrfToken,
+                'performedAt' => $workout->performedAt->format('Y-m-d\TH:i'),
+                'duration' => $workout->duration,
+                'workoutExercises' => [[
+                    'exercise' => (string) $workoutExercise->exercise->id,
+                    'position' => 0,
+                    'exerciseSets' => [
+                        [
+                            // Champ laissé vide : régression, ne doit jamais être reconverti
+                            // (le setter défensif garde la valeur kg existante — 181.44 — telle
+                            // quelle, sans qu'un second passage lbs→kg la corrompe).
+                            'weight' => '',
+                            'reps' => 5,
+                            'position' => 0,
+                        ],
+                        [
+                            // Champ réellement resoumis (nouvelle valeur en lbs) : doit être
+                            // converti normalement.
+                            'weight' => 300,
+                            'reps' => 5,
+                            'position' => 1,
+                        ],
+                    ],
+                ]],
+            ],
+        ];
+
+        $client->request(Request::METHOD_POST, $url, $payload);
+        $this->assertResponseRedirects();
+
+        $updated = $this->findUpdatedWorkout($workout->id);
+        $updatedExercise = $this->firstWorkoutExercise($updated);
+        $sets = $updatedExercise->exerciseSets->toArray();
+        usort($sets, static fn (ExerciseSet $a, ExerciseSet $b) => $a->position <=> $b->position);
+
+        $this->assertSame(181.44, $sets[0]->weight);
+        $this->assertSame(136.08, $sets[1]->weight);
+    }
+
+    public function testEditUpdatesSetDistanceForADistanceBasedExercise(): void
+    {
+        $client = $this->login(self::USER);
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $workout = $this->createDistanceBasedWorkout($em, self::USER);
+
+        $url = $this->getEditUrl($workout);
+        $crawler = $client->request(Request::METHOD_GET, $url);
+        $csrfToken = $crawler->filter('input[name="workout[_token]"]')->attr('value');
+        $this->assertNotNull($csrfToken);
+
+        // Régression : la page d'édition affiche bien le champ distance (pré-rempli avec la
+        // valeur existante), et non le champ reps — WorkoutEditController::buildExerciseData()
+        // doit donc exposer `distance` dans le tableau `existingSets` consommé par _table.html.twig.
+        $distanceInput = $crawler->filter('input[name*="[exerciseSets]"][name$="[distance]"]');
+        $this->assertGreaterThan(0, $distanceInput->count());
+        $this->assertSame('100', $distanceInput->attr('value'));
+
+        $payload = [
+            'workout' => [
+                '_token' => $csrfToken,
+                'performedAt' => $workout->performedAt->format('Y-m-d\TH:i'),
+                'duration' => $workout->duration,
+                'workoutExercises' => [[
+                    'exercise' => (string) $this->firstWorkoutExercise($workout)->exercise->id,
+                    'position' => 0,
+                    'exerciseSets' => [[
+                        'weight' => 0,
+                        'distance' => 200,
+                        'position' => 0,
+                    ]],
+                ]],
+            ],
+        ];
+
+        $client->request(Request::METHOD_POST, $url, $payload);
+        $this->assertResponseRedirects();
+
+        $updated = $this->findUpdatedWorkout($workout->id);
+        $firstSet = $this->getFirstSet($updated);
+        $this->assertSame(200, $firstSet->distance);
+        // reps reste à sa valeur par défaut, sans objet pour un exercice `DISTANCE` — voir
+        // ExerciseSet::validateByMeasurementType().
+        $this->assertSame(0, $firstSet->reps);
+    }
+
+    public function testEmptyDistanceLeavesThePreviousValueUnchanged(): void
+    {
+        $client = $this->login(self::USER);
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $workout = $this->createDistanceBasedWorkout($em, self::USER);
+
+        $url = $this->getEditUrl($workout);
+        $crawler = $client->request(Request::METHOD_GET, $url);
+        $csrfToken = $crawler->filter('input[name="workout[_token]"]')->attr('value');
+        $this->assertNotNull($csrfToken);
+
+        $payload = [
+            'workout' => [
+                '_token' => $csrfToken,
+                'performedAt' => $workout->performedAt->format('Y-m-d\TH:i'),
+                'duration' => $workout->duration,
+                'workoutExercises' => [[
+                    'exercise' => (string) $this->firstWorkoutExercise($workout)->exercise->id,
+                    'position' => 0,
+                    'exerciseSets' => [[
+                        'weight' => 0,
+                        'distance' => '',
+                        'position' => 0,
+                    ]],
+                ]],
+            ],
+        ];
+
+        $client->request(Request::METHOD_POST, $url, $payload);
+        $this->assertResponseRedirects();
+
+        $updated = $this->findUpdatedWorkout($workout->id);
+        $firstSet = $this->getFirstSet($updated);
+        // Setter défensif `$distance ?? $this->distance` (même convention que `weight`/`reps`) :
+        // une soumission vide ne peut jamais écraser la valeur existante par null en base.
+        $this->assertSame(100, $firstSet->distance);
+    }
+
     // -------------------------------------------------------------------------
     // Helpers privés
     // -------------------------------------------------------------------------
@@ -435,6 +582,113 @@ class WorkoutEditControllerTest extends WebTestCase
         $set = new ExerciseSet();
         $set->position = 0;
         $set->duration = 480;
+        $workoutExercise->addExerciseSet($set);
+
+        $em->persist($exercise);
+        $em->persist($workout);
+        $em->flush();
+
+        return $workout;
+    }
+
+    private function createTwoSetWeightBasedWorkout(
+        EntityManagerInterface $em,
+        string $email,
+        float $firstSetWeightKg,
+        float $secondSetWeightKg,
+    ): Workout {
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        /** @var User $owner */
+        $owner = $userRepository->findOneBy([
+            'email' => $email,
+        ]);
+
+        $exercise = new Exercise();
+        $exercise->name = 'Weight-based test exercise ' . uniqid();
+        $exercise->owner = $owner;
+
+        /** @var MuscleGroupRepository $muscleGroupRepository */
+        $muscleGroupRepository = static::getContainer()->get(MuscleGroupRepository::class);
+        /** @var MuscleGroup $muscleGroup */
+        $muscleGroup = $muscleGroupRepository->findOneBy([
+            'name' => 'name.chest',
+        ]);
+        $exerciseMuscle = new ExerciseMuscle();
+        $exerciseMuscle->exercise = $exercise;
+        $exerciseMuscle->muscleGroup = $muscleGroup;
+        $exerciseMuscle->type = MuscleTypeEnum::PRIMARY;
+        $exercise->exerciseMuscles->add($exerciseMuscle);
+
+        $workout = new Workout();
+        $workout->owner = $owner;
+        $workout->performedAt = new \DateTimeImmutable('-1 day');
+
+        $workoutExercise = new WorkoutExercise();
+        $workoutExercise->exercise = $exercise;
+        $workoutExercise->position = 0;
+        $workout->addWorkoutExercise($workoutExercise);
+
+        $firstSet = new ExerciseSet();
+        $firstSet->position = 0;
+        $firstSet->weight = $firstSetWeightKg;
+        $firstSet->reps = 5;
+        $workoutExercise->addExerciseSet($firstSet);
+
+        $secondSet = new ExerciseSet();
+        $secondSet->position = 1;
+        $secondSet->weight = $secondSetWeightKg;
+        $secondSet->reps = 5;
+        $workoutExercise->addExerciseSet($secondSet);
+
+        $em->persist($exercise);
+        $em->persist($workout);
+        $em->flush();
+
+        return $workout;
+    }
+
+    private function createDistanceBasedWorkout(EntityManagerInterface $em, string $email): Workout
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        /** @var User $owner */
+        $owner = $userRepository->findOneBy([
+            'email' => $email,
+        ]);
+
+        $exercise = new Exercise();
+        $exercise->name = 'Distance-based test exercise ' . uniqid();
+        $exercise->owner = $owner;
+        $exercise->measurementType = MeasurementType::DISTANCE;
+
+        // WorkoutExerciseRepository::findWithExercisesAndSets() fait un INNER JOIN sur
+        // exerciseMuscles : sans muscle attaché, l'exercice n'apparaîtrait jamais dans la liste
+        // de la page d'édition, faussant silencieusement le test.
+        /** @var MuscleGroupRepository $muscleGroupRepository */
+        $muscleGroupRepository = static::getContainer()->get(MuscleGroupRepository::class);
+        /** @var MuscleGroup $muscleGroup */
+        $muscleGroup = $muscleGroupRepository->findOneBy([
+            'name' => 'name.chest',
+        ]);
+        $exerciseMuscle = new ExerciseMuscle();
+        $exerciseMuscle->exercise = $exercise;
+        $exerciseMuscle->muscleGroup = $muscleGroup;
+        $exerciseMuscle->type = MuscleTypeEnum::PRIMARY;
+        $exercise->exerciseMuscles->add($exerciseMuscle);
+
+        $workout = new Workout();
+        $workout->owner = $owner;
+        $workout->performedAt = new \DateTimeImmutable('-1 day');
+
+        $workoutExercise = new WorkoutExercise();
+        $workoutExercise->exercise = $exercise;
+        $workoutExercise->position = 0;
+        $workout->addWorkoutExercise($workoutExercise);
+
+        $set = new ExerciseSet();
+        $set->position = 0;
+        $set->distance = 100;
         $workoutExercise->addExerciseSet($set);
 
         $em->persist($exercise);

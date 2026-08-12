@@ -8,6 +8,7 @@ exercise:
     name_not_blank: Er moet een naam worden opgegeven
 
 exercise_set:
+    distance_required: De afstand moet worden ingevuld en positief zijn.
     duration_required: De duur moet worden ingevuld en positief zijn.
     reps_required: De herhalingen moeten worden ingevuld en positief zijn.
     weight_positive_or_zero: Het gewicht mag niet negatief zijn.

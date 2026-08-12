@@ -195,6 +195,102 @@ final class WorkoutTonnageRepositoryTest extends KernelTestCase
         $em->flush();
     }
 
+    public function testFindTonnageByWorkoutIdsCountsDistanceBasedSetWeightAloneAsOneRep(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var WorkoutTonnageRepository $workoutTonnageRepository */
+        $workoutTonnageRepository = static::getContainer()->get(WorkoutTonnageRepository::class);
+
+        $user = $this->createTestUser($em);
+        $weightExercise = $this->createTestExercise($em);
+        $distanceExercise = $this->createTestExercise($em, MeasurementType::DISTANCE);
+
+        $workout = new Workout();
+        $workout->owner = $user;
+        $workout->performedAt = new \DateTimeImmutable('-1 day');
+
+        $weightWorkoutExercise = new WorkoutExercise();
+        $weightWorkoutExercise->exercise = $weightExercise;
+        $weightWorkoutExercise->position = 0;
+        $workout->addWorkoutExercise($weightWorkoutExercise);
+
+        $weightSet = new ExerciseSet();
+        $weightSet->position = 0;
+        $weightSet->weight = 100.0;
+        $weightSet->reps = 5;
+        $weightWorkoutExercise->addExerciseSet($weightSet);
+
+        $distanceWorkoutExercise = new WorkoutExercise();
+        $distanceWorkoutExercise->exercise = $distanceExercise;
+        $distanceWorkoutExercise->position = 1;
+        $workout->addWorkoutExercise($distanceWorkoutExercise);
+
+        // Farmer walk à 30kg sur 50m : compte pour 30 dans le tonnage (poids seul, comme une
+        // série à 1 rep), jamais poids × distance — les unités ne seraient pas comparables au
+        // reste du total.
+        $distanceSet = new ExerciseSet();
+        $distanceSet->position = 0;
+        $distanceSet->weight = 30.0;
+        $distanceSet->distance = 50;
+        $distanceWorkoutExercise->addExerciseSet($distanceSet);
+
+        $em->persist($workout);
+        $em->flush();
+
+        $result = $workoutTonnageRepository->findTonnageByWorkoutIds([(string) $workout->id]);
+
+        // 100kg × 5 (weight_reps) + 30kg (distance, poids seul) = 530.
+        self::assertSame(530.0, $result[(string) $workout->id]);
+
+        $em->remove($workout);
+        $em->remove($weightExercise);
+        $em->remove($distanceExercise);
+        $em->remove($user);
+        $em->flush();
+    }
+
+    public function testFindTonnageByWorkoutIdsTreatsBodyweightDistanceSetAsZeroTonnage(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var WorkoutTonnageRepository $workoutTonnageRepository */
+        $workoutTonnageRepository = static::getContainer()->get(WorkoutTonnageRepository::class);
+
+        $user = $this->createTestUser($em);
+        $distanceExercise = $this->createTestExercise($em, MeasurementType::DISTANCE);
+
+        $workout = new Workout();
+        $workout->owner = $user;
+        $workout->performedAt = new \DateTimeImmutable('-1 day');
+
+        $distanceWorkoutExercise = new WorkoutExercise();
+        $distanceWorkoutExercise->exercise = $distanceExercise;
+        $distanceWorkoutExercise->position = 0;
+        $workout->addWorkoutExercise($distanceWorkoutExercise);
+
+        $distanceSet = new ExerciseSet();
+        $distanceSet->position = 0;
+        $distanceSet->distance = 50;
+        $distanceWorkoutExercise->addExerciseSet($distanceSet);
+
+        $em->persist($workout);
+        $em->flush();
+
+        $result = $workoutTonnageRepository->findTonnageByWorkoutIds([(string) $workout->id]);
+
+        self::assertSame(0.0, $result[(string) $workout->id]);
+
+        $em->remove($workout);
+        $em->remove($distanceExercise);
+        $em->remove($user);
+        $em->flush();
+    }
+
     private function createTestUser(EntityManagerInterface $em): User
     {
         $user = new User();

@@ -180,6 +180,23 @@ class ExerciseEditControllerTest extends WebTestCase
         $this->removeExerciseById($exerciseId);
     }
 
+    public function testMeasurementTypeCanBeChangedToDistanceWhenExerciseHasNoRecordedSet(): void
+    {
+        $client = $this->login(self::OWNER);
+        $owner = $this->getUserByEmail(self::OWNER);
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $exerciseId = (string) $this->createOwnedExercise($em, $owner, 'Unlocked distance exercise')->id;
+        $url = \sprintf('/fr/bibliotheque/exercice/%s/modifier', $exerciseId);
+
+        $this->submitEdit($client, $url, name: 'Unlocked distance exercise', measurementType: 'distance');
+
+        $exercise = $this->getExerciseById($exerciseId);
+        $this->assertSame(MeasurementType::DISTANCE, $exercise->measurementType);
+
+        $this->removeExerciseById($exerciseId);
+    }
+
     public function testOwnerIsUnchangedAfterEdit(): void
     {
         $client = $this->login(self::OWNER);

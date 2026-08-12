@@ -164,6 +164,17 @@ class ExerciseCreateControllerTest extends WebTestCase
         $this->assertSame(MeasurementType::TIME, $exercise->measurementType);
     }
 
+    public function testExerciseCanBeCreatedWithDistanceMeasurementType(): void
+    {
+        $client = $this->login(self::USER);
+        $this->submitExercise($client, measurementType: 'distance');
+
+        /** @var Exercise $exercise */
+        $exercise = $this->findExercise(self::USER, 'Test Exercise');
+
+        $this->assertSame(MeasurementType::DISTANCE, $exercise->measurementType);
+    }
+
     public function testExerciseIsIsolatedFromOtherUser(): void
     {
         $client = $this->login(self::USER);
