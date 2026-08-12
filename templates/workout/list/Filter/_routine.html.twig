@@ -1,0 +1,12 @@
+{# Params: routines, filterRoutine — rendu uniquement si routines n'est pas vide, cf. _filters.html.twig #}
+<select
+    data-action="change->workout--list--workout-filters#onRoutineChange"
+    class="bg-white/[0.04] border border-white/[0.07] rounded-lg px-3 py-1.5 text-[12px] text-[#f0f4ff] font-['DM_Sans'] outline-none cursor-pointer"
+    aria-label="{{ 'workout.list.filter.routine_label'|trans({}, 'navigation') }}"
+>
+    <option value="" {{ filterRoutine is null ? 'selected' : '' }}>{{ 'workout.list.filter.all_sessions'|trans({}, 'navigation') }}</option>
+    <option value="free" {{ 'free' == filterRoutine ? 'selected' : '' }}>{{ 'workout.list.free_session'|trans({}, 'navigation') }}</option>
+    {% for routine in routines %}
+        <option value="{{ routine.id }}" {{ filterRoutine == routine.id ~ '' ? 'selected' : '' }}>{{ routine.name }}</option>
+    {% endfor %}
+</select>

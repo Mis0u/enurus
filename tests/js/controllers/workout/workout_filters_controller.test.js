@@ -18,6 +18,11 @@ describe('workout--list--workout-filters controller', () => {
                 <input type="date" data-workout--list--workout-filters-target="dateInput"
                        data-action="change->workout--list--workout-filters#onDateChange">
                 <button data-action="click->workout--list--workout-filters#clearDate"></button>
+                <select data-action="change->workout--list--workout-filters#onRoutineChange">
+                    <option value=""></option>
+                    <option value="free">free</option>
+                    <option value="routine-id-123">Push Day</option>
+                </select>
             </div>
         `;
 
@@ -30,8 +35,8 @@ describe('workout--list--workout-filters controller', () => {
         document.body.innerHTML = '';
     });
 
-    it('navigates with the date query param and drops filter and page', () => {
-        stubLocation('http://localhost/fr/mes-seances?filter=week&page=2');
+    it('navigates with the date query param and drops filter, routine and page', () => {
+        stubLocation('http://localhost/fr/mes-seances?filter=week&routine=free&page=2');
 
         const dateInput = document.querySelector('[data-workout--list--workout-filters-target="dateInput"]');
         dateInput.value = '2026-01-14';
@@ -40,6 +45,7 @@ describe('workout--list--workout-filters controller', () => {
         const url = new URL(window.location.href);
         expect(url.searchParams.get('date')).toBe('2026-01-14');
         expect(url.searchParams.has('filter')).toBe(false);
+        expect(url.searchParams.has('routine')).toBe(false);
         expect(url.searchParams.has('page')).toBe(false);
     });
 
@@ -61,6 +67,55 @@ describe('workout--list--workout-filters controller', () => {
         const url = new URL(window.location.href);
         expect(url.searchParams.has('date')).toBe(false);
         expect(url.searchParams.has('page')).toBe(false);
+        expect(url.searchParams.get('filter')).toBe('week');
+    });
+
+    it('onRoutineChange sets the routine query param, drops page, keeps other filters', () => {
+        stubLocation('http://localhost/fr/mes-seances?filter=week&page=2');
+
+        const select = document.querySelector('select');
+        select.value = 'routine-id-123';
+        select.dispatchEvent(new Event('change'));
+
+        const url = new URL(window.location.href);
+        expect(url.searchParams.get('routine')).toBe('routine-id-123');
+        expect(url.searchParams.has('page')).toBe(false);
+        expect(url.searchParams.get('filter')).toBe('week');
+    });
+
+    it('onRoutineChange with the "free" option filters on free sessions', () => {
+        stubLocation('http://localhost/fr/mes-seances');
+
+        const select = document.querySelector('select');
+        select.value = 'free';
+        select.dispatchEvent(new Event('change'));
+
+        const url = new URL(window.location.href);
+        expect(url.searchParams.get('routine')).toBe('free');
+    });
+
+    it('onRoutineChange with the empty option removes the routine query param', () => {
+        stubLocation('http://localhost/fr/mes-seances?routine=free&page=3');
+
+        const select = document.querySelector('select');
+        select.value = '';
+        select.dispatchEvent(new Event('change'));
+
+        const url = new URL(window.location.href);
+        expect(url.searchParams.has('routine')).toBe(false);
+        expect(url.searchParams.has('page')).toBe(false);
+    });
+
+    it('onRoutineChange drops the date query param, keeping filter', () => {
+        stubLocation('http://localhost/fr/mes-seances?date=2026-01-14&filter=week');
+
+        const select = document.querySelector('select');
+        select.value = 'routine-id-123';
+        select.dispatchEvent(new Event('change'));
+
+        const url = new URL(window.location.href);
+        expect(url.searchParams.has('date')).toBe(false);
+        expect(url.searchParams.get('routine')).toBe('routine-id-123');
         expect(url.searchParams.get('filter')).toBe('week');
     });
 });

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller\Workout;
 
+use App\Entity\Routine;
 use App\Entity\User;
 use App\Entity\Workout;
+use App\Repository\RoutineRepository;
 use App\Repository\WorkoutMuscleRepository;
 use App\Repository\WorkoutRepository;
 use App\Repository\WorkoutStatsRepository;
@@ -46,6 +48,7 @@ class WorkoutListController extends AbstractController
         WorkoutTonnageRepository $workoutTonnageRepository,
         WorkoutMuscleRepository $workoutMuscleRepository,
         WorkoutStatsRepository $workoutStatsRepository,
+        RoutineRepository $routineRepository,
         PaginatorInterface $paginator,
         WeightConverterService $weightConverter,
         WorkoutRecordDetectionService $workoutRecordDetectionService,
@@ -53,9 +56,20 @@ class WorkoutListController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        $filters = $this->resolveFilters($request);
+        /** @var array<Routine> $routines */
+        $routines = $routineRepository->findByOwnerOrderedByDate($user)->getQuery()->getResult();
+
+        $filters = $this->resolveFilters($request, $routines);
         $filterType = in_array($filters['type'] ?? null, ['week', 'month'], true) ? $filters['type'] : null;
         $filterDate = $request->query->get('date');
+        // Dérivé du filtre résolu (pas de la valeur brute de la query string) : une routine
+        // inconnue ou appartenant à un autre utilisateur est ignorée, le select ne doit alors
+        // afficher aucune sélection plutôt que refléter une valeur invalide.
+        $filterRoutine = match (true) {
+            'free' === ($filters['routine'] ?? null) => 'free',
+            ($filters['routine'] ?? null) instanceof Routine => (string) $filters['routine']->id,
+            default => null,
+        };
 
         $pagination = $this->paginate($paginator, $request, $workoutRepository, $user, $filters);
 
@@ -82,6 +96,8 @@ class WorkoutListController extends AbstractController
             'hiddenCountMap' => $hiddenCountMap,
             'filterType' => $filterType,
             'filterDate' => $filterDate,
+            'routines' => $routines,
+            'filterRoutine' => $filterRoutine,
             'limitAllowed' => self::DISPLAY_LIMIT_ALLOWED,
             'exerciseCountMap' => $exerciseCountMap,
             'hasPrMap' => $hasPrMap,
@@ -90,34 +106,68 @@ class WorkoutListController extends AbstractController
     }
 
     /**
-     * @return array{type?: string, value?: DateTimeImmutable}
+     * @param array<Routine> $routines routines de l'utilisateur, pour résoudre/valider le filtre
+     * @return array{type?: string, value?: DateTimeImmutable, routine?: 'free'|Routine}
      */
-    private function resolveFilters(Request $request): array
+    private function resolveFilters(Request $request, array $routines): array
     {
+        $filters = [];
+
         $filterDate = $request->query->get('date');
         $filterType = $request->query->get('filter');
 
         if (null !== $filterDate && '' !== $filterDate) {
             $parsedDate = DateTimeImmutable::createFromFormat('Y-m-d', $filterDate);
             if (false !== $parsedDate) {
-                return [
-                    'type' => 'date',
-                    'value' => $parsedDate,
-                ];
+                $filters['type'] = 'date';
+                $filters['value'] = $parsedDate;
             }
         }
 
-        if (in_array($filterType, ['week', 'month'], true)) {
-            return [
-                'type' => $filterType,
-            ];
+        if (! isset($filters['type']) && in_array($filterType, ['week', 'month'], true)) {
+            $filters['type'] = $filterType;
         }
 
-        return [];
+        $routineFilter = $this->resolveRoutineFilter($request, $routines);
+
+        // Le filtre date est exclusif : combiné à une routine, il n'apporte rien puisqu'une
+        // journée ne contient jamais qu'une poignée de séances. semaine/mois restent combinables.
+        if (null !== $routineFilter && 'date' !== ($filters['type'] ?? null)) {
+            $filters['routine'] = $routineFilter;
+        }
+
+        return $filters;
     }
 
     /**
-     * @param array{type?: string, value?: \DateTimeImmutable} $filters
+     * @param array<Routine> $routines
+     * @return 'free'|Routine|null
+     */
+    private function resolveRoutineFilter(Request $request, array $routines): string|Routine|null
+    {
+        $routineParam = $request->query->get('routine');
+
+        if ('free' === $routineParam) {
+            return 'free';
+        }
+
+        if (null === $routineParam || '' === $routineParam) {
+            return null;
+        }
+
+        foreach ($routines as $routine) {
+            if ((string) $routine->id === $routineParam) {
+                return $routine;
+            }
+        }
+
+        // Routine inconnue ou n'appartenant pas à l'utilisateur : filtre silencieusement ignoré,
+        // même logique que pour un filtre de période inconnu.
+        return null;
+    }
+
+    /**
+     * @param array{type?: string, value?: \DateTimeImmutable, routine?: 'free'|Routine} $filters
      * @return PaginationInterface<int, Workout>
      */
     private function paginate(

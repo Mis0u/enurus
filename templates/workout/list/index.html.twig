@@ -19,6 +19,8 @@
         {% include 'workout/list/_filters.html.twig' with {
             'filterType': filterType,
             'filterDate': filterDate,
+            'routines': routines,
+            'filterRoutine': filterRoutine,
             'pagination': pagination,
         } only %}
 
@@ -50,7 +52,7 @@
             {% include '_pagination/_pagination.html.twig' with {
                 'pagination': pagination,
                 'route': 'app_workout_list',
-                'routeParams': {'filter': filterType, 'date': filterDate},
+                'routeParams': {'filter': filterType, 'date': filterDate, 'routine': filterRoutine},
                 'limitAllowed': limitAllowed,
             } only %}
         {% endif %}

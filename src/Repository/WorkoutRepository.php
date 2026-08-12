@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Entity\Routine;
 use App\Entity\User;
 use App\Entity\Workout;
 use DateTimeImmutable;
@@ -79,7 +80,7 @@ class WorkoutRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param array{type?: string, value?: DateTimeImmutable} $filters
+     * @param array{type?: string, value?: DateTimeImmutable, routine?: 'free'|Routine} $filters
      */
     public function findByUserPaginated(User $user, array $filters = []): QueryBuilder
     {
@@ -94,6 +95,17 @@ class WorkoutRepository extends ServiceEntityRepository
             $qb->andWhere('w.performedAt BETWEEN :start AND :end')
                 ->setParameter('start', $start)
                 ->setParameter('end', $end);
+        }
+
+        // Filtre indépendant du filtre de période (combinable, pas exclusif) : "quelle routine"
+        // et "quelle période" sont deux axes différents.
+        $routineFilter = $filters['routine'] ?? null;
+
+        if ('free' === $routineFilter) {
+            $qb->andWhere('w.routine IS NULL');
+        } elseif ($routineFilter instanceof Routine) {
+            $qb->andWhere('w.routine = :routine')
+                ->setParameter('routine', $routineFilter);
         }
 
         return $qb;

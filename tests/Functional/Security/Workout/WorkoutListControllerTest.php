@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security\Workout;
 
+use App\Entity\Routine;
+use App\Entity\User;
+use App\Entity\Workout;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -265,5 +269,145 @@ class WorkoutListControllerTest extends WebTestCase
             $crawler->filter('.session-tonnage')->text(),
             'Le tonnage doit être affiché en kg pour un user kg'
         );
+    }
+
+    // -------------------------------------------------------------------------
+    // Filtre routine
+    // -------------------------------------------------------------------------
+
+    public function testRoutineFilterIsHiddenWhenUserHasNoRoutines(): void
+    {
+        $client = $this->login(self::USER_EMPTY);
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(0, $crawler->filter('[data-action="change->workout--list--workout-filters#onRoutineChange"]'));
+    }
+
+    public function testRoutineFilterNarrowsToWorkoutsOfThatRoutine(): void
+    {
+        $client = $this->login(self::USER_EMPTY);
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::USER_EMPTY);
+        $routine = $this->createRoutine($em, $owner, 'Push Day');
+        $this->createWorkout($em, $owner, $routine);
+        $freeWorkout = $this->createWorkout($em, $owner, null);
+
+        $crawler = $client->request(Request::METHOD_GET, self::URL . '?routine=' . $routine->id);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(1, $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]'));
+
+        $this->removeWorkout($em, $freeWorkout);
+    }
+
+    public function testFreeRoutineFilterShowsOnlyFreeSessions(): void
+    {
+        $client = $this->login(self::USER_EMPTY);
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::USER_EMPTY);
+        $routine = $this->createRoutine($em, $owner, 'Pull Day');
+        $this->createWorkout($em, $owner, $routine);
+        $this->createWorkout($em, $owner, null);
+
+        $crawler = $client->request(Request::METHOD_GET, self::URL . '?routine=free');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(1, $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]'));
+    }
+
+    public function testUnknownRoutineFilterIsIgnoredAndShowsAllWorkouts(): void
+    {
+        $client = $this->login(self::USER_EMPTY);
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::USER_EMPTY);
+        // Routine appartenant à un autre utilisateur : ne doit jamais filtrer les séances de USER_EMPTY.
+        $otherOwner = $this->getUserByEmail(self::USER_11);
+        $otherRoutine = $this->createRoutine($em, $otherOwner, 'Not mine');
+        $this->createWorkout($em, $owner, null);
+        $this->createWorkout($em, $owner, null);
+
+        $crawler = $client->request(Request::METHOD_GET, self::URL . '?routine=' . $otherRoutine->id);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(2, $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]'));
+
+        $em->remove($otherRoutine);
+        $em->flush();
+    }
+
+    public function testRoutineFilterSelectorIsPreselected(): void
+    {
+        $client = $this->login(self::USER_EMPTY);
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::USER_EMPTY);
+        $routine = $this->createRoutine($em, $owner, 'Leg Day');
+        $this->createWorkout($em, $owner, $routine);
+
+        $crawler = $client->request(Request::METHOD_GET, self::URL . '?routine=' . $routine->id);
+
+        $this->assertResponseIsSuccessful();
+        $selected = $crawler->filter('[data-action="change->workout--list--workout-filters#onRoutineChange"] option[selected]');
+        $this->assertSame((string) $routine->id, $selected->attr('value'));
+    }
+
+    public function testRoutineFilterIsIgnoredWhenCombinedWithDateFilter(): void
+    {
+        $client = $this->login(self::USER_EMPTY);
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::USER_EMPTY);
+        $routine = $this->createRoutine($em, $owner, 'Push Day');
+        $this->createWorkout($em, $owner, $routine);
+        $freeWorkout = $this->createWorkout($em, $owner, null);
+
+        // Filtre date exclusif : la routine est ignorée, les deux séances de la veille restent affichées.
+        $date = (new \DateTimeImmutable('-1 day'))->format('Y-m-d');
+        $crawler = $client->request(Request::METHOD_GET, self::URL . '?date=' . $date . '&routine=' . $routine->id);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(2, $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]'));
+
+        $this->removeWorkout($em, $freeWorkout);
+    }
+
+    private function createRoutine(EntityManagerInterface $em, User $owner, string $name): Routine
+    {
+        $routine = new Routine();
+        $routine->owner = $owner;
+        $routine->name = $name . ' ' . uniqid();
+
+        $em->persist($routine);
+        $em->flush();
+
+        return $routine;
+    }
+
+    private function createWorkout(EntityManagerInterface $em, User $owner, ?Routine $routine): Workout
+    {
+        $workout = new Workout();
+        $workout->owner = $owner;
+        $workout->performedAt = new \DateTimeImmutable('-1 day');
+        $workout->routine = $routine;
+
+        $em->persist($workout);
+        $em->flush();
+
+        return $workout;
+    }
+
+    private function removeWorkout(EntityManagerInterface $em, Workout $workout): void
+    {
+        $em->remove($workout);
+        $em->flush();
     }
 }
