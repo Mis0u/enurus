@@ -173,6 +173,7 @@ exercise:
         description_toggle: Beschreibung hinzufügen
         legend_primary: Primäre Muskeln
         legend_secondary: Sekundäre Muskeln
+        measurement_type_distance: Distanz (Meter)
         measurement_type_label: Gemessen nach
         measurement_type_locked_hint: "Gesperrt: Für diese Übung sind bereits Sätze erfasst."
         measurement_type_time: Dauer
@@ -504,6 +505,7 @@ workout:
         no_exercise:
             text: Füge mindestens eine Übung hinzu, bevor du dein Training bestätigst
             title: Keine Übung
+        required_distance: Die Distanz ist erforderlich
         required_duration: Die Dauer ist erforderlich
         required_reps: Die Wiederholungen sind erforderlich
         required_weight: Das Gewicht ist erforderlich
@@ -581,6 +583,8 @@ workout:
         placeholder: Name der Übung...
         title: Übung suchen
     series: Sätze
+    series_distance: Distanz (Meter)
+    series_distance_abbreviate: m
     series_duration: Dauer (Sekunden)
     series_duration_abbreviate: Sek
     show:
@@ -604,6 +608,7 @@ workout:
             error: "Bild konnte nicht erstellt werden, versuche es erneut."
             other_exercises: "{count, plural, =1 {+ # weitere Übung} other {+ # weitere Übungen}}"
         sets_table:
+            distance: Distanz
             duration: Dauer
             reps: Wdh
             tonnage: Tonnage

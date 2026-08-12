@@ -8,6 +8,7 @@ exercise:
     name_not_blank: É necessário indicar um nome
 
 exercise_set:
+    distance_required: A distância deve ser indicada e ser positiva.
     duration_required: A duração deve ser indicada e ser positiva.
     reps_required: As repetições devem ser indicadas e positivas.
     weight_positive_or_zero: O peso não pode ser negativo.

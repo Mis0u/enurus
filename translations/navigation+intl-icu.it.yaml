@@ -173,6 +173,7 @@ exercise:
         description_toggle: Aggiungi una descrizione
         legend_primary: Muscoli primari
         legend_secondary: Muscoli secondari
+        measurement_type_distance: Distanza (metri)
         measurement_type_label: Misurato per
         measurement_type_locked_hint: "Bloccato: questo esercizio ha già serie registrate."
         measurement_type_time: Durata
@@ -504,6 +505,7 @@ workout:
         no_exercise:
             text: Aggiungi almeno un esercizio prima di convalidare il tuo allenamento
             title: Nessun esercizio
+        required_distance: La distanza è obbligatoria
         required_duration: La durata è obbligatoria
         required_reps: Le ripetizioni sono obbligatorie
         required_weight: Il peso è obbligatorio
@@ -581,6 +583,8 @@ workout:
         placeholder: Nome dell'esercizio...
         title: Cerca un esercizio
     series: Serie
+    series_distance: Distanza (metri)
+    series_distance_abbreviate: m
     series_duration: Durata (secondi)
     series_duration_abbreviate: sec
     show:
@@ -604,6 +608,7 @@ workout:
             error: "Impossibile generare l'immagine, riprova."
             other_exercises: "{count, plural, =1 {+ # altro esercizio} other {+ # altri esercizi}}"
         sets_table:
+            distance: Distanza
             duration: Durata
             reps: Rip
             tonnage: Tonnellaggio

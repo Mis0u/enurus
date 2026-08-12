@@ -173,6 +173,7 @@ exercise:
         description_toggle: Add a description
         legend_primary: Primary muscles
         legend_secondary: Secondary muscles
+        measurement_type_distance: Distance (meters)
         measurement_type_label: Measured by
         measurement_type_locked_hint: "Locked: this exercise already has recorded sets."
         measurement_type_time: Duration
@@ -504,6 +505,7 @@ workout:
         no_exercise:
             text: Add at least one exercise before submitting your workout
             title: No exercise
+        required_distance: Distance is required
         required_duration: Duration is required
         required_reps: Reps are required
         required_weight: Weight is required
@@ -581,6 +583,8 @@ workout:
         placeholder: Exercise name...
         title: Search for an exercise
     series: Sets
+    series_distance: Distance (meters)
+    series_distance_abbreviate: m
     series_duration: Duration (seconds)
     series_duration_abbreviate: sec
     show:
@@ -604,6 +608,7 @@ workout:
             error: "Couldn't generate the image, try again."
             other_exercises: "{count, plural, =1 {+ # other exercise} other {+ # other exercises}}"
         sets_table:
+            distance: Distance
             duration: Duration
             reps: Reps
             tonnage: Tonnage

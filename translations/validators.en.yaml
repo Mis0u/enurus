@@ -8,6 +8,7 @@ exercise:
     name_not_blank: A name must be provided
 
 exercise_set:
+    distance_required: Distance must be provided and positive.
     duration_required: Duration must be provided and positive.
     reps_required: Reps must be provided and positive.
     weight_positive_or_zero: Weight cannot be negative.
