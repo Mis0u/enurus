@@ -34,8 +34,18 @@ final class WeightConverterService
     /**
      * Reconvertit in-place tous les ExerciseSet du Workout : lbs → kg avant persist.
      * Sans effet si l'unité est déjà KG.
+     *
+     * `$previousWeightsById` (poids déjà en kg, capturé avant `$form->handleRequest()`) permet
+     * de ne jamais reconvertir une série dont le poids ressort de la soumission strictement
+     * identique à sa valeur avant soumission : c'est le signe que le champ a été laissé vide et
+     * que le setter défensif `ExerciseSet::weight` a gardé l'ancienne valeur (déjà en kg) —
+     * la reconvertir la traiterait à tort comme un lbs fraîchement saisi et la corromprait
+     * (double conversion). Une série absente de `$previousWeightsById` (nouvelle série) est
+     * toujours convertie normalement.
+     *
+     * @param array<string, float> $previousWeightsById poids en kg avant soumission, keyé par ExerciseSet::id
      */
-    public function convertWorkoutSetsToKg(Workout $workout, UnitOfMeasureEnum $unit): void
+    public function convertWorkoutSetsToKg(Workout $workout, UnitOfMeasureEnum $unit, array $previousWeightsById = []): void
     {
         if (UnitOfMeasureEnum::KG === $unit) {
             return;
@@ -43,6 +53,12 @@ final class WeightConverterService
 
         foreach ($workout->workoutExercises as $workoutExercise) {
             foreach ($workoutExercise->exerciseSets as $set) {
+                $previousWeight = null !== $set->id ? ($previousWeightsById[(string) $set->id] ?? null) : null;
+
+                if (null !== $previousWeight && $previousWeight === $set->weight) {
+                    continue;
+                }
+
                 $set->weight = $this->convertToKg($set->weight, $unit);
             }
         }

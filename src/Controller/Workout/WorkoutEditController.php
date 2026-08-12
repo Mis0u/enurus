@@ -56,6 +56,7 @@ class WorkoutEditController extends AbstractController
         $user = $this->getUser();
 
         $originalPerformedAt = $workout->performedAt;
+        $previousWeightsById = $this->snapshotWeightsById($workout);
 
         $form = $this->createForm(WorkoutType::class, $workout, [
             'is_edit' => true,
@@ -72,7 +73,7 @@ class WorkoutEditController extends AbstractController
                 (int) $originalPerformedAt->format('i'),
                 (int) $originalPerformedAt->format('s'),
             );
-            $weightConverter->convertWorkoutSetsToKg($workout, $user->unitOfMeasure);
+            $weightConverter->convertWorkoutSetsToKg($workout, $user->unitOfMeasure, $previousWeightsById);
             $em->flush();
 
             return $this->redirectToRoute('app_workout_show', [
@@ -104,6 +105,27 @@ class WorkoutEditController extends AbstractController
             'imageMaxSizeBytes' => ImageConstraints::MAX_SIZE_BYTES,
             'imageAllowedMimeTypes' => ImageConstraints::ALLOWED_MIME_TYPES,
         ]);
+    }
+
+    /**
+     * Capture, avant `$form->handleRequest()`, le poids (déjà en kg) de chaque série existante —
+     * voir `WeightConverterService::convertWorkoutSetsToKg()` pour l'usage.
+     *
+     * @return array<string, float>
+     */
+    private function snapshotWeightsById(Workout $workout): array
+    {
+        $previousWeightsById = [];
+
+        foreach ($workout->workoutExercises as $workoutExercise) {
+            foreach ($workoutExercise->exerciseSets as $set) {
+                if (null !== $set->id) {
+                    $previousWeightsById[(string) $set->id] = $set->weight;
+                }
+            }
+        }
+
+        return $previousWeightsById;
     }
 
     /**
