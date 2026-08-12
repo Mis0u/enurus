@@ -7,7 +7,10 @@ namespace App\Controller\Exercise;
 use App\Entity\User;
 use App\Enum\Translations\LocaleAllowedEnum;
 use App\Repository\ExerciseRepository;
+use App\Repository\MuscleGroupRepository;
+use App\Service\Entity\ExercisePrimaryMuscleIdsResolver;
 use App\Service\Entity\ExerciseSorterService;
+use App\Service\Entity\MuscleGroupSorterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,6 +22,9 @@ final class ExerciseListController extends AbstractController
     public function __construct(
         private readonly ExerciseRepository $exerciseRepository,
         private readonly ExerciseSorterService $exerciseSorter,
+        private readonly MuscleGroupRepository $muscleGroupRepository,
+        private readonly MuscleGroupSorterService $muscleGroupSorter,
+        private readonly ExercisePrimaryMuscleIdsResolver $primaryMuscleIdsResolver,
     ) {
     }
 
@@ -43,9 +49,18 @@ final class ExerciseListController extends AbstractController
         $archived = $this->exerciseRepository->findArchivedByUser($user);
         $sortedArchived = $this->exerciseSorter->sortByName($archived, $user->locale ?? LocaleAllowedEnum::EN->value);
 
+        $allExercises = [...$sorted, ...$sortedArchived];
+        $sortedMuscleGroups = $this->muscleGroupSorter->sortByName(
+            $this->muscleGroupRepository->findAllOrderedByPosition(),
+            $user->locale ?? LocaleAllowedEnum::EN->value,
+        );
+
         return $this->render('exercise/list/index.html.twig', [
-            'exercises' => [...$sorted, ...$sortedArchived],
+            'exercises' => $allExercises,
             'totalCount' => count($sorted),
+            'muscleGroups' => $sortedMuscleGroups,
+            'primaryMuscleGroupIds' => $this->primaryMuscleIdsResolver->resolvePrimaryMuscleGroupIds($allExercises),
+            'secondaryMuscleGroupIds' => $this->primaryMuscleIdsResolver->resolveSecondaryMuscleGroupIds($allExercises),
         ]);
     }
 }
