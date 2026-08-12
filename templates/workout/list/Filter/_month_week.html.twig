@@ -1,5 +1,6 @@
+{% set routine_params = filterRoutine is not null ? {'routine': filterRoutine} : {} %}
 <a
-    href="{{ path('app_workout_list', {'filter': 'week', '_locale': app.request.locale}) }}"
+    href="{{ path('app_workout_list', {'filter': 'week', '_locale': app.request.locale}|merge(routine_params)) }}"
     data-workout--list--workout-filters-target="dateInput"="tabWeek"
     class="px-3 py-1.5 rounded-md text-[12px] font-medium transition-all duration-250
                 {% if filterType == 'week' and (filterDate is null or filterDate == '') %}
@@ -12,7 +13,7 @@
 {{ 'workout.list.filter.week'|trans({}, 'navigation') }}
 </a>
 <a
-    href="{{ path('app_workout_list', {'filter': 'month', '_locale': app.request.locale}) }}"
+    href="{{ path('app_workout_list', {'filter': 'month', '_locale': app.request.locale}|merge(routine_params)) }}"
     data-workout--list--workout-filters-target="dateInput"="tabMonth"
 class="px-3 py-1.5 rounded-md text-[12px] font-medium transition-all duration-250
                 {% if filterType == 'month' and (filterDate is null or filterDate == '') %}

@@ -10,10 +10,11 @@ export default class extends Controller {
             return;
         }
 
-        // Construit l'URL avec le query param date, sans filter
+        // Filtre exclusif : une date remplace la période (semaine/mois) et la routine.
         const url = new URL(window.location.href);
         url.searchParams.set('date', date);
         url.searchParams.delete('filter');
+        url.searchParams.delete('routine');
         url.searchParams.delete('page');
 
         window.location.href = url.toString();
@@ -26,7 +27,7 @@ export default class extends Controller {
         window.location.href = url.toString();
     }
 
-    // Filtre indépendant de la période (date/semaine/mois) — combinable, jamais retiré ici.
+    // Combinable avec semaine/mois (filter), mais exclusif avec la date.
     onRoutineChange(event) {
         const routine = event.target.value;
         const url = new URL(window.location.href);
@@ -37,6 +38,7 @@ export default class extends Controller {
             url.searchParams.delete('routine');
         }
 
+        url.searchParams.delete('date');
         url.searchParams.delete('page');
         window.location.href = url.toString();
     }

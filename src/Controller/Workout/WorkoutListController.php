@@ -130,7 +130,9 @@ class WorkoutListController extends AbstractController
 
         $routineFilter = $this->resolveRoutineFilter($request, $routines);
 
-        if (null !== $routineFilter) {
+        // Le filtre date est exclusif : combiné à une routine, il n'apporte rien puisqu'une
+        // journée ne contient jamais qu'une poignée de séances. semaine/mois restent combinables.
+        if (null !== $routineFilter && 'date' !== ($filters['type'] ?? null)) {
             $filters['routine'] = $routineFilter;
         }
 
