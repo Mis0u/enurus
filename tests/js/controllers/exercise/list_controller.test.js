@@ -6,11 +6,18 @@ function nextTick() {
     return new Promise(resolve => setTimeout(resolve, 0));
 }
 
-function card(id, { name, type }) {
-    return `<div data-exercise--list-target="card" data-name="${name}" data-type="${type}" id="${id}"></div>`;
+function card(id, { name, type, primary = '', secondary = '' }) {
+    return `<div data-exercise--list-target="card" data-name="${name}" data-type="${type}"
+                 data-primary-muscle-group-ids="${primary}" data-secondary-muscle-group-ids="${secondary}"
+                 id="${id}"></div>`;
 }
 
-async function buildDom(cardsHtml) {
+function muscleChip(id) {
+    return `<button data-exercise--list-target="muscleFilterChip" data-muscle-id="${id}" data-state="none"
+                    data-action="click->exercise--list#cycleMuscleFilter"></button>`;
+}
+
+async function buildDom(cardsHtml, muscleChipsHtml = '') {
     document.body.innerHTML = `
         <div data-controller="exercise--list">
             <input data-exercise--list-target="searchInput" data-action="input->exercise--list#onSearch">
@@ -21,6 +28,15 @@ async function buildDom(cardsHtml) {
             <button data-exercise--list-target="filterBtn" data-filter-type="archived"
                     data-action="click->exercise--list#toggleFilter"></button>
             <button data-exercise--list-target="resetBtn" data-action="click->exercise--list#resetFilters"></button>
+            ${muscleChipsHtml ? `
+                <details>
+                    <summary>
+                        Filtrer par muscle
+                        <span data-exercise--list-target="muscleFilterCount" hidden></span>
+                    </summary>
+                    <div>${muscleChipsHtml}</div>
+                </details>
+            ` : ''}
 
             <span data-exercise--list-target="counter">
                 <span data-exercise--list-target="counterText"></span>
@@ -244,5 +260,108 @@ describe('exercise--list controller', () => {
         select.dispatchEvent(new Event('change'));
 
         expect(visibleCardIds()).toEqual(Array.from({ length: 12 }, (_, i) => `c${i}`));
+    });
+
+    it('cycles a muscle chip through none -> primary -> secondary -> none, updating its pill class', async () => {
+        await buildDom(
+            [
+                card('c1', { name: 'squat', type: 'legs', primary: 'chest-id' }),
+                card('c2', { name: 'row', type: 'back', secondary: 'chest-id' }),
+            ].join(''),
+            muscleChip('chest-id'),
+        );
+
+        const chip = document.querySelector('[data-muscle-id="chest-id"]');
+
+        chip.click();
+        expect(chip.dataset.state).toBe('primary');
+        expect(chip.classList.contains('pill--primary')).toBe(true);
+        expect(visibleCardIds()).toEqual(['c1']);
+
+        chip.click();
+        expect(chip.dataset.state).toBe('secondary');
+        expect(chip.classList.contains('pill--secondary')).toBe(true);
+        expect(visibleCardIds()).toEqual(['c2']);
+
+        chip.click();
+        expect(chip.dataset.state).toBe('none');
+        expect(chip.classList.contains('pill--primary')).toBe(false);
+        expect(chip.classList.contains('pill--secondary')).toBe(false);
+        expect(visibleCardIds()).toEqual(['c1', 'c2']);
+    });
+
+    it('combines the muscle filter (OR across chips) with search and type filters (AND)', async () => {
+        await buildDom(
+            [
+                card('c1', { name: 'squat', type: 'legs', primary: 'legs-id' }),
+                card('c2', { name: 'bench press', type: 'chest', primary: 'chest-id' }),
+                card('c3', { name: 'row', type: 'back', primary: 'back-id' }),
+            ].join(''),
+            [muscleChip('legs-id'), muscleChip('chest-id')].join(''),
+        );
+
+        document.querySelector('[data-muscle-id="legs-id"]').click();
+        document.querySelector('[data-muscle-id="chest-id"]').click();
+        expect(visibleCardIds()).toEqual(['c1', 'c2']);
+
+        const input = document.querySelector('[data-exercise--list-target="searchInput"]');
+        input.value = 'bench';
+        input.dispatchEvent(new Event('input'));
+        expect(visibleCardIds()).toEqual(['c2']);
+    });
+
+    it('resetFilters clears active muscle chips back to none', async () => {
+        await buildDom(
+            [
+                card('c1', { name: 'squat', type: 'legs', primary: 'legs-id' }),
+                card('c2', { name: 'bench press', type: 'chest', primary: 'chest-id' }),
+            ].join(''),
+            muscleChip('legs-id'),
+        );
+
+        const chip = document.querySelector('[data-muscle-id="legs-id"]');
+        chip.click();
+        expect(visibleCardIds()).toEqual(['c1']);
+
+        document.querySelector('[data-exercise--list-target="resetBtn"]').click();
+
+        expect(chip.dataset.state).toBe('none');
+        expect(visibleCardIds()).toEqual(['c1', 'c2']);
+    });
+
+    it('shows the reset button when a muscle filter is active, even with no other filter', async () => {
+        await buildDom(
+            card('c1', { name: 'squat', type: 'legs', primary: 'legs-id' }),
+            muscleChip('legs-id'),
+        );
+        const resetBtn = document.querySelector('[data-exercise--list-target="resetBtn"]');
+
+        expect(resetBtn.hidden).toBe(true);
+
+        document.querySelector('[data-muscle-id="legs-id"]').click();
+        expect(resetBtn.hidden).toBe(false);
+    });
+
+    it('shows the active muscle filter count next to the toggle, and hides it on reset', async () => {
+        await buildDom(
+            [
+                card('c1', { name: 'squat', type: 'legs', primary: 'legs-id' }),
+                card('c2', { name: 'bench press', type: 'chest', primary: 'chest-id' }),
+            ].join(''),
+            [muscleChip('legs-id'), muscleChip('chest-id')].join(''),
+        );
+        const count = document.querySelector('[data-exercise--list-target="muscleFilterCount"]');
+
+        expect(count.hidden).toBe(true);
+
+        document.querySelector('[data-muscle-id="legs-id"]').click();
+        expect(count.hidden).toBe(false);
+        expect(count.textContent).toBe('(1)');
+
+        document.querySelector('[data-muscle-id="chest-id"]').click();
+        expect(count.textContent).toBe('(2)');
+
+        document.querySelector('[data-exercise--list-target="resetBtn"]').click();
+        expect(count.hidden).toBe(true);
     });
 });

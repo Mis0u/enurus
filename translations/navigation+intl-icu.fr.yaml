@@ -212,6 +212,7 @@ exercise:
                     other {# exercices}
                 }
             mine: Mes exercices
+            muscle_label: Filtrer par muscle
             reset: Réinitialiser les filtres
             search_placeholder: Rechercher un exercice…
         pagination:

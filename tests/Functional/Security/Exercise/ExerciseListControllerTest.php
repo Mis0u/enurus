@@ -138,6 +138,75 @@ final class ExerciseListControllerTest extends WebTestCase
         );
     }
 
+    // =========================================================
+    // Filtre par muscle
+    // =========================================================
+
+    public function testMuscleFilterChipsAreRendered(): void
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('[data-exercise--list-target="muscleFilterChip"]')->count(),
+            'Aucune puce de filtre muscle trouvée.',
+        );
+    }
+
+    public function testMuscleFilterIsCollapsedInADetailsDisclosure(): void
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+
+        $this->assertResponseIsSuccessful();
+
+        $chips = $crawler->filter('[data-exercise--list-target="muscleFilterChip"]');
+        $this->assertGreaterThan(0, $chips->count());
+
+        // Repliable par défaut (comme le sélecteur d'exercices des routines) — évite de polluer
+        // la page sur mobile avec la liste complète des groupes musculaires toujours visible.
+        $details = $chips->first()->closest('details');
+        $this->assertNotNull($details, 'Les puces de filtre muscle doivent être repliées dans un <details>.');
+        $this->assertNull($details->attr('open'));
+    }
+
+    public function testExerciseCardExposesItsMuscleGroupIds(): void
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+
+        $this->assertResponseIsSuccessful();
+
+        $card = $crawler->filter('[data-name="reverse fly"]');
+        $this->assertGreaterThan(0, $card->count(), 'Card "Reverse fly" introuvable.');
+
+        $this->assertNotSame('', $card->attr('data-primary-muscle-group-ids'));
+        $this->assertNotSame('', $card->attr('data-secondary-muscle-group-ids'));
+    }
+
+    public function testExerciseCardMuscleGroupIdMatchesAFilterChip(): void
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+
+        $this->assertResponseIsSuccessful();
+
+        $primaryId = $crawler->filter('[data-name="reverse fly"]')->attr('data-primary-muscle-group-ids');
+        $this->assertIsString($primaryId);
+
+        $chipIds = $crawler->filter('[data-exercise--list-target="muscleFilterChip"]')->each(
+            fn ($node) => $node->attr('data-muscle-id'),
+        );
+
+        $this->assertContains(
+            $primaryId,
+            $chipIds,
+            'Le groupe musculaire primaire de la card ne correspond à aucune puce de filtre rendue.',
+        );
+    }
+
     public function testEditAndDeleteButtonsAreAbsentOnOfficialExercise(): void
     {
         $client = $this->login(self::USER);
