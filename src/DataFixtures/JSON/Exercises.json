@@ -562,6 +562,7 @@
     "name": "farmer_walk.name",
     "description": "farmer_walk.description",
     "isPublic": true,
+    "measurementType": "distance",
     "primary": [
       "name.forearms",
       "name.traps_upper"
@@ -873,6 +874,7 @@
     "name": "plank.name",
     "description": "plank.description",
     "isPublic": true,
+    "measurementType": "time",
     "primary": [
       "name.abs"
     ],
