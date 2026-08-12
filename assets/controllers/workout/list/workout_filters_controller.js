@@ -25,4 +25,19 @@ export default class extends Controller {
         url.searchParams.delete('page');
         window.location.href = url.toString();
     }
+
+    // Filtre indépendant de la période (date/semaine/mois) — combinable, jamais retiré ici.
+    onRoutineChange(event) {
+        const routine = event.target.value;
+        const url = new URL(window.location.href);
+
+        if (routine) {
+            url.searchParams.set('routine', routine);
+        } else {
+            url.searchParams.delete('routine');
+        }
+
+        url.searchParams.delete('page');
+        window.location.href = url.toString();
+    }
 }
