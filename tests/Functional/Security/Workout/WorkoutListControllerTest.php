@@ -359,6 +359,27 @@ class WorkoutListControllerTest extends WebTestCase
         $this->assertSame((string) $routine->id, $selected->attr('value'));
     }
 
+    public function testRoutineFilterIsIgnoredWhenCombinedWithDateFilter(): void
+    {
+        $client = $this->login(self::USER_EMPTY);
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::USER_EMPTY);
+        $routine = $this->createRoutine($em, $owner, 'Push Day');
+        $this->createWorkout($em, $owner, $routine);
+        $freeWorkout = $this->createWorkout($em, $owner, null);
+
+        // Filtre date exclusif : la routine est ignorée, les deux séances de la veille restent affichées.
+        $date = (new \DateTimeImmutable('-1 day'))->format('Y-m-d');
+        $crawler = $client->request(Request::METHOD_GET, self::URL . '?date=' . $date . '&routine=' . $routine->id);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(2, $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]'));
+
+        $this->removeWorkout($em, $freeWorkout);
+    }
+
     private function createRoutine(EntityManagerInterface $em, User $owner, string $name): Routine
     {
         $routine = new Routine();
