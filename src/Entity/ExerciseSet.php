@@ -95,9 +95,26 @@ class ExerciseSet
     }
 
     /**
+     * Distance parcourue, en mètres — sans objet pour un exercice `WEIGHT_REPS`/`TIME`. Pendant
+     * du PR "poids max" pour les exercices `DISTANCE` : c'est cette valeur, seule, qui détermine
+     * un record (le poids éventuellement ajouté est ignoré du calcul, même convention que
+     * `duration` pour `TIME`).
+     */
+    #[ORM\Column(type: 'integer', nullable: true)]
+    public ?int $distance = null {
+        get {
+            return $this->distance;
+        }
+        set(?int $distance) {
+            $this->distance = $distance ?? $this->distance;
+        }
+    }
+
+    /**
      * Les champs obligatoires dépendent du type de mesure de l'exercice parent — voir
      * `MeasurementType`. Centralisé ici plutôt qu'en attributs statiques `Assert\Positive`/
-     * `NotBlank` sur `weight`/`reps`/`duration`, qui ne peuvent pas varier selon une autre entité.
+     * `NotBlank` sur `weight`/`reps`/`duration`/`distance`, qui ne peuvent pas varier selon une
+     * autre entité.
      */
     #[Assert\Callback]
     public function validateByMeasurementType(ExecutionContextInterface $context): void
@@ -106,6 +123,24 @@ class ExerciseSet
             if (0 >= $this->duration) {
                 $context->buildViolation('exercise_set.duration_required')
                     ->atPath('duration')
+                    ->setTranslationDomain('validators')
+                    ->addViolation();
+            }
+
+            if (0 > $this->weight) {
+                $context->buildViolation('exercise_set.weight_positive_or_zero')
+                    ->atPath('weight')
+                    ->setTranslationDomain('validators')
+                    ->addViolation();
+            }
+
+            return;
+        }
+
+        if (MeasurementType::DISTANCE === $this->workoutExercise->exercise->measurementType) {
+            if (0 >= $this->distance) {
+                $context->buildViolation('exercise_set.distance_required')
+                    ->atPath('distance')
                     ->setTranslationDomain('validators')
                     ->addViolation();
             }

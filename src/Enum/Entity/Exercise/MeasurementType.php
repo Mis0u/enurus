@@ -8,4 +8,5 @@ enum MeasurementType: string
 {
     case WEIGHT_REPS = 'weight_reps';
     case TIME = 'time';
+    case DISTANCE = 'distance';
 }

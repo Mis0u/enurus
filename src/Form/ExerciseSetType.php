@@ -26,6 +26,9 @@ final class ExerciseSetType extends AbstractType
             ->add('duration', IntegerType::class, [
                 'required' => false,
             ])
+            ->add('distance', IntegerType::class, [
+                'required' => false,
+            ])
             ->add('position', IntegerType::class, [
                 'label' => false,
                 'attr' => [

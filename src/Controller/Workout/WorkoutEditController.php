@@ -110,7 +110,7 @@ class WorkoutEditController extends AbstractController
      * @param  array<int, WorkoutExercise> $workoutExercises
      * @return array<int, array{
      *     workoutExercise: WorkoutExercise,
-     *     sets: array<int, array{position: int, weight: float, reps: int, duration: ?int}>,
+     *     sets: array<int, array{position: int, weight: float, reps: int, duration: ?int, distance: ?int}>,
      *     tonnage: float,
      * }>
      */
@@ -133,9 +133,10 @@ class WorkoutEditController extends AbstractController
                     'weight' => $weightConverter->convertToLbs($set->weight, $user->unitOfMeasure),
                     'reps' => $set->reps,
                     'duration' => $set->duration,
+                    'distance' => $set->distance,
                 ];
                 // Poids × reps pour un exercice classique, poids seul (comme une série à 1 rep)
-                // pour un exercice `TIME` — voir WorkoutTonnageRepository::TONNAGE_SUBQUERY_DQL.
+                // pour un exercice `TIME`/`DISTANCE` — voir WorkoutTonnageRepository::TONNAGE_SUBQUERY_DQL.
                 $tonnage += $isWeightReps ? $set->weight * $set->reps : $set->weight;
             }
 

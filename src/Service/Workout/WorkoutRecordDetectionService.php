@@ -22,10 +22,11 @@ readonly class WorkoutRecordDetectionService
     }
 
     /**
-     * PR de poids (exercices `WEIGHT_REPS`) et PR de durée (exercices `TIME`, ex. gainage) fusionnés
-     * dans le même flux d'événements : un exercice appartient exclusivement à l'un ou l'autre type
-     * de mesure, les clés (`exerciseId`) ne se chevauchent donc jamais entre les deux sous-listes —
-     * une simple concaténation suffit, chaque sous-liste restant déjà triée chronologiquement.
+     * PR de poids (exercices `WEIGHT_REPS`), PR de durée (exercices `TIME`, ex. gainage) et PR de
+     * distance (exercices `DISTANCE`, ex. farmer walk) fusionnés dans le même flux d'événements :
+     * un exercice appartient exclusivement à l'un des trois types de mesure, les clés
+     * (`exerciseId`) ne se chevauchent donc jamais entre les sous-listes — une simple concaténation
+     * suffit, chaque sous-liste restant déjà triée chronologiquement.
      *
      * @return array<int, array{workoutId: string, performedAt: \DateTimeImmutable}>
      */
@@ -33,6 +34,7 @@ readonly class WorkoutRecordDetectionService
     {
         $weightRows = $this->exerciseSetRepository->findMaxWeightPerWorkoutAndExerciseChronologicallyByUser($user);
         $durationRows = $this->exerciseSetRepository->findMaxDurationPerWorkoutAndExerciseChronologicallyByUser($user);
+        $distanceRows = $this->exerciseSetRepository->findMaxDistancePerWorkoutAndExerciseChronologicallyByUser($user);
 
         $entries = [
             ...array_map(
@@ -52,6 +54,15 @@ readonly class WorkoutRecordDetectionService
                     'performedAt' => $row['performedAt'],
                 ],
                 $durationRows,
+            ),
+            ...array_map(
+                static fn (array $row): array => [
+                    'key' => $row['exerciseId'],
+                    'value' => (float) $row['distance'],
+                    'workoutId' => $row['workoutId'],
+                    'performedAt' => $row['performedAt'],
+                ],
+                $distanceRows,
             ),
         ];
 
