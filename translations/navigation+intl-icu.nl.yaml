@@ -187,12 +187,36 @@ exercise:
         preview_label: Voorbeeld
         primary_muscles: Primaire
         secondary_muscles: Secundaire
+    history:
+        empty_state: Nog geen sessies geregistreerd voor deze oefening.
+        journal:
+            best_set: Beste set
+            date: Datum
+            pr_badge: PR
+            volume: Volume
+        overview:
+            average_frequency: Gemiddelde frequentie
+            average_frequency_value: "{count} sessies/week"
+            current_record: Huidig record
+            last_practiced: Laatst uitgevoerd
+            progression: Voortgang
+            title: Overzicht
+            total_sessions: Totaal aantal sessies
+            total_volume: Totaal volume
+        progression:
+            period:
+                1y: 1 jaar
+                3m: 3 maanden
+                all: Alles
+            title: Voortgang
+        subtitle: Volg je voortgang bij deze oefening
     library:
         title: Bibliotheek
     list:
         actions:
             delete: Verwijderen
             edit: Bewerken
+            history: Geschiedenis
             restore: Herstellen
         badge:
             archived: Gearchiveerd

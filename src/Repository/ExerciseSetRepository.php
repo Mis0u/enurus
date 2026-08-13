@@ -388,6 +388,54 @@ class ExerciseSetRepository extends ServiceEntityRepository
     }
 
     /**
+     * Sets bruts d'un exercice pour un user, triés chronologiquement par séance — sert de base à
+     * la page d'historique par exercice (agrégation par séance faite en PHP, pas en DQL : la
+     * "série max" d'une séance doit rester associée à ses propres reps, ce qu'un simple
+     * `MAX(es.weight)` + `SUM(es.reps)` agrégés perdrait si la séance contient plusieurs séries à
+     * poids différents — dataset borné à un seul exercice/user, le tri en PHP reste trivial).
+     *
+     * @return array<int, array{workoutId: string, performedAt: DateTimeImmutable, weight: float, reps: int, duration: ?int, distance: ?int}>
+     */
+    public function findSessionHistoryForExerciseAndUser(User $user, Exercise $exercise): array
+    {
+        /** @var array<int, array{workoutId: mixed, performedAt: mixed, weight: mixed, reps: mixed, duration: mixed, distance: mixed}> $rows */
+        $rows = $this->queryForUser($user)
+            ->select('w.id as workoutId', 'w.performedAt as performedAt', 'es.weight as weight', 'es.reps as reps', 'es.duration as duration', 'es.distance as distance')
+            ->andWhere('e = :exercise')
+            ->setParameter('exercise', $exercise)
+            ->orderBy('w.performedAt', 'ASC')
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY);
+
+        $result = [];
+        foreach ($rows as $row) {
+            /** @var \Stringable|string $workoutId */
+            $workoutId = $row['workoutId'];
+            /** @var DateTimeImmutable $performedAt */
+            $performedAt = $row['performedAt'];
+            /** @var numeric $weight */
+            $weight = $row['weight'];
+            /** @var numeric $reps */
+            $reps = $row['reps'];
+            /** @var numeric|null $duration */
+            $duration = $row['duration'];
+            /** @var numeric|null $distance */
+            $distance = $row['distance'];
+
+            $result[] = [
+                'workoutId' => (string) $workoutId,
+                'performedAt' => $performedAt,
+                'weight' => (float) $weight,
+                'reps' => (int) $reps,
+                'duration' => null !== $duration ? (int) $duration : null,
+                'distance' => null !== $distance ? (int) $distance : null,
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
      * Clé de tableau stable pour un poids exact — jamais un cast `(string)` brut : un poids rond
      * (ex. 130.0) donnerait la chaîne "130", que PHP convertit silencieusement en clé entière,
      * cassant le typage `array<string, ...>` attendu par les appelants (WorkoutShowController).

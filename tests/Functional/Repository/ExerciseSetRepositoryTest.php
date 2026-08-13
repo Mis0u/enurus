@@ -164,6 +164,65 @@ final class ExerciseSetRepositoryTest extends KernelTestCase
         $em->flush();
     }
 
+    public function testFindSessionHistoryReturnsOneRowPerSetOrderedChronologically(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var ExerciseSetRepository $exerciseSetRepository */
+        $exerciseSetRepository = static::getContainer()->get(ExerciseSetRepository::class);
+
+        $user = $this->createTestUser($em, 'exercise-set-repo-test-history@test.com');
+        $exercise = $this->createTestExercise($em);
+
+        $olderWorkout = $this->createTestWorkout($em, $user, $exercise, new \DateTimeImmutable('-10 days'), 100.0);
+        $recentWorkout = $this->createTestWorkout($em, $user, $exercise, new \DateTimeImmutable('-2 days'), 110.0);
+
+        $result = $exerciseSetRepository->findSessionHistoryForExerciseAndUser($user, $exercise);
+
+        self::assertCount(2, $result);
+        self::assertSame((string) $olderWorkout->id, $result[0]['workoutId']);
+        self::assertSame(100.0, $result[0]['weight']);
+        self::assertSame((string) $recentWorkout->id, $result[1]['workoutId']);
+        self::assertSame(110.0, $result[1]['weight']);
+
+        $em->remove($olderWorkout);
+        $em->remove($recentWorkout);
+        $em->remove($exercise);
+        $em->remove($user);
+        $em->flush();
+    }
+
+    public function testFindSessionHistoryNeverReturnsAnotherUsersSessionsOnASharedPublicExercise(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var ExerciseSetRepository $exerciseSetRepository */
+        $exerciseSetRepository = static::getContainer()->get(ExerciseSetRepository::class);
+
+        $owner = $this->createTestUser($em, 'exercise-set-repo-test-history-owner@test.com');
+        $otherUser = $this->createTestUser($em, 'exercise-set-repo-test-history-other@test.com');
+        $exercise = $this->createTestExercise($em);
+
+        $ownWorkout = $this->createTestWorkout($em, $owner, $exercise, new \DateTimeImmutable('-1 day'), 100.0);
+        $otherWorkout = $this->createTestWorkout($em, $otherUser, $exercise, new \DateTimeImmutable('-1 day'), 999.0);
+
+        $result = $exerciseSetRepository->findSessionHistoryForExerciseAndUser($owner, $exercise);
+
+        self::assertCount(1, $result);
+        self::assertSame((string) $ownWorkout->id, $result[0]['workoutId']);
+
+        $em->remove($ownWorkout);
+        $em->remove($otherWorkout);
+        $em->remove($exercise);
+        $em->remove($owner);
+        $em->remove($otherUser);
+        $em->flush();
+    }
+
     private function createTestUser(EntityManagerInterface $em, string $email): User
     {
         $user = new User();

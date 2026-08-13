@@ -187,12 +187,36 @@ exercise:
         preview_label: Pré-visualização
         primary_muscles: Primários
         secondary_muscles: Secundários
+    history:
+        empty_state: Ainda não há sessões registadas para este exercício.
+        journal:
+            best_set: Melhor série
+            date: Data
+            pr_badge: PR
+            volume: Volume
+        overview:
+            average_frequency: Frequência média
+            average_frequency_value: "{count} sessões/semana"
+            current_record: Recorde atual
+            last_practiced: Última vez praticado
+            progression: Progressão
+            title: Resumo
+            total_sessions: Sessões totais
+            total_volume: Volume total
+        progression:
+            period:
+                1y: 1 ano
+                3m: 3 meses
+                all: Tudo
+            title: Progressão
+        subtitle: Acompanha a tua progressão neste exercício
     library:
         title: Biblioteca
     list:
         actions:
             delete: Eliminar
             edit: Modificar
+            history: Histórico
             restore: Restaurar
         badge:
             archived: Arquivado
