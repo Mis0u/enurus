@@ -187,12 +187,36 @@ exercise:
         preview_label: Podgląd
         primary_muscles: Główne
         secondary_muscles: Wspomagające
+    history:
+        empty_state: Brak zarejestrowanych treningów dla tego ćwiczenia.
+        journal:
+            best_set: Najlepsza seria
+            date: Data
+            pr_badge: PR
+            volume: Objętość
+        overview:
+            average_frequency: Średnia częstotliwość
+            average_frequency_value: "{count} treningów/tydzień"
+            current_record: Aktualny rekord
+            last_practiced: Ostatnio wykonane
+            progression: Postęp
+            title: Podsumowanie
+            total_sessions: Łączna liczba treningów
+            total_volume: Łączna objętość
+        progression:
+            period:
+                1y: 1 rok
+                3m: 3 miesiące
+                all: Wszystko
+            title: Postęp
+        subtitle: Śledź swój postęp w tym ćwiczeniu
     library:
         title: Biblioteka
     list:
         actions:
             delete: Usuń
             edit: Edytuj
+            history: Historia
             restore: Przywróć
         badge:
             archived: Zarchiwizowane

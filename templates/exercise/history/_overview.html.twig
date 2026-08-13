@@ -1,0 +1,80 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - overview : array{recordValue: float, recordDate: ?DateTimeImmutable, totalSessions: int, totalVolume: float, lastPracticedAt: ?DateTimeImmutable, progressionPercent: ?float, averageFrequencyPerWeek: float}
+    - unitLabel : string
+    - measurementType : string ('weight_reps'|'time'|'distance')
+#}
+<section class="mb-7">
+    <h2 class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4] mb-3">
+        {{ 'exercise.history.overview.title'|trans({}, 'navigation') }}
+    </h2>
+
+    <div class="grid grid-cols-3 gap-3 max-md:grid-cols-2">
+        <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#64748b] mb-1.5">
+                🏆 {{ 'exercise.history.overview.current_record'|trans({}, 'navigation') }}
+            </div>
+            <div class="font-rajdhani text-[22px] font-bold text-rose-ft">
+                {{ overview.recordValue|number_format(1, ',', ' ') }} {{ unitLabel }}
+            </div>
+            {% if overview.recordDate %}
+                <div class="text-[11px] text-[#64748b] mt-0.5">
+                    {{ overview.recordDate|format_date('medium', locale=app.request.locale) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#64748b] mb-1.5">
+                {{ 'exercise.history.overview.total_sessions'|trans({}, 'navigation') }}
+            </div>
+            <div class="font-rajdhani text-[22px] font-bold text-[#f1f5f9]">
+                {{ overview.totalSessions }}
+            </div>
+        </div>
+
+        <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#64748b] mb-1.5">
+                {{ 'exercise.history.overview.total_volume'|trans({}, 'navigation') }}
+            </div>
+            <div class="font-rajdhani text-[22px] font-bold text-[#f1f5f9]">
+                {{ overview.totalVolume|number_format(0, ',', ' ') }} {{ unitLabel }}
+            </div>
+        </div>
+
+        <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#64748b] mb-1.5">
+                {{ 'exercise.history.overview.last_practiced'|trans({}, 'navigation') }}
+            </div>
+            <div class="font-rajdhani text-[16px] font-bold text-[#f1f5f9]">
+                {% if overview.lastPracticedAt %}
+                    {{ overview.lastPracticedAt|format_date('medium', locale=app.request.locale) }}
+                {% else %}
+                    —
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#64748b] mb-1.5">
+                {{ 'exercise.history.overview.progression'|trans({}, 'navigation') }}
+            </div>
+            <div class="font-rajdhani text-[22px] font-bold {{ overview.progressionPercent is not null and overview.progressionPercent > 0 ? 'text-cyan-ft' : 'text-[#f1f5f9]' }}">
+                {% if overview.progressionPercent is not null %}
+                    {{ overview.progressionPercent > 0 ? '+' : '' }}{{ overview.progressionPercent|number_format(1, ',', ' ') }}%
+                {% else %}
+                    —
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#64748b] mb-1.5">
+                {{ 'exercise.history.overview.average_frequency'|trans({}, 'navigation') }}
+            </div>
+            <div class="font-rajdhani text-[22px] font-bold text-[#f1f5f9]">
+                {{ 'exercise.history.overview.average_frequency_value'|trans({count: overview.averageFrequencyPerWeek|number_format(1, ',', ' ')}, 'navigation') }}
+            </div>
+        </div>
+    </div>
+</section>

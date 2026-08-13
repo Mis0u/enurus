@@ -122,6 +122,50 @@ final class ExerciseVoterTest extends TestCase
         self::assertSame(Voter::ACCESS_ABSTAIN, $vote);
     }
 
+    public function testOwnerCanViewTheirOwnExercise(): void
+    {
+        $owner = $this->createUser('owner@test.com');
+        $exercise = $this->createExercise($owner);
+
+        $vote = $this->voter->vote($this->tokenFor($owner), $exercise, [ExerciseVoter::VIEW]);
+
+        self::assertSame(Voter::ACCESS_GRANTED, $vote);
+    }
+
+    public function testAnyAuthenticatedUserCanViewAPublicExercise(): void
+    {
+        $user = $this->createUser('user@test.com');
+        $publicExercise = $this->createExercise(owner: null);
+
+        $vote = $this->voter->vote($this->tokenFor($user), $publicExercise, [ExerciseVoter::VIEW]);
+
+        self::assertSame(Voter::ACCESS_GRANTED, $vote);
+    }
+
+    public function testOtherUserCannotViewSomeoneElsesPrivateExercise(): void
+    {
+        $owner = $this->createUser('owner@test.com');
+        $other = $this->createUser('other@test.com');
+        $exercise = $this->createExercise($owner);
+        $exercise->isPublic = false;
+
+        $vote = $this->voter->vote($this->tokenFor($other), $exercise, [ExerciseVoter::VIEW]);
+
+        self::assertSame(Voter::ACCESS_DENIED, $vote);
+    }
+
+    public function testAnonymousTokenIsDeniedOnView(): void
+    {
+        $exercise = $this->createExercise(owner: null);
+
+        $token = $this->createStub(TokenInterface::class);
+        $token->method('getUser')->willReturn(null);
+
+        $vote = $this->voter->vote($token, $exercise, [ExerciseVoter::VIEW]);
+
+        self::assertSame(Voter::ACCESS_DENIED, $vote);
+    }
+
     private function createExercise(?User $owner): Exercise
     {
         $exercise = new Exercise();

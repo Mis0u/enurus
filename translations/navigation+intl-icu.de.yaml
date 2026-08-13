@@ -187,12 +187,36 @@ exercise:
         preview_label: Vorschau
         primary_muscles: Primäre
         secondary_muscles: Sekundäre
+    history:
+        empty_state: Für diese Übung sind noch keine Einheiten erfasst.
+        journal:
+            best_set: Bester Satz
+            date: Datum
+            pr_badge: PR
+            volume: Volumen
+        overview:
+            average_frequency: Durchschnittliche Häufigkeit
+            average_frequency_value: "{count} Einheiten/Woche"
+            current_record: Aktueller Rekord
+            last_practiced: Zuletzt trainiert
+            progression: Fortschritt
+            title: Überblick
+            total_sessions: Einheiten insgesamt
+            total_volume: Gesamtvolumen
+        progression:
+            period:
+                1y: 1 Jahr
+                3m: 3 Monate
+                all: Alle
+            title: Fortschritt
+        subtitle: Verfolge deinen Fortschritt bei dieser Übung
     library:
         title: Bibliothek
     list:
         actions:
             delete: Löschen
             edit: Bearbeiten
+            history: Verlauf
             restore: Wiederherstellen
         badge:
             archived: Archiviert

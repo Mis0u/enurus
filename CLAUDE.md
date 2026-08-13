@@ -198,6 +198,10 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
   LIMIT s'applique aux lignes SQL, pas aux entités → perte silencieuse de données. Utiliser une
   sous-requête DQL corrélée à la place (déjà fait pour le tonnage).
 - PR (poids max) calculé sur `weight` seul, jamais `weight × reps` — convention musculation.
+- Requêtes PR/reps liées au poids (`ExerciseSetRepository::findMaxWeight...`, `findMaxReps...`)
+  filtrent sur `e.measurementType = :weightRepsType` (jamais `!= :timeType`) — depuis l'ajout de
+  `DISTANCE`, exclure uniquement `TIME` laisserait passer les exercices `DISTANCE` à tort, le poids
+  y étant lui aussi une charge additionnelle optionnelle, pas la métrique de record.
 - Muscles d'un workout dédupliqués en PHP : `PRIMARY` si primaire dans au moins un exercice.
   Tri primaires→secondaires en repository.
 - Toutes les données lourdes précalculées dans le controller, passées à la vue en maps indexées —
@@ -364,16 +368,25 @@ palier précise, préférer des dates fixes en dur.
 
 ---
 
-## TODO actifs du projet
+## Roadmap V1 (feature-complete pour lancement public)
+
+Chantiers à discuter/planifier avant l'annonce publique. Pas d'ordre de priorité figé.
+
+Aucun chantier en cours actuellement. #24 (page d'historique par exercice) a été implémenté —
+`ExerciseVoter::VIEW`, `ExerciseSetRepository::findSessionHistoryForExerciseAndUser()`,
+`ExerciseHistoryDataService`/`ExerciseHistoryChartBuilder`, `ExerciseHistoryController` (route
+`/bibliotheque/exercice/{id}/historique`, 8 locales), templates `exercise/history/*`, traductions
+`exercise.history.*`.
+
+---
+
+## Backlog (post-V1 / infra)
 
 | # | Item |
 |---|------|
-| 22 | Mise en ligne du site — **fait** : domaine `enurus.com` (Cloudflare Registrar) ; app Scalingo `enurus` (région `osc-fr1`, déploiement Git direct, addon PostgreSQL Starter 512M) ; monitoring Sentry ; stockage objet Cloudflare R2 (bucket `enurus`, domaine `cdn.enurus.com`) ; fournisseur transactionnel **Resend** (Brevo puis Postmark abandonnés — Brevo exige une adresse postale physique en pied de mail, Postmark trop restrictif en gratuit ; DNS vérifié, clé API scopée Sending) ; CNAME applicatif `enurus.com`/`www.enurus.com` → Scalingo posé ; premier déploiement effectué ; worker `messenger:consume async` actif en continu en prod ; CD automatique en place (déploie sur Scalingo après un `qa` vert sur `main`, cf. workflow GitHub Actions). **Reste à faire (demain)** : supprimer le compte Postmark (jamais quitté le Test mode, aucune facturation) + ses records DNS sur `enurus.com`, maintenant qu'un envoi réel via Resend est confirmé fonctionnel en prod ; rédiger mentions légales/CGU/politique de confidentialité (aucune page de ce type actuellement dans le projet — bloquant pour toute monétisation ou revente future) ; vérifier que le plan Postgres Scalingo inclut bien des sauvegardes automatiques. |
-| 23 | Résilience en cas d'afflux massif (scénario "influenceur" : ~100k inscriptions en une journée) — décisions actées avec Misou : **passer sur un palier payant du fournisseur transactionnel** (Resend, cf. #22) dès le lancement — le palier gratuit (3 000 emails/mois) bloquerait la quasi-totalité des utilisateurs à l'étape de vérification d'email obligatoire, `BlockedUserChecker` + `isVerified`, en cas d'afflux massif. Points à anticiper avant tout pic prévisible (à traiter le moment venu, pas dans l'immédiat) : dimensionnement du tier Postgres Scalingo (connexions/IOPS — chaque requête écrit une session via `DoctrineSessionHandler`, en plus des `User` créés), nombre de workers `messenger:consume` (actuellement un seul consommateur pour la queue Doctrine partagée par les emails et les notifications Telegram admin), et scaling des containers Scalingo (réactif, pas instantané face à un pic soudain). |
-| 24 | **Page d'historique par exercice** (prochaine version) — actuellement aucune page ne montre la progression d'un exercice donné dans le temps (poids/reps par séance, PR). Le calcul de PR existe déjà dans `ExerciseSetRepository` mais n'est utilisé qu'en filigrane (hint "dernier poids fait"), jamais exposé comme vraie page dédiée avec courbe Chart.js. Nécessite un nouveau repository de requêtes dédié + un widget graphique, dans la lignée des widgets dashboard existants (`_muscles`, `_regularity`, `_tonnage`). |
-| 25 | **Images redimensionnées (perf mobile)** — photos de séance et avatars (`storage_url`, stockage R2) servies en taille originale, sans variante `srcset`/thumbnail. Alourdit le chargement sur mobile sans bénéfice. À trancher : resize à l'upload dans `ImageUploadService`/`WorkoutPhotoService` vs. transformations d'image Cloudflare (dépend de l'offre R2/Images actuelle). |
-| 26 | **Filtres combinés visibles sur la Bibliothèque** (UX) — la liste d'exercices (`assets/controllers/exercise/list_controller.js`, pagination client-side) n'offre qu'un cycle de filtre muscle à cliquer plutôt que muscle + recherche texte combinés et visibles en permanence. Gagnerait en confort vu le volume d'exercices publics + perso à parcourir. |
-| 27 | **Exercices mesurés par durée/distance** (lié à #24, besoin réel confirmé — ex. gainage 8 min, farmer walk) — **fait pour `TIME` et `DISTANCE`** : `MeasurementType` (`WEIGHT_REPS` par défaut / `TIME` / `DISTANCE`) sur `Exercise`, `ExerciseSet::duration` (secondes) et `ExerciseSet::distance` (mètres, sans conversion — pas d'unité alternative, comme `duration`), tous deux nullable, switch verrouillé à la création/édition d'exercice dès qu'une série existe (`ExerciseSetRepository::existsForExercise`). PR = valeur max seule par type (poids ajouté ignoré du calcul, même convention que les reps pour le PR de poids), les trois flux (poids/durée/distance) fusionnés dans `WorkoutRecordDetectionService::findPrEvents` (les clés `exerciseId` ne se chevauchent jamais entre types). Tonnage : poids seul si renseigné (comme une série à 1 rep), jamais poids × durée/distance — unités non comparables ; déjà générique côté `WorkoutTonnageRepository`/`WorkoutExerciseRepository` (branche sur `== WEIGHT_REPS`, pas sur le type exclu), donc aucun changement requis pour `DISTANCE`. Les requêtes PR de poids/reps (`ExerciseSetRepository::findMaxWeight...`, `findMaxReps...`) filtrent désormais sur `= WEIGHT_REPS` (et non plus `!= TIME`) pour exclure `TIME` et `DISTANCE` des deux côtés. |
+| 22 | Mise en ligne — infra en place (Scalingo, Cloudflare R2, Resend, CD auto sur `main`). **Reste à faire** : supprimer le compte Postmark inutilisé (jamais quitté le Test mode) + ses DNS sur `enurus.com` ; rédiger mentions légales/CGU/politique de confidentialité (bloquant pour toute monétisation) ; vérifier que le plan Postgres Scalingo inclut des sauvegardes automatiques. |
+| 23 | Résilience afflux massif (scénario "influenceur", ~100k inscriptions/jour) — décision actée : palier payant Resend dès le lancement (le gratuit, 3000 emails/mois, bloquerait la vérification d'email obligatoire en cas de pic). À anticiper le moment venu : dimensionnement Postgres Scalingo, nombre de workers `messenger:consume` (un seul actuellement), scaling des containers. |
+| 25 | **Images redimensionnées (perf mobile)** — photos de séance et avatars servis en taille originale, sans `srcset`/thumbnail. À trancher : resize à l'upload (`ImageUploadService`/`WorkoutPhotoService`) vs. transformations Cloudflare Images. |
 
 ---
 

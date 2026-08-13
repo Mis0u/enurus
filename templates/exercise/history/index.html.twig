@@ -1,0 +1,57 @@
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% set exercise_name = exercise.isPublic ? exercise.name|trans({}, 'exercise') : exercise.name %}
+
+{% block title %}{{ exercise_name|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        title: exercise_name,
+        subtitle: app.user.nickname|formatInitials,
+    } only %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 overflow-y-auto px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]">
+        <div class="max-w-[960px] mx-auto">
+
+            {{ component('Breadcrumb:Breadcrumb', {
+                items: [
+                    {label: 'exercise.library.title'|trans({}, 'navigation'), url: 'app_exercise_list'},
+                    {label: exercise_name, url: null},
+                ]
+            }) }}
+
+            <header class="mb-7">
+                <h1 class="font-rajdhani text-[28px] font-bold text-[#f1f5f9] mb-1">
+                    {{ exercise_name }}
+                </h1>
+                <p class="text-sm text-[#64748b]">{{ 'exercise.history.subtitle'|trans({}, 'navigation') }}</p>
+            </header>
+
+            {% if not hasHistory %}
+                <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-10 text-center">
+                    <p class="text-sm text-[#64748b]">{{ 'exercise.history.empty_state'|trans({}, 'navigation') }}</p>
+                </div>
+            {% else %}
+                {% include 'exercise/history/_overview.html.twig' with {
+                    overview: overview,
+                    unitLabel: unitLabel,
+                    measurementType: exercise.measurementType.value,
+                } only %}
+
+                {% include 'exercise/history/_progression.html.twig' with {
+                    exercise: exercise,
+                    chart: chart,
+                    journal: journal,
+                    period: period,
+                    availablePeriods: availablePeriods,
+                    unitLabel: unitLabel,
+                    measurementType: exercise.measurementType.value,
+                    limitAllowed: limitAllowed,
+                } only %}
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

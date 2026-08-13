@@ -702,6 +702,9 @@
   .h-\[160px\] {
     height: 160px;
   }
+  .h-\[220px\] {
+    height: 220px;
+  }
   .h-auto {
     height: auto;
   }
@@ -938,6 +941,9 @@
   }
   .max-w-\[720px\] {
     max-width: 720px;
+  }
+  .max-w-\[960px\] {
+    max-width: 960px;
   }
   .max-w-\[1100px\] {
     max-width: 1100px;
@@ -2019,6 +2025,9 @@
   }
   .p-8 {
     padding: calc(var(--spacing) * 8);
+  }
+  .p-10 {
+    padding: calc(var(--spacing) * 10);
   }
   .p-\[8px_12px\] {
     padding: 8px 12px;
@@ -3802,6 +3811,11 @@
   .max-md\:items-center {
     @media (width < 48rem) {
       align-items: center;
+    }
+  }
+  .max-md\:items-start {
+    @media (width < 48rem) {
+      align-items: flex-start;
     }
   }
   .max-md\:items-stretch {

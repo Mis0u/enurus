@@ -187,12 +187,36 @@ exercise:
         preview_label: Preview
         primary_muscles: Primary
         secondary_muscles: Secondary
+    history:
+        empty_state: No sessions recorded for this exercise yet.
+        journal:
+            best_set: Best set
+            date: Date
+            pr_badge: PR
+            volume: Volume
+        overview:
+            average_frequency: Average frequency
+            average_frequency_value: "{count} sessions/week"
+            current_record: Current record
+            last_practiced: Last practiced
+            progression: Progression
+            title: Overview
+            total_sessions: Total sessions
+            total_volume: Total volume
+        progression:
+            period:
+                1y: 1 year
+                3m: 3 months
+                all: All
+            title: Progression
+        subtitle: Track your progress on this exercise
     library:
         title: Library
     list:
         actions:
             delete: Delete
             edit: Edit
+            history: History
             restore: Restore
         badge:
             archived: Archived

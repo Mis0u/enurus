@@ -1,0 +1,95 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - exercise : Exercise
+    - chart : Chart (ux-chartjs)
+    - journal : PaginationInterface<int, array{workoutId: string, performedAt: DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}>
+    - period : string
+    - availablePeriods : string[]
+    - unitLabel : string
+    - measurementType : string ('weight_reps'|'time'|'distance')
+    - limitAllowed : int[]
+#}
+<section>
+    <div class="flex items-center justify-between mb-3 max-md:flex-col max-md:items-start max-md:gap-2">
+        <h2 class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
+            {{ 'exercise.history.progression.title'|trans({}, 'navigation') }}
+        </h2>
+
+        {% if availablePeriods|length > 1 %}
+            <div class="flex items-center gap-1 bg-white/[0.04] border border-white/[0.07] rounded-lg p-1">
+                {% for available in availablePeriods %}
+                    <a href="{{ path('app_exercise_history', {id: exercise.id, period: available}) }}"
+                       class="px-3 py-1.5 text-[12px] font-semibold rounded-md transition-ft {{ available == period ? 'dashboard-tab-active' : 'dashboard-tab-inactive' }}">
+                        {{ ('exercise.history.progression.period.' ~ available)|trans({}, 'navigation') }}
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] mb-5">
+        <div class="h-[220px]">
+            {{ render_chart(chart) }}
+        </div>
+    </div>
+
+    <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] overflow-x-auto">
+        <table class="w-full border-collapse">
+            <thead>
+            <tr>
+                <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5">
+                    {{ 'exercise.history.journal.date'|trans({}, 'navigation') }}
+                </th>
+                <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5">
+                    {{ 'exercise.history.journal.best_set'|trans({}, 'navigation') }}
+                </th>
+                <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5 max-md:hidden">
+                    {{ 'exercise.history.journal.volume'|trans({}, 'navigation') }}
+                </th>
+                <th class="show-table-th text-right text-[11px] font-semibold uppercase px-3 py-2.5"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for session in journal %}
+                <tr class="show-table-row">
+                    <td class="show-table-td-muted px-3 py-2.5 text-[12px]">
+                        {{ session.performedAt|format_date('medium', locale=app.request.locale) }}
+                    </td>
+                    <td class="show-table-td-value px-3 py-2.5 font-['Rajdhani'] text-[15px] font-semibold">
+                        {% if measurementType == 'time' %}
+                            {{ session.recordValue|format_set_duration }}
+                        {% elseif measurementType == 'distance' %}
+                            {{ session.recordValue }} {{ 'workout.series_distance_abbreviate'|trans({}, 'navigation') }}
+                        {% else %}
+                            {{ session.recordValue|number_format(1, ',', ' ') }} {{ unitLabel }} × {{ session.recordReps }}
+                        {% endif %}
+                    </td>
+                    <td class="show-table-td-secondary px-3 py-2.5 font-['Rajdhani'] text-[15px] font-semibold max-md:hidden">
+                        {% if measurementType == 'time' %}
+                            {{ session.volume|format_set_duration }}
+                        {% elseif measurementType == 'distance' %}
+                            {{ session.volume }} {{ 'workout.series_distance_abbreviate'|trans({}, 'navigation') }}
+                        {% else %}
+                            {{ session.volume|number_format(0, ',', ' ') }} {{ unitLabel }}
+                        {% endif %}
+                    </td>
+                    <td class="px-3 py-2.5 text-right">
+                        {% if session.isPr %}
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium whitespace-nowrap bg-rose-500/[0.12] border border-rose-500/[0.3] text-rose-400">
+                                🏆 {{ 'exercise.history.journal.pr_badge'|trans({}, 'navigation') }}
+                            </span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% include '_pagination/_pagination.html.twig' with {
+            'pagination': journal,
+            'route': 'app_exercise_history',
+            'routeParams': {id: exercise.id, period: period},
+            'limitAllowed': limitAllowed,
+        } only %}
+    </div>
+</section>
