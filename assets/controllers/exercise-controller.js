@@ -60,16 +60,17 @@ export default class extends Controller {
     addSet(event) {
         const card = event.target.closest('[data-exercise-index]');
         const tbody = card.querySelector('.js-sets-tbody');
-        const exerciseIndex = card.dataset.exerciseIndex;
-        const setIndex = tbody.querySelectorAll('tr').length;
 
-        const template = card.querySelector('.js-set-template');
-        const html = template.innerHTML
-            .replaceAll('__EXERCISE_INDEX__', exerciseIndex)
-            .replaceAll('__SET_INDEX__', setIndex)
-            .replaceAll('__SET_NUMBER__', setIndex + 1);
+        this.#insertSetRow(card, tbody);
+    }
 
-        tbody.insertAdjacentHTML('beforeend', html);
+    repeatSet(event) {
+        const sourceRow = event.target.closest('tr');
+        const card = event.target.closest('[data-exercise-index]');
+        const tbody = card.querySelector('.js-sets-tbody');
+
+        const newRow = this.#insertSetRow(card, tbody);
+        this.#copySetValues(sourceRow, newRow);
     }
 
     deleteSet(event) {
@@ -114,6 +115,35 @@ export default class extends Controller {
     }
 
     // ─── Privé ───────────────────────────────────────────────────
+
+    #insertSetRow(card, tbody) {
+        const exerciseIndex = card.dataset.exerciseIndex;
+        const setIndex = tbody.querySelectorAll('tr').length;
+
+        const template = card.querySelector('.js-set-template');
+        const html = template.innerHTML
+            .replaceAll('__EXERCISE_INDEX__', exerciseIndex)
+            .replaceAll('__SET_INDEX__', setIndex)
+            .replaceAll('__SET_NUMBER__', setIndex + 1);
+
+        tbody.insertAdjacentHTML('beforeend', html);
+
+        return tbody.lastElementChild;
+    }
+
+    #copySetValues(sourceRow, newRow) {
+        sourceRow.querySelectorAll('input[name]').forEach((input) => {
+            const key = input.name.match(/\[(\w+)]$/)?.[1];
+            if (!key || key === 'position') {
+                return;
+            }
+
+            const target = newRow.querySelector(`input[name$="[${key}]"]`);
+            if (target) {
+                target.value = input.value;
+            }
+        });
+    }
 
     #updatePositions() {
         this.exerciseListTarget.querySelectorAll('[data-exercise-index]').forEach((card, index) => {

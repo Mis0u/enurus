@@ -601,6 +601,7 @@ workout:
         remove: Usuń
         select: Wybierz
         too_large: Zdjęcie nie może przekraczać 5 MB.
+    repeat_series: Powtórz tę serię
     reps: Powtórzenia
     reps_abbreviate: Powt
     routine:
