@@ -587,6 +587,7 @@ workout:
         remove: Entfernen
         select: Auswählen
         too_large: Das Foto darf 5 MB nicht überschreiten.
+    repeat_series: Diesen Satz wiederholen
     reps: Wiederholungen
     reps_abbreviate: Wdh
     routine:

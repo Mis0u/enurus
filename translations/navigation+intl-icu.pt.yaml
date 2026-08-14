@@ -587,6 +587,7 @@ workout:
         remove: Eliminar
         select: Selecionar
         too_large: A foto não deve ultrapassar 5 MB.
+    repeat_series: Repetir esta série
     reps: Repetições
     reps_abbreviate: Reps
     routine:

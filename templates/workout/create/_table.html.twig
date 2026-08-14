@@ -14,7 +14,7 @@
                 {{ 'workout.reps'|trans({}, 'navigation') }}
             {% endif %}
         </td>
-        <td class="pb-2.5 w-6"></td>
+        <td class="pb-2.5 w-14"></td>
     </tr>
     </thead>
     <tbody class="js-sets-tbody">
@@ -67,11 +67,19 @@
                     {% endif %}
                 </td>
                 <td class="text-center">
-                    <button type="button"
-                            data-action="click->{{ controllerName|default('exercise') }}#deleteSet"
-                            class="text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250 text-[20px] leading-none flex items-center justify-center w-6 h-6">
-                        {% include 'partials/_svg/_red_cross.html.twig' only %}
-                    </button>
+                    <div class="flex items-center justify-center gap-1">
+                        <button type="button"
+                                data-action="click->{{ controllerName|default('exercise') }}#repeatSet"
+                                aria-label="{{ 'workout.repeat_series'|trans({}, 'navigation') }}"
+                                class="text-[#4a5568] hover:text-[#06b6d4] transition-colors duration-250 flex items-center justify-center w-6 h-6 max-md:w-5 max-md:h-5">
+                            {% include 'partials/_svg/_repeat.html.twig' only %}
+                        </button>
+                        <button type="button"
+                                data-action="click->{{ controllerName|default('exercise') }}#deleteSet"
+                                class="text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250 text-[20px] leading-none flex items-center justify-center w-6 h-6 max-md:w-5 max-md:h-5">
+                            {% include 'partials/_svg/_red_cross.html.twig' only %}
+                        </button>
+                    </div>
                 </td>
             </tr>
         {% endfor %}
@@ -119,11 +127,19 @@
                 {% endif %}
             </td>
             <td class="text-center">
-                <button type="button"
-                        data-action="click->{{ controllerName|default('exercise') }}#deleteSet"
-                        class="text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250 text-[20px] leading-none flex items-center justify-center w-6 h-6">
-                    {% include 'partials/_svg/_red_cross.html.twig' only %}
-                </button>
+                <div class="flex items-center justify-center gap-1">
+                    <button type="button"
+                            data-action="click->{{ controllerName|default('exercise') }}#repeatSet"
+                            aria-label="{{ 'workout.repeat_series'|trans({}, 'navigation') }}"
+                            class="text-[#4a5568] hover:text-[#06b6d4] transition-colors duration-250 flex items-center justify-center w-6 h-6 max-md:w-5 max-md:h-5">
+                        {% include 'partials/_svg/_repeat.html.twig' only %}
+                    </button>
+                    <button type="button"
+                            data-action="click->{{ controllerName|default('exercise') }}#deleteSet"
+                            class="text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250 text-[20px] leading-none flex items-center justify-center w-6 h-6 max-md:w-5 max-md:h-5">
+                        {% include 'partials/_svg/_red_cross.html.twig' only %}
+                    </button>
+                </div>
             </td>
         </tr>
     {% endif %}

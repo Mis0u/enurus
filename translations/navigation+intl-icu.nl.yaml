@@ -587,6 +587,7 @@ workout:
         remove: Verwijderen
         select: Selecteren
         too_large: De foto mag niet groter zijn dan 5 MB.
+    repeat_series: Deze set herhalen
     reps: Herhalingen
     reps_abbreviate: Reps
     routine:
