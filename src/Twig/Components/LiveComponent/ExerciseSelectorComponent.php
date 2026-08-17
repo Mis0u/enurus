@@ -12,6 +12,8 @@ use App\Repository\ExerciseRepository;
 use App\Repository\MuscleGroupRepository;
 use App\Service\Entity\ExerciseSorterService;
 use App\Service\Entity\MuscleGroupSorterService;
+use App\Service\Utils\WeightConverterService;
+use App\Service\Workout\BodyweightSnapshotService;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -60,6 +62,8 @@ final class ExerciseSelectorComponent
         private readonly ExerciseSorterService $exerciseSorter,
         private readonly MuscleGroupSorterService $muscleGroupSorter,
         private readonly Environment $twig,
+        private readonly WeightConverterService $weightConverter,
+        private readonly BodyweightSnapshotService $bodyweightSnapshotService,
     ) {
     }
 
@@ -95,10 +99,20 @@ final class ExerciseSelectorComponent
             return;
         }
 
+        if (null !== $exercise->bodyweightPercent && ! $this->userHasBodyweight()) {
+            return;
+        }
+
+        $user = $this->getUser();
+        $shareKg = $this->bodyweightSnapshotService->shareKg($user->bodyweightKg, $exercise->bodyweightPercent);
+
         $html = $this->twig->render('workout/create/_exercise_card.html.twig', [
             'exercise' => $exercise,
             'index' => '__EXERCISE_INDEX__',
             'controllerName' => $this->controllerName,
+            'cardBodyweightShare' => null !== $exercise->bodyweightPercent
+                ? round($this->weightConverter->convertToLbs($shareKg, $user->unitOfMeasure), 1)
+                : null,
         ]);
 
         $this->search = '';
@@ -162,6 +176,11 @@ final class ExerciseSelectorComponent
             $this->muscleGroupRepository->findAllOrderedByPosition(),
             $this->getUser()->locale,
         );
+    }
+
+    public function userHasBodyweight(): bool
+    {
+        return null !== $this->getUser()->bodyweightKg;
     }
 
     private function getUser(): User

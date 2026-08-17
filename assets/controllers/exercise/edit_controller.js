@@ -19,6 +19,11 @@ export default class extends Controller {
         'pill',
         'recapPrimary',
         'recapSecondary',
+        'bodyweightSection',
+        'bodyweightToggle',
+        'bodyweightRangeWrapper',
+        'bodyweightRange',
+        'bodyweightPercentDisplay',
     ];
 
     static values = {
@@ -106,6 +111,33 @@ export default class extends Controller {
         } catch {
             // Aborted or network error — fail silently
         }
+    }
+
+    toggleBodyweightVisibility(event) {
+        if (!this.hasBodyweightSectionTarget) return;
+
+        const isWeightReps = event.currentTarget.value === 'weight_reps';
+
+        this.bodyweightSectionTarget.hidden = !isWeightReps;
+
+        if (!isWeightReps && this.hasBodyweightRangeTarget) {
+            this.bodyweightRangeTarget.disabled = true;
+        }
+    }
+
+    toggleBodyweightRange() {
+        if (!this.hasBodyweightToggleTarget || !this.hasBodyweightRangeTarget) return;
+
+        const isChecked = this.bodyweightToggleTarget.checked;
+
+        this.bodyweightRangeWrapperTarget.hidden = !isChecked;
+        this.bodyweightRangeTarget.disabled = !isChecked;
+    }
+
+    updateBodyweightPercentDisplay() {
+        if (!this.hasBodyweightRangeTarget || !this.hasBodyweightPercentDisplayTarget) return;
+
+        this.bodyweightPercentDisplayTarget.textContent = `${this.bodyweightRangeTarget.value}%`;
     }
 
     toggleAccordion() {

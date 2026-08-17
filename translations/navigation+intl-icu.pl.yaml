@@ -147,6 +147,7 @@ exercise:
     alert:
         duplicate_custom: "Masz już ćwiczenie \"%name%\" utworzone %date%."
         duplicate_public: "Podobne ćwiczenie \"%name%\" już istnieje w bibliotece."
+    bodyweight_badge: "MC {percent}%"
     create:
         breadcrumb: Nowe ćwiczenie
         submit: Utwórz ćwiczenie
@@ -169,6 +170,14 @@ exercise:
         restored: Ćwiczenie przywrócone pomyślnie.
         updated: Ćwiczenie zmienione pomyślnie.
     form:
+        bodyweight_go_to_settings: Przejdź do ustawień
+        bodyweight_label: Masa ciała
+        bodyweight_locked_disabled: Wyłączone
+        bodyweight_locked_enabled: "Włączone — {percent}% masy ciała"
+        bodyweight_locked_hint: "Zablokowane: to ćwiczenie ma już zarejestrowane serie."
+        bodyweight_percent_label: Procent uniesionej masy ciała
+        bodyweight_requires_settings: Podaj swoją masę ciała w ustawieniach, aby włączyć tę opcję.
+        bodyweight_toggle: Ćwiczenie z masą ciała
         description_placeholder: Opisz kluczowe punkty, postawę, błędy do unikania…
         description_toggle: Dodaj opis
         legend_primary: Mięśnie główne
@@ -459,6 +468,10 @@ settings:
     avatar:
         change: Zmień zdjęcie
         hint: JPEG, PNG lub WebP · maks. 5 MB
+    bodyweight:
+        hint: Używane do obliczania objętości treningowej ćwiczeń z masą ciała.
+        label: Masa ciała
+        placeholder: Waga w {unit}
     danger_zone:
         button: Usuń moje konto
         explanation: Twoje konto zostanie dezaktywowane, a następnie trwale usunięte po 30 dniach. Ponowne zalogowanie się przed upływem terminu automatycznie anuluje usunięcie.
@@ -611,6 +624,7 @@ workout:
         select: Wybierz swoją rutynę
         title: Rutyna
     search_exercise:
+        bodyweight_required: Podaj swoją masę ciała w ustawieniach, aby użyć tego ćwiczenia.
         create_link:
             cancel_button: Anuluj
             confirm_button: Utwórz
@@ -623,6 +637,8 @@ workout:
         placeholder: Nazwa ćwiczenia...
         title: Wyszukaj ćwiczenie
     series: Serie
+    series_bodyweight_extra_abbreviate: dodatkowo
+    series_bodyweight_lifted: "Uniesiony ciężar: {weight}"
     series_distance: Dystans (metry)
     series_distance_abbreviate: m
     series_duration: Czas trwania (sekundy)
@@ -648,6 +664,7 @@ workout:
             error: "Nie udało się wygenerować obrazu, spróbuj ponownie."
             other_exercises: "{count, plural, =1 {+ # inne ćwiczenie} few {+ # inne ćwiczenia} many {+ # innych ćwiczeń} other {+ # innego ćwiczenia}}"
         sets_table:
+            bodyweight_used: "Użyta masa ciała: {weight}"
             distance: Dystans
             duration: Czas
             reps: Powt

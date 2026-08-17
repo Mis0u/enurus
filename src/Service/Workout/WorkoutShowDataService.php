@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Workout;
 
 use App\Entity\ExerciseMuscle;
+use App\Entity\ExerciseSet;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
@@ -27,6 +28,7 @@ final readonly class WorkoutShowDataService
         private WorkoutExerciseRepository $workoutExerciseRepository,
         private ExerciseSetRepository $exerciseSetRepository,
         private WeightConverterService $weightConverter,
+        private BodyweightSnapshotService $bodyweightSnapshotService,
     ) {
     }
 
@@ -34,7 +36,7 @@ final readonly class WorkoutShowDataService
      * @return array{
      *     exerciseData: array<int, array{
      *         workoutExercise: WorkoutExercise,
-     *         sets: array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>,
+     *         sets: array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool, bodyweightSnapshotFormatted: ?string}>,
      *         tonnage: float,
      *         primarySvgIds: array<string>,
      *         secondarySvgIds: array<string>,
@@ -128,7 +130,7 @@ final readonly class WorkoutShowDataService
      * @param array<string, float> $exerciseTonnageMap
      * @return array<int, array{
      *     workoutExercise: WorkoutExercise,
-     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>,
+     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool, bodyweightSnapshotFormatted: ?string}>,
      *     tonnage: float,
      *     primarySvgIds: array<string>,
      *     secondarySvgIds: array<string>,
@@ -166,7 +168,7 @@ final readonly class WorkoutShowDataService
      * @param array<string, float> $exerciseTonnageMap
      * @return array{
      *     workoutExercise: WorkoutExercise,
-     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>,
+     *     sets: array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool, bodyweightSnapshotFormatted: ?string}>,
      *     tonnage: float,
      *     primarySvgIds: array<string>,
      *     secondarySvgIds: array<string>,
@@ -238,7 +240,7 @@ final readonly class WorkoutShowDataService
      * d'équivalent au record de reps).
      *
      * @param array<string, int> $priorMaxRepsByWeight poids (chaîne) => reps max avant cette séance
-     * @return array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>
+     * @return array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool, bodyweightSnapshotFormatted: ?string}>
      */
     private function buildSets(
         WorkoutExercise $we,
@@ -261,9 +263,10 @@ final readonly class WorkoutShowDataService
         $workoutMaxRepsByWeight = [];
 
         foreach ($we->exerciseSets as $set) {
-            $workoutMaxWeight = max($workoutMaxWeight, $set->weight);
+            $effectiveWeight = $this->effectiveWeight($set, $we);
+            $workoutMaxWeight = max($workoutMaxWeight, $effectiveWeight);
 
-            $weightKey = ExerciseSetRepository::weightKey($set->weight);
+            $weightKey = ExerciseSetRepository::weightKey($effectiveWeight);
             $workoutMaxRepsByWeight[$weightKey] = max($workoutMaxRepsByWeight[$weightKey] ?? 0, $set->reps);
         }
 
@@ -283,17 +286,18 @@ final readonly class WorkoutShowDataService
         $sets = [];
 
         foreach ($we->exerciseSets as $set) {
-            $rawTonnage = $set->weight * $set->reps;
-            $weightKey = ExerciseSetRepository::weightKey($set->weight);
+            $effectiveWeight = $this->effectiveWeight($set, $we);
+            $rawTonnage = $effectiveWeight * $set->reps;
+            $weightKey = ExerciseSetRepository::weightKey($effectiveWeight);
 
-            $isPr = $isWeightPr && $set->weight === $workoutMaxWeight;
+            $isPr = $isWeightPr && $effectiveWeight === $workoutMaxWeight;
             $isRepsRecord = ! $isPr
                 && ($repsRecordByWeight[$weightKey] ?? false)
                 && $set->reps === $workoutMaxRepsByWeight[$weightKey];
 
             $sets[] = [
                 'position' => $set->position,
-                'weightFormatted' => $this->weightConverter->format($set->weight, $user->unitOfMeasure),
+                'weightFormatted' => $this->weightConverter->format($effectiveWeight, $user->unitOfMeasure),
                 'reps' => $set->reps,
                 'duration' => null,
                 'distance' => null,
@@ -303,6 +307,7 @@ final readonly class WorkoutShowDataService
                 'tonnageUnit' => $user->unitOfMeasure->value,
                 'isPr' => $isPr,
                 'isRepsRecord' => $isRepsRecord,
+                'bodyweightSnapshotFormatted' => $this->bodyweightSnapshotFormatted($set, $we, $user),
             ];
         }
 
@@ -312,7 +317,7 @@ final readonly class WorkoutShowDataService
     }
 
     /**
-     * @return array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>
+     * @return array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool, bodyweightSnapshotFormatted: ?string}>
      */
     private function buildTimeBasedSets(WorkoutExercise $we, ?int $priorMaxDuration, User $user): array
     {
@@ -344,6 +349,7 @@ final readonly class WorkoutShowDataService
                 'tonnageUnit' => $user->unitOfMeasure->value,
                 'isPr' => $isDurationPr && $set->duration === $workoutMaxDuration,
                 'isRepsRecord' => false,
+                'bodyweightSnapshotFormatted' => $this->bodyweightSnapshotFormatted($set, $we, $user),
             ];
         }
 
@@ -356,7 +362,7 @@ final readonly class WorkoutShowDataService
      * Pendant de `buildTimeBasedSets` pour les exercices `DISTANCE` — même règle stricte, mais
      * portant sur `distance` (distance max parcourue) plutôt que `duration`.
      *
-     * @return array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool}>
+     * @return array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool, bodyweightSnapshotFormatted: ?string}>
      */
     private function buildDistanceBasedSets(WorkoutExercise $we, ?int $priorMaxDistance, User $user): array
     {
@@ -388,12 +394,39 @@ final readonly class WorkoutShowDataService
                 'tonnageUnit' => $user->unitOfMeasure->value,
                 'isPr' => $isDistancePr && $set->distance === $workoutMaxDistance,
                 'isRepsRecord' => false,
+                'bodyweightSnapshotFormatted' => $this->bodyweightSnapshotFormatted($set, $we, $user),
             ];
         }
 
         usort($sets, static fn ($a, $b) => $a['position'] <=> $b['position']);
 
         return $sets;
+    }
+
+    /**
+     * Poids réellement soulevé pour cette série : poids saisi (`weight`, "lest" pour un exercice au
+     * poids de corps) auquel s'ajoute la part de poids de corps figée à la création de la série
+     * (`bodyweightSnapshotKg × Exercise::bodyweightPercent`) — voir le docblock de
+     * `ExerciseSet::weight`. Inchangé (= `weight`) pour un exercice classique.
+     */
+    private function effectiveWeight(ExerciseSet $set, WorkoutExercise $we): float
+    {
+        return $this->bodyweightSnapshotService->shareKg($set->bodyweightSnapshotKg, $we->exercise->bodyweightPercent) + $set->weight;
+    }
+
+    /**
+     * Rappel discret, sur la page de détail, du poids de corps figé pour cette série — utile si
+     * l'utilisateur a depuis modifié ou supprimé son poids en réglages et ne se souvient plus de
+     * la valeur utilisée au moment de la séance. `null` pour un exercice classique, ou si la
+     * série a été créée avant l'introduction de `bodyweightSnapshotKg` (aucune valeur figée).
+     */
+    private function bodyweightSnapshotFormatted(ExerciseSet $set, WorkoutExercise $we, User $user): ?string
+    {
+        if (null === $we->exercise->bodyweightPercent || null === $set->bodyweightSnapshotKg) {
+            return null;
+        }
+
+        return $this->weightConverter->format($set->bodyweightSnapshotKg, $user->unitOfMeasure);
     }
 
     /**

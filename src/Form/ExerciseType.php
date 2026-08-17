@@ -9,6 +9,7 @@ use App\Enum\Entity\Exercise\MeasurementType;
 use App\Form\Type\ExerciseMusclesType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -52,6 +53,18 @@ final class ExerciseType extends AbstractType
                 'multiple' => false,
                 'disabled' => $options['measurement_type_locked'],
             ])
+            ->add('bodyweightPercent', RangeType::class, [
+                'label' => false,
+                'required' => false,
+                'disabled' => $options['bodyweight_locked'],
+                'attr' => [
+                    'min' => 1,
+                    'max' => 100,
+                    'step' => 1,
+                    'data-exercise--create-target' => 'bodyweightRange',
+                    'data-exercise--edit-target' => 'bodyweightRange',
+                ],
+            ])
             ->add('description', TextareaType::class, [
                 'label' => false,
                 'required' => false,
@@ -69,7 +82,9 @@ final class ExerciseType extends AbstractType
             'data_class' => Exercise::class,
             'translation_domain' => 'messages',
             'measurement_type_locked' => false,
+            'bodyweight_locked' => false,
         ]);
         $resolver->setAllowedTypes('measurement_type_locked', 'bool');
+        $resolver->setAllowedTypes('bodyweight_locked', 'bool');
     }
 }

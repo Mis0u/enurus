@@ -26,6 +26,9 @@ settings:
         too_large: O ficheiro ultrapassa o tamanho máximo permitido de {{ limit }} MB
 
 user:
+    bodyweight:
+        invalid: O peso corporal deve ser um número válido.
+        range: "O peso corporal deve estar entre {{ min }} e {{ max }}."
     email_exists: Já existe uma conta com este email.
     nickname:
         length:

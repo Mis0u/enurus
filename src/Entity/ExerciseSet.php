@@ -52,7 +52,10 @@ class ExerciseSet
      * Toujours pertinent quel que soit le type de mesure de l'exercice : poids de travail pour
      * `WEIGHT_REPS`, charge additionnelle optionnelle pour `TIME` (ex. gainage lesté) — `0.0` y
      * signifie "au poids du corps". Le caractère obligatoire (>0) n'est imposé que pour
-     * `WEIGHT_REPS`, voir `validateByMeasurementType()`.
+     * `WEIGHT_REPS`, voir `validateByMeasurementType()`. Pour un exercice `WEIGHT_REPS` avec
+     * `Exercise::bodyweightPercent` non-null, ce champ reste le lest additionnel optionnel
+     * (peut être 0) — jamais le poids de corps effectif, qui n'est jamais stocké ici mais calculé
+     * à la volée à partir de `bodyweightSnapshotKg` et `Exercise::bodyweightPercent`.
      */
     #[ORM\Column(type: 'float')]
     public float $weight = 0.0 {
@@ -111,6 +114,23 @@ class ExerciseSet
     }
 
     /**
+     * Poids de corps (kg) de l'utilisateur figé au moment de la création de cette série, pour un
+     * exercice `Exercise::bodyweightPercent` non-null — jamais réécrit ensuite (ni à l'édition, ni
+     * si l'utilisateur met à jour son poids en réglages), pour ne jamais faire bouger
+     * rétroactivement le tonnage/PR d'une séance passée. Assigné une seule fois par
+     * `BodyweightSnapshotService`, jamais par l'entité elle-même. `null` pour un exercice classique.
+     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    public ?float $bodyweightSnapshotKg = null {
+        get {
+            return $this->bodyweightSnapshotKg;
+        }
+        set(?float $bodyweightSnapshotKg) {
+            $this->bodyweightSnapshotKg = $bodyweightSnapshotKg;
+        }
+    }
+
+    /**
      * Les champs obligatoires dépendent du type de mesure de l'exercice parent — voir
      * `MeasurementType`. Centralisé ici plutôt qu'en attributs statiques `Assert\Positive`/
      * `NotBlank` sur `weight`/`reps`/`duration`/`distance`, qui ne peuvent pas varier selon une
@@ -155,7 +175,16 @@ class ExerciseSet
             return;
         }
 
-        if (0 >= $this->weight) {
+        $isBodyweight = null !== $this->workoutExercise->exercise->bodyweightPercent;
+
+        if ($isBodyweight) {
+            if (0 > $this->weight) {
+                $context->buildViolation('exercise_set.weight_positive_or_zero')
+                    ->atPath('weight')
+                    ->setTranslationDomain('validators')
+                    ->addViolation();
+            }
+        } elseif (0 >= $this->weight) {
             $context->buildViolation('exercise_set.weight_required')
                 ->atPath('weight')
                 ->setTranslationDomain('validators')

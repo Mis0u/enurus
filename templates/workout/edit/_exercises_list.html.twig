@@ -4,6 +4,9 @@
     data-workout--edit--exercise-no-date-text-value="{{ 'workout.error.no_date.text'|trans({}, 'navigation') }}"
     data-workout--edit--exercise-no-exercise-title-value="{{ 'workout.error.no_exercise.title'|trans({}, 'navigation') }}"
     data-workout--edit--exercise-no-exercise-text-value="{{ 'workout.error.no_exercise.text'|trans({}, 'navigation') }}"
+    data-workout--edit--exercise-user-has-bodyweight-value="{{ app.user.bodyweightKg is not null ? 'true' : 'false' }}"
+    data-workout--edit--exercise-bodyweight-required-message-value="{{ 'workout.search_exercise.bodyweight_required'|trans({}, 'navigation') }}"
+    data-workout--edit--exercise-lifted-weight-template-value="{{ 'workout.series_bodyweight_lifted'|trans({weight: '__WEIGHT__ ' ~ app.user.unitOfMeasure.value}, 'navigation') }}"
 >
     <div class="flex items-center justify-between mb-5">
         <div class="flex items-center gap-2.5 mb-5">
@@ -24,6 +27,7 @@
                 'index': index,
                 'controllerName': 'workout--edit--exercise',
                 'existingSets': item.sets,
+                'cardBodyweightShare': item.cardBodyweightShare,
             } only %}
         {% endfor %}
     </div>

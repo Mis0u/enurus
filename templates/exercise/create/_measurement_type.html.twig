@@ -1,4 +1,4 @@
-{# Params: form #}
+{# Params: form, controllerName #}
 <div class="bg-[#111827] border border-white/[0.07] rounded-xl p-6">
     <label class="block font-rajdhani text-[13px] font-semibold text-[#64748b] uppercase tracking-[0.3px] mb-2">
         {{ 'exercise.form.measurement_type_label'|trans({}, 'navigation') }}
@@ -20,7 +20,7 @@
         <div class="grid grid-cols-3 gap-3">
             {% for choice_form in form.measurementType %}
                 <label class="relative cursor-pointer group">
-                    {{ form_widget(choice_form, {attr: {class: 'peer sr-only'}}) }}
+                    {{ form_widget(choice_form, {attr: {class: 'peer sr-only', 'data-action': 'change->' ~ controllerName ~ '#toggleBodyweightVisibility'}}) }}
                     <div class="text-center px-4 py-3 bg-white/5 border-2 border-white/10 rounded-lg text-sm font-medium text-[#8b9bb4] transition-all duration-200 peer-checked:bg-[#f43f5e]/10 peer-checked:border-[#f43f5e] peer-checked:text-[#f1f5f9] group-hover:border-white/20">
                         {{ ('exercise.form.measurement_type_' ~ choice_form.vars.value)|trans({}, 'navigation') }}
                     </div>

@@ -4,6 +4,8 @@ import { numerate } from './workout/create/number_series.js';
 import { swalError } from './swal/error/_error.js';
 import { handleErrorField } from './workout/_error_form.js';
 import { NoteModalManager } from './workout/create/note_modal_manager.js';
+import { showErrorToast } from '../utils/toast.js';
+import { initLiftedWeights, updateLiftedWeightForInput } from './workout/lifted_weight.js';
 
 export default class extends Controller {
     static targets = ['exerciseList'];
@@ -16,6 +18,9 @@ export default class extends Controller {
         submitFailedTitle: String,
         submitFailedText: String,
         uploadPhotoUrl: String,
+        userHasBodyweight: Boolean,
+        bodyweightRequiredMessage: String,
+        liftedWeightTemplate: String,
     };
 
     #noteModalManager = null;
@@ -40,7 +45,15 @@ export default class extends Controller {
             onEnd: () => this.#updatePositions(),
         });
 
-        this.element.addEventListener('input', (e) => this.#clearFieldError(e));
+        this.element.addEventListener('input', (e) => {
+            this.#clearFieldError(e);
+
+            if (e.target.matches('input[name$="[weight]"]')) {
+                updateLiftedWeightForInput(e.target, this.liftedWeightTemplateValue);
+            }
+        });
+
+        initLiftedWeights(this.element, this.liftedWeightTemplateValue);
     }
 
     disconnect() {
@@ -55,22 +68,29 @@ export default class extends Controller {
         const index = this.exerciseListTarget.children.length;
 
         this.exerciseListTarget.insertAdjacentHTML('beforeend', html.replaceAll('__EXERCISE_INDEX__', index));
+        initLiftedWeights(this.exerciseListTarget.lastElementChild, this.liftedWeightTemplateValue);
     }
 
     addSet(event) {
         const card = event.target.closest('[data-exercise-index]');
+        if (this.#blockedByMissingBodyweight(card)) return;
+
         const tbody = card.querySelector('.js-sets-tbody');
 
-        this.#insertSetRow(card, tbody);
+        const newRow = this.#insertSetRow(card, tbody);
+        initLiftedWeights(newRow, this.liftedWeightTemplateValue);
     }
 
     repeatSet(event) {
-        const sourceRow = event.target.closest('tr');
         const card = event.target.closest('[data-exercise-index]');
+        if (this.#blockedByMissingBodyweight(card)) return;
+
+        const sourceRow = event.target.closest('tr');
         const tbody = card.querySelector('.js-sets-tbody');
 
         const newRow = this.#insertSetRow(card, tbody);
         this.#copySetValues(sourceRow, newRow);
+        initLiftedWeights(newRow, this.liftedWeightTemplateValue);
     }
 
     deleteSet(event) {
@@ -115,6 +135,15 @@ export default class extends Controller {
     }
 
     // ─── Privé ───────────────────────────────────────────────────
+
+    #blockedByMissingBodyweight(card) {
+        if (card.dataset.bodyweight !== 'true' || this.userHasBodyweightValue) {
+            return false;
+        }
+
+        showErrorToast(this.bodyweightRequiredMessageValue);
+        return true;
+    }
 
     #insertSetRow(card, tbody) {
         const exerciseIndex = card.dataset.exerciseIndex;

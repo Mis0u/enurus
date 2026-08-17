@@ -147,6 +147,7 @@ exercise:
     alert:
         duplicate_custom: "You already have an exercise \"%name%\" created on %date%."
         duplicate_public: "A similar exercise \"%name%\" already exists in the library."
+    bodyweight_badge: "BW {percent}%"
     create:
         breadcrumb: New exercise
         submit: Create exercise
@@ -169,6 +170,14 @@ exercise:
         restored: Exercise restored successfully.
         updated: Exercise updated successfully.
     form:
+        bodyweight_go_to_settings: Go to settings
+        bodyweight_label: Bodyweight
+        bodyweight_locked_disabled: Disabled
+        bodyweight_locked_enabled: "Enabled — {percent}% of bodyweight"
+        bodyweight_locked_hint: "Locked: this exercise already has recorded sets."
+        bodyweight_percent_label: Percentage of bodyweight lifted
+        bodyweight_requires_settings: Set your bodyweight in your settings to enable this option.
+        bodyweight_toggle: Bodyweight exercise
         description_placeholder: Describe the key points, posture, mistakes to avoid…
         description_toggle: Add a description
         legend_primary: Primary muscles
@@ -449,6 +458,10 @@ settings:
     avatar:
         change: Change photo
         hint: JPEG, PNG or WebP · 5 MB max
+    bodyweight:
+        hint: Used to calculate the tonnage of bodyweight exercises.
+        label: Bodyweight
+        placeholder: Weight in {unit}
     danger_zone:
         button: Delete my account
         explanation: Your account will be deactivated then permanently deleted after 30 days. Logging back in before the deadline will automatically cancel the deletion.
@@ -597,6 +610,7 @@ workout:
         select: Choose your routine
         title: Routine
     search_exercise:
+        bodyweight_required: Set your bodyweight in settings to use this exercise.
         create_link:
             cancel_button: Cancel
             confirm_button: Create
@@ -609,6 +623,8 @@ workout:
         placeholder: Exercise name...
         title: Search for an exercise
     series: Sets
+    series_bodyweight_extra_abbreviate: extra
+    series_bodyweight_lifted: "Weight lifted: {weight}"
     series_distance: Distance (meters)
     series_distance_abbreviate: m
     series_duration: Duration (seconds)
@@ -634,6 +650,7 @@ workout:
             error: "Couldn't generate the image, try again."
             other_exercises: "{count, plural, =1 {+ # other exercise} other {+ # other exercises}}"
         sets_table:
+            bodyweight_used: "Bodyweight used: {weight}"
             distance: Distance
             duration: Duration
             reps: Reps

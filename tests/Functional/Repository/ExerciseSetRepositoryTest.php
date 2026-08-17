@@ -223,6 +223,59 @@ final class ExerciseSetRepositoryTest extends KernelTestCase
         $em->flush();
     }
 
+    public function testFindMaxWeightPerExerciseBeforeDateAddsBodyweightSnapshotToTheLest(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var ExerciseSetRepository $exerciseSetRepository */
+        $exerciseSetRepository = static::getContainer()->get(ExerciseSetRepository::class);
+
+        $user = $this->createTestUser($em, 'exercise-set-repo-test-bodyweight@test.com');
+
+        $exercise = new Exercise();
+        $exercise->name = 'Bodyweight test exercise ' . uniqid();
+        $exercise->isPublic = true;
+        $exercise->measurementType = MeasurementType::WEIGHT_REPS;
+        $exercise->bodyweightPercent = 70.0;
+        $em->persist($exercise);
+        $em->flush();
+
+        $workout = new Workout();
+        $workout->owner = $user;
+        $workout->performedAt = new \DateTimeImmutable('-1 day');
+
+        $workoutExercise = new WorkoutExercise();
+        $workoutExercise->exercise = $exercise;
+        $workoutExercise->position = 0;
+        $workout->addWorkoutExercise($workoutExercise);
+
+        // 70% de 70kg (poids de corps figé) + 10kg de lest = 59kg de poids effectif.
+        $set = new ExerciseSet();
+        $set->position = 0;
+        $set->weight = 10.0;
+        $set->reps = 8;
+        $set->bodyweightSnapshotKg = 70.0;
+        $workoutExercise->addExerciseSet($set);
+
+        $em->persist($workout);
+        $em->flush();
+
+        $result = $exerciseSetRepository->findMaxWeightPerExerciseBeforeDate(
+            $user,
+            [$exercise],
+            new \DateTimeImmutable('now'),
+        );
+
+        self::assertSame(59.0, $result[(string) $exercise->id]);
+
+        $em->remove($workout);
+        $em->remove($exercise);
+        $em->remove($user);
+        $em->flush();
+    }
+
     private function createTestUser(EntityManagerInterface $em, string $email): User
     {
         $user = new User();

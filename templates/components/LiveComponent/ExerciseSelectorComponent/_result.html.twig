@@ -1,14 +1,26 @@
 {% set results = this.filteredExercises %}
 {% if results is not empty %}
     {% for exercise in results %}
+        {% set is_blocked = exercise.bodyweightPercent is not null and not this.userHasBodyweight %}
         <div
-            class="px-3.5 py-3 bg-white/[0.02] border border-white/[0.07] rounded-[10px] mb-2 cursor-pointer transition-all duration-250 hover:bg-white/[0.06] hover:border-white/[0.12]"
-            data-action="click->live#action"
-            data-live-action-param="selectExercise"
-            data-live-id-param="{{ exercise.id }}"
+            class="px-3.5 py-3 bg-white/[0.02] border border-white/[0.07] rounded-[10px] mb-2 transition-all duration-250 {{ is_blocked ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:bg-white/[0.06] hover:border-white/[0.12]' }}"
+            aria-disabled="{{ is_blocked ? 'true' : 'false' }}"
+            {% if is_blocked %}
+                data-action="click->search-modal#bodyweightRequired"
+                data-search-modal-message-param="{{ 'workout.search_exercise.bodyweight_required'|trans({}, 'navigation') }}"
+            {% else %}
+                data-action="click->live#action"
+                data-live-action-param="selectExercise"
+                data-live-id-param="{{ exercise.id }}"
+            {% endif %}
         >
             <div class="text-[15px] font-semibold text-[#f0f4ff] mb-1.5">
                 {{ exercise.isPublic ? exercise.name|trans({}, 'exercise') : exercise.name }}
+                {% if exercise.bodyweightPercent is not null %}
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10.5px] font-medium bg-[rgba(244,63,94,0.1)] border border-[rgba(244,63,94,0.3)] text-[#f43f5e] align-middle ml-1">
+                        {{ 'exercise.bodyweight_badge'|trans({percent: exercise.bodyweightPercent|number_format(0)}, 'navigation') }}
+                    </span>
+                {% endif %}
             </div>
             <div class="flex items-center gap-1.5 flex-wrap">
                 {{ component('MuscleTags', {exercise: exercise}) }}

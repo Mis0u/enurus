@@ -94,6 +94,26 @@ class Exercise
         }
     }
 
+    /**
+     * Pourcentage du poids de corps soulevé pour cette variante (ex. 70% pour des pompes) — `null`
+     * pour un exercice classique. Applicable uniquement si `measurementType === WEIGHT_REPS` (une
+     * variante au poids de corps reste un exercice poids+reps, le poids de corps s'ajoutant au
+     * lest saisi dans `ExerciseSet::weight`, jamais stocké ici). Verrouillé en même temps que
+     * `measurementType` dès que l'exercice a au moins une série enregistrée (cf.
+     * ExerciseSetRepository::existsForExercise), pour ne jamais faire cohabiter des séries
+     * calculées sur des pourcentages différents.
+     */
+    #[ORM\Column(type: Types::FLOAT, nullable: true)]
+    #[Assert\Range(min: 1, max: 100)]
+    public ?float $bodyweightPercent = null {
+        get {
+            return $this->bodyweightPercent;
+        }
+        set(?float $bodyweightPercent) {
+            $this->bodyweightPercent = $bodyweightPercent;
+        }
+    }
+
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: true)]
     public ?User $owner = null {

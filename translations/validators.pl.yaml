@@ -26,6 +26,9 @@ settings:
         too_large: Plik przekracza maksymalny dozwolony rozmiar {{ limit }} MB
 
 user:
+    bodyweight:
+        invalid: Masa ciała musi być prawidłową liczbą.
+        range: "Masa ciała musi być pomiędzy {{ min }} a {{ max }}."
     email_exists: Konto z tym adresem e-mail już istnieje.
     nickname:
         length:

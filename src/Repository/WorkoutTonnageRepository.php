@@ -23,10 +23,19 @@ class WorkoutTonnageRepository
      * rester dans le même ordre de grandeur que le tonnage classique et pouvoir s'additionner au
      * total de la séance sans le fausser. Un exercice `TIME` sans poids ajouté (0.0, poids du
      * corps) contribue naturellement 0 au tonnage, sans cas particulier à gérer.
+     *
+     * Pour un exercice bodyweight (`ex2.bodyweightPercent` non-null), `s.weight` n'est que le lest
+     * additionnel — le poids réellement soulevé ajoute la part de poids de corps figée à la
+     * création de la série (`s.bodyweightSnapshotKg × ex2.bodyweightPercent / 100`), voir le
+     * docblock de `ExerciseSet::weight`.
      */
     private const string TONNAGE_SUBQUERY_DQL = "(SELECT COALESCE(SUM(
-                CASE WHEN ex2.measurementType = '" . MeasurementType::WEIGHT_REPS->value . "' THEN s.weight * s.reps
-                     ELSE s.weight
+                CASE WHEN ex2.measurementType = '" . MeasurementType::WEIGHT_REPS->value . "' THEN
+                    CASE WHEN ex2.bodyweightPercent IS NOT NULL
+                         THEN (COALESCE(s.bodyweightSnapshotKg, 0) * ex2.bodyweightPercent / 100 + s.weight) * s.reps
+                         ELSE s.weight * s.reps
+                    END
+                ELSE s.weight
                 END
               ), 0)
               FROM App\Entity\ExerciseSet s

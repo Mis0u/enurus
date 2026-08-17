@@ -147,6 +147,7 @@ exercise:
     alert:
         duplicate_custom: "Já tens um exercício \"%name%\" criado em %date%."
         duplicate_public: "Um exercício semelhante \"%name%\" já existe na biblioteca."
+    bodyweight_badge: "PC {percent}%"
     create:
         breadcrumb: Novo exercício
         submit: Criar o exercício
@@ -169,6 +170,14 @@ exercise:
         restored: Exercício restaurado com sucesso.
         updated: Exercício modificado com sucesso.
     form:
+        bodyweight_go_to_settings: Ir para as definições
+        bodyweight_label: Peso corporal
+        bodyweight_locked_disabled: Desativado
+        bodyweight_locked_enabled: "Ativado — {percent}% do peso corporal"
+        bodyweight_locked_hint: "Bloqueado: este exercício já tem séries registadas."
+        bodyweight_percent_label: Percentagem de peso corporal levantado
+        bodyweight_requires_settings: Indica o teu peso corporal nas definições para ativar esta opção.
+        bodyweight_toggle: Exercício com peso corporal
         description_placeholder: Descreve os pontos técnicos, a postura, os erros a evitar…
         description_toggle: Adicionar uma descrição
         legend_primary: Músculos primários
@@ -449,6 +458,10 @@ settings:
     avatar:
         change: Alterar foto
         hint: JPEG, PNG ou WebP · 5 MB máx
+    bodyweight:
+        hint: Usado para calcular a tonelagem dos exercícios com peso corporal.
+        label: Peso corporal
+        placeholder: Peso em {unit}
     danger_zone:
         button: Eliminar a minha conta
         explanation: A tua conta será desativada e depois definitivamente eliminada após 30 dias. Voltares a iniciar sessão antes do prazo cancelará automaticamente a eliminação.
@@ -597,6 +610,7 @@ workout:
         select: Escolhe a tua rotina
         title: Rotina
     search_exercise:
+        bodyweight_required: Indica o teu peso corporal nas definições para usar este exercício.
         create_link:
             cancel_button: Cancelar
             confirm_button: Criar
@@ -609,6 +623,8 @@ workout:
         placeholder: Nome do exercício...
         title: Procurar um exercício
     series: Séries
+    series_bodyweight_extra_abbreviate: extra
+    series_bodyweight_lifted: "Peso levantado: {weight}"
     series_distance: Distância (metros)
     series_distance_abbreviate: m
     series_duration: Duração (segundos)
@@ -634,6 +650,7 @@ workout:
             error: "Não foi possível gerar a imagem, tenta novamente."
             other_exercises: "{count, plural, =1 {+ # outro exercício} other {+ # outros exercícios}}"
         sets_table:
+            bodyweight_used: "Peso corporal utilizado: {weight}"
             distance: Distância
             duration: Duração
             reps: Reps

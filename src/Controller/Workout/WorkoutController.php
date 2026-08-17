@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\Workout;
 use App\Form\WorkoutType;
 use App\Service\Utils\WeightConverterService;
+use App\Service\Workout\BodyweightSnapshotService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,6 +24,7 @@ final class WorkoutController extends AbstractController
 {
     public function __construct(
         private readonly WeightConverterService $weightConverterService,
+        private readonly BodyweightSnapshotService $bodyweightSnapshotService,
         private readonly EntityManagerInterface $em,
         private readonly TranslatorInterface $translator,
     ) {
@@ -50,6 +52,11 @@ final class WorkoutController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Workout $workout */
             $workout = $form->getData();
+
+            if ($this->bodyweightSnapshotService->hasNewSetWithoutBodyweight($workout, $user)) {
+                return $this->handleInvalidForm($request, 'workout.search_exercise.bodyweight_required');
+            }
+
             return $this->handleValidForm($workout, $user, $request);
         }
 
@@ -73,6 +80,7 @@ final class WorkoutController extends AbstractController
         $workout->owner = $user;
         $workout->performedAt = $this->stampCurrentTime($workout->performedAt);
         $this->weightConverterService->convertWorkoutSetsToKg($workout, $user->unitOfMeasure);
+        $this->bodyweightSnapshotService->apply($workout, $user);
 
         $this->em->persist($workout);
         $this->em->flush();
@@ -103,9 +111,9 @@ final class WorkoutController extends AbstractController
         );
     }
 
-    private function handleInvalidForm(Request $request): Response
+    private function handleInvalidForm(Request $request, string $translationKey = 'workout.error.validation'): Response
     {
-        $errorMessage = $this->translator->trans('workout.error.validation', [], 'navigation');
+        $errorMessage = $this->translator->trans($translationKey, [], 'navigation');
 
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(

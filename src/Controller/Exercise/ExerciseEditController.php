@@ -47,8 +47,10 @@ final class ExerciseEditController extends AbstractController
     {
         $this->denyAccessUnlessGranted(ExerciseVoter::EDIT, $exercise);
 
+        $hasExistingSets = $this->exerciseSetRepository->existsForExercise($exercise);
         $form = $this->createForm(ExerciseType::class, $exercise, [
-            'measurement_type_locked' => $this->exerciseSetRepository->existsForExercise($exercise),
+            'measurement_type_locked' => $hasExistingSets,
+            'bodyweight_locked' => $hasExistingSets,
         ]);
         $form->get('muscles')->setData($exercise->exerciseMuscles);
         $form->handleRequest($request);
