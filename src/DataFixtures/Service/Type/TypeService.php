@@ -37,6 +37,20 @@ class TypeService
     /**
      * @param array<string, mixed> $data
      */
+    public function getFloat(array $data, string $field): float
+    {
+        if (! isset($data[$field]) || (! is_int($data[$field]) && ! is_float($data[$field]))) {
+            throw new \UnexpectedValueException(
+                sprintf('Le champ "%s" doit être un nombre, "%s" reçu.', $field, gettype($data[$field] ?? null))
+            );
+        }
+
+        return (float) $data[$field];
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
     public function getBool(array $data, string $field): bool
     {
         if (! isset($data[$field]) || ! is_bool($data[$field])) {
