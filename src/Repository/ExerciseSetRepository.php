@@ -19,6 +19,17 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ExerciseSetRepository extends ServiceEntityRepository
 {
+    /**
+     * Poids réellement soulevé pour une série — `es.weight` seul pour un exercice classique, ou
+     * lest + part de poids de corps figée pour un exercice bodyweight (`e.bodyweightPercent` non
+     * null) — voir le docblock de `ExerciseSet::weight`. Aliases `es`/`e` fixés par
+     * `queryForUser()`, réutilisés par toutes les requêtes de ce repository.
+     */
+    private const string EFFECTIVE_WEIGHT_DQL = '(CASE WHEN e.bodyweightPercent IS NOT NULL
+        THEN (COALESCE(es.bodyweightSnapshotKg, 0)) * e.bodyweightPercent / 100 + es.weight
+        ELSE es.weight
+        END)';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ExerciseSet::class);
@@ -60,7 +71,7 @@ class ExerciseSetRepository extends ServiceEntityRepository
 
         /** @var array<int, array{exerciseId: mixed, maxWeight: mixed}> $results */
         $results = $this->queryForUser($user)
-            ->select('e.id AS exerciseId, MAX(es.weight) AS maxWeight')
+            ->select('e.id AS exerciseId, MAX(' . self::EFFECTIVE_WEIGHT_DQL . ') AS maxWeight')
             ->andWhere('e IN (:exercises)')
             ->andWhere('e.measurementType = :weightRepsType')
             ->andWhere('w.performedAt < :before')
@@ -179,7 +190,7 @@ class ExerciseSetRepository extends ServiceEntityRepository
 
         /** @var array<int, array{exerciseId: mixed, weight: mixed, maxReps: mixed}> $results */
         $results = $this->queryForUser($user)
-            ->select('e.id AS exerciseId, es.weight AS weight, MAX(es.reps) AS maxReps')
+            ->select('e.id AS exerciseId, ' . self::EFFECTIVE_WEIGHT_DQL . ' AS weight, MAX(es.reps) AS maxReps')
             ->andWhere('e IN (:exercises)')
             ->andWhere('e.measurementType = :weightRepsType')
             ->andWhere('w.performedAt < :before')
@@ -187,7 +198,7 @@ class ExerciseSetRepository extends ServiceEntityRepository
             ->setParameter('weightRepsType', MeasurementType::WEIGHT_REPS)
             ->setParameter('before', $before)
             ->groupBy('e.id')
-            ->addGroupBy('es.weight')
+            ->addGroupBy('weight')
             ->getQuery()
             ->getArrayResult();
 
@@ -221,7 +232,7 @@ class ExerciseSetRepository extends ServiceEntityRepository
     {
         /** @var array<int, array{workoutId: mixed, exerciseId: mixed, weight: mixed, performedAt: mixed}> $rows */
         $rows = $this->queryForUser($user)
-            ->select('w.id as workoutId', 'e.id as exerciseId', 'MAX(es.weight) as weight', 'w.performedAt as performedAt')
+            ->select('w.id as workoutId', 'e.id as exerciseId', 'MAX(' . self::EFFECTIVE_WEIGHT_DQL . ') as weight', 'w.performedAt as performedAt')
             ->andWhere('e.measurementType = :weightRepsType')
             ->setParameter('weightRepsType', MeasurementType::WEIGHT_REPS)
             ->groupBy('w.id')
@@ -351,12 +362,12 @@ class ExerciseSetRepository extends ServiceEntityRepository
     {
         /** @var array<int, array{workoutId: mixed, exerciseId: mixed, weight: mixed, reps: mixed, performedAt: mixed}> $rows */
         $rows = $this->queryForUser($user)
-            ->select('w.id as workoutId', 'e.id as exerciseId', 'es.weight as weight', 'MAX(es.reps) as reps', 'w.performedAt as performedAt')
+            ->select('w.id as workoutId', 'e.id as exerciseId', self::EFFECTIVE_WEIGHT_DQL . ' as weight', 'MAX(es.reps) as reps', 'w.performedAt as performedAt')
             ->andWhere('e.measurementType = :weightRepsType')
             ->setParameter('weightRepsType', MeasurementType::WEIGHT_REPS)
             ->groupBy('w.id')
             ->addGroupBy('e.id')
-            ->addGroupBy('es.weight')
+            ->addGroupBy('weight')
             ->addGroupBy('w.performedAt')
             ->orderBy('w.performedAt', 'ASC')
             ->getQuery()
@@ -394,13 +405,17 @@ class ExerciseSetRepository extends ServiceEntityRepository
      * `MAX(es.weight)` + `SUM(es.reps)` agrégés perdrait si la séance contient plusieurs séries à
      * poids différents — dataset borné à un seul exercice/user, le tri en PHP reste trivial).
      *
+     * `weight` remonte déjà le poids effectif (lest + part de poids de corps figée) pour un
+     * exercice bodyweight — voir `EFFECTIVE_WEIGHT_DQL` — les appelants n'ont donc jamais besoin de
+     * connaître `bodyweightSnapshotKg`/`bodyweightPercent` séparément.
+     *
      * @return array<int, array{workoutId: string, performedAt: DateTimeImmutable, weight: float, reps: int, duration: ?int, distance: ?int}>
      */
     public function findSessionHistoryForExerciseAndUser(User $user, Exercise $exercise): array
     {
         /** @var array<int, array{workoutId: mixed, performedAt: mixed, weight: mixed, reps: mixed, duration: mixed, distance: mixed}> $rows */
         $rows = $this->queryForUser($user)
-            ->select('w.id as workoutId', 'w.performedAt as performedAt', 'es.weight as weight', 'es.reps as reps', 'es.duration as duration', 'es.distance as distance')
+            ->select('w.id as workoutId', 'w.performedAt as performedAt', self::EFFECTIVE_WEIGHT_DQL . ' as weight', 'es.reps as reps', 'es.duration as duration', 'es.distance as distance')
             ->andWhere('e = :exercise')
             ->setParameter('exercise', $exercise)
             ->orderBy('w.performedAt', 'ASC')

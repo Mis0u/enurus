@@ -41,6 +41,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             $exercise->description = $this->typeService->getString($data, 'description');
             $exercise->isPublic = $this->typeService->getBool($data, 'isPublic');
             $exercise->measurementType = $this->resolveMeasurementType($data);
+            $exercise->bodyweightPercent = $this->resolveBodyweightPercent($data);
 
             $this->addMuscleToExercise($data, $exercise, MuscleTypeEnum::PRIMARY);
             $this->addMuscleToExercise($data, $exercise, MuscleTypeEnum::SECONDARY);
@@ -75,6 +76,21 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
         }
 
         return MeasurementType::from($this->typeService->getString($data, 'measurementType'));
+    }
+
+    /**
+     * Clé facultative dans Exercises.json — absente pour la quasi-totalité des exercices, qui
+     * restent des exercices classiques (charge externe uniquement, pas de poids de corps).
+     *
+     * @param array<string, mixed> $data
+     */
+    private function resolveBodyweightPercent(array $data): ?float
+    {
+        if (! isset($data['bodyweightPercent'])) {
+            return null;
+        }
+
+        return $this->typeService->getFloat($data, 'bodyweightPercent');
     }
 
     /**

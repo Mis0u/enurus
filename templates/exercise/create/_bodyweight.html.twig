@@ -1,0 +1,60 @@
+{# Params: form, controllerName, hasUserBodyweight #}
+{% set is_weight_reps = form.vars.value.measurementType.value == 'weight_reps' %}
+{% set has_bodyweight = form.vars.value.bodyweightPercent is not null %}
+
+<div
+    class="bg-[#111827] border border-white/[0.07] rounded-xl p-6"
+    data-{{ controllerName }}-target="bodyweightSection"
+    {{ is_weight_reps ? '' : 'hidden' }}
+>
+    <label class="block font-rajdhani text-[13px] font-semibold text-[#64748b] uppercase tracking-[0.3px] mb-2">
+        {{ 'exercise.form.bodyweight_label'|trans({}, 'navigation') }}
+    </label>
+
+    {% if form.bodyweightPercent.vars.disabled %}
+        <p class="text-sm text-[#f1f5f9] font-medium">
+            {% if has_bodyweight %}
+                {{ 'exercise.form.bodyweight_locked_enabled'|trans({'{{ percent }}': form.vars.value.bodyweightPercent}, 'navigation') }}
+            {% else %}
+                {{ 'exercise.form.bodyweight_locked_disabled'|trans({}, 'navigation') }}
+            {% endif %}
+        </p>
+        <p class="mt-1.5 text-[12.5px] text-[#64748b]">
+            {{ 'exercise.form.bodyweight_locked_hint'|trans({}, 'navigation') }}
+        </p>
+    {% elseif not hasUserBodyweight %}
+        <p class="text-sm text-[#64748b]">
+            {{ 'exercise.form.bodyweight_requires_settings'|trans({}, 'navigation') }}
+        </p>
+        <a href="{{ path('app_settings') }}" class="inline-block mt-2 text-sm text-[#f43f5e] hover:underline">
+            {{ 'exercise.form.bodyweight_go_to_settings'|trans({}, 'navigation') }}
+        </a>
+    {% else %}
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input
+                type="checkbox"
+                class="peer sr-only"
+                data-{{ controllerName }}-target="bodyweightToggle"
+                data-action="change->{{ controllerName }}#toggleBodyweightRange"
+                {{ has_bodyweight ? 'checked' : '' }}
+            >
+            <span class="w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-[#f43f5e] after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
+            <span class="text-sm text-[#f1f5f9]">{{ 'exercise.form.bodyweight_toggle'|trans({}, 'navigation') }}</span>
+        </label>
+
+        <div class="mt-4" data-{{ controllerName }}-target="bodyweightRangeWrapper" {{ has_bodyweight ? '' : 'hidden' }}>
+            <div class="flex items-center justify-between mb-1.5">
+                <span class="text-[12.5px] text-[#64748b]">{{ 'exercise.form.bodyweight_percent_label'|trans({}, 'navigation') }}</span>
+                <span class="text-sm font-semibold text-[#f1f5f9]" data-{{ controllerName }}-target="bodyweightPercentDisplay">{{ form.vars.value.bodyweightPercent ?? 50 }}%</span>
+            </div>
+            {{ form_widget(form.bodyweightPercent, {
+                value: form.vars.value.bodyweightPercent ?? 50,
+                disabled: not has_bodyweight,
+                attr: {
+                    class: 'w-full accent-[#f43f5e]',
+                    'data-action': 'input->' ~ controllerName ~ '#updateBodyweightPercentDisplay',
+                },
+            }) }}
+        </div>
+    {% endif %}
+</div>

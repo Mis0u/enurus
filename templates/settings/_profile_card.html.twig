@@ -23,4 +23,14 @@
     {% include 'settings/_fields/_gender.html.twig' with {user: user} only %}
     {% include 'settings/_fields/_language.html.twig' with {user: user} only %}
     {% include 'settings/_fields/_weight_unit.html.twig' with {user: user} only %}
+    {% include 'settings/_fields/_bodyweight.html.twig' with {
+        user: user,
+        bodyweightMin: bodyweightMin,
+        bodyweightMax: bodyweightMax,
+        bodyweightMinKg: bodyweightMinKg,
+        bodyweightMaxKg: bodyweightMaxKg,
+        bodyweightMinLbs: bodyweightMinLbs,
+        bodyweightMaxLbs: bodyweightMaxLbs,
+        bodyweightDisplay: bodyweightDisplay,
+    } only %}
 </section>

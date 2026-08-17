@@ -1,5 +1,6 @@
 {% set is_time_based = exercise.measurementType.value == 'time' %}
 {% set is_distance_based = exercise.measurementType.value == 'distance' %}
+{% set is_bodyweight = exercise.bodyweightPercent is not null %}
 <table class="w-full mb-3">
     <thead>
     <tr class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#4a5568]">
@@ -27,14 +28,18 @@
                            name="workout[workoutExercises][{{ index }}][exerciseSets][{{ set_index }}][weight]"
                            value="{{ set.weight }}"
                            data-error-message="{{ 'workout.error.required_weight'|trans({}, 'navigation') }}"
-                           {{ (is_time_based or is_distance_based) ? '' : 'required' }}
-                           min="{{ (is_time_based or is_distance_based) ? '0' : '0.1' }}"
+                           {{ (is_time_based or is_distance_based or is_bodyweight) ? '' : 'required' }}
+                           min="{{ (is_time_based or is_distance_based or is_bodyweight) ? '0' : '0.1' }}"
                            step="0.1"
-                           placeholder="{{ app.user.unitOfMeasure.value }}"
+                           placeholder="{{ is_bodyweight ? 'workout.series_bodyweight_extra_abbreviate'|trans({}, 'navigation')|lower : app.user.unitOfMeasure.value }}"
                            class="w-20 px-3 py-2 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
                     <input type="hidden"
                            name="workout[workoutExercises][{{ index }}][exerciseSets][{{ set_index }}][position]"
                            value="{{ set_index }}">
+                    {% if is_bodyweight %}
+                        <span class="js-lifted-weight block mt-1 text-[10px] text-[#4a5568] whitespace-nowrap"
+                              data-bodyweight-share="{{ set.bodyweightShare ?? cardBodyweightShare ?? 0 }}"></span>
+                    {% endif %}
                 </td>
                 <td class="pr-2">
                     {% if is_time_based %}
@@ -90,14 +95,18 @@
                 <input type="number"
                        name="workout[workoutExercises][{{ index }}][exerciseSets][0][weight]"
                        data-error-message="{{ 'workout.error.required_weight'|trans({}, 'navigation') }}"
-                       {{ (is_time_based or is_distance_based) ? '' : 'required' }}
-                       min="{{ (is_time_based or is_distance_based) ? '0' : '0.1' }}"
+                       {{ (is_time_based or is_distance_based or is_bodyweight) ? '' : 'required' }}
+                       min="{{ (is_time_based or is_distance_based or is_bodyweight) ? '0' : '0.1' }}"
                        step="0.1"
-                       placeholder="{{ app.user.unitOfMeasure.value }}"
+                       placeholder="{{ is_bodyweight ? 'workout.series_bodyweight_extra_abbreviate'|trans({}, 'navigation')|lower : app.user.unitOfMeasure.value }}"
                        class="w-20 px-3 py-2 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
                 <input type="hidden"
                        name="workout[workoutExercises][{{ index }}][exerciseSets][0][position]"
                        value="0">
+                {% if is_bodyweight %}
+                    <span class="js-lifted-weight block mt-1 text-[10px] text-[#4a5568] whitespace-nowrap"
+                          data-bodyweight-share="{{ cardBodyweightShare ?? 0 }}"></span>
+                {% endif %}
             </td>
             <td class="pr-2">
                 {% if is_time_based %}

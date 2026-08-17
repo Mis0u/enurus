@@ -147,6 +147,7 @@ exercise:
     alert:
         duplicate_custom: "Du hast bereits eine Übung \"%name%\" erstellt am %date%."
         duplicate_public: "Eine ähnliche Übung \"%name%\" existiert bereits in der Bibliothek."
+    bodyweight_badge: "EG {percent}%"
     create:
         breadcrumb: Neue Übung
         submit: Übung erstellen
@@ -169,6 +170,14 @@ exercise:
         restored: Übung erfolgreich wiederhergestellt.
         updated: Übung erfolgreich geändert.
     form:
+        bodyweight_go_to_settings: Zu den Einstellungen
+        bodyweight_label: Körpergewicht
+        bodyweight_locked_disabled: Deaktiviert
+        bodyweight_locked_enabled: "Aktiviert — {percent}% des Körpergewichts"
+        bodyweight_locked_hint: "Gesperrt: Diese Übung hat bereits erfasste Sätze."
+        bodyweight_percent_label: Prozentsatz des gehobenen Körpergewichts
+        bodyweight_requires_settings: Gib dein Körpergewicht in den Einstellungen an, um diese Option zu aktivieren.
+        bodyweight_toggle: Körpergewichtsübung
         description_placeholder: Beschreibe die technischen Punkte, Haltung, zu vermeidende Fehler…
         description_toggle: Beschreibung hinzufügen
         legend_primary: Primäre Muskeln
@@ -449,6 +458,10 @@ settings:
     avatar:
         change: Foto ändern
         hint: JPEG, PNG oder WebP · max. 5 MB
+    bodyweight:
+        hint: Wird verwendet, um das Trainingsvolumen von Körpergewichtsübungen zu berechnen.
+        label: Körpergewicht
+        placeholder: Gewicht in {unit}
     danger_zone:
         button: Mein Konto löschen
         explanation: Dein Konto wird deaktiviert und nach 30 Tagen endgültig gelöscht. Eine erneute Anmeldung vor Ablauf der Frist bricht die Löschung automatisch ab.
@@ -597,6 +610,7 @@ workout:
         select: Wähle deine Routine
         title: Routine
     search_exercise:
+        bodyweight_required: Gib dein Körpergewicht in den Einstellungen an, um diese Übung zu nutzen.
         create_link:
             cancel_button: Abbrechen
             confirm_button: Erstellen
@@ -609,6 +623,8 @@ workout:
         placeholder: Name der Übung...
         title: Übung suchen
     series: Sätze
+    series_bodyweight_extra_abbreviate: extra
+    series_bodyweight_lifted: "Gehobenes Gewicht: {weight}"
     series_distance: Distanz (Meter)
     series_distance_abbreviate: m
     series_duration: Dauer (Sekunden)
@@ -634,6 +650,7 @@ workout:
             error: "Bild konnte nicht erstellt werden, versuche es erneut."
             other_exercises: "{count, plural, =1 {+ # weitere Übung} other {+ # weitere Übungen}}"
         sets_table:
+            bodyweight_used: "Verwendetes Körpergewicht: {weight}"
             distance: Distanz
             duration: Dauer
             reps: Wdh

@@ -47,7 +47,8 @@
                 }
             }) }}
             {% include 'exercise/create/_name.html.twig' with {form: form, controllerName: 'exercise--edit'} only %}
-            {% include 'exercise/create/_measurement_type.html.twig' with {form: form} only %}
+            {% include 'exercise/create/_measurement_type.html.twig' with {form: form, controllerName: 'exercise--edit'} only %}
+            {% include 'exercise/create/_bodyweight.html.twig' with {form: form, controllerName: 'exercise--edit', hasUserBodyweight: user.bodyweightKg is not null} only %}
             {% include 'exercise/create/_pills.html.twig' with {form: form, muscleGroups: muscleGroups, controllerName: 'exercise--edit'} only %}
             {% include 'exercise/create/_svg_preview.html.twig' with {gender: gender} only %}
             {% include 'exercise/create/_description_accordion.html.twig' with {form: form, controllerName: 'exercise--edit'} only %}

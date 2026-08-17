@@ -26,6 +26,9 @@ settings:
         too_large: Het bestand overschrijdt de maximaal toegestane grootte van {{ limit }} MB
 
 user:
+    bodyweight:
+        invalid: Het lichaamsgewicht moet een geldig getal zijn.
+        range: "Het lichaamsgewicht moet tussen {{ min }} en {{ max }} liggen."
     email_exists: Er bestaat al een account met dit e-mailadres.
     nickname:
         length:

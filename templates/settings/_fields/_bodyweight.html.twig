@@ -1,0 +1,35 @@
+{% set kg = enum('App\\Enum\\Entity\\User\\UnitOfMeasureEnum').KG.value %}
+{% set lbs = enum('App\\Enum\\Entity\\User\\UnitOfMeasureEnum').LBS.value %}
+<div class="mb-4.5"
+     data-controller="settings--bodyweight"
+     data-settings--bodyweight-url-value="{{ path('app_settings_bodyweight_update') }}"
+     data-settings--bodyweight-csrf-token-value="{{ csrf_token('settings_bodyweight') }}"
+     data-settings--bodyweight-min-value="{{ bodyweightMin }}"
+     data-settings--bodyweight-max-value="{{ bodyweightMax }}"
+     data-settings--bodyweight-min-kg-value="{{ bodyweightMinKg }}"
+     data-settings--bodyweight-max-kg-value="{{ bodyweightMaxKg }}"
+     data-settings--bodyweight-min-lbs-value="{{ bodyweightMinLbs }}"
+     data-settings--bodyweight-max-lbs-value="{{ bodyweightMaxLbs }}"
+     data-settings--bodyweight-range-error-value="{{ 'user.bodyweight.range'|trans({'{{ min }}': bodyweightMin, '{{ max }}': bodyweightMax}, 'validators') }}"
+     data-settings--bodyweight-range-error-kg-value="{{ 'user.bodyweight.range'|trans({'{{ min }}': bodyweightMinKg, '{{ max }}': bodyweightMaxKg}, 'validators') }}"
+     data-settings--bodyweight-range-error-lbs-value="{{ 'user.bodyweight.range'|trans({'{{ min }}': bodyweightMinLbs, '{{ max }}': bodyweightMaxLbs}, 'validators') }}"
+     data-settings--bodyweight-invalid-error-value="{{ 'user.bodyweight.invalid'|trans({}, 'validators') }}"
+     data-settings--bodyweight-placeholder-kg-value="{{ 'settings.bodyweight.placeholder'|trans({unit: kg}, 'navigation') }}"
+     data-settings--bodyweight-placeholder-lbs-value="{{ 'settings.bodyweight.placeholder'|trans({unit: lbs}, 'navigation') }}"
+     data-settings--bodyweight-success-message-value="{{ 'settings.feedback.success'|trans({}, 'navigation') }}">
+    <label for="fieldBodyweight" class="block font-['Rajdhani'] text-xs font-semibold uppercase tracking-wide text-[#4a5568] mb-2">
+        {{ 'settings.bodyweight.label'|trans({}, 'navigation') }}
+    </label>
+    <input type="number"
+           id="fieldBodyweight"
+           step="0.1"
+           min="{{ bodyweightMin }}"
+           max="{{ bodyweightMax }}"
+           value="{{ bodyweightDisplay ?? '' }}"
+           placeholder="{{ 'settings.bodyweight.placeholder'|trans({'{{ unit }}': user.unitOfMeasure.value}, 'navigation') }}"
+           data-settings--bodyweight-target="input"
+           data-action="blur->settings--bodyweight#save"
+           class="w-full min-h-11 px-3.5 py-3 rounded-lg bg-[#080e1a] border border-white/[0.07] text-[#f0f4ff] text-sm outline-none focus:border-[rgba(244,63,94,0.5)] focus:ring-4 focus:ring-[rgba(244,63,94,0.08)] transition-colors">
+    <p class="mt-1.5 text-xs text-[#4a5568]">{{ 'settings.bodyweight.hint'|trans({}, 'navigation') }}</p>
+    <p data-settings--bodyweight-target="error" class="hidden mt-1.5 text-xs text-[#f43f5e]"></p>
+</div>

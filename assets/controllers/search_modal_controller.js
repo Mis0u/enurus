@@ -1,9 +1,14 @@
 import { Controller } from '@hotwired/stimulus';
 import { confirmAction } from '../utils/delete_confirmation.js';
+import { showErrorToast } from '../utils/toast.js';
 
 export default class extends Controller {
     stop(event) {
         event.stopPropagation();
+    }
+
+    bodyweightRequired(event) {
+        showErrorToast(event.params.message);
     }
 
     async confirmNavigate(event) {

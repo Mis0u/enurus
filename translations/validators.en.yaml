@@ -26,6 +26,9 @@ settings:
         too_large: The file exceeds the maximum allowed size of {{ limit }} MB
 
 user:
+    bodyweight:
+        invalid: Bodyweight must be a valid number.
+        range: "Bodyweight must be between {{ min }} and {{ max }}."
     email_exists: There is already an account with this email.
     nickname:
         length:

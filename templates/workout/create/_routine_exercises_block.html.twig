@@ -6,12 +6,14 @@
     avec un index continu qui démarre à startIndex.
 
     Paramètres :
-      - routineExercises : Collection<int, RoutineExercise>
-      - startIndex       : int
+      - routineExercises      : Collection<int, RoutineExercise>
+      - startIndex            : int
+      - cardBodyweightShares  : array<string, float> (RoutineExercise.exercise.id => part de poids de corps dans l'unité de l'utilisateur)
 #}
 {% for routine_exercise in routineExercises %}
     {% include 'workout/create/_exercise_card.html.twig' with {
         exercise: routine_exercise.exercise,
         index: startIndex + loop.index0,
+        cardBodyweightShare: cardBodyweightShares[routine_exercise.exercise.id] ?? null,
     } only %}
 {% endfor %}

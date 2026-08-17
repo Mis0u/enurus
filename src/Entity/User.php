@@ -40,6 +40,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public const int NICKNAME_MAX_LENGTH = 20;
 
+    public const int BODYWEIGHT_MIN_KG = 20;
+
+    public const int BODYWEIGHT_MAX_KG = 300;
+
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
@@ -187,6 +191,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         set(UnitOfMeasureEnum $unitOfMeasure) {
             $this->unitOfMeasure = $unitOfMeasure;
+        }
+    }
+
+    /**
+     * Toujours en kg (même convention que ExerciseSet::weight) — conversion à l'affichage/la
+     * saisie via WeightConverterService selon unitOfMeasure. Optionnel : sert uniquement à
+     * calculer le tonnage des exercices "au poids de corps" (Exercise::bodyweightPercent).
+     */
+    #[ORM\Column(type: Types::FLOAT, nullable: true)]
+    public ?float $bodyweightKg = null {
+        get {
+            return $this->bodyweightKg;
+        }
+        set(?float $bodyweightKg) {
+            $this->bodyweightKg = $bodyweightKg;
         }
     }
 

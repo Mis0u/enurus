@@ -13,6 +13,7 @@ use App\Form\WorkoutType;
 use App\Repository\WorkoutExerciseRepository;
 use App\Security\Voter\WorkoutVoter;
 use App\Service\Utils\WeightConverterService;
+use App\Service\Workout\BodyweightSnapshotService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,6 +49,7 @@ class WorkoutEditController extends AbstractController
         EntityManagerInterface $em,
         WorkoutExerciseRepository $workoutExerciseRepository,
         WeightConverterService $weightConverter,
+        BodyweightSnapshotService $bodyweightSnapshotService,
         TranslatorInterface $translator,
     ): Response {
         $this->denyAccessUnlessGranted(WorkoutVoter::EDIT, $workout);
@@ -63,6 +65,15 @@ class WorkoutEditController extends AbstractController
         ]);
         $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid() && $bodyweightSnapshotService->hasNewSetWithoutBodyweight($workout, $user)) {
+            $this->addFlash('error', $translator->trans('workout.search_exercise.bodyweight_required', [], 'navigation'));
+
+            return $this->redirectToRoute('app_workout_edit', [
+                'id' => $workout->id,
+                '_locale' => $request->getLocale(),
+            ]);
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', $translator->trans('workout.flash.updated', [], 'navigation'));
             // `DateType` reconstruit performedAt à minuit (pas de sélecteur d'heure) — on restaure
@@ -74,6 +85,7 @@ class WorkoutEditController extends AbstractController
                 (int) $originalPerformedAt->format('s'),
             );
             $weightConverter->convertWorkoutSetsToKg($workout, $user->unitOfMeasure, $previousWeightsById);
+            $bodyweightSnapshotService->apply($workout, $user);
             $em->flush();
 
             return $this->redirectToRoute('app_workout_show', [
@@ -92,7 +104,7 @@ class WorkoutEditController extends AbstractController
         }
 
         $workoutExercises = $workoutExerciseRepository->findWithExercisesAndSets($workout);
-        $exerciseData = $this->buildExerciseData($workoutExercises, $user, $weightConverter);
+        $exerciseData = $this->buildExerciseData($workoutExercises, $user, $weightConverter, $bodyweightSnapshotService);
         $totalTonnage = array_sum(array_column($exerciseData, 'tonnage'));
 
         return $this->render('workout/edit/edit.html.twig', [
@@ -132,14 +144,16 @@ class WorkoutEditController extends AbstractController
      * @param  array<int, WorkoutExercise> $workoutExercises
      * @return array<int, array{
      *     workoutExercise: WorkoutExercise,
-     *     sets: array<int, array{position: int, weight: float, reps: int, duration: ?int, distance: ?int}>,
+     *     sets: array<int, array{position: int, weight: float, reps: int, duration: ?int, distance: ?int, bodyweightShare: ?float}>,
      *     tonnage: float,
+     *     cardBodyweightShare: ?float,
      * }>
      */
     private function buildExerciseData(
         array $workoutExercises,
         User $user,
         WeightConverterService $weightConverter,
+        BodyweightSnapshotService $bodyweightSnapshotService,
     ): array {
         $data = [];
 
@@ -148,24 +162,35 @@ class WorkoutEditController extends AbstractController
             $tonnage = 0.0;
 
             $isWeightReps = MeasurementType::WEIGHT_REPS === $workoutExercise->exercise->measurementType;
+            $bodyweightPercent = $workoutExercise->exercise->bodyweightPercent;
 
             foreach ($workoutExercise->exerciseSets as $set) {
+                $shareKg = $bodyweightSnapshotService->shareKg($set->bodyweightSnapshotKg, $bodyweightPercent);
+                $effectiveWeight = $shareKg + $set->weight;
+
                 $sets[] = [
                     'position' => $set->position,
                     'weight' => $weightConverter->convertToLbs($set->weight, $user->unitOfMeasure),
                     'reps' => $set->reps,
                     'duration' => $set->duration,
                     'distance' => $set->distance,
+                    'bodyweightShare' => null !== $bodyweightPercent ? round($weightConverter->convertToLbs($shareKg, $user->unitOfMeasure), 1) : null,
                 ];
                 // Poids × reps pour un exercice classique, poids seul (comme une série à 1 rep)
                 // pour un exercice `TIME`/`DISTANCE` — voir WorkoutTonnageRepository::TONNAGE_SUBQUERY_DQL.
-                $tonnage += $isWeightReps ? $set->weight * $set->reps : $set->weight;
+                $tonnage += $isWeightReps ? $effectiveWeight * $set->reps : $effectiveWeight;
             }
+
+            // Part de poids de corps "live" (poids de corps actuel, pas figé) utilisée par
+            // l'indicateur "poids soulevé" pour une série ajoutée en JS sur cet exercice — aucune
+            // série n'a encore de `bodyweightSnapshotKg` à ce stade.
+            $cardShareKg = $bodyweightSnapshotService->shareKg($user->bodyweightKg, $bodyweightPercent);
 
             $data[] = [
                 'workoutExercise' => $workoutExercise,
                 'sets' => $sets,
                 'tonnage' => $weightConverter->convertToLbs($tonnage, $user->unitOfMeasure),
+                'cardBodyweightShare' => null !== $bodyweightPercent ? round($weightConverter->convertToLbs($cardShareKg, $user->unitOfMeasure), 1) : null,
             ];
         }
 

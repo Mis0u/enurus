@@ -27,7 +27,7 @@ final class WeightConverterService
 
     public function format(float $weightKg, UnitOfMeasureEnum $unit): string
     {
-        $weight = $this->convertToLbs($weightKg, $unit);
+        $weight = round($this->convertToLbs($weightKg, $unit), 1);
         return \sprintf('%s %s', $weight, $unit->value);
     }
 

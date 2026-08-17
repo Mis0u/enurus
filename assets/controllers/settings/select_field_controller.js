@@ -36,6 +36,9 @@ export default class extends Controller {
 
             if (response.ok) {
                 showSuccessToast(this.successMessageValue);
+                window.dispatchEvent(new CustomEvent('settings:field-updated', {
+                    detail: { paramName: this.paramNameValue, value },
+                }));
             }
         } catch {
             // Échec silencieux volontaire — le select/toggle garde la valeur choisie,

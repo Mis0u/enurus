@@ -93,6 +93,7 @@ final class ExerciseCreateController extends AbstractController
                 $locale,
             ),
             'gender' => $user->gender,
+            'user' => $user,
         ]);
     }
 

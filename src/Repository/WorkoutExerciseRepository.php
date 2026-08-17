@@ -25,7 +25,10 @@ final class WorkoutExerciseRepository extends ServiceEntityRepository
     /**
      * `poids × reps` pour un exercice `WEIGHT_REPS`, `poids` seul (comme une série à 1 rep) pour
      * un exercice `TIME` — même formule que `WorkoutTonnageRepository::TONNAGE_SUBQUERY_DQL`, dont
-     * la responsabilité est différente (tonnage par séance entière, pas par workoutExercice).
+     * la responsabilité est différente (tonnage par séance entière, pas par workoutExercice). Pour
+     * un exercice bodyweight, `s.weight` n'est que le lest — la part de poids de corps figée
+     * (`s.bodyweightSnapshotKg × e.bodyweightPercent / 100`) s'y ajoute, voir
+     * `WorkoutTonnageRepository::TONNAGE_SUBQUERY_DQL`.
      *
      * @param string[] $workoutExerciseIds
      * @return array<string, float>
@@ -43,8 +46,12 @@ final class WorkoutExerciseRepository extends ServiceEntityRepository
             ->addSelect(
                 sprintf(
                     "(SELECT COALESCE(SUM(
-                        CASE WHEN e.measurementType = '%s' THEN s.weight * s.reps
-                             ELSE s.weight
+                        CASE WHEN e.measurementType = '%s' THEN
+                            CASE WHEN e.bodyweightPercent IS NOT NULL
+                                 THEN (COALESCE(s.bodyweightSnapshotKg, 0) * e.bodyweightPercent / 100 + s.weight) * s.reps
+                                 ELSE s.weight * s.reps
+                            END
+                        ELSE s.weight
                         END
                     ), 0) FROM %s s WHERE s.workoutExercise = we) as tonnage",
                     MeasurementType::WEIGHT_REPS->value,

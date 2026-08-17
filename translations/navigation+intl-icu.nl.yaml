@@ -147,6 +147,7 @@ exercise:
     alert:
         duplicate_custom: "Je hebt al een oefening \"%name%\" aangemaakt op %date%."
         duplicate_public: "Een vergelijkbare oefening \"%name%\" bestaat al in de bibliotheek."
+    bodyweight_badge: "EG {percent}%"
     create:
         breadcrumb: Nieuwe oefening
         submit: Oefening aanmaken
@@ -169,6 +170,14 @@ exercise:
         restored: Oefening succesvol hersteld.
         updated: Oefening succesvol gewijzigd.
     form:
+        bodyweight_go_to_settings: Naar instellingen
+        bodyweight_label: Lichaamsgewicht
+        bodyweight_locked_disabled: Uitgeschakeld
+        bodyweight_locked_enabled: "Ingeschakeld — {percent}% van het lichaamsgewicht"
+        bodyweight_locked_hint: "Vergrendeld: deze oefening heeft al geregistreerde sets."
+        bodyweight_percent_label: Percentage lichaamsgewicht getild
+        bodyweight_requires_settings: Vul je lichaamsgewicht in bij de instellingen om deze optie in te schakelen.
+        bodyweight_toggle: Lichaamsgewicht-oefening
         description_placeholder: Beschrijf de technische punten, houding, fouten om te vermijden…
         description_toggle: Beschrijving toevoegen
         legend_primary: Primaire spieren
@@ -449,6 +458,10 @@ settings:
     avatar:
         change: Foto wijzigen
         hint: JPEG, PNG of WebP · max. 5 MB
+    bodyweight:
+        hint: Wordt gebruikt om het volume van lichaamsgewicht-oefeningen te berekenen.
+        label: Lichaamsgewicht
+        placeholder: Gewicht in {unit}
     danger_zone:
         button: Mijn account verwijderen
         explanation: Je account wordt gedeactiveerd en na 30 dagen definitief verwijderd. Opnieuw inloggen voor de deadline annuleert de verwijdering automatisch.
@@ -597,6 +610,7 @@ workout:
         select: Kies je routine
         title: Routine
     search_exercise:
+        bodyweight_required: Vul je lichaamsgewicht in bij de instellingen om deze oefening te gebruiken.
         create_link:
             cancel_button: Annuleren
             confirm_button: Aanmaken
@@ -609,6 +623,8 @@ workout:
         placeholder: Naam van de oefening...
         title: Zoek een oefening
     series: Sets
+    series_bodyweight_extra_abbreviate: extra
+    series_bodyweight_lifted: "Getild gewicht: {weight}"
     series_distance: Afstand (meter)
     series_distance_abbreviate: m
     series_duration: Duur (seconden)
@@ -634,6 +650,7 @@ workout:
             error: "Kon de afbeelding niet genereren, probeer opnieuw."
             other_exercises: "{count, plural, =1 {+ # andere oefening} other {+ # andere oefeningen}}"
         sets_table:
+            bodyweight_used: "Gebruikt lichaamsgewicht: {weight}"
             distance: Afstand
             duration: Duur
             reps: Reps

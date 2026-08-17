@@ -14,6 +14,11 @@
                     {{ 'exercise.list.badge.archived'|trans({}, 'navigation') }}
                 </span>
             {% endif %}
+            {% if exercise.bodyweightPercent is not null %}
+                <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10.5px] font-medium bg-[rgba(244,63,94,0.1)] border border-[rgba(244,63,94,0.3)] text-[#f43f5e] align-middle ml-1">
+                    {{ 'exercise.bodyweight_badge'|trans({percent: exercise.bodyweightPercent|number_format(0)}, 'navigation') }}
+                </span>
+            {% endif %}
         </h4>
     </div>
     <button type="button"
