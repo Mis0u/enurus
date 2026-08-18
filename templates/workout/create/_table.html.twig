@@ -5,7 +5,7 @@
     <thead>
     <tr class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#4a5568]">
         <td class="pb-2.5 w-12">{{ 'workout.series'|trans({}, 'navigation') }}</td>
-        <td class="pb-2.5 w-40">{{ 'workout.weight'|trans({}, 'navigation') }}</td>
+        <td class="pb-2.5 w-40">{{ (is_bodyweight ? 'workout.weight_bodyweight' : 'workout.weight')|trans({}, 'navigation') }}</td>
         <td class="pb-2.5 w-40">
             {% if is_time_based %}
                 {{ 'workout.series_duration'|trans({}, 'navigation') }}
