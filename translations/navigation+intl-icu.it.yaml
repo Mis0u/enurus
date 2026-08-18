@@ -410,6 +410,8 @@ routine:
         search_placeholder: Cerca un esercizio…
         your_routine: La tua routine
     list:
+        actions:
+            show: Dettaglio
         count: >-
             {count, plural,
                 =0    {Nessuna routine}
@@ -432,6 +434,21 @@ routine:
                 other {e # altri esercizi…}
             }
         title: Le mie routine
+    show:
+        empty_usage: Questa routine non è ancora stata utilizzata in un allenamento.
+        exercises_title: Esercizi
+        muscles_primary: Muscoli primari
+        muscles_secondary: Muscoli secondari
+        muscles_title: Muscoli coinvolti
+        usage:
+            average_duration_label: Durata media
+            count_label: Allenamenti completati
+            last_used_label: Ultimo utilizzo
+            month_label: Questo mese
+            period_title: Utilizzi per periodo
+            title: Statistiche di utilizzo
+            week_label: Questa settimana
+            year_label: Quest'anno
 
 settings:
     account_blocked:

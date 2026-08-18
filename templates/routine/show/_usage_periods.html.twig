@@ -1,0 +1,42 @@
+{#
+templates/routine/show/_usage_periods.html.twig
+
+Paramètres (via `only`) :
+  - weekCount : int
+  - monthCount : int
+  - yearCount : int
+#}
+<section class="mb-7">
+    <h2 class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4] mb-3">
+        {{ 'routine.show.usage.period_title'|trans({}, 'navigation') }}
+    </h2>
+
+    <div class="grid grid-cols-3 gap-3 max-md:grid-cols-1">
+        <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#64748b] mb-1.5">
+                {{ 'routine.show.usage.week_label'|trans({}, 'navigation') }}
+            </div>
+            <div class="font-rajdhani text-[22px] font-bold text-[#f1f5f9]">
+                {{ weekCount }}
+            </div>
+        </div>
+
+        <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#64748b] mb-1.5">
+                {{ 'routine.show.usage.month_label'|trans({}, 'navigation') }}
+            </div>
+            <div class="font-rajdhani text-[22px] font-bold text-[#f1f5f9]">
+                {{ monthCount }}
+            </div>
+        </div>
+
+        <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4">
+            <div class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#64748b] mb-1.5">
+                {{ 'routine.show.usage.year_label'|trans({}, 'navigation') }}
+            </div>
+            <div class="font-rajdhani text-[22px] font-bold text-[#f1f5f9]">
+                {{ yearCount }}
+            </div>
+        </div>
+    </div>
+</section>

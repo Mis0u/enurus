@@ -410,6 +410,8 @@ routine:
         search_placeholder: Zoek een oefening…
         your_routine: Jouw routine
     list:
+        actions:
+            show: Details
         count: >-
             {count, plural,
                 =0    {Geen routines}
@@ -432,6 +434,21 @@ routine:
                 other {en # andere oefeningen…}
             }
         title: Mijn routines
+    show:
+        empty_usage: Deze routine is nog niet gebruikt in een training.
+        exercises_title: Oefeningen
+        muscles_primary: Primaire spieren
+        muscles_secondary: Secundaire spieren
+        muscles_title: Belaste spieren
+        usage:
+            average_duration_label: Gemiddelde duur
+            count_label: Voltooide trainingen
+            last_used_label: Laatst gebruikt
+            month_label: Deze maand
+            period_title: Gebruik per periode
+            title: Gebruiksstatistieken
+            week_label: Deze week
+            year_label: Dit jaar
 
 settings:
     account_blocked:

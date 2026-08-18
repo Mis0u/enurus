@@ -81,6 +81,40 @@ final class RoutineVoterTest extends TestCase
         self::assertSame(Voter::ACCESS_DENIED, $vote);
     }
 
+    public function testOwnerCanViewTheirRoutine(): void
+    {
+        $owner = $this->createUser('owner@test.com');
+        $routine = $this->createRoutine($owner);
+
+        $vote = $this->voter->vote($this->tokenFor($owner), $routine, [RoutineVoter::VIEW]);
+
+        self::assertSame(Voter::ACCESS_GRANTED, $vote);
+    }
+
+    public function testOtherUserCannotViewTheRoutine(): void
+    {
+        $owner = $this->createUser('owner@test.com');
+        $other = $this->createUser('other@test.com');
+        $routine = $this->createRoutine($owner);
+
+        $vote = $this->voter->vote($this->tokenFor($other), $routine, [RoutineVoter::VIEW]);
+
+        self::assertSame(Voter::ACCESS_DENIED, $vote);
+    }
+
+    public function testAnonymousTokenIsDeniedOnView(): void
+    {
+        $owner = $this->createUser('owner@test.com');
+        $routine = $this->createRoutine($owner);
+
+        $token = $this->createStub(TokenInterface::class);
+        $token->method('getUser')->willReturn(null);
+
+        $vote = $this->voter->vote($token, $routine, [RoutineVoter::VIEW]);
+
+        self::assertSame(Voter::ACCESS_DENIED, $vote);
+    }
+
     public function testAnonymousTokenIsDeniedOnEdit(): void
     {
         $owner = $this->createUser('owner@test.com');

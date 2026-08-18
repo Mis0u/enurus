@@ -1,0 +1,28 @@
+{#
+templates/partials/_badge/_measurement_type_badge.html.twig
+
+Paramètres (via `only`) :
+  - measurementType : string ('weight_reps'|'time'|'distance')
+#}
+{% set colors = {
+    weight_reps: 'text-slate-400',
+    time: 'text-amber-500/80',
+    distance: 'text-slate-400',
+} %}
+<span class="inline-flex items-center gap-1 text-[10.5px] font-medium whitespace-nowrap {{ colors[measurementType] }}">
+    {% if measurementType == 'weight_reps' %}
+        <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 12h16M4 8v8M20 8v8M2 10v4M22 10v4"></path>
+        </svg>
+    {% elseif measurementType == 'time' %}
+        <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 3"></path>
+        </svg>
+    {% else %}
+        <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12h3l3-7 4 14 3-7h5"></path>
+        </svg>
+    {% endif %}
+    {{ ('exercise.form.measurement_type_' ~ measurementType)|trans({}, 'navigation') }}
+</span>
