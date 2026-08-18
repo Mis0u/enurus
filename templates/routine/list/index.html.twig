@@ -5,9 +5,11 @@
     Controller : RoutineListController (GET /{_locale}/mes-routines)
 
     Variables passées par le controller :
-      - pagination   : PaginationInterface<int, Routine>
-      - count        : int (nombre total de routines, toutes pages confondues)
-      - limitAllowed : int[]
+      - pagination         : PaginationInterface<int, Routine>
+      - count              : int (nombre total de routines, toutes pages confondues)
+      - limitAllowed       : int[]
+      - bodyweightWarnings : array<string, bool> (routine.id => routine contient un exercice PDC
+                              alors que l'utilisateur n'a pas de poids corporel renseigné)
 #}
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
 
@@ -39,7 +41,10 @@
 
             <div class="routines-grid mt-5">
                 {% for routine in pagination %}
-                    {% include 'routine/list/_routine_card.html.twig' with {routine: routine} only %}
+                    {% include 'routine/list/_routine_card.html.twig' with {
+                        routine: routine,
+                        hasBodyweightWarning: bodyweightWarnings[routine.id] ?? false,
+                    } only %}
                 {% endfor %}
             </div>
 

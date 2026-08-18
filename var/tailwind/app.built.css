@@ -1676,6 +1676,9 @@
   .bg-\[rgba\(244\,63\,94\,0\.1\)\] {
     background-color: rgba(244,63,94,0.1);
   }
+  .bg-\[rgba\(244\,63\,94\,0\.06\)\] {
+    background-color: rgba(244,63,94,0.06);
+  }
   .bg-\[rgba\(244\,63\,94\,0\.15\)\] {
     background-color: rgba(244,63,94,0.15);
   }
@@ -3496,6 +3499,13 @@
       }
     }
   }
+  .hover\:text-\[\#ff6b85\] {
+    &:hover {
+      @media (hover: hover) {
+        color: #ff6b85;
+      }
+    }
+  }
   .hover\:text-cyan-300 {
     &:hover {
       @media (hover: hover) {
@@ -3769,6 +3779,11 @@
   .disabled\:cursor-not-allowed {
     &:disabled {
       cursor: not-allowed;
+    }
+  }
+  .disabled\:opacity-40 {
+    &:disabled {
+      opacity: 40%;
     }
   }
   .disabled\:opacity-50 {

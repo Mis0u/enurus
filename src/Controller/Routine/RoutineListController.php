@@ -56,6 +56,30 @@ final class RoutineListController extends AbstractController
             'pagination' => $pagination,
             'count' => $pagination->getTotalItemCount(),
             'limitAllowed' => self::DISPLAY_LIMIT_ALLOWED,
+            'bodyweightWarnings' => $this->bodyweightWarnings($pagination, $user),
         ]);
+    }
+
+    /**
+     * @param PaginationInterface<int, Routine> $pagination
+     * @return array<string, bool>
+     */
+    private function bodyweightWarnings(PaginationInterface $pagination, User $user): array
+    {
+        if (null !== $user->bodyweightKg) {
+            return [];
+        }
+
+        $warnings = [];
+        foreach ($pagination as $routine) {
+            foreach ($routine->routineExercises as $routineExercise) {
+                if (null !== $routineExercise->exercise->bodyweightPercent) {
+                    $warnings[(string) $routine->id] = true;
+                    break;
+                }
+            }
+        }
+
+        return $warnings;
     }
 }

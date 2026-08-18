@@ -1,7 +1,7 @@
 <div class="fixed bottom-0 left-[240px] right-0 max-md:left-0 max-md:bottom-[70px] px-7 py-4 max-md:px-4 bg-gradient-to-t from-[#080e1a] to-transparent pointer-events-none z-10">
     <div class="pointer-events-auto max-w-[600px] mx-auto">
         <twig:Button:Primary:Primary
-            data="data-action=click->exercise#validateAndSubmit"
+            data="data-action=click->exercise#validateAndSubmit data-exercise-target=submit"
             message="{{ 'field.form.button.validate'|trans({}, 'common') }}"
         />
     </div>

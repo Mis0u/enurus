@@ -2,7 +2,8 @@
 templates/routine/list/_routine_card.html.twig
 
 Paramètres :
-  - routine : Routine
+  - routine              : Routine
+  - hasBodyweightWarning : bool
 #}
 {% set exercises = routine.routineExercises %}
 {% set total = exercises|length %}
@@ -16,6 +17,15 @@ Paramètres :
         <div class="routine-card__meta">
             <h2 class="routine-card__name">
                 {{ routine.name }}
+                {% if hasBodyweightWarning %}
+                    <span class="routine-card__bodyweight-warning"
+                          title="{{ 'routine.show.bodyweight_warning'|trans({}, 'navigation') }}"
+                          aria-label="{{ 'routine.show.bodyweight_warning'|trans({}, 'navigation') }}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </span>
+                {% endif %}
             </h2>
             <span class="routine-card__count">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

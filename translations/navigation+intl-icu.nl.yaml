@@ -435,6 +435,7 @@ routine:
             }
         title: Mijn routines
     show:
+        bodyweight_warning: Vul je lichaamsgewicht in bij de instellingen om alle oefeningen van deze routine te gebruiken.
         empty_usage: Deze routine is nog niet gebruikt in een training.
         exercises_title: Oefeningen
         muscles_primary: Primaire spieren

@@ -113,6 +113,10 @@ final class ExerciseSelectorComponent
             'cardBodyweightShare' => null !== $exercise->bodyweightPercent
                 ? round($this->weightConverter->convertToLbs($shareKg, $user->unitOfMeasure), 1)
                 : null,
+            // Toujours true ici : le guard ci-dessus a déjà refusé le rendu si l'exercice est
+            // PDC et que l'utilisateur n'a pas de poids — cette branche n'est jamais atteinte
+            // dans le cas contraire.
+            'userHasBodyweight' => true,
         ]);
 
         $this->search = '';

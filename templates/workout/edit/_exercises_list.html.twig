@@ -28,6 +28,7 @@
                 'controllerName': 'workout--edit--exercise',
                 'existingSets': item.sets,
                 'cardBodyweightShare': item.cardBodyweightShare,
+                'userHasBodyweight': app.user.bodyweightKg is not null,
             } only %}
         {% endfor %}
     </div>

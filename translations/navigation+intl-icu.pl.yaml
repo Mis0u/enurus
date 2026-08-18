@@ -445,6 +445,7 @@ routine:
             }
         title: Moje programy
     show:
+        bodyweight_warning: Podaj swoją masę ciała w ustawieniach, aby korzystać ze wszystkich ćwiczeń w tym planie.
         empty_usage: Ten program nie był jeszcze użyty w żadnym treningu.
         exercises_title: Ćwiczenia
         muscles_primary: Mięśnie główne

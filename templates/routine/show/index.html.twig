@@ -31,6 +31,20 @@
                 {% endif %}
             </header>
 
+            {% if hasBodyweightWarning %}
+                <div class="flex items-start gap-2.5 mb-6 px-4 py-3.5 bg-[rgba(244,63,94,0.06)] border border-[rgba(244,63,94,0.25)] rounded-xl text-[13px] text-[#f0f4ff]">
+                    <svg class="w-4.5 h-4.5 mt-0.5 flex-shrink-0 text-[#f43f5e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>
+                        {{ 'routine.show.bodyweight_warning'|trans({}, 'navigation') }}
+                        <a href="{{ path('app_settings') }}#fieldBodyweight" class="underline text-[#f43f5e] hover:text-[#ff6b85]">
+                            {{ 'settings.bodyweight.label'|trans({}, 'navigation') }}
+                        </a>
+                    </span>
+                </div>
+            {% endif %}
+
             {% include 'routine/show/_muscles.html.twig' with {
                 allPrimarySvgIds: allPrimarySvgIds,
                 allSecondarySvgIds: allSecondarySvgIds,
