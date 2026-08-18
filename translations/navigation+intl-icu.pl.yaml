@@ -203,11 +203,13 @@ exercise:
             date: Data
             pr_badge: PR
             volume: Objętość
+            weight: Waga
         overview:
             average_frequency: Średnia częstotliwość
             average_frequency_value: "{count} treningów/tydzień"
             current_record: Aktualny rekord
             last_practiced: Ostatnio wykonane
+            max_weight: Maksymalna waga
             progression: Postęp
             title: Podsumowanie
             total_sessions: Łączna liczba treningów

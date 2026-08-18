@@ -49,12 +49,12 @@ final readonly class ExerciseHistoryDataService
     /**
      * @return array{
      *     hasHistory: bool,
-     *     overview: array{recordValue: float|int, recordDate: ?\DateTimeImmutable, totalSessions: int, totalVolume: float|int, lastPracticedAt: ?\DateTimeImmutable, progressionPercent: ?float, averageFrequencyPerWeek: float},
+     *     overview: array{recordValue: float|int, recordDate: ?\DateTimeImmutable, totalSessions: int, totalVolume: float|int, lastPracticedAt: ?\DateTimeImmutable, progressionPercent: ?float, averageFrequencyPerWeek: float, maxWeight: ?float},
      *     unitLabel: string,
      *     period: string,
      *     availablePeriods: string[],
      *     chart: Chart,
-     *     journal: PaginationInterface<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}>
+     *     journal: PaginationInterface<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}>
      * }
      */
     public function getData(User $user, Exercise $exercise, string $period, int $page, int $limit): array
@@ -76,6 +76,7 @@ final readonly class ExerciseHistoryDataService
                     'lastPracticedAt' => null,
                     'progressionPercent' => null,
                     'averageFrequencyPerWeek' => 0.0,
+                    'maxWeight' => null,
                 ],
                 'unitLabel' => $unitLabel,
                 'period' => self::PERIOD_ALL,
@@ -97,7 +98,7 @@ final readonly class ExerciseHistoryDataService
             $unitLabel,
         );
 
-        /** @var PaginationInterface<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}> $journal */
+        /** @var PaginationInterface<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}> $journal */
         $journal = $this->paginator->paginate(
             array_reverse($this->convertSessionsForDisplay($filteredSessions, $measurementType, $user)),
             $page,
@@ -123,11 +124,11 @@ final readonly class ExerciseHistoryDataService
      * toutes les séries de la séance sur cet exercice.
      *
      * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, weight: float, reps: int, duration: ?int, distance: ?int}> $rawSets
-     * @return array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float}>
+     * @return array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float}>
      */
     private function aggregateSessions(array $rawSets, MeasurementType $measurementType): array
     {
-        /** @var array<string, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float}> $sessions */
+        /** @var array<string, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float}> $sessions */
         $sessions = [];
 
         foreach ($rawSets as $set) {
@@ -137,6 +138,7 @@ final readonly class ExerciseHistoryDataService
                 'recordValue' => 0.0,
                 'recordReps' => 0,
                 'volume' => 0.0,
+                'maxWeight' => 0.0,
             ];
 
             $value = $this->metricValue($set, $measurementType);
@@ -149,6 +151,8 @@ final readonly class ExerciseHistoryDataService
             $sessions[$set['workoutId']]['volume'] += MeasurementType::WEIGHT_REPS === $measurementType
                 ? $set['weight'] * $set['reps']
                 : $value;
+
+            $sessions[$set['workoutId']]['maxWeight'] = max($sessions[$set['workoutId']]['maxWeight'], $set['weight']);
         }
 
         return array_values($sessions);
@@ -173,8 +177,8 @@ final readonly class ExerciseHistoryDataService
      * partagée avec `WorkoutRecordDetectionService` : celui-ci jette la valeur du record, ici on
      * en a besoin pour le graphique et les tuiles.
      *
-     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float}> $sessions
-     * @return array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}>
+     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float}> $sessions
+     * @return array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}>
      */
     private function markRecords(array $sessions): array
     {
@@ -194,8 +198,8 @@ final readonly class ExerciseHistoryDataService
     }
 
     /**
-     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}> $sessions
-     * @return array{recordValue: float|int, recordDate: ?\DateTimeImmutable, totalSessions: int, totalVolume: float|int, lastPracticedAt: ?\DateTimeImmutable, progressionPercent: ?float, averageFrequencyPerWeek: float}
+     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}> $sessions
+     * @return array{recordValue: float|int, recordDate: ?\DateTimeImmutable, totalSessions: int, totalVolume: float|int, lastPracticedAt: ?\DateTimeImmutable, progressionPercent: ?float, averageFrequencyPerWeek: float, maxWeight: ?float}
      */
     private function buildOverview(array $sessions, MeasurementType $measurementType, User $user): array
     {
@@ -230,11 +234,31 @@ final readonly class ExerciseHistoryDataService
             'lastPracticedAt' => $last['performedAt'],
             'progressionPercent' => 0.0 < $firstValue ? round(($recordValue - $firstValue) / $firstValue * self::PERCENT_MULTIPLIER, 1) : null,
             'averageFrequencyPerWeek' => round(\count($sessions) / $weeksElapsed, 1),
+            'maxWeight' => $this->overviewMaxWeight($sessions, $measurementType, $user),
         ];
     }
 
     /**
-     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}> $sessions
+     * "Tonnage maximal" affiché en tuile pour un exercice `TIME`/`DISTANCE` seulement s'il porte
+     * réellement du lest sur au moins une séance (ex. gainage lesté, farmer walk chargé) — `null`
+     * pour `WEIGHT_REPS` (déjà couvert par `recordValue`) ou si aucun poids n'a jamais été
+     * renseigné, pour ne pas afficher une tuile à 0 sans intérêt.
+     *
+     * @param array<int, array{maxWeight: float}> $sessions
+     */
+    private function overviewMaxWeight(array $sessions, MeasurementType $measurementType, User $user): ?float
+    {
+        if (MeasurementType::WEIGHT_REPS === $measurementType) {
+            return null;
+        }
+
+        $maxWeight = array_reduce($sessions, static fn (float $carry, array $session): float => max($carry, $session['maxWeight']), 0.0);
+
+        return 0.0 < $maxWeight ? $this->weightConverter->convertToLbs($maxWeight, $user->unitOfMeasure) : null;
+    }
+
+    /**
+     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}> $sessions
      * @return string[]
      */
     private function resolveAvailablePeriods(array $sessions): array
@@ -256,8 +280,8 @@ final readonly class ExerciseHistoryDataService
     }
 
     /**
-     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}> $sessions
-     * @return array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}>
+     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}> $sessions
+     * @return array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}>
      */
     private function filterByPeriod(array $sessions, string $period): array
     {
@@ -279,7 +303,7 @@ final readonly class ExerciseHistoryDataService
      * `DashboardTonnageService`, sans zero-fill : une courbe de progression n'a pas besoin de
      * points vides sur les mois sans séance.
      *
-     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}> $sessions
+     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}> $sessions
      * @return array<int, array{label: string, value: float, isPr: bool, isCurrentRecord: bool}>
      */
     private function buildChartPoints(array $sessions, MeasurementType $measurementType, User $user): array
@@ -302,7 +326,7 @@ final readonly class ExerciseHistoryDataService
             );
         }
 
-        /** @var array<string, array{performedAt: \DateTimeImmutable, session: array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}}> $bestByMonth */
+        /** @var array<string, array{performedAt: \DateTimeImmutable, session: array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}}> $bestByMonth */
         $bestByMonth = [];
         foreach ($sessions as $session) {
             $monthKey = $session['performedAt']->format('Y-m');
@@ -340,20 +364,21 @@ final readonly class ExerciseHistoryDataService
      * Convertit `recordValue`/`volume` kg→unité d'affichage pour les exercices `WEIGHT_REPS` —
      * sans objet pour `TIME`/`DISTANCE` (secondes/mètres affichés tels quels par le template via
      * les filtres/traductions déjà existants, `format_set_duration` et l'abréviation "m", même
-     * pattern que `workout/show/_exercise_card.html.twig`).
+     * pattern que `workout/show/_exercise_card.html.twig`). `maxWeight`, lui, est toujours en kg
+     * quel que soit le type — converti dans tous les cas pour la colonne "Poids" du journal.
      *
-     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}> $sessions
-     * @return array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}>
+     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}> $sessions
+     * @return array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}>
      */
     private function convertSessionsForDisplay(array $sessions, MeasurementType $measurementType, User $user): array
     {
-        if (MeasurementType::WEIGHT_REPS !== $measurementType) {
-            return $sessions;
-        }
+        return array_map(function (array $session) use ($measurementType, $user): array {
+            if (MeasurementType::WEIGHT_REPS === $measurementType) {
+                $session['recordValue'] = $this->weightConverter->convertToLbs($session['recordValue'], $user->unitOfMeasure);
+                $session['volume'] = $this->weightConverter->convertToLbs($session['volume'], $user->unitOfMeasure);
+            }
 
-        return array_map(function (array $session) use ($user): array {
-            $session['recordValue'] = $this->weightConverter->convertToLbs($session['recordValue'], $user->unitOfMeasure);
-            $session['volume'] = $this->weightConverter->convertToLbs($session['volume'], $user->unitOfMeasure);
+            $session['maxWeight'] = $this->weightConverter->convertToLbs($session['maxWeight'], $user->unitOfMeasure);
 
             return $session;
         }, $sessions);
@@ -390,11 +415,11 @@ final readonly class ExerciseHistoryDataService
     }
 
     /**
-     * @return PaginationInterface<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}>
+     * @return PaginationInterface<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}>
      */
     private function emptyJournal(int $page, int $limit): PaginationInterface
     {
-        /** @var PaginationInterface<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}> $journal */
+        /** @var PaginationInterface<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}> $journal */
         $journal = $this->paginator->paginate([], $page, $limit);
 
         return $journal;

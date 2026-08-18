@@ -203,11 +203,13 @@ exercise:
             date: Datum
             pr_badge: PR
             volume: Volume
+            weight: Gewicht
         overview:
             average_frequency: Gemiddelde frequentie
             average_frequency_value: "{count} sessies/week"
             current_record: Huidig record
             last_practiced: Laatst uitgevoerd
+            max_weight: Maximaal gewicht
             progression: Voortgang
             title: Overzicht
             total_sessions: Totaal aantal sessies

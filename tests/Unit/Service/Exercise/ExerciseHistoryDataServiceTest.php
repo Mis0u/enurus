@@ -191,6 +191,61 @@ final class ExerciseHistoryDataServiceTest extends TestCase
         self::assertSame('m', $result['unitLabel']);
     }
 
+    public function testATimeBasedExerciseHasNoMaxWeightTileWhenNoSetEverCarriedExtraWeight(): void
+    {
+        $rawSets = [$this->rawSet('workout-1', weight: 0.0, reps: 0, duration: 120)];
+
+        $service = $this->service($rawSets);
+        $result = $service->getData($this->user(UnitOfMeasureEnum::KG), $this->timeExercise(), 'all', 1, 10);
+
+        self::assertNull($result['overview']['maxWeight']);
+    }
+
+    public function testATimeBasedExerciseExposesTheMaxWeightEverCarriedAcrossAllSessions(): void
+    {
+        $rawSets = [
+            $this->rawSet('workout-1', weight: 5.0, reps: 0, duration: 120, performedAt: new \DateTimeImmutable('-2 days')),
+            $this->rawSet('workout-2', weight: 8.0, reps: 0, duration: 90, performedAt: new \DateTimeImmutable('now')),
+        ];
+
+        $service = $this->service($rawSets);
+        $result = $service->getData($this->user(UnitOfMeasureEnum::KG), $this->timeExercise(), 'all', 1, 10);
+
+        self::assertSame(8.0, $result['overview']['maxWeight']);
+    }
+
+    public function testAWeightRepsExerciseNeverExposesAMaxWeightTileSinceRecordValueAlreadyCoversIt(): void
+    {
+        $rawSets = [$this->rawSet('workout-1', weight: 100.0, reps: 5)];
+
+        $service = $this->service($rawSets);
+        $result = $service->getData($this->user(UnitOfMeasureEnum::KG), $this->weightExercise(), 'all', 1, 10);
+
+        self::assertNull($result['overview']['maxWeight']);
+    }
+
+    public function testTheJournalExposesEachSessionsMaxWeightConvertedToTheUsersUnit(): void
+    {
+        $rawSets = [$this->rawSet('workout-1', weight: 10.0, reps: 0, duration: 60)];
+
+        $captured = null;
+        $paginator = $this->createMock(PaginatorInterface::class);
+        $paginator->expects(self::once())
+            ->method('paginate')
+            ->willReturnCallback(function (array $items) use (&$captured): PaginationInterface {
+                $captured = $items;
+
+                return $this->createStub(PaginationInterface::class);
+            });
+
+        $service = $this->service($rawSets, $paginator);
+        $service->getData($this->user(UnitOfMeasureEnum::LBS), $this->timeExercise(), 'all', 1, 10);
+
+        self::assertNotNull($captured);
+        // 10 kg -> round(10 * 2.20462, 1) = 22.0 lbs (WeightConverterService).
+        self::assertSame(22.0, $captured[0]['maxWeight']);
+    }
+
     /**
      * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, weight: float, reps: int, duration: ?int, distance: ?int}> $rawSets
      */

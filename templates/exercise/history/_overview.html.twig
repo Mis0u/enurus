@@ -1,9 +1,10 @@
 {#
     Variables attendues (toutes via `only`) :
-    - overview : array{recordValue: float|int, recordDate: ?DateTimeImmutable, totalSessions: int, totalVolume: float|int, lastPracticedAt: ?DateTimeImmutable, progressionPercent: ?float, averageFrequencyPerWeek: float}
+    - overview : array{recordValue: float|int, recordDate: ?DateTimeImmutable, totalSessions: int, totalVolume: float|int, lastPracticedAt: ?DateTimeImmutable, progressionPercent: ?float, averageFrequencyPerWeek: float, maxWeight: ?float}
       recordValue/totalVolume : secondes brutes (int) pour measurementType == 'time' (format mm:ss
       via `format_set_duration`, cf. ExerciseHistoryDataService::overviewValue()) — sinon la
-      valeur convertie habituelle.
+      valeur convertie habituelle. maxWeight : non-null seulement pour 'time'/'distance' si un
+      poids a déjà été renseigné sur au moins une séance (lest optionnel).
     - unitLabel : string
     - measurementType : string ('weight_reps'|'time'|'distance')
 #}
@@ -87,5 +88,16 @@
                 {{ 'exercise.history.overview.average_frequency_value'|trans({count: overview.averageFrequencyPerWeek|number_format(1, ',', ' ')}, 'navigation') }}
             </div>
         </div>
+
+        {% if overview.maxWeight is not null %}
+            <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4">
+                <div class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#64748b] mb-1.5">
+                    {{ 'exercise.history.overview.max_weight'|trans({}, 'navigation') }}
+                </div>
+                <div class="font-rajdhani text-[22px] font-bold text-[#f1f5f9]">
+                    {{ overview.maxWeight|number_format(1, ',', ' ') }} {{ app.user.unitOfMeasure.value }}
+                </div>
+            </div>
+        {% endif %}
     </div>
 </section>

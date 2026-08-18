@@ -203,11 +203,13 @@ exercise:
             date: Data
             pr_badge: PR
             volume: Volume
+            weight: Peso
         overview:
             average_frequency: Frequência média
             average_frequency_value: "{count} sessões/semana"
             current_record: Recorde atual
             last_practiced: Última vez praticado
+            max_weight: Peso máximo
             progression: Progressão
             title: Resumo
             total_sessions: Sessões totais
