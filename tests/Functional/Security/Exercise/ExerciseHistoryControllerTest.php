@@ -124,7 +124,7 @@ final class ExerciseHistoryControllerTest extends WebTestCase
         $client->request(Request::METHOD_GET, $url);
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextSame('header', 'Reverse fly Suis ta progression sur cet exercice');
+        $this->assertSelectorTextSame('header', 'Reverse fly');
     }
 
     private function getHistoryUrl(string $exerciseName): string
