@@ -9,6 +9,7 @@ use App\Entity\ExerciseSet;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
+use App\Enum\Entity\Exercise\MeasurementType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -232,6 +233,21 @@ class WorkoutFixtures extends Fixture implements DependentFixtureInterface
 
     private function createExerciseSet(WorkoutExercise $workoutExercise, int $position): ExerciseSet
     {
+        $set = new ExerciseSet();
+        $set->workoutExercise = $workoutExercise;
+        $set->position = $position;
+
+        match ($workoutExercise->exercise->measurementType) {
+            MeasurementType::WEIGHT_REPS => $this->fillWeightRepsSet($set),
+            MeasurementType::TIME => $set->duration = $this->randomSetDurationSeconds(),
+            MeasurementType::DISTANCE => $set->distance = $this->randomSetDistanceMeters(),
+        };
+
+        return $set;
+    }
+
+    private function fillWeightRepsSet(ExerciseSet $set): void
+    {
         $reps = self::REPS_OPTIONS[array_rand(self::REPS_OPTIONS)];
         $range = self::WEIGHT_RANGES[$reps];
 
@@ -239,13 +255,24 @@ class WorkoutFixtures extends Fixture implements DependentFixtureInterface
         $steps = (int) (($max - $min) / $step);
         $weight = $min + (random_int(0, $steps) * $step);
 
-        $set = new ExerciseSet();
-        $set->workoutExercise = $workoutExercise;
-        $set->position = $position;
         $set->reps = $reps;
         $set->weight = $weight;
+    }
 
-        return $set;
+    /**
+     * Durée de série tenue réaliste (gainage, hang...), entre 20 et 180 secondes, par tranche de 5.
+     */
+    private function randomSetDurationSeconds(): int
+    {
+        return random_int(4, 36) * 5;
+    }
+
+    /**
+     * Distance de série réaliste (farmer walk...), entre 10 et 50 mètres, par tranche de 5.
+     */
+    private function randomSetDistanceMeters(): int
+    {
+        return random_int(2, 10) * 5;
     }
 
     /**
