@@ -203,11 +203,13 @@ exercise:
             date: Datum
             pr_badge: PR
             volume: Volume
+            weight: Gewicht
         overview:
             average_frequency: Gemiddelde frequentie
             average_frequency_value: "{count} sessies/week"
             current_record: Huidig record
             last_practiced: Laatst uitgevoerd
+            max_weight: Maximaal gewicht
             progression: Voortgang
             title: Overzicht
             total_sessions: Totaal aantal sessies
@@ -218,7 +220,6 @@ exercise:
                 3m: 3 maanden
                 all: Alles
             title: Voortgang
-        subtitle: Volg je voortgang bij deze oefening
     library:
         title: Bibliotheek
     list:
@@ -632,6 +633,7 @@ workout:
     show:
         back: Terug naar mijn trainingen
         metrics:
+            distance: Afstand
             duration: Duur
             exercises: "{count, plural, =1 {Oefening} other {Oefeningen}}"
             sets: "{count, plural, =1 {Set} other {Sets}}"
@@ -663,3 +665,4 @@ workout:
         routine: Kies een routine
         title: Trainingstype
     weight: Gewicht
+    weight_bodyweight: Gewicht (extra)

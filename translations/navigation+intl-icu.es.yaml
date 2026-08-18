@@ -203,11 +203,13 @@ exercise:
             date: Fecha
             pr_badge: PR
             volume: Volumen
+            weight: Peso
         overview:
             average_frequency: Frecuencia media
             average_frequency_value: "{count} sesiones/semana"
             current_record: Récord actual
             last_practiced: Última práctica
+            max_weight: Peso máximo
             progression: Progresión
             title: Resumen
             total_sessions: Sesiones totales
@@ -218,7 +220,6 @@ exercise:
                 3m: 3 meses
                 all: Todo
             title: Progresión
-        subtitle: Sigue tu progresión en este ejercicio
     library:
         title: Biblioteca
     list:
@@ -632,6 +633,7 @@ workout:
     show:
         back: Volver a mis entrenamientos
         metrics:
+            distance: Distancia
             duration: Duración
             exercises: "{count, plural, =1 {Ejercicio} other {Ejercicios}}"
             sets: "{count, plural, =1 {Serie} other {Series}}"
@@ -663,3 +665,4 @@ workout:
         routine: Elegir una rutina
         title: Tipo de entrenamiento
     weight: Peso
+    weight_bodyweight: Peso (extra)

@@ -155,16 +155,29 @@ final class ExerciseHistoryDataServiceTest extends TestCase
         self::assertSame('workout-older', $captured[1]['workoutId']);
     }
 
-    public function testATimeBasedExerciseUsesDurationInMinutesForTheOverviewRecord(): void
+    public function testATimeBasedExerciseUsesRawSecondsForTheOverviewRecord(): void
     {
+        // Minutes décimales arrondies (480s -> 8.0min) sont sans ambiguïté ici, mais le choix de
+        // secondes brutes est vérifié par le test suivant sur un cas qui ne tombe pas rond.
         $rawSets = [$this->rawSet('workout-1', weight: 0.0, reps: 0, duration: 480)];
 
         $service = $this->service($rawSets);
         $result = $service->getData($this->user(UnitOfMeasureEnum::KG), $this->timeExercise(), 'all', 1, 10);
 
-        // 480 secondes = 8 minutes.
-        self::assertSame(8.0, $result['overview']['recordValue']);
+        self::assertSame(480, $result['overview']['recordValue']);
         self::assertSame('min', $result['unitLabel']);
+    }
+
+    public function testATimeBasedExerciseKeepsExactSecondsRatherThanARoundedMinutesValue(): void
+    {
+        // 135s = 2min15 — en minutes décimales arrondies ça donnerait "2,3 min", trompeur : la
+        // tuile doit garder les secondes brutes pour un formatage mm:ss fidèle par le template.
+        $rawSets = [$this->rawSet('workout-1', weight: 0.0, reps: 0, duration: 135)];
+
+        $service = $this->service($rawSets);
+        $result = $service->getData($this->user(UnitOfMeasureEnum::KG), $this->timeExercise(), 'all', 1, 10);
+
+        self::assertSame(135, $result['overview']['recordValue']);
     }
 
     public function testADistanceBasedExerciseUsesRawMetersForTheOverviewRecord(): void
@@ -176,6 +189,61 @@ final class ExerciseHistoryDataServiceTest extends TestCase
 
         self::assertSame(500.0, $result['overview']['recordValue']);
         self::assertSame('m', $result['unitLabel']);
+    }
+
+    public function testATimeBasedExerciseHasNoMaxWeightTileWhenNoSetEverCarriedExtraWeight(): void
+    {
+        $rawSets = [$this->rawSet('workout-1', weight: 0.0, reps: 0, duration: 120)];
+
+        $service = $this->service($rawSets);
+        $result = $service->getData($this->user(UnitOfMeasureEnum::KG), $this->timeExercise(), 'all', 1, 10);
+
+        self::assertNull($result['overview']['maxWeight']);
+    }
+
+    public function testATimeBasedExerciseExposesTheMaxWeightEverCarriedAcrossAllSessions(): void
+    {
+        $rawSets = [
+            $this->rawSet('workout-1', weight: 5.0, reps: 0, duration: 120, performedAt: new \DateTimeImmutable('-2 days')),
+            $this->rawSet('workout-2', weight: 8.0, reps: 0, duration: 90, performedAt: new \DateTimeImmutable('now')),
+        ];
+
+        $service = $this->service($rawSets);
+        $result = $service->getData($this->user(UnitOfMeasureEnum::KG), $this->timeExercise(), 'all', 1, 10);
+
+        self::assertSame(8.0, $result['overview']['maxWeight']);
+    }
+
+    public function testAWeightRepsExerciseNeverExposesAMaxWeightTileSinceRecordValueAlreadyCoversIt(): void
+    {
+        $rawSets = [$this->rawSet('workout-1', weight: 100.0, reps: 5)];
+
+        $service = $this->service($rawSets);
+        $result = $service->getData($this->user(UnitOfMeasureEnum::KG), $this->weightExercise(), 'all', 1, 10);
+
+        self::assertNull($result['overview']['maxWeight']);
+    }
+
+    public function testTheJournalExposesEachSessionsMaxWeightConvertedToTheUsersUnit(): void
+    {
+        $rawSets = [$this->rawSet('workout-1', weight: 10.0, reps: 0, duration: 60)];
+
+        $captured = null;
+        $paginator = $this->createMock(PaginatorInterface::class);
+        $paginator->expects(self::once())
+            ->method('paginate')
+            ->willReturnCallback(function (array $items) use (&$captured): PaginationInterface {
+                $captured = $items;
+
+                return $this->createStub(PaginationInterface::class);
+            });
+
+        $service = $this->service($rawSets, $paginator);
+        $service->getData($this->user(UnitOfMeasureEnum::LBS), $this->timeExercise(), 'all', 1, 10);
+
+        self::assertNotNull($captured);
+        // 10 kg -> round(10 * 2.20462, 1) = 22.0 lbs (WeightConverterService).
+        self::assertSame(22.0, $captured[0]['maxWeight']);
     }
 
     /**

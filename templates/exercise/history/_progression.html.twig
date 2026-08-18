@@ -2,12 +2,14 @@
     Variables attendues (toutes via `only`) :
     - exercise : Exercise
     - chart : Chart (ux-chartjs)
-    - journal : PaginationInterface<int, array{workoutId: string, performedAt: DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}>
+    - journal : PaginationInterface<int, array{workoutId: string, performedAt: DateTimeImmutable, recordValue: float, recordReps: int, volume: float, maxWeight: float, isPr: bool}>
     - period : string
     - availablePeriods : string[]
     - unitLabel : string
     - measurementType : string ('weight_reps'|'time'|'distance')
     - limitAllowed : int[]
+    - showWeightColumn : bool — colonne "Poids" affichée seulement si au moins une séance porte
+      du lest (measurementType 'time'/'distance' avec overview.maxWeight non-null, cf. index.html.twig)
 #}
 <section>
     <div class="flex items-center justify-between mb-3 max-md:flex-col max-md:items-start max-md:gap-2">
@@ -46,6 +48,11 @@
                 <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5 max-md:hidden">
                     {{ 'exercise.history.journal.volume'|trans({}, 'navigation') }}
                 </th>
+                {% if showWeightColumn %}
+                    <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5 max-md:hidden">
+                        {{ 'exercise.history.journal.weight'|trans({}, 'navigation') }}
+                    </th>
+                {% endif %}
                 <th class="show-table-th text-right text-[11px] font-semibold uppercase px-3 py-2.5"></th>
             </tr>
             </thead>
@@ -73,6 +80,11 @@
                             {{ session.volume|number_format(0, ',', ' ') }} {{ unitLabel }}
                         {% endif %}
                     </td>
+                    {% if showWeightColumn %}
+                        <td class="show-table-td-secondary px-3 py-2.5 font-['Rajdhani'] text-[15px] font-semibold max-md:hidden">
+                            {{ session.maxWeight|number_format(1, ',', ' ') }} {{ app.user.unitOfMeasure.value }}
+                        </td>
+                    {% endif %}
                     <td class="px-3 py-2.5 text-right">
                         {% if session.isPr %}
                             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium whitespace-nowrap bg-rose-500/[0.12] border border-rose-500/[0.3] text-rose-400">

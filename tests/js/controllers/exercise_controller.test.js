@@ -10,7 +10,7 @@ function nextTick() {
     return new Promise(resolve => setTimeout(resolve, 0));
 }
 
-function buildDom({ dateValue = '', exerciseCards = '' } = {}) {
+function buildDom({ dateValue = '', exerciseCards = '', liftedWeightTemplate = 'Poids soulevé : __WEIGHT__' } = {}) {
     document.body.innerHTML = `
         <div data-controller="exercise"
              data-exercise-no-date-title-value="Aucune date sélectionnée"
@@ -19,7 +19,8 @@ function buildDom({ dateValue = '', exerciseCards = '' } = {}) {
              data-exercise-no-exercise-text-value="Ajoute au moins un exercice avant de valider ta séance"
              data-exercise-submit-failed-title-value="Échec"
              data-exercise-submit-failed-text-value="Une erreur est survenue"
-             data-exercise-upload-photo-url-value="/upload/__ID__">
+             data-exercise-upload-photo-url-value="/upload/__ID__"
+             data-exercise-lifted-weight-template-value="${liftedWeightTemplate}">
 
             <input id="workout_performedAt" type="text" value="${dateValue}">
 
@@ -88,5 +89,27 @@ describe('exercise controller', () => {
 
         const modal = document.getElementById('note-modal');
         expect(modal.classList.contains('flex')).toBe(true);
+    });
+
+    it('computes the lifted weight of a routine\'s bodyweight sets once loaded', async () => {
+        buildDom({ dateValue: '2026-08-02', exerciseCards: '' });
+        await nextTick();
+
+        const exerciseList = document.getElementById('exercises-list');
+        exerciseList.insertAdjacentHTML('beforeend', `
+            <div data-exercise-index="0">
+                <table><tbody><tr>
+                    <td>
+                        <input type="number" value="10">
+                        <span class="js-lifted-weight" data-bodyweight-share="70"></span>
+                    </td>
+                </tr></tbody></table>
+            </div>
+        `);
+
+        window.dispatchEvent(new CustomEvent('routine:exercises-loaded', { detail: { exerciseList } }));
+        await nextTick();
+
+        expect(document.querySelector('.js-lifted-weight').textContent).toBe('Poids soulevé : 80.0');
     });
 });

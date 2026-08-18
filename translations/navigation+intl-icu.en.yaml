@@ -203,11 +203,13 @@ exercise:
             date: Date
             pr_badge: PR
             volume: Volume
+            weight: Weight
         overview:
             average_frequency: Average frequency
             average_frequency_value: "{count} sessions/week"
             current_record: Current record
             last_practiced: Last practiced
+            max_weight: Max weight
             progression: Progression
             title: Overview
             total_sessions: Total sessions
@@ -218,7 +220,6 @@ exercise:
                 3m: 3 months
                 all: All
             title: Progression
-        subtitle: Track your progress on this exercise
     library:
         title: Library
     list:
@@ -632,6 +633,7 @@ workout:
     show:
         back: Back to my workouts
         metrics:
+            distance: Distance
             duration: Duration
             exercises: "{count, plural, =1 {Exercise} other {Exercises}}"
             sets: "{count, plural, =1 {Set} other {Sets}}"
@@ -663,3 +665,4 @@ workout:
         routine: Choose a routine
         title: Workout type
     weight: Weight
+    weight_bodyweight: Weight (extra)
