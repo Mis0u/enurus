@@ -8,7 +8,7 @@ import { showErrorToast } from '../utils/toast.js';
 import { initLiftedWeights, updateLiftedWeightForInput } from './workout/lifted_weight.js';
 
 export default class extends Controller {
-    static targets = ['exerciseList'];
+    static targets = ['exerciseList', 'submit'];
 
     static values = {
         noDateTitle: String,
@@ -57,6 +57,7 @@ export default class extends Controller {
         });
 
         initLiftedWeights(this.element, this.liftedWeightTemplateValue);
+        this.#updateSubmitAvailability();
     }
 
     disconnect() {
@@ -73,10 +74,12 @@ export default class extends Controller {
 
         this.exerciseListTarget.insertAdjacentHTML('beforeend', html.replaceAll('__EXERCISE_INDEX__', index));
         initLiftedWeights(this.exerciseListTarget.lastElementChild, this.liftedWeightTemplateValue);
+        this.#updateSubmitAvailability();
     }
 
     onRoutineExercisesLoaded(event) {
         initLiftedWeights(event.detail.exerciseList, this.liftedWeightTemplateValue);
+        this.#updateSubmitAvailability();
     }
 
     addSet(event) {
@@ -117,6 +120,7 @@ export default class extends Controller {
     deleteExercise(event) {
         const card = event.target.closest('[data-exercise-index]');
         card.remove();
+        this.#updateSubmitAvailability();
     }
 
     async validateAndSubmit(event) {
@@ -151,6 +155,18 @@ export default class extends Controller {
 
         showErrorToast(this.bodyweightRequiredMessageValue);
         return true;
+    }
+
+    #updateSubmitAvailability() {
+        if (!this.hasSubmitTarget) {
+            return;
+        }
+
+        const cards = [...this.exerciseListTarget.querySelectorAll('[data-exercise-index]')];
+        const allBlocked = cards.length > 0 && cards.every((card) => card.dataset.bodyweightBlocked === 'true');
+
+        this.submitTarget.disabled = allBlocked;
+        this.submitTarget.title = allBlocked ? this.bodyweightRequiredMessageValue : '';
     }
 
     #insertSetRow(card, tbody) {

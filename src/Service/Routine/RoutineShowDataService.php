@@ -38,6 +38,7 @@ final readonly class RoutineShowDataService
      *     weekCount: int,
      *     monthCount: int,
      *     yearCount: int,
+     *     hasBodyweightWarning: bool,
      * }
      */
     public function build(Routine $routine, User $user): array
@@ -55,7 +56,23 @@ final readonly class RoutineShowDataService
             'lastUsedAt' => $this->routineStatsRepository->lastUsedAtFromDates($usageDates),
             'averageDurationMinutes' => $this->averageDurationMinutes($routine, $user),
             ...$this->periodCounts($usageDates),
+            'hasBodyweightWarning' => $this->hasBodyweightWarning($routine, $user),
         ];
+    }
+
+    private function hasBodyweightWarning(Routine $routine, User $user): bool
+    {
+        if (null !== $user->bodyweightKg) {
+            return false;
+        }
+
+        foreach ($routine->routineExercises as $routineExercise) {
+            if (null !== $routineExercise->exercise->bodyweightPercent) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

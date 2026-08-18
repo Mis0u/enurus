@@ -101,6 +101,15 @@
 
 .routine-card__count svg { width: 12px; height: 12px; }
 
+.routine-card__bodyweight-warning {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-left: 4px;
+    color: #f43f5e;
+}
+
+.routine-card__bodyweight-warning svg { width: 15px; height: 15px; }
+
 /* ------------------------------------------------------------------
    CARD ACTIONS
 ------------------------------------------------------------------ */

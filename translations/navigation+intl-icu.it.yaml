@@ -435,6 +435,7 @@ routine:
             }
         title: Le mie routine
     show:
+        bodyweight_warning: Imposta il tuo peso corporeo nelle impostazioni per usare tutti gli esercizi di questa routine.
         empty_usage: Questa routine non è ancora stata utilizzata in un allenamento.
         exercises_title: Esercizi
         muscles_primary: Muscoli primari

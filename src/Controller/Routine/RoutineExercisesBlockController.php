@@ -72,6 +72,7 @@ final class RoutineExercisesBlockController extends AbstractController
             'routineExercises' => $routine->routineExercises,
             'startIndex' => $startIndex,
             'cardBodyweightShares' => $cardBodyweightShares,
+            'userHasBodyweight' => null !== $user->bodyweightKg,
         ]);
     }
 }

@@ -435,6 +435,7 @@ routine:
             }
         title: As minhas rotinas
     show:
+        bodyweight_warning: Indica o teu peso corporal nas definições para usares todos os exercícios desta rotina.
         empty_usage: Esta rotina ainda não foi utilizada num treino.
         exercises_title: Exercícios
         muscles_primary: Músculos primários

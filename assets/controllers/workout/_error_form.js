@@ -1,6 +1,6 @@
 export function handleErrorField(exerciseListTarget) {
     let valid = true;
-    exerciseListTarget.querySelectorAll('input[required]').forEach(input => {
+    exerciseListTarget.querySelectorAll('input[required]:not(:disabled)').forEach(input => {
         const isEmpty    = input.value === '' || input.value === null;
         const minValue   = input.hasAttribute('min') ? parseFloat(input.min) : null;
         const isBelowMin = minValue !== null && input.value !== '' && parseFloat(input.value) < minValue;
