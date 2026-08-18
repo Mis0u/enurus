@@ -14,7 +14,9 @@ Paramètres :
 
     <div class="routine-card__header">
         <div class="routine-card__meta">
-            <h2 class="routine-card__name">{{ routine.name }}</h2>
+            <h2 class="routine-card__name">
+                {{ routine.name }}
+            </h2>
             <span class="routine-card__count">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
@@ -24,6 +26,15 @@ Paramètres :
         </div>
 
         <div class="routine-card__actions">
+            <a
+                href="{{ path('app_routine_show', {id: routine.id}) }}"
+                class="routine-action-btn show"
+                title="{{ 'routine.list.actions.show'|trans({}, 'navigation') }}"
+                aria-label="{{ 'routine.list.actions.show'|trans({}, 'navigation') }} {{ routine.name }}"
+            >
+                {% include 'partials/_svg/_chart.html.twig' with {'width': 3.75, 'height': 3.75, 'ariaHidden': true} only %}
+            </a>
+
             <a
                 href="{{ path('app_routine_edit', {id: routine.id}) }}"
                 class="routine-action-btn edit"

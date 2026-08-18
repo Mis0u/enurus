@@ -1,0 +1,41 @@
+{#
+templates/routine/show/_exercises.html.twig
+
+Paramètres (via `only`) :
+  - routineExercises : list<RoutineExercise>
+#}
+<section class="mb-7">
+    <h2 class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4] mb-3">
+        {{ 'routine.show.exercises_title'|trans({}, 'navigation') }}
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {% for routine_exercise in routineExercises %}
+            {% set exercise = routine_exercise.exercise %}
+            {% set exercise_name = exercise.isPublic ? exercise.name|trans({}, 'exercise') : exercise.name %}
+
+            <div class="routine-show-exercise-tile bg-bg-card border border-white/[0.07] rounded-2xl p-4">
+                <div class="flex items-start justify-between gap-2 mb-2.5">
+                    <span class="font-['Rajdhani'] text-[16px] font-bold text-[#f0f4ff] leading-snug">
+                        {{ exercise_name }}
+                        {% if exercise.bodyweightPercent is not null %}
+                            {% include 'partials/_badge/_bodyweight_badge.html.twig' with {percent: exercise.bodyweightPercent} only %}
+                        {% endif %}
+                    </span>
+
+                    {% include 'partials/_badge/_measurement_type_badge.html.twig' with {measurementType: exercise.measurementType.value} only %}
+                </div>
+
+                <div class="flex flex-wrap gap-1.5">
+                    {% for exercise_muscle in exercise.exerciseMuscles %}
+                        {% set is_primary = exercise_muscle.type.value == enum('App\\Enum\\Entity\\ExerciceMuscle\\MuscleTypeEnum').PRIMARY.value %}
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium
+                            {{ is_primary ? 'bg-rose-500/[0.12] border border-rose-500/[0.3] text-rose-400' : 'bg-cyan-500/[0.12] border border-cyan-500/[0.3] text-cyan-400' }}">
+                            {{ exercise_muscle.muscleGroup.name|trans({}, 'muscle') }}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>

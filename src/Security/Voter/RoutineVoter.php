@@ -21,13 +21,15 @@ final class RoutineVoter extends Voter
 
     public const string DELETE = 'ROUTINE_DELETE';
 
+    public const string VIEW = 'ROUTINE_VIEW';
+
     protected function supports(string $attribute, mixed $subject): bool
     {
         if (self::CREATE === $attribute) {
             return true;
         }
 
-        return in_array($attribute, [self::EDIT, self::DELETE], true)
+        return in_array($attribute, [self::EDIT, self::DELETE, self::VIEW], true)
             && $subject instanceof Routine;
     }
 
