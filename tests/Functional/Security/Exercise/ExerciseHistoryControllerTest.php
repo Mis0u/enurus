@@ -103,6 +103,30 @@ final class ExerciseHistoryControllerTest extends WebTestCase
         $this->assertSelectorNotExists('header h1 span');
     }
 
+    public function testShowsTheExerciseDescriptionWhenPresent(): void
+    {
+        $client = $this->login(self::OWNER);
+
+        $exercise = $this->getExerciseByName('dips_chest.name');
+        $this->assertNotNull($exercise);
+
+        $client->request(Request::METHOD_GET, \sprintf('/fr/bibliotheque/exercice/%s/historique', $exercise->id));
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('header', 'Aux barres parallèles, buste penché en avant');
+    }
+
+    public function testDoesNotShowAnyDescriptionWhenExerciseHasNone(): void
+    {
+        $client = $this->login(self::OWNER);
+        $url = $this->getHistoryUrl(ExerciseFixtures::EXERCISE_REVERSE_FLY);
+
+        $client->request(Request::METHOD_GET, $url);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextSame('header', 'Reverse fly Suis ta progression sur cet exercice');
+    }
+
     private function getHistoryUrl(string $exerciseName): string
     {
         $exercise = $this->getExerciseByName($exerciseName);
