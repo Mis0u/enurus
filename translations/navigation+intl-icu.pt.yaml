@@ -663,3 +663,4 @@ workout:
         routine: Escolher uma rotina
         title: Tipo de treino
     weight: Peso
+    weight_bodyweight: Peso (extra)

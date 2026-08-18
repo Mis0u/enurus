@@ -663,3 +663,4 @@ workout:
         routine: Kies een routine
         title: Trainingstype
     weight: Gewicht
+    weight_bodyweight: Gewicht (extra)

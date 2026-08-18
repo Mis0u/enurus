@@ -66,6 +66,23 @@ describe('workout--routine-loader controller', () => {
         expect(document.getElementById('exercises-list').children.length).toBe(1);
     });
 
+    it('dispatches routine:exercises-loaded once the exercises are inserted', async () => {
+        buildDom();
+        await nextTick();
+
+        const listener = vi.fn();
+        window.addEventListener('routine:exercises-loaded', listener);
+
+        selectRoutine('routine-1');
+        await nextTick();
+        await nextTick();
+
+        window.removeEventListener('routine:exercises-loaded', listener);
+
+        expect(listener).toHaveBeenCalledTimes(1);
+        expect(listener.mock.calls[0][0].detail.exerciseList).toBe(document.getElementById('exercises-list'));
+    });
+
     it('clears the exercise list without confirmation when going back to the placeholder while empty', async () => {
         buildDom();
         await nextTick();

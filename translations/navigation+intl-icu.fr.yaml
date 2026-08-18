@@ -663,3 +663,4 @@ workout:
         routine: Choisir une routine
         title: Type de séance
     weight: Poids
+    weight_bodyweight: Poids (lest)

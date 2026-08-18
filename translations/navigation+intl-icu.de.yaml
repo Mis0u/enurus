@@ -663,3 +663,4 @@ workout:
         routine: Routine wählen
         title: Trainingsart
     weight: Gewicht
+    weight_bodyweight: Gewicht (Zusatz)

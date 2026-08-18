@@ -29,6 +29,9 @@ export default class extends Controller {
         this.boundHandler = this.onExerciseSelected.bind(this);
         window.addEventListener('exercise:selected', this.boundHandler);
 
+        this.boundRoutineHandler = this.onRoutineExercisesLoaded.bind(this);
+        window.addEventListener('routine:exercises-loaded', this.boundRoutineHandler);
+
         this.#noteModalManager = new NoteModalManager(
             this.application,
             this.uploadPhotoUrlValue,
@@ -58,6 +61,7 @@ export default class extends Controller {
 
     disconnect() {
         window.removeEventListener('exercise:selected', this.boundHandler);
+        window.removeEventListener('routine:exercises-loaded', this.boundRoutineHandler);
         this.sortable?.destroy();
     }
 
@@ -69,6 +73,10 @@ export default class extends Controller {
 
         this.exerciseListTarget.insertAdjacentHTML('beforeend', html.replaceAll('__EXERCISE_INDEX__', index));
         initLiftedWeights(this.exerciseListTarget.lastElementChild, this.liftedWeightTemplateValue);
+    }
+
+    onRoutineExercisesLoaded(event) {
+        initLiftedWeights(event.detail.exerciseList, this.liftedWeightTemplateValue);
     }
 
     addSet(event) {

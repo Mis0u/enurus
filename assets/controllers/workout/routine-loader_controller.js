@@ -98,6 +98,7 @@ export default class extends Controller {
 
         const html = await response.text();
         exerciseList.insertAdjacentHTML('beforeend', html);
+        window.dispatchEvent(new CustomEvent('routine:exercises-loaded', { detail: { exerciseList } }));
         this.#hideLoader();
     }
 
