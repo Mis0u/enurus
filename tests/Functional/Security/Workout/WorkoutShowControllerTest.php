@@ -6,15 +6,19 @@ namespace App\Tests\Functional\Security\Workout;
 
 use App\Entity\User;
 use App\Entity\Workout;
+use App\Entity\WorkoutExercise;
+use App\Enum\Entity\Exercise\MeasurementType;
 use App\Enum\Entity\User\GenderEnum;
 use App\Enum\Entity\User\UnitOfMeasureEnum;
 use App\Repository\UserRepository;
+use App\Repository\WorkoutExerciseRepository;
 use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WorkoutShowControllerTest extends WebTestCase
 {
@@ -212,6 +216,34 @@ class WorkoutShowControllerTest extends WebTestCase
         );
     }
 
+    public function testTimeBasedExerciseCardShowsTotalDurationAlongsideTonnage(): void
+    {
+        $client = static::createClient();
+
+        $found = $this->findWorkoutForMeasurementType(MeasurementType::TIME);
+
+        if (null === $found) {
+            self::markTestSkipped('Aucune séance avec un exercice TIME dans les fixtures chargées.');
+        }
+
+        [$owner, $url, $exerciseName] = $found;
+
+        $client->loginUser($owner);
+        $crawler = $client->request(Request::METHOD_GET, $url);
+
+        $this->assertResponseIsSuccessful();
+
+        $card = $crawler->filter('.show-exercise-card')
+            ->reduce(static fn (Crawler $node): bool => str_contains($node->text(), $exerciseName))
+            ->first();
+
+        $labels = $card->filter('.show-exercise-tonnage-label')->each(static fn (Crawler $node): string => trim($node->text()));
+        $values = $card->filter('.show-exercise-tonnage-value')->each(static fn (Crawler $node): string => trim($node->text()));
+
+        $this->assertSame(['Tonnage', 'Durée'], $labels, 'Le tonnage et la durée totale doivent être affichés côte à côte');
+        $this->assertMatchesRegularExpression('/^\d+:\d{2}$/', $values[1] ?? '', 'La durée totale doit être au format mm:ss');
+    }
+
     public function testFemaleSilhouetteIsDisplayedForFemaleUser(): void
     {
         $this->identifySilhouette(self::USER_WITH_NOTE, GenderEnum::FEMALE->value);
@@ -250,6 +282,38 @@ class WorkoutShowControllerTest extends WebTestCase
         $ids = json_decode((string) $secondaryValue, true);
 
         $this->assertIsArray($ids, 'Les IDs SVG secondaires doivent être un tableau JSON valide');
+    }
+
+    /**
+     * @return ?array{0: User, 1: string, 2: string} owner, URL séance, nom traduit de l'exercice
+     */
+    private function findWorkoutForMeasurementType(MeasurementType $measurementType): ?array
+    {
+        /** @var WorkoutExerciseRepository $workoutExerciseRepository */
+        $workoutExerciseRepository = static::getContainer()->get(WorkoutExerciseRepository::class);
+
+        $workoutExercise = $workoutExerciseRepository->createQueryBuilder('we')
+            ->join('we.exercise', 'e')
+            ->join('we.workout', 'w')
+            ->addSelect('e', 'w')
+            ->andWhere('e.measurementType = :measurementType')
+            ->setParameter('measurementType', $measurementType)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (! $workoutExercise instanceof WorkoutExercise) {
+            return null;
+        }
+
+        /** @var TranslatorInterface $translator */
+        $translator = self::getContainer()->get(TranslatorInterface::class);
+
+        $exerciseName = $workoutExercise->exercise->isPublic
+            ? $translator->trans($workoutExercise->exercise->name, [], 'exercise', 'fr')
+            : $workoutExercise->exercise->name;
+
+        return [$workoutExercise->workout->owner, \sprintf('/fr/seance/%s', $workoutExercise->workout->id), $exerciseName];
     }
 
     private function getWorkoutUrl(string $userEmail): string

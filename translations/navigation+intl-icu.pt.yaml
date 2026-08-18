@@ -631,6 +631,7 @@ workout:
     show:
         back: Voltar aos meus treinos
         metrics:
+            distance: Distância
             duration: Duração
             exercises: "{count, plural, =1 {Exercício} other {Exercícios}}"
             sets: "{count, plural, =1 {Série} other {Séries}}"

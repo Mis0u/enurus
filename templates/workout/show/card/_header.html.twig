@@ -33,4 +33,20 @@
     <div class="show-exercise-tonnage-label text-[10px]">
         {{ 'workout.show.metrics.tonnage'|trans({}, 'navigation') }}
     </div>
+
+    {% if exercise.measurementType.value == 'time' %}
+        <div class="show-exercise-tonnage-value font-['Rajdhani'] text-[18px] font-bold mt-1.5">
+            {{ item.totalDuration|format_set_duration }}
+        </div>
+        <div class="show-exercise-tonnage-label text-[10px]">
+            {{ 'workout.show.metrics.duration'|trans({}, 'navigation') }}
+        </div>
+    {% elseif exercise.measurementType.value == 'distance' %}
+        <div class="show-exercise-tonnage-value font-['Rajdhani'] text-[18px] font-bold mt-1.5">
+            {{ item.totalDistance }} {{ 'workout.series_distance_abbreviate'|trans({}, 'navigation') }}
+        </div>
+        <div class="show-exercise-tonnage-label text-[10px]">
+            {{ 'workout.show.metrics.distance'|trans({}, 'navigation') }}
+        </div>
+    {% endif %}
 </div>

@@ -38,6 +38,8 @@ final readonly class WorkoutShowDataService
      *         workoutExercise: WorkoutExercise,
      *         sets: array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool, bodyweightSnapshotFormatted: ?string}>,
      *         tonnage: float,
+     *         totalDuration: ?int,
+     *         totalDistance: ?int,
      *         primarySvgIds: array<string>,
      *         secondarySvgIds: array<string>,
      *         muscles: array<ExerciseMuscle>,
@@ -132,6 +134,8 @@ final readonly class WorkoutShowDataService
      *     workoutExercise: WorkoutExercise,
      *     sets: array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool, bodyweightSnapshotFormatted: ?string}>,
      *     tonnage: float,
+     *     totalDuration: ?int,
+     *     totalDistance: ?int,
      *     primarySvgIds: array<string>,
      *     secondarySvgIds: array<string>,
      *     muscles: array<ExerciseMuscle>,
@@ -170,6 +174,8 @@ final readonly class WorkoutShowDataService
      *     workoutExercise: WorkoutExercise,
      *     sets: array<int, array{position: int, weightFormatted: string, reps: int, duration: ?int, distance: ?int, isTimeBased: bool, isDistanceBased: bool, tonnage: float, tonnageUnit: string, isPr: bool, isRepsRecord: bool, bodyweightSnapshotFormatted: ?string}>,
      *     tonnage: float,
+     *     totalDuration: ?int,
+     *     totalDistance: ?int,
      *     primarySvgIds: array<string>,
      *     secondarySvgIds: array<string>,
      *     muscles: array<ExerciseMuscle>,
@@ -200,10 +206,28 @@ final readonly class WorkoutShowDataService
             'workoutExercise' => $we,
             'sets' => $sets,
             'tonnage' => $tonnage,
+            'totalDuration' => $this->sumMetric($sets, 'duration'),
+            'totalDistance' => $this->sumMetric($sets, 'distance'),
             'primarySvgIds' => $primarySvgIds,
             'secondarySvgIds' => $secondarySvgIds,
             'muscles' => $sortedMuscles,
         ];
+    }
+
+    /**
+     * Total durée/distance de la card (tuile d'en-tête) : somme des séries — pendant du tonnage
+     * total pour un exercice `WEIGHT_REPS`, mais sur la métrique qui a vraiment du sens pour
+     * `TIME`/`DISTANCE` (le tonnage y reste 0 la plupart du temps, poids additionnel optionnel).
+     * `null` pour l'autre métrique / pour un exercice `WEIGHT_REPS`, où aucune des deux ne
+     * s'applique.
+     *
+     * @param array<int, array{duration: ?int, distance: ?int}> $sets
+     */
+    private function sumMetric(array $sets, string $key): ?int
+    {
+        $values = array_filter(array_column($sets, $key), static fn (?int $value): bool => null !== $value);
+
+        return [] === $values ? null : array_sum($values);
     }
 
     /**
