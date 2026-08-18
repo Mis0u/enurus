@@ -1,6 +1,9 @@
 {#
     Variables attendues (toutes via `only`) :
-    - overview : array{recordValue: float, recordDate: ?DateTimeImmutable, totalSessions: int, totalVolume: float, lastPracticedAt: ?DateTimeImmutable, progressionPercent: ?float, averageFrequencyPerWeek: float}
+    - overview : array{recordValue: float|int, recordDate: ?DateTimeImmutable, totalSessions: int, totalVolume: float|int, lastPracticedAt: ?DateTimeImmutable, progressionPercent: ?float, averageFrequencyPerWeek: float}
+      recordValue/totalVolume : secondes brutes (int) pour measurementType == 'time' (format mm:ss
+      via `format_set_duration`, cf. ExerciseHistoryDataService::overviewValue()) — sinon la
+      valeur convertie habituelle.
     - unitLabel : string
     - measurementType : string ('weight_reps'|'time'|'distance')
 #}
@@ -15,7 +18,11 @@
                 🏆 {{ 'exercise.history.overview.current_record'|trans({}, 'navigation') }}
             </div>
             <div class="font-rajdhani text-[22px] font-bold text-rose-ft">
-                {{ overview.recordValue|number_format(1, ',', ' ') }} {{ unitLabel }}
+                {% if measurementType == 'time' %}
+                    {{ overview.recordValue|format_set_duration }}
+                {% else %}
+                    {{ overview.recordValue|number_format(1, ',', ' ') }} {{ unitLabel }}
+                {% endif %}
             </div>
             {% if overview.recordDate %}
                 <div class="text-[11px] text-[#64748b] mt-0.5">
@@ -38,7 +45,11 @@
                 {{ 'exercise.history.overview.total_volume'|trans({}, 'navigation') }}
             </div>
             <div class="font-rajdhani text-[22px] font-bold text-[#f1f5f9]">
-                {{ overview.totalVolume|number_format(0, ',', ' ') }} {{ unitLabel }}
+                {% if measurementType == 'time' %}
+                    {{ overview.totalVolume|format_set_duration }}
+                {% else %}
+                    {{ overview.totalVolume|number_format(0, ',', ' ') }} {{ unitLabel }}
+                {% endif %}
             </div>
         </div>
 

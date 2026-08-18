@@ -49,7 +49,7 @@ final readonly class ExerciseHistoryDataService
     /**
      * @return array{
      *     hasHistory: bool,
-     *     overview: array{recordValue: float, recordDate: ?\DateTimeImmutable, totalSessions: int, totalVolume: float, lastPracticedAt: ?\DateTimeImmutable, progressionPercent: ?float, averageFrequencyPerWeek: float},
+     *     overview: array{recordValue: float|int, recordDate: ?\DateTimeImmutable, totalSessions: int, totalVolume: float|int, lastPracticedAt: ?\DateTimeImmutable, progressionPercent: ?float, averageFrequencyPerWeek: float},
      *     unitLabel: string,
      *     period: string,
      *     availablePeriods: string[],
@@ -195,7 +195,7 @@ final readonly class ExerciseHistoryDataService
 
     /**
      * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable, recordValue: float, recordReps: int, volume: float, isPr: bool}> $sessions
-     * @return array{recordValue: float, recordDate: ?\DateTimeImmutable, totalSessions: int, totalVolume: float, lastPracticedAt: ?\DateTimeImmutable, progressionPercent: ?float, averageFrequencyPerWeek: float}
+     * @return array{recordValue: float|int, recordDate: ?\DateTimeImmutable, totalSessions: int, totalVolume: float|int, lastPracticedAt: ?\DateTimeImmutable, progressionPercent: ?float, averageFrequencyPerWeek: float}
      */
     private function buildOverview(array $sessions, MeasurementType $measurementType, User $user): array
     {
@@ -223,10 +223,10 @@ final readonly class ExerciseHistoryDataService
         $firstValue = $first['recordValue'];
 
         return [
-            'recordValue' => $this->displayValue($recordValue, $measurementType, $user),
+            'recordValue' => $this->overviewValue($recordValue, $measurementType, $user),
             'recordDate' => $currentRecord['performedAt'],
             'totalSessions' => \count($sessions),
-            'totalVolume' => $this->displayValue($totalVolume, $measurementType, $user),
+            'totalVolume' => $this->overviewValue($totalVolume, $measurementType, $user),
             'lastPracticedAt' => $last['performedAt'],
             'progressionPercent' => 0.0 < $firstValue ? round(($recordValue - $firstValue) / $firstValue * self::PERCENT_MULTIPLIER, 1) : null,
             'averageFrequencyPerWeek' => round(\count($sessions) / $weeksElapsed, 1),
@@ -361,9 +361,9 @@ final readonly class ExerciseHistoryDataService
 
     /**
      * Valeur brute (kg pour `WEIGHT_REPS`, secondes pour `TIME`, mètres pour `DISTANCE`) convertie
-     * pour l'affichage des tuiles/graphique : kg→unité utilisateur, secondes→minutes (cohérent
-     * avec l'unité "min" du cahier des charges) ; mètres inchangés. Le journal, lui, reste en
-     * secondes brutes pour réutiliser `format_set_duration` (format mm:ss) — granularité différente,
+     * pour l'affichage du graphique : kg→unité utilisateur, secondes→minutes (cohérent avec
+     * l'unité "min" du cahier des charges) ; mètres inchangés. Le journal, lui, reste en secondes
+     * brutes pour réutiliser `format_set_duration` (format mm:ss) — granularité différente,
      * volontaire.
      */
     private function displayValue(float $rawValue, MeasurementType $measurementType, User $user): float
@@ -373,6 +373,20 @@ final readonly class ExerciseHistoryDataService
             MeasurementType::TIME => round($rawValue / self::SECONDS_PER_MINUTE, 1),
             MeasurementType::DISTANCE => $rawValue,
         };
+    }
+
+    /**
+     * Valeur affichée par les tuiles "Record actuel"/"Volume total" : mêmes conversions que
+     * `displayValue()`, sauf pour `TIME` — secondes brutes (entier) plutôt que minutes décimales
+     * arrondies (ex. 2min15 affiché "2,3 min" est trompeur, le template le formate en mm:ss via
+     * `format_set_duration`, cohérent avec le journal en dessous). Le graphique, lui, garde les
+     * minutes décimales de `displayValue()` — un axe en secondes brutes serait illisible.
+     */
+    private function overviewValue(float $rawValue, MeasurementType $measurementType, User $user): float|int
+    {
+        return MeasurementType::TIME === $measurementType
+            ? (int) round($rawValue)
+            : $this->displayValue($rawValue, $measurementType, $user);
     }
 
     /**
