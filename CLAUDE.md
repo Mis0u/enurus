@@ -384,9 +384,8 @@ Aucun chantier en cours actuellement. #24 (page d'historique par exercice) a ét
 
 | # | Item |
 |---|------|
-| 22 | Mise en ligne — infra en place (Scalingo, Cloudflare R2, Resend, CD auto sur `main`). **Reste à faire** : supprimer le compte Postmark inutilisé (jamais quitté le Test mode) + ses DNS sur `enurus.com` ; rédiger mentions légales/CGU/politique de confidentialité (bloquant pour toute monétisation) ; vérifier que le plan Postgres Scalingo inclut des sauvegardes automatiques. |
 | 23 | Résilience afflux massif (scénario "influenceur", ~100k inscriptions/jour) — décision actée : palier payant Resend dès le lancement (le gratuit, 3000 emails/mois, bloquerait la vérification d'email obligatoire en cas de pic). À anticiper le moment venu : dimensionnement Postgres Scalingo, nombre de workers `messenger:consume` (un seul actuellement), scaling des containers. |
-| 25 | **Images redimensionnées (perf mobile)** — photos de séance et avatars servis en taille originale, sans `srcset`/thumbnail. À trancher : resize à l'upload (`ImageUploadService`/`WorkoutPhotoService`) vs. transformations Cloudflare Images. |
+| 25 | **Images redimensionnées (perf mobile)** — photos de séance et avatars servis en taille originale, sans `srcset`/thumbnail. Mis de côté (2026-08-19) : Cloudflare Image Resizing (`/cdn-cgi/image/`) nécessite le plan Pro (~20$/mois), pas justifié à la volumétrie actuelle. À reconsidérer si la base d'utilisateurs grossit — soit repasser sur Cloudflare Pro (archi déjà pensée : filtre Twig `storage_url_resized` à côté de `storage_url` dans `StorageUrlExtension`), soit resize à l'upload dans `ImageUploadService`/`WorkoutPhotoService`. |
 
 ---
 

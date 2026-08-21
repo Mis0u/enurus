@@ -205,6 +205,7 @@ admin:
         field:
             account_blocked_at: "Compte bloqué le"
             avatar: Avatar
+            bodyweight: "Poids de corps"
             contact_restricted_until: "Messagerie bloquée jusqu'au"
             contact_restriction_duration: "Durée de la restriction d'origine"
             created_at: "Inscrit le"
