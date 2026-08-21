@@ -18,6 +18,7 @@ use App\Service\Entity\AccountDeletionService;
 use App\Service\Security\ResetPasswordService;
 use App\Service\Security\SessionInvalidationService;
 use App\Service\Security\UserAccountBlockService;
+use App\Service\Utils\WeightConverterService;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -83,6 +84,7 @@ final class UserCrudController extends AbstractCrudController
         private readonly UserPasswordHasherInterface $userPasswordHasher,
         private readonly TranslatorInterface $translator,
         private readonly UserRepository $userRepository,
+        private readonly WeightConverterService $weightConverterService,
         /**
          * `IntlFormatterInterface` n'a pas d'alias de service public dans EasyAdminBundle (seule
          * la classe concrète `IntlFormatter` est enregistrée) — même pattern que
@@ -118,6 +120,23 @@ final class UserCrudController extends AbstractCrudController
         yield ChoiceField::new('gender', $this->trans('admin.user.field.gender'))->setChoices($this->enumChoices(GenderEnum::cases()));
         yield ChoiceField::new('locale', $this->trans('admin.user.field.locale'))->setChoices($this->localeChoices());
         yield ChoiceField::new('unitOfMeasure', $this->trans('admin.user.field.unit_of_measure'))->setChoices($this->enumChoices(UnitOfMeasureEnum::cases()));
+        /**
+         * Détail uniquement, à but de support — renseigné (ou non) par l'utilisateur depuis ses
+         * réglages, jamais édité depuis l'admin. `bodyweightKg` est toujours stocké en kg
+         * (cf. CLAUDE.md), donc reformaté via `WeightConverterService::format()` dans l'unité de
+         * préférence de l'utilisateur, comme partout ailleurs dans l'app. `null` reste `null`, pas
+         * de valeur par défaut affichée.
+         */
+        yield Field::new('bodyweightKg', $this->trans('admin.user.field.bodyweight'))
+            ->onlyOnDetail()
+            ->formatValue(function (mixed $value, User $user): ?string {
+                if (! \is_float($value)) {
+                    return null;
+                }
+
+                return $this->weightConverterService->format($value, $user->unitOfMeasure);
+            })
+        ;
         /**
          * Lecture seule — sert au support ("je n'arrive pas à me connecter") pour distinguer un
          * compte jamais vérifié d'un autre problème, sans exposer de bascule manuelle : forcer la
