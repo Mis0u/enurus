@@ -45,6 +45,35 @@ final class GoalProgressTest extends TestCase
     }
 
     /**
+     * Exercice au poids de corps : le poids effectif remonté par le repository
+     * (`bodyweightSnapshotKg × bodyweightPercent + lest`, ex. dips à 100% PDC) peut dépasser la
+     * cible à lui seul, sans le moindre lest — l'objectif ne doit pourtant JAMAIS se baser sur ce
+     * total, seulement sur le lest (`addedWeight`), sans quoi il serait atteint dès la première
+     * série peu importe le poids de l'utilisateur.
+     */
+    public function testBodyweightExerciseGoalIgnoresEffectiveWeightAndUsesAddedWeightOnly(): void
+    {
+        $goal = $this->weightGoal(target: 40.0);
+
+        $progress = new GoalProgress($goal, [
+            [
+                'workoutId' => 'workout-1',
+                'performedAt' => new \DateTimeImmutable('now'),
+                // Poids effectif (80kg de poids de corps + 0kg de lest) très au-dessus de la
+                // cible, mais aucun lest ajouté : l'objectif ne doit pas être atteint.
+                'weight' => 80.0,
+                'addedWeight' => 0.0,
+                'reps' => 5,
+                'duration' => null,
+                'distance' => null,
+            ],
+        ]);
+
+        self::assertFalse($progress->achieved);
+        self::assertSame(0.0, $progress->currentValue);
+    }
+
+    /**
      * Un objectif redevient "en cours" si la séance à l'origine du franchissement est retirée —
      * le calcul est toujours dérivé, jamais un flag persisté (voir `GoalProgressResolver`).
      */
@@ -233,7 +262,7 @@ final class GoalProgressTest extends TestCase
     }
 
     /**
-     * @return array{workoutId: string, performedAt: \DateTimeImmutable, weight: float, reps: int, duration: ?int, distance: ?int}
+     * @return array{workoutId: string, performedAt: \DateTimeImmutable, weight: float, addedWeight: float, reps: int, duration: ?int, distance: ?int}
      */
     private function row(
         float $weight,
@@ -246,6 +275,7 @@ final class GoalProgressTest extends TestCase
             'workoutId' => 'workout-' . spl_object_id(new \stdClass()),
             'performedAt' => $performedAt ?? new \DateTimeImmutable('now'),
             'weight' => $weight,
+            'addedWeight' => $weight,
             'reps' => $reps,
             'duration' => $duration,
             'distance' => $distance,

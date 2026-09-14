@@ -63,7 +63,7 @@ final class GoalProgressResolverTest extends TestCase
     }
 
     /**
-     * @return array{workoutId: string, performedAt: \DateTimeImmutable, weight: float, reps: int, duration: ?int, distance: ?int}
+     * @return array{workoutId: string, performedAt: \DateTimeImmutable, weight: float, addedWeight: float, reps: int, duration: ?int, distance: ?int}
      */
     private function row(string $workoutId, float $weight): array
     {
@@ -71,6 +71,7 @@ final class GoalProgressResolverTest extends TestCase
             'workoutId' => $workoutId,
             'performedAt' => new \DateTimeImmutable('now'),
             'weight' => $weight,
+            'addedWeight' => $weight,
             'reps' => 5,
             'duration' => null,
             'distance' => null,

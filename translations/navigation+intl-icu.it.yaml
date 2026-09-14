@@ -216,6 +216,9 @@ exercise:
             confirm: Capito
             text: "Hai già raggiunto questo obiettivo su {exerciseName} ({target}) il {date}!"
             title: Obiettivo già raggiunto
+        bodyweight_required:
+            cta: Inserisci il mio peso
+            text: "Impossibile calcolare questo obiettivo senza il tuo peso — il peso corporeo non è mai conteggiato nell'obiettivo, solo il carico aggiuntivo, ma serve il tuo peso per isolarlo dalle serie già registrate."
         delete:
             cancel_button: Annulla
             confirm_button: Elimina
@@ -223,12 +226,15 @@ exercise:
             confirm_title: Elimina obiettivo
             error_text: Si è verificato un errore durante l'eliminazione. Riprova.
         flash:
+            bodyweight_required: Inserisci il tuo peso nelle impostazioni prima di definire un obiettivo su questo esercizio a corpo libero.
             deleted: Obiettivo eliminato.
             error: "L'obiettivo non è stato salvato. Controlla il valore inserito."
             saved: Obiettivo salvato.
         form:
             edit: Modifica
             submit: Salva obiettivo
+            target_added_weight_bodyweight_label: Carico aggiuntivo obiettivo
+            target_added_weight_bodyweight_placeholder: "Es. 20"
             target_added_weight_label: Carico aggiuntivo (opzionale)
             target_added_weight_placeholder: "Es. 20"
             target_distance_label: Distanza obiettivo (metri)
@@ -240,6 +246,7 @@ exercise:
             target_weight_label: Peso obiettivo
             target_weight_placeholder: "Es. 100"
             title: Imposta un obiettivo
+        target_added_weight_suffix: "{weight} di carico"
         target_distance: "{meters} m"
         target_distance_weight: "{distance} × {weight}"
         target_duration: "{seconds} s"

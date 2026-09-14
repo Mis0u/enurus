@@ -405,17 +405,20 @@ class ExerciseSetRepository extends ServiceEntityRepository
      * `MAX(es.weight)` + `SUM(es.reps)` agrégés perdrait si la séance contient plusieurs séries à
      * poids différents — dataset borné à un seul exercice/user, le tri en PHP reste trivial).
      *
-     * `weight` remonte déjà le poids effectif (lest + part de poids de corps figée) pour un
-     * exercice bodyweight — voir `EFFECTIVE_WEIGHT_DQL` — les appelants n'ont donc jamais besoin de
-     * connaître `bodyweightSnapshotKg`/`bodyweightPercent` séparément.
+     * `weight` remonte le poids effectif (lest + part de poids de corps figée) pour un exercice
+     * bodyweight — voir `EFFECTIVE_WEIGHT_DQL` — utilisé par l'historique/le PR, cohérent avec
+     * `WorkoutShowDataService::effectiveWeight()`. `addedWeight` remonte `es.weight` brut (le lest
+     * seul, jamais le poids de corps) : les objectifs (`GoalProgress`) l'utilisent à la place de
+     * `weight`, car un objectif de lest doit rester valable quel que soit le poids de
+     * l'utilisateur — décision produit distincte de l'affichage PR/tonnage.
      *
-     * @return array<int, array{workoutId: string, performedAt: DateTimeImmutable, weight: float, reps: int, duration: ?int, distance: ?int}>
+     * @return array<int, array{workoutId: string, performedAt: DateTimeImmutable, weight: float, addedWeight: float, reps: int, duration: ?int, distance: ?int}>
      */
     public function findSessionHistoryForExerciseAndUser(User $user, Exercise $exercise): array
     {
-        /** @var array<int, array{workoutId: mixed, performedAt: mixed, weight: mixed, reps: mixed, duration: mixed, distance: mixed}> $rows */
+        /** @var array<int, array{workoutId: mixed, performedAt: mixed, weight: mixed, addedWeight: mixed, reps: mixed, duration: mixed, distance: mixed}> $rows */
         $rows = $this->queryForUser($user)
-            ->select('w.id as workoutId', 'w.performedAt as performedAt', self::EFFECTIVE_WEIGHT_DQL . ' as weight', 'es.reps as reps', 'es.duration as duration', 'es.distance as distance')
+            ->select('w.id as workoutId', 'w.performedAt as performedAt', self::EFFECTIVE_WEIGHT_DQL . ' as weight', 'es.weight as addedWeight', 'es.reps as reps', 'es.duration as duration', 'es.distance as distance')
             ->andWhere('e = :exercise')
             ->setParameter('exercise', $exercise)
             ->orderBy('w.performedAt', 'ASC')
@@ -430,6 +433,8 @@ class ExerciseSetRepository extends ServiceEntityRepository
             $performedAt = $row['performedAt'];
             /** @var numeric $weight */
             $weight = $row['weight'];
+            /** @var numeric $addedWeight */
+            $addedWeight = $row['addedWeight'];
             /** @var numeric $reps */
             $reps = $row['reps'];
             /** @var numeric|null $duration */
@@ -441,6 +446,7 @@ class ExerciseSetRepository extends ServiceEntityRepository
                 'workoutId' => (string) $workoutId,
                 'performedAt' => $performedAt,
                 'weight' => (float) $weight,
+                'addedWeight' => (float) $addedWeight,
                 'reps' => (int) $reps,
                 'duration' => null !== $duration ? (int) $duration : null,
                 'distance' => null !== $distance ? (int) $distance : null,

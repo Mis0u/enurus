@@ -167,6 +167,46 @@ final class ExerciseGoalSaveControllerTest extends WebTestCase
         $this->assertSelectorTextContains('body', "L'objectif n'a pas pu être enregistré");
     }
 
+    public function testCannotDefineAGoalOnABodyweightExerciseWithoutBodyweightSet(): void
+    {
+        $client = $this->login(self::OWNER);
+        $exercise = $this->getBodyweightExercise();
+
+        $client->request(Request::METHOD_POST, $this->getSaveUrl($exercise), [
+            'exercise_goal' => [
+                'targetWeight' => '20',
+            ],
+        ]);
+
+        $this->assertResponseRedirects($this->getHistoryUrl($exercise));
+        self::assertCount(0, $this->getGoalsFor($exercise));
+
+        $client->followRedirect();
+        $this->assertSelectorTextContains('body', 'Renseigne ton poids en réglages');
+    }
+
+    public function testCanDefineAGoalOnABodyweightExerciseOnceBodyweightIsSet(): void
+    {
+        $client = $this->login(self::OWNER);
+        $exercise = $this->getBodyweightExercise();
+        $owner = $this->getUserEntityByEmail(self::OWNER);
+        $owner->bodyweightKg = 80.0;
+        $this->getEntityManager()->flush();
+
+        $crawler = $client->request(Request::METHOD_GET, $this->getHistoryUrl($exercise));
+        $form = $crawler->filter('form')->form();
+        $form->setValues([
+            'exercise_goal[targetWeight]' => '20',
+        ]);
+        $client->submit($form);
+
+        $this->assertResponseRedirects($this->getHistoryUrl($exercise));
+        $goals = $this->getGoalsFor($exercise);
+        self::assertCount(1, $goals);
+        // Le poids de corps (80kg) n'est jamais ajouté à la cible : elle reste 20kg de lest.
+        self::assertSame(20.0, $goals[0]->targetWeight);
+    }
+
     public function testCannotSaveAGoalOnAnExerciseNotVisibleToTheUser(): void
     {
         $client = $this->login(self::OTHER_USER);
@@ -313,6 +353,18 @@ final class ExerciseGoalSaveControllerTest extends WebTestCase
             'isPublic' => true,
         ]);
         self::assertNotNull($exercise);
+
+        return $exercise;
+    }
+
+    private function getBodyweightExercise(): Exercise
+    {
+        /** @var ExerciseRepository $repository */
+        $repository = static::getContainer()->get(ExerciseRepository::class);
+        $exercise = $repository->findOneBy([
+            'name' => 'dips_chest.name',
+        ]);
+        self::assertNotNull($exercise, 'Fixture bodyweight exercise "dips_chest.name" not found.');
 
         return $exercise;
     }

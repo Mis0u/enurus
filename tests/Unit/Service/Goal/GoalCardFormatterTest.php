@@ -46,6 +46,7 @@ final class GoalCardFormatterTest extends TestCase
                 'workoutId' => 'workout-1',
                 'performedAt' => new \DateTimeImmutable('2026-01-01'),
                 'weight' => 90.0,
+                'addedWeight' => 90.0,
                 'reps' => 6,
                 'duration' => null,
                 'distance' => null,
