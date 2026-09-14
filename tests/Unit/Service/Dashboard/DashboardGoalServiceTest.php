@@ -53,7 +53,7 @@ final class DashboardGoalServiceTest extends TestCase
     }
 
     /**
-     * @return array{workoutId: string, performedAt: \DateTimeImmutable, weight: float, reps: int, duration: ?int, distance: ?int}
+     * @return array{workoutId: string, performedAt: \DateTimeImmutable, weight: float, addedWeight: float, reps: int, duration: ?int, distance: ?int}
      */
     private function row(float $weight): array
     {
@@ -61,6 +61,7 @@ final class DashboardGoalServiceTest extends TestCase
             'workoutId' => 'workout-a',
             'performedAt' => new \DateTimeImmutable('now'),
             'weight' => $weight,
+            'addedWeight' => $weight,
             'reps' => 5,
             'duration' => null,
             'distance' => null,

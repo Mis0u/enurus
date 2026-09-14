@@ -31,7 +31,9 @@ final class ExerciseGoalType extends AbstractType
 
         match ($exercise->measurementType) {
             MeasurementType::WEIGHT_REPS => $builder
-                ->add('targetWeight', NumberType::class, $this->fieldOptions('exercise.goal.form.target_weight_label', 'exercise.goal.form.target_weight_placeholder'))
+                ->add('targetWeight', NumberType::class, null !== $exercise->bodyweightPercent
+                    ? $this->fieldOptions('exercise.goal.form.target_added_weight_bodyweight_label', 'exercise.goal.form.target_added_weight_bodyweight_placeholder')
+                    : $this->fieldOptions('exercise.goal.form.target_weight_label', 'exercise.goal.form.target_weight_placeholder'))
                 ->add('targetReps', IntegerType::class, $this->fieldOptions('exercise.goal.form.target_reps_label', 'exercise.goal.form.target_reps_placeholder', required: false)),
             MeasurementType::TIME => $builder
                 ->add('targetDuration', IntegerType::class, $this->fieldOptions('exercise.goal.form.target_duration_label', 'exercise.goal.form.target_duration_placeholder'))

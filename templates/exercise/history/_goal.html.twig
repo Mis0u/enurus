@@ -5,6 +5,8 @@
     - goalForm : FormView
     - goalFieldName : string
     - goalHistoryCards : array<array{exerciseName: string, currentLabel: string, targetLabel: string, percent: int, achieved: bool, achievedAt: ?\DateTimeImmutable}>
+    - bodyweightGoalBlocked : bool — true si l'exercice est au poids de corps et que l'utilisateur
+      n'a pas encore renseigné son poids en réglages (objectif impossible à calculer sans ça)
 #}
 <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-5 mb-6"
      {% if goalCard is not null %}data-controller="exercise--goal-form"{% endif %}>
@@ -48,31 +50,42 @@
         </div>
     {% endif %}
 
-    <div {% if goalCard is not null %}class="hidden" data-exercise--goal-form-target="form"{% endif %}>
-        {{ form_start(goalForm, {
-            action: path('app_exercise_goal_save', {id: exercise.id}),
-            attr: {novalidate: 'novalidate', class: 'flex flex-col sm:flex-row sm:items-end gap-3'},
-        }) }}
-            <div class="flex-1 flex flex-col sm:flex-row gap-3">
-                <div class="flex-1">
-                    {{ form_row(goalForm[goalFieldName]) }}
+    {% if bodyweightGoalBlocked and goalCard is null %}
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3 bg-white/[0.03] border border-white/[0.07] rounded-xl p-4">
+            <p class="text-[13px] text-[#8b9bb4] flex-1">
+                {{ 'exercise.goal.bodyweight_required.text'|trans({}, 'navigation') }}
+            </p>
+            <a href="{{ path('app_settings') }}#fieldBodyweight" class="text-[13px] font-medium text-rose-ft hover:opacity-80 transition-ft shrink-0">
+                {{ 'exercise.goal.bodyweight_required.cta'|trans({}, 'navigation') }}
+            </a>
+        </div>
+    {% else %}
+        <div {% if goalCard is not null %}class="hidden" data-exercise--goal-form-target="form"{% endif %}>
+            {{ form_start(goalForm, {
+                action: path('app_exercise_goal_save', {id: exercise.id}),
+                attr: {novalidate: 'novalidate', class: 'flex flex-col sm:flex-row sm:items-end gap-3'},
+            }) }}
+                <div class="flex-1 flex flex-col sm:flex-row gap-3">
+                    <div class="flex-1">
+                        {{ form_row(goalForm[goalFieldName]) }}
+                    </div>
+                    {% if goalForm.targetReps is defined %}
+                        <div class="flex-1">
+                            {{ form_row(goalForm.targetReps) }}
+                        </div>
+                    {% elseif goalFieldName != 'targetWeight' and goalForm.targetWeight is defined %}
+                        <div class="flex-1">
+                            {{ form_row(goalForm.targetWeight) }}
+                        </div>
+                    {% endif %}
                 </div>
-                {% if goalForm.targetReps is defined %}
-                    <div class="flex-1">
-                        {{ form_row(goalForm.targetReps) }}
-                    </div>
-                {% elseif goalFieldName != 'targetWeight' and goalForm.targetWeight is defined %}
-                    <div class="flex-1">
-                        {{ form_row(goalForm.targetWeight) }}
-                    </div>
-                {% endif %}
-            </div>
-            <button type="submit" class="shrink-0 bg-rose-ft text-white font-medium text-sm rounded-[10px] px-5 py-3 transition-ft hover:opacity-90">
-                {{ 'exercise.goal.form.submit'|trans({}, 'navigation') }}
-            </button>
-            {{ form_row(goalForm._token) }}
-        {{ form_end(goalForm, {render_rest: false}) }}
-    </div>
+                <button type="submit" class="shrink-0 bg-rose-ft text-white font-medium text-sm rounded-[10px] px-5 py-3 transition-ft hover:opacity-90">
+                    {{ 'exercise.goal.form.submit'|trans({}, 'navigation') }}
+                </button>
+                {{ form_row(goalForm._token) }}
+            {{ form_end(goalForm, {render_rest: false}) }}
+        </div>
+    {% endif %}
 
     {% if goalHistoryCards is not empty %}
         <div class="mt-5 pt-5 border-t border-white/[0.07]">

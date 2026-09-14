@@ -38,9 +38,12 @@ final readonly class GoalProgress
     public ?DateTimeImmutable $achievedAt;
 
     /**
-     * @param array<int, array{workoutId: string, performedAt: DateTimeImmutable, weight: float, reps: int, duration: ?int, distance: ?int}> $sessionRows
+     * @param array<int, array{workoutId: string, performedAt: DateTimeImmutable, weight: float, addedWeight: float, reps: int, duration: ?int, distance: ?int}> $sessionRows
      *        triées chronologiquement (ASC), même format que
-     *        `ExerciseSetRepository::findSessionHistoryForExerciseAndUser()`.
+     *        `ExerciseSetRepository::findSessionHistoryForExerciseAndUser()`. Le poids d'un
+     *        objectif compare toujours `addedWeight` (le lest seul), jamais `weight` (poids
+     *        effectif incluant la part de poids de corps) — un objectif de lest doit rester
+     *        valable quel que soit le poids de l'utilisateur.
      */
     public function __construct(
         public ExerciseGoal $goal,
@@ -61,7 +64,7 @@ final readonly class GoalProgress
     }
 
     /**
-     * @param array<int, array{performedAt: DateTimeImmutable, weight: float, duration: ?int, distance: ?int}> $sessionRows
+     * @param array<int, array{performedAt: DateTimeImmutable, addedWeight: float, duration: ?int, distance: ?int}> $sessionRows
      * @return array{currentValue: float, currentReps: ?int, currentSecondaryWeight: ?float, achieved: bool, achievedAt: ?DateTimeImmutable, percent: int}
      */
     private static function resolveSingleTarget(ExerciseGoal $goal, array $sessionRows): array
@@ -96,7 +99,7 @@ final readonly class GoalProgress
      * (ratio min des deux dimensions), jamais les deux maximums pris indépendamment sur des
      * séries différentes.
      *
-     * @param array<int, array{performedAt: DateTimeImmutable, weight: float, reps: int, duration: ?int, distance: ?int}> $sessionRows
+     * @param array<int, array{performedAt: DateTimeImmutable, addedWeight: float, reps: int, duration: ?int, distance: ?int}> $sessionRows
      * @return array{currentValue: float, currentReps: ?int, currentSecondaryWeight: ?float, achieved: bool, achievedAt: ?DateTimeImmutable, percent: int}
      */
     private static function resolveDualTarget(ExerciseGoal $goal, array $sessionRows, float $secondaryTarget): array
@@ -157,25 +160,25 @@ final readonly class GoalProgress
     }
 
     /**
-     * @param array{weight: float, duration: ?int, distance: ?int} $row
+     * @param array{addedWeight: float, duration: ?int, distance: ?int} $row
      */
     private static function metricValue(array $row, MeasurementType $type): float
     {
         return match ($type) {
-            MeasurementType::WEIGHT_REPS => $row['weight'],
+            MeasurementType::WEIGHT_REPS => $row['addedWeight'],
             MeasurementType::TIME => (float) ($row['duration'] ?? 0),
             MeasurementType::DISTANCE => (float) ($row['distance'] ?? 0),
         };
     }
 
     /**
-     * @param array{weight: float, reps: int} $row
+     * @param array{addedWeight: float, reps: int} $row
      */
     private static function secondaryMetricValue(array $row, MeasurementType $type): float
     {
         return match ($type) {
             MeasurementType::WEIGHT_REPS => (float) $row['reps'],
-            MeasurementType::TIME, MeasurementType::DISTANCE => $row['weight'],
+            MeasurementType::TIME, MeasurementType::DISTANCE => $row['addedWeight'],
         };
     }
 }

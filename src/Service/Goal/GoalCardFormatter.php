@@ -38,7 +38,7 @@ final readonly class GoalCardFormatter
         return [
             'exerciseId' => $goal->exercise->id->toRfc4122(),
             'exerciseName' => $this->exerciseName($goal->exercise),
-            'currentLabel' => $this->valueLabel($progress->currentValue, $goal->measurementType, $user, $progress->currentReps, $progress->currentSecondaryWeight),
+            'currentLabel' => $this->valueLabel($progress->currentValue, $goal->measurementType, $user, $progress->currentReps, $progress->currentSecondaryWeight, $this->isBodyweight($goal->exercise)),
             'targetLabel' => $this->formatTarget($goal, $user),
             'percent' => $progress->percent,
             'achieved' => $progress->achieved,
@@ -48,7 +48,7 @@ final readonly class GoalCardFormatter
 
     public function formatTarget(ExerciseGoal $goal, User $user): string
     {
-        return $this->valueLabel($goal->targetValue(), $goal->measurementType, $user, $goal->targetReps, $goal->targetWeight);
+        return $this->valueLabel($goal->targetValue(), $goal->measurementType, $user, $goal->targetReps, $goal->targetWeight, $this->isBodyweight($goal->exercise));
     }
 
     /**
@@ -62,16 +62,28 @@ final readonly class GoalCardFormatter
     }
 
     /**
+     * Le poids cible/actuel d'un exercice au poids de corps est TOUJOURS le lest seul (voir
+     * `GoalProgress` et `ExerciseSetRepository::findSessionHistoryForExerciseAndUser()`) — la
+     * mention "de lest" évite qu'un utilisateur croie que ce chiffre inclut son poids de corps.
+     */
+    private function isBodyweight(Exercise $exercise): bool
+    {
+        return null !== $exercise->bodyweightPercent;
+    }
+
+    /**
      * `$reps` n'est pertinent que pour `WEIGHT_REPS` (objectif à deux dimensions "X reps à Y kg").
      * `$secondaryWeight` n'est pertinent que pour `TIME`/`DISTANCE` (objectif à deux dimensions
      * "X (durée/distance) à Y kg" — jamais utilisé pour `WEIGHT_REPS`, où le poids est déjà la
-     * métrique principale, pas une charge additionnelle optionnelle).
+     * métrique principale, pas une charge additionnelle optionnelle). `$isBodyweight` ajoute la
+     * mention "de lest" sur le poids d'un exercice au poids de corps (jamais pertinent pour
+     * `TIME`/`DISTANCE`, qui n'ont jamais de `bodyweightPercent`).
      */
-    private function valueLabel(float $value, MeasurementType $type, User $user, ?int $reps = null, ?float $secondaryWeight = null): string
+    private function valueLabel(float $value, MeasurementType $type, User $user, ?int $reps = null, ?float $secondaryWeight = null, bool $isBodyweight = false): string
     {
         if (MeasurementType::WEIGHT_REPS === $type && null !== $reps) {
             return $this->translator->trans('exercise.goal.target_weight_reps', [
-                'weight' => $this->weightConverterService->format($value, $user->unitOfMeasure),
+                'weight' => $this->weightLabel($value, $user, $isBodyweight),
                 'reps' => $reps,
                 'repsUnit' => $this->translator->trans('workout.reps_abbreviate', [], 'navigation'),
             ], 'navigation');
@@ -96,7 +108,7 @@ final readonly class GoalCardFormatter
         }
 
         return match ($type) {
-            MeasurementType::WEIGHT_REPS => $this->weightConverterService->format($value, $user->unitOfMeasure),
+            MeasurementType::WEIGHT_REPS => $this->weightLabel($value, $user, $isBodyweight),
             MeasurementType::TIME => $this->translator->trans('exercise.goal.target_duration', [
                 'seconds' => (int) $value,
             ], 'navigation'),
@@ -104,5 +116,16 @@ final readonly class GoalCardFormatter
                 'meters' => (int) $value,
             ], 'navigation'),
         };
+    }
+
+    private function weightLabel(float $kg, User $user, bool $isBodyweight): string
+    {
+        $formatted = $this->weightConverterService->format($kg, $user->unitOfMeasure);
+
+        return $isBodyweight
+            ? $this->translator->trans('exercise.goal.target_added_weight_suffix', [
+                'weight' => $formatted,
+            ], 'navigation')
+            : $formatted;
     }
 }

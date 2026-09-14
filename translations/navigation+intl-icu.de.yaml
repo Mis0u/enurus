@@ -216,6 +216,9 @@ exercise:
             confirm: Verstanden
             text: "Du hast dieses Ziel bei {exerciseName} ({target}) bereits am {date} erreicht!"
             title: Ziel bereits erreicht
+        bodyweight_required:
+            cta: Mein Gewicht angeben
+            text: "Dieses Ziel kann ohne dein Gewicht nicht berechnet werden — das Körpergewicht zählt nie zum Ziel, nur das Zusatzgewicht, aber wir brauchen dein Gewicht, um es von deinen erfassten Sätzen zu trennen."
         delete:
             cancel_button: Abbrechen
             confirm_button: Löschen
@@ -223,12 +226,15 @@ exercise:
             confirm_title: Ziel löschen
             error_text: Beim Löschen ist ein Fehler aufgetreten. Bitte versuche es erneut.
         flash:
+            bodyweight_required: Gib dein Gewicht in den Einstellungen an, bevor du ein Ziel für diese Körpergewichtsübung festlegst.
             deleted: Ziel gelöscht.
             error: "Das Ziel konnte nicht gespeichert werden. Überprüfe den eingegebenen Wert."
             saved: Ziel gespeichert.
         form:
             edit: Bearbeiten
             submit: Ziel speichern
+            target_added_weight_bodyweight_label: Ziel-Zusatzgewicht
+            target_added_weight_bodyweight_placeholder: "z. B. 20"
             target_added_weight_label: Zusatzgewicht (optional)
             target_added_weight_placeholder: "z. B. 20"
             target_distance_label: Zieldistanz (Meter)
@@ -240,6 +246,7 @@ exercise:
             target_weight_label: Zielgewicht
             target_weight_placeholder: "z. B. 100"
             title: Ein Ziel festlegen
+        target_added_weight_suffix: "{weight} Zusatzgewicht"
         target_distance: "{meters} m"
         target_distance_weight: "{distance} × {weight}"
         target_duration: "{seconds} s"

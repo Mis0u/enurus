@@ -60,6 +60,15 @@ final class ExerciseGoalSaveController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
+        if (null !== $exercise->bodyweightPercent && null === $user->bodyweightKg) {
+            $this->addFlash('error', $this->translator->trans('exercise.goal.flash.bodyweight_required', [], 'navigation'));
+
+            return $this->redirectToRoute('app_exercise_history', [
+                'id' => $exercise->id,
+                '_locale' => $request->getLocale(),
+            ]);
+        }
+
         $existingGoals = $this->exerciseGoalRepository->findAllByOwnerAndExercise($user, $exercise);
         $goal = $this->goalStateResolver->findActiveGoal($user, $existingGoals) ?? ExerciseGoal::draftFor($user, $exercise);
 

@@ -216,6 +216,9 @@ exercise:
             confirm: Begrepen
             text: "Je hebt dit doel voor {exerciseName} ({target}) al op {date} behaald!"
             title: Doel al behaald
+        bodyweight_required:
+            cta: Mijn gewicht invullen
+            text: "Dit doel kan niet berekend worden zonder je gewicht — je lichaamsgewicht telt nooit mee voor het doel, alleen het extra gewicht, maar we hebben je gewicht nodig om dat te isoleren van je geregistreerde sets."
         delete:
             cancel_button: Annuleren
             confirm_button: Verwijderen
@@ -223,12 +226,15 @@ exercise:
             confirm_title: Doel verwijderen
             error_text: Er is een fout opgetreden bij het verwijderen. Probeer het opnieuw.
         flash:
+            bodyweight_required: Vul je gewicht in bij instellingen voordat je een doel instelt voor deze lichaamsgewichtoefening.
             deleted: Doel verwijderd.
             error: "Het doel kon niet worden opgeslagen. Controleer de ingevoerde waarde."
             saved: Doel opgeslagen.
         form:
             edit: Bewerken
             submit: Doel opslaan
+            target_added_weight_bodyweight_label: Doel extra gewicht
+            target_added_weight_bodyweight_placeholder: "Bijv. 20"
             target_added_weight_label: Extra gewicht (optioneel)
             target_added_weight_placeholder: "Bijv. 20"
             target_distance_label: Doelafstand (meter)
@@ -240,6 +246,7 @@ exercise:
             target_weight_label: Doelgewicht
             target_weight_placeholder: "Bijv. 100"
             title: Een doel instellen
+        target_added_weight_suffix: "{weight} extra"
         target_distance: "{meters} m"
         target_distance_weight: "{distance} × {weight}"
         target_duration: "{seconds} s"

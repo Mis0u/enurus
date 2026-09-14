@@ -67,6 +67,8 @@ final class ExerciseHistoryController extends AbstractController
             $limit,
         );
 
+        $bodyweightGoalBlocked = null !== $exercise->bodyweightPercent && null === $user->bodyweightKg;
+
         $existingGoals = $exerciseGoalRepository->findAllByOwnerAndExercise($user, $exercise);
         $goal = $goalStateResolver->findActiveGoal($user, $existingGoals);
         $goalCard = null !== $goal ? $goalCardFormatter->format($goalProgressResolver->resolve($user, $goal), $user) : null;
@@ -89,6 +91,7 @@ final class ExerciseHistoryController extends AbstractController
             'goalForm' => $goalForm,
             'goalFieldName' => self::goalFieldName($exercise->measurementType),
             'goalHistoryCards' => $goalHistoryCards,
+            'bodyweightGoalBlocked' => $bodyweightGoalBlocked,
             ...$data,
         ]);
     }
