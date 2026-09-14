@@ -81,6 +81,14 @@ dashboard:
     setting: Einstellungen
     title: Übersicht
     widget:
+        goal:
+            achieved_on: "Erreicht am {date}"
+            empty_achieved: Noch kein Ziel erreicht.
+            empty_current: "Kein Ziel in Bearbeitung — lege eines über eine Übungsseite fest."
+            tab:
+                achieved: Verlauf
+                current: In Bearbeitung
+            title: Ziele
         locked:
             need_days: "{count, plural, =1 {+ # Tag Aktivität} other {+ # Tage Aktivität}}"
             need_workouts: "{count, plural, =1 {Noch # Training} other {Noch # Trainings}}"
@@ -196,6 +204,44 @@ exercise:
         preview_label: Vorschau
         primary_muscles: Primäre
         secondary_muscles: Sekundäre
+    goal:
+        achieved:
+            confirm: Weiter
+            text: "Du hast dein Ziel bei {exerciseName} erreicht: {target}!"
+            title: "Ziel erreicht! 🎉"
+        already_achieved:
+            confirm: Verstanden
+            text: "Du hast dieses Ziel bei {exerciseName} ({target}) bereits am {date} erreicht!"
+            title: Ziel bereits erreicht
+        delete:
+            cancel_button: Abbrechen
+            confirm_button: Löschen
+            confirm_text: Möchtest du dieses Ziel löschen?
+            confirm_title: Ziel löschen
+            error_text: Beim Löschen ist ein Fehler aufgetreten. Bitte versuche es erneut.
+        flash:
+            deleted: Ziel gelöscht.
+            error: "Das Ziel konnte nicht gespeichert werden. Überprüfe den eingegebenen Wert."
+            saved: Ziel gespeichert.
+        form:
+            edit: Bearbeiten
+            submit: Ziel speichern
+            target_added_weight_label: Zusatzgewicht (optional)
+            target_added_weight_placeholder: "z. B. 20"
+            target_distance_label: Zieldistanz (Meter)
+            target_distance_placeholder: "z. B. 2000"
+            target_duration_label: Zieldauer (Sekunden)
+            target_duration_placeholder: "z. B. 480"
+            target_reps_label: Ziel-Wiederholungen (optional)
+            target_reps_placeholder: "z. B. 6"
+            target_weight_label: Zielgewicht
+            target_weight_placeholder: "z. B. 100"
+            title: Ein Ziel festlegen
+        target_distance: "{meters} m"
+        target_distance_weight: "{distance} × {weight}"
+        target_duration: "{seconds} s"
+        target_duration_weight: "{duration} × {weight}"
+        target_weight_reps: "{weight} × {reps} {repsUnit}"
     history:
         empty_state: Für diese Übung sind noch keine Einheiten erfasst.
         journal:

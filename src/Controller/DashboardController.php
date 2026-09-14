@@ -9,12 +9,15 @@ use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
 use App\Repository\WorkoutMuscleRepository;
 use App\Repository\WorkoutRepository;
 use App\Repository\WorkoutStatsRepository;
+use App\Service\Dashboard\DashboardGoalService;
 use App\Service\Dashboard\DashboardMuscleDistributionService;
 use App\Service\Dashboard\DashboardPeriodCalculator;
 use App\Service\Dashboard\DashboardPrService;
 use App\Service\Dashboard\DashboardRegularityService;
 use App\Service\Dashboard\DashboardTonnageService;
 use App\Service\Dashboard\DashboardUnlockService;
+use App\Service\Goal\GoalCardFormatter;
+use App\Service\Goal\GoalProgress;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -30,6 +33,8 @@ final class DashboardController extends AbstractController
         private readonly DashboardTonnageService $tonnageService,
         private readonly DashboardPrService $prService,
         private readonly DashboardPeriodCalculator $periodCalculator,
+        private readonly DashboardGoalService $goalService,
+        private readonly GoalCardFormatter $goalCardFormatter,
         private readonly TranslatorInterface $translator,
     ) {
     }
@@ -199,6 +204,11 @@ final class DashboardController extends AbstractController
         // Tonnage (chiffre toujours débloqué dès 1 séance, courbe gérée par filtre dans le service)
         $tonnageData = $this->tonnageService->getData($user);
 
+        $goalState = $this->goalService->getStateForUser($user);
+        $goalCurrentCards = array_map(fn (GoalProgress $progress) => $this->goalCardFormatter->format($progress, $user), $goalState->current);
+        $goalAchievedCards = array_map(fn (GoalProgress $progress) => $this->goalCardFormatter->format($progress, $user), $goalState->achieved);
+        $hasAnyGoal = [] !== $goalCurrentCards || [] !== $goalAchievedCards;
+
         return $this->render('dashboard/dashboard.html.twig', [
             'user' => $user,
             'dashboardState' => $dashboardState,
@@ -214,6 +224,9 @@ final class DashboardController extends AbstractController
             'weekBars' => $weekBars,
             'monthBars' => $monthBars,
             'regularityData' => $regularityData,
+            'goalCurrentCards' => $goalCurrentCards,
+            'goalAchievedCards' => $goalAchievedCards,
+            'hasAnyGoal' => $hasAnyGoal,
         ]);
     }
 

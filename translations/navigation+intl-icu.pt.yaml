@@ -81,6 +81,14 @@ dashboard:
     setting: Definições
     title: Painel
     widget:
+        goal:
+            achieved_on: "Atingido em {date}"
+            empty_achieved: Ainda nenhum objetivo atingido.
+            empty_current: "Nenhum objetivo em curso — define um a partir da ficha do exercício."
+            tab:
+                achieved: Histórico
+                current: Em curso
+            title: Objetivos
         locked:
             need_days: "{count, plural, =1 {+ # dia de histórico} other {+ # dias de histórico}}"
             need_workouts: "{count, plural, =1 {Ainda # treino} other {Ainda # treinos}}"
@@ -196,6 +204,44 @@ exercise:
         preview_label: Pré-visualização
         primary_muscles: Primários
         secondary_muscles: Secundários
+    goal:
+        achieved:
+            confirm: Continuar
+            text: "Atingiste o teu objetivo em {exerciseName}: {target}!"
+            title: "Objetivo atingido! 🎉"
+        already_achieved:
+            confirm: Entendido
+            text: "Já atingiste este objetivo em {exerciseName} ({target}) em {date}!"
+            title: Objetivo já atingido
+        delete:
+            cancel_button: Cancelar
+            confirm_button: Eliminar
+            confirm_text: Queres eliminar este objetivo?
+            confirm_title: Eliminar objetivo
+            error_text: Ocorreu um erro ao eliminar. Tenta novamente.
+        flash:
+            deleted: Objetivo eliminado.
+            error: "Não foi possível guardar o objetivo. Verifica o valor introduzido."
+            saved: Objetivo guardado.
+        form:
+            edit: Editar
+            submit: Guardar objetivo
+            target_added_weight_label: Carga adicional (opcional)
+            target_added_weight_placeholder: "Ex.: 20"
+            target_distance_label: Distância alvo (metros)
+            target_distance_placeholder: "Ex.: 2000"
+            target_duration_label: Duração alvo (segundos)
+            target_duration_placeholder: "Ex.: 480"
+            target_reps_label: Repetições alvo (opcional)
+            target_reps_placeholder: "Ex.: 6"
+            target_weight_label: Peso alvo
+            target_weight_placeholder: "Ex.: 100"
+            title: Definir um objetivo
+        target_distance: "{meters} m"
+        target_distance_weight: "{distance} × {weight}"
+        target_duration: "{seconds} s"
+        target_duration_weight: "{duration} × {weight}"
+        target_weight_reps: "{weight} × {reps} {repsUnit}"
     history:
         empty_state: Ainda não há sessões registadas para este exercício.
         journal:

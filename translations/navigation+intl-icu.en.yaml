@@ -81,6 +81,14 @@ dashboard:
     setting: Settings
     title: Dashboard
     widget:
+        goal:
+            achieved_on: "Achieved on {date}"
+            empty_achieved: No goal achieved yet.
+            empty_current: "No goal in progress — set one from an exercise page."
+            tab:
+                achieved: History
+                current: In progress
+            title: Goals
         locked:
             need_days: "{count, plural, =1 {+ # day of history} other {+ # days of history}}"
             need_workouts: "{count, plural, =1 {# more workout} other {# more workouts}}"
@@ -196,6 +204,44 @@ exercise:
         preview_label: Preview
         primary_muscles: Primary
         secondary_muscles: Secondary
+    goal:
+        achieved:
+            confirm: Continue
+            text: "You reached your goal on {exerciseName}: {target}!"
+            title: "Goal achieved! 🎉"
+        already_achieved:
+            confirm: Got it
+            text: "You already reached this goal on {exerciseName} ({target}) on {date}!"
+            title: Goal already achieved
+        delete:
+            cancel_button: Cancel
+            confirm_button: Delete
+            confirm_text: Do you want to delete this goal?
+            confirm_title: Delete goal
+            error_text: An error occurred while deleting. Please try again.
+        flash:
+            deleted: Goal deleted.
+            error: "The goal could not be saved. Check the value entered."
+            saved: Goal saved.
+        form:
+            edit: Edit
+            submit: Save goal
+            target_added_weight_label: Added weight (optional)
+            target_added_weight_placeholder: "e.g. 20"
+            target_distance_label: Target distance (meters)
+            target_distance_placeholder: "e.g. 2000"
+            target_duration_label: Target duration (seconds)
+            target_duration_placeholder: "e.g. 480"
+            target_reps_label: Target reps (optional)
+            target_reps_placeholder: "e.g. 6"
+            target_weight_label: Target weight
+            target_weight_placeholder: "e.g. 100"
+            title: Set a goal
+        target_distance: "{meters} m"
+        target_distance_weight: "{distance} × {weight}"
+        target_duration: "{seconds} s"
+        target_duration_weight: "{duration} × {weight}"
+        target_weight_reps: "{weight} × {reps} {repsUnit}"
     history:
         empty_state: No sessions recorded for this exercise yet.
         journal:

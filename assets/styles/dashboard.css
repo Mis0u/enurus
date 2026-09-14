@@ -169,3 +169,18 @@ body { font-family: 'DM Sans', sans-serif; }
         0 2px 12px rgba(0,0,0,0.5);
     transform: scale(1.1);
 }
+
+/* Scrollbar fine pour les listes d'historique d'objectifs (dashboard + page exercice) — même
+   règle que .exercise-list-scroll (assets/styles/routine-create.css), dupliquée ici plutôt que
+   liée depuis routine-create.css qui n'est chargé que sur les pages routine. */
+.exercise-list-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.07) transparent;
+}
+
+.exercise-list-scroll::-webkit-scrollbar { width: 4px; }
+.exercise-list-scroll::-webkit-scrollbar-track { background: transparent; }
+.exercise-list-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 4px;
+}

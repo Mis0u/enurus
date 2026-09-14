@@ -81,6 +81,14 @@ dashboard:
     setting: Ajustes
     title: Panel
     widget:
+        goal:
+            achieved_on: "Conseguido el {date}"
+            empty_achieved: Todavía no has conseguido ningún objetivo.
+            empty_current: "Ningún objetivo en curso — define uno desde la ficha del ejercicio."
+            tab:
+                achieved: Historial
+                current: En curso
+            title: Objetivos
         locked:
             need_days: "{count, plural, =1 {+ # día de historial} other {+ # días de historial}}"
             need_workouts: "{count, plural, =1 {Aún # entrenamiento} other {Aún # entrenamientos}}"
@@ -196,6 +204,44 @@ exercise:
         preview_label: Vista previa
         primary_muscles: Primarios
         secondary_muscles: Secundarios
+    goal:
+        achieved:
+            confirm: Continuar
+            text: "¡Has conseguido tu objetivo en {exerciseName}: {target}!"
+            title: "¡Objetivo conseguido! 🎉"
+        already_achieved:
+            confirm: Entendido
+            text: "¡Ya has conseguido este objetivo en {exerciseName} ({target}) el {date}!"
+            title: Objetivo ya conseguido
+        delete:
+            cancel_button: Cancelar
+            confirm_button: Eliminar
+            confirm_text: ¿Quieres eliminar este objetivo?
+            confirm_title: Eliminar objetivo
+            error_text: Se produjo un error al eliminar. Inténtalo de nuevo.
+        flash:
+            deleted: Objetivo eliminado.
+            error: "No se pudo guardar el objetivo. Comprueba el valor introducido."
+            saved: Objetivo guardado.
+        form:
+            edit: Modificar
+            submit: Guardar objetivo
+            target_added_weight_label: Carga adicional (opcional)
+            target_added_weight_placeholder: "Ej. 20"
+            target_distance_label: Distancia objetivo (metros)
+            target_distance_placeholder: "Ej. 2000"
+            target_duration_label: Duración objetivo (segundos)
+            target_duration_placeholder: "Ej. 480"
+            target_reps_label: Repeticiones objetivo (opcional)
+            target_reps_placeholder: "Ej. 6"
+            target_weight_label: Peso objetivo
+            target_weight_placeholder: "Ej. 100"
+            title: Definir un objetivo
+        target_distance: "{meters} m"
+        target_distance_weight: "{distance} × {weight}"
+        target_duration: "{seconds} s"
+        target_duration_weight: "{duration} × {weight}"
+        target_weight_reps: "{weight} × {reps} {repsUnit}"
     history:
         empty_state: Todavía no hay sesiones registradas para este ejercicio.
         journal:

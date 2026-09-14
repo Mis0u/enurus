@@ -7,6 +7,9 @@ exercise:
     muscle_primary_required: Wymagany jest przynajmniej jeden mięsień główny.
     name_not_blank: Nazwa jest wymagana
 
+exercise_goal:
+    target_required: Cel musi być ustawiony i dodatni.
+
 exercise_set:
     distance_required: Dystans musi być podany i dodatni.
     duration_required: Czas trwania musi być podany i dodatni.

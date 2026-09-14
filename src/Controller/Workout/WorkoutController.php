@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Controller\Workout;
 
 use App\Constraint\ImageConstraints;
+use App\Controller\Trait\NotifiesGoalAchievementTrait;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Form\WorkoutType;
+use App\Service\Goal\GoalAchievementDetector;
+use App\Service\Goal\GoalCardFormatter;
 use App\Service\Utils\WeightConverterService;
 use App\Service\Workout\BodyweightSnapshotService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,9 +25,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted('ROLE_USER')]
 final class WorkoutController extends AbstractController
 {
+    use NotifiesGoalAchievementTrait;
+
     public function __construct(
         private readonly WeightConverterService $weightConverterService,
         private readonly BodyweightSnapshotService $bodyweightSnapshotService,
+        private readonly GoalAchievementDetector $goalAchievementDetector,
+        private readonly GoalCardFormatter $goalCardFormatter,
         private readonly EntityManagerInterface $em,
         private readonly TranslatorInterface $translator,
     ) {
@@ -86,6 +93,7 @@ final class WorkoutController extends AbstractController
         $this->em->flush();
 
         $this->addFlash('success', $this->translator->trans('workout.flash.created', [], 'navigation'));
+        $this->notifyGoalAchievements($user, $workout, $this->goalAchievementDetector, $this->goalCardFormatter);
 
         if ($request->isXmlHttpRequest()) {
             return $this->jsonSuccessResponse($workout, $request);
