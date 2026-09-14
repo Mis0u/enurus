@@ -70,6 +70,9 @@ contact:
 
 dashboard:
     contact: Kontakt
+    empty_widgets:
+        cta: Widgets verwalten
+        text: Du hast alle verfügbaren Widgets ausgeblendet. Aktiviere mindestens eines wieder in deinen Einstellungen.
     library: Bibliothek
     logout: Abmelden
     messaging: Nachrichten
@@ -539,6 +542,15 @@ settings:
             title: Bist du sicher?
         request_error: Ein Fehler ist aufgetreten, bitte versuche es später erneut
         title: Kontolöschung
+    dashboard_widgets:
+        explanation: Wähle die Blöcke, die auf deinem Dashboard angezeigt werden.
+        title: Dashboard-Widgets
+        widget:
+            goals: Ziele
+            muscle_distribution: Trainierte Muskeln
+            regularity: Regelmäßigkeit
+            session: Training
+            tonnage: Gehobenes Gewicht
     email:
         label: E-Mail
         not_editable: Nicht änderbar

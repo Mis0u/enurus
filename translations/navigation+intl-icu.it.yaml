@@ -70,6 +70,9 @@ contact:
 
 dashboard:
     contact: Contatti
+    empty_widgets:
+        cta: Gestisci i miei widget
+        text: Hai nascosto tutti i widget disponibili. Riattivane almeno uno dalle tue impostazioni.
     library: Biblioteca
     logout: Disconnetti
     messaging: Messaggi
@@ -539,6 +542,15 @@ settings:
             title: "{gender, select, female {Sei sicura?} other {Sei sicuro?}}"
         request_error: Si è verificato un errore, riprova più tardi
         title: Eliminazione dell'account
+    dashboard_widgets:
+        explanation: Scegli i blocchi visualizzati sulla tua dashboard.
+        title: Widget della dashboard
+        widget:
+            goals: Obiettivi
+            muscle_distribution: Muscoli allenati
+            regularity: Regolarità
+            session: Sessione
+            tonnage: Volume sollevato
     email:
         label: Email
         not_editable: Non modificabile

@@ -70,6 +70,9 @@ contact:
 
 dashboard:
     contact: Kontakt
+    empty_widgets:
+        cta: Zarządzaj widżetami
+        text: Ukryto wszystkie dostępne widżety. Włącz ponownie przynajmniej jeden w ustawieniach.
     library: Biblioteka
     logout: Wyloguj się
     messaging: Wiadomości
@@ -549,6 +552,15 @@ settings:
             title: Czy na pewno?
         request_error: Wystąpił błąd, spróbuj ponownie później
         title: Usunięcie konta
+    dashboard_widgets:
+        explanation: Wybierz bloki wyświetlane na Twoim panelu.
+        title: Widżety panelu
+        widget:
+            goals: Cele
+            muscle_distribution: Trenowane mięśnie
+            regularity: Regularność
+            session: Trening
+            tonnage: Podniesiony ciężar
     email:
         label: E-mail
         not_editable: Nie można edytować

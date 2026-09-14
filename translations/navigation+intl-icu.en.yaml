@@ -70,6 +70,9 @@ contact:
 
 dashboard:
     contact: Contact
+    empty_widgets:
+        cta: Manage my widgets
+        text: You've hidden every available widget. Re-enable at least one from your settings.
     library: Library
     logout: Log out
     messaging: Messages
@@ -539,6 +542,15 @@ settings:
             title: Are you sure?
         request_error: An error occurred, please try again later
         title: Account deletion
+    dashboard_widgets:
+        explanation: Choose which blocks appear on your dashboard.
+        title: Dashboard widgets
+        widget:
+            goals: Goals
+            muscle_distribution: Muscles worked
+            regularity: Regularity
+            session: Session
+            tonnage: Volume lifted
     email:
         label: Email
         not_editable: Not editable

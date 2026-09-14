@@ -33,7 +33,10 @@
                 {% include 'settings/_password_card.html.twig' with {passwordForm: passwordForm} only %}
             </div>
 
-            {# ============ LIGNE 2 — SUPPRESSION, PLEINE LARGEUR ============ #}
+            {# ============ LIGNE 2 — WIDGETS DU DASHBOARD, PLEINE LARGEUR ============ #}
+            {% include 'settings/_dashboard_widgets_card.html.twig' with {dashboardWidgets: dashboardWidgets} only %}
+
+            {# ============ LIGNE 3 — SUPPRESSION, PLEINE LARGEUR ============ #}
             {% include 'settings/_danger_zone_card.html.twig' with {user: user} only %}
 
         </div>

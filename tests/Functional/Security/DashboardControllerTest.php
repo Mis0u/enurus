@@ -8,6 +8,7 @@ use App\Repository\WorkoutRepository;
 use App\Repository\WorkoutStatsRepository;
 use App\Service\Dashboard\DashboardPeriodCalculator;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -115,6 +116,40 @@ class DashboardControllerTest extends WebTestCase
         // Widget Régularité réellement rendu (>= 2 séances), pas le _locked_card.html.twig —
         // "Last week" (widget de comparaison hebdomadaire) n'existe que côté widget débloqué.
         self::assertSelectorExists('[data-dashboard--session-target="exercises"]');
+    }
+
+    public function testWidgetHiddenByTheUserIsNotRenderedOnTheDashboard(): void
+    {
+        $client = $this->login(self::USER_WITH_WORKOUTS);
+        $user = $this->getUserByEmail(self::USER_WITH_WORKOUTS);
+        $user->hiddenWidgets = ['tonnage'];
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $em->flush();
+
+        $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorNotExists('[data-controller="dashboard--tonnage"]');
+        // Les autres widgets débloqués restent affichés, seul celui masqué disparaît.
+        self::assertSelectorExists('[data-controller="dashboard--session"]');
+    }
+
+    public function testHidingEveryWidgetShowsAnEmptyStateInsteadOfABlankScreen(): void
+    {
+        $client = $this->login(self::USER_WITH_WORKOUTS);
+        $user = $this->getUserByEmail(self::USER_WITH_WORKOUTS);
+        $user->hiddenWidgets = ['session', 'tonnage', 'muscle_distribution', 'regularity', 'goals'];
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $em->flush();
+
+        $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorNotExists('[data-controller="dashboard--session"]');
+        self::assertSelectorNotExists('[data-controller="dashboard--tonnage"]');
+        self::assertSelectorTextContains('body', 'Gérer mes widgets');
     }
 
     /**

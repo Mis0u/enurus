@@ -8,18 +8,24 @@ use App\Constraint\ImageConstraints;
 use App\Entity\User;
 use App\Enum\Entity\User\UnitOfMeasureEnum;
 use App\Form\ChangePasswordFormType;
+use App\Service\Dashboard\DashboardUnlockService;
+use App\Service\Dashboard\DashboardWidgetUnlockResolver;
 use App\Service\Utils\WeightConverterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[IsGranted('ROLE_USER')]
 final class SettingsIndexController extends AbstractController
 {
     public function __construct(
         private readonly WeightConverterService $weightConverter,
+        private readonly DashboardUnlockService $dashboardUnlockService,
+        private readonly DashboardWidgetUnlockResolver $widgetUnlockResolver,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -61,6 +67,35 @@ final class SettingsIndexController extends AbstractController
             'bodyweightDisplay' => null !== $user->bodyweightKg
                 ? $this->weightConverter->convertToLbs($user->bodyweightKg, $user->unitOfMeasure)
                 : null,
+            'dashboardWidgets' => $this->buildDashboardWidgetRows($user),
         ]);
+    }
+
+    /**
+     * Un widget n'est proposé en réglages qu'une fois débloqué — même source de vérité que le
+     * dashboard (`DashboardWidgetUnlockResolver`), pour ne jamais désynchroniser les deux.
+     *
+     * @return array<array{key: string, label: string, hidden: bool}>
+     */
+    private function buildDashboardWidgetRows(User $user): array
+    {
+        $dashboardState = $this->dashboardUnlockService->getStateForUser($user);
+        $unlockedWidgets = $this->widgetUnlockResolver->resolve($user, $dashboardState);
+
+        $rows = [];
+
+        foreach ($unlockedWidgets as $widget => $unlocked) {
+            if (! $unlocked) {
+                continue;
+            }
+
+            $rows[] = [
+                'key' => $widget,
+                'label' => $this->translator->trans(\sprintf('settings.dashboard_widgets.widget.%s', $widget), [], 'navigation'),
+                'hidden' => in_array($widget, $user->hiddenWidgets, true),
+            ];
+        }
+
+        return $rows;
     }
 }

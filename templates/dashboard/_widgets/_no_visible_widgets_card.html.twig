@@ -1,0 +1,10 @@
+<div class="md:col-span-2 bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] flex flex-col items-center justify-center text-center gap-3 min-h-[180px]">
+    <span class="text-[32px] leading-none" aria-hidden="true">🫥</span>
+    <p class="text-[13px] text-[#8b9bb4] max-w-[320px]">
+        {{ 'dashboard.empty_widgets.text'|trans({}, 'navigation') }}
+    </p>
+    <a href="{{ path('app_settings') }}#dashboard-widgets"
+       class="text-[13px] font-medium text-rose-ft hover:opacity-80 transition-ft">
+        {{ 'dashboard.empty_widgets.cta'|trans({}, 'navigation') }}
+    </a>
+</div>
