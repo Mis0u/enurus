@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Workout;
 
 use App\Constraint\ImageConstraints;
+use App\Controller\Trait\NotifiesGoalAchievementTrait;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
@@ -12,6 +13,8 @@ use App\Enum\Entity\Exercise\MeasurementType;
 use App\Form\WorkoutType;
 use App\Repository\WorkoutExerciseRepository;
 use App\Security\Voter\WorkoutVoter;
+use App\Service\Goal\GoalAchievementDetector;
+use App\Service\Goal\GoalCardFormatter;
 use App\Service\Utils\WeightConverterService;
 use App\Service\Workout\BodyweightSnapshotService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,6 +29,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted('ROLE_USER')]
 class WorkoutEditController extends AbstractController
 {
+    use NotifiesGoalAchievementTrait;
+
     #[Route(
         path: [
             'fr' => '/seance/{id}/modifier',
@@ -50,6 +55,8 @@ class WorkoutEditController extends AbstractController
         WorkoutExerciseRepository $workoutExerciseRepository,
         WeightConverterService $weightConverter,
         BodyweightSnapshotService $bodyweightSnapshotService,
+        GoalAchievementDetector $goalAchievementDetector,
+        GoalCardFormatter $goalCardFormatter,
         TranslatorInterface $translator,
     ): Response {
         $this->denyAccessUnlessGranted(WorkoutVoter::EDIT, $workout);
@@ -87,6 +94,7 @@ class WorkoutEditController extends AbstractController
             $weightConverter->convertWorkoutSetsToKg($workout, $user->unitOfMeasure, $previousWeightsById);
             $bodyweightSnapshotService->apply($workout, $user);
             $em->flush();
+            $this->notifyGoalAchievements($user, $workout, $goalAchievementDetector, $goalCardFormatter);
 
             return $this->redirectToRoute('app_workout_show', [
                 'id' => $workout->id,

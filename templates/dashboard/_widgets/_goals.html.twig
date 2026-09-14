@@ -1,0 +1,74 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - goalCurrentCards  : array<array{exerciseId: string, exerciseName: string, currentLabel: string, targetLabel: string, percent: int}>
+    - goalAchievedCards : array<array{exerciseId: string, exerciseName: string, currentLabel: string, targetLabel: string, percent: int, achievedAt: ?\DateTimeImmutable}>
+#}
+<div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
+     data-controller="dashboard--goal">
+
+    <div class="flex items-center gap-[7px] mb-4">
+        <svg class="w-[15px] h-[15px] text-[#8b9bb4]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 14a4 4 0 1 1 4-4 4 4 0 0 1-4 4Z"/>
+        </svg>
+        <span class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
+            {{ 'dashboard.widget.goal.title'|trans({}, 'navigation') }}
+        </span>
+    </div>
+
+    <div class="flex items-center gap-1 bg-white/[0.04] border border-white/[0.07] rounded-lg p-1 mb-4">
+        <button type="button"
+                data-dashboard--goal-target="tab"
+                data-filter="current"
+                data-action="click->dashboard--goal#switchFilter"
+                class="dashboard-tab-active flex-1 px-3 py-1.5 text-[12px] font-semibold rounded-md transition-ft">
+            {{ 'dashboard.widget.goal.tab.current'|trans({}, 'navigation') }}
+        </button>
+        <button type="button"
+                data-dashboard--goal-target="tab"
+                data-filter="achieved"
+                data-action="click->dashboard--goal#switchFilter"
+                class="dashboard-tab-inactive flex-1 px-3 py-1.5 text-[12px] font-semibold rounded-md transition-ft">
+            {{ 'dashboard.widget.goal.tab.achieved'|trans({}, 'navigation') }}
+        </button>
+    </div>
+
+    <div data-dashboard--goal-target="panel" data-filter="current" class="flex flex-col gap-3">
+        {% if goalCurrentCards is empty %}
+            <p class="text-[13px] text-[#8b9bb4] text-center py-4">
+                {{ 'dashboard.widget.goal.empty_current'|trans({}, 'navigation') }}
+            </p>
+        {% endif %}
+        {% for card in goalCurrentCards %}
+            <a href="{{ path('app_exercise_history', {id: card.exerciseId}) }}" class="block bg-white/[0.03] border border-white/[0.07] rounded-xl p-3 hover:border-white/[0.14] transition-ft">
+                <div class="flex items-center justify-between mb-1.5 gap-2">
+                    <span class="text-[13px] font-medium text-[#f0f4ff] truncate">{{ card.exerciseName }}</span>
+                    <span class="text-[12px] text-[#8b9bb4] shrink-0">{{ card.currentLabel }} / {{ card.targetLabel }}</span>
+                </div>
+                <div class="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                    <div class="h-full rounded-full bg-rose-ft" style="width: {{ card.percent }}%;"></div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    <div data-dashboard--goal-target="panel" data-filter="achieved" class="hidden flex-col gap-3 max-h-96 overflow-y-auto pr-1 exercise-list-scroll">
+        {% if goalAchievedCards is empty %}
+            <p class="text-[13px] text-[#8b9bb4] text-center py-4">
+                {{ 'dashboard.widget.goal.empty_achieved'|trans({}, 'navigation') }}
+            </p>
+        {% endif %}
+        {% for card in goalAchievedCards %}
+            <a href="{{ path('app_exercise_history', {id: card.exerciseId}) }}" class="block bg-cyan-ft/[0.06] border border-cyan-ft/[0.15] rounded-xl p-3 hover:border-cyan-ft/[0.3] transition-ft">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-[13px] font-medium text-[#f0f4ff] truncate">🏆 {{ card.exerciseName }}</span>
+                    <span class="text-[12px] text-cyan-ft shrink-0">{{ card.targetLabel }}</span>
+                </div>
+                {% if card.achievedAt is not null %}
+                    <p class="text-[12px] text-[#8b9bb4] mt-1">
+                        {{ 'dashboard.widget.goal.achieved_on'|trans({date: card.achievedAt|format_date('medium', locale=app.request.locale)}, 'navigation') }}
+                    </p>
+                {% endif %}
+            </a>
+        {% endfor %}
+    </div>
+</div>

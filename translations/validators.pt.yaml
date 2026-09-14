@@ -7,6 +7,9 @@ exercise:
     muscle_primary_required: É necessário pelo menos um músculo primário.
     name_not_blank: É necessário indicar um nome
 
+exercise_goal:
+    target_required: O objetivo deve ser definido e positivo.
+
 exercise_set:
     distance_required: A distância deve ser indicada e ser positiva.
     duration_required: A duração deve ser indicada e ser positiva.

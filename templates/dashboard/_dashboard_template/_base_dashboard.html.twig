@@ -13,6 +13,9 @@
     {% for message in app.flashes('error') %}
         <twig:Flash:Message:Message message="{{ message }}" type="error"/>
     {% endfor %}
+
+    {% include 'partials/_popup/_goal_achieved.html.twig' with {achievements: app.flashes('goal_achieved')} only %}
+    {% include 'partials/_popup/_goal_already_achieved.html.twig' with {achievements: app.flashes('goal_already_achieved')} only %}
 <div class="flex h-screen w-screen overflow-hidden bg-bg-base text-[#f0f4ff] text-sm leading-relaxed font-dm-sans" data-controller="mobile-nav">
 
     {% block sidebar %}

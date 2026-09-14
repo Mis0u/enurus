@@ -36,6 +36,14 @@
                 {% endif %}
             </header>
 
+            {% include 'exercise/history/_goal.html.twig' with {
+                exercise: exercise,
+                goalCard: goalCard,
+                goalForm: goalForm,
+                goalFieldName: goalFieldName,
+                goalHistoryCards: goalHistoryCards,
+            } only %}
+
             {% if not hasHistory %}
                 <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-10 text-center">
                     <p class="text-sm text-[#64748b]">{{ 'exercise.history.empty_state'|trans({}, 'navigation') }}</p>

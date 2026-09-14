@@ -1,0 +1,18 @@
+{#
+    Variable attendue (via `only`) :
+    - achievements : array<array{exerciseName: string, targetLabel: string}> (app.flashes('goal_achieved'))
+#}
+{% if achievements is not empty %}
+    {% set payload = [] %}
+    {% for achievement in achievements %}
+        {% set payload = payload|merge([{
+            title: 'exercise.goal.achieved.title'|trans({}, 'navigation'),
+            text: 'exercise.goal.achieved.text'|trans({
+                exerciseName: achievement.exerciseName,
+                target: achievement.targetLabel,
+            }, 'navigation'),
+            confirmButtonText: 'exercise.goal.achieved.confirm'|trans({}, 'navigation'),
+        }]) %}
+    {% endfor %}
+    <div data-controller="goal--achieved" data-goal--achieved-achievements-value="{{ payload|json_encode }}"></div>
+{% endif %}

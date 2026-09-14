@@ -44,6 +44,14 @@
                 } only %}
             {% endif %}
 
+            {# Ligne 3 : Objectifs par exercice — bloc masqué tant que l'utilisateur n'a jamais créé d'objectif #}
+            {% if hasAnyGoal %}
+                {% include 'dashboard/_widgets/_goals.html.twig' with {
+                    goalCurrentCards: goalCurrentCards,
+                    goalAchievedCards: goalAchievedCards,
+                } only %}
+            {% endif %}
+
         </div>
     </div>
 {% endblock %}

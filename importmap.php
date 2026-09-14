@@ -100,4 +100,7 @@ return [
     'flatpickr/dist/l10n/pt.js' => [
         'version' => '4.6.13',
     ],
+    'canvas-confetti' => [
+        'version' => '1.9.4',
+    ],
 ];

@@ -85,6 +85,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @var Collection<int, ExerciseGoal>
+     */
+    #[ORM\OneToMany(targetEntity: ExerciseGoal::class, mappedBy: 'owner', cascade: ['remove'], orphanRemoval: true)]
+    public Collection $exerciseGoals {
+        get {
+            return $this->exerciseGoals;
+        }
+    }
+
+    /**
      * @var Collection<int, ContactThread>
      */
     #[ORM\OneToMany(targetEntity: ContactThread::class, mappedBy: 'owner', cascade: ['remove'], orphanRemoval: true)]
@@ -310,6 +320,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->exercises = new ArrayCollection();
         $this->workouts = new ArrayCollection();
         $this->routines = new ArrayCollection();
+        $this->exerciseGoals = new ArrayCollection();
         $this->contactThreads = new ArrayCollection();
         $this->locale = LocaleAllowedEnum::EN->value;
     }

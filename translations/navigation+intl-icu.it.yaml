@@ -81,6 +81,14 @@ dashboard:
     setting: Impostazioni
     title: Cruscotto
     widget:
+        goal:
+            achieved_on: "Raggiunto il {date}"
+            empty_achieved: Nessun obiettivo raggiunto per ora.
+            empty_current: "Nessun obiettivo in corso — impostane uno dalla scheda esercizio."
+            tab:
+                achieved: Cronologia
+                current: In corso
+            title: Obiettivi
         locked:
             need_days: "{count, plural, =1 {+ # giorno di storico} other {+ # giorni di storico}}"
             need_workouts: "{count, plural, =1 {Ancora # allenamento} other {Ancora # allenamenti}}"
@@ -196,6 +204,44 @@ exercise:
         preview_label: Anteprima
         primary_muscles: Primari
         secondary_muscles: Secondari
+    goal:
+        achieved:
+            confirm: Continua
+            text: "Hai raggiunto il tuo obiettivo su {exerciseName}: {target}!"
+            title: "Obiettivo raggiunto! 🎉"
+        already_achieved:
+            confirm: Capito
+            text: "Hai già raggiunto questo obiettivo su {exerciseName} ({target}) il {date}!"
+            title: Obiettivo già raggiunto
+        delete:
+            cancel_button: Annulla
+            confirm_button: Elimina
+            confirm_text: Vuoi eliminare questo obiettivo?
+            confirm_title: Elimina obiettivo
+            error_text: Si è verificato un errore durante l'eliminazione. Riprova.
+        flash:
+            deleted: Obiettivo eliminato.
+            error: "L'obiettivo non è stato salvato. Controlla il valore inserito."
+            saved: Obiettivo salvato.
+        form:
+            edit: Modifica
+            submit: Salva obiettivo
+            target_added_weight_label: Carico aggiuntivo (opzionale)
+            target_added_weight_placeholder: "Es. 20"
+            target_distance_label: Distanza obiettivo (metri)
+            target_distance_placeholder: "Es. 2000"
+            target_duration_label: Durata obiettivo (secondi)
+            target_duration_placeholder: "Es. 480"
+            target_reps_label: Ripetizioni obiettivo (opzionale)
+            target_reps_placeholder: "Es. 6"
+            target_weight_label: Peso obiettivo
+            target_weight_placeholder: "Es. 100"
+            title: Imposta un obiettivo
+        target_distance: "{meters} m"
+        target_distance_weight: "{distance} × {weight}"
+        target_duration: "{seconds} s"
+        target_duration_weight: "{duration} × {weight}"
+        target_weight_reps: "{weight} × {reps} {repsUnit}"
     history:
         empty_state: Nessuna sessione registrata per questo esercizio.
         journal:

@@ -1,0 +1,19 @@
+{#
+    Variable attendue (via `only`) :
+    - achievements : array<array{exerciseName: string, targetLabel: string, achievedAt: \DateTimeImmutable}> (app.flashes('goal_already_achieved'))
+#}
+{% if achievements is not empty %}
+    {% set payload = [] %}
+    {% for achievement in achievements %}
+        {% set payload = payload|merge([{
+            title: 'exercise.goal.already_achieved.title'|trans({}, 'navigation'),
+            text: 'exercise.goal.already_achieved.text'|trans({
+                exerciseName: achievement.exerciseName,
+                target: achievement.targetLabel,
+                date: achievement.achievedAt|format_date('medium', locale=app.request.locale),
+            }, 'navigation'),
+            confirmButtonText: 'exercise.goal.already_achieved.confirm'|trans({}, 'navigation'),
+        }]) %}
+    {% endfor %}
+    <div data-controller="goal--already-achieved" data-goal--already-achieved-achievements-value="{{ payload|json_encode }}"></div>
+{% endif %}

@@ -81,6 +81,14 @@ dashboard:
     setting: Instellingen
     title: Overzicht
     widget:
+        goal:
+            achieved_on: "Behaald op {date}"
+            empty_achieved: Nog geen doel behaald.
+            empty_current: "Geen lopend doel — stel er een in via een oefeningpagina."
+            tab:
+                achieved: Geschiedenis
+                current: Lopend
+            title: Doelen
         locked:
             need_days: "{count, plural, =1 {+ # dag geschiedenis} other {+ # dagen geschiedenis}}"
             need_workouts: "{count, plural, =1 {Nog # training} other {Nog # trainingen}}"
@@ -196,6 +204,44 @@ exercise:
         preview_label: Voorbeeld
         primary_muscles: Primaire
         secondary_muscles: Secundaire
+    goal:
+        achieved:
+            confirm: Doorgaan
+            text: "Je hebt je doel voor {exerciseName} behaald: {target}!"
+            title: "Doel behaald! 🎉"
+        already_achieved:
+            confirm: Begrepen
+            text: "Je hebt dit doel voor {exerciseName} ({target}) al op {date} behaald!"
+            title: Doel al behaald
+        delete:
+            cancel_button: Annuleren
+            confirm_button: Verwijderen
+            confirm_text: Wil je dit doel verwijderen?
+            confirm_title: Doel verwijderen
+            error_text: Er is een fout opgetreden bij het verwijderen. Probeer het opnieuw.
+        flash:
+            deleted: Doel verwijderd.
+            error: "Het doel kon niet worden opgeslagen. Controleer de ingevoerde waarde."
+            saved: Doel opgeslagen.
+        form:
+            edit: Bewerken
+            submit: Doel opslaan
+            target_added_weight_label: Extra gewicht (optioneel)
+            target_added_weight_placeholder: "Bijv. 20"
+            target_distance_label: Doelafstand (meter)
+            target_distance_placeholder: "Bijv. 2000"
+            target_duration_label: Doelduur (seconden)
+            target_duration_placeholder: "Bijv. 480"
+            target_reps_label: Doelherhalingen (optioneel)
+            target_reps_placeholder: "Bijv. 6"
+            target_weight_label: Doelgewicht
+            target_weight_placeholder: "Bijv. 100"
+            title: Een doel instellen
+        target_distance: "{meters} m"
+        target_distance_weight: "{distance} × {weight}"
+        target_duration: "{seconds} s"
+        target_duration_weight: "{duration} × {weight}"
+        target_weight_reps: "{weight} × {reps} {repsUnit}"
     history:
         empty_state: Nog geen sessies geregistreerd voor deze oefening.
         journal:

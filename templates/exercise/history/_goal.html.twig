@@ -1,0 +1,96 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - exercise : Exercise
+    - goalCard : array{exerciseName: string, currentLabel: string, targetLabel: string, percent: int, achieved: bool, achievedAt: ?\DateTimeImmutable}|null
+    - goalForm : FormView
+    - goalFieldName : string
+    - goalHistoryCards : array<array{exerciseName: string, currentLabel: string, targetLabel: string, percent: int, achieved: bool, achievedAt: ?\DateTimeImmutable}>
+#}
+<div class="bg-bg-card border border-white/[0.07] rounded-2xl p-5 mb-6"
+     {% if goalCard is not null %}data-controller="exercise--goal-form"{% endif %}>
+    <div class="flex items-center justify-between mb-4 gap-3">
+        <h2 class="font-rajdhani text-[17px] font-semibold text-[#f0f4ff]">
+            {{ 'exercise.goal.form.title'|trans({}, 'navigation') }}
+        </h2>
+        {% if goalCard is not null %}
+            <div class="flex items-center gap-3">
+                <button type="button"
+                        data-action="click->exercise--goal-form#show"
+                        class="text-[12px] text-[#8b9bb4] hover:text-[#f0f4ff] transition-ft">
+                    {{ 'exercise.goal.form.edit'|trans({}, 'navigation') }}
+                </button>
+                <button type="button"
+                        data-controller="exercise--goal-delete"
+                        data-exercise--goal-delete-url-value="{{ path('app_exercise_goal_delete', {id: goalForm.vars.data.id}) }}"
+                        data-exercise--goal-delete-csrf-token-value="{{ csrf_token('exercise_goal_delete_' ~ goalForm.vars.data.id) }}"
+                        data-exercise--goal-delete-confirm-title-value="{{ 'exercise.goal.delete.confirm_title'|trans({}, 'navigation') }}"
+                        data-exercise--goal-delete-confirm-text-value="{{ 'exercise.goal.delete.confirm_text'|trans({}, 'navigation') }}"
+                        data-exercise--goal-delete-confirm-button-value="{{ 'exercise.goal.delete.confirm_button'|trans({}, 'navigation') }}"
+                        data-exercise--goal-delete-cancel-button-value="{{ 'exercise.goal.delete.cancel_button'|trans({}, 'navigation') }}"
+                        data-exercise--goal-delete-error-text-value="{{ 'exercise.goal.delete.error_text'|trans({}, 'navigation') }}"
+                        data-action="click->exercise--goal-delete#confirmDelete"
+                        class="text-[12px] text-[#8b9bb4] hover:text-red-400 transition-ft">
+                    {{ 'exercise.list.actions.delete'|trans({}, 'navigation') }}
+                </button>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if goalCard is not null %}
+        <div class="mb-4">
+            <div class="flex items-center justify-between mb-1.5 text-[13px] text-[#8b9bb4]">
+                <span>{{ goalCard.currentLabel }} / {{ goalCard.targetLabel }}</span>
+                <span>{{ goalCard.percent }}%</span>
+            </div>
+            <div class="h-2 rounded-full bg-white/[0.06] overflow-hidden">
+                <div class="h-full rounded-full {{ goalCard.achieved ? 'bg-cyan-ft' : 'bg-rose-ft' }}" style="width: {{ goalCard.percent }}%;"></div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div {% if goalCard is not null %}class="hidden" data-exercise--goal-form-target="form"{% endif %}>
+        {{ form_start(goalForm, {
+            action: path('app_exercise_goal_save', {id: exercise.id}),
+            attr: {novalidate: 'novalidate', class: 'flex flex-col sm:flex-row sm:items-end gap-3'},
+        }) }}
+            <div class="flex-1 flex flex-col sm:flex-row gap-3">
+                <div class="flex-1">
+                    {{ form_row(goalForm[goalFieldName]) }}
+                </div>
+                {% if goalForm.targetReps is defined %}
+                    <div class="flex-1">
+                        {{ form_row(goalForm.targetReps) }}
+                    </div>
+                {% elseif goalFieldName != 'targetWeight' and goalForm.targetWeight is defined %}
+                    <div class="flex-1">
+                        {{ form_row(goalForm.targetWeight) }}
+                    </div>
+                {% endif %}
+            </div>
+            <button type="submit" class="shrink-0 bg-rose-ft text-white font-medium text-sm rounded-[10px] px-5 py-3 transition-ft hover:opacity-90">
+                {{ 'exercise.goal.form.submit'|trans({}, 'navigation') }}
+            </button>
+            {{ form_row(goalForm._token) }}
+        {{ form_end(goalForm, {render_rest: false}) }}
+    </div>
+
+    {% if goalHistoryCards is not empty %}
+        <div class="mt-5 pt-5 border-t border-white/[0.07]">
+            <h3 class="text-[12px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4] mb-3">
+                {{ 'dashboard.widget.goal.tab.achieved'|trans({}, 'navigation') }}
+            </h3>
+            <div class="flex flex-col gap-2 max-h-64 overflow-y-auto pr-1 exercise-list-scroll">
+                {% for card in goalHistoryCards %}
+                    <div class="flex items-center justify-between gap-2 bg-cyan-ft/[0.06] border border-cyan-ft/[0.15] rounded-xl p-3">
+                        <span class="text-[13px] font-medium text-cyan-ft">🏆 {{ card.targetLabel }}</span>
+                        {% if card.achievedAt is not null %}
+                            <span class="text-[12px] text-[#8b9bb4] shrink-0">
+                                {{ 'dashboard.widget.goal.achieved_on'|trans({date: card.achievedAt|format_date('medium', locale=app.request.locale)}, 'navigation') }}
+                            </span>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
