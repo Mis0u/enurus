@@ -205,6 +205,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Clés `DashboardWidgetEnum` que l'utilisateur a choisi de masquer sur son dashboard — un
+     * widget encore verrouillé (palier non atteint) ne peut pas y figurer, la case à cocher
+     * correspondante n'étant proposée en réglages qu'une fois débloquée
+     * (`DashboardWidgetUnlockResolver`).
+     *
+     * @var array<int, string>
+     */
+    #[ORM\Column(type: 'json', nullable: false, options: [
+        'default' => '[]',
+    ])]
+    public array $hiddenWidgets = [] {
+        get {
+            return $this->hiddenWidgets;
+        }
+        set(array $hiddenWidgets) {
+            $this->hiddenWidgets = $hiddenWidgets;
+        }
+    }
+
+    /**
      * Toujours en kg (même convention que ExerciseSet::weight) — conversion à l'affichage/la
      * saisie via WeightConverterService selon unitOfMeasure. Optionnel : sert uniquement à
      * calculer le tonnage des exercices "au poids de corps" (Exercise::bodyweightPercent).

@@ -765,6 +765,9 @@
   .min-h-\[100px\] {
     min-height: 100px;
   }
+  .min-h-\[180px\] {
+    min-height: 180px;
+  }
   .min-h-screen {
     min-height: 100vh;
   }
@@ -938,6 +941,9 @@
   }
   .max-w-\[220px\] {
     max-width: 220px;
+  }
+  .max-w-\[320px\] {
+    max-width: 320px;
   }
   .max-w-\[360px\] {
     max-width: 360px;
@@ -2687,6 +2693,9 @@
   .accent-\[\#f43f5e\] {
     accent-color: #f43f5e;
   }
+  .accent-rose-ft {
+    accent-color: var(--color-rose-ft);
+  }
   .opacity-0 {
     opacity: 0%;
   }
@@ -4175,6 +4184,11 @@
   .sm\:items-end {
     @media (width >= 40rem) {
       align-items: flex-end;
+    }
+  }
+  .md\:col-span-2 {
+    @media (width >= 48rem) {
+      grid-column: span 2 / span 2;
     }
   }
   .md\:mb-3 {

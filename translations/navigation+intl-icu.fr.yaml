@@ -70,6 +70,9 @@ contact:
 
 dashboard:
     contact: Contact
+    empty_widgets:
+        cta: Gérer mes widgets
+        text: Tu as masqué tous les widgets affichables. Réactives-en au moins un depuis tes réglages.
     library: Bibliothèque
     logout: Déconnexion
     messaging: Messagerie
@@ -539,6 +542,15 @@ settings:
             title: "{gender, select, female {Es-tu sûre ?} other {Es-tu sûr ?}}"
         request_error: Une erreur est survenue, réessaie plus tard
         title: Suppression du compte
+    dashboard_widgets:
+        explanation: Choisis les blocs affichés sur ton tableau de bord.
+        title: Widgets du dashboard
+        widget:
+            goals: Objectifs
+            muscle_distribution: Muscles travaillés
+            regularity: Régularité
+            session: Séance
+            tonnage: Tonnage
     email:
         label: Email
         not_editable: Non modifiable

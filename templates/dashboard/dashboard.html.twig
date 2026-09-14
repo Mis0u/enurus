@@ -7,35 +7,43 @@
         <div class="grid md:grid-cols-2 gap-4 md:gap-5 items-stretch">
 
             {# Ligne 1 col 1 : Séance #}
-            {% include 'dashboard/_widgets/_session.html.twig' with {
-                sessionStats: sessionStats,
-            } only %}
+            {% if visibleWidgets.session %}
+                {% include 'dashboard/_widgets/_session.html.twig' with {
+                    sessionStats: sessionStats,
+                } only %}
+            {% endif %}
 
             {# Ligne 1 col 2 : Tonnage (chiffre toujours débloqué dès 1 séance) #}
-            {% include 'dashboard/_widgets/_tonnage.html.twig' with {
-                tonnageData: tonnageData,
-            } only %}
+            {% if visibleWidgets.tonnage %}
+                {% include 'dashboard/_widgets/_tonnage.html.twig' with {
+                    tonnageData: tonnageData,
+                } only %}
+            {% endif %}
 
             {# Ligne 2 col 1 : Muscles travaillés #}
-            {% include 'dashboard/_widgets/_muscles.html.twig' with {
-                user: user,
-                muscleWeekMonthUnlocked: dashboardState.muscleWeekMonthUnlocked,
-                sessionPrimary: sessionPrimary,
-                sessionSecondary: sessionSecondary,
-                weekPrimary: weekPrimary,
-                weekSecondary: weekSecondary,
-                monthPrimary: monthPrimary,
-                monthSecondary: monthSecondary,
-                sessionBars: sessionBars,
-                weekBars: weekBars,
-                monthBars: monthBars,
-            } only %}
+            {% if visibleWidgets.muscle_distribution %}
+                {% include 'dashboard/_widgets/_muscles.html.twig' with {
+                    user: user,
+                    muscleWeekMonthUnlocked: dashboardState.muscleWeekMonthUnlocked,
+                    sessionPrimary: sessionPrimary,
+                    sessionSecondary: sessionSecondary,
+                    weekPrimary: weekPrimary,
+                    weekSecondary: weekSecondary,
+                    monthPrimary: monthPrimary,
+                    monthSecondary: monthSecondary,
+                    sessionBars: sessionBars,
+                    weekBars: weekBars,
+                    monthBars: monthBars,
+                } only %}
+            {% endif %}
 
             {# Ligne 2 col 2 : Régularité #}
             {% if dashboardState.regularityUnlocked %}
-                {% include 'dashboard/_widgets/_regularity.html.twig' with {
-                    regularityData: regularityData,
-                } only %}
+                {% if visibleWidgets.regularity %}
+                    {% include 'dashboard/_widgets/_regularity.html.twig' with {
+                        regularityData: regularityData,
+                    } only %}
+                {% endif %}
             {% else %}
                 {% include 'dashboard/_widgets/_locked_card.html.twig' with {
                     title: 'dashboard.widget.locked.title_regularity'|trans({}, 'navigation'),
@@ -44,12 +52,17 @@
                 } only %}
             {% endif %}
 
-            {# Ligne 3 : Objectifs par exercice — bloc masqué tant que l'utilisateur n'a jamais créé d'objectif #}
-            {% if hasAnyGoal %}
+            {# Ligne 3 : Objectifs par exercice — bloc masqué tant que l'utilisateur n'a jamais créé d'objectif, ou qu'il l'a masqué en réglages #}
+            {% if visibleWidgets.goals %}
                 {% include 'dashboard/_widgets/_goals.html.twig' with {
                     goalCurrentCards: goalCurrentCards,
                     goalAchievedCards: goalAchievedCards,
                 } only %}
+            {% endif %}
+
+            {# Tous les widgets débloqués ont été masqués par l'utilisateur — évite un écran vide #}
+            {% if hasNoVisibleContent %}
+                {% include 'dashboard/_widgets/_no_visible_widgets_card.html.twig' only %}
             {% endif %}
 
         </div>

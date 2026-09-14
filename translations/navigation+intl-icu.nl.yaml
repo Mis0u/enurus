@@ -70,6 +70,9 @@ contact:
 
 dashboard:
     contact: Contact
+    empty_widgets:
+        cta: Mijn widgets beheren
+        text: Je hebt alle beschikbare widgets verborgen. Schakel er minstens één opnieuw in via je instellingen.
     library: Bibliotheek
     logout: Uitloggen
     messaging: Berichten
@@ -539,6 +542,15 @@ settings:
             title: Weet je het zeker?
         request_error: Er is een fout opgetreden, probeer het later opnieuw
         title: Accountverwijdering
+    dashboard_widgets:
+        explanation: Kies welke blokken op je dashboard worden weergegeven.
+        title: Dashboard-widgets
+        widget:
+            goals: Doelen
+            muscle_distribution: Getrainde spieren
+            regularity: Regelmaat
+            session: Training
+            tonnage: Geheven gewicht
     email:
         label: E-mail
         not_editable: Niet bewerkbaar

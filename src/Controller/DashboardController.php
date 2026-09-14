@@ -14,8 +14,10 @@ use App\Service\Dashboard\DashboardMuscleDistributionService;
 use App\Service\Dashboard\DashboardPeriodCalculator;
 use App\Service\Dashboard\DashboardPrService;
 use App\Service\Dashboard\DashboardRegularityService;
+use App\Service\Dashboard\DashboardState;
 use App\Service\Dashboard\DashboardTonnageService;
 use App\Service\Dashboard\DashboardUnlockService;
+use App\Service\Dashboard\DashboardWidgetUnlockResolver;
 use App\Service\Goal\GoalCardFormatter;
 use App\Service\Goal\GoalProgress;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,6 +37,7 @@ final class DashboardController extends AbstractController
         private readonly DashboardPeriodCalculator $periodCalculator,
         private readonly DashboardGoalService $goalService,
         private readonly GoalCardFormatter $goalCardFormatter,
+        private readonly DashboardWidgetUnlockResolver $widgetUnlockResolver,
         private readonly TranslatorInterface $translator,
     ) {
     }
@@ -207,7 +210,13 @@ final class DashboardController extends AbstractController
         $goalState = $this->goalService->getStateForUser($user);
         $goalCurrentCards = array_map(fn (GoalProgress $progress) => $this->goalCardFormatter->format($progress, $user), $goalState->current);
         $goalAchievedCards = array_map(fn (GoalProgress $progress) => $this->goalCardFormatter->format($progress, $user), $goalState->achieved);
-        $hasAnyGoal = [] !== $goalCurrentCards || [] !== $goalAchievedCards;
+
+        $visibleWidgets = $this->resolveVisibleWidgets($user, $dashboardState);
+
+        // Le placeholder "verrouillé" de Régularité occupe toujours de l'espace quand elle n'est
+        // pas encore débloquée — l'écran n'est réellement vide que si aucun widget débloqué n'est
+        // affiché ET que Régularité est débloquée (donc masquable, donc potentiellement masquée).
+        $hasNoVisibleContent = ! in_array(true, $visibleWidgets, true) && $dashboardState->regularityUnlocked;
 
         return $this->render('dashboard/dashboard.html.twig', [
             'user' => $user,
@@ -226,8 +235,27 @@ final class DashboardController extends AbstractController
             'regularityData' => $regularityData,
             'goalCurrentCards' => $goalCurrentCards,
             'goalAchievedCards' => $goalAchievedCards,
-            'hasAnyGoal' => $hasAnyGoal,
+            'visibleWidgets' => $visibleWidgets,
+            'hasNoVisibleContent' => $hasNoVisibleContent,
         ]);
+    }
+
+    /**
+     * Un widget s'affiche s'il est débloqué ET que l'utilisateur ne l'a pas masqué en réglages —
+     * même source de vérité que la liste de cases à cocher proposée dans les réglages
+     * (`DashboardWidgetUnlockResolver`), pour ne jamais désynchroniser les deux.
+     *
+     * @return array<string, bool> clé = DashboardWidgetEnum::value
+     */
+    private function resolveVisibleWidgets(User $user, DashboardState $dashboardState): array
+    {
+        $visibleWidgets = [];
+
+        foreach ($this->widgetUnlockResolver->resolve($user, $dashboardState) as $widget => $unlocked) {
+            $visibleWidgets[$widget] = $unlocked && ! in_array($widget, $user->hiddenWidgets, true);
+        }
+
+        return $visibleWidgets;
     }
 
     private function buildPrLabel(int $count): string
