@@ -20,7 +20,9 @@
         data-controller="exercise--edit"
         data-exercise--edit-label-none-value="{{ 'exercise.form.none'|trans({}, 'navigation') }}"
         data-exercise--edit-check-duplicate-url-value="{{ path('app_exercise_check_duplicate') }}"
+        {# @symfony-lsp-ignore translation.placeholders #}
         data-exercise--edit-duplicate-custom-message-value="{{ 'exercise.alert.duplicate_custom'|trans({}, 'navigation') }}"
+        {# @symfony-lsp-ignore translation.placeholders #}
         data-exercise--edit-duplicate-public-message-value="{{ 'exercise.alert.duplicate_public'|trans({}, 'navigation') }}"
     >
         <div class="max-w-[720px] mx-auto">
