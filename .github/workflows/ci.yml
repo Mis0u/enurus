@@ -51,6 +51,11 @@ jobs:
             - name: Install PHP dependencies
               run: composer install --no-interaction --prefer-dist --no-progress
 
+            - name: Install Symfony CLI
+              run: |
+                  curl -sS https://get.symfony.com/cli/installer | bash
+                  sudo mv "$HOME"/.symfony*/bin/symfony /usr/local/bin/symfony
+
             - name: Composer audit
               run: vendor/bin/castor composer-audit --no-interaction
 
@@ -89,6 +94,9 @@ jobs:
 
             - name: ESLint
               run: vendor/bin/castor eslint --no-interaction
+
+            - name: Symfony LSP
+              run: vendor/bin/castor symfony-lsp --no-interaction
 
             - name: Schema validate
               run: vendor/bin/castor schema-validate --test --no-interaction

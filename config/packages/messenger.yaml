@@ -41,4 +41,5 @@ when@test:
                 # SendContactBroadcastMessage, jamais les autres messages routés vers `async`.
                 broadcast_test: 'in-memory://'
             routing:
+                # @symfony-lsp-ignore messenger.unknown_transport
                 App\Message\SendContactBroadcastMessage: broadcast_test

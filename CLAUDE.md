@@ -19,7 +19,8 @@ Symfony Mailer (Mailtrap en dev), SweetAlert2, SortableJS, AssetMapper (pas de W
 Flysystem (local dev → Scaleway S3 prod), PostgreSQL, KnpPaginatorBundle.
 
 Qualité : PHPStan niveau 9 + dead-code-detector, ECS, TwigCS, PHPMND, ESLint, Doctrine Doctor,
-Captain Hook, PHPUnit 12.5.4, Castor comme task runner.
+Symfony LSP (`symfony lsp:check`, CLI Symfony), Captain Hook, PHPUnit 12.5.4, Castor comme task
+runner.
 
 ---
 
@@ -48,7 +49,12 @@ Captain Hook, PHPUnit 12.5.4, Castor comme task runner.
 - **Pas de `~` en clé de hash Twig.**
 - **Domaine de traduction toujours explicite** dans les appels `trans()`. Format **ICU** (`{name}`),
   jamais `%name%` — sauf `validators.xx.yaml` qui garde `{{ limit }}` (format natif Symfony
-  `ConstraintViolation`, différent du reste).
+  `ConstraintViolation`, différent du reste), et sauf les clés destinées à un remplacement
+  **côté JS** après coup (`exercise.alert.duplicate_custom`/`duplicate_public` dans
+  `navigation+intl-icu.xx.yaml`) : `trans({}, 'navigation')` est appelé avec des params vides en
+  Twig, et c'est `assets/controllers/exercise/{create,edit}_controller.js`
+  (`.replace('%name%', ...)`) qui substitue après réception — la traduction garde alors
+  volontairement `%name%`, jamais `{name}`, pour rester un marqueur texte simple côté JS.
 - **8 langues supportées** : fr, en, it, es, pt, de, nl, pl. Routes locale-préfixées **sur tous les
   endpoints, y compris les endpoints AJAX jamais vus par l'utilisateur** — la résolution de locale
   dépend du préfixe `_locale` de la route matchée (`RouterListener`), pas d'un mécanisme de session.
@@ -349,6 +355,28 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
   \LogicException`) plutôt que `assertIsArray()` si l'extension `phpstan-phpunit` est absente.
 - Jamais de `@phpstan-ignore`.
 - Enum backed n'a **pas** de `__toString()` — toujours `.value` explicite en Twig.
+
+### Symfony LSP (`castor symfony-lsp`)
+- Détecte ce que PHPStan ne peut pas voir : noms de route, templates Twig, clés de traduction,
+  bus/transport Messenger, entrypoints AssetMapper, options de FormType — toutes des strings
+  résolues à l'exécution. Intégré dans `qa()` (donc pre-commit Captain Hook + CI), boot complet de
+  l'appli (pas `--source-only`, plus précis), traductions activées (`.symfony-lsp.json`,
+  `translationDiagnostics: true`).
+- **`translation.domain_not_found` exclu du `--fail-on`** (visible mais non bloquant) : faux
+  positif systématique sur tous les `Admin/*CrudController.php`, qui appellent une méthode privée
+  `trans(string $key, array $params = [])` (domaine fixé en dur, ex.
+  `DashboardController::trans()`) que l'outil ne résout pas statiquement — il suppose le domaine
+  par défaut `messages`, inexistant dans ce projet (un fichier de traduction = un domaine). Ne pas
+  ajouter `translation.domain_not_found` au `--fail-on` de `castor.php::symfonyLsp()` tant que ce
+  pattern de wrapper `trans()` existe dans les CRUD admin.
+- **Annotation d'ignore ponctuelle** : `# @symfony-lsp-ignore <code>` (YAML/PHP) ou
+  `{# @symfony-lsp-ignore <code> #}` (Twig) juste au-dessus de la ligne concernée — pour un faux
+  positif isolé, jamais pour un pattern récurrent (auquel cas exclure le code du `--fail-on`
+  plutôt que multiplier les annotations). Utilisé sur `config/packages/messenger.yaml` (transport
+  `broadcast_test` déclaré sous `when@test`, non résolu par l'outil en environnement `dev` — bug
+  connu de non-respect des blocs `when@env`) et sur les 4 appels `trans({}, 'navigation')` de
+  `exercise/{create,edit}/index.html.twig` (cf. règle ICU ci-dessous).
+- Fichier de config du binaire : `.symfony-lsp.json` (avec le point, pas `symfony-lsp.json`).
 
 ---
 

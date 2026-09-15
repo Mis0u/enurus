@@ -98,6 +98,53 @@ function twigcs(): void
     );
 }
 
+#[AsTask(description: 'Check routes, templates and translations consistency with Symfony LSP')]
+function symfonyLsp(): void
+{
+    // translation.domain_not_found exclu : faux positif systématique sur les CRUD admin, qui
+    // utilisent tous une méthode privée trans() (domaine fixé en dur) que l'outil ne résout pas
+    // statiquement — cf. src/Controller/Admin/DashboardController.php::trans().
+    $failOn = implode(',', [
+        'config.deprecated_key',
+        'config.duplicate_key',
+        'config.invalid_type',
+        'config.malformed_structure',
+        'config.unknown_key',
+        'console.unknown_argument',
+        'console.unknown_option',
+        'env.incompatible_type',
+        'env.malformed_chain',
+        'env.unknown_processor',
+        'event.invalid_listener_method',
+        'form.unknown_option',
+        'importmap.unknown_entrypoint',
+        'messenger.invalid_handler_signature',
+        'messenger.unknown_bus',
+        'messenger.unknown_transport',
+        'parameter.not_found',
+        'route.missing_parameters',
+        'route.not_found',
+        'security.unknown_firewall',
+        'security.unknown_provider',
+        'service.not_found',
+        'stimulus.unknown_controller',
+        'suppression.invalid',
+        'template.not_found',
+        'translation.not_found',
+        'translation.placeholders',
+        'twig_callable.unknown_argument',
+        'twig_component.not_found',
+        'validation.unknown_constraint_option',
+    ]);
+
+    execute(
+        'SYMFONY LSP',
+        '🔗 Checking routes, templates and translations consistency...',
+        \sprintf('symfony lsp:check --fail-on=%s', $failOn),
+        'Symfony LSP check passed'
+    );
+}
+
 #[AsTask(description: 'Execute test with phpunit')]
 function test(bool $coverage = false): void
 {
@@ -154,6 +201,7 @@ function qa(): void
     phpmnd();
     twigcs();
     eslint();
+    symfonyLsp();
     composerAudit();
     schemaValidate(test: true);
     io()->success('✨ All checks passed! Ready to commit.');
