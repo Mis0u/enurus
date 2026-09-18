@@ -67,6 +67,26 @@ final class UserRepositoryTest extends KernelTestCase
         self::assertSame($countBefore - 1, $countAfter);
     }
 
+    public function testExistsByShareCodeReflectsAssignedCodes(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+
+        $user = $this->createTestUser($em, 'share-code-exists@test.com', null);
+        $user->shareCode = 'EXI5T7';
+        $em->flush();
+
+        self::assertTrue($userRepository->existsByShareCode('EXI5T7'));
+        self::assertFalse($userRepository->existsByShareCode('ABS3N7'));
+
+        $em->remove($user);
+        $em->flush();
+    }
+
     private function createTestUser(
         EntityManagerInterface $em,
         string $email,
