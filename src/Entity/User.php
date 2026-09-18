@@ -263,6 +263,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Propriété virtuelle — seule règle décidant si un profil peut être retrouvé et sollicité :
+     * un compte bloqué, non vérifié ou en cours de suppression ne doit jamais l'être, même avec
+     * `isDiscoverable` à vrai.
+     */
+    public bool $isSearchable {
+        get {
+            return $this->isDiscoverable
+                && $this->isVerified
+                && ! $this->isAccountBlocked
+                && null === $this->deletionRequestedAt;
+        }
+    }
+
+    /**
      * Code public à saisir avec le pseudo (`Pseudo#CODE`) pour trouver l'utilisateur — unique sur
      * tous les comptes, indépendamment du pseudo (non unique lui-même). Nul tant que le partage n'a
      * jamais été activé ; conservé ensuite, y compris si `isDiscoverable` repasse à faux.

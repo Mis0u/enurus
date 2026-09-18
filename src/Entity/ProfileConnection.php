@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\Entity\Trait\TimestampTrait;
 use App\Enum\Entity\ProfileConnection\ProfileConnectionStatusEnum;
+use App\Repository\ProfileConnectionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
@@ -16,10 +17,10 @@ use Symfony\Component\Uid\Uuid;
  * Connexion réciproque entre deux utilisateurs : une fois `ACCEPTED`, chacun voit le dashboard de
  * l'autre, quel que soit celui qui a envoyé la demande. La contrainte unique ne porte que sur le
  * sens (requester, addressee) — empêcher la demande inverse (B→A quand A→B existe) et l'auto-demande
- * (requester = addressee) relève du service de demande, une contrainte d'index sur la paire non
- * ordonnée n'étant pas exprimable via le mapping Doctrine.
+ * (requester = addressee) relève de `ProfileConnectionRequestService`, une contrainte d'index sur
+ * la paire non ordonnée n'étant pas exprimable via le mapping Doctrine.
  */
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: ProfileConnectionRepository::class)]
 #[ORM\Table(name: 'profile_connection')]
 #[ORM\UniqueConstraint(name: 'UNIQ_PROFILE_CONNECTION_PAIR', fields: ['requester', 'addressee'])]
 class ProfileConnection

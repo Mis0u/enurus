@@ -16,3 +16,11 @@ framework:
             policy: 'sliding_window'
             limit: 3
             interval: '15 minutes'
+        profile_search:
+            policy: 'sliding_window'
+            limit: 10
+            interval: '15 minutes'
+        profile_connection_request:
+            policy: 'sliding_window'
+            limit: 5
+            interval: '1 hour'
