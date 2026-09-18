@@ -33,6 +33,9 @@ final readonly class DashboardTonnageService
     }
 
     /**
+     * Les séances sont celles de `$subject`, mais l'unité et la langue des libellés suivent
+     * `$viewer` : celui qui regarde lit dans sa propre unité et sa propre langue.
+     *
      * @return array{
      *     unit: string,
      *     year: int,
@@ -42,13 +45,13 @@ final readonly class DashboardTonnageService
      *     charts: array{sessions: Chart, week: Chart, month: Chart}
      * }
      */
-    public function getData(User $user): array
+    public function getData(User $subject, User $viewer): array
     {
         $now = new \DateTimeImmutable();
         $year = $this->periodCalculator->currentYearElapsed($now);
 
-        $unit = $user->unitOfMeasure;
-        $series = $this->workoutTonnageRepository->findTonnageSeriesByUser($user, $year->start, $year->end);
+        $unit = $viewer->unitOfMeasure;
+        $series = $this->workoutTonnageRepository->findTonnageSeriesByUser($subject, $year->start, $year->end);
 
         $annualTotal = $this->weightConverter->convertToLbs(
             array_sum(array_column($series, 'tonnage')),
@@ -60,7 +63,7 @@ final readonly class DashboardTonnageService
             $year->start,
             $year->end,
             $unit,
-            $user->locale,
+            $viewer->locale,
             'd MMM',
             static fn (\DateTimeImmutable $date): string => $date->format('Y-m-d'),
             static fn (\DateTimeImmutable $date): \DateTimeImmutable => $date,
@@ -71,7 +74,7 @@ final readonly class DashboardTonnageService
             $year->start,
             $year->end,
             $unit,
-            $user->locale,
+            $viewer->locale,
             'd MMM',
             fn (\DateTimeImmutable $date): string => $this->periodCalculator->weekStartOf($date)->format('Y-m-d'),
             fn (\DateTimeImmutable $date): \DateTimeImmutable => $this->periodCalculator->weekStartOf($date),
@@ -82,7 +85,7 @@ final readonly class DashboardTonnageService
             $year->start,
             $year->end,
             $unit,
-            $user->locale,
+            $viewer->locale,
             'MMM',
             static fn (\DateTimeImmutable $date): string => $date->format('Y-m'),
             static fn (\DateTimeImmutable $date): \DateTimeImmutable => $date->modify('first day of this month')->setTime(0, 0, 0),

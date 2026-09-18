@@ -33,7 +33,7 @@ final class DashboardTonnageServiceTest extends TestCase
             ],
         ]);
 
-        $result = $service->getData($user);
+        $result = $service->getData($user, $user);
 
         self::assertSame(1500.0, $result['annualTotal']);
         self::assertSame('kg', $result['unit']);
@@ -51,7 +51,7 @@ final class DashboardTonnageServiceTest extends TestCase
             ],
         ]);
 
-        $result = $service->getData($user);
+        $result = $service->getData($user, $user);
 
         // 100 kg -> round(100 * 2.20462, 1) = 220.5 lbs (WeightConverterService, cf. son propre test).
         self::assertSame(220.5, $result['annualTotal']);
@@ -69,7 +69,7 @@ final class DashboardTonnageServiceTest extends TestCase
 
         $service = $this->service([]);
 
-        $result = $service->getData($user);
+        $result = $service->getData($user, $user);
 
         $sessionsChart = $result['charts']['sessions'];
         self::assertCount($expectedDays, $sessionsChart->getData()['labels']);
@@ -87,7 +87,7 @@ final class DashboardTonnageServiceTest extends TestCase
         $expectedYear = (int) $now->format('Y');
 
         $service = $this->service([]);
-        $result = $service->getData($user);
+        $result = $service->getData($user, $user);
 
         self::assertSame($expectedYear, $result['year']);
 
@@ -107,7 +107,7 @@ final class DashboardTonnageServiceTest extends TestCase
         $expectedMonths = (int) $now->format('n');
 
         $service = $this->service([]);
-        $result = $service->getData($user);
+        $result = $service->getData($user, $user);
 
         self::assertCount($expectedMonths, $result['charts']['month']->getData()['labels']);
     }
@@ -128,10 +128,62 @@ final class DashboardTonnageServiceTest extends TestCase
             ],
         ]);
 
-        $result = $service->getData($user);
+        $result = $service->getData($user, $user);
 
         $lastBarValue = array_key_last($result['charts']['sessions']->getData()['datasets'][0]['data']);
         self::assertSame(150.0, $result['charts']['sessions']->getData()['datasets'][0]['data'][$lastBarValue]);
+    }
+
+    public function testDisplayUnitAndConversionFollowTheViewerNotTheOwner(): void
+    {
+        $owner = $this->createUser(UnitOfMeasureEnum::KG);
+        $viewer = $this->createUser(UnitOfMeasureEnum::LBS);
+
+        $service = $this->service([
+            [
+                'performedAt' => new \DateTimeImmutable(),
+                'tonnage' => 100.0,
+            ],
+        ]);
+
+        $result = $service->getData($owner, $viewer);
+
+        self::assertSame(220.5, $result['annualTotal']);
+        self::assertSame('lbs', $result['unit']);
+    }
+
+    public function testTonnageSeriesAreReadFromTheOwnerNotTheViewer(): void
+    {
+        $owner = $this->createUser(UnitOfMeasureEnum::KG);
+        $viewer = $this->createUser(UnitOfMeasureEnum::KG);
+
+        $workoutTonnageRepository = $this->createMock(WorkoutTonnageRepository::class);
+        $workoutTonnageRepository->expects(self::once())
+            ->method('findTonnageSeriesByUser')
+            ->with($owner, self::anything(), self::anything())
+            ->willReturn([]);
+
+        $service = new DashboardTonnageService(
+            $workoutTonnageRepository,
+            new WeightConverterService(),
+            new DashboardTonnageChartBuilder(new ChartBuilder()),
+            new DashboardPeriodCalculator(),
+        );
+
+        $service->getData($owner, $viewer);
+    }
+
+    public function testChartLabelsAreFormattedInTheViewersLocaleNotTheOwners(): void
+    {
+        $owner = $this->createUser(UnitOfMeasureEnum::KG);
+        $owner->locale = 'fr';
+        $viewer = $this->createUser(UnitOfMeasureEnum::KG);
+        $viewer->locale = 'en';
+
+        $result = $this->service([])->getData($owner, $viewer);
+
+        // Le graphique mensuel commence toujours en janvier : "Jan" en anglais, "janv." en français.
+        self::assertSame('Jan', $result['charts']['month']->getData()['labels'][0]);
     }
 
     /**

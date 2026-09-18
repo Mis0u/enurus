@@ -1,0 +1,68 @@
+{#
+    Grille des widgets du dashboard, partagée entre le dashboard de l'utilisateur et celui d'une
+    connexion. Variables attendues (toutes via `only`) :
+    - data    : DashboardViewData — tout ce qui est affiché, déjà calculé
+    - subject : User — propriétaire des données (la silhouette suit son genre)
+#}
+<div class="grid md:grid-cols-2 gap-4 md:gap-5 items-stretch">
+
+    {# Ligne 1 col 1 : Séance #}
+    {% if data.visibleWidgets.session %}
+        {% include 'dashboard/_widgets/_session.html.twig' with {
+            sessionStats: data.sessionStats,
+        } only %}
+    {% endif %}
+
+    {# Ligne 1 col 2 : Tonnage (chiffre toujours débloqué dès 1 séance) #}
+    {% if data.visibleWidgets.tonnage %}
+        {% include 'dashboard/_widgets/_tonnage.html.twig' with {
+            tonnageData: data.tonnageData,
+        } only %}
+    {% endif %}
+
+    {# Ligne 2 col 1 : Muscles travaillés #}
+    {% if data.visibleWidgets.muscle_distribution %}
+        {% include 'dashboard/_widgets/_muscles.html.twig' with {
+            gender: subject.gender,
+            muscleWeekMonthUnlocked: data.dashboardState.muscleWeekMonthUnlocked,
+            sessionPrimary: data.muscles.session.primary,
+            sessionSecondary: data.muscles.session.secondary,
+            weekPrimary: data.muscles.week.primary,
+            weekSecondary: data.muscles.week.secondary,
+            monthPrimary: data.muscles.month.primary,
+            monthSecondary: data.muscles.month.secondary,
+            sessionBars: data.muscles.session.bars,
+            weekBars: data.muscles.week.bars,
+            monthBars: data.muscles.month.bars,
+        } only %}
+    {% endif %}
+
+    {# Ligne 2 col 2 : Régularité #}
+    {% if data.dashboardState.regularityUnlocked %}
+        {% if data.visibleWidgets.regularity %}
+            {% include 'dashboard/_widgets/_regularity.html.twig' with {
+                regularityData: data.regularityData,
+            } only %}
+        {% endif %}
+    {% else %}
+        {% include 'dashboard/_widgets/_locked_card.html.twig' with {
+            title: 'dashboard.widget.locked.title_regularity'|trans({}, 'navigation'),
+            need_workouts: data.dashboardState.workoutsNeededForRegularity,
+            need_days: 0,
+        } only %}
+    {% endif %}
+
+    {# Ligne 3 : Objectifs par exercice — bloc masqué tant que l'utilisateur n'a jamais créé d'objectif, ou qu'il l'a masqué en réglages #}
+    {% if data.visibleWidgets.goals %}
+        {% include 'dashboard/_widgets/_goals.html.twig' with {
+            goalCurrentCards: data.goalCurrentCards,
+            goalAchievedCards: data.goalAchievedCards,
+        } only %}
+    {% endif %}
+
+    {# Tous les widgets débloqués ont été masqués par l'utilisateur — évite un écran vide #}
+    {% if data.hasNoVisibleContent %}
+        {% include 'dashboard/_widgets/_no_visible_widgets_card.html.twig' only %}
+    {% endif %}
+
+</div>

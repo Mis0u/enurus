@@ -6,6 +6,7 @@ namespace App\Tests\Functional\Service\Dashboard;
 
 use App\Entity\User;
 use App\Enum\Dashboard\DashboardWidgetEnum;
+use App\Enum\Entity\User\UnitOfMeasureEnum;
 use App\Repository\UserRepository;
 use App\Service\Dashboard\DashboardState;
 use App\Service\Dashboard\DashboardUnlockService;
@@ -46,7 +47,7 @@ final class DashboardViewDataBuilderTest extends KernelTestCase
         $user = $this->findUser(self::USER_WITH_WORKOUTS);
         $state = $this->unlockService->getStateForUser($user);
 
-        $data = $this->builder->build($user, $state);
+        $data = $this->builder->build($user, $user, $state);
 
         self::assertSame($state, $data->dashboardState);
         self::assertGreaterThanOrEqual(1, $data->sessionStats['last']['sessions']);
@@ -60,7 +61,7 @@ final class DashboardViewDataBuilderTest extends KernelTestCase
     {
         $user = $this->findUser(self::USER_WITH_WORKOUTS);
 
-        $data = $this->builder->build($user, $this->unlockService->getStateForUser($user));
+        $data = $this->builder->build($user, $user, $this->unlockService->getStateForUser($user));
 
         foreach ([DashboardWidgetEnum::SESSION, DashboardWidgetEnum::TONNAGE, DashboardWidgetEnum::MUSCLE_DISTRIBUTION, DashboardWidgetEnum::REGULARITY] as $widget) {
             self::assertTrue($data->visibleWidgets[$widget->value], $widget->value . ' should be visible');
@@ -71,7 +72,7 @@ final class DashboardViewDataBuilderTest extends KernelTestCase
     {
         $user = $this->findUser(self::USER_WITH_WORKOUTS);
 
-        $data = $this->builder->build($user, $this->unlockService->getStateForUser($user));
+        $data = $this->builder->build($user, $user, $this->unlockService->getStateForUser($user));
 
         foreach (DashboardWidgetEnum::cases() as $widget) {
             self::assertArrayHasKey($widget->value, $data->visibleWidgets);
@@ -83,7 +84,7 @@ final class DashboardViewDataBuilderTest extends KernelTestCase
         $user = $this->findUser(self::USER_WITH_WORKOUTS);
         $user->hiddenWidgets = [DashboardWidgetEnum::TONNAGE->value];
 
-        $data = $this->builder->build($user, $this->unlockService->getStateForUser($user));
+        $data = $this->builder->build($user, $user, $this->unlockService->getStateForUser($user));
 
         self::assertFalse($data->visibleWidgets[DashboardWidgetEnum::TONNAGE->value]);
         self::assertTrue($data->visibleWidgets[DashboardWidgetEnum::SESSION->value]);
@@ -95,7 +96,7 @@ final class DashboardViewDataBuilderTest extends KernelTestCase
         $user = $this->findUser(self::USER_WITH_WORKOUTS);
         $user->hiddenWidgets = array_map(static fn (DashboardWidgetEnum $widget): string => $widget->value, DashboardWidgetEnum::cases());
 
-        $data = $this->builder->build($user, $this->unlockService->getStateForUser($user));
+        $data = $this->builder->build($user, $user, $this->unlockService->getStateForUser($user));
 
         self::assertTrue($data->hasNoVisibleContent);
     }
@@ -104,11 +105,34 @@ final class DashboardViewDataBuilderTest extends KernelTestCase
     {
         $user = $this->findUser(self::USER_WITH_WORKOUTS);
 
-        $data = $this->builder->build($user, new DashboardState(1));
+        $data = $this->builder->build($user, $user, new DashboardState(1));
 
         self::assertNull($data->regularityData);
         self::assertSame([], $data->muscles->week->primary);
         self::assertSame([], $data->muscles->month->primary);
+    }
+
+    public function testWeightUnitFollowsTheViewerWhileTheDataIsTheOwners(): void
+    {
+        $owner = $this->findUser(self::USER_WITH_WORKOUTS);
+        $viewer = new User();
+        $viewer->unitOfMeasure = UnitOfMeasureEnum::LBS;
+
+        $data = $this->builder->build($owner, $viewer, $this->unlockService->getStateForUser($owner));
+
+        self::assertSame(UnitOfMeasureEnum::LBS->value, $data->tonnageData['unit']);
+        self::assertGreaterThanOrEqual(1, $data->sessionStats['last']['sessions']);
+    }
+
+    public function testWidgetVisibilityFollowsTheOwnerNotTheViewer(): void
+    {
+        $owner = $this->findUser(self::USER_WITH_WORKOUTS);
+        $viewer = new User();
+        $viewer->hiddenWidgets = [DashboardWidgetEnum::TONNAGE->value];
+
+        $data = $this->builder->build($owner, $viewer, $this->unlockService->getStateForUser($owner));
+
+        self::assertTrue($data->visibleWidgets[DashboardWidgetEnum::TONNAGE->value]);
     }
 
     public function testRefusesADashboardWithoutAnyWorkout(): void
@@ -117,7 +141,7 @@ final class DashboardViewDataBuilderTest extends KernelTestCase
 
         $this->expectException(\LogicException::class);
 
-        $this->builder->build($user, $this->unlockService->getStateForUser($user));
+        $this->builder->build($user, $user, $this->unlockService->getStateForUser($user));
     }
 
     private function findUser(string $email): User

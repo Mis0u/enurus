@@ -1,6 +1,6 @@
 {#
     Variables attendues (toutes via `only`) :
-    - user                    : User
+    - gender                  : GenderEnum — genre du propriétaire des données, choisit la silhouette
     - muscleWeekMonthUnlocked : bool
     - sessionPrimary          : string[]
     - sessionSecondary        : string[]
@@ -71,10 +71,10 @@
         {# Silhouettes SVG avant + dos #}
         <div class="flex items-center justify-center gap-6 mb-4">
             <div class="w-[120px] [&_svg]:!h-auto [&_svg]:max-h-[240px]">
-                {% include 'SVG_BODY/' ~ user.gender.value ~ '/front.html.twig' only %}
+                {% include 'SVG_BODY/' ~ gender.value ~ '/front.html.twig' only %}
             </div>
             <div class="w-[120px] [&_svg]:!h-auto [&_svg]:max-h-[240px]">
-                {% include 'SVG_BODY/' ~ user.gender.value ~ '/back.html.twig' only %}
+                {% include 'SVG_BODY/' ~ gender.value ~ '/back.html.twig' only %}
             </div>
         </div>
 

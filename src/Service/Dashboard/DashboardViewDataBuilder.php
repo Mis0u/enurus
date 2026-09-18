@@ -11,9 +11,10 @@ use App\Service\Goal\GoalCardFormatter;
 use App\Service\Goal\GoalProgress;
 
 /**
- * Calcule le dashboard d'un utilisateur donné (`$subject`), indépendamment de qui le consulte :
- * réutilisable pour afficher le dashboard d'un autre utilisateur. À n'appeler que si
- * `$dashboardState->workoutCount` est non nul — un dashboard vide a sa propre vue.
+ * Calcule le dashboard d'un utilisateur (`$subject`) tel que le lit `$viewer` : les données et les
+ * widgets visibles sont ceux du propriétaire, mais l'unité de poids et la langue des libellés
+ * dépendent de celui qui regarde. Pour son propre dashboard, les deux sont le même utilisateur.
+ * À n'appeler que si `$dashboardState->workoutCount` est non nul — un dashboard vide a sa propre vue.
  */
 final readonly class DashboardViewDataBuilder
 {
@@ -31,7 +32,7 @@ final readonly class DashboardViewDataBuilder
     ) {
     }
 
-    public function build(User $subject, DashboardState $dashboardState): DashboardViewData
+    public function build(User $subject, User $viewer, DashboardState $dashboardState): DashboardViewData
     {
         $periods = $this->resolvePeriods($subject);
         $dayIds = $this->workoutStatsRepository->findIdsByUserAndDateRange($subject, $periods->day->start, $periods->day->end);
@@ -42,10 +43,10 @@ final readonly class DashboardViewDataBuilder
             $dashboardState,
             $this->sessionStatsBuilder->build($subject, $periods, \count($dayIds)),
             $this->muscleViewBuilder->build($subject, $periods, $dayIds, $dashboardState->muscleWeekMonthUnlocked),
-            $this->tonnageService->getData($subject),
+            $this->tonnageService->getData($subject, $viewer),
             $dashboardState->regularityUnlocked ? $this->regularityService->getData($subject) : null,
-            $this->formatGoalCards($goalState->current, $subject),
-            $this->formatGoalCards($goalState->achieved, $subject),
+            $this->formatGoalCards($goalState->current, $viewer),
+            $this->formatGoalCards($goalState->achieved, $viewer),
             $visibleWidgets,
             $this->hasNoVisibleContent($visibleWidgets, $dashboardState),
         );
@@ -104,10 +105,10 @@ final readonly class DashboardViewDataBuilder
      * @param array<GoalProgress> $progressList
      * @return array<array<string, mixed>>
      */
-    private function formatGoalCards(array $progressList, User $subject): array
+    private function formatGoalCards(array $progressList, User $viewer): array
     {
         return array_map(
-            fn (GoalProgress $progress): array => $this->goalCardFormatter->format($progress, $subject),
+            fn (GoalProgress $progress): array => $this->goalCardFormatter->format($progress, $viewer),
             $progressList,
         );
     }

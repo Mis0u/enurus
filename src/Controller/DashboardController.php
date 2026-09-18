@@ -51,27 +51,11 @@ final class DashboardController extends AbstractController
             ]);
         }
 
-        $data = $this->viewDataBuilder->build($user, $dashboardState);
+        $data = $this->viewDataBuilder->build($user, $user, $dashboardState);
 
         return $this->render('dashboard/dashboard.html.twig', [
             'user' => $user,
-            'dashboardState' => $data->dashboardState,
-            'sessionStats' => $data->sessionStats,
-            'tonnageData' => $data->tonnageData,
-            'sessionPrimary' => $data->muscles->session->primary,
-            'sessionSecondary' => $data->muscles->session->secondary,
-            'weekPrimary' => $data->muscles->week->primary,
-            'weekSecondary' => $data->muscles->week->secondary,
-            'monthPrimary' => $data->muscles->month->primary,
-            'monthSecondary' => $data->muscles->month->secondary,
-            'sessionBars' => $data->muscles->session->bars,
-            'weekBars' => $data->muscles->week->bars,
-            'monthBars' => $data->muscles->month->bars,
-            'regularityData' => $data->regularityData,
-            'goalCurrentCards' => $data->goalCurrentCards,
-            'goalAchievedCards' => $data->goalAchievedCards,
-            'visibleWidgets' => $data->visibleWidgets,
-            'hasNoVisibleContent' => $data->hasNoVisibleContent,
+            'data' => $data,
         ]);
     }
 }
