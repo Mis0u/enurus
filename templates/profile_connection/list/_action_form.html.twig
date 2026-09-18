@@ -1,0 +1,17 @@
+{#
+    Bouton d'action (POST + jeton CSRF) d'une demande ou d'une connexion.
+    Variables attendues (toutes via `only`) :
+    - url       : string — route de l'action
+    - tokenId   : string — identifiant du jeton CSRF, celui attendu par le controller
+    - label     : string — texte visible du bouton
+    - ariaLabel : string — libellé complet pour les lecteurs d'écran (précise la personne concernée)
+    - variant   : 'primary'|'secondary'
+#}
+{% set button_classes = {
+    primary: 'inline-flex items-center justify-center px-4 py-2 rounded-[10px] text-[13px] font-semibold text-white bg-gradient-to-br from-rose-ft to-red-600 shadow-[0_4px_15px_rgba(244,63,94,0.3)] hover:-translate-y-px transition-all duration-200 whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-ft',
+    secondary: 'inline-flex items-center justify-center px-4 py-2 rounded-[10px] text-[13px] font-medium text-[#f0f4ff] bg-white/[0.04] border border-white/[0.12] hover:bg-white/[0.08] transition-ft whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-ft',
+} %}
+<form method="post" action="{{ url }}">
+    <input type="hidden" name="_token" value="{{ csrf_token(tokenId) }}">
+    <button type="submit" aria-label="{{ ariaLabel }}" class="{{ button_classes[variant] }}">{{ label }}</button>
+</form>

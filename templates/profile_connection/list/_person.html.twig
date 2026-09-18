@@ -1,0 +1,18 @@
+{#
+    Avatar et alias d'une personne.
+    Variables attendues (toutes via `only`) :
+    - person : User
+#}
+<div class="flex items-center gap-3 min-w-0">
+    <div class="w-10 h-10 shrink-0 rounded-full bg-gradient-to-br from-rose-ft to-cyan-ft flex items-center justify-center font-rajdhani font-bold text-[15px] border-2 border-rose-ft overflow-hidden">
+        {% if person.avatarPath %}
+            <img src="{{ person.avatarPath|storage_url }}"
+                 alt=""
+                 crossorigin="anonymous"
+                 class="w-full h-full object-cover">
+        {% else %}
+            <span aria-hidden="true">{{ person.nickname|formatInitials }}</span>
+        {% endif %}
+    </div>
+    <span class="text-[14px] font-medium text-[#f0f4ff] truncate">{{ person.nickname }}</span>
+</div>

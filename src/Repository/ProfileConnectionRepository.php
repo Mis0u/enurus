@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Entity\ProfileConnection;
 use App\Entity\User;
+use App\Enum\Entity\ProfileConnection\ProfileConnectionStatusEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -34,5 +35,42 @@ class ProfileConnectionRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * Demandes en attente et connexions acceptées où l'utilisateur est l'une des deux parties. Les
+     * refusées et les révoquées ne sont pas listées : elles ne servent qu'au délai avant une
+     * nouvelle demande. Les deux utilisateurs sont chargés avec la requête (jointures `ManyToOne`,
+     * sans effet sur le nombre de lignes) pour ne déclencher aucune requête supplémentaire à
+     * l'affichage.
+     *
+     * @return list<ProfileConnection>
+     */
+    public function findActiveInvolving(User $user): array
+    {
+        /** @var list<ProfileConnection> */
+        return $this->createQueryBuilder('c')
+            ->addSelect('requester', 'addressee')
+            ->join('c.requester', 'requester')
+            ->join('c.addressee', 'addressee')
+            ->andWhere('c.requester = :user OR c.addressee = :user')
+            ->andWhere('c.status IN (:statuses)')
+            ->setParameter('user', $user)
+            ->setParameter('statuses', [ProfileConnectionStatusEnum::PENDING, ProfileConnectionStatusEnum::ACCEPTED])
+            ->orderBy('c.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countPendingReceivedBy(User $user): int
+    {
+        return (int) $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->andWhere('c.addressee = :user')
+            ->andWhere('c.status = :pending')
+            ->setParameter('user', $user)
+            ->setParameter('pending', ProfileConnectionStatusEnum::PENDING)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

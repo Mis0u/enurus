@@ -69,6 +69,7 @@ contact:
         subject: "Willkommen bei {brand} 🎉"
 
 dashboard:
+    connections: Verbindungen
     contact: Kontakt
     empty_widgets:
         cta: Widgets verwalten
@@ -385,6 +386,50 @@ profile_connection:
         no_workout: "{nickname} hat noch kein Training erstellt"
         read_only: "Nur Lesezugriff"
         title: "Übersicht von {nickname}"
+    error:
+        already_connected: "Ihr seid bereits verbunden."
+        already_pending: "Mit dieser Person ist bereits eine Anfrage offen."
+        cooldown_active: "Eine frühere Verbindung mit dieser Person wurde kürzlich beendet: Vor einer neuen Anfrage gilt eine Wartezeit von {days, plural, one {# Tag} other {# Tagen}}."
+        invalid_query: "Ungültige Eingabe: Verwende das Format Alias#CODE."
+        invalid_transition: "Diese Aktion ist nicht mehr möglich: Die Anfrage wurde bereits bearbeitet."
+        not_found: "Kein Profil gefunden. Prüfe den Alias und den Code."
+        not_searchable: "Kein Profil gefunden. Prüfe den Alias und den Code."
+        self_request: "Du kannst dich nicht selbst hinzufügen."
+    flash:
+        accepted: "Verbindung mit {nickname} hergestellt."
+        cancelled: "Anfrage an {nickname} zurückgezogen."
+        declined: "Anfrage von {nickname} abgelehnt."
+        requested: "Anfrage an {nickname} gesendet."
+        revoked: "Verbindung mit {nickname} entfernt."
+    list:
+        action:
+            accept: "Annehmen"
+            accept_for: "Anfrage von {nickname} annehmen"
+            cancel: "Anfrage zurückziehen"
+            cancel_for: "Anfrage an {nickname} zurückziehen"
+            decline: "Ablehnen"
+            decline_for: "Anfrage von {nickname} ablehnen"
+            revoke: "Entfernen"
+            revoke_for: "Verbindung mit {nickname} entfernen"
+            view: "Übersicht ansehen"
+            view_for: "Übersicht von {nickname} ansehen"
+        connections:
+            empty: "Du hast noch keine Verbindung."
+            title: "Meine Verbindungen"
+        intro: "Sobald eine Anfrage angenommen ist, seht ihr jeweils die Übersicht des anderen."
+        received:
+            title: "Erhaltene Anfragen"
+        request:
+            help: "Gib den Alias gefolgt vom Freigabecode der Person ein, zum Beispiel Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "Misou#A7K2XM"
+            settings_link: "Meine Einstellungen öffnen"
+            sharing_hint: "Damit andere dich finden können, aktiviere die Profilfreigabe in deinen Einstellungen."
+            submit: "Anfrage senden"
+            title: "Verbindung hinzufügen"
+        sent:
+            title: "Gesendete Anfragen"
+        title: "Meine Verbindungen"
 
 registration:
     account_created: Dein Konto ist erstellt und einsatzbereit

@@ -69,6 +69,7 @@ contact:
         subject: "Bienvenue sur {brand} 🎉"
 
 dashboard:
+    connections: Connexions
     contact: Contact
     empty_widgets:
         cta: Gérer mes widgets
@@ -385,6 +386,50 @@ profile_connection:
         no_workout: "{nickname} n'a pas encore créé de séance"
         read_only: "Lecture seule"
         title: "Tableau de bord de {nickname}"
+    error:
+        already_connected: "Vous êtes déjà connectés."
+        already_pending: "Une demande est déjà en attente avec cette personne."
+        cooldown_active: "Une connexion précédente avec cette personne s'est terminée récemment : un délai de {days, plural, one {# jour} other {# jours}} s'applique avant une nouvelle demande."
+        invalid_query: "Saisie invalide : utilise le format Alias#CODE."
+        invalid_transition: "Cette action n'est plus possible : la demande a déjà été traitée."
+        not_found: "Aucun profil trouvé. Vérifie l'alias et le code."
+        not_searchable: "Aucun profil trouvé. Vérifie l'alias et le code."
+        self_request: "Tu ne peux pas t'ajouter toi-même."
+    flash:
+        accepted: "Connexion établie avec {nickname}."
+        cancelled: "Demande à {nickname} annulée."
+        declined: "Demande de {nickname} refusée."
+        requested: "Demande envoyée à {nickname}."
+        revoked: "Connexion avec {nickname} retirée."
+    list:
+        action:
+            accept: "Accepter"
+            accept_for: "Accepter la demande de {nickname}"
+            cancel: "Annuler la demande"
+            cancel_for: "Annuler la demande à {nickname}"
+            decline: "Refuser"
+            decline_for: "Refuser la demande de {nickname}"
+            revoke: "Retirer"
+            revoke_for: "Retirer la connexion avec {nickname}"
+            view: "Voir le dashboard"
+            view_for: "Voir le dashboard de {nickname}"
+        connections:
+            empty: "Tu n'as pas encore de connexion."
+            title: "Mes connexions"
+        intro: "Une fois une demande acceptée, vous voyez chacun le dashboard de l'autre."
+        received:
+            title: "Demandes reçues"
+        request:
+            help: "Saisis l'alias suivi du code de partage de la personne, par exemple Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "Misou#A7K2XM"
+            settings_link: "Ouvrir mes réglages"
+            sharing_hint: "Pour que d'autres puissent te trouver, active le partage de ton profil dans tes réglages."
+            submit: "Envoyer la demande"
+            title: "Ajouter une connexion"
+        sent:
+            title: "Demandes envoyées"
+        title: "Mes connexions"
 
 registration:
     account_created: Ton compte est créé et prêt à l'emploi

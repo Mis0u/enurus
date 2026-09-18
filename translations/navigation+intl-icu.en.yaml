@@ -69,6 +69,7 @@ contact:
         subject: "Welcome to {brand} 🎉"
 
 dashboard:
+    connections: Connections
     contact: Contact
     empty_widgets:
         cta: Manage my widgets
@@ -385,6 +386,50 @@ profile_connection:
         no_workout: "{nickname} hasn't created a workout yet"
         read_only: "Read only"
         title: "{nickname}'s dashboard"
+    error:
+        already_connected: "You are already connected."
+        already_pending: "A request is already pending with this person."
+        cooldown_active: "A previous connection with this person ended recently: a delay of {days, plural, one {# day} other {# days}} applies before a new request."
+        invalid_query: "Invalid input: use the Alias#CODE format."
+        invalid_transition: "This action is no longer possible: the request has already been handled."
+        not_found: "No profile found. Check the alias and the code."
+        not_searchable: "No profile found. Check the alias and the code."
+        self_request: "You can't add yourself."
+    flash:
+        accepted: "Connection established with {nickname}."
+        cancelled: "Request to {nickname} cancelled."
+        declined: "Request from {nickname} declined."
+        requested: "Request sent to {nickname}."
+        revoked: "Connection with {nickname} removed."
+    list:
+        action:
+            accept: "Accept"
+            accept_for: "Accept the request from {nickname}"
+            cancel: "Cancel request"
+            cancel_for: "Cancel the request to {nickname}"
+            decline: "Decline"
+            decline_for: "Decline the request from {nickname}"
+            revoke: "Remove"
+            revoke_for: "Remove the connection with {nickname}"
+            view: "View dashboard"
+            view_for: "View {nickname}'s dashboard"
+        connections:
+            empty: "You don't have any connection yet."
+            title: "My connections"
+        intro: "Once a request is accepted, you each see the other's dashboard."
+        received:
+            title: "Requests received"
+        request:
+            help: "Enter the alias followed by the person's share code, for example Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "Misou#A7K2XM"
+            settings_link: "Open my settings"
+            sharing_hint: "To let others find you, turn on profile sharing in your settings."
+            submit: "Send request"
+            title: "Add a connection"
+        sent:
+            title: "Requests sent"
+        title: "My connections"
 
 registration:
     account_created: Your account is created and ready to go

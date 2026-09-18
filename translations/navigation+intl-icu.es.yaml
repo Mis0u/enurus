@@ -69,6 +69,7 @@ contact:
         subject: "Bienvenido a {brand} 🎉"
 
 dashboard:
+    connections: Conexiones
     contact: Contacto
     empty_widgets:
         cta: Gestionar mis widgets
@@ -385,6 +386,50 @@ profile_connection:
         no_workout: "{nickname} aún no ha creado ningún entrenamiento"
         read_only: "Solo lectura"
         title: "Panel de {nickname}"
+    error:
+        already_connected: "Ya estáis conectados."
+        already_pending: "Ya hay una solicitud pendiente con esta persona."
+        cooldown_active: "Una conexión anterior con esta persona terminó hace poco: se aplica un plazo de {days, plural, one {# día} other {# días}} antes de una nueva solicitud."
+        invalid_query: "Entrada no válida: usa el formato Alias#CODE."
+        invalid_transition: "Esta acción ya no es posible: la solicitud ya se ha tramitado."
+        not_found: "No se ha encontrado ningún perfil. Comprueba el alias y el código."
+        not_searchable: "No se ha encontrado ningún perfil. Comprueba el alias y el código."
+        self_request: "No puedes añadirte a ti mismo."
+    flash:
+        accepted: "Conexión establecida con {nickname}."
+        cancelled: "Solicitud a {nickname} cancelada."
+        declined: "Solicitud de {nickname} rechazada."
+        requested: "Solicitud enviada a {nickname}."
+        revoked: "Conexión con {nickname} eliminada."
+    list:
+        action:
+            accept: "Aceptar"
+            accept_for: "Aceptar la solicitud de {nickname}"
+            cancel: "Cancelar solicitud"
+            cancel_for: "Cancelar la solicitud a {nickname}"
+            decline: "Rechazar"
+            decline_for: "Rechazar la solicitud de {nickname}"
+            revoke: "Eliminar"
+            revoke_for: "Eliminar la conexión con {nickname}"
+            view: "Ver el panel"
+            view_for: "Ver el panel de {nickname}"
+        connections:
+            empty: "Todavía no tienes ninguna conexión."
+            title: "Mis conexiones"
+        intro: "Una vez aceptada una solicitud, cada uno ve el panel del otro."
+        received:
+            title: "Solicitudes recibidas"
+        request:
+            help: "Introduce el alias seguido del código para compartir de la persona, por ejemplo Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "Misou#A7K2XM"
+            settings_link: "Abrir mis ajustes"
+            sharing_hint: "Para que otros puedan encontrarte, activa el uso compartido del perfil en tus ajustes."
+            submit: "Enviar solicitud"
+            title: "Añadir una conexión"
+        sent:
+            title: "Solicitudes enviadas"
+        title: "Mis conexiones"
 
 registration:
     account_created: Tu cuenta está creada y lista para usar

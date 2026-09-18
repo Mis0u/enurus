@@ -69,6 +69,7 @@ contact:
         subject: "Witaj w {brand} 🎉"
 
 dashboard:
+    connections: Połączenia
     contact: Kontakt
     empty_widgets:
         cta: Zarządzaj widżetami
@@ -389,6 +390,50 @@ profile_connection:
         no_workout: "{nickname} nie ma jeszcze żadnego treningu"
         read_only: "Tylko do odczytu"
         title: "Panel użytkownika {nickname}"
+    error:
+        already_connected: "Jesteście już połączeni."
+        already_pending: "Z tą osobą oczekuje już prośba."
+        cooldown_active: "Poprzednie połączenie z tą osobą zakończyło się niedawno: przed nową prośbą obowiązuje okres oczekiwania wynoszący {days, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}}."
+        invalid_query: "Nieprawidłowe dane: użyj formatu Alias#CODE."
+        invalid_transition: "Ta akcja nie jest już możliwa: prośba została już rozpatrzona."
+        not_found: "Nie znaleziono profilu. Sprawdź alias i kod."
+        not_searchable: "Nie znaleziono profilu. Sprawdź alias i kod."
+        self_request: "Nie możesz dodać samego siebie."
+    flash:
+        accepted: "Nawiązano połączenie z {nickname}."
+        cancelled: "Prośba do {nickname} anulowana."
+        declined: "Prośba od {nickname} odrzucona."
+        requested: "Wysłano prośbę do {nickname}."
+        revoked: "Połączenie z {nickname} usunięte."
+    list:
+        action:
+            accept: "Akceptuj"
+            accept_for: "Zaakceptuj prośbę od {nickname}"
+            cancel: "Anuluj prośbę"
+            cancel_for: "Anuluj prośbę do {nickname}"
+            decline: "Odrzuć"
+            decline_for: "Odrzuć prośbę od {nickname}"
+            revoke: "Usuń"
+            revoke_for: "Usuń połączenie z {nickname}"
+            view: "Zobacz panel"
+            view_for: "Zobacz panel użytkownika {nickname}"
+        connections:
+            empty: "Nie masz jeszcze żadnych połączeń."
+            title: "Moje połączenia"
+        intro: "Po zaakceptowaniu prośby każdy widzi panel drugiej osoby."
+        received:
+            title: "Otrzymane prośby"
+        request:
+            help: "Wpisz alias, a po nim kod udostępniania danej osoby, na przykład Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "Misou#A7K2XM"
+            settings_link: "Otwórz moje ustawienia"
+            sharing_hint: "Aby inni mogli Cię znaleźć, włącz udostępnianie profilu w ustawieniach."
+            submit: "Wyślij prośbę"
+            title: "Dodaj połączenie"
+        sent:
+            title: "Wysłane prośby"
+        title: "Moje połączenia"
 
 registration:
     account_created: Twoje konto jest utworzone i gotowe do użycia

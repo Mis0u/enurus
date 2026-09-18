@@ -83,6 +83,49 @@ final class ProfileConnectionVoterTest extends TestCase
         self::assertSame(Voter::ACCESS_ABSTAIN, $this->voter->vote($this->tokenFor(new User()), new User(), [ProfileConnectionVoter::VIEW]));
     }
 
+    public function testOnlyTheAddresseeCanRespondToARequest(): void
+    {
+        $connection = $this->createConnection($requester = new User(), $addressee = new User(), ProfileConnectionStatusEnum::PENDING);
+
+        self::assertSame(Voter::ACCESS_GRANTED, $this->vote($addressee, $connection, ProfileConnectionVoter::RESPOND));
+        self::assertSame(Voter::ACCESS_DENIED, $this->vote($requester, $connection, ProfileConnectionVoter::RESPOND));
+        self::assertSame(Voter::ACCESS_DENIED, $this->vote(new User(), $connection, ProfileConnectionVoter::RESPOND));
+    }
+
+    public function testOnlyTheRequesterCanCancelARequest(): void
+    {
+        $connection = $this->createConnection($requester = new User(), $addressee = new User(), ProfileConnectionStatusEnum::PENDING);
+
+        self::assertSame(Voter::ACCESS_GRANTED, $this->vote($requester, $connection, ProfileConnectionVoter::CANCEL));
+        self::assertSame(Voter::ACCESS_DENIED, $this->vote($addressee, $connection, ProfileConnectionVoter::CANCEL));
+        self::assertSame(Voter::ACCESS_DENIED, $this->vote(new User(), $connection, ProfileConnectionVoter::CANCEL));
+    }
+
+    public function testEitherPartyCanRevokeButNoStranger(): void
+    {
+        $connection = $this->createConnection($requester = new User(), $addressee = new User(), ProfileConnectionStatusEnum::ACCEPTED);
+
+        self::assertSame(Voter::ACCESS_GRANTED, $this->vote($requester, $connection, ProfileConnectionVoter::REVOKE));
+        self::assertSame(Voter::ACCESS_GRANTED, $this->vote($addressee, $connection, ProfileConnectionVoter::REVOKE));
+        self::assertSame(Voter::ACCESS_DENIED, $this->vote(new User(), $connection, ProfileConnectionVoter::REVOKE));
+    }
+
+    public function testAnonymousTokenCannotRespondCancelOrRevoke(): void
+    {
+        $token = $this->createStub(TokenInterface::class);
+        $token->method('getUser')->willReturn(null);
+        $connection = $this->createConnection(new User(), new User(), ProfileConnectionStatusEnum::PENDING);
+
+        foreach ([ProfileConnectionVoter::RESPOND, ProfileConnectionVoter::CANCEL, ProfileConnectionVoter::REVOKE] as $attribute) {
+            self::assertSame(Voter::ACCESS_DENIED, $this->voter->vote($token, $connection, [$attribute]));
+        }
+    }
+
+    private function vote(User $user, ProfileConnection $connection, string $attribute): int
+    {
+        return $this->voter->vote($this->tokenFor($user), $connection, [$attribute]);
+    }
+
     private function voteView(User $user, ProfileConnection $connection): int
     {
         return $this->voter->vote($this->tokenFor($user), $connection, [ProfileConnectionVoter::VIEW]);

@@ -69,6 +69,7 @@ contact:
         subject: "Bem-vindo ao {brand} 🎉"
 
 dashboard:
+    connections: Conexões
     contact: Contacto
     empty_widgets:
         cta: Gerir os meus widgets
@@ -385,6 +386,50 @@ profile_connection:
         no_workout: "{nickname} ainda não criou nenhum treino"
         read_only: "Somente leitura"
         title: "Painel de {nickname}"
+    error:
+        already_connected: "Já estão conectados."
+        already_pending: "Já existe um pedido pendente com esta pessoa."
+        cooldown_active: "Uma conexão anterior com esta pessoa terminou recentemente: aplica-se um prazo de {days, plural, one {# dia} other {# dias}} antes de um novo pedido."
+        invalid_query: "Entrada inválida: usa o formato Alias#CODE."
+        invalid_transition: "Esta ação já não é possível: o pedido já foi tratado."
+        not_found: "Nenhum perfil encontrado. Verifica o alias e o código."
+        not_searchable: "Nenhum perfil encontrado. Verifica o alias e o código."
+        self_request: "Não te podes adicionar a ti próprio."
+    flash:
+        accepted: "Conexão estabelecida com {nickname}."
+        cancelled: "Pedido a {nickname} cancelado."
+        declined: "Pedido de {nickname} recusado."
+        requested: "Pedido enviado a {nickname}."
+        revoked: "Conexão com {nickname} removida."
+    list:
+        action:
+            accept: "Aceitar"
+            accept_for: "Aceitar o pedido de {nickname}"
+            cancel: "Cancelar pedido"
+            cancel_for: "Cancelar o pedido a {nickname}"
+            decline: "Recusar"
+            decline_for: "Recusar o pedido de {nickname}"
+            revoke: "Remover"
+            revoke_for: "Remover a conexão com {nickname}"
+            view: "Ver o painel"
+            view_for: "Ver o painel de {nickname}"
+        connections:
+            empty: "Ainda não tens nenhuma conexão."
+            title: "As minhas conexões"
+        intro: "Depois de aceite um pedido, cada um vê o painel do outro."
+        received:
+            title: "Pedidos recebidos"
+        request:
+            help: "Introduz o alias seguido do código de partilha da pessoa, por exemplo Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "Misou#A7K2XM"
+            settings_link: "Abrir as minhas definições"
+            sharing_hint: "Para que outros te possam encontrar, ativa a partilha do perfil nas tuas definições."
+            submit: "Enviar pedido"
+            title: "Adicionar uma conexão"
+        sent:
+            title: "Pedidos enviados"
+        title: "As minhas conexões"
 
 registration:
     account_created: A tua conta está criada e pronta a usar

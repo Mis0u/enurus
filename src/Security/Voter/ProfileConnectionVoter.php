@@ -22,9 +22,32 @@ final class ProfileConnectionVoter extends Voter
      */
     public const string VIEW = 'PROFILE_CONNECTION_VIEW';
 
+    /**
+     * Accepter ou refuser : réservé au destinataire. L'état de la demande (encore en attente ?)
+     * n'est pas vérifié ici mais par `ProfileConnectionResponseService`.
+     */
+    public const string RESPOND = 'PROFILE_CONNECTION_RESPOND';
+
+    /**
+     * Retirer sa propre demande : réservé au demandeur.
+     */
+    public const string CANCEL = 'PROFILE_CONNECTION_CANCEL';
+
+    /**
+     * Mettre fin à une connexion : chacune des deux parties peut le faire.
+     */
+    public const string REVOKE = 'PROFILE_CONNECTION_REVOKE';
+
+    private const array SUPPORTED_ATTRIBUTES = [
+        self::VIEW,
+        self::RESPOND,
+        self::CANCEL,
+        self::REVOKE,
+    ];
+
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return self::VIEW === $attribute && $subject instanceof ProfileConnection;
+        return \in_array($attribute, self::SUPPORTED_ATTRIBUTES, true) && $subject instanceof ProfileConnection;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -35,6 +58,12 @@ final class ProfileConnectionVoter extends Voter
             return false;
         }
 
-        return ProfileConnectionStatusEnum::ACCEPTED === $subject->status && $subject->involves($user);
+        return match ($attribute) {
+            self::VIEW => ProfileConnectionStatusEnum::ACCEPTED === $subject->status && $subject->involves($user),
+            self::RESPOND => $subject->addressee === $user,
+            self::CANCEL => $subject->requester === $user,
+            self::REVOKE => $subject->involves($user),
+            default => false,
+        };
     }
 }

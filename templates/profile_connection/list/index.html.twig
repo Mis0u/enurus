@@ -1,0 +1,120 @@
+{#
+    Page « Mes connexions ».
+    Controller : ProfileConnectionListController (GET /{_locale}/connexions)
+
+    Variables passées par le controller :
+      - overview    : ProfileConnectionOverview (demandes reçues, demandes envoyées, connexions acceptées)
+      - requestForm : FormView (saisie Alias#CODE, envoyée à ProfileConnectionRequestController)
+#}
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block title %}{{ 'profile_connection.list.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        title: 'profile_connection.list.title'|trans({}, 'navigation'),
+        subtitle: app.user.nickname|formatInitials,
+    } only %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 overflow-y-auto p-4 max-md:pb-[160px] md:p-[24px_28px]">
+        <div class="mx-auto flex w-full max-w-3xl flex-col gap-5">
+
+            <p class="text-[13px] text-[#8b9bb4]">
+                {{ 'profile_connection.list.intro'|trans({}, 'navigation') }}
+            </p>
+
+            {% include 'profile_connection/list/_request_form.html.twig' with {
+                requestForm: requestForm,
+            } only %}
+
+            {% if overview.receivedRequests is not empty %}
+                <section class="flex flex-col gap-3" aria-labelledby="profile-connection-received-title">
+                    <h2 id="profile-connection-received-title" class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
+                        {{ 'profile_connection.list.received.title'|trans({}, 'navigation') }}
+                    </h2>
+                    <ul class="flex flex-col gap-3">
+                        {% for entry in overview.receivedRequests %}
+                            <li class="bg-bg-card border border-white/[0.07] rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+                                {% include 'profile_connection/list/_person.html.twig' with {person: entry.counterpart} only %}
+                                <div class="flex flex-wrap items-center gap-2">
+                                    {% include 'profile_connection/list/_action_form.html.twig' with {
+                                        url: path('app_profile_connection_accept', {id: entry.connection.id}),
+                                        tokenId: 'profile_connection_accept',
+                                        label: 'profile_connection.list.action.accept'|trans({}, 'navigation'),
+                                        ariaLabel: 'profile_connection.list.action.accept_for'|trans({nickname: entry.counterpart.nickname}, 'navigation'),
+                                        variant: 'primary',
+                                    } only %}
+                                    {% include 'profile_connection/list/_action_form.html.twig' with {
+                                        url: path('app_profile_connection_decline', {id: entry.connection.id}),
+                                        tokenId: 'profile_connection_decline',
+                                        label: 'profile_connection.list.action.decline'|trans({}, 'navigation'),
+                                        ariaLabel: 'profile_connection.list.action.decline_for'|trans({nickname: entry.counterpart.nickname}, 'navigation'),
+                                        variant: 'secondary',
+                                    } only %}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            {% endif %}
+
+            <section class="flex flex-col gap-3" aria-labelledby="profile-connection-connections-title">
+                <h2 id="profile-connection-connections-title" class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
+                    {{ 'profile_connection.list.connections.title'|trans({}, 'navigation') }}
+                </h2>
+                {% if overview.connections is empty %}
+                    <p class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] text-center text-[13px] text-[#8b9bb4]">
+                        {{ 'profile_connection.list.connections.empty'|trans({}, 'navigation') }}
+                    </p>
+                {% else %}
+                    <ul class="flex flex-col gap-3">
+                        {% for entry in overview.connections %}
+                            <li class="bg-bg-card border border-white/[0.07] rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+                                {% include 'profile_connection/list/_person.html.twig' with {person: entry.counterpart} only %}
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <a href="{{ path('app_profile_connection_dashboard', {id: entry.connection.id}) }}"
+                                       aria-label="{{ 'profile_connection.list.action.view_for'|trans({nickname: entry.counterpart.nickname}, 'navigation') }}"
+                                       class="inline-flex items-center justify-center px-4 py-2 rounded-[10px] text-[13px] font-semibold text-white bg-gradient-to-br from-rose-ft to-red-600 shadow-[0_4px_15px_rgba(244,63,94,0.3)] hover:-translate-y-px transition-all duration-200 whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-ft">
+                                        {{ 'profile_connection.list.action.view'|trans({}, 'navigation') }}
+                                    </a>
+                                    {% include 'profile_connection/list/_action_form.html.twig' with {
+                                        url: path('app_profile_connection_revoke', {id: entry.connection.id}),
+                                        tokenId: 'profile_connection_revoke',
+                                        label: 'profile_connection.list.action.revoke'|trans({}, 'navigation'),
+                                        ariaLabel: 'profile_connection.list.action.revoke_for'|trans({nickname: entry.counterpart.nickname}, 'navigation'),
+                                        variant: 'secondary',
+                                    } only %}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </section>
+
+            {% if overview.sentRequests is not empty %}
+                <section class="flex flex-col gap-3" aria-labelledby="profile-connection-sent-title">
+                    <h2 id="profile-connection-sent-title" class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
+                        {{ 'profile_connection.list.sent.title'|trans({}, 'navigation') }}
+                    </h2>
+                    <ul class="flex flex-col gap-3">
+                        {% for entry in overview.sentRequests %}
+                            <li class="bg-bg-card border border-white/[0.07] rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+                                {% include 'profile_connection/list/_person.html.twig' with {person: entry.counterpart} only %}
+                                {% include 'profile_connection/list/_action_form.html.twig' with {
+                                    url: path('app_profile_connection_cancel', {id: entry.connection.id}),
+                                    tokenId: 'profile_connection_cancel',
+                                    label: 'profile_connection.list.action.cancel'|trans({}, 'navigation'),
+                                    ariaLabel: 'profile_connection.list.action.cancel_for'|trans({nickname: entry.counterpart.nickname}, 'navigation'),
+                                    variant: 'secondary',
+                                } only %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

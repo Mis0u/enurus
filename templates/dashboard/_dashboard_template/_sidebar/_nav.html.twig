@@ -26,6 +26,15 @@
         menu="{{ 'dashboard.my_routines'|trans({}, 'navigation') }}"
         icon="repeat"
     />
+    {% set pending_connections_count = profile_connection_pending_count(app.user) %}
+    <twig:Navigation:Sidebar:NavigationItem
+        link="{{ path('app_profile_connection_list') }}"
+        route="app_profile_connection_list"
+        menu="{{ 'dashboard.connections'|trans({}, 'navigation') }}"
+        icon="add_people"
+        badge="{{ pending_connections_count > 0 }}"
+        totalNotification="{{ pending_connections_count }}"
+    />
 
     {% if not is_granted('ROLE_ADMIN') %}
         {% set unread_contact_count = contact_unread_count(app.user) %}

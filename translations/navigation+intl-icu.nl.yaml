@@ -69,6 +69,7 @@ contact:
         subject: "Welkom bij {brand} 🎉"
 
 dashboard:
+    connections: Verbindingen
     contact: Contact
     empty_widgets:
         cta: Mijn widgets beheren
@@ -385,6 +386,50 @@ profile_connection:
         no_workout: "{nickname} heeft nog geen training aangemaakt"
         read_only: "Alleen lezen"
         title: "Overzicht van {nickname}"
+    error:
+        already_connected: "Jullie zijn al verbonden."
+        already_pending: "Er staat al een verzoek open met deze persoon."
+        cooldown_active: "Een eerdere verbinding met deze persoon is onlangs beëindigd: er geldt een wachttijd van {days, plural, one {# dag} other {# dagen}} voor een nieuw verzoek."
+        invalid_query: "Ongeldige invoer: gebruik het formaat Alias#CODE."
+        invalid_transition: "Deze actie is niet meer mogelijk: het verzoek is al afgehandeld."
+        not_found: "Geen profiel gevonden. Controleer de alias en de code."
+        not_searchable: "Geen profiel gevonden. Controleer de alias en de code."
+        self_request: "Je kunt jezelf niet toevoegen."
+    flash:
+        accepted: "Verbinding met {nickname} tot stand gebracht."
+        cancelled: "Verzoek aan {nickname} geannuleerd."
+        declined: "Verzoek van {nickname} geweigerd."
+        requested: "Verzoek verzonden naar {nickname}."
+        revoked: "Verbinding met {nickname} verwijderd."
+    list:
+        action:
+            accept: "Accepteren"
+            accept_for: "Verzoek van {nickname} accepteren"
+            cancel: "Verzoek annuleren"
+            cancel_for: "Verzoek aan {nickname} annuleren"
+            decline: "Weigeren"
+            decline_for: "Verzoek van {nickname} weigeren"
+            revoke: "Verwijderen"
+            revoke_for: "Verbinding met {nickname} verwijderen"
+            view: "Overzicht bekijken"
+            view_for: "Overzicht van {nickname} bekijken"
+        connections:
+            empty: "Je hebt nog geen verbindingen."
+            title: "Mijn verbindingen"
+        intro: "Zodra een verzoek is geaccepteerd, zien jullie elkaars overzicht."
+        received:
+            title: "Ontvangen verzoeken"
+        request:
+            help: "Voer de alias in, gevolgd door de deelcode van de persoon, bijvoorbeeld Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "Misou#A7K2XM"
+            settings_link: "Mijn instellingen openen"
+            sharing_hint: "Zet profiel delen aan in je instellingen zodat anderen je kunnen vinden."
+            submit: "Verzoek versturen"
+            title: "Verbinding toevoegen"
+        sent:
+            title: "Verzonden verzoeken"
+        title: "Mijn verbindingen"
 
 registration:
     account_created: Je account is aangemaakt en klaar voor gebruik
