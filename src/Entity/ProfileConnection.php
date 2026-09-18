@@ -82,4 +82,22 @@ class ProfileConnection
             $this->respondedAt = $respondedAt;
         }
     }
+
+    public function involves(User $user): bool
+    {
+        return $this->requester === $user || $this->addressee === $user;
+    }
+
+    /**
+     * L'autre partie de la connexion — la connexion étant réciproque, peu importe qui a envoyé la
+     * demande.
+     */
+    public function counterpartOf(User $user): User
+    {
+        return match (true) {
+            $this->requester === $user => $this->addressee,
+            $this->addressee === $user => $this->requester,
+            default => throw new \LogicException('The user is not a party of this connection.'),
+        };
+    }
 }

@@ -7,6 +7,7 @@
         {% include 'dashboard/_dashboard_grid.html.twig' with {
             data: data,
             subject: user,
+            readOnly: false,
         } only %}
     </div>
 {% endblock %}

@@ -378,6 +378,14 @@ pagination:
     previous: Précédent
     results: Résultats
 
+profile_connection:
+    dashboard:
+        back: "Retour à mon tableau de bord"
+        no_widgets: "{nickname} a décidé de ne pas afficher de data"
+        no_workout: "{nickname} n'a pas encore créé de séance"
+        read_only: "Lecture seule"
+        title: "Tableau de bord de {nickname}"
+
 registration:
     account_created: Ton compte est créé et prêt à l'emploi
     confirm_email: Confirmation de ton email

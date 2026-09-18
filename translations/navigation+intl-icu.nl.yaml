@@ -378,6 +378,14 @@ pagination:
     previous: Vorige
     results: Resultaten
 
+profile_connection:
+    dashboard:
+        back: "Terug naar mijn overzicht"
+        no_widgets: "{nickname} heeft besloten geen gegevens te tonen"
+        no_workout: "{nickname} heeft nog geen training aangemaakt"
+        read_only: "Alleen lezen"
+        title: "Overzicht van {nickname}"
+
 registration:
     account_created: Je account is aangemaakt en klaar voor gebruik
     confirm_email: Bevestiging van je e-mail

@@ -378,6 +378,14 @@ pagination:
     previous: Previous
     results: Results
 
+profile_connection:
+    dashboard:
+        back: "Back to my dashboard"
+        no_widgets: "{nickname} has decided not to display any data"
+        no_workout: "{nickname} hasn't created a workout yet"
+        read_only: "Read only"
+        title: "{nickname}'s dashboard"
+
 registration:
     account_created: Your account is created and ready to go
     confirm_email: Email confirmation

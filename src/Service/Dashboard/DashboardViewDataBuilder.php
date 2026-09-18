@@ -38,6 +38,7 @@ final readonly class DashboardViewDataBuilder
         $dayIds = $this->workoutStatsRepository->findIdsByUserAndDateRange($subject, $periods->day->start, $periods->day->end);
         $goalState = $this->goalService->getStateForUser($subject);
         $visibleWidgets = $this->resolveVisibleWidgets($subject, $dashboardState);
+        $hasNoVisibleWidgets = ! \in_array(true, $visibleWidgets, true);
 
         return new DashboardViewData(
             $dashboardState,
@@ -48,7 +49,8 @@ final readonly class DashboardViewDataBuilder
             $this->formatGoalCards($goalState->current, $viewer),
             $this->formatGoalCards($goalState->achieved, $viewer),
             $visibleWidgets,
-            $this->hasNoVisibleContent($visibleWidgets, $dashboardState),
+            $hasNoVisibleWidgets,
+            $hasNoVisibleWidgets && $dashboardState->regularityUnlocked,
         );
     }
 
@@ -87,18 +89,6 @@ final readonly class DashboardViewDataBuilder
         }
 
         return $visibleWidgets;
-    }
-
-    /**
-     * Le placeholder "verrouillé" de Régularité occupe toujours de l'espace quand elle n'est pas
-     * encore débloquée — l'écran n'est réellement vide que si aucun widget débloqué n'est affiché
-     * ET que Régularité est débloquée (donc masquable, donc potentiellement masquée).
-     *
-     * @param array<string, bool> $visibleWidgets
-     */
-    private function hasNoVisibleContent(array $visibleWidgets, DashboardState $dashboardState): bool
-    {
-        return ! \in_array(true, $visibleWidgets, true) && $dashboardState->regularityUnlocked;
     }
 
     /**

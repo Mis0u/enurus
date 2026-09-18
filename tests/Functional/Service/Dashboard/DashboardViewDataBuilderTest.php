@@ -98,7 +98,29 @@ final class DashboardViewDataBuilderTest extends KernelTestCase
 
         $data = $this->builder->build($user, $user, $this->unlockService->getStateForUser($user));
 
+        self::assertTrue($data->hasNoVisibleWidgets);
         self::assertTrue($data->hasNoVisibleContent);
+    }
+
+    public function testHidingEveryWidgetWhileRegularityIsLockedLeavesTheLockedCardAsContent(): void
+    {
+        $user = $this->findUser(self::USER_WITH_WORKOUTS);
+        $user->hiddenWidgets = array_map(static fn (DashboardWidgetEnum $widget): string => $widget->value, DashboardWidgetEnum::cases());
+
+        $data = $this->builder->build($user, $user, new DashboardState(1));
+
+        self::assertTrue($data->hasNoVisibleWidgets);
+        self::assertFalse($data->hasNoVisibleContent);
+    }
+
+    public function testSomeVisibleWidgetMeansThereIsNoEmptyStateOfAnyKind(): void
+    {
+        $user = $this->findUser(self::USER_WITH_WORKOUTS);
+
+        $data = $this->builder->build($user, $user, $this->unlockService->getStateForUser($user));
+
+        self::assertFalse($data->hasNoVisibleWidgets);
+        self::assertFalse($data->hasNoVisibleContent);
     }
 
     public function testLockedWidgetsAreNotComputedFromTheStateGiven(): void

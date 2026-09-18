@@ -18,6 +18,10 @@ final readonly class DashboardViewData
      * @param array<array<string, mixed>>     $goalCurrentCards
      * @param array<array<string, mixed>>     $goalAchievedCards
      * @param array<string, bool>             $visibleWidgets    clé = DashboardWidgetEnum::value
+     * @param bool                            $hasNoVisibleWidgets  aucun widget n'est visible (masqués ou verrouillés)
+     * @param bool                            $hasNoVisibleContent  l'écran serait réellement vide : aucun widget visible ET
+     *                                                              Régularité débloquée — verrouillée, son placeholder
+     *                                                              occupe toujours de l'espace
      */
     public function __construct(
         public DashboardState $dashboardState,
@@ -28,6 +32,7 @@ final readonly class DashboardViewData
         public array $goalCurrentCards,
         public array $goalAchievedCards,
         public array $visibleWidgets,
+        public bool $hasNoVisibleWidgets,
         public bool $hasNoVisibleContent,
     ) {
     }

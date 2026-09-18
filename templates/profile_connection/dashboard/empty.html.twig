@@ -1,0 +1,22 @@
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block title %}{{ 'profile_connection.dashboard.title'|trans({nickname: subject.nickname}, 'navigation')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'profile_connection/dashboard/_banner.html.twig' with {
+        subject: subject,
+    } only %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 overflow-y-auto p-4 max-md:pb-[160px] md:p-[24px_28px]">
+        <div class="min-h-full flex items-center justify-center">
+            <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] flex flex-col items-center justify-center text-center gap-3 min-h-[180px] w-full max-w-md">
+                <span class="text-[32px] leading-none" aria-hidden="true">🫥</span>
+                <p class="text-[13px] text-[#8b9bb4]">
+                    {{ 'profile_connection.dashboard.no_workout'|trans({nickname: subject.nickname}, 'navigation') }}
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

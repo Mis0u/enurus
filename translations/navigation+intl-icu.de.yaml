@@ -378,6 +378,14 @@ pagination:
     previous: Zurück
     results: Ergebnisse
 
+profile_connection:
+    dashboard:
+        back: "Zurück zu meiner Übersicht"
+        no_widgets: "{nickname} hat entschieden, keine Daten anzuzeigen"
+        no_workout: "{nickname} hat noch kein Training erstellt"
+        read_only: "Nur Lesezugriff"
+        title: "Übersicht von {nickname}"
+
 registration:
     account_created: Dein Konto ist erstellt und einsatzbereit
     confirm_email: Bestätigung deiner E-Mail

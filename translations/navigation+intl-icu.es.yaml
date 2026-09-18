@@ -378,6 +378,14 @@ pagination:
     previous: Anterior
     results: Resultados
 
+profile_connection:
+    dashboard:
+        back: "Volver a mi panel"
+        no_widgets: "{nickname} ha decidido no mostrar ningún dato"
+        no_workout: "{nickname} aún no ha creado ningún entrenamiento"
+        read_only: "Solo lectura"
+        title: "Panel de {nickname}"
+
 registration:
     account_created: Tu cuenta está creada y lista para usar
     confirm_email: Confirmación de tu correo electrónico

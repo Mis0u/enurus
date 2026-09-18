@@ -378,6 +378,14 @@ pagination:
     previous: Precedente
     results: Risultati
 
+profile_connection:
+    dashboard:
+        back: "Torna al mio cruscotto"
+        no_widgets: "{nickname} ha deciso di non mostrare alcun dato"
+        no_workout: "{nickname} non ha ancora creato nessun allenamento"
+        read_only: "Sola lettura"
+        title: "Cruscotto di {nickname}"
+
 registration:
     account_created: Il tuo account è stato creato ed è pronto all'uso
     confirm_email: Conferma della tua email

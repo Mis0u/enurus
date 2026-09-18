@@ -2,6 +2,8 @@
     Variables attendues (toutes via `only`) :
     - goalCurrentCards  : array<array{exerciseId: string, exerciseName: string, currentLabel: string, targetLabel: string, percent: int}>
     - goalAchievedCards : array<array{exerciseId: string, exerciseName: string, currentLabel: string, targetLabel: string, percent: int, achievedAt: ?\DateTimeImmutable}>
+    - readOnly          : bool — dashboard d'une connexion : cartes sans lien, l'historique d'un exercice
+                          étant celui de l'utilisateur connecté, jamais du propriétaire des objectifs
 #}
 <div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
      data-controller="dashboard--goal">
@@ -39,15 +41,15 @@
             </p>
         {% endif %}
         {% for card in goalCurrentCards %}
-            <a href="{{ path('app_exercise_history', {id: card.exerciseId}) }}" class="block bg-white/[0.03] border border-white/[0.07] rounded-xl p-3 hover:border-white/[0.14] transition-ft">
-                <div class="flex items-center justify-between mb-1.5 gap-2">
-                    <span class="text-[13px] font-medium text-[#f0f4ff] truncate">{{ card.exerciseName }}</span>
-                    <span class="text-[12px] text-[#8b9bb4] shrink-0">{{ card.currentLabel }} / {{ card.targetLabel }}</span>
+            {% if readOnly %}
+                <div class="block bg-white/[0.03] border border-white/[0.07] rounded-xl p-3">
+                    {% include 'dashboard/_widgets/_goal_current_card.html.twig' with {card: card} only %}
                 </div>
-                <div class="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
-                    <div class="h-full rounded-full bg-rose-ft" style="width: {{ card.percent }}%;"></div>
-                </div>
-            </a>
+            {% else %}
+                <a href="{{ path('app_exercise_history', {id: card.exerciseId}) }}" class="block bg-white/[0.03] border border-white/[0.07] rounded-xl p-3 hover:border-white/[0.14] transition-ft">
+                    {% include 'dashboard/_widgets/_goal_current_card.html.twig' with {card: card} only %}
+                </a>
+            {% endif %}
         {% endfor %}
     </div>
 
@@ -58,17 +60,15 @@
             </p>
         {% endif %}
         {% for card in goalAchievedCards %}
-            <a href="{{ path('app_exercise_history', {id: card.exerciseId}) }}" class="block bg-cyan-ft/[0.06] border border-cyan-ft/[0.15] rounded-xl p-3 hover:border-cyan-ft/[0.3] transition-ft">
-                <div class="flex items-center justify-between gap-2">
-                    <span class="text-[13px] font-medium text-[#f0f4ff] truncate">🏆 {{ card.exerciseName }}</span>
-                    <span class="text-[12px] text-cyan-ft shrink-0">{{ card.targetLabel }}</span>
+            {% if readOnly %}
+                <div class="block bg-cyan-ft/[0.06] border border-cyan-ft/[0.15] rounded-xl p-3">
+                    {% include 'dashboard/_widgets/_goal_achieved_card.html.twig' with {card: card} only %}
                 </div>
-                {% if card.achievedAt is not null %}
-                    <p class="text-[12px] text-[#8b9bb4] mt-1">
-                        {{ 'dashboard.widget.goal.achieved_on'|trans({date: card.achievedAt|format_date('medium', locale=app.request.locale)}, 'navigation') }}
-                    </p>
-                {% endif %}
-            </a>
+            {% else %}
+                <a href="{{ path('app_exercise_history', {id: card.exerciseId}) }}" class="block bg-cyan-ft/[0.06] border border-cyan-ft/[0.15] rounded-xl p-3 hover:border-cyan-ft/[0.3] transition-ft">
+                    {% include 'dashboard/_widgets/_goal_achieved_card.html.twig' with {card: card} only %}
+                </a>
+            {% endif %}
         {% endfor %}
     </div>
 </div>
