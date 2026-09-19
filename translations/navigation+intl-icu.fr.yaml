@@ -394,6 +394,7 @@ profile_connection:
         invalid_transition: "Cette action n'est plus possible : la demande a déjà été traitée."
         not_found: "Aucun profil trouvé. Vérifie l'alias et le code."
         not_searchable: "Aucun profil trouvé. Vérifie l'alias et le code."
+        requester_not_sharing: "Active le partage de ton profil pour pouvoir envoyer une demande de connexion."
         self_request: "Tu ne peux pas t'ajouter toi-même."
     flash:
         accepted: "Connexion établie avec {nickname}."
@@ -423,6 +424,7 @@ profile_connection:
             help: "Saisis l'alias suivi du code de partage de la personne, par exemple Misou#A7K2XM."
             label: "Alias#CODE"
             placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Active le partage de ton profil ci-dessus pour pouvoir envoyer une demande de connexion."
             submit: "Envoyer la demande"
             title: "Ajouter une connexion"
         sent:
@@ -433,6 +435,7 @@ profile_connection:
             explanation: Rends ton profil trouvable par d'autres utilisateurs grâce à un code unique, pour partager vos tableaux de bord.
             feedback:
                 copied: Code copié
+                copy_error: "La copie a échoué, sélectionne et copie le code manuellement"
                 disabled: Partage de profil désactivé
                 enabled: Partage de profil activé
                 regenerated: Nouveau code généré

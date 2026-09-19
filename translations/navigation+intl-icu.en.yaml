@@ -394,6 +394,7 @@ profile_connection:
         invalid_transition: "This action is no longer possible: the request has already been handled."
         not_found: "No profile found. Check the alias and the code."
         not_searchable: "No profile found. Check the alias and the code."
+        requester_not_sharing: "Turn on profile sharing to be able to send a connection request."
         self_request: "You can't add yourself."
     flash:
         accepted: "Connection established with {nickname}."
@@ -423,6 +424,7 @@ profile_connection:
             help: "Enter the alias followed by the person's share code, for example Misou#A7K2XM."
             label: "Alias#CODE"
             placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Turn on profile sharing above to be able to send a connection request."
             submit: "Send request"
             title: "Add a connection"
         sent:
@@ -433,6 +435,7 @@ profile_connection:
             explanation: Make your profile discoverable by other users through a unique code, to share your dashboards with each other.
             feedback:
                 copied: Code copied
+                copy_error: "Copy failed, select and copy the code manually"
                 disabled: Profile sharing disabled
                 enabled: Profile sharing enabled
                 regenerated: New code generated

@@ -36,6 +36,7 @@
 
             {% include 'profile_connection/list/_request_form.html.twig' with {
                 requestForm: requestForm,
+                isDiscoverable: isDiscoverable,
             } only %}
 
             {% if overview.receivedRequests is not empty %}

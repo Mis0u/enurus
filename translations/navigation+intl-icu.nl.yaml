@@ -394,6 +394,7 @@ profile_connection:
         invalid_transition: "Deze actie is niet meer mogelijk: het verzoek is al afgehandeld."
         not_found: "Geen profiel gevonden. Controleer de alias en de code."
         not_searchable: "Geen profiel gevonden. Controleer de alias en de code."
+        requester_not_sharing: "Zet profiel delen aan om een verbindingsverzoek te kunnen versturen."
         self_request: "Je kunt jezelf niet toevoegen."
     flash:
         accepted: "Verbinding met {nickname} tot stand gebracht."
@@ -423,6 +424,7 @@ profile_connection:
             help: "Voer de alias in, gevolgd door de deelcode van de persoon, bijvoorbeeld Misou#A7K2XM."
             label: "Alias#CODE"
             placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Zet hierboven profiel delen aan om een verbindingsverzoek te kunnen versturen."
             submit: "Verzoek versturen"
             title: "Verbinding toevoegen"
         sent:
@@ -433,6 +435,7 @@ profile_connection:
             explanation: Maak je profiel vindbaar voor andere gebruikers via een unieke code, om jullie dashboards te delen.
             feedback:
                 copied: Code gekopieerd
+                copy_error: "Kopiëren mislukt, selecteer en kopieer de code handmatig"
                 disabled: Profiel delen uitgeschakeld
                 enabled: Profiel delen ingeschakeld
                 regenerated: Nieuwe code gegenereerd

@@ -73,6 +73,19 @@ final class ProfileConnectionRequestServiceTest extends TestCase
         );
     }
 
+    public function testRejectsARequesterWhoIsNotSharingTheirOwnProfile(): void
+    {
+        $requester = $this->createSearchableUser('Requester', 'B8L3YN');
+        $requester->isDiscoverable = false;
+
+        $this->assertRequestFailsWith(
+            ProfileConnectionFailureReasonEnum::REQUESTER_NOT_SHARING,
+            $this->createService(null),
+            $requester,
+            $this->createSearchableUser('Addressee', 'A7K2XM'),
+        );
+    }
+
     public function testRejectsAnAddresseeWhoCannotBeFound(): void
     {
         $addressee = $this->createSearchableUser('Addressee', 'A7K2XM');

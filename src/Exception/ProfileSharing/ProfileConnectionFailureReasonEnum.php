@@ -11,6 +11,7 @@ namespace App\Exception\ProfileSharing;
 enum ProfileConnectionFailureReasonEnum: string
 {
     case SELF_REQUEST = 'self_request';
+    case REQUESTER_NOT_SHARING = 'requester_not_sharing';
     case NOT_SEARCHABLE = 'not_searchable';
     case ALREADY_PENDING = 'already_pending';
     case ALREADY_CONNECTED = 'already_connected';

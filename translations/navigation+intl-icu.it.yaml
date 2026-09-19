@@ -394,6 +394,7 @@ profile_connection:
         invalid_transition: "Questa azione non è più possibile: la richiesta è già stata gestita."
         not_found: "Nessun profilo trovato. Controlla l'alias e il codice."
         not_searchable: "Nessun profilo trovato. Controlla l'alias e il codice."
+        requester_not_sharing: "Attiva la condivisione del tuo profilo per poter inviare una richiesta di connessione."
         self_request: "Non puoi aggiungere te stesso."
     flash:
         accepted: "Connessione stabilita con {nickname}."
@@ -423,6 +424,7 @@ profile_connection:
             help: "Inserisci l'alias seguito dal codice di condivisione della persona, ad esempio Misou#A7K2XM."
             label: "Alias#CODE"
             placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Attiva la condivisione del tuo profilo qui sopra per poter inviare una richiesta di connessione."
             submit: "Invia richiesta"
             title: "Aggiungi una connessione"
         sent:
@@ -433,6 +435,7 @@ profile_connection:
             explanation: Rendi il tuo profilo rintracciabile da altri utenti tramite un codice unico, per condividere i vostri dashboard.
             feedback:
                 copied: Codice copiato
+                copy_error: "Copia non riuscita, seleziona e copia il codice manualmente"
                 disabled: Condivisione del profilo disattivata
                 enabled: Condivisione del profilo attivata
                 regenerated: Nuovo codice generato

@@ -394,6 +394,7 @@ profile_connection:
         invalid_transition: "Diese Aktion ist nicht mehr möglich: Die Anfrage wurde bereits bearbeitet."
         not_found: "Kein Profil gefunden. Prüfe den Alias und den Code."
         not_searchable: "Kein Profil gefunden. Prüfe den Alias und den Code."
+        requester_not_sharing: "Aktiviere die Profilfreigabe, um eine Verbindungsanfrage senden zu können."
         self_request: "Du kannst dich nicht selbst hinzufügen."
     flash:
         accepted: "Verbindung mit {nickname} hergestellt."
@@ -423,6 +424,7 @@ profile_connection:
             help: "Gib den Alias gefolgt vom Freigabecode der Person ein, zum Beispiel Misou#A7K2XM."
             label: "Alias#CODE"
             placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Aktiviere oben die Profilfreigabe, um eine Verbindungsanfrage senden zu können."
             submit: "Anfrage senden"
             title: "Verbindung hinzufügen"
         sent:
@@ -433,6 +435,7 @@ profile_connection:
             explanation: Mach dein Profil über einen eindeutigen Code für andere Nutzer auffindbar, um eure Dashboards zu teilen.
             feedback:
                 copied: Code kopiert
+                copy_error: "Kopieren fehlgeschlagen, markiere und kopiere den Code manuell"
                 disabled: Profilfreigabe deaktiviert
                 enabled: Profilfreigabe aktiviert
                 regenerated: Neuer Code generiert

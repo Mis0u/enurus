@@ -394,6 +394,7 @@ profile_connection:
         invalid_transition: "Esta acción ya no es posible: la solicitud ya se ha tramitado."
         not_found: "No se ha encontrado ningún perfil. Comprueba el alias y el código."
         not_searchable: "No se ha encontrado ningún perfil. Comprueba el alias y el código."
+        requester_not_sharing: "Activa la compartición de tu perfil para poder enviar una solicitud de conexión."
         self_request: "No puedes añadirte a ti mismo."
     flash:
         accepted: "Conexión establecida con {nickname}."
@@ -423,6 +424,7 @@ profile_connection:
             help: "Introduce el alias seguido del código para compartir de la persona, por ejemplo Misou#A7K2XM."
             label: "Alias#CODE"
             placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Activa la compartición de tu perfil arriba para poder enviar una solicitud de conexión."
             submit: "Enviar solicitud"
             title: "Añadir una conexión"
         sent:
@@ -433,6 +435,7 @@ profile_connection:
             explanation: Haz que otros usuarios puedan encontrar tu perfil mediante un código único, para compartir vuestros paneles.
             feedback:
                 copied: Código copiado
+                copy_error: "La copia ha fallado, selecciona y copia el código manualmente"
                 disabled: Compartición de perfil desactivada
                 enabled: Compartición de perfil activada
                 regenerated: Nuevo código generado

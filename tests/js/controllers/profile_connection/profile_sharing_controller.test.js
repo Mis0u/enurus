@@ -6,7 +6,7 @@ vi.mock('../../../../assets/utils/toast.js', () => ({
     showErrorToast: vi.fn(),
 }));
 
-const { showSuccessToast } = await import('../../../../assets/utils/toast.js');
+const { showSuccessToast, showErrorToast } = await import('../../../../assets/utils/toast.js');
 const ProfileSharingController = (await import('../../../../assets/controllers/profile_connection/profile_sharing_controller.js')).default;
 
 describe('profile-connection--profile-sharing controller', () => {
@@ -24,7 +24,8 @@ describe('profile-connection--profile-sharing controller', () => {
                  data-profile-connection--profile-sharing-enable-message-value="Partage activé"
                  data-profile-connection--profile-sharing-disable-message-value="Partage désactivé"
                  data-profile-connection--profile-sharing-regenerate-message-value="Nouveau code généré"
-                 data-profile-connection--profile-sharing-copy-message-value="Code copié">
+                 data-profile-connection--profile-sharing-copy-message-value="Code copié"
+                 data-profile-connection--profile-sharing-copy-error-message-value="Erreur de copie">
                 <input type="checkbox" data-action="change->profile-connection--profile-sharing#toggle">
                 <div data-profile-connection--profile-sharing-target="codeWrapper" hidden>
                     <span data-profile-connection--profile-sharing-target="code">ABC123</span>
@@ -101,15 +102,47 @@ describe('profile-connection--profile-sharing controller', () => {
         expect(showSuccessToast).toHaveBeenCalledWith('Nouveau code généré');
     });
 
-    it('copy writes the current code to the clipboard', async () => {
+    it('copy prefers the synchronous execCommand fallback and never calls the async Clipboard API', async () => {
+        document.execCommand = vi.fn().mockReturnValue(true);
         const writeText = vi.fn().mockResolvedValue(undefined);
         Object.assign(navigator, { clipboard: { writeText } });
 
         document.querySelector('button[data-action$="#copy"]').click();
-        await vi.waitFor(() => expect(writeText).toHaveBeenCalled());
+        await vi.waitFor(() => expect(showSuccessToast).toHaveBeenCalled());
+
+        expect(document.execCommand).toHaveBeenCalledWith('copy');
+        expect(writeText).not.toHaveBeenCalled();
+        expect(showSuccessToast).toHaveBeenCalledWith('Code copié');
+
+        delete document.execCommand;
+    });
+
+    it('copy falls back to the Clipboard API when execCommand is unavailable', async () => {
+        document.execCommand = vi.fn().mockReturnValue(false);
+        const writeText = vi.fn().mockResolvedValue(undefined);
+        Object.assign(navigator, { clipboard: { writeText } });
+
+        document.querySelector('button[data-action$="#copy"]').click();
+        await vi.waitFor(() => expect(showSuccessToast).toHaveBeenCalled());
 
         expect(writeText).toHaveBeenCalledWith('ABC123');
         expect(showSuccessToast).toHaveBeenCalledWith('Code copié');
+
+        delete document.execCommand;
+    });
+
+    it('copy shows an error toast when both the fallback and the Clipboard API fail', async () => {
+        document.execCommand = vi.fn().mockReturnValue(false);
+        const writeText = vi.fn().mockRejectedValue(new Error('denied'));
+        Object.assign(navigator, { clipboard: { writeText } });
+
+        document.querySelector('button[data-action$="#copy"]').click();
+        await vi.waitFor(() => expect(showErrorToast).toHaveBeenCalled());
+
+        expect(showErrorToast).toHaveBeenCalledWith('Erreur de copie');
+        expect(showSuccessToast).not.toHaveBeenCalled();
+
+        delete document.execCommand;
     });
 
     it('does not toast when the server rejects the toggle', async () => {

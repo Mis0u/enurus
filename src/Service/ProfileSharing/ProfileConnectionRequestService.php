@@ -21,7 +21,9 @@ use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
  * Le délai avant une nouvelle demande évite de relancer en boucle quelqu'un qui a refusé.
  *
  * `$addressee` vient d'un identifiant transmis par le client : la recherche n'est pas le seul
- * chemin possible, d'où la revérification de `isSearchable` ici.
+ * chemin possible, d'où la revérification de `isSearchable` ici. Le demandeur doit lui aussi
+ * partager son propre profil (`isDiscoverable`) — le formulaire est désactivé côté vue tant que
+ * ce n'est pas le cas, mais cette garde reste nécessaire côté service contre une requête directe.
  */
 final readonly class ProfileConnectionRequestService
 {
@@ -54,6 +56,10 @@ final readonly class ProfileConnectionRequestService
     {
         if ($requester->id?->equals($addressee->id)) {
             throw new ProfileConnectionException(ProfileConnectionFailureReasonEnum::SELF_REQUEST);
+        }
+
+        if (! $requester->isDiscoverable) {
+            throw new ProfileConnectionException(ProfileConnectionFailureReasonEnum::REQUESTER_NOT_SHARING);
         }
 
         if (! $addressee->isSearchable) {

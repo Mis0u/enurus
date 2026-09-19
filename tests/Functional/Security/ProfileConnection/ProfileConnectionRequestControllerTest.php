@@ -23,6 +23,7 @@ final class ProfileConnectionRequestControllerTest extends WebTestCase
         $client = $this->login(self::ACTOR);
         $actor = $this->getUserByEmail(self::ACTOR);
         $target = $this->getUserByEmail(self::OTHER);
+        $this->makeDiscoverable($actor, 'ZZZZZZ');
         $this->makeDiscoverable($target, self::TARGET_CODE);
 
         $this->submitQuery($client, $target->nickname . '#' . self::TARGET_CODE);
@@ -39,6 +40,7 @@ final class ProfileConnectionRequestControllerTest extends WebTestCase
     {
         $client = $this->login(self::ACTOR);
         $target = $this->getUserByEmail(self::OTHER);
+        $this->makeDiscoverable($this->getUserByEmail(self::ACTOR), 'ZZZZZZ');
         $this->makeDiscoverable($target, self::TARGET_CODE);
 
         $this->submitQuery($client, strtoupper($target->nickname) . '#' . strtolower(self::TARGET_CODE));
@@ -51,6 +53,7 @@ final class ProfileConnectionRequestControllerTest extends WebTestCase
     {
         $client = $this->login(self::ACTOR);
         $target = $this->getUserByEmail(self::OTHER);
+        $this->makeDiscoverable($this->getUserByEmail(self::ACTOR), 'ZZZZZZ');
 
         $this->submitQuery($client, $target->nickname . '#Z9Y8X7');
         $client->followRedirect();
@@ -66,6 +69,7 @@ final class ProfileConnectionRequestControllerTest extends WebTestCase
         $target->shareCode = self::TARGET_CODE;
         $target->isDiscoverable = false;
         $this->entityManager()->flush();
+        $this->makeDiscoverable($this->getUserByEmail(self::ACTOR), 'ZZZZZZ');
 
         $this->submitQuery($client, $target->nickname . '#' . self::TARGET_CODE);
         $client->followRedirect();
@@ -77,6 +81,7 @@ final class ProfileConnectionRequestControllerTest extends WebTestCase
     public function testRightCodeWithTheWrongAliasFindsNobody(): void
     {
         $client = $this->login(self::ACTOR);
+        $this->makeDiscoverable($this->getUserByEmail(self::ACTOR), 'ZZZZZZ');
         $this->makeDiscoverable($this->getUserByEmail(self::OTHER), self::TARGET_CODE);
 
         $this->submitQuery($client, 'SomeoneElse#' . self::TARGET_CODE);
@@ -102,6 +107,7 @@ final class ProfileConnectionRequestControllerTest extends WebTestCase
         $client = $this->login(self::ACTOR);
         $actor = $this->getUserByEmail(self::ACTOR);
         $target = $this->getUserByEmail(self::OTHER);
+        $this->makeDiscoverable($actor, 'ZZZZZZ');
         $this->makeDiscoverable($target, self::TARGET_CODE);
         $this->createConnection($actor, $target);
 
@@ -111,9 +117,23 @@ final class ProfileConnectionRequestControllerTest extends WebTestCase
         self::assertSelectorTextContains('body', 'Une demande est déjà en attente');
     }
 
+    public function testRequesterNotSharingTheirOwnProfileIsRejected(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $target = $this->getUserByEmail(self::OTHER);
+        $this->makeDiscoverable($target, self::TARGET_CODE);
+
+        $this->submitQuery($client, $target->nickname . '#' . self::TARGET_CODE);
+        $client->followRedirect();
+
+        self::assertSelectorTextContains('body', 'Active le partage de ton profil');
+        self::assertNull($this->findBetween($this->getUserByEmail(self::ACTOR), $target));
+    }
+
     public function testEmptyInputIsRejectedAsInvalid(): void
     {
         $client = $this->login(self::ACTOR);
+        $this->makeDiscoverable($this->getUserByEmail(self::ACTOR), 'ZZZZZZ');
 
         $this->submitQuery($client, '');
         $client->followRedirect();

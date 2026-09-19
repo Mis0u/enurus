@@ -398,6 +398,7 @@ profile_connection:
         invalid_transition: "Ta akcja nie jest już możliwa: prośba została już rozpatrzona."
         not_found: "Nie znaleziono profilu. Sprawdź alias i kod."
         not_searchable: "Nie znaleziono profilu. Sprawdź alias i kod."
+        requester_not_sharing: "Włącz udostępnianie swojego profilu, aby móc wysłać prośbę o połączenie."
         self_request: "Nie możesz dodać samego siebie."
     flash:
         accepted: "Nawiązano połączenie z {nickname}."
@@ -427,6 +428,7 @@ profile_connection:
             help: "Wpisz alias, a po nim kod udostępniania danej osoby, na przykład Misou#A7K2XM."
             label: "Alias#CODE"
             placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Włącz powyżej udostępnianie swojego profilu, aby móc wysłać prośbę o połączenie."
             submit: "Wyślij prośbę"
             title: "Dodaj połączenie"
         sent:
@@ -437,6 +439,7 @@ profile_connection:
             explanation: Spraw, aby Twój profil był wykrywalny dla innych użytkowników dzięki unikalnemu kodowi, aby udostępniać sobie nawzajem pulpity.
             feedback:
                 copied: Kod skopiowany
+                copy_error: "Kopiowanie nie powiodło się, zaznacz i skopiuj kod ręcznie"
                 disabled: Udostępnianie profilu wyłączone
                 enabled: Udostępnianie profilu włączone
                 regenerated: Wygenerowano nowy kod
