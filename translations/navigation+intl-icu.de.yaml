@@ -382,9 +382,12 @@ pagination:
 profile_connection:
     dashboard:
         back: "Zurück zu meiner Übersicht"
+        guard:
+            body: "Aktiviere die Profilfreigabe wieder, um die Übersicht einer Verbindung ansehen zu können."
+            confirm: "Verstanden"
+            title: "Freigabe deaktiviert"
         no_widgets: "{nickname} hat entschieden, keine Daten anzuzeigen"
         no_workout: "{nickname} hat noch kein Training erstellt"
-        read_only: "Nur Lesezugriff"
         title: "Übersicht von {nickname}"
     error:
         already_connected: "Ihr seid bereits verbunden."
@@ -408,6 +411,7 @@ profile_connection:
             accept_for: "Anfrage von {nickname} annehmen"
             cancel: "Anfrage zurückziehen"
             cancel_for: "Anfrage an {nickname} zurückziehen"
+            counterpart_not_sharing: "{nickname} hat die Profilfreigabe derzeit deaktiviert."
             decline: "Ablehnen"
             decline_for: "Anfrage von {nickname} ablehnen"
             revoke: "Entfernen"

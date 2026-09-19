@@ -18,7 +18,10 @@ final class ProfileConnectionVoter extends Voter
 
     /**
      * Voir le dashboard de l'autre partie : réservé aux deux parties d'une connexion acceptée,
-     * dans les deux sens (la connexion est réciproque).
+     * dans les deux sens (la connexion est réciproque). Les deux parties doivent en plus partager
+     * actuellement leur profil (`isDiscoverable`) — si l'une des deux désactive son partage, le
+     * voter refuse dans les deux sens (elle ne voit plus personne, personne ne la voit plus),
+     * même si la connexion elle-même reste acceptée en base.
      */
     public const string VIEW = 'PROFILE_CONNECTION_VIEW';
 
@@ -59,7 +62,10 @@ final class ProfileConnectionVoter extends Voter
         }
 
         return match ($attribute) {
-            self::VIEW => ProfileConnectionStatusEnum::ACCEPTED === $subject->status && $subject->involves($user),
+            self::VIEW => ProfileConnectionStatusEnum::ACCEPTED === $subject->status
+                && $subject->involves($user)
+                && $user->isDiscoverable
+                && $subject->counterpartOf($user)->isDiscoverable,
             self::RESPOND => $subject->addressee === $user,
             self::CANCEL => $subject->requester === $user,
             self::REVOKE => $subject->involves($user),

@@ -382,9 +382,12 @@ pagination:
 profile_connection:
     dashboard:
         back: "Volver a mi panel"
+        guard:
+            body: "Vuelve a activar la compartición de tu perfil para poder consultar el panel de una conexión."
+            confirm: "Entendido"
+            title: "Compartición desactivada"
         no_widgets: "{nickname} ha decidido no mostrar ningún dato"
         no_workout: "{nickname} aún no ha creado ningún entrenamiento"
-        read_only: "Solo lectura"
         title: "Panel de {nickname}"
     error:
         already_connected: "Ya estáis conectados."
@@ -408,6 +411,7 @@ profile_connection:
             accept_for: "Aceptar la solicitud de {nickname}"
             cancel: "Cancelar solicitud"
             cancel_for: "Cancelar la solicitud a {nickname}"
+            counterpart_not_sharing: "Por ahora, {nickname} ha desactivado la compartición de su perfil."
             decline: "Rechazar"
             decline_for: "Rechazar la solicitud de {nickname}"
             revoke: "Eliminar"

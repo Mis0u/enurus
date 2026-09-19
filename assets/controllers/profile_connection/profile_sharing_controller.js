@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 import { showSuccessToast, showErrorToast } from '../../utils/toast.js';
 
 export default class extends Controller {
-    static targets = ['code', 'codeWrapper'];
+    static targets = ['code', 'fullCode', 'codeWrapper'];
 
     static values = {
         toggleUrl: String,
@@ -32,6 +32,9 @@ export default class extends Controller {
 
             const data = await response.json();
             this.#applyShareCode(data.shareCode);
+            window.dispatchEvent(new CustomEvent('profile-connection:sharing-changed', {
+                detail: { isDiscoverable: data.isDiscoverable },
+            }));
             showSuccessToast(isDiscoverable ? this.enableMessageValue : this.disableMessageValue);
         } catch {
             // Échec silencieux volontaire — même pattern que dashboard_widgets_controller.js.
@@ -59,7 +62,7 @@ export default class extends Controller {
     }
 
     async copy() {
-        const text = this.codeTarget.textContent.trim();
+        const text = this.fullCodeTarget.textContent.trim();
 
         if (await this.#writeToClipboard(text)) {
             showSuccessToast(this.copyMessageValue);

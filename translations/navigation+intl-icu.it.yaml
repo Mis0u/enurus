@@ -382,9 +382,12 @@ pagination:
 profile_connection:
     dashboard:
         back: "Torna al mio cruscotto"
+        guard:
+            body: "Riattiva la condivisione del tuo profilo per poter consultare il cruscotto di una connessione."
+            confirm: "Ho capito"
+            title: "Condivisione disattivata"
         no_widgets: "{nickname} ha deciso di non mostrare alcun dato"
         no_workout: "{nickname} non ha ancora creato nessun allenamento"
-        read_only: "Sola lettura"
         title: "Cruscotto di {nickname}"
     error:
         already_connected: "Siete già connessi."
@@ -408,6 +411,7 @@ profile_connection:
             accept_for: "Accetta la richiesta di {nickname}"
             cancel: "Annulla richiesta"
             cancel_for: "Annulla la richiesta a {nickname}"
+            counterpart_not_sharing: "Al momento {nickname} ha disattivato la condivisione del proprio profilo."
             decline: "Rifiuta"
             decline_for: "Rifiuta la richiesta di {nickname}"
             revoke: "Rimuovi"

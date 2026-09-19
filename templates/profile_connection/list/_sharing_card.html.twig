@@ -35,7 +35,7 @@
     <div data-profile-connection--profile-sharing-target="codeWrapper" {% if not shareCode %}hidden{% endif %} class="mt-4 flex items-center justify-between gap-3 flex-wrap">
         <p class="text-sm text-[#8b9bb4]">
             {{ 'profile_connection.list.sharing.code_label'|trans({}, 'navigation') }}
-            <span class="font-mono text-[#f0f4ff]">{{ nickname }}#<span data-profile-connection--profile-sharing-target="code">{{ shareCode }}</span></span>
+            <span class="font-mono text-[#f0f4ff]" data-profile-connection--profile-sharing-target="fullCode">{{ nickname }}#<span data-profile-connection--profile-sharing-target="code">{{ shareCode }}</span></span>
         </p>
         <div class="flex items-center gap-2">
             <button type="button"

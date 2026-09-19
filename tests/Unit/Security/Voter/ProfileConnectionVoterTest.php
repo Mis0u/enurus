@@ -24,16 +24,38 @@ final class ProfileConnectionVoterTest extends TestCase
 
     public function testRequesterCanViewTheDashboardOfAnAcceptedConnection(): void
     {
-        $connection = $this->createConnection($requester = new User(), new User(), ProfileConnectionStatusEnum::ACCEPTED);
+        $connection = $this->createConnection($requester = $this->createDiscoverableUser(), $this->createDiscoverableUser(), ProfileConnectionStatusEnum::ACCEPTED);
 
         self::assertSame(Voter::ACCESS_GRANTED, $this->voteView($requester, $connection));
     }
 
     public function testAddresseeCanViewTheDashboardOfAnAcceptedConnection(): void
     {
-        $connection = $this->createConnection(new User(), $addressee = new User(), ProfileConnectionStatusEnum::ACCEPTED);
+        $connection = $this->createConnection($this->createDiscoverableUser(), $addressee = $this->createDiscoverableUser(), ProfileConnectionStatusEnum::ACCEPTED);
 
         self::assertSame(Voter::ACCESS_GRANTED, $this->voteView($addressee, $connection));
+    }
+
+    public function testDeniedWhenTheCounterpartIsNotCurrentlySharing(): void
+    {
+        $connection = $this->createConnection(
+            $requester = $this->createDiscoverableUser(),
+            $addressee = new User(),
+            ProfileConnectionStatusEnum::ACCEPTED,
+        );
+
+        self::assertSame(Voter::ACCESS_DENIED, $this->voteView($requester, $connection));
+    }
+
+    public function testDeniedWhenTheViewerIsNotCurrentlySharing(): void
+    {
+        $connection = $this->createConnection(
+            $requester = new User(),
+            $addressee = $this->createDiscoverableUser(),
+            ProfileConnectionStatusEnum::ACCEPTED,
+        );
+
+        self::assertSame(Voter::ACCESS_DENIED, $this->voteView($requester, $connection));
     }
 
     /**
@@ -137,6 +159,14 @@ final class ProfileConnectionVoterTest extends TestCase
         $token->method('getUser')->willReturn($user);
 
         return $token;
+    }
+
+    private function createDiscoverableUser(): User
+    {
+        $user = new User();
+        $user->isDiscoverable = true;
+
+        return $user;
     }
 
     private function createConnection(User $requester, User $addressee, ProfileConnectionStatusEnum $status): ProfileConnection

@@ -382,9 +382,12 @@ pagination:
 profile_connection:
     dashboard:
         back: "Retour à mon tableau de bord"
+        guard:
+            body: "Réactive le partage de ton profil pour pouvoir consulter le tableau de bord d'une connexion."
+            confirm: "Compris"
+            title: "Partage désactivé"
         no_widgets: "{nickname} a décidé de ne pas afficher de data"
         no_workout: "{nickname} n'a pas encore créé de séance"
-        read_only: "Lecture seule"
         title: "Tableau de bord de {nickname}"
     error:
         already_connected: "Vous êtes déjà connectés."
@@ -408,6 +411,7 @@ profile_connection:
             accept_for: "Accepter la demande de {nickname}"
             cancel: "Annuler la demande"
             cancel_for: "Annuler la demande à {nickname}"
+            counterpart_not_sharing: "Pour le moment, {nickname} a désactivé le partage de son profil."
             decline: "Refuser"
             decline_for: "Refuser la demande de {nickname}"
             revoke: "Retirer"

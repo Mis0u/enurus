@@ -28,7 +28,7 @@ describe('profile-connection--profile-sharing controller', () => {
                  data-profile-connection--profile-sharing-copy-error-message-value="Erreur de copie">
                 <input type="checkbox" data-action="change->profile-connection--profile-sharing#toggle">
                 <div data-profile-connection--profile-sharing-target="codeWrapper" hidden>
-                    <span data-profile-connection--profile-sharing-target="code">ABC123</span>
+                    <span data-profile-connection--profile-sharing-target="fullCode">Misou#<span data-profile-connection--profile-sharing-target="code">ABC123</span></span>
                     <button type="button" data-action="profile-connection--profile-sharing#copy">Copier</button>
                     <button type="button" data-action="profile-connection--profile-sharing#regenerate">Régénérer</button>
                 </div>
@@ -45,11 +45,13 @@ describe('profile-connection--profile-sharing controller', () => {
         vi.unstubAllGlobals();
     });
 
-    it('enabling sends isDiscoverable: true and reveals the code', async () => {
+    it('enabling sends isDiscoverable: true, reveals the code and dispatches a sharing-changed event', async () => {
         vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
             ok: true,
             json: () => Promise.resolve({ isDiscoverable: true, shareCode: 'NEW123' }),
         }));
+        const listener = vi.fn();
+        window.addEventListener('profile-connection:sharing-changed', listener);
 
         const checkbox = document.querySelector('input');
         checkbox.checked = true;
@@ -63,14 +65,19 @@ describe('profile-connection--profile-sharing controller', () => {
         expect(document.querySelector('[data-profile-connection--profile-sharing-target="codeWrapper"]').hidden).toBe(false);
         expect(document.querySelector('[data-profile-connection--profile-sharing-target="code"]').textContent).toBe('NEW123');
         expect(showSuccessToast).toHaveBeenCalledWith('Partage activé');
+        expect(listener).toHaveBeenCalledWith(expect.objectContaining({ detail: { isDiscoverable: true } }));
+
+        window.removeEventListener('profile-connection:sharing-changed', listener);
     });
 
-    it('disabling sends isDiscoverable: false and keeps the code visible', async () => {
+    it('disabling sends isDiscoverable: false, keeps the code visible and dispatches a sharing-changed event', async () => {
         vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
             ok: true,
             json: () => Promise.resolve({ isDiscoverable: false, shareCode: 'ABC123' }),
         }));
         document.querySelector('[data-profile-connection--profile-sharing-target="codeWrapper"]').hidden = false;
+        const listener = vi.fn();
+        window.addEventListener('profile-connection:sharing-changed', listener);
 
         const checkbox = document.querySelector('input');
         checkbox.checked = false;
@@ -83,6 +90,9 @@ describe('profile-connection--profile-sharing controller', () => {
         }));
         expect(document.querySelector('[data-profile-connection--profile-sharing-target="codeWrapper"]').hidden).toBe(false);
         expect(showSuccessToast).toHaveBeenCalledWith('Partage désactivé');
+        expect(listener).toHaveBeenCalledWith(expect.objectContaining({ detail: { isDiscoverable: false } }));
+
+        window.removeEventListener('profile-connection:sharing-changed', listener);
     });
 
     it('regenerating sends the regenerate token and updates the displayed code', async () => {
@@ -102,7 +112,7 @@ describe('profile-connection--profile-sharing controller', () => {
         expect(showSuccessToast).toHaveBeenCalledWith('Nouveau code généré');
     });
 
-    it('copy prefers the synchronous execCommand fallback and never calls the async Clipboard API', async () => {
+    it('copy copies the full alias#code, preferring the synchronous execCommand fallback', async () => {
         document.execCommand = vi.fn().mockReturnValue(true);
         const writeText = vi.fn().mockResolvedValue(undefined);
         Object.assign(navigator, { clipboard: { writeText } });
@@ -117,7 +127,7 @@ describe('profile-connection--profile-sharing controller', () => {
         delete document.execCommand;
     });
 
-    it('copy falls back to the Clipboard API when execCommand is unavailable', async () => {
+    it('copy falls back to the Clipboard API with the full alias#code when execCommand is unavailable', async () => {
         document.execCommand = vi.fn().mockReturnValue(false);
         const writeText = vi.fn().mockResolvedValue(undefined);
         Object.assign(navigator, { clipboard: { writeText } });
@@ -125,7 +135,7 @@ describe('profile-connection--profile-sharing controller', () => {
         document.querySelector('button[data-action$="#copy"]').click();
         await vi.waitFor(() => expect(showSuccessToast).toHaveBeenCalled());
 
-        expect(writeText).toHaveBeenCalledWith('ABC123');
+        expect(writeText).toHaveBeenCalledWith('Misou#ABC123');
         expect(showSuccessToast).toHaveBeenCalledWith('Code copié');
 
         delete document.execCommand;

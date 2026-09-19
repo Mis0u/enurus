@@ -32,6 +32,7 @@ final class ProfileConnectionListControllerTest extends WebTestCase
         $sender = $this->getUserByEmail(self::OTHER);
         $target = $this->getUserByEmail(self::THIRD);
         $friend = $this->getUserByEmail(self::FOURTH);
+        $this->makeDiscoverable($friend, 'DDDDD1');
         $received = $this->createConnection($sender, $actor);
         $sent = $this->createConnection($actor, $target);
         $accepted = $this->createConnection($friend, $actor, ProfileConnectionStatusEnum::ACCEPTED);
@@ -47,6 +48,55 @@ final class ProfileConnectionListControllerTest extends WebTestCase
         self::assertStringContainsString($sender->nickname, $crawler->filter('#profile-connection-received-title + ul')->text());
         self::assertStringContainsString($target->nickname, $crawler->filter('#profile-connection-sent-title + ul')->text());
         self::assertStringContainsString($friend->nickname, $crawler->filter('#profile-connection-connections-title + ul')->text());
+    }
+
+    public function testViewDashboardButtonIsHiddenWhenTheCounterpartStoppedSharing(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $actor = $this->getUserByEmail(self::ACTOR);
+        $friend = $this->getUserByEmail(self::FOURTH);
+        $accepted = $this->createConnection($friend, $actor, ProfileConnectionStatusEnum::ACCEPTED);
+
+        $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorNotExists(\sprintf('a[href$="/connexions/%s/tableau-de-bord"]', $accepted->id));
+        self::assertSelectorTextContains('main', $friend->nickname . ' a désactivé le partage de son profil');
+    }
+
+    public function testViewDashboardLinkIsMarkedAsBlockedWhenTheViewerStoppedSharing(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $actor = $this->getUserByEmail(self::ACTOR);
+        $friend = $this->getUserByEmail(self::FOURTH);
+        $this->makeDiscoverable($friend, 'DDDDD2');
+        $accepted = $this->createConnection($friend, $actor, ProfileConnectionStatusEnum::ACCEPTED);
+
+        $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists(\sprintf(
+            'a[href$="/connexions/%s/tableau-de-bord"][data-profile-connection--dashboard-link-blocked-value="true"]',
+            $accepted->id,
+        ));
+    }
+
+    public function testViewDashboardLinkIsNotBlockedWhenTheViewerIsCurrentlySharing(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $actor = $this->getUserByEmail(self::ACTOR);
+        $friend = $this->getUserByEmail(self::FOURTH);
+        $this->makeDiscoverable($actor, 'DDDDD3');
+        $this->makeDiscoverable($friend, 'DDDDD4');
+        $accepted = $this->createConnection($friend, $actor, ProfileConnectionStatusEnum::ACCEPTED);
+
+        $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists(\sprintf(
+            'a[href$="/connexions/%s/tableau-de-bord"][data-profile-connection--dashboard-link-blocked-value="false"]',
+            $accepted->id,
+        ));
     }
 
     public function testEndedConnectionsAreNotListed(): void

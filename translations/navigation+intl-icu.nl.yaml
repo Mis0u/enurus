@@ -382,9 +382,12 @@ pagination:
 profile_connection:
     dashboard:
         back: "Terug naar mijn overzicht"
+        guard:
+            body: "Zet profiel delen weer aan om het overzicht van een verbinding te kunnen bekijken."
+            confirm: "Begrepen"
+            title: "Delen uitgeschakeld"
         no_widgets: "{nickname} heeft besloten geen gegevens te tonen"
         no_workout: "{nickname} heeft nog geen training aangemaakt"
-        read_only: "Alleen lezen"
         title: "Overzicht van {nickname}"
     error:
         already_connected: "Jullie zijn al verbonden."
@@ -408,6 +411,7 @@ profile_connection:
             accept_for: "Verzoek van {nickname} accepteren"
             cancel: "Verzoek annuleren"
             cancel_for: "Verzoek aan {nickname} annuleren"
+            counterpart_not_sharing: "{nickname} heeft profiel delen momenteel uitgeschakeld."
             decline: "Weigeren"
             decline_for: "Verzoek van {nickname} weigeren"
             revoke: "Verwijderen"

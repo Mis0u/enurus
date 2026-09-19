@@ -56,22 +56,27 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
     public function testRequesterSeesTheDashboardOfTheAddresseeInReadOnly(): void
     {
         $client = $this->login(self::VIEWER);
+        $viewer = $this->getUserByEmail(self::VIEWER);
         $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
-        $connection = $this->createConnection($this->getUserByEmail(self::VIEWER), $subject, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->makeDiscoverable($viewer, 'AAAAA1');
+        $this->makeDiscoverable($subject, 'AAAAA2');
+        $connection = $this->createConnection($viewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
 
         $client->request('GET', $this->dashboardUrl($connection, 'fr'));
 
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('h1', 'Tableau de bord de ' . $subject->nickname);
-        self::assertSelectorTextContains('main', 'Lecture seule');
         self::assertSelectorExists('[data-controller="dashboard--session"]');
     }
 
     public function testAddresseeSeesTheDashboardOfTheRequesterToo(): void
     {
         $client = $this->login(self::VIEWER);
+        $viewer = $this->getUserByEmail(self::VIEWER);
         $requester = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
-        $connection = $this->createConnection($requester, $this->getUserByEmail(self::VIEWER), ProfileConnectionStatusEnum::ACCEPTED);
+        $this->makeDiscoverable($viewer, 'AAAAA3');
+        $this->makeDiscoverable($requester, 'AAAAA4');
+        $connection = $this->createConnection($requester, $viewer, ProfileConnectionStatusEnum::ACCEPTED);
 
         $client->request('GET', $this->dashboardUrl($connection, 'fr'));
 
@@ -82,14 +87,42 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
     public function testPageFollowsTheLanguageOfTheViewer(): void
     {
         $client = $this->login(self::VIEWER);
+        $viewer = $this->getUserByEmail(self::VIEWER);
         $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
-        $connection = $this->createConnection($this->getUserByEmail(self::VIEWER), $subject, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->makeDiscoverable($viewer, 'AAAAA5');
+        $this->makeDiscoverable($subject, 'AAAAA6');
+        $connection = $this->createConnection($viewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
 
         $client->request('GET', $this->dashboardUrl($connection, 'en'));
 
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('h1', $subject->nickname . "'s dashboard");
-        self::assertSelectorTextContains('main', 'Read only');
+    }
+
+    public function testViewerWhoStoppedSharingIsForbiddenEvenIfTheConnectionIsStillAccepted(): void
+    {
+        $client = $this->login(self::VIEWER);
+        $viewer = $this->getUserByEmail(self::VIEWER);
+        $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
+        $this->makeDiscoverable($subject, 'BBBBB1');
+        $connection = $this->createConnection($viewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
+
+        $client->request('GET', $this->dashboardUrl($connection, 'fr'));
+
+        self::assertResponseStatusCodeSame(403);
+    }
+
+    public function testSubjectWhoStoppedSharingIsNoLongerVisibleEvenIfTheConnectionIsStillAccepted(): void
+    {
+        $client = $this->login(self::VIEWER);
+        $viewer = $this->getUserByEmail(self::VIEWER);
+        $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
+        $this->makeDiscoverable($viewer, 'BBBBB2');
+        $connection = $this->createConnection($viewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
+
+        $client->request('GET', $this->dashboardUrl($connection, 'fr'));
+
+        self::assertResponseStatusCodeSame(403);
     }
 
     /**
@@ -130,8 +163,11 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
     public function testOwnerWithoutAnyWorkoutShowsADedicatedMessageInsteadOfTheOwnInvitation(): void
     {
         $client = $this->login(self::VIEWER);
+        $viewer = $this->getUserByEmail(self::VIEWER);
         $subject = $this->getUserByEmail(self::SUBJECT_WITH_NO_WORKOUT);
-        $connection = $this->createConnection($this->getUserByEmail(self::VIEWER), $subject, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->makeDiscoverable($viewer, 'CCCCC1');
+        $this->makeDiscoverable($subject, 'CCCCC2');
+        $connection = $this->createConnection($viewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
 
         $client->request('GET', $this->dashboardUrl($connection, 'fr'));
 
@@ -144,9 +180,12 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
     public function testOwnerWhoHidEveryWidgetShowsANeutralMessageWithoutLinkToTheSettings(): void
     {
         $client = $this->login(self::VIEWER);
+        $viewer = $this->getUserByEmail(self::VIEWER);
         $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
         $subject->hiddenWidgets = array_map(static fn (DashboardWidgetEnum $widget): string => $widget->value, DashboardWidgetEnum::cases());
-        $connection = $this->createConnection($this->getUserByEmail(self::VIEWER), $subject, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->makeDiscoverable($viewer, 'CCCCC3');
+        $this->makeDiscoverable($subject, 'CCCCC4');
+        $connection = $this->createConnection($viewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
 
         $client->request('GET', $this->dashboardUrl($connection, 'fr'));
 
@@ -159,9 +198,12 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
     public function testOnlyTheWidgetsTheOwnerKeptVisibleAreShown(): void
     {
         $client = $this->login(self::VIEWER);
+        $viewer = $this->getUserByEmail(self::VIEWER);
         $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
         $subject->hiddenWidgets = [DashboardWidgetEnum::TONNAGE->value];
-        $connection = $this->createConnection($this->getUserByEmail(self::VIEWER), $subject, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->makeDiscoverable($viewer, 'CCCCC5');
+        $this->makeDiscoverable($subject, 'CCCCC6');
+        $connection = $this->createConnection($viewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
 
         $client->request('GET', $this->dashboardUrl($connection, 'fr'));
 
@@ -178,7 +220,11 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
             $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS)->unitOfMeasure,
             'Le fixture propriétaire doit être en kg pour que ce test discrimine.',
         );
-        $connection = $this->createConnection($this->getUserByEmail(self::LBS_VIEWER), $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS), ProfileConnectionStatusEnum::ACCEPTED);
+        $lbsViewer = $this->getUserByEmail(self::LBS_VIEWER);
+        $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
+        $this->makeDiscoverable($lbsViewer, 'CCCCC7');
+        $this->makeDiscoverable($subject, 'CCCCC8');
+        $connection = $this->createConnection($lbsViewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
 
         $client->request('GET', $this->dashboardUrl($connection, 'fr'));
 
@@ -189,9 +235,12 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
     public function testOwnersAvatarIsShownInTheBanner(): void
     {
         $client = $this->login(self::VIEWER);
+        $viewer = $this->getUserByEmail(self::VIEWER);
         $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
         $subject->avatarPath = 'avatars/owner-avatar.jpg';
-        $connection = $this->createConnection($this->getUserByEmail(self::VIEWER), $subject, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->makeDiscoverable($viewer, 'CCCCC9');
+        $this->makeDiscoverable($subject, 'CCCC10');
+        $connection = $this->createConnection($viewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
 
         $client->request('GET', $this->dashboardUrl($connection, 'fr'));
 
@@ -202,9 +251,12 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
     public function testGoalCardsOfTheOwnerAreNotLinksToAnExerciseHistory(): void
     {
         $client = $this->login(self::VIEWER);
+        $viewer = $this->getUserByEmail(self::VIEWER);
         $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
         $this->createGoal($subject);
-        $connection = $this->createConnection($this->getUserByEmail(self::VIEWER), $subject, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->makeDiscoverable($viewer, 'CCCC11');
+        $this->makeDiscoverable($subject, 'CCCC12');
+        $connection = $this->createConnection($viewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
 
         $crawler = $client->request('GET', $this->dashboardUrl($connection, 'fr'));
 
@@ -227,7 +279,11 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
     public function testViewersOwnNavigationIsStillThere(): void
     {
         $client = $this->login(self::VIEWER);
-        $connection = $this->createConnection($this->getUserByEmail(self::VIEWER), $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS), ProfileConnectionStatusEnum::ACCEPTED);
+        $viewer = $this->getUserByEmail(self::VIEWER);
+        $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
+        $this->makeDiscoverable($viewer, 'CCCC13');
+        $this->makeDiscoverable($subject, 'CCCC14');
+        $connection = $this->createConnection($viewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
 
         $client->request('GET', $this->dashboardUrl($connection, 'fr'));
 
@@ -242,6 +298,13 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
         ];
 
         return \sprintf($segments[$locale], $connection->id?->toRfc4122());
+    }
+
+    private function makeDiscoverable(User $user, string $shareCode): void
+    {
+        $user->isDiscoverable = true;
+        $user->shareCode = $shareCode;
+        $this->entityManager()->flush();
     }
 
     private function createConnection(User $requester, User $addressee, ProfileConnectionStatusEnum $status): ProfileConnection

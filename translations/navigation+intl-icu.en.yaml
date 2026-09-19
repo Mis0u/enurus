@@ -382,9 +382,12 @@ pagination:
 profile_connection:
     dashboard:
         back: "Back to my dashboard"
+        guard:
+            body: "Turn profile sharing back on to view a connection's dashboard."
+            confirm: "Got it"
+            title: "Sharing disabled"
         no_widgets: "{nickname} has decided not to display any data"
         no_workout: "{nickname} hasn't created a workout yet"
-        read_only: "Read only"
         title: "{nickname}'s dashboard"
     error:
         already_connected: "You are already connected."
@@ -408,6 +411,7 @@ profile_connection:
             accept_for: "Accept the request from {nickname}"
             cancel: "Cancel request"
             cancel_for: "Cancel the request to {nickname}"
+            counterpart_not_sharing: "{nickname} has currently turned off profile sharing."
             decline: "Decline"
             decline_for: "Decline the request from {nickname}"
             revoke: "Remove"

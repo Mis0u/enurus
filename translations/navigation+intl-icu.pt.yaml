@@ -382,9 +382,12 @@ pagination:
 profile_connection:
     dashboard:
         back: "Voltar ao meu painel"
+        guard:
+            body: "Reativa a partilha do teu perfil para poderes consultar o painel de uma conexão."
+            confirm: "Percebido"
+            title: "Partilha desativada"
         no_widgets: "{nickname} decidiu não mostrar nenhum dado"
         no_workout: "{nickname} ainda não criou nenhum treino"
-        read_only: "Somente leitura"
         title: "Painel de {nickname}"
     error:
         already_connected: "Já estão conectados."
@@ -408,6 +411,7 @@ profile_connection:
             accept_for: "Aceitar o pedido de {nickname}"
             cancel: "Cancelar pedido"
             cancel_for: "Cancelar o pedido a {nickname}"
+            counterpart_not_sharing: "De momento, {nickname} desativou a partilha do seu perfil."
             decline: "Recusar"
             decline_for: "Recusar o pedido de {nickname}"
             revoke: "Remover"

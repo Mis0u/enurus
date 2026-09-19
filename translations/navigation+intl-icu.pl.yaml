@@ -386,9 +386,12 @@ pagination:
 profile_connection:
     dashboard:
         back: "Wróć do mojego panelu"
+        guard:
+            body: "Włącz ponownie udostępnianie swojego profilu, aby móc zobaczyć panel połączenia."
+            confirm: "Rozumiem"
+            title: "Udostępnianie wyłączone"
         no_widgets: "{nickname} nie pokazuje żadnych danych"
         no_workout: "{nickname} nie ma jeszcze żadnego treningu"
-        read_only: "Tylko do odczytu"
         title: "Panel użytkownika {nickname}"
     error:
         already_connected: "Jesteście już połączeni."
@@ -412,6 +415,7 @@ profile_connection:
             accept_for: "Zaakceptuj prośbę od {nickname}"
             cancel: "Anuluj prośbę"
             cancel_for: "Anuluj prośbę do {nickname}"
+            counterpart_not_sharing: "Obecnie {nickname} wyłączył udostępnianie swojego profilu."
             decline: "Odrzuć"
             decline_for: "Odrzuć prośbę od {nickname}"
             revoke: "Usuń"

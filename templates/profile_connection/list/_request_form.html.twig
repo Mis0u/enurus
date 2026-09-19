@@ -6,11 +6,17 @@
       lui-même son profil (ProfileConnectionRequestService::assertCanBeRequested() applique la
       même règle côté serveur, cette désactivation n'est qu'un confort d'UI)
 #}
-<section class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px]" aria-labelledby="profile-connection-request-title">
+<section class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px]"
+         aria-labelledby="profile-connection-request-title"
+         data-controller="profile-connection--request-form"
+         data-profile-connection--request-form-help-message-value="{{ 'profile_connection.list.request.help'|trans({}, 'navigation') }}"
+         data-profile-connection--request-form-sharing-required-hint-value="{{ 'profile_connection.list.request.sharing_required_hint'|trans({}, 'navigation') }}">
     <h2 id="profile-connection-request-title" class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
         {{ 'profile_connection.list.request.title'|trans({}, 'navigation') }}
     </h2>
-    <p id="profile-connection-request-help" class="text-[13px] text-[#8b9bb4] mt-1">
+    <p id="profile-connection-request-help"
+       class="text-[13px] text-[#8b9bb4] mt-1"
+       data-profile-connection--request-form-target="hint">
         {{ isDiscoverable ? 'profile_connection.list.request.help'|trans({}, 'navigation') : 'profile_connection.list.request.sharing_required_hint'|trans({}, 'navigation') }}
     </p>
 
@@ -20,10 +26,12 @@
             {{ form_widget(requestForm.query, {attr: {
                 class: 'w-full rounded-[10px] bg-white/[0.04] border border-white/[0.12] px-3 py-2 text-[14px] text-[#f0f4ff] placeholder:text-[#4a5568] focus:outline-none focus:border-rose-ft focus:ring-1 focus:ring-rose-ft disabled:opacity-50 disabled:cursor-not-allowed',
                 disabled: not isDiscoverable,
+                'data-profile-connection--request-form-target': 'input',
             }}) }}
         </div>
         <button type="submit"
                 {% if not isDiscoverable %}disabled{% endif %}
+                data-profile-connection--request-form-target="submit"
                 class="inline-flex items-center justify-center px-4 py-2 rounded-[10px] text-[13px] font-semibold text-white bg-gradient-to-br from-rose-ft to-red-600 shadow-[0_4px_15px_rgba(244,63,94,0.3)] hover:-translate-y-px transition-all duration-200 whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-ft disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0">
             {{ 'profile_connection.list.request.submit'|trans({}, 'navigation') }}
         </button>
