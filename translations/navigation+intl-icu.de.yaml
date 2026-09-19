@@ -422,13 +422,23 @@ profile_connection:
         request:
             help: "Gib den Alias gefolgt vom Freigabecode der Person ein, zum Beispiel Misou#A7K2XM."
             label: "Alias#CODE"
-            placeholder: "Misou#A7K2XM"
-            settings_link: "Meine Einstellungen öffnen"
-            sharing_hint: "Damit andere dich finden können, aktiviere die Profilfreigabe in deinen Einstellungen."
+            placeholder: "ALIAS#A7K2XM"
             submit: "Anfrage senden"
             title: "Verbindung hinzufügen"
         sent:
             title: "Gesendete Anfragen"
+        sharing:
+            code_label: "Dein Freigabecode:"
+            copy: Kopieren
+            explanation: Mach dein Profil über einen eindeutigen Code für andere Nutzer auffindbar, um eure Dashboards zu teilen.
+            feedback:
+                copied: Code kopiert
+                disabled: Profilfreigabe deaktiviert
+                enabled: Profilfreigabe aktiviert
+                regenerated: Neuer Code generiert
+            regenerate: Code neu generieren
+            switch_label: Mein Profil auffindbar machen
+            title: Mein Profil teilen
         title: "Meine Verbindungen"
 
 registration:
@@ -638,18 +648,6 @@ settings:
     profile:
         subtitle: Deine persönlichen Informationen
         title: Profil
-    profile_sharing:
-        code_label: "Dein Freigabecode:"
-        copy: Kopieren
-        explanation: Mach dein Profil über einen eindeutigen Code für andere Nutzer auffindbar, um eure Dashboards zu teilen.
-        feedback:
-            copied: Code kopiert
-            disabled: Profilfreigabe deaktiviert
-            enabled: Profilfreigabe aktiviert
-            regenerated: Neuer Code generiert
-        regenerate: Code neu generieren
-        switch_label: Mein Profil auffindbar machen
-        title: Profilfreigabe
     title: Einstellungen
     weight_unit:
         label: Gewichtseinheit

@@ -36,13 +36,6 @@
             {# ============ LIGNE 2 — WIDGETS DU DASHBOARD, PLEINE LARGEUR ============ #}
             {% include 'settings/_dashboard_widgets_card.html.twig' with {dashboardWidgets: dashboardWidgets} only %}
 
-            {# ============ LIGNE 2b — PARTAGE DE PROFIL, PLEINE LARGEUR ============ #}
-            {% include 'settings/_profile_sharing_card.html.twig' with {
-                isDiscoverable: user.isDiscoverable,
-                shareCode: user.shareCode,
-                nickname: user.nickname,
-            } only %}
-
             {# ============ LIGNE 3 — SUPPRESSION, PLEINE LARGEUR ============ #}
             {% include 'settings/_danger_zone_card.html.twig' with {user: user} only %}
 

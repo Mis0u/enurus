@@ -7,33 +7,35 @@ vi.mock('../../../../assets/utils/toast.js', () => ({
 }));
 
 const { showSuccessToast } = await import('../../../../assets/utils/toast.js');
-const ProfileSharingController = (await import('../../../../assets/controllers/settings/profile_sharing_controller.js')).default;
+const ProfileSharingController = (await import('../../../../assets/controllers/profile_connection/profile_sharing_controller.js')).default;
 
-describe('settings--profile-sharing controller', () => {
+describe('profile-connection--profile-sharing controller', () => {
     let application;
 
     beforeEach(() => {
         vi.clearAllMocks();
 
         document.body.innerHTML = `
-            <div data-controller="settings--profile-sharing"
-                 data-settings--profile-sharing-url-value="/reglages/partage-de-profil"
-                 data-settings--profile-sharing-csrf-token-value="token"
-                 data-settings--profile-sharing-enable-message-value="Partage activé"
-                 data-settings--profile-sharing-disable-message-value="Partage désactivé"
-                 data-settings--profile-sharing-regenerate-message-value="Nouveau code généré"
-                 data-settings--profile-sharing-copy-message-value="Code copié">
-                <input type="checkbox" data-action="change->settings--profile-sharing#toggle">
-                <div data-settings--profile-sharing-target="codeWrapper" hidden>
-                    <span data-settings--profile-sharing-target="code">ABC123</span>
-                    <button type="button" data-action="settings--profile-sharing#copy">Copier</button>
-                    <button type="button" data-action="settings--profile-sharing#regenerate">Régénérer</button>
+            <div data-controller="profile-connection--profile-sharing"
+                 data-profile-connection--profile-sharing-toggle-url-value="/connexions/partage"
+                 data-profile-connection--profile-sharing-regenerate-url-value="/connexions/partage/regenerer"
+                 data-profile-connection--profile-sharing-toggle-token-value="toggle-token"
+                 data-profile-connection--profile-sharing-regenerate-token-value="regenerate-token"
+                 data-profile-connection--profile-sharing-enable-message-value="Partage activé"
+                 data-profile-connection--profile-sharing-disable-message-value="Partage désactivé"
+                 data-profile-connection--profile-sharing-regenerate-message-value="Nouveau code généré"
+                 data-profile-connection--profile-sharing-copy-message-value="Code copié">
+                <input type="checkbox" data-action="change->profile-connection--profile-sharing#toggle">
+                <div data-profile-connection--profile-sharing-target="codeWrapper" hidden>
+                    <span data-profile-connection--profile-sharing-target="code">ABC123</span>
+                    <button type="button" data-action="profile-connection--profile-sharing#copy">Copier</button>
+                    <button type="button" data-action="profile-connection--profile-sharing#regenerate">Régénérer</button>
                 </div>
             </div>
         `;
 
         application = Application.start();
-        application.register('settings--profile-sharing', ProfileSharingController);
+        application.register('profile-connection--profile-sharing', ProfileSharingController);
     });
 
     afterEach(() => {
@@ -42,7 +44,7 @@ describe('settings--profile-sharing controller', () => {
         vi.unstubAllGlobals();
     });
 
-    it('enabling sends the toggle action with enabled: true and reveals the code', async () => {
+    it('enabling sends isDiscoverable: true and reveals the code', async () => {
         vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
             ok: true,
             json: () => Promise.resolve({ isDiscoverable: true, shareCode: 'NEW123' }),
@@ -53,35 +55,36 @@ describe('settings--profile-sharing controller', () => {
         checkbox.dispatchEvent(new Event('change', { bubbles: true }));
         await vi.waitFor(() => expect(showSuccessToast).toHaveBeenCalled());
 
-        expect(global.fetch).toHaveBeenCalledWith('/reglages/partage-de-profil', expect.objectContaining({
+        expect(global.fetch).toHaveBeenCalledWith('/connexions/partage', expect.objectContaining({
             method: 'PATCH',
-            body: JSON.stringify({ action: 'toggle', enabled: true, _token: 'token' }),
+            body: JSON.stringify({ isDiscoverable: true, _token: 'toggle-token' }),
         }));
-        expect(document.querySelector('[data-settings--profile-sharing-target="codeWrapper"]').hidden).toBe(false);
-        expect(document.querySelector('[data-settings--profile-sharing-target="code"]').textContent).toBe('NEW123');
+        expect(document.querySelector('[data-profile-connection--profile-sharing-target="codeWrapper"]').hidden).toBe(false);
+        expect(document.querySelector('[data-profile-connection--profile-sharing-target="code"]').textContent).toBe('NEW123');
         expect(showSuccessToast).toHaveBeenCalledWith('Partage activé');
     });
 
-    it('disabling sends the toggle action with enabled: false and hides the code', async () => {
+    it('disabling sends isDiscoverable: false and keeps the code visible', async () => {
         vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
             ok: true,
             json: () => Promise.resolve({ isDiscoverable: false, shareCode: 'ABC123' }),
         }));
+        document.querySelector('[data-profile-connection--profile-sharing-target="codeWrapper"]').hidden = false;
 
         const checkbox = document.querySelector('input');
         checkbox.checked = false;
         checkbox.dispatchEvent(new Event('change', { bubbles: true }));
         await vi.waitFor(() => expect(showSuccessToast).toHaveBeenCalled());
 
-        expect(global.fetch).toHaveBeenCalledWith('/reglages/partage-de-profil', expect.objectContaining({
+        expect(global.fetch).toHaveBeenCalledWith('/connexions/partage', expect.objectContaining({
             method: 'PATCH',
-            body: JSON.stringify({ action: 'toggle', enabled: false, _token: 'token' }),
+            body: JSON.stringify({ isDiscoverable: false, _token: 'toggle-token' }),
         }));
-        expect(document.querySelector('[data-settings--profile-sharing-target="codeWrapper"]').hidden).toBe(true);
+        expect(document.querySelector('[data-profile-connection--profile-sharing-target="codeWrapper"]').hidden).toBe(false);
         expect(showSuccessToast).toHaveBeenCalledWith('Partage désactivé');
     });
 
-    it('regenerating sends the regenerate action and updates the displayed code', async () => {
+    it('regenerating sends the regenerate token and updates the displayed code', async () => {
         vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
             ok: true,
             json: () => Promise.resolve({ isDiscoverable: true, shareCode: 'ZZZ999' }),
@@ -90,11 +93,11 @@ describe('settings--profile-sharing controller', () => {
         document.querySelector('button[data-action$="#regenerate"]').click();
         await vi.waitFor(() => expect(showSuccessToast).toHaveBeenCalled());
 
-        expect(global.fetch).toHaveBeenCalledWith('/reglages/partage-de-profil', expect.objectContaining({
-            method: 'PATCH',
-            body: JSON.stringify({ action: 'regenerate', _token: 'token' }),
+        expect(global.fetch).toHaveBeenCalledWith('/connexions/partage/regenerer', expect.objectContaining({
+            method: 'POST',
+            body: JSON.stringify({ _token: 'regenerate-token' }),
         }));
-        expect(document.querySelector('[data-settings--profile-sharing-target="code"]').textContent).toBe('ZZZ999');
+        expect(document.querySelector('[data-profile-connection--profile-sharing-target="code"]').textContent).toBe('ZZZ999');
         expect(showSuccessToast).toHaveBeenCalledWith('Nouveau code généré');
     });
 

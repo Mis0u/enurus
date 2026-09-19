@@ -1,0 +1,52 @@
+{#
+    Variables attendues (via `only`) :
+    - isDiscoverable : bool
+    - shareCode : string|null
+    - nickname : string
+#}
+<section class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px]"
+         aria-labelledby="profile-connection-sharing-title"
+         data-controller="profile-connection--profile-sharing"
+         data-profile-connection--profile-sharing-toggle-url-value="{{ path('app_profile_connection_sharing_toggle') }}"
+         data-profile-connection--profile-sharing-regenerate-url-value="{{ path('app_profile_connection_sharing_regenerate') }}"
+         data-profile-connection--profile-sharing-toggle-token-value="{{ csrf_token('profile_connection_sharing_toggle') }}"
+         data-profile-connection--profile-sharing-regenerate-token-value="{{ csrf_token('profile_connection_sharing_regenerate') }}"
+         data-profile-connection--profile-sharing-enable-message-value="{{ 'profile_connection.list.sharing.feedback.enabled'|trans({}, 'navigation') }}"
+         data-profile-connection--profile-sharing-disable-message-value="{{ 'profile_connection.list.sharing.feedback.disabled'|trans({}, 'navigation') }}"
+         data-profile-connection--profile-sharing-regenerate-message-value="{{ 'profile_connection.list.sharing.feedback.regenerated'|trans({}, 'navigation') }}"
+         data-profile-connection--profile-sharing-copy-message-value="{{ 'profile_connection.list.sharing.feedback.copied'|trans({}, 'navigation') }}">
+
+    <h2 id="profile-connection-sharing-title" class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
+        {{ 'profile_connection.list.sharing.title'|trans({}, 'navigation') }}
+    </h2>
+    <p class="text-[13px] text-[#8b9bb4] mt-1">
+        {{ 'profile_connection.list.sharing.explanation'|trans({}, 'navigation') }}
+    </p>
+
+    <label class="mt-4 flex items-center justify-between gap-3 cursor-pointer">
+        <span class="text-sm text-[#f0f4ff]">{{ 'profile_connection.list.sharing.switch_label'|trans({}, 'navigation') }}</span>
+        <input type="checkbox"
+               class="h-5 w-5 rounded border-white/[0.15] bg-transparent text-rose-ft accent-rose-ft cursor-pointer"
+               {% if isDiscoverable %}checked{% endif %}
+               data-action="change->profile-connection--profile-sharing#toggle">
+    </label>
+
+    <div data-profile-connection--profile-sharing-target="codeWrapper" {% if not shareCode %}hidden{% endif %} class="mt-4 flex items-center justify-between gap-3 flex-wrap">
+        <p class="text-sm text-[#8b9bb4]">
+            {{ 'profile_connection.list.sharing.code_label'|trans({}, 'navigation') }}
+            <span class="font-mono text-[#f0f4ff]">{{ nickname }}#<span data-profile-connection--profile-sharing-target="code">{{ shareCode }}</span></span>
+        </p>
+        <div class="flex items-center gap-2">
+            <button type="button"
+                    class="px-3 py-1.5 rounded-[10px] text-[13px] font-semibold text-[#f0f4ff] bg-white/[0.06] hover:bg-white/[0.1] transition-ft"
+                    data-action="profile-connection--profile-sharing#copy">
+                {{ 'profile_connection.list.sharing.copy'|trans({}, 'navigation') }}
+            </button>
+            <button type="button"
+                    class="px-3 py-1.5 rounded-[10px] text-[13px] font-semibold text-[#f0f4ff] bg-white/[0.06] hover:bg-white/[0.1] transition-ft"
+                    data-action="profile-connection--profile-sharing#regenerate">
+                {{ 'profile_connection.list.sharing.regenerate'|trans({}, 'navigation') }}
+            </button>
+        </div>
+    </div>
+</section>

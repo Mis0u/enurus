@@ -422,13 +422,23 @@ profile_connection:
         request:
             help: "Inserisci l'alias seguito dal codice di condivisione della persona, ad esempio Misou#A7K2XM."
             label: "Alias#CODE"
-            placeholder: "Misou#A7K2XM"
-            settings_link: "Apri le mie impostazioni"
-            sharing_hint: "Perché gli altri possano trovarti, attiva la condivisione del profilo nelle impostazioni."
+            placeholder: "ALIAS#A7K2XM"
             submit: "Invia richiesta"
             title: "Aggiungi una connessione"
         sent:
             title: "Richieste inviate"
+        sharing:
+            code_label: "Il tuo codice di condivisione:"
+            copy: Copia
+            explanation: Rendi il tuo profilo rintracciabile da altri utenti tramite un codice unico, per condividere i vostri dashboard.
+            feedback:
+                copied: Codice copiato
+                disabled: Condivisione del profilo disattivata
+                enabled: Condivisione del profilo attivata
+                regenerated: Nuovo codice generato
+            regenerate: Rigenera codice
+            switch_label: Rendi il mio profilo rintracciabile
+            title: Condividi il mio profilo
         title: "Le mie connessioni"
 
 registration:
@@ -638,18 +648,6 @@ settings:
     profile:
         subtitle: Le tue informazioni personali
         title: Profilo
-    profile_sharing:
-        code_label: "Il tuo codice di condivisione:"
-        copy: Copia
-        explanation: Rendi il tuo profilo rintracciabile da altri utenti tramite un codice unico, per condividere i vostri dashboard.
-        feedback:
-            copied: Codice copiato
-            disabled: Condivisione del profilo disattivata
-            enabled: Condivisione del profilo attivata
-            regenerated: Nuovo codice generato
-        regenerate: Rigenera codice
-        switch_label: Rendi il mio profilo rintracciabile
-        title: Condivisione del profilo
     title: Impostazioni
     weight_unit:
         label: Unità di peso

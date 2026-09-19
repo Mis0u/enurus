@@ -41,6 +41,9 @@ final class ProfileConnectionListController extends AbstractController
         return $this->render('profile_connection/list/index.html.twig', [
             'overview' => $this->overviewService->forUser($user),
             'requestForm' => $this->createForm(ProfileConnectionRequestType::class),
+            'isDiscoverable' => $user->isDiscoverable,
+            'shareCode' => $user->shareCode,
+            'nickname' => $user->nickname,
         ]);
     }
 }

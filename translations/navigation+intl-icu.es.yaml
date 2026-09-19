@@ -422,13 +422,23 @@ profile_connection:
         request:
             help: "Introduce el alias seguido del código para compartir de la persona, por ejemplo Misou#A7K2XM."
             label: "Alias#CODE"
-            placeholder: "Misou#A7K2XM"
-            settings_link: "Abrir mis ajustes"
-            sharing_hint: "Para que otros puedan encontrarte, activa el uso compartido del perfil en tus ajustes."
+            placeholder: "ALIAS#A7K2XM"
             submit: "Enviar solicitud"
             title: "Añadir una conexión"
         sent:
             title: "Solicitudes enviadas"
+        sharing:
+            code_label: "Tu código de compartición:"
+            copy: Copiar
+            explanation: Haz que otros usuarios puedan encontrar tu perfil mediante un código único, para compartir vuestros paneles.
+            feedback:
+                copied: Código copiado
+                disabled: Compartición de perfil desactivada
+                enabled: Compartición de perfil activada
+                regenerated: Nuevo código generado
+            regenerate: Regenerar código
+            switch_label: Hacer que mi perfil sea localizable
+            title: Compartir mi perfil
         title: "Mis conexiones"
 
 registration:
@@ -638,18 +648,6 @@ settings:
     profile:
         subtitle: Tu información personal
         title: Perfil
-    profile_sharing:
-        code_label: "Tu código de compartición:"
-        copy: Copiar
-        explanation: Haz que otros usuarios puedan encontrar tu perfil mediante un código único, para compartir vuestros paneles.
-        feedback:
-            copied: Código copiado
-            disabled: Compartición de perfil desactivada
-            enabled: Compartición de perfil activada
-            regenerated: Nuevo código generado
-        regenerate: Regenerar código
-        switch_label: Hacer que mi perfil sea localizable
-        title: Compartir perfil
     title: Ajustes
     weight_unit:
         label: Unidad de peso

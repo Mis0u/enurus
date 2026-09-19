@@ -3,8 +3,11 @@
     Controller : ProfileConnectionListController (GET /{_locale}/connexions)
 
     Variables passées par le controller :
-      - overview    : ProfileConnectionOverview (demandes reçues, demandes envoyées, connexions acceptées)
-      - requestForm : FormView (saisie Alias#CODE, envoyée à ProfileConnectionRequestController)
+      - overview       : ProfileConnectionOverview (demandes reçues, demandes envoyées, connexions acceptées)
+      - requestForm    : FormView (saisie Alias#CODE, envoyée à ProfileConnectionRequestController)
+      - isDiscoverable : bool (partage de son propre profil activé)
+      - shareCode      : string|null (code de partage de l'utilisateur courant)
+      - nickname       : string (alias de l'utilisateur courant)
 #}
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
 
@@ -24,6 +27,12 @@
             <p class="text-[13px] text-[#8b9bb4]">
                 {{ 'profile_connection.list.intro'|trans({}, 'navigation') }}
             </p>
+
+            {% include 'profile_connection/list/_sharing_card.html.twig' with {
+                isDiscoverable: isDiscoverable,
+                shareCode: shareCode,
+                nickname: nickname,
+            } only %}
 
             {% include 'profile_connection/list/_request_form.html.twig' with {
                 requestForm: requestForm,

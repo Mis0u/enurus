@@ -422,13 +422,23 @@ profile_connection:
         request:
             help: "Voer de alias in, gevolgd door de deelcode van de persoon, bijvoorbeeld Misou#A7K2XM."
             label: "Alias#CODE"
-            placeholder: "Misou#A7K2XM"
-            settings_link: "Mijn instellingen openen"
-            sharing_hint: "Zet profiel delen aan in je instellingen zodat anderen je kunnen vinden."
+            placeholder: "ALIAS#A7K2XM"
             submit: "Verzoek versturen"
             title: "Verbinding toevoegen"
         sent:
             title: "Verzonden verzoeken"
+        sharing:
+            code_label: "Jouw deelcode:"
+            copy: Kopiëren
+            explanation: Maak je profiel vindbaar voor andere gebruikers via een unieke code, om jullie dashboards te delen.
+            feedback:
+                copied: Code gekopieerd
+                disabled: Profiel delen uitgeschakeld
+                enabled: Profiel delen ingeschakeld
+                regenerated: Nieuwe code gegenereerd
+            regenerate: Code opnieuw genereren
+            switch_label: Mijn profiel vindbaar maken
+            title: Mijn profiel delen
         title: "Mijn verbindingen"
 
 registration:
@@ -638,18 +648,6 @@ settings:
     profile:
         subtitle: Je persoonlijke informatie
         title: Profiel
-    profile_sharing:
-        code_label: "Jouw deelcode:"
-        copy: Kopiëren
-        explanation: Maak je profiel vindbaar voor andere gebruikers via een unieke code, om jullie dashboards te delen.
-        feedback:
-            copied: Code gekopieerd
-            disabled: Profiel delen uitgeschakeld
-            enabled: Profiel delen ingeschakeld
-            regenerated: Nieuwe code gegenereerd
-        regenerate: Code opnieuw genereren
-        switch_label: Mijn profiel vindbaar maken
-        title: Profiel delen
     title: Instellingen
     weight_unit:
         label: Gewichtseenheid

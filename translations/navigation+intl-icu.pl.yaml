@@ -426,13 +426,23 @@ profile_connection:
         request:
             help: "Wpisz alias, a po nim kod udostępniania danej osoby, na przykład Misou#A7K2XM."
             label: "Alias#CODE"
-            placeholder: "Misou#A7K2XM"
-            settings_link: "Otwórz moje ustawienia"
-            sharing_hint: "Aby inni mogli Cię znaleźć, włącz udostępnianie profilu w ustawieniach."
+            placeholder: "ALIAS#A7K2XM"
             submit: "Wyślij prośbę"
             title: "Dodaj połączenie"
         sent:
             title: "Wysłane prośby"
+        sharing:
+            code_label: "Twój kod udostępniania:"
+            copy: Kopiuj
+            explanation: Spraw, aby Twój profil był wykrywalny dla innych użytkowników dzięki unikalnemu kodowi, aby udostępniać sobie nawzajem pulpity.
+            feedback:
+                copied: Kod skopiowany
+                disabled: Udostępnianie profilu wyłączone
+                enabled: Udostępnianie profilu włączone
+                regenerated: Wygenerowano nowy kod
+            regenerate: Wygeneruj nowy kod
+            switch_label: Uczyń mój profil wykrywalnym
+            title: Udostępnij mój profil
         title: "Moje połączenia"
 
 registration:
@@ -648,18 +658,6 @@ settings:
     profile:
         subtitle: Twoje dane osobowe
         title: Profil
-    profile_sharing:
-        code_label: "Twój kod udostępniania:"
-        copy: Kopiuj
-        explanation: Spraw, aby Twój profil był wykrywalny dla innych użytkowników dzięki unikalnemu kodowi, aby udostępniać sobie nawzajem pulpity.
-        feedback:
-            copied: Kod skopiowany
-            disabled: Udostępnianie profilu wyłączone
-            enabled: Udostępnianie profilu włączone
-            regenerated: Wygenerowano nowy kod
-        regenerate: Wygeneruj nowy kod
-        switch_label: Uczyń mój profil wykrywalnym
-        title: Udostępnianie profilu
     title: Ustawienia
     weight_unit:
         label: Jednostka wagi

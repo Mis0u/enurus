@@ -422,13 +422,23 @@ profile_connection:
         request:
             help: "Enter the alias followed by the person's share code, for example Misou#A7K2XM."
             label: "Alias#CODE"
-            placeholder: "Misou#A7K2XM"
-            settings_link: "Open my settings"
-            sharing_hint: "To let others find you, turn on profile sharing in your settings."
+            placeholder: "ALIAS#A7K2XM"
             submit: "Send request"
             title: "Add a connection"
         sent:
             title: "Requests sent"
+        sharing:
+            code_label: "Your share code:"
+            copy: Copy
+            explanation: Make your profile discoverable by other users through a unique code, to share your dashboards with each other.
+            feedback:
+                copied: Code copied
+                disabled: Profile sharing disabled
+                enabled: Profile sharing enabled
+                regenerated: New code generated
+            regenerate: Regenerate code
+            switch_label: Make my profile discoverable
+            title: Share my profile
         title: "My connections"
 
 registration:
@@ -638,18 +648,6 @@ settings:
     profile:
         subtitle: Your personal information
         title: Profile
-    profile_sharing:
-        code_label: "Your share code:"
-        copy: Copy
-        explanation: Make your profile discoverable by other users through a unique code, to share your dashboards with each other.
-        feedback:
-            copied: Code copied
-            disabled: Profile sharing disabled
-            enabled: Profile sharing enabled
-            regenerated: New code generated
-        regenerate: Regenerate code
-        switch_label: Make my profile discoverable
-        title: Profile sharing
     title: Settings
     weight_unit:
         label: Weight unit
