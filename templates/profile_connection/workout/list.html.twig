@@ -1,3 +1,10 @@
+{#
+    Liste des séances d'une connexion, en lecture seule.
+    Controller : ProfileConnectionWorkoutListController (GET /{_locale}/connexions/{id}/seances)
+    Variables : connection, subject, pagination, tonnageMap, musclesMap, hiddenCountMap,
+    filterType, filterDate, routines, filterRoutine, limitAllowed, exerciseCountMap, hasPrMap,
+    hasRepsRecordMap — mêmes données que `workout/list/index.html.twig`, calculées pour `subject`.
+#}
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
 
 {% block stylesheets %}
@@ -5,25 +12,22 @@
     <link rel="stylesheet" href="{{ asset('styles/date-picker.css') }}">
 {% endblock %}
 
-{% block title %}{{ 'workout.list.title'|trans({}, 'navigation')|format_title }}{% endblock %}
+{% block title %}{{ 'profile_connection.workout.list.title'|trans({nickname: subject.nickname}, 'navigation')|format_title }}{% endblock %}
 
 {% block topbar %}
-    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {'title': 'workout.list.title'|trans({}, 'navigation'), 'subtitle': user.nickname|formatInitials} only %}
+    {% include 'profile_connection/dashboard/_banner.html.twig' with {subject: subject} only %}
 {% endblock %}
 
 {% block state %}
-    <div
-        class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]"
-        data-controller="workout--list--delete-modal"
-    >
+    <div class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]">
         {% include 'workout/list/_filters.html.twig' with {
             'filterType': filterType,
             'filterDate': filterDate,
             'routines': routines,
             'filterRoutine': filterRoutine,
             'pagination': pagination,
-            'route': 'app_workout_list',
-            'routeParams': {},
+            'route': 'app_profile_connection_workout_list',
+            'routeParams': {id: connection.id},
         } only %}
 
         {% if pagination.getTotalItemCount() == 0 %}
@@ -46,20 +50,19 @@
                         exerciseCount: exerciseCountMap[workout.id ~ ''] ?? 0,
                         hasPr: hasPrMap[workout.id] ?? false,
                         hasRepsRecord: hasRepsRecordMap[workout.id] ?? false,
-                        user: user,
-                        showUrl: path('app_workout_show', {id: workout.id}),
-                        readOnly: false,
+                        user: app.user,
+                        showUrl: path('app_profile_connection_workout_show', {id: connection.id, workoutId: workout.id}),
+                        readOnly: true,
                     } only %}
                 {% endfor %}
             </div>
 
             {% include '_pagination/_pagination.html.twig' with {
                 'pagination': pagination,
-                'route': 'app_workout_list',
-                'routeParams': {'filter': filterType, 'date': filterDate, 'routine': filterRoutine},
+                'route': 'app_profile_connection_workout_list',
+                'routeParams': {'id': connection.id, 'filter': filterType, 'date': filterDate, 'routine': filterRoutine},
                 'limitAllowed': limitAllowed,
             } only %}
         {% endif %}
-
     </div>
 {% endblock %}

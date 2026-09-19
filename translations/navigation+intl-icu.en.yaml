@@ -389,6 +389,7 @@ profile_connection:
         no_widgets: "{nickname} has decided not to display any data"
         no_workout: "{nickname} hasn't created a workout yet"
         title: "{nickname}'s dashboard"
+        view_workouts: "View their workouts"
     error:
         already_connected: "You are already connected."
         already_pending: "A request is already pending with this person."
@@ -443,10 +444,16 @@ profile_connection:
                 disabled: Profile sharing disabled
                 enabled: Profile sharing enabled
                 regenerated: New code generated
+                workouts_disabled: Workout sharing disabled
+                workouts_enabled: Workout sharing enabled
             regenerate: Regenerate code
+            share_workouts_label: "Also share my workouts (list and detail)"
             switch_label: Make my profile discoverable
             title: Share my profile
         title: "My connections"
+    workout:
+        list:
+            title: "{nickname}'s workouts"
 
 registration:
     account_created: Your account is created and ready to go

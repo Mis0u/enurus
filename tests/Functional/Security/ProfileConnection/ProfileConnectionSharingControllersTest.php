@@ -19,6 +19,8 @@ final class ProfileConnectionSharingControllersTest extends WebTestCase
 
     private const string REGENERATE_URL = '/fr/connexions/partage/regenerer';
 
+    private const string WORKOUT_TOGGLE_URL = '/fr/connexions/partage/seances';
+
     public function testEnablingSharingAssignsAShareCode(): void
     {
         $client = $this->login(self::ACTOR);
@@ -144,6 +146,93 @@ final class ProfileConnectionSharingControllersTest extends WebTestCase
         self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
+    public function testEnablingWorkoutSharingWhileDiscoverableWorks(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $this->makeDiscoverable($this->getUserByEmail(self::ACTOR), 'WWWWW1');
+        $token = $this->workoutToggleTokenFor($client);
+
+        $client->request(
+            Request::METHOD_PATCH,
+            self::WORKOUT_TOGGLE_URL,
+            server: [
+                'CONTENT_TYPE' => 'application/json',
+            ],
+            content: json_encode([
+                'shareWorkouts' => true,
+                '_token' => $token,
+            ], JSON_THROW_ON_ERROR),
+        );
+
+        self::assertResponseIsSuccessful();
+        self::assertTrue($this->getUserByEmail(self::ACTOR)->shareWorkouts);
+    }
+
+    public function testEnablingWorkoutSharingWhileNotDiscoverableIsRejected(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $token = $this->workoutToggleTokenFor($client);
+
+        $client->request(
+            Request::METHOD_PATCH,
+            self::WORKOUT_TOGGLE_URL,
+            server: [
+                'CONTENT_TYPE' => 'application/json',
+            ],
+            content: json_encode([
+                'shareWorkouts' => true,
+                '_token' => $token,
+            ], JSON_THROW_ON_ERROR),
+        );
+
+        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+        self::assertFalse($this->getUserByEmail(self::ACTOR)->shareWorkouts);
+    }
+
+    public function testInvalidCsrfTokenIsRejectedOnWorkoutToggle(): void
+    {
+        $client = $this->login(self::ACTOR);
+
+        $client->request(
+            Request::METHOD_PATCH,
+            self::WORKOUT_TOGGLE_URL,
+            server: [
+                'CONTENT_TYPE' => 'application/json',
+            ],
+            content: json_encode([
+                'shareWorkouts' => true,
+                '_token' => 'invalid',
+            ], JSON_THROW_ON_ERROR),
+        );
+
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
+
+    public function testDisablingProfileSharingCascadesToWorkoutSharing(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $actor = $this->getUserByEmail(self::ACTOR);
+        $this->makeDiscoverable($actor, 'WWWWW2');
+        $actor->shareWorkouts = true;
+        $this->entityManager()->flush();
+        $token = $this->toggleTokenFor($client);
+
+        $client->request(
+            Request::METHOD_PATCH,
+            self::TOGGLE_URL,
+            server: [
+                'CONTENT_TYPE' => 'application/json',
+            ],
+            content: json_encode([
+                'isDiscoverable' => false,
+                '_token' => $token,
+            ], JSON_THROW_ON_ERROR),
+        );
+
+        self::assertResponseIsSuccessful();
+        self::assertFalse($this->getUserByEmail(self::ACTOR)->shareWorkouts);
+    }
+
     private function toggleTokenFor(KernelBrowser $client): string
     {
         return $this->csrfTokenFromPage(
@@ -151,6 +240,16 @@ final class ProfileConnectionSharingControllersTest extends WebTestCase
             self::LIST_URL,
             '[data-profile-connection--profile-sharing-toggle-token-value]',
             'data-profile-connection--profile-sharing-toggle-token-value',
+        );
+    }
+
+    private function workoutToggleTokenFor(KernelBrowser $client): string
+    {
+        return $this->csrfTokenFromPage(
+            $client,
+            self::LIST_URL,
+            '[data-profile-connection--profile-sharing-workout-toggle-token-value]',
+            'data-profile-connection--profile-sharing-workout-toggle-token-value',
         );
     }
 

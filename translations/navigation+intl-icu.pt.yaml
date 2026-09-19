@@ -389,6 +389,7 @@ profile_connection:
         no_widgets: "{nickname} decidiu não mostrar nenhum dado"
         no_workout: "{nickname} ainda não criou nenhum treino"
         title: "Painel de {nickname}"
+        view_workouts: "Ver os treinos dele/dela"
     error:
         already_connected: "Já estão conectados."
         already_pending: "Já existe um pedido pendente com esta pessoa."
@@ -443,10 +444,16 @@ profile_connection:
                 disabled: Partilha de perfil desativada
                 enabled: Partilha de perfil ativada
                 regenerated: Novo código gerado
+                workouts_disabled: Partilha de treinos desativada
+                workouts_enabled: Partilha de treinos ativada
             regenerate: Gerar novo código
+            share_workouts_label: "Partilhar também os meus treinos (lista e detalhe)"
             switch_label: Tornar o meu perfil detetável
             title: Partilhar o meu perfil
         title: "As minhas conexões"
+    workout:
+        list:
+            title: "Treinos de {nickname}"
 
 registration:
     account_created: A tua conta está criada e pronta a usar

@@ -53,11 +53,13 @@ final class ProfileConnectionDashboardController extends AbstractController
         if (0 === $dashboardState->workoutCount) {
             return $this->render('profile_connection/dashboard/empty.html.twig', [
                 'subject' => $subject,
+                'connection' => $connection,
             ]);
         }
 
         return $this->render('profile_connection/dashboard/index.html.twig', [
             'subject' => $subject,
+            'connection' => $connection,
             'data' => $this->viewDataBuilder->build($subject, $viewer, $dashboardState),
         ]);
     }

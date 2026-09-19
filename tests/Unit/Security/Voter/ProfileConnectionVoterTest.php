@@ -58,6 +58,41 @@ final class ProfileConnectionVoterTest extends TestCase
         self::assertSame(Voter::ACCESS_DENIED, $this->voteView($requester, $connection));
     }
 
+    public function testCanViewWorkoutsWhenTheCounterpartSharesThem(): void
+    {
+        $connection = $this->createConnection(
+            $requester = $this->createDiscoverableUser(),
+            $addressee = $this->createDiscoverableUser(sharesWorkouts: true),
+            ProfileConnectionStatusEnum::ACCEPTED,
+        );
+
+        self::assertSame(Voter::ACCESS_GRANTED, $this->voteViewWorkouts($requester, $connection));
+    }
+
+    public function testCannotViewWorkoutsWhenTheCounterpartDoesNotShareThem(): void
+    {
+        $connection = $this->createConnection(
+            $requester = $this->createDiscoverableUser(),
+            $addressee = $this->createDiscoverableUser(),
+            ProfileConnectionStatusEnum::ACCEPTED,
+        );
+
+        self::assertSame(Voter::ACCESS_DENIED, $this->voteViewWorkouts($requester, $connection));
+    }
+
+    public function testDoesNotNeedToShareOwnWorkoutsToViewTheCounterparts(): void
+    {
+        $connection = $this->createConnection(
+            $requester = $this->createDiscoverableUser(),
+            $addressee = $this->createDiscoverableUser(sharesWorkouts: true),
+            ProfileConnectionStatusEnum::ACCEPTED,
+        );
+
+        // $requester ne partage pas ses propres séances (sharesWorkouts: false par défaut) —
+        // ce n'est pas réciproque, il peut quand même voir celles de $addressee.
+        self::assertSame(Voter::ACCESS_GRANTED, $this->voteViewWorkouts($requester, $connection));
+    }
+
     /**
      * @return iterable<string, array{ProfileConnectionStatusEnum}>
      */
@@ -153,6 +188,11 @@ final class ProfileConnectionVoterTest extends TestCase
         return $this->voter->vote($this->tokenFor($user), $connection, [ProfileConnectionVoter::VIEW]);
     }
 
+    private function voteViewWorkouts(User $user, ProfileConnection $connection): int
+    {
+        return $this->voter->vote($this->tokenFor($user), $connection, [ProfileConnectionVoter::VIEW_WORKOUTS]);
+    }
+
     private function tokenFor(User $user): TokenInterface
     {
         $token = $this->createStub(TokenInterface::class);
@@ -161,10 +201,11 @@ final class ProfileConnectionVoterTest extends TestCase
         return $token;
     }
 
-    private function createDiscoverableUser(): User
+    private function createDiscoverableUser(bool $sharesWorkouts = false): User
     {
         $user = new User();
         $user->isDiscoverable = true;
+        $user->shareWorkouts = $sharesWorkouts;
 
         return $user;
     }

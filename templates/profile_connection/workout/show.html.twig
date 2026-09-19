@@ -1,3 +1,8 @@
+{#
+    Détail d'une séance d'une connexion, en lecture seule.
+    Controller : ProfileConnectionWorkoutShowController
+    (GET /{_locale}/connexions/{id}/seances/{workoutId})
+#}
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
 
 {% block stylesheets %}
@@ -8,10 +13,7 @@
 {% block title %}{{ 'workout.show.title'|trans({}, 'navigation')|format_title }}{% endblock %}
 
 {% block topbar %}
-    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
-        'title': workout.routine is not null ? workout.routine.name : 'workout.list.free_session'|trans({}, 'navigation'),
-        'subtitle': user.nickname|formatInitials,
-    } only %}
+    {% include 'profile_connection/dashboard/_banner.html.twig' with {subject: subject} only %}
 {% endblock %}
 
 {% block state %}
@@ -27,8 +29,8 @@
             'workout': workout,
             'totalTonnage': totalTonnage,
             'unit': unit,
-            'backUrl': path('app_workout_list'),
-            'readOnly': false,
+            'backUrl': path('app_profile_connection_workout_list', {id: connection.id}),
+            'readOnly': true,
         } only %}
         {% include 'workout/show/_share_card.html.twig' with {
             'workout': workout,
@@ -37,7 +39,7 @@
             'totalSets': totalSets,
             'totalReps': totalReps,
             'unit': unit,
-            'user': user,
+            'user': subject,
             'allPrimarySvgIds': allPrimarySvgIds,
             'allSecondarySvgIds': allSecondarySvgIds,
         } only %}
@@ -52,7 +54,7 @@
                 'unit': unit,
             } only %}
             {% include 'workout/show/_muscles.html.twig' with {
-                'user': user,
+                'user': subject,
                 'allPrimarySvgIds': allPrimarySvgIds,
                 'allSecondarySvgIds': allSecondarySvgIds,
             } only %}

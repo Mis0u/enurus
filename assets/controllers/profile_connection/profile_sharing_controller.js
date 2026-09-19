@@ -2,18 +2,22 @@ import { Controller } from '@hotwired/stimulus';
 import { showSuccessToast, showErrorToast } from '../../utils/toast.js';
 
 export default class extends Controller {
-    static targets = ['code', 'fullCode', 'codeWrapper'];
+    static targets = ['code', 'fullCode', 'codeWrapper', 'workoutCheckbox'];
 
     static values = {
         toggleUrl: String,
         regenerateUrl: String,
+        workoutToggleUrl: String,
         toggleToken: String,
         regenerateToken: String,
+        workoutToggleToken: String,
         enableMessage: String,
         disableMessage: String,
         regenerateMessage: String,
         copyMessage: String,
         copyErrorMessage: String,
+        enableWorkoutsMessage: String,
+        disableWorkoutsMessage: String,
     };
 
     async toggle(event) {
@@ -32,12 +36,35 @@ export default class extends Controller {
 
             const data = await response.json();
             this.#applyShareCode(data.shareCode);
+            this.#applyWorkoutSharing(data.shareWorkouts, isDiscoverable);
             window.dispatchEvent(new CustomEvent('profile-connection:sharing-changed', {
                 detail: { isDiscoverable: data.isDiscoverable },
             }));
             showSuccessToast(isDiscoverable ? this.enableMessageValue : this.disableMessageValue);
         } catch {
             // Échec silencieux volontaire — même pattern que dashboard_widgets_controller.js.
+        }
+    }
+
+    async toggleWorkouts(event) {
+        const shareWorkouts = event.target.checked;
+
+        try {
+            const response = await fetch(this.workoutToggleUrlValue, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ shareWorkouts, _token: this.workoutToggleTokenValue }),
+            });
+
+            if (! response.ok) {
+                event.target.checked = ! shareWorkouts;
+
+                return;
+            }
+
+            showSuccessToast(shareWorkouts ? this.enableWorkoutsMessageValue : this.disableWorkoutsMessageValue);
+        } catch {
+            event.target.checked = ! shareWorkouts;
         }
     }
 
@@ -130,5 +157,17 @@ export default class extends Controller {
         if (this.hasCodeWrapperTarget) {
             this.codeWrapperTarget.hidden = false;
         }
+    }
+
+    // Le partage des séances est un opt-in secondaire qui dépend du partage de profil : dès que
+    // celui-ci se coupe, la case doit se décocher et se désactiver dans le même geste (le serveur
+    // a déjà forcé shareWorkouts à faux en cascade — cf. ProfileConnectionSharingToggleController).
+    #applyWorkoutSharing(shareWorkouts, isDiscoverable) {
+        if (! this.hasWorkoutCheckboxTarget) {
+            return;
+        }
+
+        this.workoutCheckboxTarget.checked = shareWorkouts;
+        this.workoutCheckboxTarget.disabled = ! isDiscoverable;
     }
 }

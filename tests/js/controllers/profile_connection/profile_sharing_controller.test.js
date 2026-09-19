@@ -19,19 +19,26 @@ describe('profile-connection--profile-sharing controller', () => {
             <div data-controller="profile-connection--profile-sharing"
                  data-profile-connection--profile-sharing-toggle-url-value="/connexions/partage"
                  data-profile-connection--profile-sharing-regenerate-url-value="/connexions/partage/regenerer"
+                 data-profile-connection--profile-sharing-workout-toggle-url-value="/connexions/partage/seances"
                  data-profile-connection--profile-sharing-toggle-token-value="toggle-token"
                  data-profile-connection--profile-sharing-regenerate-token-value="regenerate-token"
+                 data-profile-connection--profile-sharing-workout-toggle-token-value="workout-toggle-token"
                  data-profile-connection--profile-sharing-enable-message-value="Partage activé"
                  data-profile-connection--profile-sharing-disable-message-value="Partage désactivé"
                  data-profile-connection--profile-sharing-regenerate-message-value="Nouveau code généré"
                  data-profile-connection--profile-sharing-copy-message-value="Code copié"
-                 data-profile-connection--profile-sharing-copy-error-message-value="Erreur de copie">
+                 data-profile-connection--profile-sharing-copy-error-message-value="Erreur de copie"
+                 data-profile-connection--profile-sharing-enable-workouts-message-value="Partage des séances activé"
+                 data-profile-connection--profile-sharing-disable-workouts-message-value="Partage des séances désactivé">
                 <input type="checkbox" data-action="change->profile-connection--profile-sharing#toggle">
                 <div data-profile-connection--profile-sharing-target="codeWrapper" hidden>
                     <span data-profile-connection--profile-sharing-target="fullCode">Misou#<span data-profile-connection--profile-sharing-target="code">ABC123</span></span>
                     <button type="button" data-action="profile-connection--profile-sharing#copy">Copier</button>
                     <button type="button" data-action="profile-connection--profile-sharing#regenerate">Régénérer</button>
                 </div>
+                <input type="checkbox"
+                       data-profile-connection--profile-sharing-target="workoutCheckbox"
+                       data-action="change->profile-connection--profile-sharing#toggleWorkouts">
             </div>
         `;
 
@@ -48,7 +55,7 @@ describe('profile-connection--profile-sharing controller', () => {
     it('enabling sends isDiscoverable: true, reveals the code and dispatches a sharing-changed event', async () => {
         vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
             ok: true,
-            json: () => Promise.resolve({ isDiscoverable: true, shareCode: 'NEW123' }),
+            json: () => Promise.resolve({ isDiscoverable: true, shareCode: 'NEW123', shareWorkouts: false }),
         }));
         const listener = vi.fn();
         window.addEventListener('profile-connection:sharing-changed', listener);
@@ -66,14 +73,33 @@ describe('profile-connection--profile-sharing controller', () => {
         expect(document.querySelector('[data-profile-connection--profile-sharing-target="code"]').textContent).toBe('NEW123');
         expect(showSuccessToast).toHaveBeenCalledWith('Partage activé');
         expect(listener).toHaveBeenCalledWith(expect.objectContaining({ detail: { isDiscoverable: true } }));
+        expect(document.querySelector('[data-profile-connection--profile-sharing-target="workoutCheckbox"]').disabled).toBe(false);
 
         window.removeEventListener('profile-connection:sharing-changed', listener);
+    });
+
+    it('disabling unchecks and disables the workout-sharing checkbox (server-side cascade reflected client-side)', async () => {
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+            ok: true,
+            json: () => Promise.resolve({ isDiscoverable: false, shareCode: 'ABC123', shareWorkouts: false }),
+        }));
+        const workoutCheckbox = document.querySelector('[data-profile-connection--profile-sharing-target="workoutCheckbox"]');
+        workoutCheckbox.checked = true;
+        workoutCheckbox.disabled = false;
+
+        const checkbox = document.querySelector('input[data-action$="#toggle"]');
+        checkbox.checked = false;
+        checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        await vi.waitFor(() => expect(showSuccessToast).toHaveBeenCalled());
+
+        expect(workoutCheckbox.checked).toBe(false);
+        expect(workoutCheckbox.disabled).toBe(true);
     });
 
     it('disabling sends isDiscoverable: false, keeps the code visible and dispatches a sharing-changed event', async () => {
         vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
             ok: true,
-            json: () => Promise.resolve({ isDiscoverable: false, shareCode: 'ABC123' }),
+            json: () => Promise.resolve({ isDiscoverable: false, shareCode: 'ABC123', shareWorkouts: false }),
         }));
         document.querySelector('[data-profile-connection--profile-sharing-target="codeWrapper"]').hidden = false;
         const listener = vi.fn();
@@ -93,6 +119,33 @@ describe('profile-connection--profile-sharing controller', () => {
         expect(listener).toHaveBeenCalledWith(expect.objectContaining({ detail: { isDiscoverable: false } }));
 
         window.removeEventListener('profile-connection:sharing-changed', listener);
+    });
+
+    it('toggling workout sharing on sends shareWorkouts: true and toasts success', async () => {
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true }));
+
+        const workoutCheckbox = document.querySelector('[data-profile-connection--profile-sharing-target="workoutCheckbox"]');
+        workoutCheckbox.checked = true;
+        workoutCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+        await vi.waitFor(() => expect(showSuccessToast).toHaveBeenCalled());
+
+        expect(global.fetch).toHaveBeenCalledWith('/connexions/partage/seances', expect.objectContaining({
+            method: 'PATCH',
+            body: JSON.stringify({ shareWorkouts: true, _token: 'workout-toggle-token' }),
+        }));
+        expect(showSuccessToast).toHaveBeenCalledWith('Partage des séances activé');
+    });
+
+    it('reverts the checkbox when the server rejects the workout-sharing toggle', async () => {
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false }));
+
+        const workoutCheckbox = document.querySelector('[data-profile-connection--profile-sharing-target="workoutCheckbox"]');
+        workoutCheckbox.checked = true;
+        workoutCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+        await vi.waitFor(() => expect(global.fetch).toHaveBeenCalled());
+
+        expect(workoutCheckbox.checked).toBe(false);
+        expect(showSuccessToast).not.toHaveBeenCalled();
     });
 
     it('regenerating sends the regenerate token and updates the displayed code', async () => {

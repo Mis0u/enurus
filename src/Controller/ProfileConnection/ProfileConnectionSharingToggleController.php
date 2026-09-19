@@ -58,11 +58,18 @@ final class ProfileConnectionSharingToggleController extends AbstractController
             $this->shareCodeAssigner->assign($user);
         }
 
+        // Cascade : le partage des séances est un opt-in secondaire qui ne peut jamais rester actif
+        // une fois le partage de profil coupé.
+        if (! $isDiscoverable) {
+            $user->shareWorkouts = false;
+        }
+
         $this->em->flush();
 
         return $this->json([
             'isDiscoverable' => $user->isDiscoverable,
             'shareCode' => $user->shareCode,
+            'shareWorkouts' => $user->shareWorkouts,
         ]);
     }
 }

@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Workout;
+namespace App\Controller\ProfileConnection;
 
+use App\Entity\ProfileConnection;
 use App\Entity\Routine;
 use App\Entity\User;
 use App\Repository\RoutineRepository;
+use App\Security\Voter\ProfileConnectionVoter;
 use App\Service\Workout\WorkoutListViewDataBuilder;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,40 +17,51 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class WorkoutListController extends AbstractController
+/**
+ * Liste des séances d'une connexion, en lecture seule — même filtres et pagination que
+ * `WorkoutListController`, réutilisés via `WorkoutListViewDataBuilder`. L'identifiant de la route
+ * est celui de la `ProfileConnection`, jamais celui du compte affiché.
+ */
+#[Route(path: [
+    'fr' => '/connexions/{id}/seances',
+    'en' => '/connections/{id}/workouts',
+    'it' => '/connessioni/{id}/allenamenti',
+    'es' => '/conexiones/{id}/entrenamientos',
+    'pt' => '/conexoes/{id}/treinos',
+    'de' => '/verbindungen/{id}/trainings',
+    'nl' => '/verbindingen/{id}/trainingen',
+    'pl' => '/polaczenia/{id}/treningi',
+], name: 'app_profile_connection_workout_list', methods: ['GET'])]
+#[IsGranted('ROLE_USER')]
+final class ProfileConnectionWorkoutListController extends AbstractController
 {
     private const int DISPLAY_LIMIT_BY_DEFAULT = 10;
 
     private const array DISPLAY_LIMIT_ALLOWED = [10, 25, 50];
 
-    #[Route(path: [
-        'fr' => '/mes-seances',
-        'en' => '/my-workouts',
-        'it' => '/i-miei-allenamenti',
-        'es' => '/mis-entrenamientos',
-        'pt' => '/os-meus-treinos',
-        'de' => '/meine-trainings',
-        'nl' => '/mijn-trainingen',
-        'pl' => '/moje-treningi',
-    ], name: 'app_workout_list')]
-    #[IsGranted('ROLE_USER')]
-    public function index(
-        Request $request,
-        RoutineRepository $routineRepository,
-        WorkoutListViewDataBuilder $viewDataBuilder,
-    ): Response {
-        /** @var User $user */
-        $user = $this->getUser();
+    public function __construct(
+        private readonly RoutineRepository $routineRepository,
+        private readonly WorkoutListViewDataBuilder $viewDataBuilder,
+    ) {
+    }
+
+    #[IsGranted(ProfileConnectionVoter::VIEW_WORKOUTS, subject: 'connection')]
+    public function __invoke(ProfileConnection $connection, Request $request): Response
+    {
+        $viewer = $this->getUser();
+
+        if (! $viewer instanceof User) {
+            throw new \LogicException('User must be authenticated.');
+        }
+
+        $subject = $connection->counterpartOf($viewer);
 
         /** @var array<Routine> $routines */
-        $routines = $routineRepository->findByOwnerOrderedByDate($user)->getQuery()->getResult();
+        $routines = $this->routineRepository->findByOwnerOrderedByDate($subject)->getQuery()->getResult();
 
         $filters = $this->resolveFilters($request, $routines);
         $filterType = in_array($filters['type'] ?? null, ['week', 'month'], true) ? $filters['type'] : null;
         $filterDate = $request->query->get('date');
-        // Dérivé du filtre résolu (pas de la valeur brute de la query string) : une routine
-        // inconnue ou appartenant à un autre utilisateur est ignorée, le select ne doit alors
-        // afficher aucune sélection plutôt que refléter une valeur invalide.
         $filterRoutine = match (true) {
             'free' === ($filters['routine'] ?? null) => 'free',
             ($filters['routine'] ?? null) instanceof Routine => (string) $filters['routine']->id,
@@ -58,10 +71,11 @@ class WorkoutListController extends AbstractController
         $limit = $request->query->getInt('limit', self::DISPLAY_LIMIT_BY_DEFAULT);
         $limit = in_array($limit, self::DISPLAY_LIMIT_ALLOWED, true) ? $limit : self::DISPLAY_LIMIT_BY_DEFAULT;
 
-        $data = $viewDataBuilder->build($user, $user, $filters, $request->query->getInt('page', 1), $limit);
+        $data = $this->viewDataBuilder->build($subject, $viewer, $filters, $request->query->getInt('page', 1), $limit);
 
-        return $this->render('workout/list/index.html.twig', [
-            'user' => $user,
+        return $this->render('profile_connection/workout/list.html.twig', [
+            'connection' => $connection,
+            'subject' => $subject,
             'pagination' => $data['pagination'],
             'tonnageMap' => $data['tonnageMap'],
             'musclesMap' => $data['musclesMap'],
@@ -78,7 +92,7 @@ class WorkoutListController extends AbstractController
     }
 
     /**
-     * @param array<Routine> $routines routines de l'utilisateur, pour résoudre/valider le filtre
+     * @param array<Routine> $routines
      * @return array{type?: string, value?: DateTimeImmutable, routine?: 'free'|Routine}
      */
     private function resolveFilters(Request $request, array $routines): array
@@ -102,8 +116,6 @@ class WorkoutListController extends AbstractController
 
         $routineFilter = $this->resolveRoutineFilter($request, $routines);
 
-        // Le filtre date est exclusif : combiné à une routine, il n'apporte rien puisqu'une
-        // journée ne contient jamais qu'une poignée de séances. semaine/mois restent combinables.
         if (null !== $routineFilter && 'date' !== ($filters['type'] ?? null)) {
             $filters['routine'] = $routineFilter;
         }
@@ -133,8 +145,6 @@ class WorkoutListController extends AbstractController
             }
         }
 
-        // Routine inconnue ou n'appartenant pas à l'utilisateur : filtre silencieusement ignoré,
-        // même logique que pour un filtre de période inconnu.
         return null;
     }
 }

@@ -10,6 +10,12 @@
 
 {% block state %}
     <div class="flex-1 overflow-y-auto p-4 max-md:pb-[160px] md:p-[24px_28px]">
+        {% if subject.shareWorkouts %}
+            <a href="{{ path('app_profile_connection_workout_list', {id: connection.id}) }}"
+               class="inline-flex items-center gap-2 mb-4 text-[13px] font-medium text-rose-ft hover:opacity-80 transition-ft">
+                {{ 'profile_connection.dashboard.view_workouts'|trans({}, 'navigation') }}
+            </a>
+        {% endif %}
         {% include 'dashboard/_dashboard_grid.html.twig' with {
             data: data,
             subject: subject,

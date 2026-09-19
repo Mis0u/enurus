@@ -389,6 +389,7 @@ profile_connection:
         no_widgets: "{nickname} hat entschieden, keine Daten anzuzeigen"
         no_workout: "{nickname} hat noch kein Training erstellt"
         title: "Übersicht von {nickname}"
+        view_workouts: "Trainings ansehen"
     error:
         already_connected: "Ihr seid bereits verbunden."
         already_pending: "Mit dieser Person ist bereits eine Anfrage offen."
@@ -443,10 +444,16 @@ profile_connection:
                 disabled: Profilfreigabe deaktiviert
                 enabled: Profilfreigabe aktiviert
                 regenerated: Neuer Code generiert
+                workouts_disabled: Trainingsfreigabe deaktiviert
+                workouts_enabled: Trainingsfreigabe aktiviert
             regenerate: Code neu generieren
+            share_workouts_label: "Auch meine Trainings teilen (Liste und Detail)"
             switch_label: Mein Profil auffindbar machen
             title: Mein Profil teilen
         title: "Meine Verbindungen"
+    workout:
+        list:
+            title: "Trainings von {nickname}"
 
 registration:
     account_created: Dein Konto ist erstellt und einsatzbereit

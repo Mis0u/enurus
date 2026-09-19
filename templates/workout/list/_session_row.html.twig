@@ -1,7 +1,13 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - workout, tonnage, muscles, hiddenCount, exerciseCount, hasPr, hasRepsRecord, user
+    - showUrl : string — URL de destination au clic (propre séance ou séance d'une connexion)
+    - readOnly : bool — masque les boutons d'édition/suppression quand vrai
+#}
 <div
     class="group bg-[#0f1928] border border-white/[0.07] rounded-xl px-5 py-4 grid grid-cols-[180px_1fr_auto] max-md:grid-cols-1 gap-5 max-md:gap-3 items-center cursor-pointer relative overflow-hidden transition-all duration-250 hover:border-white/[0.12] hover:bg-[#151f30] hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
     style="animation: fadeUp 0.3s ease both;"
-    onclick="window.location.href='{{ path('app_workout_show', {'id': workout.id}) }}'"
+    onclick="window.location.href='{{ showUrl }}'"
 >
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(244,63,94,0.03),transparent_60%)] pointer-events-none"></div>
 
@@ -26,11 +32,13 @@
         } only %}
     </div>
 
-    <div class="flex items-center gap-2 max-md:justify-end" onclick="event.stopPropagation()">
+    {% if not readOnly %}
+        <div class="flex items-center gap-2 max-md:justify-end" onclick="event.stopPropagation()">
 
-        {% include 'workout/list/Session/_edit_button.html.twig' with {'workout': workout} only %}
+            {% include 'workout/list/Session/_edit_button.html.twig' with {'workout': workout} only %}
 
-        {% include 'workout/list/Session/_delete_button.html.twig' with {'workout': workout} only %}
-    </div>
+            {% include 'workout/list/Session/_delete_button.html.twig' with {'workout': workout} only %}
+        </div>
+    {% endif %}
 
 </div>

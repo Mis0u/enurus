@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Security\Voter;
 
 use App\Entity\ProfileConnection;
+use App\Entity\User;
 use App\Enum\Entity\ProfileConnection\ProfileConnectionStatusEnum;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -26,6 +27,14 @@ final class ProfileConnectionVoter extends Voter
     public const string VIEW = 'PROFILE_CONNECTION_VIEW';
 
     /**
+     * Voir la liste et le détail des séances de l'autre partie : en plus de tout ce qu'exige
+     * `VIEW`, le propriétaire des séances doit avoir explicitement activé `shareWorkouts` — opt-in
+     * secondaire, jamais requis dans l'autre sens (voir ses propres séances n'est pas une
+     * condition pour consulter celles de l'autre, ce n'est pas réciproque).
+     */
+    public const string VIEW_WORKOUTS = 'PROFILE_CONNECTION_VIEW_WORKOUTS';
+
+    /**
      * Accepter ou refuser : réservé au destinataire. L'état de la demande (encore en attente ?)
      * n'est pas vérifié ici mais par `ProfileConnectionResponseService`.
      */
@@ -43,6 +52,7 @@ final class ProfileConnectionVoter extends Voter
 
     private const array SUPPORTED_ATTRIBUTES = [
         self::VIEW,
+        self::VIEW_WORKOUTS,
         self::RESPOND,
         self::CANCEL,
         self::REVOKE,
@@ -62,14 +72,20 @@ final class ProfileConnectionVoter extends Voter
         }
 
         return match ($attribute) {
-            self::VIEW => ProfileConnectionStatusEnum::ACCEPTED === $subject->status
-                && $subject->involves($user)
-                && $user->isDiscoverable
-                && $subject->counterpartOf($user)->isDiscoverable,
+            self::VIEW => $this->canView($subject, $user),
+            self::VIEW_WORKOUTS => $this->canView($subject, $user) && $subject->counterpartOf($user)->shareWorkouts,
             self::RESPOND => $subject->addressee === $user,
             self::CANCEL => $subject->requester === $user,
             self::REVOKE => $subject->involves($user),
             default => false,
         };
+    }
+
+    private function canView(ProfileConnection $connection, User $user): bool
+    {
+        return ProfileConnectionStatusEnum::ACCEPTED === $connection->status
+            && $connection->involves($user)
+            && $user->isDiscoverable
+            && $connection->counterpartOf($user)->isDiscoverable;
     }
 }

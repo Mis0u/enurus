@@ -292,6 +292,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Opt-in secondaire, dépendant de `isDiscoverable` : autorise en plus les connexions acceptées
+     * à consulter la liste et le détail de ses séances (pas seulement le dashboard). Ne peut être
+     * vrai que si `isDiscoverable` l'est aussi — désactiver le partage de profil repasse toujours
+     * ce champ à faux (cascade appliquée par `ProfileConnectionSharingToggleController`, jamais
+     * ici : un simple setter ne doit pas dépendre de l'état d'une autre propriété au moment de
+     * l'appel).
+     */
+    #[ORM\Column(options: [
+        'default' => false,
+    ])]
+    public bool $shareWorkouts = false {
+        get {
+            return $this->shareWorkouts;
+        }
+        set(bool $shareWorkouts) {
+            $this->shareWorkouts = $shareWorkouts;
+        }
+    }
+
+    /**
      * Toujours en kg (même convention que ExerciseSet::weight) — conversion à l'affichage/la
      * saisie via WeightConverterService selon unitOfMeasure. Optionnel : sert uniquement à
      * calculer le tonnage des exercices "au poids de corps" (Exercise::bodyweightPercent).

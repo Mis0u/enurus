@@ -2,6 +2,7 @@
     Variables attendues (via `only`) :
     - isDiscoverable : bool
     - shareCode : string|null
+    - shareWorkouts : bool
     - nickname : string
 #}
 <section class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px]"
@@ -9,13 +10,17 @@
          data-controller="profile-connection--profile-sharing"
          data-profile-connection--profile-sharing-toggle-url-value="{{ path('app_profile_connection_sharing_toggle') }}"
          data-profile-connection--profile-sharing-regenerate-url-value="{{ path('app_profile_connection_sharing_regenerate') }}"
+         data-profile-connection--profile-sharing-workout-toggle-url-value="{{ path('app_profile_connection_workout_sharing_toggle') }}"
          data-profile-connection--profile-sharing-toggle-token-value="{{ csrf_token('profile_connection_sharing_toggle') }}"
          data-profile-connection--profile-sharing-regenerate-token-value="{{ csrf_token('profile_connection_sharing_regenerate') }}"
+         data-profile-connection--profile-sharing-workout-toggle-token-value="{{ csrf_token('profile_connection_workout_sharing_toggle') }}"
          data-profile-connection--profile-sharing-enable-message-value="{{ 'profile_connection.list.sharing.feedback.enabled'|trans({}, 'navigation') }}"
          data-profile-connection--profile-sharing-disable-message-value="{{ 'profile_connection.list.sharing.feedback.disabled'|trans({}, 'navigation') }}"
          data-profile-connection--profile-sharing-regenerate-message-value="{{ 'profile_connection.list.sharing.feedback.regenerated'|trans({}, 'navigation') }}"
          data-profile-connection--profile-sharing-copy-message-value="{{ 'profile_connection.list.sharing.feedback.copied'|trans({}, 'navigation') }}"
-         data-profile-connection--profile-sharing-copy-error-message-value="{{ 'profile_connection.list.sharing.feedback.copy_error'|trans({}, 'navigation') }}">
+         data-profile-connection--profile-sharing-copy-error-message-value="{{ 'profile_connection.list.sharing.feedback.copy_error'|trans({}, 'navigation') }}"
+         data-profile-connection--profile-sharing-enable-workouts-message-value="{{ 'profile_connection.list.sharing.feedback.workouts_enabled'|trans({}, 'navigation') }}"
+         data-profile-connection--profile-sharing-disable-workouts-message-value="{{ 'profile_connection.list.sharing.feedback.workouts_disabled'|trans({}, 'navigation') }}">
 
     <h2 id="profile-connection-sharing-title" class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
         {{ 'profile_connection.list.sharing.title'|trans({}, 'navigation') }}
@@ -50,4 +55,14 @@
             </button>
         </div>
     </div>
+
+    <label class="mt-4 flex items-center justify-between gap-3 {% if isDiscoverable %}cursor-pointer{% else %}cursor-not-allowed{% endif %}">
+        <span class="text-sm text-[#f0f4ff]">{{ 'profile_connection.list.sharing.share_workouts_label'|trans({}, 'navigation') }}</span>
+        <input type="checkbox"
+               class="h-5 w-5 rounded border-white/[0.15] bg-transparent text-rose-ft accent-rose-ft cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+               {% if shareWorkouts %}checked{% endif %}
+               {% if not isDiscoverable %}disabled{% endif %}
+               data-profile-connection--profile-sharing-target="workoutCheckbox"
+               data-action="change->profile-connection--profile-sharing#toggleWorkouts">
+    </label>
 </section>

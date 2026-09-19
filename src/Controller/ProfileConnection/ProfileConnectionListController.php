@@ -43,6 +43,7 @@ final class ProfileConnectionListController extends AbstractController
             'requestForm' => $this->createForm(ProfileConnectionRequestType::class),
             'isDiscoverable' => $user->isDiscoverable,
             'shareCode' => $user->shareCode,
+            'shareWorkouts' => $user->shareWorkouts,
             'nickname' => $user->nickname,
         ]);
     }

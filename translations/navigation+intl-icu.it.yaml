@@ -389,6 +389,7 @@ profile_connection:
         no_widgets: "{nickname} ha deciso di non mostrare alcun dato"
         no_workout: "{nickname} non ha ancora creato nessun allenamento"
         title: "Cruscotto di {nickname}"
+        view_workouts: "Vedi i suoi allenamenti"
     error:
         already_connected: "Siete già connessi."
         already_pending: "C'è già una richiesta in sospeso con questa persona."
@@ -443,10 +444,16 @@ profile_connection:
                 disabled: Condivisione del profilo disattivata
                 enabled: Condivisione del profilo attivata
                 regenerated: Nuovo codice generato
+                workouts_disabled: Condivisione degli allenamenti disattivata
+                workouts_enabled: Condivisione degli allenamenti attivata
             regenerate: Rigenera codice
+            share_workouts_label: "Condividi anche i miei allenamenti (elenco e dettaglio)"
             switch_label: Rendi il mio profilo rintracciabile
             title: Condividi il mio profilo
         title: "Le mie connessioni"
+    workout:
+        list:
+            title: "Allenamenti di {nickname}"
 
 registration:
     account_created: Il tuo account è stato creato ed è pronto all'uso

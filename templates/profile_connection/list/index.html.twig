@@ -7,6 +7,7 @@
       - requestForm    : FormView (saisie Alias#CODE, envoyée à ProfileConnectionRequestController)
       - isDiscoverable : bool (partage de son propre profil activé)
       - shareCode      : string|null (code de partage de l'utilisateur courant)
+      - shareWorkouts  : bool (partage de ses propres séances activé, opt-in secondaire)
       - nickname       : string (alias de l'utilisateur courant)
 #}
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
@@ -31,6 +32,7 @@
             {% include 'profile_connection/list/_sharing_card.html.twig' with {
                 isDiscoverable: isDiscoverable,
                 shareCode: shareCode,
+                shareWorkouts: shareWorkouts,
                 nickname: nickname,
             } only %}
 

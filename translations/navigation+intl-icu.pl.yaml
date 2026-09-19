@@ -393,6 +393,7 @@ profile_connection:
         no_widgets: "{nickname} nie pokazuje żadnych danych"
         no_workout: "{nickname} nie ma jeszcze żadnego treningu"
         title: "Panel użytkownika {nickname}"
+        view_workouts: "Zobacz jego/jej treningi"
     error:
         already_connected: "Jesteście już połączeni."
         already_pending: "Z tą osobą oczekuje już prośba."
@@ -447,10 +448,16 @@ profile_connection:
                 disabled: Udostępnianie profilu wyłączone
                 enabled: Udostępnianie profilu włączone
                 regenerated: Wygenerowano nowy kod
+                workouts_disabled: Udostępnianie treningów wyłączone
+                workouts_enabled: Udostępnianie treningów włączone
             regenerate: Wygeneruj nowy kod
+            share_workouts_label: "Udostępniaj też moje treningi (lista i szczegóły)"
             switch_label: Uczyń mój profil wykrywalnym
             title: Udostępnij mój profil
         title: "Moje połączenia"
+    workout:
+        list:
+            title: "Treningi użytkownika {nickname}"
 
 registration:
     account_created: Twoje konto jest utworzone i gotowe do użycia

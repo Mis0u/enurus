@@ -389,6 +389,7 @@ profile_connection:
         no_widgets: "{nickname} heeft besloten geen gegevens te tonen"
         no_workout: "{nickname} heeft nog geen training aangemaakt"
         title: "Overzicht van {nickname}"
+        view_workouts: "Bekijk zijn/haar trainingen"
     error:
         already_connected: "Jullie zijn al verbonden."
         already_pending: "Er staat al een verzoek open met deze persoon."
@@ -443,10 +444,16 @@ profile_connection:
                 disabled: Profiel delen uitgeschakeld
                 enabled: Profiel delen ingeschakeld
                 regenerated: Nieuwe code gegenereerd
+                workouts_disabled: Trainingen delen uitgeschakeld
+                workouts_enabled: Trainingen delen ingeschakeld
             regenerate: Code opnieuw genereren
+            share_workouts_label: "Ook mijn trainingen delen (lijst en detail)"
             switch_label: Mijn profiel vindbaar maken
             title: Mijn profiel delen
         title: "Mijn verbindingen"
+    workout:
+        list:
+            title: "Trainingen van {nickname}"
 
 registration:
     account_created: Je account is aangemaakt en klaar voor gebruik

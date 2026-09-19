@@ -389,6 +389,7 @@ profile_connection:
         no_widgets: "{nickname} a décidé de ne pas afficher de data"
         no_workout: "{nickname} n'a pas encore créé de séance"
         title: "Tableau de bord de {nickname}"
+        view_workouts: "Voir ses séances"
     error:
         already_connected: "Vous êtes déjà connectés."
         already_pending: "Une demande est déjà en attente avec cette personne."
@@ -443,10 +444,16 @@ profile_connection:
                 disabled: Partage de profil désactivé
                 enabled: Partage de profil activé
                 regenerated: Nouveau code généré
+                workouts_disabled: Partage des séances désactivé
+                workouts_enabled: Partage des séances activé
             regenerate: Régénérer le code
+            share_workouts_label: "Partager aussi mes séances (liste et détail)"
             switch_label: Rendre mon profil trouvable
             title: Partage de mon profil
         title: "Mes connexions"
+    workout:
+        list:
+            title: "Séances de {nickname}"
 
 registration:
     account_created: Ton compte est créé et prêt à l'emploi
