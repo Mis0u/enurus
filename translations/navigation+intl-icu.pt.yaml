@@ -69,6 +69,7 @@ contact:
         subject: "Bem-vindo ao {brand} 🎉"
 
 dashboard:
+    connections: Conexões
     contact: Contacto
     empty_widgets:
         cta: Gerir os meus widgets
@@ -377,6 +378,82 @@ pagination:
     per_page: Mostrar
     previous: Anterior
     results: Resultados
+
+profile_connection:
+    dashboard:
+        back: "Voltar ao meu painel"
+        guard:
+            body: "Reativa a partilha do teu perfil para poderes consultar o painel de uma conexão."
+            confirm: "Percebido"
+            title: "Partilha desativada"
+        no_widgets: "{nickname} decidiu não mostrar nenhum dado"
+        no_workout: "{nickname} ainda não criou nenhum treino"
+        title: "Painel de {nickname}"
+        view_workouts: "Ver os treinos dele/dela"
+    error:
+        already_connected: "Já estão conectados."
+        already_pending: "Já existe um pedido pendente com esta pessoa."
+        cooldown_active: "Uma conexão anterior com esta pessoa terminou recentemente: aplica-se um prazo de {days, plural, one {# dia} other {# dias}} antes de um novo pedido."
+        invalid_query: "Entrada inválida: usa o formato Alias#CODE."
+        invalid_transition: "Esta ação já não é possível: o pedido já foi tratado."
+        not_found: "Nenhum perfil encontrado. Verifica o alias e o código."
+        not_searchable: "Nenhum perfil encontrado. Verifica o alias e o código."
+        requester_not_sharing: "Ativa a partilha do teu perfil para poderes enviar um pedido de conexão."
+        self_request: "Não te podes adicionar a ti próprio."
+    flash:
+        accepted: "Conexão estabelecida com {nickname}."
+        cancelled: "Pedido a {nickname} cancelado."
+        declined: "Pedido de {nickname} recusado."
+        requested: "Pedido enviado a {nickname}."
+        revoked: "Conexão com {nickname} removida."
+    list:
+        action:
+            accept: "Aceitar"
+            accept_for: "Aceitar o pedido de {nickname}"
+            cancel: "Cancelar pedido"
+            cancel_for: "Cancelar o pedido a {nickname}"
+            counterpart_not_sharing: "De momento, {nickname} desativou a partilha do seu perfil."
+            decline: "Recusar"
+            decline_for: "Recusar o pedido de {nickname}"
+            revoke: "Remover"
+            revoke_for: "Remover a conexão com {nickname}"
+            view: "Ver o painel"
+            view_for: "Ver o painel de {nickname}"
+        connections:
+            empty: "Ainda não tens nenhuma conexão."
+            title: "As minhas conexões"
+        intro: "Depois de aceite um pedido, cada um vê o painel do outro."
+        received:
+            title: "Pedidos recebidos"
+        request:
+            help: "Introduz o alias seguido do código de partilha da pessoa, por exemplo Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Ativa a partilha do teu perfil acima para poderes enviar um pedido de conexão."
+            submit: "Enviar pedido"
+            title: "Adicionar uma conexão"
+        sent:
+            title: "Pedidos enviados"
+        sharing:
+            code_label: "O teu código de partilha:"
+            copy: Copiar
+            explanation: Torna o teu perfil detetável por outros utilizadores através de um código único, para partilharem os vossos painéis.
+            feedback:
+                copied: Código copiado
+                copy_error: "A cópia falhou, seleciona e copia o código manualmente"
+                disabled: Partilha de perfil desativada
+                enabled: Partilha de perfil ativada
+                regenerated: Novo código gerado
+                workouts_disabled: Partilha de treinos desativada
+                workouts_enabled: Partilha de treinos ativada
+            regenerate: Gerar novo código
+            share_workouts_label: "Partilhar também os meus treinos (lista e detalhe)"
+            switch_label: Tornar o meu perfil detetável
+            title: Partilhar o meu perfil
+        title: "As minhas conexões"
+    workout:
+        list:
+            title: "Treinos de {nickname}"
 
 registration:
     account_created: A tua conta está criada e pronta a usar

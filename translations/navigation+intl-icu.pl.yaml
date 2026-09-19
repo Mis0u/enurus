@@ -69,6 +69,7 @@ contact:
         subject: "Witaj w {brand} 🎉"
 
 dashboard:
+    connections: Połączenia
     contact: Kontakt
     empty_widgets:
         cta: Zarządzaj widżetami
@@ -381,6 +382,82 @@ pagination:
     per_page: Wyświetl
     previous: Poprzedni
     results: Wyniki
+
+profile_connection:
+    dashboard:
+        back: "Wróć do mojego panelu"
+        guard:
+            body: "Włącz ponownie udostępnianie swojego profilu, aby móc zobaczyć panel połączenia."
+            confirm: "Rozumiem"
+            title: "Udostępnianie wyłączone"
+        no_widgets: "{nickname} nie pokazuje żadnych danych"
+        no_workout: "{nickname} nie ma jeszcze żadnego treningu"
+        title: "Panel użytkownika {nickname}"
+        view_workouts: "Zobacz jego/jej treningi"
+    error:
+        already_connected: "Jesteście już połączeni."
+        already_pending: "Z tą osobą oczekuje już prośba."
+        cooldown_active: "Poprzednie połączenie z tą osobą zakończyło się niedawno: przed nową prośbą obowiązuje okres oczekiwania wynoszący {days, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}}."
+        invalid_query: "Nieprawidłowe dane: użyj formatu Alias#CODE."
+        invalid_transition: "Ta akcja nie jest już możliwa: prośba została już rozpatrzona."
+        not_found: "Nie znaleziono profilu. Sprawdź alias i kod."
+        not_searchable: "Nie znaleziono profilu. Sprawdź alias i kod."
+        requester_not_sharing: "Włącz udostępnianie swojego profilu, aby móc wysłać prośbę o połączenie."
+        self_request: "Nie możesz dodać samego siebie."
+    flash:
+        accepted: "Nawiązano połączenie z {nickname}."
+        cancelled: "Prośba do {nickname} anulowana."
+        declined: "Prośba od {nickname} odrzucona."
+        requested: "Wysłano prośbę do {nickname}."
+        revoked: "Połączenie z {nickname} usunięte."
+    list:
+        action:
+            accept: "Akceptuj"
+            accept_for: "Zaakceptuj prośbę od {nickname}"
+            cancel: "Anuluj prośbę"
+            cancel_for: "Anuluj prośbę do {nickname}"
+            counterpart_not_sharing: "Obecnie {nickname} wyłączył udostępnianie swojego profilu."
+            decline: "Odrzuć"
+            decline_for: "Odrzuć prośbę od {nickname}"
+            revoke: "Usuń"
+            revoke_for: "Usuń połączenie z {nickname}"
+            view: "Zobacz panel"
+            view_for: "Zobacz panel użytkownika {nickname}"
+        connections:
+            empty: "Nie masz jeszcze żadnych połączeń."
+            title: "Moje połączenia"
+        intro: "Po zaakceptowaniu prośby każdy widzi panel drugiej osoby."
+        received:
+            title: "Otrzymane prośby"
+        request:
+            help: "Wpisz alias, a po nim kod udostępniania danej osoby, na przykład Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Włącz powyżej udostępnianie swojego profilu, aby móc wysłać prośbę o połączenie."
+            submit: "Wyślij prośbę"
+            title: "Dodaj połączenie"
+        sent:
+            title: "Wysłane prośby"
+        sharing:
+            code_label: "Twój kod udostępniania:"
+            copy: Kopiuj
+            explanation: Spraw, aby Twój profil był wykrywalny dla innych użytkowników dzięki unikalnemu kodowi, aby udostępniać sobie nawzajem pulpity.
+            feedback:
+                copied: Kod skopiowany
+                copy_error: "Kopiowanie nie powiodło się, zaznacz i skopiuj kod ręcznie"
+                disabled: Udostępnianie profilu wyłączone
+                enabled: Udostępnianie profilu włączone
+                regenerated: Wygenerowano nowy kod
+                workouts_disabled: Udostępnianie treningów wyłączone
+                workouts_enabled: Udostępnianie treningów włączone
+            regenerate: Wygeneruj nowy kod
+            share_workouts_label: "Udostępniaj też moje treningi (lista i szczegóły)"
+            switch_label: Uczyń mój profil wykrywalnym
+            title: Udostępnij mój profil
+        title: "Moje połączenia"
+    workout:
+        list:
+            title: "Treningi użytkownika {nickname}"
 
 registration:
     account_created: Twoje konto jest utworzone i gotowe do użycia

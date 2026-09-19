@@ -1,10 +1,21 @@
+{#
+    Variables attendues (toutes via `only`) :
+    - readOnly        : bool   — dashboard d'une connexion : texte neutre et aucun lien vers les réglages
+    - subjectNickname : string — pseudo du propriétaire des données, utilisé en lecture seule
+#}
 <div class="md:col-span-2 bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] flex flex-col items-center justify-center text-center gap-3 min-h-[180px]">
     <span class="text-[32px] leading-none" aria-hidden="true">🫥</span>
     <p class="text-[13px] text-[#8b9bb4] max-w-[320px]">
-        {{ 'dashboard.empty_widgets.text'|trans({}, 'navigation') }}
+        {% if readOnly %}
+            {{ 'profile_connection.dashboard.no_widgets'|trans({nickname: subjectNickname}, 'navigation') }}
+        {% else %}
+            {{ 'dashboard.empty_widgets.text'|trans({}, 'navigation') }}
+        {% endif %}
     </p>
-    <a href="{{ path('app_settings') }}#dashboard-widgets"
-       class="text-[13px] font-medium text-rose-ft hover:opacity-80 transition-ft">
-        {{ 'dashboard.empty_widgets.cta'|trans({}, 'navigation') }}
-    </a>
+    {% if not readOnly %}
+        <a href="{{ path('app_settings') }}#dashboard-widgets"
+           class="text-[13px] font-medium text-rose-ft hover:opacity-80 transition-ft">
+            {{ 'dashboard.empty_widgets.cta'|trans({}, 'navigation') }}
+        </a>
+    {% endif %}
 </div>

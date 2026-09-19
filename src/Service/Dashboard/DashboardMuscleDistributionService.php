@@ -6,6 +6,9 @@ namespace App\Service\Dashboard;
 
 use App\Repository\WorkoutMuscleRepository;
 
+/**
+ * @phpstan-type MuscleBars array{bars: array<int, array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null}>, remainingCount: int}
+ */
 final readonly class DashboardMuscleDistributionService
 {
     private const int MAX_BARS = 8;
@@ -30,7 +33,7 @@ final readonly class DashboardMuscleDistributionService
      *                                                                  dernière sollicitation sur tout
      *                                                                  l'historique — vide si non pertinent
      *                                                                  (filtre "Séance")
-     * @return array{bars: array<int, array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null}>, remainingCount: int}
+     * @return MuscleBars
      */
     public function getBars(array $workoutIds, array $lastSolicitationDates = []): array
     {

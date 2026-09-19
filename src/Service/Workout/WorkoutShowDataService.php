@@ -51,22 +51,23 @@ final readonly class WorkoutShowDataService
      *     allSecondarySvgIds: array<string>,
      * }
      */
-    public function build(Workout $workout, User $user): array
+    public function build(Workout $workout, User $subject, ?User $viewer = null): array
     {
+        $viewer ??= $subject;
         $workoutExercises = $this->workoutExerciseRepository->findWithExercisesAndSets($workout);
         $workoutExerciseIds = $this->extractWorkoutExerciseIds($workoutExercises);
         $exercises = $this->extractExercises($workoutExercises);
 
         $tonnageMap = $this->workoutTonnageRepository->findTonnageByWorkoutIds([(string) $workout->id]);
         $exerciseTonnageMap = $this->workoutExerciseRepository->findTonnageByWorkoutExerciseIds($workoutExerciseIds);
-        $priorMaxWeightPerExercise = $this->exerciseSetRepository->findMaxWeightPerExerciseBeforeDate($user, $exercises, $workout->performedAt);
-        $priorMaxRepsPerWeight = $this->exerciseSetRepository->findMaxRepsPerWeightBeforeDate($user, $exercises, $workout->performedAt);
-        $priorMaxDurationPerExercise = $this->exerciseSetRepository->findMaxDurationPerExerciseBeforeDate($user, $exercises, $workout->performedAt);
-        $priorMaxDistancePerExercise = $this->exerciseSetRepository->findMaxDistancePerExerciseBeforeDate($user, $exercises, $workout->performedAt);
+        $priorMaxWeightPerExercise = $this->exerciseSetRepository->findMaxWeightPerExerciseBeforeDate($subject, $exercises, $workout->performedAt);
+        $priorMaxRepsPerWeight = $this->exerciseSetRepository->findMaxRepsPerWeightBeforeDate($subject, $exercises, $workout->performedAt);
+        $priorMaxDurationPerExercise = $this->exerciseSetRepository->findMaxDurationPerExerciseBeforeDate($subject, $exercises, $workout->performedAt);
+        $priorMaxDistancePerExercise = $this->exerciseSetRepository->findMaxDistancePerExerciseBeforeDate($subject, $exercises, $workout->performedAt);
 
         $totalTonnageKg = $tonnageMap[(string) $workout->id] ?? 0.0;
-        $totalTonnage = $this->weightConverter->convertToLbs($totalTonnageKg, $user->unitOfMeasure);
-        $exerciseData = $this->buildExerciseData($workoutExercises, $priorMaxWeightPerExercise, $priorMaxRepsPerWeight, $priorMaxDurationPerExercise, $priorMaxDistancePerExercise, $exerciseTonnageMap, $user);
+        $totalTonnage = $this->weightConverter->convertToLbs($totalTonnageKg, $viewer->unitOfMeasure);
+        $exerciseData = $this->buildExerciseData($workoutExercises, $priorMaxWeightPerExercise, $priorMaxRepsPerWeight, $priorMaxDurationPerExercise, $priorMaxDistancePerExercise, $exerciseTonnageMap, $viewer);
         [$totalSets, $totalReps] = $this->countSetsAndReps($exerciseData);
 
         return [

@@ -22,6 +22,8 @@
             'routines': routines,
             'filterRoutine': filterRoutine,
             'pagination': pagination,
+            'route': 'app_workout_list',
+            'routeParams': {},
         } only %}
 
         {% if pagination.getTotalItemCount() == 0 %}
@@ -45,6 +47,8 @@
                         hasPr: hasPrMap[workout.id] ?? false,
                         hasRepsRecord: hasRepsRecordMap[workout.id] ?? false,
                         user: user,
+                        showUrl: path('app_workout_show', {id: workout.id}),
+                        readOnly: false,
                     } only %}
                 {% endfor %}
             </div>

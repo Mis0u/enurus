@@ -1,0 +1,14 @@
+{#
+    Contenu d'une carte d'objectif atteint — l'enveloppe (lien ou non) est posée par `_goals`.
+    Variables attendues (toutes via `only`) :
+    - card : array{exerciseName: string, targetLabel: string, achievedAt: ?\DateTimeImmutable}
+#}
+<div class="flex items-center justify-between gap-2">
+    <span class="text-[13px] font-medium text-[#f0f4ff] truncate">🏆 {{ card.exerciseName }}</span>
+    <span class="text-[12px] text-cyan-ft shrink-0">{{ card.targetLabel }}</span>
+</div>
+{% if card.achievedAt is not null %}
+    <p class="text-[12px] text-[#8b9bb4] mt-1">
+        {{ 'dashboard.widget.goal.achieved_on'|trans({date: card.achievedAt|format_date('medium', locale=app.request.locale)}, 'navigation') }}
+    </p>
+{% endif %}

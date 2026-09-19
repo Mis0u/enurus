@@ -69,6 +69,7 @@ contact:
         subject: "Willkommen bei {brand} 🎉"
 
 dashboard:
+    connections: Verbindungen
     contact: Kontakt
     empty_widgets:
         cta: Widgets verwalten
@@ -377,6 +378,82 @@ pagination:
     per_page: Anzeigen
     previous: Zurück
     results: Ergebnisse
+
+profile_connection:
+    dashboard:
+        back: "Zurück zu meiner Übersicht"
+        guard:
+            body: "Aktiviere die Profilfreigabe wieder, um die Übersicht einer Verbindung ansehen zu können."
+            confirm: "Verstanden"
+            title: "Freigabe deaktiviert"
+        no_widgets: "{nickname} hat entschieden, keine Daten anzuzeigen"
+        no_workout: "{nickname} hat noch kein Training erstellt"
+        title: "Übersicht von {nickname}"
+        view_workouts: "Trainings ansehen"
+    error:
+        already_connected: "Ihr seid bereits verbunden."
+        already_pending: "Mit dieser Person ist bereits eine Anfrage offen."
+        cooldown_active: "Eine frühere Verbindung mit dieser Person wurde kürzlich beendet: Vor einer neuen Anfrage gilt eine Wartezeit von {days, plural, one {# Tag} other {# Tagen}}."
+        invalid_query: "Ungültige Eingabe: Verwende das Format Alias#CODE."
+        invalid_transition: "Diese Aktion ist nicht mehr möglich: Die Anfrage wurde bereits bearbeitet."
+        not_found: "Kein Profil gefunden. Prüfe den Alias und den Code."
+        not_searchable: "Kein Profil gefunden. Prüfe den Alias und den Code."
+        requester_not_sharing: "Aktiviere die Profilfreigabe, um eine Verbindungsanfrage senden zu können."
+        self_request: "Du kannst dich nicht selbst hinzufügen."
+    flash:
+        accepted: "Verbindung mit {nickname} hergestellt."
+        cancelled: "Anfrage an {nickname} zurückgezogen."
+        declined: "Anfrage von {nickname} abgelehnt."
+        requested: "Anfrage an {nickname} gesendet."
+        revoked: "Verbindung mit {nickname} entfernt."
+    list:
+        action:
+            accept: "Annehmen"
+            accept_for: "Anfrage von {nickname} annehmen"
+            cancel: "Anfrage zurückziehen"
+            cancel_for: "Anfrage an {nickname} zurückziehen"
+            counterpart_not_sharing: "{nickname} hat die Profilfreigabe derzeit deaktiviert."
+            decline: "Ablehnen"
+            decline_for: "Anfrage von {nickname} ablehnen"
+            revoke: "Entfernen"
+            revoke_for: "Verbindung mit {nickname} entfernen"
+            view: "Übersicht ansehen"
+            view_for: "Übersicht von {nickname} ansehen"
+        connections:
+            empty: "Du hast noch keine Verbindung."
+            title: "Meine Verbindungen"
+        intro: "Sobald eine Anfrage angenommen ist, seht ihr jeweils die Übersicht des anderen."
+        received:
+            title: "Erhaltene Anfragen"
+        request:
+            help: "Gib den Alias gefolgt vom Freigabecode der Person ein, zum Beispiel Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Aktiviere oben die Profilfreigabe, um eine Verbindungsanfrage senden zu können."
+            submit: "Anfrage senden"
+            title: "Verbindung hinzufügen"
+        sent:
+            title: "Gesendete Anfragen"
+        sharing:
+            code_label: "Dein Freigabecode:"
+            copy: Kopieren
+            explanation: Mach dein Profil über einen eindeutigen Code für andere Nutzer auffindbar, um eure Dashboards zu teilen.
+            feedback:
+                copied: Code kopiert
+                copy_error: "Kopieren fehlgeschlagen, markiere und kopiere den Code manuell"
+                disabled: Profilfreigabe deaktiviert
+                enabled: Profilfreigabe aktiviert
+                regenerated: Neuer Code generiert
+                workouts_disabled: Trainingsfreigabe deaktiviert
+                workouts_enabled: Trainingsfreigabe aktiviert
+            regenerate: Code neu generieren
+            share_workouts_label: "Auch meine Trainings teilen (Liste und Detail)"
+            switch_label: Mein Profil auffindbar machen
+            title: Mein Profil teilen
+        title: "Meine Verbindungen"
+    workout:
+        list:
+            title: "Trainings von {nickname}"
 
 registration:
     account_created: Dein Konto ist erstellt und einsatzbereit

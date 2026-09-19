@@ -37,7 +37,7 @@ class WorkoutShowController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        $data = $workoutShowDataService->build($workout, $user);
+        $data = $workoutShowDataService->build($workout, $user, $user);
 
         return $this->render('workout/show/show.html.twig', [
             'workout' => $workout,

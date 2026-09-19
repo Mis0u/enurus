@@ -1,0 +1,12 @@
+{#
+    Contenu d'une carte d'objectif en cours — l'enveloppe (lien ou non) est posée par `_goals`.
+    Variables attendues (toutes via `only`) :
+    - card : array{exerciseName: string, currentLabel: string, targetLabel: string, percent: int}
+#}
+<div class="flex items-center justify-between mb-1.5 gap-2">
+    <span class="text-[13px] font-medium text-[#f0f4ff] truncate">{{ card.exerciseName }}</span>
+    <span class="text-[12px] text-[#8b9bb4] shrink-0">{{ card.currentLabel }} / {{ card.targetLabel }}</span>
+</div>
+<div class="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+    <div class="h-full rounded-full bg-rose-ft" style="width: {{ card.percent }}%;"></div>
+</div>

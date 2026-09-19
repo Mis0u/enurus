@@ -49,6 +49,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ]);
     }
 
+    public function findOneByShareCode(string $shareCode): ?User
+    {
+        return $this->findOneBy([
+            'shareCode' => $shareCode,
+        ]);
+    }
+
+    public function existsByShareCode(string $shareCode): bool
+    {
+        return 0 < $this->count([
+            'shareCode' => $shareCode,
+        ]);
+    }
+
     /**
      * @return list<User>
      */

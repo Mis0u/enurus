@@ -69,6 +69,7 @@ contact:
         subject: "Welcome to {brand} 🎉"
 
 dashboard:
+    connections: Connections
     contact: Contact
     empty_widgets:
         cta: Manage my widgets
@@ -377,6 +378,82 @@ pagination:
     per_page: Show
     previous: Previous
     results: Results
+
+profile_connection:
+    dashboard:
+        back: "Back to my dashboard"
+        guard:
+            body: "Turn profile sharing back on to view a connection's dashboard."
+            confirm: "Got it"
+            title: "Sharing disabled"
+        no_widgets: "{nickname} has decided not to display any data"
+        no_workout: "{nickname} hasn't created a workout yet"
+        title: "{nickname}'s dashboard"
+        view_workouts: "View their workouts"
+    error:
+        already_connected: "You are already connected."
+        already_pending: "A request is already pending with this person."
+        cooldown_active: "A previous connection with this person ended recently: a delay of {days, plural, one {# day} other {# days}} applies before a new request."
+        invalid_query: "Invalid input: use the Alias#CODE format."
+        invalid_transition: "This action is no longer possible: the request has already been handled."
+        not_found: "No profile found. Check the alias and the code."
+        not_searchable: "No profile found. Check the alias and the code."
+        requester_not_sharing: "Turn on profile sharing to be able to send a connection request."
+        self_request: "You can't add yourself."
+    flash:
+        accepted: "Connection established with {nickname}."
+        cancelled: "Request to {nickname} cancelled."
+        declined: "Request from {nickname} declined."
+        requested: "Request sent to {nickname}."
+        revoked: "Connection with {nickname} removed."
+    list:
+        action:
+            accept: "Accept"
+            accept_for: "Accept the request from {nickname}"
+            cancel: "Cancel request"
+            cancel_for: "Cancel the request to {nickname}"
+            counterpart_not_sharing: "{nickname} has currently turned off profile sharing."
+            decline: "Decline"
+            decline_for: "Decline the request from {nickname}"
+            revoke: "Remove"
+            revoke_for: "Remove the connection with {nickname}"
+            view: "View dashboard"
+            view_for: "View {nickname}'s dashboard"
+        connections:
+            empty: "You don't have any connection yet."
+            title: "My connections"
+        intro: "Once a request is accepted, you each see the other's dashboard."
+        received:
+            title: "Requests received"
+        request:
+            help: "Enter the alias followed by the person's share code, for example Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Turn on profile sharing above to be able to send a connection request."
+            submit: "Send request"
+            title: "Add a connection"
+        sent:
+            title: "Requests sent"
+        sharing:
+            code_label: "Your share code:"
+            copy: Copy
+            explanation: Make your profile discoverable by other users through a unique code, to share your dashboards with each other.
+            feedback:
+                copied: Code copied
+                copy_error: "Copy failed, select and copy the code manually"
+                disabled: Profile sharing disabled
+                enabled: Profile sharing enabled
+                regenerated: New code generated
+                workouts_disabled: Workout sharing disabled
+                workouts_enabled: Workout sharing enabled
+            regenerate: Regenerate code
+            share_workouts_label: "Also share my workouts (list and detail)"
+            switch_label: Make my profile discoverable
+            title: Share my profile
+        title: "My connections"
+    workout:
+        list:
+            title: "{nickname}'s workouts"
 
 registration:
     account_created: Your account is created and ready to go

@@ -69,6 +69,7 @@ contact:
         subject: "Welkom bij {brand} 🎉"
 
 dashboard:
+    connections: Verbindingen
     contact: Contact
     empty_widgets:
         cta: Mijn widgets beheren
@@ -377,6 +378,82 @@ pagination:
     per_page: Tonen
     previous: Vorige
     results: Resultaten
+
+profile_connection:
+    dashboard:
+        back: "Terug naar mijn overzicht"
+        guard:
+            body: "Zet profiel delen weer aan om het overzicht van een verbinding te kunnen bekijken."
+            confirm: "Begrepen"
+            title: "Delen uitgeschakeld"
+        no_widgets: "{nickname} heeft besloten geen gegevens te tonen"
+        no_workout: "{nickname} heeft nog geen training aangemaakt"
+        title: "Overzicht van {nickname}"
+        view_workouts: "Bekijk zijn/haar trainingen"
+    error:
+        already_connected: "Jullie zijn al verbonden."
+        already_pending: "Er staat al een verzoek open met deze persoon."
+        cooldown_active: "Een eerdere verbinding met deze persoon is onlangs beëindigd: er geldt een wachttijd van {days, plural, one {# dag} other {# dagen}} voor een nieuw verzoek."
+        invalid_query: "Ongeldige invoer: gebruik het formaat Alias#CODE."
+        invalid_transition: "Deze actie is niet meer mogelijk: het verzoek is al afgehandeld."
+        not_found: "Geen profiel gevonden. Controleer de alias en de code."
+        not_searchable: "Geen profiel gevonden. Controleer de alias en de code."
+        requester_not_sharing: "Zet profiel delen aan om een verbindingsverzoek te kunnen versturen."
+        self_request: "Je kunt jezelf niet toevoegen."
+    flash:
+        accepted: "Verbinding met {nickname} tot stand gebracht."
+        cancelled: "Verzoek aan {nickname} geannuleerd."
+        declined: "Verzoek van {nickname} geweigerd."
+        requested: "Verzoek verzonden naar {nickname}."
+        revoked: "Verbinding met {nickname} verwijderd."
+    list:
+        action:
+            accept: "Accepteren"
+            accept_for: "Verzoek van {nickname} accepteren"
+            cancel: "Verzoek annuleren"
+            cancel_for: "Verzoek aan {nickname} annuleren"
+            counterpart_not_sharing: "{nickname} heeft profiel delen momenteel uitgeschakeld."
+            decline: "Weigeren"
+            decline_for: "Verzoek van {nickname} weigeren"
+            revoke: "Verwijderen"
+            revoke_for: "Verbinding met {nickname} verwijderen"
+            view: "Overzicht bekijken"
+            view_for: "Overzicht van {nickname} bekijken"
+        connections:
+            empty: "Je hebt nog geen verbindingen."
+            title: "Mijn verbindingen"
+        intro: "Zodra een verzoek is geaccepteerd, zien jullie elkaars overzicht."
+        received:
+            title: "Ontvangen verzoeken"
+        request:
+            help: "Voer de alias in, gevolgd door de deelcode van de persoon, bijvoorbeeld Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Zet hierboven profiel delen aan om een verbindingsverzoek te kunnen versturen."
+            submit: "Verzoek versturen"
+            title: "Verbinding toevoegen"
+        sent:
+            title: "Verzonden verzoeken"
+        sharing:
+            code_label: "Jouw deelcode:"
+            copy: Kopiëren
+            explanation: Maak je profiel vindbaar voor andere gebruikers via een unieke code, om jullie dashboards te delen.
+            feedback:
+                copied: Code gekopieerd
+                copy_error: "Kopiëren mislukt, selecteer en kopieer de code handmatig"
+                disabled: Profiel delen uitgeschakeld
+                enabled: Profiel delen ingeschakeld
+                regenerated: Nieuwe code gegenereerd
+                workouts_disabled: Trainingen delen uitgeschakeld
+                workouts_enabled: Trainingen delen ingeschakeld
+            regenerate: Code opnieuw genereren
+            share_workouts_label: "Ook mijn trainingen delen (lijst en detail)"
+            switch_label: Mijn profiel vindbaar maken
+            title: Mijn profiel delen
+        title: "Mijn verbindingen"
+    workout:
+        list:
+            title: "Trainingen van {nickname}"
 
 registration:
     account_created: Je account is aangemaakt en klaar voor gebruik

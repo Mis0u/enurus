@@ -69,6 +69,7 @@ contact:
         subject: "Bienvenido a {brand} 🎉"
 
 dashboard:
+    connections: Conexiones
     contact: Contacto
     empty_widgets:
         cta: Gestionar mis widgets
@@ -377,6 +378,82 @@ pagination:
     per_page: Mostrar
     previous: Anterior
     results: Resultados
+
+profile_connection:
+    dashboard:
+        back: "Volver a mi panel"
+        guard:
+            body: "Vuelve a activar la compartición de tu perfil para poder consultar el panel de una conexión."
+            confirm: "Entendido"
+            title: "Compartición desactivada"
+        no_widgets: "{nickname} ha decidido no mostrar ningún dato"
+        no_workout: "{nickname} aún no ha creado ningún entrenamiento"
+        title: "Panel de {nickname}"
+        view_workouts: "Ver sus entrenamientos"
+    error:
+        already_connected: "Ya estáis conectados."
+        already_pending: "Ya hay una solicitud pendiente con esta persona."
+        cooldown_active: "Una conexión anterior con esta persona terminó hace poco: se aplica un plazo de {days, plural, one {# día} other {# días}} antes de una nueva solicitud."
+        invalid_query: "Entrada no válida: usa el formato Alias#CODE."
+        invalid_transition: "Esta acción ya no es posible: la solicitud ya se ha tramitado."
+        not_found: "No se ha encontrado ningún perfil. Comprueba el alias y el código."
+        not_searchable: "No se ha encontrado ningún perfil. Comprueba el alias y el código."
+        requester_not_sharing: "Activa la compartición de tu perfil para poder enviar una solicitud de conexión."
+        self_request: "No puedes añadirte a ti mismo."
+    flash:
+        accepted: "Conexión establecida con {nickname}."
+        cancelled: "Solicitud a {nickname} cancelada."
+        declined: "Solicitud de {nickname} rechazada."
+        requested: "Solicitud enviada a {nickname}."
+        revoked: "Conexión con {nickname} eliminada."
+    list:
+        action:
+            accept: "Aceptar"
+            accept_for: "Aceptar la solicitud de {nickname}"
+            cancel: "Cancelar solicitud"
+            cancel_for: "Cancelar la solicitud a {nickname}"
+            counterpart_not_sharing: "Por ahora, {nickname} ha desactivado la compartición de su perfil."
+            decline: "Rechazar"
+            decline_for: "Rechazar la solicitud de {nickname}"
+            revoke: "Eliminar"
+            revoke_for: "Eliminar la conexión con {nickname}"
+            view: "Ver el panel"
+            view_for: "Ver el panel de {nickname}"
+        connections:
+            empty: "Todavía no tienes ninguna conexión."
+            title: "Mis conexiones"
+        intro: "Una vez aceptada una solicitud, cada uno ve el panel del otro."
+        received:
+            title: "Solicitudes recibidas"
+        request:
+            help: "Introduce el alias seguido del código para compartir de la persona, por ejemplo Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Activa la compartición de tu perfil arriba para poder enviar una solicitud de conexión."
+            submit: "Enviar solicitud"
+            title: "Añadir una conexión"
+        sent:
+            title: "Solicitudes enviadas"
+        sharing:
+            code_label: "Tu código de compartición:"
+            copy: Copiar
+            explanation: Haz que otros usuarios puedan encontrar tu perfil mediante un código único, para compartir vuestros paneles.
+            feedback:
+                copied: Código copiado
+                copy_error: "La copia ha fallado, selecciona y copia el código manualmente"
+                disabled: Compartición de perfil desactivada
+                enabled: Compartición de perfil activada
+                regenerated: Nuevo código generado
+                workouts_disabled: Compartición de entrenamientos desactivada
+                workouts_enabled: Compartición de entrenamientos activada
+            regenerate: Regenerar código
+            share_workouts_label: "Compartir también mis entrenamientos (lista y detalle)"
+            switch_label: Hacer que mi perfil sea localizable
+            title: Compartir mi perfil
+        title: "Mis conexiones"
+    workout:
+        list:
+            title: "Entrenamientos de {nickname}"
 
 registration:
     account_created: Tu cuenta está creada y lista para usar

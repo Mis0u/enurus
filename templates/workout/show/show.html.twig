@@ -27,6 +27,8 @@
             'workout': workout,
             'totalTonnage': totalTonnage,
             'unit': unit,
+            'backUrl': path('app_workout_list'),
+            'readOnly': false,
         } only %}
         {% include 'workout/show/_share_card.html.twig' with {
             'workout': workout,

@@ -44,6 +44,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public const int BODYWEIGHT_MAX_KG = 300;
 
+    public const int SHARE_CODE_LENGTH = 6;
+
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
@@ -91,6 +93,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public Collection $exerciseGoals {
         get {
             return $this->exerciseGoals;
+        }
+    }
+
+    /**
+     * @var Collection<int, ProfileConnection>
+     */
+    #[ORM\OneToMany(targetEntity: ProfileConnection::class, mappedBy: 'requester', cascade: ['remove'], orphanRemoval: true)]
+    public Collection $sentProfileConnections {
+        get {
+            return $this->sentProfileConnections;
+        }
+    }
+
+    /**
+     * @var Collection<int, ProfileConnection>
+     */
+    #[ORM\OneToMany(targetEntity: ProfileConnection::class, mappedBy: 'addressee', cascade: ['remove'], orphanRemoval: true)]
+    public Collection $receivedProfileConnections {
+        get {
+            return $this->receivedProfileConnections;
         }
     }
 
@@ -225,6 +247,71 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Opt-in au partage de profil : ne rend l'utilisateur trouvable que par son `shareCode` — une
+     * connexion déjà acceptée n'en dépend pas et reste valable si le partage est ensuite coupé.
+     */
+    #[ORM\Column(options: [
+        'default' => false,
+    ])]
+    public bool $isDiscoverable = false {
+        get {
+            return $this->isDiscoverable;
+        }
+        set(bool $isDiscoverable) {
+            $this->isDiscoverable = $isDiscoverable;
+        }
+    }
+
+    /**
+     * Propriété virtuelle — seule règle décidant si un profil peut être retrouvé et sollicité :
+     * un compte bloqué, non vérifié ou en cours de suppression ne doit jamais l'être, même avec
+     * `isDiscoverable` à vrai.
+     */
+    public bool $isSearchable {
+        get {
+            return $this->isDiscoverable
+                && $this->isVerified
+                && ! $this->isAccountBlocked
+                && null === $this->deletionRequestedAt;
+        }
+    }
+
+    /**
+     * Code public à saisir avec le pseudo (`Pseudo#CODE`) pour trouver l'utilisateur — unique sur
+     * tous les comptes, indépendamment du pseudo (non unique lui-même). Nul tant que le partage n'a
+     * jamais été activé ; conservé ensuite, y compris si `isDiscoverable` repasse à faux.
+     */
+    #[ORM\Column(type: Types::STRING, length: self::SHARE_CODE_LENGTH, unique: true, nullable: true)]
+    public ?string $shareCode = null {
+        get {
+            return $this->shareCode;
+        }
+        set(?string $shareCode) {
+            $this->shareCode = $shareCode;
+        }
+    }
+
+    /**
+     * Opt-in secondaire, dépendant de `isDiscoverable` : autorise en plus les connexions acceptées
+     * à consulter la liste et le détail de ses séances (pas seulement le dashboard). Ne peut être
+     * vrai que si `isDiscoverable` l'est aussi — désactiver le partage de profil repasse toujours
+     * ce champ à faux (cascade appliquée par `ProfileConnectionSharingToggleController`, jamais
+     * ici : un simple setter ne doit pas dépendre de l'état d'une autre propriété au moment de
+     * l'appel).
+     */
+    #[ORM\Column(options: [
+        'default' => false,
+    ])]
+    public bool $shareWorkouts = false {
+        get {
+            return $this->shareWorkouts;
+        }
+        set(bool $shareWorkouts) {
+            $this->shareWorkouts = $shareWorkouts;
+        }
+    }
+
+    /**
      * Toujours en kg (même convention que ExerciseSet::weight) — conversion à l'affichage/la
      * saisie via WeightConverterService selon unitOfMeasure. Optionnel : sert uniquement à
      * calculer le tonnage des exercices "au poids de corps" (Exercise::bodyweightPercent).
@@ -341,6 +428,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->workouts = new ArrayCollection();
         $this->routines = new ArrayCollection();
         $this->exerciseGoals = new ArrayCollection();
+        $this->sentProfileConnections = new ArrayCollection();
+        $this->receivedProfileConnections = new ArrayCollection();
         $this->contactThreads = new ArrayCollection();
         $this->locale = LocaleAllowedEnum::EN->value;
     }

@@ -69,6 +69,7 @@ contact:
         subject: "Benvenuto su {brand} 🎉"
 
 dashboard:
+    connections: Connessioni
     contact: Contatti
     empty_widgets:
         cta: Gestisci i miei widget
@@ -377,6 +378,82 @@ pagination:
     per_page: Mostra
     previous: Precedente
     results: Risultati
+
+profile_connection:
+    dashboard:
+        back: "Torna al mio cruscotto"
+        guard:
+            body: "Riattiva la condivisione del tuo profilo per poter consultare il cruscotto di una connessione."
+            confirm: "Ho capito"
+            title: "Condivisione disattivata"
+        no_widgets: "{nickname} ha deciso di non mostrare alcun dato"
+        no_workout: "{nickname} non ha ancora creato nessun allenamento"
+        title: "Cruscotto di {nickname}"
+        view_workouts: "Vedi i suoi allenamenti"
+    error:
+        already_connected: "Siete già connessi."
+        already_pending: "C'è già una richiesta in sospeso con questa persona."
+        cooldown_active: "Una connessione precedente con questa persona è terminata da poco: prima di una nuova richiesta si applica un'attesa di {days, plural, one {# giorno} other {# giorni}}."
+        invalid_query: "Inserimento non valido: usa il formato Alias#CODE."
+        invalid_transition: "Questa azione non è più possibile: la richiesta è già stata gestita."
+        not_found: "Nessun profilo trovato. Controlla l'alias e il codice."
+        not_searchable: "Nessun profilo trovato. Controlla l'alias e il codice."
+        requester_not_sharing: "Attiva la condivisione del tuo profilo per poter inviare una richiesta di connessione."
+        self_request: "Non puoi aggiungere te stesso."
+    flash:
+        accepted: "Connessione stabilita con {nickname}."
+        cancelled: "Richiesta a {nickname} annullata."
+        declined: "Richiesta di {nickname} rifiutata."
+        requested: "Richiesta inviata a {nickname}."
+        revoked: "Connessione con {nickname} rimossa."
+    list:
+        action:
+            accept: "Accetta"
+            accept_for: "Accetta la richiesta di {nickname}"
+            cancel: "Annulla richiesta"
+            cancel_for: "Annulla la richiesta a {nickname}"
+            counterpart_not_sharing: "Al momento {nickname} ha disattivato la condivisione del proprio profilo."
+            decline: "Rifiuta"
+            decline_for: "Rifiuta la richiesta di {nickname}"
+            revoke: "Rimuovi"
+            revoke_for: "Rimuovi la connessione con {nickname}"
+            view: "Vedi il cruscotto"
+            view_for: "Vedi il cruscotto di {nickname}"
+        connections:
+            empty: "Non hai ancora nessuna connessione."
+            title: "Le mie connessioni"
+        intro: "Una volta accettata una richiesta, ognuno vede il cruscotto dell'altro."
+        received:
+            title: "Richieste ricevute"
+        request:
+            help: "Inserisci l'alias seguito dal codice di condivisione della persona, ad esempio Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Attiva la condivisione del tuo profilo qui sopra per poter inviare una richiesta di connessione."
+            submit: "Invia richiesta"
+            title: "Aggiungi una connessione"
+        sent:
+            title: "Richieste inviate"
+        sharing:
+            code_label: "Il tuo codice di condivisione:"
+            copy: Copia
+            explanation: Rendi il tuo profilo rintracciabile da altri utenti tramite un codice unico, per condividere i vostri dashboard.
+            feedback:
+                copied: Codice copiato
+                copy_error: "Copia non riuscita, seleziona e copia il codice manualmente"
+                disabled: Condivisione del profilo disattivata
+                enabled: Condivisione del profilo attivata
+                regenerated: Nuovo codice generato
+                workouts_disabled: Condivisione degli allenamenti disattivata
+                workouts_enabled: Condivisione degli allenamenti attivata
+            regenerate: Rigenera codice
+            share_workouts_label: "Condividi anche i miei allenamenti (elenco e dettaglio)"
+            switch_label: Rendi il mio profilo rintracciabile
+            title: Condividi il mio profilo
+        title: "Le mie connessioni"
+    workout:
+        list:
+            title: "Allenamenti di {nickname}"
 
 registration:
     account_created: Il tuo account è stato creato ed è pronto all'uso

@@ -69,6 +69,7 @@ contact:
         subject: "Bienvenue sur {brand} 🎉"
 
 dashboard:
+    connections: Connexions
     contact: Contact
     empty_widgets:
         cta: Gérer mes widgets
@@ -377,6 +378,82 @@ pagination:
     per_page: Afficher
     previous: Précédent
     results: Résultats
+
+profile_connection:
+    dashboard:
+        back: "Retour à mon tableau de bord"
+        guard:
+            body: "Réactive le partage de ton profil pour pouvoir consulter le tableau de bord d'une connexion."
+            confirm: "Compris"
+            title: "Partage désactivé"
+        no_widgets: "{nickname} a décidé de ne pas afficher de data"
+        no_workout: "{nickname} n'a pas encore créé de séance"
+        title: "Tableau de bord de {nickname}"
+        view_workouts: "Voir ses séances"
+    error:
+        already_connected: "Vous êtes déjà connectés."
+        already_pending: "Une demande est déjà en attente avec cette personne."
+        cooldown_active: "Une connexion précédente avec cette personne s'est terminée récemment : un délai de {days, plural, one {# jour} other {# jours}} s'applique avant une nouvelle demande."
+        invalid_query: "Saisie invalide : utilise le format Alias#CODE."
+        invalid_transition: "Cette action n'est plus possible : la demande a déjà été traitée."
+        not_found: "Aucun profil trouvé. Vérifie l'alias et le code."
+        not_searchable: "Aucun profil trouvé. Vérifie l'alias et le code."
+        requester_not_sharing: "Active le partage de ton profil pour pouvoir envoyer une demande de connexion."
+        self_request: "Tu ne peux pas t'ajouter toi-même."
+    flash:
+        accepted: "Connexion établie avec {nickname}."
+        cancelled: "Demande à {nickname} annulée."
+        declined: "Demande de {nickname} refusée."
+        requested: "Demande envoyée à {nickname}."
+        revoked: "Connexion avec {nickname} retirée."
+    list:
+        action:
+            accept: "Accepter"
+            accept_for: "Accepter la demande de {nickname}"
+            cancel: "Annuler la demande"
+            cancel_for: "Annuler la demande à {nickname}"
+            counterpart_not_sharing: "Pour le moment, {nickname} a désactivé le partage de son profil."
+            decline: "Refuser"
+            decline_for: "Refuser la demande de {nickname}"
+            revoke: "Retirer"
+            revoke_for: "Retirer la connexion avec {nickname}"
+            view: "Voir le dashboard"
+            view_for: "Voir le dashboard de {nickname}"
+        connections:
+            empty: "Tu n'as pas encore de connexion."
+            title: "Mes connexions"
+        intro: "Une fois une demande acceptée, vous voyez chacun le dashboard de l'autre."
+        received:
+            title: "Demandes reçues"
+        request:
+            help: "Saisis l'alias suivi du code de partage de la personne, par exemple Misou#A7K2XM."
+            label: "Alias#CODE"
+            placeholder: "ALIAS#A7K2XM"
+            sharing_required_hint: "Active le partage de ton profil ci-dessus pour pouvoir envoyer une demande de connexion."
+            submit: "Envoyer la demande"
+            title: "Ajouter une connexion"
+        sent:
+            title: "Demandes envoyées"
+        sharing:
+            code_label: "Ton code de partage :"
+            copy: Copier
+            explanation: Rends ton profil trouvable par d'autres utilisateurs grâce à un code unique, pour partager vos tableaux de bord.
+            feedback:
+                copied: Code copié
+                copy_error: "La copie a échoué, sélectionne et copie le code manuellement"
+                disabled: Partage de profil désactivé
+                enabled: Partage de profil activé
+                regenerated: Nouveau code généré
+                workouts_disabled: Partage des séances désactivé
+                workouts_enabled: Partage des séances activé
+            regenerate: Régénérer le code
+            share_workouts_label: "Partager aussi mes séances (liste et détail)"
+            switch_label: Rendre mon profil trouvable
+            title: Partage de mon profil
+        title: "Mes connexions"
+    workout:
+        list:
+            title: "Séances de {nickname}"
 
 registration:
     account_created: Ton compte est créé et prêt à l'emploi

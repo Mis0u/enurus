@@ -25,3 +25,13 @@ framework:
             limit: 100
             interval: '15 minutes'
             cache_pool: rate_limiter.storage
+        profile_search:
+            policy: 'sliding_window'
+            limit: 10
+            interval: '15 minutes'
+            cache_pool: rate_limiter.storage
+        profile_connection_request:
+            policy: 'sliding_window'
+            limit: 5
+            interval: '1 hour'
+            cache_pool: rate_limiter.storage
