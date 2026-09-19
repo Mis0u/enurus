@@ -638,6 +638,18 @@ settings:
     profile:
         subtitle: Your personal information
         title: Profile
+    profile_sharing:
+        code_label: "Your share code:"
+        copy: Copy
+        explanation: Make your profile discoverable by other users through a unique code, to share your dashboards with each other.
+        feedback:
+            copied: Code copied
+            disabled: Profile sharing disabled
+            enabled: Profile sharing enabled
+            regenerated: New code generated
+        regenerate: Regenerate code
+        switch_label: Make my profile discoverable
+        title: Profile sharing
     title: Settings
     weight_unit:
         label: Weight unit

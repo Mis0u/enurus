@@ -638,6 +638,18 @@ settings:
     profile:
         subtitle: Tes informations personnelles
         title: Profil
+    profile_sharing:
+        code_label: "Ton code de partage :"
+        copy: Copier
+        explanation: Rends ton profil trouvable par d'autres utilisateurs grâce à un code unique, pour partager vos tableaux de bord.
+        feedback:
+            copied: Code copié
+            disabled: Partage de profil désactivé
+            enabled: Partage de profil activé
+            regenerated: Nouveau code généré
+        regenerate: Régénérer le code
+        switch_label: Rendre mon profil trouvable
+        title: Partage de profil
     title: Réglages
     weight_unit:
         label: Unité de poids

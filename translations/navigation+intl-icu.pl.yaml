@@ -648,6 +648,18 @@ settings:
     profile:
         subtitle: Twoje dane osobowe
         title: Profil
+    profile_sharing:
+        code_label: "Twój kod udostępniania:"
+        copy: Kopiuj
+        explanation: Spraw, aby Twój profil był wykrywalny dla innych użytkowników dzięki unikalnemu kodowi, aby udostępniać sobie nawzajem pulpity.
+        feedback:
+            copied: Kod skopiowany
+            disabled: Udostępnianie profilu wyłączone
+            enabled: Udostępnianie profilu włączone
+            regenerated: Wygenerowano nowy kod
+        regenerate: Wygeneruj nowy kod
+        switch_label: Uczyń mój profil wykrywalnym
+        title: Udostępnianie profilu
     title: Ustawienia
     weight_unit:
         label: Jednostka wagi

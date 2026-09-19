@@ -638,6 +638,18 @@ settings:
     profile:
         subtitle: Je persoonlijke informatie
         title: Profiel
+    profile_sharing:
+        code_label: "Jouw deelcode:"
+        copy: Kopiëren
+        explanation: Maak je profiel vindbaar voor andere gebruikers via een unieke code, om jullie dashboards te delen.
+        feedback:
+            copied: Code gekopieerd
+            disabled: Profiel delen uitgeschakeld
+            enabled: Profiel delen ingeschakeld
+            regenerated: Nieuwe code gegenereerd
+        regenerate: Code opnieuw genereren
+        switch_label: Mijn profiel vindbaar maken
+        title: Profiel delen
     title: Instellingen
     weight_unit:
         label: Gewichtseenheid

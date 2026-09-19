@@ -638,6 +638,18 @@ settings:
     profile:
         subtitle: As tuas informações pessoais
         title: Perfil
+    profile_sharing:
+        code_label: "O teu código de partilha:"
+        copy: Copiar
+        explanation: Torna o teu perfil detetável por outros utilizadores através de um código único, para partilharem os vossos painéis.
+        feedback:
+            copied: Código copiado
+            disabled: Partilha de perfil desativada
+            enabled: Partilha de perfil ativada
+            regenerated: Novo código gerado
+        regenerate: Gerar novo código
+        switch_label: Tornar o meu perfil detetável
+        title: Partilha de perfil
     title: Definições
     weight_unit:
         label: Unidade de peso

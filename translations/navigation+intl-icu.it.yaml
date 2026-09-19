@@ -638,6 +638,18 @@ settings:
     profile:
         subtitle: Le tue informazioni personali
         title: Profilo
+    profile_sharing:
+        code_label: "Il tuo codice di condivisione:"
+        copy: Copia
+        explanation: Rendi il tuo profilo rintracciabile da altri utenti tramite un codice unico, per condividere i vostri dashboard.
+        feedback:
+            copied: Codice copiato
+            disabled: Condivisione del profilo disattivata
+            enabled: Condivisione del profilo attivata
+            regenerated: Nuovo codice generato
+        regenerate: Rigenera codice
+        switch_label: Rendi il mio profilo rintracciabile
+        title: Condivisione del profilo
     title: Impostazioni
     weight_unit:
         label: Unità di peso

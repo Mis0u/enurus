@@ -638,6 +638,18 @@ settings:
     profile:
         subtitle: Tu información personal
         title: Perfil
+    profile_sharing:
+        code_label: "Tu código de compartición:"
+        copy: Copiar
+        explanation: Haz que otros usuarios puedan encontrar tu perfil mediante un código único, para compartir vuestros paneles.
+        feedback:
+            copied: Código copiado
+            disabled: Compartición de perfil desactivada
+            enabled: Compartición de perfil activada
+            regenerated: Nuevo código generado
+        regenerate: Regenerar código
+        switch_label: Hacer que mi perfil sea localizable
+        title: Compartir perfil
     title: Ajustes
     weight_unit:
         label: Unidad de peso

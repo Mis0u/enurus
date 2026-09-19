@@ -638,6 +638,18 @@ settings:
     profile:
         subtitle: Deine persönlichen Informationen
         title: Profil
+    profile_sharing:
+        code_label: "Dein Freigabecode:"
+        copy: Kopieren
+        explanation: Mach dein Profil über einen eindeutigen Code für andere Nutzer auffindbar, um eure Dashboards zu teilen.
+        feedback:
+            copied: Code kopiert
+            disabled: Profilfreigabe deaktiviert
+            enabled: Profilfreigabe aktiviert
+            regenerated: Neuer Code generiert
+        regenerate: Code neu generieren
+        switch_label: Mein Profil auffindbar machen
+        title: Profilfreigabe
     title: Einstellungen
     weight_unit:
         label: Gewichtseinheit
