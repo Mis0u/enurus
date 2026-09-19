@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security\ProfileConnection;
 
+use App\Entity\User;
 use App\Enum\Entity\ProfileConnection\ProfileConnectionStatusEnum;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -99,6 +100,36 @@ final class ProfileConnectionListControllerTest extends WebTestCase
         ));
     }
 
+    public function testConnectionsListIsNotScrollableBelowFiveEntries(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $actor = $this->getUserByEmail(self::ACTOR);
+        $this->createConnection($this->getUserByEmail(self::OTHER), $actor, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->createConnection($this->getUserByEmail(self::THIRD), $actor, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->createConnection($this->getUserByEmail(self::FOURTH), $actor, ProfileConnectionStatusEnum::ACCEPTED);
+
+        $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorNotExists('#profile-connection-connections-title + ul.exercise-list-scroll');
+    }
+
+    public function testConnectionsListBecomesScrollableFromFiveEntries(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $actor = $this->getUserByEmail(self::ACTOR);
+        $this->createConnection($this->getUserByEmail(self::OTHER), $actor, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->createConnection($this->getUserByEmail(self::THIRD), $actor, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->createConnection($this->getUserByEmail(self::FOURTH), $actor, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->createConnection($this->createExtraUser('extra1@test.com'), $actor, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->createConnection($this->createExtraUser('extra2@test.com'), $actor, ProfileConnectionStatusEnum::ACCEPTED);
+
+        $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists('#profile-connection-connections-title + ul.exercise-list-scroll');
+    }
+
     public function testEndedConnectionsAreNotListed(): void
     {
         $client = $this->login(self::ACTOR);
@@ -146,5 +177,20 @@ final class ProfileConnectionListControllerTest extends WebTestCase
 
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('main', 'Add a connection');
+    }
+
+    private function createExtraUser(string $email): User
+    {
+        $user = new User();
+        $user->email = $email;
+        $user->password = 'hashed';
+        $user->nickname = explode('@', $email)[0];
+        $user->lastLogin = new \DateTimeImmutable();
+        $user->isVerified = true;
+
+        $this->entityManager()->persist($user);
+        $this->entityManager()->flush();
+
+        return $user;
     }
 }

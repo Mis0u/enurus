@@ -750,6 +750,9 @@
   .max-h-\[420px\] {
     max-height: 420px;
   }
+  .max-h-\[430px\] {
+    max-height: 430px;
+  }
   .max-h-full {
     max-height: 100%;
   }

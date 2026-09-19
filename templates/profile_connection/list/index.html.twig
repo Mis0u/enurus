@@ -79,7 +79,9 @@
                         {{ 'profile_connection.list.connections.empty'|trans({}, 'navigation') }}
                     </p>
                 {% else %}
-                    <ul class="flex flex-col gap-3">
+                    {# À partir de 5 connexions, la liste garde une hauteur fixe (~5 lignes) et
+                       scrolle en interne plutôt que de laisser la page s'allonger indéfiniment. #}
+                    <ul class="flex flex-col gap-3 {% if overview.connections|length >= 5 %}max-h-[430px] overflow-y-auto pr-1 exercise-list-scroll{% endif %}">
                         {% for entry in overview.connections %}
                             <li class="bg-bg-card border border-white/[0.07] rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
                                 {% include 'profile_connection/list/_person.html.twig' with {person: entry.counterpart} only %}

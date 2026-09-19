@@ -118,6 +118,10 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
         $viewer = $this->getUserByEmail(self::VIEWER);
         $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
         $this->makeDiscoverable($viewer, 'BBBBB2');
+        // Le fixture hub de ProfileConnectionFixtures rend ce compte partageur par défaut — ce
+        // test veut explicitement le cas où il ne l'est plus.
+        $subject->isDiscoverable = false;
+        $this->entityManager()->flush();
         $connection = $this->createConnection($viewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
 
         $client->request('GET', $this->dashboardUrl($connection, 'fr'));
