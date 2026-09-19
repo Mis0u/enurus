@@ -75,7 +75,7 @@ final class SettingsIndexController extends AbstractController
      * Un widget n'est proposé en réglages qu'une fois débloqué — même source de vérité que le
      * dashboard (`DashboardWidgetUnlockResolver`), pour ne jamais désynchroniser les deux.
      *
-     * @return array<array{key: string, label: string, hidden: bool}>
+     * @return array<array{key: string, label: string, hidden: bool, hiddenForShare: bool}>
      */
     private function buildDashboardWidgetRows(User $user): array
     {
@@ -93,6 +93,7 @@ final class SettingsIndexController extends AbstractController
                 'key' => $widget,
                 'label' => $this->translator->trans(\sprintf('settings.dashboard_widgets.widget.%s', $widget), [], 'navigation'),
                 'hidden' => in_array($widget, $user->hiddenWidgets, true),
+                'hiddenForShare' => in_array($widget, $user->hiddenSharedWidgets, true),
             ];
         }
 

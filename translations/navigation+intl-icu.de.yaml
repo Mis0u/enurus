@@ -628,6 +628,7 @@ settings:
         title: Kontolöschung
     dashboard_widgets:
         explanation: Wähle die Blöcke, die auf deinem Dashboard angezeigt werden.
+        hide_for_connections: "Vor meinen Verbindungen ausblenden"
         title: Dashboard-Widgets
         widget:
             goals: Ziele

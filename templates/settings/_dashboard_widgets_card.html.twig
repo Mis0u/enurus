@@ -1,14 +1,16 @@
 {#
     Variables attendues (via `only`) :
-    - dashboardWidgets : array<array{key: string, label: string, hidden: bool}> — uniquement les
-      widgets débloqués, voir SettingsIndexController::buildDashboardWidgetRows()
+    - dashboardWidgets : array<array{key: string, label: string, hidden: bool, hiddenForShare: bool}>
+      — uniquement les widgets débloqués, voir SettingsIndexController::buildDashboardWidgetRows()
 #}
 {% if dashboardWidgets is not empty %}
     <section id="dashboard-widgets"
              class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-6"
              data-controller="settings--dashboard-widgets"
              data-settings--dashboard-widgets-url-value="{{ path('app_settings_dashboard_widgets_update') }}"
+             data-settings--dashboard-widgets-share-url-value="{{ path('app_settings_dashboard_widget_sharing_update') }}"
              data-settings--dashboard-widgets-csrf-token-value="{{ csrf_token('settings_dashboard_widgets') }}"
+             data-settings--dashboard-widgets-share-csrf-token-value="{{ csrf_token('settings_dashboard_widget_sharing') }}"
              data-settings--dashboard-widgets-success-message-value="{{ 'settings.feedback.success'|trans({}, 'navigation') }}">
 
         <h2 class="font-['Rajdhani'] text-lg font-bold text-[#f0f4ff] mb-1">
@@ -18,16 +20,27 @@
             {{ 'settings.dashboard_widgets.explanation'|trans({}, 'navigation') }}
         </p>
 
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-4">
             {% for widget in dashboardWidgets %}
-                <label class="flex items-center justify-between gap-3 cursor-pointer">
-                    <span class="text-sm text-[#f0f4ff]">{{ widget.label }}</span>
-                    <input type="checkbox"
-                           class="h-5 w-5 rounded border-white/[0.15] bg-transparent text-rose-ft accent-rose-ft cursor-pointer"
-                           {% if not widget.hidden %}checked{% endif %}
-                           data-action="change->settings--dashboard-widgets#toggle"
-                           data-settings--dashboard-widgets-widget-param="{{ widget.key }}">
-                </label>
+                <div class="flex flex-col gap-1.5" data-widget-key="{{ widget.key }}">
+                    <label class="flex items-center justify-between gap-3 cursor-pointer">
+                        <span class="text-sm text-[#f0f4ff]">{{ widget.label }}</span>
+                        <input type="checkbox"
+                               class="h-5 w-5 rounded border-white/[0.15] bg-transparent text-rose-ft accent-rose-ft cursor-pointer"
+                               {% if not widget.hidden %}checked{% endif %}
+                               data-action="change->settings--dashboard-widgets#toggle"
+                               data-settings--dashboard-widgets-widget-param="{{ widget.key }}">
+                    </label>
+                    <label class="flex items-center justify-between gap-3 pl-4 {% if widget.hidden %}opacity-40{% else %}cursor-pointer{% endif %}">
+                        <span class="text-xs text-[#8b9bb4]">{{ 'settings.dashboard_widgets.hide_for_connections'|trans({}, 'navigation') }}</span>
+                        <input type="checkbox"
+                               class="h-4 w-4 rounded border-white/[0.15] bg-transparent text-rose-ft accent-rose-ft cursor-pointer disabled:cursor-not-allowed"
+                               {% if widget.hiddenForShare %}checked{% endif %}
+                               {% if widget.hidden %}disabled{% endif %}
+                               data-action="change->settings--dashboard-widgets#toggleShare"
+                               data-settings--dashboard-widgets-widget-param="{{ widget.key }}">
+                    </label>
+                </div>
             {% endfor %}
         </div>
     </section>

@@ -216,6 +216,36 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
         self::assertSelectorExists('[data-controller="dashboard--session"]');
     }
 
+    public function testWidgetHiddenOnlyForSharingStaysHiddenOnTheSharedDashboard(): void
+    {
+        $client = $this->login(self::VIEWER);
+        $viewer = $this->getUserByEmail(self::VIEWER);
+        $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
+        $subject->hiddenSharedWidgets = [DashboardWidgetEnum::TONNAGE->value];
+        $this->makeDiscoverable($viewer, 'CCCC15');
+        $this->makeDiscoverable($subject, 'CCCC16');
+        $connection = $this->createConnection($viewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
+
+        $client->request('GET', $this->dashboardUrl($connection, 'fr'));
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorNotExists('[data-controller="dashboard--tonnage"]');
+        self::assertSelectorExists('[data-controller="dashboard--session"]');
+    }
+
+    public function testWidgetHiddenOnlyForSharingStaysVisibleOnTheOwnersOwnDashboard(): void
+    {
+        $client = $this->login(self::SUBJECT_WITH_WORKOUTS);
+        $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
+        $subject->hiddenSharedWidgets = [DashboardWidgetEnum::TONNAGE->value];
+        $this->entityManager()->flush();
+
+        $client->request('GET', '/fr/tableau-de-bord');
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists('[data-controller="dashboard--tonnage"]');
+    }
+
     public function testWeightUnitIsTheViewersNotTheOwners(): void
     {
         $client = $this->login(self::LBS_VIEWER);

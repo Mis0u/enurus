@@ -628,6 +628,7 @@ settings:
         title: Accountverwijdering
     dashboard_widgets:
         explanation: Kies welke blokken op je dashboard worden weergegeven.
+        hide_for_connections: "Verbergen voor mijn verbindingen"
         title: Dashboard-widgets
         widget:
             goals: Doelen

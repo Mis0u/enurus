@@ -628,6 +628,7 @@ settings:
         title: Eliminazione dell'account
     dashboard_widgets:
         explanation: Scegli i blocchi visualizzati sulla tua dashboard.
+        hide_for_connections: "Nascondi alle mie connessioni"
         title: Widget della dashboard
         widget:
             goals: Obiettivi

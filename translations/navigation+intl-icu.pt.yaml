@@ -628,6 +628,7 @@ settings:
         title: Eliminação da conta
     dashboard_widgets:
         explanation: Escolhe os blocos apresentados no teu painel.
+        hide_for_connections: "Ocultar das minhas conexões"
         title: Widgets do painel
         widget:
             goals: Objetivos

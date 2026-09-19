@@ -628,6 +628,7 @@ settings:
         title: Account deletion
     dashboard_widgets:
         explanation: Choose which blocks appear on your dashboard.
+        hide_for_connections: "Hide from my connections"
         title: Dashboard widgets
         widget:
             goals: Goals

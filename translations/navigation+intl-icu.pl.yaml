@@ -638,6 +638,7 @@ settings:
         title: Usunięcie konta
     dashboard_widgets:
         explanation: Wybierz bloki wyświetlane na Twoim panelu.
+        hide_for_connections: "Ukryj przed moimi połączeniami"
         title: Widżety panelu
         widget:
             goals: Cele

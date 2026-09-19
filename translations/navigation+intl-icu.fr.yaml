@@ -628,6 +628,7 @@ settings:
         title: Suppression du compte
     dashboard_widgets:
         explanation: Choisis les blocs affichés sur ton tableau de bord.
+        hide_for_connections: "Masquer pour mes connexions"
         title: Widgets du dashboard
         widget:
             goals: Objectifs
