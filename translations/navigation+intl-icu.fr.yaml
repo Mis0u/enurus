@@ -434,6 +434,11 @@ profile_connection:
             title: "Ajouter une connexion"
         sent:
             title: "Demandes envoyées"
+        shared_widgets:
+            explanation: "Choisis ce que tes connexions voient sur ton dashboard partagé, indépendamment de ce que toi tu affiches."
+            feedback:
+                success: "Préférence mise à jour"
+            title: "Affichage du dashboard partagé"
         sharing:
             code_label: "Ton code de partage :"
             copy: Copier
@@ -453,6 +458,7 @@ profile_connection:
         title: "Mes connexions"
     workout:
         list:
+            back_to_dashboard: "Retour au tableau de bord de {nickname}"
             title: "Séances de {nickname}"
 
 registration:
@@ -792,6 +798,7 @@ workout:
     series_duration_abbreviate: sec
     show:
         back: Retour à mes séances
+        back_shared: "Retour à ses séances"
         metrics:
             distance: Distance
             duration: Durée

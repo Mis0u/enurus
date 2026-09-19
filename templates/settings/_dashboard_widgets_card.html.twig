@@ -23,10 +23,11 @@
                 <label class="flex items-center justify-between gap-3 cursor-pointer">
                     <span class="text-sm text-[#f0f4ff]">{{ widget.label }}</span>
                     <input type="checkbox"
-                           class="h-5 w-5 rounded border-white/[0.15] bg-transparent text-rose-ft accent-rose-ft cursor-pointer"
+                           class="peer sr-only"
                            {% if not widget.hidden %}checked{% endif %}
                            data-action="change->settings--dashboard-widgets#toggle"
                            data-settings--dashboard-widgets-widget-param="{{ widget.key }}">
+                    <span class="shrink-0 w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-rose-ft after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
                 </label>
             {% endfor %}
         </div>

@@ -438,6 +438,11 @@ profile_connection:
             title: "Dodaj połączenie"
         sent:
             title: "Wysłane prośby"
+        shared_widgets:
+            explanation: "Wybierz, co Twoje połączenia widzą na Twoim udostępnionym panelu, niezależnie od tego, co Ty sam wyświetlasz."
+            feedback:
+                success: "Preferencja zaktualizowana"
+            title: "Wyświetlanie udostępnionego panelu"
         sharing:
             code_label: "Twój kod udostępniania:"
             copy: Kopiuj
@@ -457,6 +462,7 @@ profile_connection:
         title: "Moje połączenia"
     workout:
         list:
+            back_to_dashboard: "Powrót do panelu {nickname}"
             title: "Treningi użytkownika {nickname}"
 
 registration:
@@ -806,6 +812,7 @@ workout:
     series_duration_abbreviate: sek
     show:
         back: Powrót do moich treningów
+        back_shared: Powrót do treningów
         metrics:
             distance: Dystans
             duration: Czas trwania

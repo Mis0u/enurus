@@ -6,11 +6,14 @@ namespace App\Controller\ProfileConnection;
 
 use App\Entity\User;
 use App\Form\ProfileConnectionRequestType;
+use App\Service\Dashboard\DashboardUnlockService;
+use App\Service\Dashboard\DashboardWidgetUnlockResolver;
 use App\Service\ProfileSharing\ProfileConnectionOverviewService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: [
     'fr' => '/connexions',
@@ -27,6 +30,9 @@ final class ProfileConnectionListController extends AbstractController
 {
     public function __construct(
         private readonly ProfileConnectionOverviewService $overviewService,
+        private readonly DashboardUnlockService $dashboardUnlockService,
+        private readonly DashboardWidgetUnlockResolver $widgetUnlockResolver,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -43,8 +49,43 @@ final class ProfileConnectionListController extends AbstractController
             'requestForm' => $this->createForm(ProfileConnectionRequestType::class),
             'isDiscoverable' => $user->isDiscoverable,
             'shareCode' => $user->shareCode,
-            'shareWorkouts' => $user->shareWorkouts,
+            'shareWorkoutsChecked' => $user->shareWorkouts && $user->isDiscoverable,
             'nickname' => $user->nickname,
+            'sharedWidgets' => $this->buildSharedWidgetRows($user),
         ]);
+    }
+
+    /**
+     * Widgets encore visibles sur son propre dashboard (`hiddenWidgets` déjà appliqué en amont)
+     * — un widget qu'on masque déjà chez soi n'a pas sa place ici, `hiddenSharedWidgets` ne fait
+     * que restreindre davantage, jamais réafficher. `checked`/`disabled` intègrent en plus le
+     * verrou en cascade : impossible d'afficher un widget sur le partage tant que le partage de
+     * profil et celui des séances ne sont pas tous les deux actifs (cf. les cascades côté
+     * ProfileConnectionSharingToggleController / ProfileConnectionWorkoutSharingToggleController).
+     *
+     * @return array<array{key: string, label: string, checked: bool, disabled: bool}>
+     */
+    private function buildSharedWidgetRows(User $user): array
+    {
+        $dashboardState = $this->dashboardUnlockService->getStateForUser($user);
+        $unlockedWidgets = $this->widgetUnlockResolver->resolve($user, $dashboardState);
+        $sharingLocked = ! $user->isDiscoverable || ! $user->shareWorkouts;
+
+        $rows = [];
+
+        foreach ($unlockedWidgets as $widget => $unlocked) {
+            if (! $unlocked || in_array($widget, $user->hiddenWidgets, true)) {
+                continue;
+            }
+
+            $rows[] = [
+                'key' => $widget,
+                'label' => $this->translator->trans(\sprintf('settings.dashboard_widgets.widget.%s', $widget), [], 'navigation'),
+                'checked' => ! $sharingLocked && ! in_array($widget, $user->hiddenSharedWidgets, true),
+                'disabled' => $sharingLocked,
+            ];
+        }
+
+        return $rows;
     }
 }

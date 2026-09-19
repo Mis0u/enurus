@@ -233,6 +233,58 @@ final class ProfileConnectionSharingControllersTest extends WebTestCase
         self::assertFalse($this->getUserByEmail(self::ACTOR)->shareWorkouts);
     }
 
+    public function testDisablingProfileSharingCascadesToHiddenSharedWidgets(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $actor = $this->getUserByEmail(self::ACTOR);
+        $this->makeDiscoverable($actor, 'WWWWW3');
+        $actor->shareWorkouts = true;
+        $this->entityManager()->flush();
+        $token = $this->toggleTokenFor($client);
+
+        $client->request(
+            Request::METHOD_PATCH,
+            self::TOGGLE_URL,
+            server: [
+                'CONTENT_TYPE' => 'application/json',
+            ],
+            content: json_encode([
+                'isDiscoverable' => false,
+                '_token' => $token,
+            ], JSON_THROW_ON_ERROR),
+        );
+
+        self::assertResponseIsSuccessful();
+        self::assertContains('tonnage', $this->getUserByEmail(self::ACTOR)->hiddenSharedWidgets);
+        self::assertContains('session', $this->getUserByEmail(self::ACTOR)->hiddenSharedWidgets);
+    }
+
+    public function testDisablingWorkoutSharingCascadesToHiddenSharedWidgets(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $actor = $this->getUserByEmail(self::ACTOR);
+        $this->makeDiscoverable($actor, 'WWWWW4');
+        $actor->shareWorkouts = true;
+        $this->entityManager()->flush();
+        $token = $this->workoutToggleTokenFor($client);
+
+        $client->request(
+            Request::METHOD_PATCH,
+            self::WORKOUT_TOGGLE_URL,
+            server: [
+                'CONTENT_TYPE' => 'application/json',
+            ],
+            content: json_encode([
+                'shareWorkouts' => false,
+                '_token' => $token,
+            ], JSON_THROW_ON_ERROR),
+        );
+
+        self::assertResponseIsSuccessful();
+        self::assertContains('tonnage', $this->getUserByEmail(self::ACTOR)->hiddenSharedWidgets);
+        self::assertContains('session', $this->getUserByEmail(self::ACTOR)->hiddenSharedWidgets);
+    }
+
     private function toggleTokenFor(KernelBrowser $client): string
     {
         return $this->csrfTokenFromPage(

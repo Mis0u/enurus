@@ -37,7 +37,7 @@ final readonly class DashboardViewDataBuilder
         $periods = $this->resolvePeriods($subject);
         $dayIds = $this->workoutStatsRepository->findIdsByUserAndDateRange($subject, $periods->day->start, $periods->day->end);
         $goalState = $this->goalService->getStateForUser($subject);
-        $visibleWidgets = $this->resolveVisibleWidgets($subject, $dashboardState);
+        $visibleWidgets = $this->resolveVisibleWidgets($subject, $viewer, $dashboardState);
         $hasNoVisibleWidgets = ! \in_array(true, $visibleWidgets, true);
 
         return new DashboardViewData(
@@ -76,16 +76,21 @@ final readonly class DashboardViewDataBuilder
     /**
      * Un widget s'affiche s'il est débloqué ET que l'utilisateur ne l'a pas masqué en réglages —
      * même source de vérité que la liste de cases à cocher proposée dans les réglages
-     * (`DashboardWidgetUnlockResolver`), pour ne jamais désynchroniser les deux.
+     * (`DashboardWidgetUnlockResolver`), pour ne jamais désynchroniser les deux. Sur le dashboard
+     * partagé (`$subject !== $viewer`), `hiddenSharedWidgets` restreint en plus — jamais l'inverse :
+     * un widget masqué via `hiddenWidgets` reste masqué même pour soi-même.
      *
      * @return array<string, bool> clé = DashboardWidgetEnum::value
      */
-    private function resolveVisibleWidgets(User $subject, DashboardState $dashboardState): array
+    private function resolveVisibleWidgets(User $subject, User $viewer, DashboardState $dashboardState): array
     {
+        $isSharedView = $subject !== $viewer;
         $visibleWidgets = [];
 
         foreach ($this->widgetUnlockResolver->resolve($subject, $dashboardState) as $widget => $unlocked) {
-            $visibleWidgets[$widget] = $unlocked && ! \in_array($widget, $subject->hiddenWidgets, true);
+            $hidden = \in_array($widget, $subject->hiddenWidgets, true)
+                || ($isSharedView && \in_array($widget, $subject->hiddenSharedWidgets, true));
+            $visibleWidgets[$widget] = $unlocked && ! $hidden;
         }
 
         return $visibleWidgets;

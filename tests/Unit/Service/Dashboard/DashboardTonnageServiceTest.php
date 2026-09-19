@@ -115,7 +115,9 @@ final class DashboardTonnageServiceTest extends TestCase
     public function testMultipleSessionsOnTheSameDayAreAggregatedOnASingleBar(): void
     {
         $user = $this->createUser(UnitOfMeasureEnum::KG);
-        $now = new \DateTimeImmutable();
+        // Heure fixée à midi : un `+2 hours` doit rester le même jour calendaire, sinon ce test
+        // devient flaky selon l'heure d'exécution (`+2 hours` traverserait minuit).
+        $now = (new \DateTimeImmutable())->setTime(12, 0);
 
         $service = $this->service([
             [

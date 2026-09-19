@@ -434,6 +434,11 @@ profile_connection:
             title: "Verbindung hinzufügen"
         sent:
             title: "Gesendete Anfragen"
+        shared_widgets:
+            explanation: "Wähle, was deine Verbindungen auf deinem geteilten Dashboard sehen, unabhängig davon, was du selbst anzeigst."
+            feedback:
+                success: "Einstellung aktualisiert"
+            title: "Anzeige des geteilten Dashboards"
         sharing:
             code_label: "Dein Freigabecode:"
             copy: Kopieren
@@ -453,6 +458,7 @@ profile_connection:
         title: "Meine Verbindungen"
     workout:
         list:
+            back_to_dashboard: "Zurück zum Dashboard von {nickname}"
             title: "Trainings von {nickname}"
 
 registration:
@@ -792,6 +798,7 @@ workout:
     series_duration_abbreviate: Sek
     show:
         back: Zurück zu meinen Trainings
+        back_shared: Zurück zu den Trainings
         metrics:
             distance: Distanz
             duration: Dauer

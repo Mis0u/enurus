@@ -247,6 +247,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Clés `DashboardWidgetEnum` masquées spécifiquement pour les connexions (dashboard partagé en
+     * lecture seule), en plus de `hiddenWidgets` — jamais l'inverse : un widget déjà masqué sur son
+     * propre dashboard reste masqué partout, cette liste ne fait que restreindre davantage, jamais
+     * réafficher. Ignorée quand on regarde son propre dashboard (`DashboardViewDataBuilder`).
+     *
+     * @var array<int, string>
+     */
+    #[ORM\Column(type: 'json', nullable: false, options: [
+        'default' => '[]',
+    ])]
+    public array $hiddenSharedWidgets = [] {
+        get {
+            return $this->hiddenSharedWidgets;
+        }
+        set(array $hiddenSharedWidgets) {
+            $this->hiddenSharedWidgets = $hiddenSharedWidgets;
+        }
+    }
+
+    /**
      * Opt-in au partage de profil : ne rend l'utilisateur trouvable que par son `shareCode` — une
      * connexion déjà acceptée n'en dépend pas et reste valable si le partage est ensuite coupé.
      */
