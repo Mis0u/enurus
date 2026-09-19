@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\ProfileConnection;
 
 use App\Entity\User;
+use App\Enum\Dashboard\DashboardWidgetEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -57,10 +58,21 @@ final class ProfileConnectionWorkoutSharingToggleController extends AbstractCont
         }
 
         $user->shareWorkouts = $shareWorkouts;
+
+        // Cascade : l'affichage des widgets sur le dashboard partagé dépend aussi du partage des
+        // séances — ne peut jamais rester actif une fois ce partage secondaire coupé.
+        if (! $shareWorkouts) {
+            $user->hiddenSharedWidgets = array_map(
+                static fn (DashboardWidgetEnum $widget): string => $widget->value,
+                DashboardWidgetEnum::cases(),
+            );
+        }
+
         $this->em->flush();
 
         return $this->json([
             'shareWorkouts' => $user->shareWorkouts,
+            'hiddenSharedWidgets' => $user->hiddenSharedWidgets,
         ]);
     }
 }

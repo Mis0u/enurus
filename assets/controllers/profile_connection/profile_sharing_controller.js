@@ -38,7 +38,11 @@ export default class extends Controller {
             this.#applyShareCode(data.shareCode);
             this.#applyWorkoutSharing(data.shareWorkouts, isDiscoverable);
             window.dispatchEvent(new CustomEvent('profile-connection:sharing-changed', {
-                detail: { isDiscoverable: data.isDiscoverable },
+                detail: {
+                    isDiscoverable: data.isDiscoverable,
+                    shareWorkouts: data.shareWorkouts,
+                    hiddenSharedWidgets: data.hiddenSharedWidgets,
+                },
             }));
             showSuccessToast(isDiscoverable ? this.enableMessageValue : this.disableMessageValue);
         } catch {
@@ -62,6 +66,14 @@ export default class extends Controller {
                 return;
             }
 
+            const data = await response.json();
+            window.dispatchEvent(new CustomEvent('profile-connection:sharing-changed', {
+                detail: {
+                    isDiscoverable: true,
+                    shareWorkouts: data.shareWorkouts,
+                    hiddenSharedWidgets: data.hiddenSharedWidgets,
+                },
+            }));
             showSuccessToast(shareWorkouts ? this.enableWorkoutsMessageValue : this.disableWorkoutsMessageValue);
         } catch {
             event.target.checked = ! shareWorkouts;

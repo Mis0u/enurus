@@ -434,6 +434,11 @@ profile_connection:
             title: "Verbinding toevoegen"
         sent:
             title: "Verzonden verzoeken"
+        shared_widgets:
+            explanation: "Kies wat je verbindingen zien op je gedeelde dashboard, onafhankelijk van wat je zelf laat zien."
+            feedback:
+                success: "Voorkeur bijgewerkt"
+            title: "Weergave van het gedeelde dashboard"
         sharing:
             code_label: "Jouw deelcode:"
             copy: Kopiëren
@@ -453,6 +458,7 @@ profile_connection:
         title: "Mijn verbindingen"
     workout:
         list:
+            back_to_dashboard: "Terug naar het dashboard van {nickname}"
             title: "Trainingen van {nickname}"
 
 registration:
@@ -628,7 +634,6 @@ settings:
         title: Accountverwijdering
     dashboard_widgets:
         explanation: Kies welke blokken op je dashboard worden weergegeven.
-        hide_for_connections: "Verbergen voor mijn verbindingen"
         title: Dashboard-widgets
         widget:
             goals: Doelen
@@ -793,6 +798,7 @@ workout:
     series_duration_abbreviate: sec
     show:
         back: Terug naar mijn trainingen
+        back_shared: Terug naar de trainingen
         metrics:
             distance: Afstand
             duration: Duur

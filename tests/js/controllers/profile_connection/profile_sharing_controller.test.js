@@ -72,7 +72,7 @@ describe('profile-connection--profile-sharing controller', () => {
         expect(document.querySelector('[data-profile-connection--profile-sharing-target="codeWrapper"]').hidden).toBe(false);
         expect(document.querySelector('[data-profile-connection--profile-sharing-target="code"]').textContent).toBe('NEW123');
         expect(showSuccessToast).toHaveBeenCalledWith('Partage activé');
-        expect(listener).toHaveBeenCalledWith(expect.objectContaining({ detail: { isDiscoverable: true } }));
+        expect(listener).toHaveBeenCalledWith(expect.objectContaining({ detail: expect.objectContaining({ isDiscoverable: true }) }));
         expect(document.querySelector('[data-profile-connection--profile-sharing-target="workoutCheckbox"]').disabled).toBe(false);
 
         window.removeEventListener('profile-connection:sharing-changed', listener);
@@ -116,13 +116,18 @@ describe('profile-connection--profile-sharing controller', () => {
         }));
         expect(document.querySelector('[data-profile-connection--profile-sharing-target="codeWrapper"]').hidden).toBe(false);
         expect(showSuccessToast).toHaveBeenCalledWith('Partage désactivé');
-        expect(listener).toHaveBeenCalledWith(expect.objectContaining({ detail: { isDiscoverable: false } }));
+        expect(listener).toHaveBeenCalledWith(expect.objectContaining({ detail: expect.objectContaining({ isDiscoverable: false }) }));
 
         window.removeEventListener('profile-connection:sharing-changed', listener);
     });
 
-    it('toggling workout sharing on sends shareWorkouts: true and toasts success', async () => {
-        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true }));
+    it('toggling workout sharing on sends shareWorkouts: true, toasts success and dispatches a sharing-changed event', async () => {
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+            ok: true,
+            json: () => Promise.resolve({ shareWorkouts: true, hiddenSharedWidgets: [] }),
+        }));
+        const listener = vi.fn();
+        window.addEventListener('profile-connection:sharing-changed', listener);
 
         const workoutCheckbox = document.querySelector('[data-profile-connection--profile-sharing-target="workoutCheckbox"]');
         workoutCheckbox.checked = true;
@@ -134,6 +139,31 @@ describe('profile-connection--profile-sharing controller', () => {
             body: JSON.stringify({ shareWorkouts: true, _token: 'workout-toggle-token' }),
         }));
         expect(showSuccessToast).toHaveBeenCalledWith('Partage des séances activé');
+        expect(listener).toHaveBeenCalledWith(expect.objectContaining({
+            detail: expect.objectContaining({ isDiscoverable: true, shareWorkouts: true }),
+        }));
+
+        window.removeEventListener('profile-connection:sharing-changed', listener);
+    });
+
+    it('toggling workout sharing off cascades hiddenSharedWidgets through the dispatched event', async () => {
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+            ok: true,
+            json: () => Promise.resolve({ shareWorkouts: false, hiddenSharedWidgets: ['tonnage', 'session'] }),
+        }));
+        const listener = vi.fn();
+        window.addEventListener('profile-connection:sharing-changed', listener);
+
+        const workoutCheckbox = document.querySelector('[data-profile-connection--profile-sharing-target="workoutCheckbox"]');
+        workoutCheckbox.checked = false;
+        workoutCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+        await vi.waitFor(() => expect(showSuccessToast).toHaveBeenCalled());
+
+        expect(listener).toHaveBeenCalledWith(expect.objectContaining({
+            detail: expect.objectContaining({ shareWorkouts: false, hiddenSharedWidgets: ['tonnage', 'session'] }),
+        }));
+
+        window.removeEventListener('profile-connection:sharing-changed', listener);
     });
 
     it('reverts the checkbox when the server rejects the workout-sharing toggle', async () => {

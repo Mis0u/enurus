@@ -45,7 +45,7 @@ final class SettingsIndexControllerTest extends WebTestCase
 
         self::assertResponseIsSuccessful();
         // Session, Tonnage, Muscles, Régularité — pas Objectifs, ce fixture n'en a jamais créé.
-        self::assertCount(4, $crawler->filter('[data-controller="settings--dashboard-widgets"] input[data-action$="#toggle"]'));
+        self::assertCount(4, $crawler->filter('[data-controller="settings--dashboard-widgets"] input[type="checkbox"]'));
     }
 
     public function testAWidgetHiddenByTheUserIsRenderedUnchecked(): void
@@ -59,38 +59,7 @@ final class SettingsIndexControllerTest extends WebTestCase
 
         $crawler = $client->request(Request::METHOD_GET, self::URL);
 
-        $checkbox = $crawler->filter('input[data-settings--dashboard-widgets-widget-param="tonnage"][data-action$="#toggle"]');
+        $checkbox = $crawler->filter('input[data-settings--dashboard-widgets-widget-param="tonnage"]');
         self::assertFalse('checked' === $checkbox->attr('checked'));
-    }
-
-    public function testAWidgetHiddenForSharingIsRenderedCheckedAndStillEnabled(): void
-    {
-        $client = $this->login(self::USER_WITH_WORKOUTS);
-        $user = $this->getUserByEmail(self::USER_WITH_WORKOUTS);
-        $user->hiddenSharedWidgets = ['tonnage'];
-        /** @var EntityManagerInterface $em */
-        $em = static::getContainer()->get(EntityManagerInterface::class);
-        $em->flush();
-
-        $crawler = $client->request(Request::METHOD_GET, self::URL);
-
-        $checkbox = $crawler->filter('input[data-settings--dashboard-widgets-widget-param="tonnage"][data-action$="#toggleShare"]');
-        self::assertSame('', $checkbox->attr('checked'));
-        self::assertNull($checkbox->attr('disabled'));
-    }
-
-    public function testHideForSharingCheckboxIsDisabledWhenTheWidgetIsAlreadyHidden(): void
-    {
-        $client = $this->login(self::USER_WITH_WORKOUTS);
-        $user = $this->getUserByEmail(self::USER_WITH_WORKOUTS);
-        $user->hiddenWidgets = ['tonnage'];
-        /** @var EntityManagerInterface $em */
-        $em = static::getContainer()->get(EntityManagerInterface::class);
-        $em->flush();
-
-        $crawler = $client->request(Request::METHOD_GET, self::URL);
-
-        $checkbox = $crawler->filter('input[data-settings--dashboard-widgets-widget-param="tonnage"][data-action$="#toggleShare"]');
-        self::assertSame('', $checkbox->attr('disabled'));
     }
 }

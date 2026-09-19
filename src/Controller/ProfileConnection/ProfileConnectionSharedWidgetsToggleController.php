@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Settings;
+namespace App\Controller\ProfileConnection;
 
 use App\Entity\User;
 use App\Enum\Dashboard\DashboardWidgetEnum;
@@ -15,13 +15,14 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
- * Masque/réaffiche un widget spécifiquement pour le dashboard partagé (connexions), en plus de
- * `SettingsDashboardWidgetsController` qui gère la visibilité sur son propre dashboard — deux
- * réglages indépendants, jamais le même endpoint : `hiddenSharedWidgets` ne fait que restreindre
- * davantage, jamais réafficher un widget déjà masqué partout.
+ * Masque/réaffiche un widget spécifiquement sur le dashboard partagé (connexions) — réglage
+ * indépendant de `SettingsDashboardWidgetsController` (visibilité sur son propre dashboard) :
+ * `hiddenSharedWidgets` ne fait que restreindre davantage, jamais réafficher un widget déjà masqué
+ * partout. Vit dans `App\Controller\ProfileConnection` et non `Settings` : c'est un réglage du
+ * partage, proposé depuis la page « Mes connexions », pas depuis les réglages généraux.
  */
 #[IsGranted('ROLE_USER')]
-final class SettingsDashboardWidgetSharingController extends AbstractController
+final class ProfileConnectionSharedWidgetsToggleController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
@@ -30,16 +31,16 @@ final class SettingsDashboardWidgetSharingController extends AbstractController
 
     #[Route(
         path: [
-            'en' => '/settings/widgets/sharing',
-            'fr' => '/reglages/widgets/partage',
-            'it' => '/impostazioni/widget/condivisione',
-            'es' => '/ajustes/widgets/compartir',
-            'pt' => '/definicoes/widgets/partilha',
-            'de' => '/einstellungen/widgets/teilen',
-            'nl' => '/instellingen/widgets/delen',
-            'pl' => '/ustawienia/widgety/udostepnianie',
+            'en' => '/connections/sharing/widgets',
+            'fr' => '/connexions/partage/widgets',
+            'it' => '/connessioni/condivisione/widget',
+            'es' => '/conexiones/compartir/widgets',
+            'pt' => '/conexoes/partilha/widgets',
+            'de' => '/verbindungen/teilen/widgets',
+            'nl' => '/verbindingen/delen/widgets',
+            'pl' => '/polaczenia/udostepnianie/widgety',
         ],
-        name: 'app_settings_dashboard_widget_sharing_update',
+        name: 'app_profile_connection_shared_widgets_toggle',
         methods: [Request::METHOD_PATCH],
     )]
     public function __invoke(Request $request): JsonResponse
@@ -47,7 +48,7 @@ final class SettingsDashboardWidgetSharingController extends AbstractController
         /** @var array{widget?: string, hiddenForShare?: bool, _token?: string} $payload */
         $payload = json_decode($request->getContent(), true) ?? [];
 
-        if (! $this->isCsrfTokenValid('settings_dashboard_widget_sharing', $payload['_token'] ?? '')) {
+        if (! $this->isCsrfTokenValid('profile_connection_shared_widgets', $payload['_token'] ?? '')) {
             return $this->json([
                 'error' => 'Invalid CSRF token',
             ], Response::HTTP_FORBIDDEN);
@@ -61,9 +62,18 @@ final class SettingsDashboardWidgetSharingController extends AbstractController
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+        $hiddenForShare = (bool) ($payload['hiddenForShare'] ?? false);
+
         /** @var User $user */
         $user = $this->getUser();
-        $user->hiddenSharedWidgets = $this->applyVisibility($user->hiddenSharedWidgets, $widget, (bool) ($payload['hiddenForShare'] ?? false));
+
+        if (! $hiddenForShare && (! $user->isDiscoverable || ! $user->shareWorkouts)) {
+            return $this->json([
+                'error' => 'Sharing is not enabled',
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $user->hiddenSharedWidgets = $this->applyVisibility($user->hiddenSharedWidgets, $widget, $hiddenForShare);
         $this->em->flush();
 
         return $this->json([

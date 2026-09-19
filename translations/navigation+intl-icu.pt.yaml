@@ -434,6 +434,11 @@ profile_connection:
             title: "Adicionar uma conexão"
         sent:
             title: "Pedidos enviados"
+        shared_widgets:
+            explanation: "Escolhe o que as tuas conexões veem no teu painel partilhado, independentemente do que tu mostras."
+            feedback:
+                success: "Preferência atualizada"
+            title: "Exibição do painel partilhado"
         sharing:
             code_label: "O teu código de partilha:"
             copy: Copiar
@@ -453,6 +458,7 @@ profile_connection:
         title: "As minhas conexões"
     workout:
         list:
+            back_to_dashboard: "Voltar ao painel de {nickname}"
             title: "Treinos de {nickname}"
 
 registration:
@@ -628,7 +634,6 @@ settings:
         title: Eliminação da conta
     dashboard_widgets:
         explanation: Escolhe os blocos apresentados no teu painel.
-        hide_for_connections: "Ocultar das minhas conexões"
         title: Widgets do painel
         widget:
             goals: Objetivos
@@ -793,6 +798,7 @@ workout:
     series_duration_abbreviate: seg
     show:
         back: Voltar aos meus treinos
+        back_shared: Voltar aos treinos
         metrics:
             distance: Distância
             duration: Duração

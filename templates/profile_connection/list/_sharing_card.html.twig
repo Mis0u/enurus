@@ -2,7 +2,8 @@
     Variables attendues (via `only`) :
     - isDiscoverable : bool
     - shareCode : string|null
-    - shareWorkouts : bool
+    - shareWorkoutsChecked : bool — déjà combiné avec isDiscoverable côté controller
+      (ProfileConnectionListController), jamais coché si le partage de profil est coupé
     - nickname : string
 #}
 <section class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px]"
@@ -32,9 +33,10 @@
     <label class="mt-4 flex items-center justify-between gap-3 cursor-pointer">
         <span class="text-sm text-[#f0f4ff]">{{ 'profile_connection.list.sharing.switch_label'|trans({}, 'navigation') }}</span>
         <input type="checkbox"
-               class="h-5 w-5 rounded border-white/[0.15] bg-transparent text-rose-ft accent-rose-ft cursor-pointer"
+               class="peer sr-only"
                {% if isDiscoverable %}checked{% endif %}
                data-action="change->profile-connection--profile-sharing#toggle">
+        <span class="shrink-0 w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-rose-ft after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
     </label>
 
     <div data-profile-connection--profile-sharing-target="codeWrapper" {% if not shareCode %}hidden{% endif %} class="mt-4 flex items-center justify-between gap-3 flex-wrap">
@@ -56,13 +58,14 @@
         </div>
     </div>
 
-    <label class="mt-4 flex items-center justify-between gap-3 {% if isDiscoverable %}cursor-pointer{% else %}cursor-not-allowed{% endif %}">
+    <label class="mt-4 flex items-center justify-between gap-3 cursor-pointer has-disabled:cursor-not-allowed">
         <span class="text-sm text-[#f0f4ff]">{{ 'profile_connection.list.sharing.share_workouts_label'|trans({}, 'navigation') }}</span>
         <input type="checkbox"
-               class="h-5 w-5 rounded border-white/[0.15] bg-transparent text-rose-ft accent-rose-ft cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
-               {% if shareWorkouts %}checked{% endif %}
+               class="peer sr-only"
+               {% if shareWorkoutsChecked %}checked{% endif %}
                {% if not isDiscoverable %}disabled{% endif %}
                data-profile-connection--profile-sharing-target="workoutCheckbox"
                data-action="change->profile-connection--profile-sharing#toggleWorkouts">
+        <span class="shrink-0 w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-rose-ft peer-disabled:opacity-50 after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
     </label>
 </section>

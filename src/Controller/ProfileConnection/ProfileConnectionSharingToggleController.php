@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\ProfileConnection;
 
 use App\Entity\User;
+use App\Enum\Dashboard\DashboardWidgetEnum;
 use App\Service\ProfileSharing\ShareCodeAssigner;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,10 +59,15 @@ final class ProfileConnectionSharingToggleController extends AbstractController
             $this->shareCodeAssigner->assign($user);
         }
 
-        // Cascade : le partage des séances est un opt-in secondaire qui ne peut jamais rester actif
-        // une fois le partage de profil coupé.
+        // Cascade : le partage des séances et l'affichage des widgets sur le dashboard partagé sont
+        // des opt-in secondaires qui ne peuvent jamais rester actifs une fois le partage de profil
+        // coupé.
         if (! $isDiscoverable) {
             $user->shareWorkouts = false;
+            $user->hiddenSharedWidgets = array_map(
+                static fn (DashboardWidgetEnum $widget): string => $widget->value,
+                DashboardWidgetEnum::cases(),
+            );
         }
 
         $this->em->flush();
@@ -70,6 +76,7 @@ final class ProfileConnectionSharingToggleController extends AbstractController
             'isDiscoverable' => $user->isDiscoverable,
             'shareCode' => $user->shareCode,
             'shareWorkouts' => $user->shareWorkouts,
+            'hiddenSharedWidgets' => $user->hiddenSharedWidgets,
         ]);
     }
 }

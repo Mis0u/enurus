@@ -24,7 +24,8 @@
         </div>
     </div>
     <a href="{{ path('app_dashboard') }}"
-       class="text-[13px] font-medium text-rose-ft hover:opacity-80 transition-ft whitespace-nowrap">
-        {{ 'profile_connection.dashboard.back'|trans({}, 'navigation') }}
+       class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/[0.07] text-sm font-medium text-[#8b9bb4] hover:border-rose-ft/40 hover:text-rose-ft transition-colors whitespace-nowrap">
+        {% include 'partials/_svg/_inferior.html.twig' with {'width': 4, 'height': 4} only %}
+        <span>{{ 'profile_connection.dashboard.back'|trans({}, 'navigation') }}</span>
     </a>
 </div>

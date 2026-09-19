@@ -2,13 +2,14 @@
     Variables attendues (toutes via `only`) :
     - workout, totalTonnage, unit
     - backUrl : string — destination du lien retour (propre liste ou liste d'une connexion)
-    - readOnly : bool — masque le lien d'édition quand vrai
+    - readOnly : bool — masque le lien d'édition et bascule le libellé du lien retour
+      ("ses séances" plutôt que "mes séances") quand vrai
 #}
 <div class="show-secondary-nav sticky top-0 z-[4] -mx-7 max-md:-mx-4 backdrop-blur-md border-b border-white/[0.07] px-7 py-3 max-md:px-4 flex items-center justify-between gap-4">
     <a href="{{ backUrl }}"
        class="show-back-btn inline-flex items-center gap-2 px-4 py-2 max-md:px-2.5 rounded-lg border text-sm font-medium">
         {% include 'partials/_svg/_inferior.html.twig' with{'width': 4, 'height': 4} only %}
-        <span class="max-md:hidden">{{ 'workout.show.back'|trans({}, 'navigation') }}</span>
+        <span class="max-md:hidden">{{ (readOnly ? 'workout.show.back_shared' : 'workout.show.back')|trans({}, 'navigation') }}</span>
     </a>
 
     <div class="flex items-center gap-2 max-md:gap-1.5">

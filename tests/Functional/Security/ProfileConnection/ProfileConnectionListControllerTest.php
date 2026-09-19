@@ -26,6 +26,88 @@ final class ProfileConnectionListControllerTest extends WebTestCase
         self::assertSelectorTextContains('main', "Tu n'as pas encore de connexion.");
     }
 
+    public function testSharedWidgetsCardListsUnlockedWidgetsAllCheckedByDefault(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $actor = $this->getUserByEmail(self::ACTOR);
+        $this->makeDiscoverable($actor, 'LSTCK1');
+        $actor->shareWorkouts = true;
+        $this->entityManager()->flush();
+
+        $crawler = $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists('[data-controller="profile-connection--shared-widgets"]');
+        $checkboxes = $crawler->filter('[data-controller="profile-connection--shared-widgets"] input[type="checkbox"]');
+        self::assertGreaterThan(0, $checkboxes->count());
+        $checkboxes->each(static function ($node): void {
+            self::assertSame('', $node->attr('checked'));
+            self::assertNull($node->attr('disabled'));
+        });
+    }
+
+    public function testAWidgetHiddenForSharingIsRenderedUnchecked(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $actor = $this->getUserByEmail(self::ACTOR);
+        $this->makeDiscoverable($actor, 'LSTCK2');
+        $actor->shareWorkouts = true;
+        $actor->hiddenSharedWidgets = ['tonnage'];
+        $this->entityManager()->flush();
+
+        $crawler = $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        $checkbox = $crawler->filter('input[data-profile-connection--shared-widgets-widget-param="tonnage"]');
+        self::assertNull($checkbox->attr('checked'));
+    }
+
+    public function testAWidgetHiddenOnOwnDashboardIsNotProposedForSharing(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $actor = $this->getUserByEmail(self::ACTOR);
+        $actor->hiddenWidgets = ['tonnage'];
+        $this->entityManager()->flush();
+
+        $crawler = $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        self::assertCount(0, $crawler->filter('input[data-profile-connection--shared-widgets-widget-param="tonnage"]'));
+    }
+
+    public function testSharedWidgetsAreUncheckedAndDisabledWhenProfileSharingIsOff(): void
+    {
+        $client = $this->login(self::ACTOR);
+
+        $crawler = $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        $checkboxes = $crawler->filter('[data-controller="profile-connection--shared-widgets"] input[type="checkbox"]');
+        self::assertGreaterThan(0, $checkboxes->count());
+        $checkboxes->each(static function ($node): void {
+            self::assertNull($node->attr('checked'));
+            self::assertSame('', $node->attr('disabled'));
+        });
+    }
+
+    public function testSharedWidgetsAreUncheckedAndDisabledWhenWorkoutSharingIsOff(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $actor = $this->getUserByEmail(self::ACTOR);
+        $this->makeDiscoverable($actor, 'LSTCK3');
+        $this->entityManager()->flush();
+
+        $crawler = $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        $checkboxes = $crawler->filter('[data-controller="profile-connection--shared-widgets"] input[type="checkbox"]');
+        self::assertGreaterThan(0, $checkboxes->count());
+        $checkboxes->each(static function ($node): void {
+            self::assertNull($node->attr('checked'));
+            self::assertSame('', $node->attr('disabled'));
+        });
+    }
+
     public function testEachKindOfConnectionIsListedInItsOwnSectionWithItsActions(): void
     {
         $client = $this->login(self::ACTOR);
