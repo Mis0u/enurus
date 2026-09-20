@@ -106,7 +106,7 @@ dashboard:
                 month: Mois
                 session: Dernière journée
                 week: Semaine
-            last_solicited: "{days, plural, =0 {Sollicité aujourd'hui} =1 {Dernière fois : il y a 1 jour} other {Dernière fois : il y a # jours}}"
+            last_solicited: "{days, plural, =0 {Auj.} =1 {Il y a 1j} other {Il y a #j}}"
             more_muscles: "{count, plural, =1 {+ # autre muscle travaillé} other {+ # autres muscles travaillés}}"
             sets_count: "{count, plural, =1 {# série} other {# séries}}"
             sort_info: "Triés par nombre total de séries (primaires et secondaires confondues), du plus au moins sollicité."
