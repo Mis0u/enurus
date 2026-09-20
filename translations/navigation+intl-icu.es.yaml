@@ -106,7 +106,7 @@ dashboard:
                 month: Mes
                 session: Último día de entrenamiento
                 week: Semana
-            last_solicited: "{days, plural, =0 {Trabajado hoy} =1 {Última vez: hace 1 día} other {Última vez: hace # días}}"
+            last_solicited: "{days, plural, =0 {Hoy} =1 {Hace 1d} other {Hace #d}}"
             more_muscles: "{count, plural, =1 {+ # músculo trabajado adicional} other {+ # músculos trabajados adicionales}}"
             sets_count: "{count, plural, =1 {# serie} other {# series}}"
             sort_info: "Ordenado por número total de series (primarias y secundarias combinadas), de más a menos trabajado."
