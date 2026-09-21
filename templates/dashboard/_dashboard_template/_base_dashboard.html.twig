@@ -21,7 +21,8 @@
     {% block sidebar %}
         {% include 'dashboard/_dashboard_template/_sidebar/_sidebar.html.twig' only %}
     {% endblock %}
-    <main class="flex-1 overflow-hidden flex flex-col relative max-md:pb-20">
+    <main class="flex-1 overflow-hidden flex flex-col relative max-md:pb-20 {% if subject is defined %}border-2 border-[#f43f5e] {% endif %}">
+
         {% block topbar %}
             {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {'title': 'dashboard.title'|trans({}, 'navigation'), 'subtitle': user.nickname|formatInitials} only %}
         {% endblock %}
