@@ -2,14 +2,10 @@
 
 {% block title %}{{ 'dashboard.title'|trans({}, 'navigation')|format_title }}{% endblock %}
 
-{% block body %}
-    {{ parent() }}
-        {% block state %}
-            <div class="flex-1 relative overflow-hidden flex items-center justify-center max-md:pb-[100px]">
-                {% include 'dashboard/_empty_dashboard/_ghost_dashboard.html.twig' only %}
+{% block state %}
+    <div class="flex-1 relative overflow-hidden flex items-center justify-center max-md:pb-[100px]">
+        {% include 'dashboard/_empty_dashboard/_ghost_dashboard.html.twig' only %}
 
-                {% include 'dashboard/_empty_dashboard/_card_empty_dashboard.html.twig' only %}
-            </div>
-        {% endblock %}
-
+        {% include 'dashboard/_empty_dashboard/_card_empty_dashboard.html.twig' only %}
+    </div>
 {% endblock %}
