@@ -8,6 +8,7 @@ use App\Constraint\ImageConstraints;
 use App\Controller\Trait\NotifiesGoalAchievementTrait;
 use App\Entity\User;
 use App\Entity\Workout;
+use App\Enum\Entity\Workout\WorkoutMoodEnum;
 use App\Form\WorkoutType;
 use App\Service\Goal\GoalAchievementDetector;
 use App\Service\Goal\GoalCardFormatter;
@@ -76,6 +77,7 @@ final class WorkoutController extends AbstractController
             'form' => $form->createView(),
             'imageMaxSizeBytes' => ImageConstraints::MAX_SIZE_BYTES,
             'imageAllowedMimeTypes' => ImageConstraints::ALLOWED_MIME_TYPES,
+            'moods' => WorkoutMoodEnum::cases(),
         ]);
     }
 

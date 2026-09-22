@@ -6,6 +6,7 @@
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('styles/workout_edit.css') }}">
     <link rel="stylesheet" href="{{ asset('styles/date-picker.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/mood-selector.css') }}">
 {% endblock %}
 
 {% block topbar %}
@@ -27,6 +28,8 @@
         {{ form_start(form, {'attr': {'id': 'workout-edit-form'}}) }}
 
         {% include 'workout/edit/_config_bar.html.twig' with {'form': form, 'workout': workout} only %}
+
+        {% include 'workout/edit/_mood.html.twig' with {'form': form, 'moods': moods} only %}
 
         {% include 'workout/edit/_note.html.twig' with {'form': form} only %}
 

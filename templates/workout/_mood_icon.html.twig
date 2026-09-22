@@ -1,0 +1,21 @@
+{#
+    Icône d'humeur (App\Enum\Entity\Workout\WorkoutMoodEnum) — réutilisée dans le header de show
+    (avec libellé visible, assez de place) et dans la liste des séances (icône seule + tooltip
+    natif `title`, l'espace y étant trop réduit pour un libellé). N'affiche rien si `workout.mood`
+    est `null` — toujours vérifier avant d'inclure.
+
+    Variables attendues : `workout`, `compact` (bool — masque le libellé visible si vrai, l'icône
+    porte alors elle-même le texte accessible via `alt`).
+#}
+{% set mood_label = ('workout.mood.' ~ workout.mood.value)|trans({}, 'navigation') %}
+<span class="mood-icon inline-flex items-center gap-1.5" title="{{ mood_label }}">
+    <img
+        src="{{ asset('images/emojis/' ~ workout.mood.value ~ '.png') }}"
+        alt="{{ compact ? mood_label : '' }}"
+        aria-hidden="{{ compact ? 'false' : 'true' }}"
+        class="w-5 h-5 object-contain shrink-0"
+    >
+    {% if not compact %}
+        <span class="text-[12px] font-semibold text-[var(--text-secondary)]">{{ mood_label }}</span>
+    {% endif %}
+</span>

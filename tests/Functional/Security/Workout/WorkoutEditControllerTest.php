@@ -14,6 +14,7 @@ use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
 use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
 use App\Enum\Entity\Exercise\MeasurementType;
+use App\Enum\Entity\Workout\WorkoutMoodEnum;
 use App\Repository\MuscleGroupRepository;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
@@ -103,6 +104,41 @@ class WorkoutEditControllerTest extends WebTestCase
 
         $updated = $this->findUpdatedWorkout($workout->id);
         $this->assertSame('Note modifiée par le test.', $updated->note);
+    }
+
+    public function testEditUpdatesMood(): void
+    {
+        [$client, $workout, $url, $payload] = $this->prepareEditRequest(self::USER);
+        $payload['workout']['mood'] = WorkoutMoodEnum::EN_FORME->value;
+
+        $client->request(Request::METHOD_POST, $url, $payload);
+
+        $updated = $this->findUpdatedWorkout($workout->id);
+        $this->assertSame(WorkoutMoodEnum::EN_FORME, $updated->mood);
+    }
+
+    /**
+     * Le controller Stimulus workout--mood-selector remet le <select> caché à '' quand on
+     * clique la chip déjà active (champ facultatif, jamais de valeur par défaut) — une
+     * soumission avec 'mood' vide doit donc effacer une valeur existante, pas la conserver.
+     */
+    public function testEditWithEmptyMoodClearsExistingValue(): void
+    {
+        [$client, $workout, $url, $payload] = $this->prepareEditRequest(self::USER);
+        $payload['workout']['mood'] = WorkoutMoodEnum::FATIGUE->value;
+        $client->request(Request::METHOD_POST, $url, $payload);
+
+        $withMood = $this->findUpdatedWorkout($workout->id);
+        $this->assertSame(WorkoutMoodEnum::FATIGUE, $withMood->mood);
+
+        $crawler = $client->request(Request::METHOD_GET, $url);
+        $freshToken = $crawler->filter('input[name="workout[_token]"]')->attr('value');
+        $payload['workout']['_token'] = $freshToken;
+        $payload['workout']['mood'] = '';
+        $client->request(Request::METHOD_POST, $url, $payload);
+
+        $cleared = $this->findUpdatedWorkout($workout->id);
+        $this->assertNull($cleared->mood);
     }
 
     public function testEditUpdatesSetWeight(): void

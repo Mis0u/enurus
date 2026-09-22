@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{{ asset('styles/workout.css') }}">
     <link rel="stylesheet" href="{{ asset('styles/routine-loader.css') }}">
     <link rel="stylesheet" href="{{ asset('styles/date-picker.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/mood-selector.css') }}">
 {% endblock %}
 
 {% block title %}{{ 'workout.title'|trans({}, 'navigation')|format_title }}{% endblock %}
@@ -24,6 +25,8 @@
         {% include 'workout/create/_note_modal.html.twig' with {
             'imageMaxSizeBytes': imageMaxSizeBytes,
             'imageAllowedMimeTypes': imageAllowedMimeTypes,
+            'field': form.mood,
+            'moods': moods,
         } only %}
         {{ component('LiveComponent:ExerciseSelectorComponent:ExerciseSelectorComponent') }}
         {{ form_end(form) }}

@@ -749,6 +749,14 @@ workout:
                 =1    {# entrenamiento}
                 other {# entrenamientos}
             }
+    mood:
+        blesse: Lesionado
+        en_forme: En forma
+        fatigue: Cansado
+        grosse_perf: Gran marca
+        label: Estado de la sesión
+        normal: Normal
+        subtitle: "¿Cómo te sentiste durante esta sesión? (opcional)"
     note:
         back: Volver al entrenamiento
         placeholder: Tu entrenamiento fue bien, ¿batiste algún récord?...

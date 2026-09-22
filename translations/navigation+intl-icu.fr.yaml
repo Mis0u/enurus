@@ -749,6 +749,14 @@ workout:
                 =1    {# séance}
                 other {# séances}
             }
+    mood:
+        blesse: Blessé
+        en_forme: En forme
+        fatigue: Fatigué
+        grosse_perf: Grosse perf
+        label: Humeur de la séance
+        normal: Normal
+        subtitle: Comment tu t'es senti pendant cette séance ? (facultatif)
     note:
         back: Retour à la séance
         placeholder: Ta séance s'est bien passée, tu as battu un record ?...

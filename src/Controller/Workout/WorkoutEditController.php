@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
 use App\Enum\Entity\Exercise\MeasurementType;
+use App\Enum\Entity\Workout\WorkoutMoodEnum;
 use App\Form\WorkoutType;
 use App\Repository\WorkoutExerciseRepository;
 use App\Security\Voter\WorkoutVoter;
@@ -124,6 +125,7 @@ class WorkoutEditController extends AbstractController
             'user' => $user,
             'imageMaxSizeBytes' => ImageConstraints::MAX_SIZE_BYTES,
             'imageAllowedMimeTypes' => ImageConstraints::ALLOWED_MIME_TYPES,
+            'moods' => WorkoutMoodEnum::cases(),
         ]);
     }
 

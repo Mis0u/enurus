@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Enum\Entity\Workout\WorkoutMoodEnum;
 use App\Repository\WorkoutRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -92,6 +94,20 @@ class Workout
         }
         set(?string $note) {
             $this->note = $note;
+        }
+    }
+
+    /**
+     * Ressenti optionnel de la séance (chips à icône, jamais de choix multiple) — `null` tant que
+     * l'utilisateur n'en sélectionne aucun, jamais de valeur par défaut.
+     */
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true, enumType: WorkoutMoodEnum::class)]
+    public ?WorkoutMoodEnum $mood = null {
+        get {
+            return $this->mood;
+        }
+        set(?WorkoutMoodEnum $mood) {
+            $this->mood = $mood;
         }
     }
 
