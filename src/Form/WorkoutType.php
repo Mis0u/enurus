@@ -7,6 +7,7 @@ namespace App\Form;
 use App\Entity\Routine;
 use App\Entity\User;
 use App\Entity\Workout;
+use App\Enum\Entity\Workout\WorkoutMoodEnum;
 use App\EventListener\Form\WorkoutFormListener;
 use App\Repository\RoutineRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -15,6 +16,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -66,6 +68,7 @@ final class WorkoutType extends AbstractType
 
         $builder
             ->add('workoutExercises', CollectionType::class, $this->workoutExercisesOptions())
+            ->add('mood', EnumType::class, $this->moodOptions())
             ->add('note', $isEdit ? TextareaType::class : HiddenType::class, $this->noteOptions($isEdit));
 
         $builder->addEventSubscriber(new WorkoutFormListener());
@@ -244,6 +247,29 @@ final class WorkoutType extends AbstractType
             'allow_delete' => true,
             'by_reference' => false,
             'label' => false,
+        ];
+    }
+
+    /**
+     * `<select>` natif toujours masqué (`hidden`, jamais retiré du DOM ni du submit) — l'UI
+     * réelle est une rangée de chips à icône pilotée par le controller Stimulus
+     * `workout--mood-selector`, identique en création et en édition. Rendu explicitement via
+     * `form_widget()` dans le partial des chips (jamais laissé au `render_rest` de `form_end()`),
+     * pour que le `<select>` reste un descendant du conteneur `data-controller`.
+     *
+     * @return array<string, mixed>
+     */
+    private function moodOptions(): array
+    {
+        return [
+            'class' => WorkoutMoodEnum::class,
+            'required' => false,
+            'label' => false,
+            'choice_label' => static fn (WorkoutMoodEnum $mood): string => $mood->value,
+            'attr' => [
+                'hidden' => true,
+                'data-workout--mood-selector-target' => 'select',
+            ],
         ];
     }
 

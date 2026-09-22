@@ -1,0 +1,41 @@
+{#
+    Chips à icône pour App\Enum\Entity\Workout\WorkoutMoodEnum — partagé entre la modal de note
+    (création) et la carte d'édition, piloté par le controller Stimulus workout--mood-selector.
+    Le <select> réel (form.mood) est rendu ici, explicitement, jamais laissé au render_rest de
+    form_end() — il doit rester un descendant du conteneur data-controller pour le ciblage
+    Stimulus, et en édition (render_rest: false) un champ jamais rendu ne serait pas soumis.
+
+    Variables attendues : `field` (FormView de form.mood), `moods` (list<WorkoutMoodEnum>).
+#}
+<div data-controller="workout--mood-selector">
+    <div
+        class="grid grid-cols-5 gap-2 max-md:gap-1.5"
+        role="group"
+        aria-label="{{ 'workout.mood.label'|trans({}, 'navigation') }}"
+    >
+        {% for mood in moods %}
+            <button
+                type="button"
+                class="mood-chip cursor-pointer flex flex-col items-center gap-1.5 py-2.5 px-1 rounded-xl border border-white/[0.07] bg-white/[0.02] transition-all duration-150 hover:bg-white/[0.06] max-md:py-3"
+                data-workout--mood-selector-target="chip"
+                data-action="click->workout--mood-selector#select"
+                data-mood-value="{{ mood.value }}"
+                aria-pressed="false"
+                aria-label="{{ ('workout.mood.' ~ mood.value)|trans({}, 'navigation') }}"
+                title="{{ ('workout.mood.' ~ mood.value)|trans({}, 'navigation') }}"
+            >
+                <img
+                    src="{{ asset('images/emojis/' ~ mood.value ~ '.png') }}"
+                    alt=""
+                    aria-hidden="true"
+                    class="w-9 h-9 object-contain max-md:w-8 max-md:h-8"
+                >
+                <span class="text-[11px] font-semibold text-center leading-tight text-slate-400 max-md:hidden">
+                    {{ ('workout.mood.' ~ mood.value)|trans({}, 'navigation') }}
+                </span>
+            </button>
+        {% endfor %}
+    </div>
+
+    {{ form_widget(field) }}
+</div>

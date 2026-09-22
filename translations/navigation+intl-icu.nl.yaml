@@ -749,6 +749,14 @@ workout:
                 =1    {# training}
                 other {# trainingen}
             }
+    mood:
+        blesse: Gewond
+        en_forme: Fit
+        fatigue: Vermoeid
+        grosse_perf: Nieuw record
+        label: Stemming van de sessie
+        normal: Normaal
+        subtitle: Hoe voelde je je tijdens deze sessie? (optioneel)
     note:
         back: Terug naar training
         placeholder: Je training ging goed, heb je een record gebroken?...

@@ -10,10 +10,12 @@ use App\Entity\WorkoutExercise;
 use App\Enum\Entity\Exercise\MeasurementType;
 use App\Enum\Entity\User\GenderEnum;
 use App\Enum\Entity\User\UnitOfMeasureEnum;
+use App\Enum\Entity\Workout\WorkoutMoodEnum;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutExerciseRepository;
 use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
@@ -115,6 +117,36 @@ class WorkoutShowControllerTest extends WebTestCase
             self::USER_LBS,
             '.show-note',
             'Le bloc note ne doit pas être affiché si aucune note',
+            false
+        );
+    }
+
+    public function testMoodBadgeIsDisplayedWhenPresent(): void
+    {
+        $client = $this->login(self::USER_WITH_NOTE);
+        $workout = $this->firstWorkout(self::USER_WITH_NOTE);
+        $workout->mood = WorkoutMoodEnum::GROSSE_PERF;
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $em->flush();
+
+        $crawler = $client->request(Request::METHOD_GET, \sprintf('/fr/seance/%s', $workout->id));
+
+        $this->assertResponseIsSuccessful();
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('.mood-icon')->count(),
+            'Le badge humeur doit être affiché quand une humeur est renseignée'
+        );
+    }
+
+    public function testMoodBadgeIsNotDisplayedWhenAbsent(): void
+    {
+        $this->displayElement(
+            self::USER_WITH_NOTE,
+            '.mood-icon',
+            'Le badge humeur ne doit pas être affiché si aucune humeur n\'est renseignée',
             false
         );
     }
@@ -318,6 +350,11 @@ class WorkoutShowControllerTest extends WebTestCase
 
     private function getWorkoutUrl(string $userEmail): string
     {
+        return \sprintf('/fr/seance/%s', $this->firstWorkout($userEmail)->id);
+    }
+
+    private function firstWorkout(string $userEmail): Workout
+    {
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
         /** @var User $user */
@@ -332,7 +369,7 @@ class WorkoutShowControllerTest extends WebTestCase
             'owner' => $user,
         ]);
 
-        return \sprintf('/fr/seance/%s', $workout->id);
+        return $workout;
     }
 
     private function displayElement(string $email, string $selector, string $message, bool $visible = true): void

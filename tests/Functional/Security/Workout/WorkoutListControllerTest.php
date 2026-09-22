@@ -7,6 +7,9 @@ namespace App\Tests\Functional\Security\Workout;
 use App\Entity\Routine;
 use App\Entity\User;
 use App\Entity\Workout;
+use App\Enum\Entity\Workout\WorkoutMoodEnum;
+use App\Repository\UserRepository;
+use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -243,6 +246,49 @@ class WorkoutListControllerTest extends WebTestCase
             0,
             $crawler->filter('circle[cx="12"][cy="12"][r="10"]')->count()
         );
+    }
+
+    public function testMoodIconIsNotDisplayedByDefault(): void
+    {
+        $client = $this->login(self::USER_11);
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(0, $crawler->filter('.mood-icon'));
+    }
+
+    public function testMoodIconIsDisplayedWhenSet(): void
+    {
+        $client = $this->login(self::USER_11);
+
+        /** @var WorkoutRepository $workoutRepository */
+        $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        /** @var User $user */
+        $user = $userRepository->findOneBy([
+            'email' => self::USER_11,
+        ]);
+
+        // Toutes les séances de l'utilisateur, pas juste la première trouvée — la pagination
+        // (limite par défaut de 10 sur 11 séances, triées par date de séance) rendrait sinon le
+        // test dépendant d'un tri qui n'est pas garanti ici.
+        $workouts = $workoutRepository->findBy([
+            'owner' => $user,
+        ]);
+
+        foreach ($workouts as $workout) {
+            $workout->mood = WorkoutMoodEnum::BLESSE;
+        }
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $em->flush();
+
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertGreaterThan(0, $crawler->filter('.mood-icon')->count());
     }
 
     public function testTonnageIsDisplayedInLbsForLbsUser(): void

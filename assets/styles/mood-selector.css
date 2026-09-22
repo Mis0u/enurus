@@ -1,0 +1,11 @@
+/* État sélectionné des chips d'humeur de séance (workout--mood-selector) — couleur rose du
+   projet, valeur rgba() donc ici plutôt qu'en classe Tailwind arbitraire (virgule = parser JIT v4
+   cassé, cf. CLAUDE.md). Partagé par la modal de note (création) et la carte d'édition. */
+.mood-chip--selected {
+    border-color: rgba(244, 63, 94, 0.4);
+    background: rgba(244, 63, 94, 0.1);
+}
+
+.mood-chip--selected span {
+    color: #f0f4ff;
+}

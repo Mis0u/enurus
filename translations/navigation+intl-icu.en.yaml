@@ -749,6 +749,14 @@ workout:
                 =1    {# workout}
                 other {# workouts}
             }
+    mood:
+        blesse: Injured
+        en_forme: In shape
+        fatigue: Tired
+        grosse_perf: Huge PR
+        label: Session mood
+        normal: Normal
+        subtitle: How did you feel during this session? (optional)
     note:
         back: Back to workout
         placeholder: Your workout went well, did you beat a record?...

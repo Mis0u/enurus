@@ -6,6 +6,9 @@
          data-workout--photo-upload-max-size-value="{{ imageMaxSizeBytes }}">
 
         {% include 'workout/create/_note_modal/_header.html.twig' only %}
+        <div class="mb-5">
+            {% include 'workout/_mood_selector.html.twig' with {'field': field, 'moods': moods} only %}
+        </div>
         {% include 'workout/create/_note_modal/_textarea.html.twig' only %}
         {% include 'workout/create/_note_modal/_photo_upload.html.twig' with {'imageAllowedMimeTypes': imageAllowedMimeTypes} only %}
         {% include 'workout/create/_note_modal/_actions.html.twig' only %}

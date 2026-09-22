@@ -763,6 +763,14 @@ workout:
                 many  {# treningów}
                 other {# treningów}
             }
+    mood:
+        blesse: Ranny
+        en_forme: W formie
+        fatigue: Zmęczony
+        grosse_perf: Nowy rekord
+        label: Nastrój treningu
+        normal: Normalnie
+        subtitle: Jak się czułeś podczas tego treningu? (opcjonalnie)
     note:
         back: Powrót do treningu
         placeholder: Twój trening poszedł dobrze, pobiłeś rekord?...

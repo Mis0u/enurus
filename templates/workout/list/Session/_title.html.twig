@@ -8,4 +8,8 @@
                     {{ 'workout.list.free_session'|trans({}, 'navigation') }}
                 </span>
     {% endif %}
+
+    {% if workout.mood is not null %}
+        {% include 'workout/_mood_icon.html.twig' with {'workout': workout, 'compact': true} only %}
+    {% endif %}
 </div>

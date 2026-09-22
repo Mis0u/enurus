@@ -14,8 +14,13 @@
             {{ workout.routine is not null ? workout.routine.name : 'workout.list.free_session'|trans({}, 'navigation') }}
         </h2>
 
-        <p class="text-[13px] text-[var(--text-secondary)]">
+        <p class="flex items-center gap-2.5 flex-wrap text-[13px] text-[var(--text-secondary)]">
             {{ workout.performedAt|format_date('full', locale=app.request.locale) }}
+
+            {% if workout.mood is not null %}
+                <span class="w-1 h-1 rounded-full bg-white/[0.15] shrink-0"></span>
+                {% include 'workout/_mood_icon.html.twig' with {'workout': workout, 'compact': false} only %}
+            {% endif %}
         </p>
     </div>
 </div>

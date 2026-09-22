@@ -9,6 +9,7 @@ use App\Entity\ExerciseSet;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
+use App\Enum\Entity\Workout\WorkoutMoodEnum;
 use App\Repository\ExerciseRepository;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
@@ -304,6 +305,33 @@ class WorkoutControllerTest extends WebTestCase
         $workout = $this->getLatestWorkout(self::USER);
 
         $this->assertNull($workout->note);
+    }
+
+    public function testWorkoutWithMoodIsPersisted(): void
+    {
+        $client = $this->login(self::USER);
+        $this->submitWorkout($client, [
+            'workout' => [
+                'mood' => WorkoutMoodEnum::EN_FORME->value,
+            ],
+        ]);
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
+
+        $workout = $this->getLatestWorkout(self::USER);
+
+        $this->assertSame(WorkoutMoodEnum::EN_FORME, $workout->mood);
+    }
+
+    public function testWorkoutWithoutMoodHasNullMood(): void
+    {
+        $client = $this->login(self::USER);
+        $this->submitWorkout($client);
+
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
+
+        $workout = $this->getLatestWorkout(self::USER);
+
+        $this->assertNull($workout->mood);
     }
 
     public function testWeightIsConvertedToKgOnSubmissionForLbsUser(): void
