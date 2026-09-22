@@ -27,7 +27,6 @@ readonly class UserService
     public function createUser(User $user, string $plainPassword, string $locale): User
     {
         $this->hashPassword($user, $plainPassword);
-        $user->email = strtolower($user->email);
         $user->lastLogin = now();
         $user->locale = $locale;
         $this->save($user);

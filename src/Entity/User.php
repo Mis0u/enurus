@@ -135,7 +135,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             return $this->email;
         }
         set(string $email) {
-            $this->email = $email;
+            $this->email = mb_strtolower($email);
         }
     }
 
