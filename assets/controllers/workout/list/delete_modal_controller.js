@@ -5,6 +5,21 @@ import { confirmDeletion, sendDeleteRequest, showDeleteError } from '../../../ut
 export default class extends Controller {
 
     async deleteWorkout(event) {
+        await this.#confirmAndDelete(event);
+    }
+
+    /**
+     * Même flux que deleteWorkout() — un deload est une entité distincte (`DeloadPeriod`) mais la
+     * confirmation/suppression/reload sont identiques, seule l'URL/le token diffèrent (déjà
+     * portés par les data-attributes du bouton).
+     */
+    async deleteDeloadPeriod(event) {
+        await this.#confirmAndDelete(event);
+    }
+
+    // ─── Privé ───────────────────────────────────────────────────
+
+    async #confirmAndDelete(event) {
         event.stopPropagation();
 
         const btn = event.currentTarget;

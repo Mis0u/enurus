@@ -113,6 +113,7 @@ dashboard:
             title: Muscles travaillés
         regularity:
             best_streak: "{count, plural, =1 {Record : # semaine} other {Record : # semaines}}"
+            deload_day: Semaine de repos programmée
             last_week: Semaine dernière
             month_delta_negative: "{count, plural, =1 {-# séance vs mois préc.} other {-# séances vs mois préc.}}"
             month_delta_positive: "{count, plural, =1 {+# séance vs mois préc.} other {+# séances vs mois préc.}}"
@@ -723,6 +724,39 @@ workout:
         deleted: Ta séance a bien été supprimée
         updated: Ta séance a bien été modifiée
     list:
+        calendar:
+            deload:
+                add_button: Programmer un repos
+                delete:
+                    cancel: Annuler
+                    confirm: Supprimer
+                    error_text: Une erreur est survenue lors de la suppression. Réessaie.
+                    message: Confirmer la suppression de cette période de repos ?
+                    title: Supprimer cette période ?
+                empty: Aucune semaine de repos programmée.
+                subtitle: Une période marquée ici n'impacte jamais ta série de régularité.
+                title: Semaines de repos programmées
+            flash:
+                created: Semaine de repos programmée.
+                deleted: Semaine de repos supprimée.
+                error: Impossible d'enregistrer cette période. Vérifie les dates.
+            heatmap:
+                legend_deload: Deload
+                legend_rest: Repos non planifié
+                legend_session_long: "90 min +"
+                legend_session_medium: "45–90 min"
+                legend_session_short: "< 45 min"
+                subtitle: "Intensité = durée de la séance ce jour-là."
+                title: Calendrier d'activité
+            modal:
+                cancel: Annuler
+                end_label: Au
+                note_label: Note (optionnel)
+                note_placeholder: "Ex. Semaine allégée après le cycle de force…"
+                start_label: Du
+                submit: Confirmer
+                subtitle: Marque cette période comme volontairement allégée — elle n'impactera pas ta série de régularité, même sans séance.
+                title: Programmer une semaine de repos
         delete:
             cancel: Annuler
             confirm: Supprimer
@@ -750,6 +784,9 @@ workout:
                 =1    {# séance}
                 other {# séances}
             }
+        view:
+            calendar: Calendrier
+            list: Liste
     mood:
         blesse: Blessé
         en_forme: En forme

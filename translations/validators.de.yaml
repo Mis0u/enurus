@@ -3,6 +3,14 @@ contact:
         invalid_type: Die Datei muss im Format JPEG, PNG oder WebP sein
         too_large: Die Datei überschreitet die maximal erlaubte Größe von {{ limit }} MB
 
+deload_period:
+    end_before_start: Das Enddatum muss nach dem Startdatum liegen.
+    end_date:
+        required: Das Enddatum ist erforderlich.
+    note_too_long: "Die Notiz darf {{ limit }} Zeichen nicht überschreiten."
+    start_date:
+        required: Das Startdatum ist erforderlich.
+
 exercise:
     muscle_primary_required: Mindestens ein primärer Muskel ist erforderlich.
     name_not_blank: Ein Name muss angegeben werden

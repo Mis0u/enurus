@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Repository\WorkoutStatsRepository;
 use App\Service\Dashboard\DashboardPeriodCalculator;
 use App\Service\Dashboard\DashboardRegularityService;
+use App\Service\Workout\DeloadPeriodSetService;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -242,6 +243,50 @@ final class DashboardRegularityServiceTest extends TestCase
         self::assertSame(1, $result['bestStreak']);
     }
 
+    public function testStreakIsNotBrokenByADeloadWeek(): void
+    {
+        $weekStart = $this->currentWeekStart();
+        $allDates = [
+            $weekStart, // semaine en cours
+            // semaine -1 : deload, aucune séance
+            $weekStart->modify('-14 days'), // semaine -2
+        ];
+
+        $result = $this->getData($allDates, deloadWeekDates: [$weekStart->modify('-7 days')]);
+
+        self::assertSame(3, $result['streak']);
+    }
+
+    public function testBestStreakCountsDeloadWeeksAsActive(): void
+    {
+        // 3 semaines consécutives où seule la première et la dernière ont une séance, la
+        // semaine du milieu est un deload — ne doit pas casser le record.
+        $allDates = [
+            new \DateTimeImmutable('2026-01-05'), // lundi, semaine 1
+            new \DateTimeImmutable('2026-01-19'), // lundi, semaine 3
+        ];
+
+        $result = $this->getData($allDates, deloadWeekDates: [new \DateTimeImmutable('2026-01-12')]);
+
+        self::assertSame(3, $result['bestStreak']);
+    }
+
+    public function testWeekDaysMarksDeloadFlagOnCoveredDays(): void
+    {
+        $weekStart = $this->currentWeekStart();
+        $deloadDay = $weekStart->modify('+2 days');
+
+        $result = $this->getData([], deloadDayDates: [$deloadDay]);
+
+        $isDeloadByDate = [];
+        foreach ($result['weekDays'] as $day) {
+            $isDeloadByDate[$day['date']->format('Y-m-d')] = $day['isDeload'];
+        }
+
+        self::assertTrue($isDeloadByDate[$deloadDay->format('Y-m-d')]);
+        self::assertFalse($isDeloadByDate[$weekStart->format('Y-m-d')]);
+    }
+
     public function testBestStreakResetAfterAGapDoesNotInflateTheNextMatch(): void
     {
         $allDates = [
@@ -262,6 +307,8 @@ final class DashboardRegularityServiceTest extends TestCase
 
     /**
      * @param \DateTimeImmutable[] $allDates
+     * @param \DateTimeImmutable[] $deloadWeekDates n'importe quel jour de chaque semaine à marquer deload
+     * @param \DateTimeImmutable[] $deloadDayDates jours individuels à marquer deload (badge par jour)
      * @return array{
      *     streak: int,
      *     bestStreak: int,
@@ -271,20 +318,48 @@ final class DashboardRegularityServiceTest extends TestCase
      *     weekDelta: int,
      *     monthDelta: int,
      *     yearDelta: int|null,
-     *     weekDays: array<int, array{date: \DateTimeImmutable, hasWorkout: bool, isToday: bool, isFuture: bool}>,
-     *     previousWeekDays: array<int, array{date: \DateTimeImmutable, hasWorkout: bool, isToday: bool, isFuture: bool}>
+     *     weekDays: array<int, array{date: \DateTimeImmutable, hasWorkout: bool, isToday: bool, isFuture: bool, isDeload: bool}>,
+     *     previousWeekDays: array<int, array{date: \DateTimeImmutable, hasWorkout: bool, isToday: bool, isFuture: bool, isDeload: bool}>
      * }
      */
-    private function getData(array $allDates, int $previousYearCount = 0, int $previousCount = 0): array
-    {
+    private function getData(
+        array $allDates,
+        int $previousYearCount = 0,
+        int $previousCount = 0,
+        array $deloadWeekDates = [],
+        array $deloadDayDates = [],
+    ): array {
         $workoutStatsRepository = $this->createStub(WorkoutStatsRepository::class);
         $workoutStatsRepository->method('findAllPerformedDatesByUser')->willReturn($allDates);
         // `countByUserAndDate` sert aux 3 deltas (semaine/mois/année) : seul yearDelta est
         // vérifié dans les tests qui utilisent un `$previousYearCount` non nul.
         $workoutStatsRepository->method('countByUserAndDate')->willReturn(0 !== $previousCount ? $previousCount : $previousYearCount);
 
-        $service = new DashboardRegularityService($workoutStatsRepository, new DashboardPeriodCalculator());
+        $deloadPeriodSetService = $this->createStub(DeloadPeriodSetService::class);
+        $deloadPeriodSetService->method('weekKeySet')->willReturn($this->mondayKeysOf($deloadWeekDates));
+        $deloadPeriodSetService->method('dayKeySet')->willReturn(array_fill_keys(
+            array_map(static fn (\DateTimeImmutable $date): string => $date->format('Y-m-d'), $deloadDayDates),
+            true,
+        ));
+
+        $service = new DashboardRegularityService($workoutStatsRepository, new DashboardPeriodCalculator(), $deloadPeriodSetService);
 
         return $service->getData($this->createStub(User::class));
+    }
+
+    /**
+     * @param \DateTimeImmutable[] $dates
+     * @return array<string, true>
+     */
+    private function mondayKeysOf(array $dates): array
+    {
+        $calculator = new DashboardPeriodCalculator();
+        $keys = [];
+
+        foreach ($dates as $date) {
+            $keys[$calculator->weekStartOf($date)->format('Y-m-d')] = true;
+        }
+
+        return $keys;
     }
 }

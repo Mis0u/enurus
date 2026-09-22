@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security;
 
+use App\Entity\DeloadPeriod;
 use App\Repository\WorkoutRepository;
 use App\Repository\WorkoutStatsRepository;
 use App\Service\Dashboard\DashboardPeriodCalculator;
@@ -116,6 +117,35 @@ class DashboardControllerTest extends WebTestCase
         // Widget Régularité réellement rendu (>= 2 séances), pas le _locked_card.html.twig —
         // "Last week" (widget de comparaison hebdomadaire) n'existe que côté widget débloqué.
         self::assertSelectorExists('[data-dashboard--session-target="exercises"]');
+    }
+
+    public function testRegularityWidgetShowsDeloadBadgeOnCoveredDay(): void
+    {
+        $client = $this->login(self::USER_WITH_WORKOUTS);
+        $user = $this->getUserByEmail(self::USER_WITH_WORKOUTS);
+
+        $deloadPeriod = new DeloadPeriod();
+        $deloadPeriod->owner = $user;
+        $deloadPeriod->startDate = new \DateTimeImmutable('today');
+        $deloadPeriod->endDate = new \DateTimeImmutable('today');
+        $deloadPeriod->note = 'Semaine allégée';
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $em->persist($deloadPeriod);
+        $em->flush();
+
+        $crawler = $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertResponseIsSuccessful();
+        self::assertGreaterThan(
+            0,
+            $crawler->filter('[title="Semaine de repos programmée"]')->count(),
+            'Le badge deload doit être affiché sur le jour couvert par la période'
+        );
+
+        $em->remove($deloadPeriod);
+        $em->flush();
     }
 
     public function testWidgetHiddenByTheUserIsNotRenderedOnTheDashboard(): void
