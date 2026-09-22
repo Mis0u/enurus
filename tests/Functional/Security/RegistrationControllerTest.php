@@ -178,6 +178,36 @@ class RegistrationControllerTest extends WebTestCase
         );
     }
 
+    /**
+     * L'email est normalisé en lowercase dès le mapping du formulaire (property hook
+     * `User::$email`), donc la contrainte `UniqueEntity` le voit avant même la validation —
+     * un doublon saisi avec une casse différente ('User-Fixture-0@test.com') doit être détecté
+     * comme n'importe quel autre doublon, jamais planter en erreur d'intégrité Postgres au flush.
+     */
+    public function testDuplicateEmailWithDifferentCaseShowsTranslatedError(): void
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request(Request::METHOD_GET, '/fr/inscription');
+        $buttonCrawlerNode = $crawler->selectButton('Créer mon compte');
+        $form = $buttonCrawlerNode->form();
+
+        $client->submit($form, [
+            'registration_form[gender]' => 'male',
+            'registration_form[nickname]' => 'Toto',
+            'registration_form[email]' => 'User-Fixture-0@test.com',
+            'registration_form[plainPassword]' => self::PASSWORD,
+            'registration_form[website]' => null,
+        ]);
+
+        $this->assertResponseStatusCodeSame(422);
+        $this->assertSelectorTextContains(
+            'body',
+            'Il existe déjà un compte avec cet email.',
+            'Le message de doublon email doit être détecté indépendamment de la casse saisie.'
+        );
+    }
+
     public function testRedirectToDashboardIfUserIsAuthenticated(): void
     {
         $client = static::createClient();
