@@ -2,14 +2,16 @@
     Liste des séances d'une connexion, en lecture seule.
     Controller : ProfileConnectionWorkoutListController (GET /{_locale}/connexions/{id}/seances)
     Variables : connection, subject, pagination, tonnageMap, musclesMap, hiddenCountMap,
-    filterType, filterDate, routines, filterRoutine, limitAllowed, exerciseCountMap, hasPrMap,
-    hasRepsRecordMap — mêmes données que `workout/list/index.html.twig`, calculées pour `subject`.
+    filterType, filterDate, routines, filterRoutine, muscleGroups, filterMuscles,
+    filterMusclesParam, limitAllowed, exerciseCountMap, hasPrMap, hasRepsRecordMap — mêmes
+    données que `workout/list/index.html.twig`, calculées pour `subject`.
 #}
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
 
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('styles/date-picker.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/workout_list.css') }}">
 {% endblock %}
 
 {% block title %}{{ 'profile_connection.workout.list.title'|trans({nickname: subject.nickname}, 'navigation')|format_title }}{% endblock %}
@@ -31,6 +33,9 @@
             'filterDate': filterDate,
             'routines': routines,
             'filterRoutine': filterRoutine,
+            'muscleGroups': muscleGroups,
+            'filterMuscles': filterMuscles,
+            'filterMusclesParam': filterMusclesParam,
             'pagination': pagination,
             'route': 'app_profile_connection_workout_list',
             'routeParams': {id: connection.id},
@@ -66,7 +71,7 @@
             {% include '_pagination/_pagination.html.twig' with {
                 'pagination': pagination,
                 'route': 'app_profile_connection_workout_list',
-                'routeParams': {'id': connection.id, 'filter': filterType, 'date': filterDate, 'routine': filterRoutine},
+                'routeParams': {'id': connection.id, 'filter': filterType, 'date': filterDate, 'routine': filterRoutine, 'muscles': filterMusclesParam},
                 'limitAllowed': limitAllowed,
             } only %}
         {% endif %}

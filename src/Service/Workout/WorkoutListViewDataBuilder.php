@@ -39,7 +39,7 @@ final readonly class WorkoutListViewDataBuilder
     }
 
     /**
-     * @param array{type?: string, value?: \DateTimeImmutable, routine?: 'free'|Routine} $filters
+     * @param array{type?: string, value?: \DateTimeImmutable, routine?: 'free'|Routine, muscles?: array<string, string>} $filters
      * @return array{
      *     pagination: PaginationInterface<int, Workout>,
      *     tonnageMap: array<string, float>,

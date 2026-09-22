@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security\Workout;
 
+use App\Entity\Exercise;
+use App\Entity\ExerciseMuscle;
+use App\Entity\MuscleGroup;
 use App\Entity\Routine;
 use App\Entity\User;
 use App\Entity\Workout;
+use App\Entity\WorkoutExercise;
+use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
 use App\Enum\Entity\Workout\WorkoutMoodEnum;
+use App\Repository\MuscleGroupRepository;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
@@ -424,6 +430,113 @@ class WorkoutListControllerTest extends WebTestCase
         $this->assertCount(2, $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]'));
 
         $this->removeWorkout($em, $freeWorkout);
+    }
+
+    public function testMuscleFilterNarrowsToMatchingWorkouts(): void
+    {
+        $client = $this->login(self::USER_EMPTY);
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::USER_EMPTY);
+
+        $chestId = $this->createWorkoutTargetingMuscle($em, $owner, 'name.chest', MuscleTypeEnum::PRIMARY)['muscleGroupId'];
+        $this->createWorkoutTargetingMuscle($em, $owner, 'name.biceps', MuscleTypeEnum::PRIMARY);
+
+        $crawler = $client->request(Request::METHOD_GET, self::URL . '?muscles=' . $chestId . ':primary');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(1, $crawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]'));
+    }
+
+    /**
+     * Le filtre matche le couple (groupe musculaire, type) exact, pas juste le groupe musculaire
+     * seul — une séance dont le pectoraux est travaillé en secondaire ne doit pas apparaître sous
+     * le filtre "pectoraux primaire".
+     */
+    public function testMuscleFilterMatchesExactTypeNotJustMuscleGroup(): void
+    {
+        $client = $this->login(self::USER_EMPTY);
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $owner = $this->getUserByEmail(self::USER_EMPTY);
+
+        $chestId = $this->createWorkoutTargetingMuscle($em, $owner, 'name.chest', MuscleTypeEnum::SECONDARY)['muscleGroupId'];
+
+        $primaryCrawler = $client->request(Request::METHOD_GET, self::URL . '?muscles=' . $chestId . ':primary');
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(0, $primaryCrawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]'));
+
+        $secondaryCrawler = $client->request(Request::METHOD_GET, self::URL . '?muscles=' . $chestId . ':secondary');
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(1, $secondaryCrawler->filter('[data-action="click->workout--list--delete-modal#deleteWorkout"]'));
+    }
+
+    public function testMuscleFilterChipReflectsActiveStateInMarkup(): void
+    {
+        $client = $this->login(self::USER_EMPTY);
+
+        /** @var MuscleGroupRepository $muscleGroupRepository */
+        $muscleGroupRepository = static::getContainer()->get(MuscleGroupRepository::class);
+        /** @var MuscleGroup $muscleGroup */
+        $muscleGroup = $muscleGroupRepository->findOneBy([
+            'name' => 'name.chest',
+        ]);
+
+        $crawler = $client->request(Request::METHOD_GET, self::URL . '?muscles=' . $muscleGroup->id . ':primary');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(
+            1,
+            $crawler->filter('.muscle-filter-chip.pill--primary[data-muscle-id="' . $muscleGroup->id . '"]'),
+            "La pill du groupe musculaire filtré doit refléter l'état actif rendu côté serveur"
+        );
+    }
+
+    /**
+     * @return array{workout: Workout, muscleGroupId: string}
+     */
+    private function createWorkoutTargetingMuscle(
+        EntityManagerInterface $em,
+        User $owner,
+        string $muscleGroupName,
+        MuscleTypeEnum $type,
+    ): array {
+        /** @var MuscleGroupRepository $muscleGroupRepository */
+        $muscleGroupRepository = static::getContainer()->get(MuscleGroupRepository::class);
+        /** @var MuscleGroup $muscleGroup */
+        $muscleGroup = $muscleGroupRepository->findOneBy([
+            'name' => $muscleGroupName,
+        ]);
+
+        $exercise = new Exercise();
+        $exercise->name = 'Muscle filter test exercise ' . uniqid();
+        $exercise->owner = $owner;
+
+        $exerciseMuscle = new ExerciseMuscle();
+        $exerciseMuscle->exercise = $exercise;
+        $exerciseMuscle->muscleGroup = $muscleGroup;
+        $exerciseMuscle->type = $type;
+        $exercise->exerciseMuscles->add($exerciseMuscle);
+
+        $workout = new Workout();
+        $workout->owner = $owner;
+        $workout->performedAt = new \DateTimeImmutable('-1 day');
+
+        $workoutExercise = new WorkoutExercise();
+        $workoutExercise->exercise = $exercise;
+        $workoutExercise->position = 0;
+        $workout->addWorkoutExercise($workoutExercise);
+
+        $em->persist($exercise);
+        $em->persist($workout);
+        $em->flush();
+
+        return [
+            'workout' => $workout,
+            'muscleGroupId' => (string) $muscleGroup->id,
+        ];
     }
 
     private function createRoutine(EntityManagerInterface $em, User $owner, string $name): Routine

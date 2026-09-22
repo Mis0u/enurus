@@ -6,9 +6,16 @@
 
     <div class="flex gap-1 bg-white/[0.04] rounded-lg p-0.75">
 
-        {% include 'workout/list/Filter/_month_week.html.twig' with {'filterType': filterType, 'filterDate': filterDate, 'filterRoutine': filterRoutine, 'route': route, 'routeParams': routeParams} only %}
+        {% include 'workout/list/Filter/_month_week.html.twig' with {
+            'filterType': filterType,
+            'filterDate': filterDate,
+            'filterRoutine': filterRoutine,
+            'filterMusclesParam': filterMusclesParam,
+            'route': route,
+            'routeParams': routeParams,
+        } only %}
 
-        {% if filterType is not null or (filterDate is not null and filterDate != '') or filterRoutine is not null %}
+        {% if filterType is not null or (filterDate is not null and filterDate != '') or filterRoutine is not null or filterMuscles is not empty %}
             {% include 'workout/list/Filter/_reset.html.twig' with {'route': route, 'routeParams': routeParams} only %}
         {% endif %}
     </div>
@@ -16,6 +23,8 @@
     {% if routines is not empty %}
         {% include 'workout/list/Filter/_routine.html.twig' with {'routines': routines, 'filterRoutine': filterRoutine} only %}
     {% endif %}
+
+    {% include 'workout/list/Filter/_muscle.html.twig' with {'muscleGroups': muscleGroups, 'filterMuscles': filterMuscles} only %}
 
     <div class="ml-auto flex items-center gap-1.5 px-3 py-1.5 bg-[rgba(6,182,212,0.12)] border border-[rgba(6,182,212,0.25)] rounded-lg text-[12px] font-semibold text-[#06b6d4]">
         {% include 'workout/list/Filter/_total_count.html.twig' with {'pagination': pagination} only %}
