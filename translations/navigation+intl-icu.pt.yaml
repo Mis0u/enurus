@@ -737,6 +737,7 @@ workout:
             all_sessions: Todos os treinos
             clear: Limpar data
             month: Este mês
+            muscle_label: Filtrar por músculo
             reset: Reiniciar
             routine_label: Filtrar por rotina
             week: Esta semana

@@ -80,7 +80,7 @@ class WorkoutRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param array{type?: string, value?: DateTimeImmutable, routine?: 'free'|Routine} $filters
+     * @param array{type?: string, value?: DateTimeImmutable, routine?: 'free'|Routine, muscles?: array<string, string>} $filters
      */
     public function findByUserPaginated(User $user, array $filters = []): QueryBuilder
     {
@@ -108,7 +108,45 @@ class WorkoutRepository extends ServiceEntityRepository
                 ->setParameter('routine', $routineFilter);
         }
 
+        $this->applyMuscleFilters($qb, $filters['muscles'] ?? []);
+
         return $qb;
+    }
+
+    /**
+     * Combinable avec les filtres période/routine ci-dessus, mais les entrées entre elles sont en
+     * OU (une séance correspond si au moins un de ses exercices matche au moins un des couples
+     * groupe musculaire/type demandés) — même sémantique que
+     * `ExerciseSelectorComponent::filterByMuscleGroups()`. `JOIN` sur une collection one-to-many
+     * dans une requête paginée par Knp : `distinct()` évite les lignes dupliquées quand plusieurs
+     * exercices d'une même séance matchent, `fetchJoinCollection` (activé par défaut côté Knp)
+     * gère ensuite correctement LIMIT/OFFSET malgré la jointure — cf. CLAUDE.md, jamais de
+     * `setMaxResults()` manuel dans ce cas.
+     *
+     * @param array<string, string> $muscleFilters groupe musculaire (id) => 'primary'|'secondary'
+     */
+    private function applyMuscleFilters(QueryBuilder $qb, array $muscleFilters): void
+    {
+        if ([] === $muscleFilters) {
+            return;
+        }
+
+        $qb->distinct()
+            ->join('w.workoutExercises', 'we')
+            ->join('we.exercise', 'e')
+            ->join('e.exerciseMuscles', 'em');
+
+        $conditions = [];
+        $index = 0;
+
+        foreach ($muscleFilters as $muscleGroupId => $type) {
+            $conditions[] = \sprintf('(em.muscleGroup = :muscleGroupId%d AND em.type = :muscleType%d)', $index, $index);
+            $qb->setParameter('muscleGroupId' . $index, Uuid::fromString($muscleGroupId))
+                ->setParameter('muscleType' . $index, $type);
+            $index++;
+        }
+
+        $qb->andWhere(implode(' OR ', $conditions));
     }
 
     /**

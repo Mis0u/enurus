@@ -1,0 +1,32 @@
+{#
+    Variables attendues : `muscleGroups` (list<MuscleGroup>), `filterMuscles`
+    (array<string, 'primary'|'secondary'> — groupe musculaire (id) => type actif).
+
+    1er clic sur une pill = primaire (rouge), 2e clic = secondaire (cyan), 3e clic = retiré du
+    filtre — même comportement et même markup que le filtre muscle de la bibliothèque d'exercices
+    (exercise/list/_filters.html.twig), simplement rebranché sur workout--list--workout-filters
+    (rechargement de page) plutôt que exercise--list (filtrage JS live).
+#}
+<details class="mb-2 basis-full">
+    <summary class="cursor-pointer text-[13px] font-medium text-white/60 hover:text-white/80 select-none">
+        {{ 'workout.list.filter.muscle_label'|trans({}, 'navigation') }}
+        {% if filterMuscles is not empty %}
+            <span class="text-[#f43f5e]">({{ filterMuscles|length }})</span>
+        {% endif %}
+    </summary>
+    <div class="flex flex-wrap gap-2 mt-3">
+        {% for muscle_group in muscleGroups %}
+            {% set filter_type = filterMuscles[muscle_group.id] ?? null %}
+            <button
+                type="button"
+                class="muscle-filter-chip inline-flex items-center px-3 py-1.5 rounded-full text-[13px] font-medium border border-white/[0.07] bg-[#0f1928] text-white/70 transition-colors duration-150 cursor-pointer select-none {{ filter_type ? 'pill--' ~ filter_type : '' }}"
+                data-workout--list--workout-filters-target="muscleChip"
+                data-action="click->workout--list--workout-filters#cycleMuscle"
+                data-muscle-id="{{ muscle_group.id }}"
+                data-muscle-state="{{ filter_type ?? 'none' }}"
+            >
+                {{ muscle_group.name|trans({}, 'muscle') }}
+            </button>
+        {% endfor %}
+    </div>
+</details>

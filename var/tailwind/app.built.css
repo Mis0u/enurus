@@ -591,6 +591,9 @@
   .aspect-square {
     aspect-ratio: 1 / 1;
   }
+  .h-1 {
+    height: calc(var(--spacing) * 1);
+  }
   .h-1\.5 {
     height: calc(var(--spacing) * 1.5);
   }
@@ -776,6 +779,9 @@
   }
   .min-h-screen {
     min-height: 100vh;
+  }
+  .w-1 {
+    width: calc(var(--spacing) * 1);
   }
   .w-1\.5 {
     width: calc(var(--spacing) * 1.5);
@@ -1028,6 +1034,9 @@
   }
   .grow {
     flex-grow: 1;
+  }
+  .basis-full {
+    flex-basis: 100%;
   }
   .border-collapse {
     border-collapse: collapse;
@@ -1947,6 +1956,12 @@
     background-color: color-mix(in srgb, #fff 12%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-white) 12%, transparent);
+    }
+  }
+  .bg-white\/\[0\.15\] {
+    background-color: color-mix(in srgb, #fff 15%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-white) 15%, transparent);
     }
   }
   .bg-gradient-to-br {
@@ -4021,9 +4036,9 @@
       height: calc(var(--spacing) * 5);
     }
   }
-  .max-md\:h-7 {
+  .max-md\:h-8 {
     @media (width < 48rem) {
-      height: calc(var(--spacing) * 7);
+      height: calc(var(--spacing) * 8);
     }
   }
   .max-md\:h-screen {
@@ -4036,9 +4051,9 @@
       width: calc(var(--spacing) * 5);
     }
   }
-  .max-md\:w-7 {
+  .max-md\:w-8 {
     @media (width < 48rem) {
-      width: calc(var(--spacing) * 7);
+      width: calc(var(--spacing) * 8);
     }
   }
   .max-md\:w-16 {
@@ -4151,11 +4166,6 @@
       gap: calc(var(--spacing) * 5);
     }
   }
-  .max-md\:self-start {
-    @media (width < 48rem) {
-      align-self: flex-start;
-    }
-  }
   .max-md\:rounded-none {
     @media (width < 48rem) {
       border-radius: 0;
@@ -4196,11 +4206,6 @@
       padding-block: calc(var(--spacing) * 1);
     }
   }
-  .max-md\:py-2 {
-    @media (width < 48rem) {
-      padding-block: calc(var(--spacing) * 2);
-    }
-  }
   .max-md\:py-3 {
     @media (width < 48rem) {
       padding-block: calc(var(--spacing) * 3);
@@ -4234,11 +4239,6 @@
   .max-md\:text-left {
     @media (width < 48rem) {
       text-align: left;
-    }
-  }
-  .max-md\:text-\[9px\] {
-    @media (width < 48rem) {
-      font-size: 9px;
     }
   }
   .max-md\:text-\[11px\] {

@@ -3,6 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('styles/date-picker.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/workout_list.css') }}">
 {% endblock %}
 
 {% block title %}{{ 'workout.list.title'|trans({}, 'navigation')|format_title }}{% endblock %}
@@ -21,6 +22,9 @@
             'filterDate': filterDate,
             'routines': routines,
             'filterRoutine': filterRoutine,
+            'muscleGroups': muscleGroups,
+            'filterMuscles': filterMuscles,
+            'filterMusclesParam': filterMusclesParam,
             'pagination': pagination,
             'route': 'app_workout_list',
             'routeParams': {},
@@ -56,7 +60,7 @@
             {% include '_pagination/_pagination.html.twig' with {
                 'pagination': pagination,
                 'route': 'app_workout_list',
-                'routeParams': {'filter': filterType, 'date': filterDate, 'routine': filterRoutine},
+                'routeParams': {'filter': filterType, 'date': filterDate, 'routine': filterRoutine, 'muscles': filterMusclesParam},
                 'limitAllowed': limitAllowed,
             } only %}
         {% endif %}

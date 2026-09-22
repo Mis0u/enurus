@@ -7,8 +7,11 @@ namespace App\Controller\ProfileConnection;
 use App\Entity\ProfileConnection;
 use App\Entity\Routine;
 use App\Entity\User;
+use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
+use App\Repository\MuscleGroupRepository;
 use App\Repository\RoutineRepository;
 use App\Security\Voter\ProfileConnectionVoter;
+use App\Service\Entity\MuscleGroupSorterService;
 use App\Service\Workout\WorkoutListViewDataBuilder;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Liste des séances d'une connexion, en lecture seule — même filtres et pagination que
@@ -39,8 +43,12 @@ final class ProfileConnectionWorkoutListController extends AbstractController
 
     private const array DISPLAY_LIMIT_ALLOWED = [10, 25, 50];
 
+    private const int MUSCLE_FILTER_PAIR_PARTS = 2;
+
     public function __construct(
         private readonly RoutineRepository $routineRepository,
+        private readonly MuscleGroupRepository $muscleGroupRepository,
+        private readonly MuscleGroupSorterService $muscleGroupSorter,
         private readonly WorkoutListViewDataBuilder $viewDataBuilder,
     ) {
     }
@@ -68,10 +76,17 @@ final class ProfileConnectionWorkoutListController extends AbstractController
             default => null,
         };
 
+        $filterMuscles = $this->resolveMuscleFilters($request);
+        $filters['muscles'] = $filterMuscles;
+
         $limit = $request->query->getInt('limit', self::DISPLAY_LIMIT_BY_DEFAULT);
         $limit = in_array($limit, self::DISPLAY_LIMIT_ALLOWED, true) ? $limit : self::DISPLAY_LIMIT_BY_DEFAULT;
 
         $data = $this->viewDataBuilder->build($subject, $viewer, $filters, $request->query->getInt('page', 1), $limit);
+
+        /** @var list<\App\Entity\MuscleGroup> $muscleGroups */
+        $muscleGroups = $this->muscleGroupRepository->findAllOrderedByPosition();
+        $muscleGroups = $this->muscleGroupSorter->sortByName($muscleGroups, $viewer->locale);
 
         return $this->render('profile_connection/workout/list.html.twig', [
             'connection' => $connection,
@@ -84,6 +99,9 @@ final class ProfileConnectionWorkoutListController extends AbstractController
             'filterDate' => $filterDate,
             'routines' => $routines,
             'filterRoutine' => $filterRoutine,
+            'muscleGroups' => $muscleGroups,
+            'filterMuscles' => $filterMuscles,
+            'filterMusclesParam' => $this->encodeMuscleFilters($filterMuscles),
             'limitAllowed' => self::DISPLAY_LIMIT_ALLOWED,
             'exerciseCountMap' => $data['exerciseCountMap'],
             'hasPrMap' => $data['hasPrMap'],
@@ -146,5 +164,55 @@ final class ProfileConnectionWorkoutListController extends AbstractController
         }
 
         return null;
+    }
+
+    /**
+     * @return array<string, string> groupe musculaire (id) => 'primary'|'secondary'
+     */
+    private function resolveMuscleFilters(Request $request): array
+    {
+        $raw = $request->query->get('muscles');
+
+        if (! is_string($raw) || '' === $raw) {
+            return [];
+        }
+
+        $filters = [];
+
+        foreach (explode(',', $raw) as $pair) {
+            $parts = explode(':', $pair, self::MUSCLE_FILTER_PAIR_PARTS);
+
+            if (self::MUSCLE_FILTER_PAIR_PARTS !== count($parts)) {
+                continue;
+            }
+
+            [$muscleGroupId, $type] = $parts;
+
+            if (! Uuid::isValid($muscleGroupId) || null === MuscleTypeEnum::tryFrom($type)) {
+                continue;
+            }
+
+            $filters[$muscleGroupId] = $type;
+        }
+
+        return $filters;
+    }
+
+    /**
+     * @param array<string, string> $filterMuscles
+     */
+    private function encodeMuscleFilters(array $filterMuscles): ?string
+    {
+        if ([] === $filterMuscles) {
+            return null;
+        }
+
+        $pairs = [];
+
+        foreach ($filterMuscles as $muscleGroupId => $type) {
+            $pairs[] = $muscleGroupId . ':' . $type;
+        }
+
+        return implode(',', $pairs);
     }
 }

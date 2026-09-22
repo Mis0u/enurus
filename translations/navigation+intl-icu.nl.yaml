@@ -737,6 +737,7 @@ workout:
             all_sessions: Alle trainingen
             clear: Datum wissen
             month: Deze maand
+            muscle_label: Filteren op spier
             reset: Resetten
             routine_label: Filteren op routine
             week: Deze week
