@@ -36,6 +36,16 @@ class ResetPasswordTest extends WebTestCase
         $this->fillEmailRequestPasswordResetForm('unknown-email@test.com', 0, 0);
     }
 
+    /**
+     * L'email est stocké en lowercase (UserService::createUser()) — une demande de reset saisie
+     * avec une casse différente ('User-Fixture-0@test.com') doit tout de même trouver le compte,
+     * cf. ResetPasswordService::findUserByEmail().
+     */
+    public function testRequestPasswordResetWithDifferentEmailCase(): void
+    {
+        $this->fillEmailRequestPasswordResetForm('User-Fixture-0@test.com', 1, 1);
+    }
+
     private function fillEmailRequestPasswordResetForm(string $email, int $countRequest, int $countMessage): void
     {
         $client = static::createClient();
