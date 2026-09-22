@@ -113,6 +113,7 @@ dashboard:
             title: Trenowane mięśnie
         regularity:
             best_streak: "{count, plural, =1 {Rekord: # tydzień} few {Rekord: # tygodnie} many {Rekord: # tygodni} other {Rekord: # tygodnia}}"
+            deload_day: Zaplanowany tydzień odpoczynku
             last_week: Poprzedni tydzień
             month_delta_negative: "{count, plural, =1 {-# trening vs poprz. miesiąc} few {-# treningi vs poprz. miesiąc} many {-# treningów vs poprz. miesiąc} other {-# treningu vs poprz. miesiąc}}"
             month_delta_positive: "{count, plural, =1 {+# trening vs poprz. miesiąc} few {+# treningi vs poprz. miesiąc} many {+# treningów vs poprz. miesiąc} other {+# treningu vs poprz. miesiąc}}"
@@ -735,6 +736,39 @@ workout:
         deleted: Twój trening został usunięty
         updated: Twój trening został zmieniony
     list:
+        calendar:
+            deload:
+                add_button: Zaplanuj tydzień odpoczynku
+                delete:
+                    cancel: Anuluj
+                    confirm: Usuń
+                    error_text: Wystąpił błąd podczas usuwania. Spróbuj ponownie.
+                    message: Potwierdzić usunięcie tego okresu odpoczynku?
+                    title: Usunąć ten okres?
+                empty: Nie zaplanowano żadnego tygodnia odpoczynku.
+                subtitle: Okres zaznaczony tutaj nigdy nie przerywa Twojej serii regularności.
+                title: Zaplanowane tygodnie odpoczynku
+            flash:
+                created: Tydzień odpoczynku zaplanowany.
+                deleted: Tydzień odpoczynku usunięty.
+                error: Nie udało się zapisać tego okresu. Sprawdź daty.
+            heatmap:
+                legend_deload: Odpoczynek
+                legend_rest: Niezaplanowany odpoczynek
+                legend_session_long: "90 min +"
+                legend_session_medium: "45–90 min"
+                legend_session_short: "< 45 min"
+                subtitle: "Intensywność = całkowity czas trwania treningu tego dnia."
+                title: Kalendarz aktywności
+            modal:
+                cancel: Anuluj
+                end_label: Do
+                note_label: Notatka (opcjonalnie)
+                note_placeholder: "Np. Lżejszy tydzień po cyklu siłowym…"
+                start_label: Od
+                submit: Potwierdź
+                subtitle: Zaznacz ten okres jako celowo lżejszy — nie wpłynie to na Twoją serię regularności, nawet bez treningu.
+                title: Zaplanuj tydzień odpoczynku
         delete:
             cancel: Anuluj
             confirm: Usuń
@@ -764,6 +798,9 @@ workout:
                 many  {# treningów}
                 other {# treningów}
             }
+        view:
+            calendar: Kalendarz
+            list: Lista
     mood:
         blesse: Ranny
         en_forme: W formie

@@ -113,6 +113,7 @@ dashboard:
             title: Getrainde spieren
         regularity:
             best_streak: "{count, plural, =1 {Record: # week} other {Record: # weken}}"
+            deload_day: Geplande rustweek
             last_week: Vorige week
             month_delta_negative: "{count, plural, =1 {-# training vs vorige maand} other {-# trainingen vs vorige maand}}"
             month_delta_positive: "{count, plural, =1 {+# training vs vorige maand} other {+# trainingen vs vorige maand}}"
@@ -723,6 +724,39 @@ workout:
         deleted: Je training is verwijderd
         updated: Je training is gewijzigd
     list:
+        calendar:
+            deload:
+                add_button: Rustweek plannen
+                delete:
+                    cancel: Annuleren
+                    confirm: Verwijderen
+                    error_text: Er is een fout opgetreden bij het verwijderen. Probeer het opnieuw.
+                    message: Verwijderen van deze rustperiode bevestigen?
+                    title: Deze periode verwijderen?
+                empty: Geen rustweek gepland.
+                subtitle: Een hier gemarkeerde periode onderbreekt nooit je regelmaat-reeks.
+                title: Geplande rustweken
+            flash:
+                created: Rustweek gepland.
+                deleted: Rustweek verwijderd.
+                error: Deze periode kon niet worden opgeslagen. Controleer de datums.
+            heatmap:
+                legend_deload: Rust
+                legend_rest: Ongeplande rust
+                legend_session_long: "90 min +"
+                legend_session_medium: "45–90 min"
+                legend_session_short: "< 45 min"
+                subtitle: "Intensiteit = totale trainingsduur die dag."
+                title: Activiteitenkalender
+            modal:
+                cancel: Annuleren
+                end_label: Tot
+                note_label: Notitie (optioneel)
+                note_placeholder: "Bijv. Lichtere week na de krachtcyclus…"
+                start_label: Van
+                submit: Bevestigen
+                subtitle: Markeer deze periode als bewust lichter — dit heeft geen invloed op je regelmaat-reeks, ook niet zonder training.
+                title: Rustweek plannen
         delete:
             cancel: Annuleren
             confirm: Verwijderen
@@ -750,6 +784,9 @@ workout:
                 =1    {# training}
                 other {# trainingen}
             }
+        view:
+            calendar: Kalender
+            list: Lijst
     mood:
         blesse: Gewond
         en_forme: Fit

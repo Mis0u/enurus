@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller\Workout;
 
+use App\Entity\DeloadPeriod;
 use App\Entity\Routine;
 use App\Entity\User;
 use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
+use App\Form\DeloadPeriodType;
+use App\Repository\DeloadPeriodRepository;
 use App\Repository\MuscleGroupRepository;
 use App\Repository\RoutineRepository;
 use App\Service\Entity\MuscleGroupSorterService;
+use App\Service\Workout\WorkoutHeatmapService;
 use App\Service\Workout\WorkoutListViewDataBuilder;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,9 +48,24 @@ class WorkoutListController extends AbstractController
         MuscleGroupRepository $muscleGroupRepository,
         MuscleGroupSorterService $muscleGroupSorter,
         WorkoutListViewDataBuilder $viewDataBuilder,
+        WorkoutHeatmapService $heatmapService,
+        DeloadPeriodRepository $deloadPeriodRepository,
     ): Response {
         /** @var User $user */
         $user = $this->getUser();
+
+        // Onglet "Calendrier" : vue entièrement différente (heatmap + gestion des deloads), pas
+        // de filtres ni de pagination — voir la mémoire du projet sur cette décision UX (pas de
+        // nouvelle page/route, un simple toggle sur cette même page).
+        if ('calendar' === $request->query->get('view')) {
+            return $this->render('workout/list/index.html.twig', [
+                'view' => 'calendar',
+                'user' => $user,
+                'heatmapData' => $heatmapService->build($user),
+                'deloadPeriods' => $deloadPeriodRepository->findByOwnerOrderedByStartDate($user),
+                'deloadForm' => $this->createForm(DeloadPeriodType::class, new DeloadPeriod()),
+            ]);
+        }
 
         /** @var array<Routine> $routines */
         $routines = $routineRepository->findByOwnerOrderedByDate($user)->getQuery()->getResult();
@@ -79,6 +98,7 @@ class WorkoutListController extends AbstractController
         $muscleGroups = $muscleGroupSorter->sortByName($muscleGroups, $user->locale);
 
         return $this->render('workout/list/index.html.twig', [
+            'view' => 'list',
             'user' => $user,
             'pagination' => $data['pagination'],
             'tonnageMap' => $data['tonnageMap'],

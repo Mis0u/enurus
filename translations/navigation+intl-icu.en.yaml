@@ -113,6 +113,7 @@ dashboard:
             title: Muscles worked
         regularity:
             best_streak: "{count, plural, =1 {Record: # week} other {Record: # weeks}}"
+            deload_day: Scheduled rest week
             last_week: Last week
             month_delta_negative: "{count, plural, =1 {-# session vs last month} other {-# sessions vs last month}}"
             month_delta_positive: "{count, plural, =1 {+# session vs last month} other {+# sessions vs last month}}"
@@ -723,6 +724,39 @@ workout:
         deleted: Your workout has been deleted
         updated: Your workout has been updated
     list:
+        calendar:
+            deload:
+                add_button: Schedule a rest week
+                delete:
+                    cancel: Cancel
+                    confirm: Delete
+                    error_text: An error occurred while deleting. Please try again.
+                    message: Confirm deletion of this rest period?
+                    title: Delete this period?
+                empty: No rest week scheduled.
+                subtitle: A period marked here never breaks your regularity streak.
+                title: Scheduled rest weeks
+            flash:
+                created: Rest week scheduled.
+                deleted: Rest week deleted.
+                error: Could not save this period. Check the dates.
+            heatmap:
+                legend_deload: Deload
+                legend_rest: Unplanned rest
+                legend_session_long: "90 min +"
+                legend_session_medium: "45–90 min"
+                legend_session_short: "< 45 min"
+                subtitle: "Intensity = total workout duration that day."
+                title: Activity calendar
+            modal:
+                cancel: Cancel
+                end_label: To
+                note_label: Note (optional)
+                note_placeholder: "E.g. Lighter week after the strength cycle…"
+                start_label: From
+                submit: Confirm
+                subtitle: Mark this period as intentionally lighter — it won't affect your regularity streak, even without a workout.
+                title: Schedule a rest week
         delete:
             cancel: Cancel
             confirm: Delete
@@ -750,6 +784,9 @@ workout:
                 =1    {# workout}
                 other {# workouts}
             }
+        view:
+            calendar: Calendar
+            list: List
     mood:
         blesse: Injured
         en_forme: In shape

@@ -113,6 +113,7 @@ dashboard:
             title: Trainierte Muskeln
         regularity:
             best_streak: "{count, plural, =1 {Rekord: # Woche} other {Rekord: # Wochen}}"
+            deload_day: Geplante Erholungswoche
             last_week: Letzte Woche
             month_delta_negative: "{count, plural, =1 {-# Einheit vs. Vormonat} other {-# Einheiten vs. Vormonat}}"
             month_delta_positive: "{count, plural, =1 {+# Einheit vs. Vormonat} other {+# Einheiten vs. Vormonat}}"
@@ -723,6 +724,39 @@ workout:
         deleted: Dein Training wurde gelöscht
         updated: Dein Training wurde geändert
     list:
+        calendar:
+            deload:
+                add_button: Erholungswoche planen
+                delete:
+                    cancel: Abbrechen
+                    confirm: Löschen
+                    error_text: Beim Löschen ist ein Fehler aufgetreten. Bitte versuche es erneut.
+                    message: Löschen dieser Erholungsphase bestätigen?
+                    title: Diese Phase löschen?
+                empty: Keine Erholungswoche geplant.
+                subtitle: Eine hier markierte Phase unterbricht nie deine Regelmäßigkeits-Serie.
+                title: Geplante Erholungswochen
+            flash:
+                created: Erholungswoche geplant.
+                deleted: Erholungswoche gelöscht.
+                error: Diese Phase konnte nicht gespeichert werden. Prüfe die Daten.
+            heatmap:
+                legend_deload: Erholung
+                legend_rest: Ungeplante Pause
+                legend_session_long: "90 min +"
+                legend_session_medium: "45–90 min"
+                legend_session_short: "< 45 min"
+                subtitle: "Intensität = Gesamtdauer des Trainings an diesem Tag."
+                title: Aktivitätskalender
+            modal:
+                cancel: Abbrechen
+                end_label: Bis
+                note_label: Notiz (optional)
+                note_placeholder: "Z. B. Leichtere Woche nach dem Kraftzyklus…"
+                start_label: Von
+                submit: Bestätigen
+                subtitle: Markiere diese Phase als bewusst leichter — sie wirkt sich nicht auf deine Regelmäßigkeits-Serie aus, selbst ohne Training.
+                title: Erholungswoche planen
         delete:
             cancel: Abbrechen
             confirm: Löschen
@@ -750,6 +784,9 @@ workout:
                 =1    {# Training}
                 other {# Trainings}
             }
+        view:
+            calendar: Kalender
+            list: Liste
     mood:
         blesse: Verletzt
         en_forme: Fit

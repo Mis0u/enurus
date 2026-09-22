@@ -97,6 +97,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @var Collection<int, DeloadPeriod>
+     */
+    #[ORM\OneToMany(targetEntity: DeloadPeriod::class, mappedBy: 'owner', cascade: ['remove'], orphanRemoval: true)]
+    public Collection $deloadPeriods {
+        get {
+            return $this->deloadPeriods;
+        }
+    }
+
+    /**
      * @var Collection<int, ProfileConnection>
      */
     #[ORM\OneToMany(targetEntity: ProfileConnection::class, mappedBy: 'requester', cascade: ['remove'], orphanRemoval: true)]
@@ -448,6 +458,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->workouts = new ArrayCollection();
         $this->routines = new ArrayCollection();
         $this->exerciseGoals = new ArrayCollection();
+        $this->deloadPeriods = new ArrayCollection();
         $this->sentProfileConnections = new ArrayCollection();
         $this->receivedProfileConnections = new ArrayCollection();
         $this->contactThreads = new ArrayCollection();

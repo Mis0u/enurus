@@ -113,6 +113,7 @@ dashboard:
             title: Músculos trabalhados
         regularity:
             best_streak: "{count, plural, =1 {Recorde: # semana} other {Recorde: # semanas}}"
+            deload_day: Semana de descanso programada
             last_week: Semana passada
             month_delta_negative: "{count, plural, =1 {-# treino vs mês ant.} other {-# treinos vs mês ant.}}"
             month_delta_positive: "{count, plural, =1 {+# treino vs mês ant.} other {+# treinos vs mês ant.}}"
@@ -723,6 +724,39 @@ workout:
         deleted: O teu treino foi eliminado
         updated: O teu treino foi modificado
     list:
+        calendar:
+            deload:
+                add_button: Programar uma semana de descanso
+                delete:
+                    cancel: Cancelar
+                    confirm: Eliminar
+                    error_text: Ocorreu um erro durante a eliminação. Tenta novamente.
+                    message: Confirmar a eliminação deste período de descanso?
+                    title: Eliminar este período?
+                empty: Nenhuma semana de descanso programada.
+                subtitle: Um período aqui marcado nunca quebra a tua sequência de regularidade.
+                title: Semanas de descanso programadas
+            flash:
+                created: Semana de descanso programada.
+                deleted: Semana de descanso eliminada.
+                error: Não foi possível guardar este período. Verifica as datas.
+            heatmap:
+                legend_deload: Descanso
+                legend_rest: Descanso não planeado
+                legend_session_long: "90 min +"
+                legend_session_medium: "45–90 min"
+                legend_session_short: "< 45 min"
+                subtitle: "Intensidade = duração total do treino nesse dia."
+                title: Calendário de atividade
+            modal:
+                cancel: Cancelar
+                end_label: Até
+                note_label: Nota (opcional)
+                note_placeholder: "Ex. Semana mais leve após o ciclo de força…"
+                start_label: De
+                submit: Confirmar
+                subtitle: Marca este período como voluntariamente mais leve — não vai afetar a tua sequência de regularidade, mesmo sem treino.
+                title: Programar uma semana de descanso
         delete:
             cancel: Cancelar
             confirm: Eliminar
@@ -750,6 +784,9 @@ workout:
                 =1    {# treino}
                 other {# treinos}
             }
+        view:
+            calendar: Calendário
+            list: Lista
     mood:
         blesse: Lesionado
         en_forme: Em forma

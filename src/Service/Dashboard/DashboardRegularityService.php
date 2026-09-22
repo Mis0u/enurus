@@ -6,6 +6,7 @@ namespace App\Service\Dashboard;
 
 use App\Entity\User;
 use App\Repository\WorkoutStatsRepository;
+use App\Service\Workout\DeloadPeriodSetService;
 
 final readonly class DashboardRegularityService
 {
@@ -16,6 +17,7 @@ final readonly class DashboardRegularityService
     public function __construct(
         private WorkoutStatsRepository $workoutStatsRepository,
         private DashboardPeriodCalculator $periodCalculator,
+        private DeloadPeriodSetService $deloadPeriodSetService,
     ) {
     }
 
@@ -29,12 +31,14 @@ final readonly class DashboardRegularityService
      *     weekDelta: int,
      *     monthDelta: int,
      *     yearDelta: int|null,
-     *     weekDays: array<int, array{date: \DateTimeImmutable, hasWorkout: bool, isToday: bool, isFuture: bool}>,
-     *     previousWeekDays: array<int, array{date: \DateTimeImmutable, hasWorkout: bool, isToday: bool, isFuture: bool}>
+     *     weekDays: array<int, array{date: \DateTimeImmutable, hasWorkout: bool, isToday: bool, isFuture: bool, isDeload: bool}>,
+     *     previousWeekDays: array<int, array{date: \DateTimeImmutable, hasWorkout: bool, isToday: bool, isFuture: bool, isDeload: bool}>
      * }
      */
     public function getData(User $user): array
     {
+        $deloadWeekSet = $this->deloadPeriodSetService->weekKeySet($user);
+        $deloadDaySet = $this->deloadPeriodSetService->dayKeySet($user);
         $now = new \DateTimeImmutable();
         $today = $now->format('Y-m-d');
 
@@ -79,8 +83,8 @@ final readonly class DashboardRegularityService
         $previousYearCount = $this->workoutStatsRepository->countByUserAndDate($user, $previousYear->start, $previousYear->end);
 
         return [
-            'streak' => $this->computeStreak($allDates, $week->start),
-            'bestStreak' => $this->computeBestStreak($allDates),
+            'streak' => $this->computeStreak($allDates, $week->start, $deloadWeekSet),
+            'bestStreak' => $this->computeBestStreak($allDates, $deloadWeekSet),
             'weekCount' => $weekCount,
             'monthCount' => $monthCount,
             'yearCount' => $yearCount,
@@ -88,34 +92,39 @@ final readonly class DashboardRegularityService
             'monthDelta' => $monthCount - $previousMonthCount,
             // null si aucune séance l'année précédente — comparer à zéro n'aurait pas de sens informatif.
             'yearDelta' => 0 < $previousYearCount ? $yearCount - $previousYearCount : null,
-            'weekDays' => $this->buildWeekDays($week->start, $workoutDaySet, $today),
-            'previousWeekDays' => $this->buildWeekDays($previousWeek->start, $workoutDaySet, $today),
+            'weekDays' => $this->buildWeekDays($week->start, $workoutDaySet, $today, $deloadDaySet),
+            'previousWeekDays' => $this->buildWeekDays($previousWeek->start, $workoutDaySet, $today, $deloadDaySet),
         ];
     }
 
     /**
+     * Une semaine couverte par un deload (même sans séance) ne casse jamais la série — voir
+     * `App\Entity\DeloadPeriod`. `$deloadWeekSet` est déjà indexé par lundi `Y-m-d`, même clé que
+     * `$currentWeekStart` (toujours un lundi, cf. `DashboardPeriodCalculator::weekStartOf()`).
+     *
      * @param \DateTimeImmutable[] $allDates
+     * @param array<string, true> $deloadWeekSet
      */
-    private function computeStreak(array $allDates, \DateTimeImmutable $currentWeekStart): int
+    private function computeStreak(array $allDates, \DateTimeImmutable $currentWeekStart, array $deloadWeekSet): int
     {
-        if ([] === $allDates) {
+        if ([] === $allDates && [] === $deloadWeekSet) {
             return 0;
         }
 
-        $weekSet = [];
+        $weekSet = $deloadWeekSet;
         foreach ($allDates as $date) {
-            $weekSet[$date->format('o-W')] = true;
+            $weekSet[self::mondayKeyOf($date)] = true;
         }
 
         $week = $currentWeekStart;
 
         // If current week has no workout, start counting from previous week
-        if (! isset($weekSet[$week->format('o-W')])) {
+        if (! isset($weekSet[$week->format('Y-m-d')])) {
             $week = $week->modify('-7 days');
         }
 
         $streak = 0;
-        while (isset($weekSet[$week->format('o-W')])) {
+        while (isset($weekSet[$week->format('Y-m-d')])) {
             $streak++;
             $week = $week->modify('-7 days');
         }
@@ -124,23 +133,27 @@ final readonly class DashboardRegularityService
     }
 
     /**
-     * Record — plus long streak (semaines consécutives avec au moins une séance) sur tout
-     * l'historique, streak en cours inclus s'il en fait partie.
+     * Record — plus long streak (semaines consécutives avec au moins une séance, ou couvertes par
+     * un deload) sur tout l'historique, streak en cours inclus s'il en fait partie.
      *
      * @param \DateTimeImmutable[] $allDates
+     * @param array<string, true> $deloadWeekSet
      */
-    private function computeBestStreak(array $allDates): int
+    private function computeBestStreak(array $allDates, array $deloadWeekSet): int
     {
-        if ([] === $allDates) {
+        if ([] === $allDates && [] === $deloadWeekSet) {
             return 0;
         }
 
         /** @var array<string, \DateTimeImmutable> $weekStarts */
         $weekStarts = [];
         foreach ($allDates as $date) {
-            $dayOfWeek = (int) $date->format('N');
-            $monday = $date->modify(sprintf('-%d days', $dayOfWeek - 1))->setTime(0, 0, 0);
+            $monday = $date->modify(sprintf('-%d days', ((int) $date->format('N')) - 1))->setTime(0, 0, 0);
             $weekStarts[$monday->format('Y-m-d')] = $monday;
+        }
+
+        foreach (array_keys($deloadWeekSet) as $mondayKey) {
+            $weekStarts[$mondayKey] ??= new \DateTimeImmutable($mondayKey);
         }
 
         $sorted = array_values($weekStarts);
@@ -165,9 +178,10 @@ final readonly class DashboardRegularityService
 
     /**
      * @param array<string, bool> $workoutDaySet
-     * @return array<int, array{date: \DateTimeImmutable, hasWorkout: bool, isToday: bool, isFuture: bool}>
+     * @param array<string, true> $deloadDaySet
+     * @return array<int, array{date: \DateTimeImmutable, hasWorkout: bool, isToday: bool, isFuture: bool, isDeload: bool}>
      */
-    private function buildWeekDays(\DateTimeImmutable $weekStart, array $workoutDaySet, string $today): array
+    private function buildWeekDays(\DateTimeImmutable $weekStart, array $workoutDaySet, string $today, array $deloadDaySet): array
     {
         $days = [];
         for ($i = 0; self::DAYS_PER_WEEK > $i; $i++) {
@@ -178,9 +192,15 @@ final readonly class DashboardRegularityService
                 'hasWorkout' => isset($workoutDaySet[$dayStr]),
                 'isToday' => $dayStr === $today,
                 'isFuture' => $dayStr > $today,
+                'isDeload' => isset($deloadDaySet[$dayStr]),
             ];
         }
 
         return $days;
+    }
+
+    private static function mondayKeyOf(\DateTimeImmutable $date): string
+    {
+        return $date->modify(sprintf('-%d days', ((int) $date->format('N')) - 1))->format('Y-m-d');
     }
 }

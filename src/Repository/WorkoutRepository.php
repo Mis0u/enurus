@@ -80,6 +80,26 @@ class WorkoutRepository extends ServiceEntityRepository
     }
 
     /**
+     * Séances de l'utilisateur depuis `$since`, date + durée seulement — alimente le calendrier
+     * heatmap (`WorkoutHeatmapService`). Le regroupement par jour (plusieurs séances le même
+     * jour) se fait en PHP, pas en DQL, même convention que `DashboardTonnageService`.
+     *
+     * @return list<array{performedAt: \DateTimeImmutable, duration: int|null}>
+     */
+    public function findPerformedAtAndDurationSince(User $user, \DateTimeImmutable $since): array
+    {
+        /** @var list<array{performedAt: \DateTimeImmutable, duration: int|null}> */
+        return $this->createQueryBuilder('w')
+            ->select('w.performedAt', 'w.duration')
+            ->andWhere('w.owner = :user')
+            ->andWhere('w.performedAt >= :since')
+            ->setParameter('user', $user)
+            ->setParameter('since', $since)
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY);
+    }
+
+    /**
      * @param array{type?: string, value?: DateTimeImmutable, routine?: 'free'|Routine, muscles?: array<string, string>} $filters
      */
     public function findByUserPaginated(User $user, array $filters = []): QueryBuilder

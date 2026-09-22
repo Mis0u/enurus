@@ -3,6 +3,14 @@ contact:
         invalid_type: Het bestand moet in JPEG-, PNG- of WebP-formaat zijn
         too_large: Het bestand overschrijdt de maximaal toegestane grootte van {{ limit }} MB
 
+deload_period:
+    end_before_start: De einddatum moet na de startdatum liggen.
+    end_date:
+        required: De einddatum is verplicht.
+    note_too_long: "De notitie mag niet meer dan {{ limit }} tekens bevatten."
+    start_date:
+        required: De startdatum is verplicht.
+
 exercise:
     muscle_primary_required: Minstens één primaire spier is vereist.
     name_not_blank: Er moet een naam worden opgegeven
