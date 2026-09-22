@@ -8,6 +8,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -16,7 +17,7 @@ use Symfony\Component\Uid\Uuid;
 /**
  * @extends ServiceEntityRepository<User>
  */
-class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserLoaderInterface
 {
     /**
      * @var list<Uuid>|null
@@ -47,6 +48,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $this->findOneBy([
             'email' => $email,
         ]);
+    }
+
+    /**
+     * Point d'extension attendu par `EntityUserProvider` (cf. `property` retiré de
+     * `app_user_provider` dans security.yaml) : l'email est toujours stocké en lowercase
+     * (`UserService::createUser()`), donc l'identifiant saisi au login doit l'être aussi pour
+     * matcher, sans quoi un email enregistré avec des majuscules ("Thomas@test.com") échouerait à
+     * se reconnecter alors que la casse n'a jamais été un critère métier.
+     */
+    public function loadUserByIdentifier(string $identifier): ?User
+    {
+        return $this->findOneByEmail(mb_strtolower($identifier));
     }
 
     public function findOneByShareCode(string $shareCode): ?User

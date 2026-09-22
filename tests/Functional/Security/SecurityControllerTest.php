@@ -96,6 +96,21 @@ class SecurityControllerTest extends WebTestCase
         $this->assertSame('Tableau de bord | Enurus', $crawler->filter('title')->text(), 'Le sélecteur title ne contient pas le texte attendu');
     }
 
+    /**
+     * L'email est normalisé en lowercase à l'inscription (UserService::createUser()) — un login
+     * avec la casse originale saisie par l'utilisateur ("User-Fixture-0@test.com") doit rester
+     * possible, cf. UserRepository::loadUserByIdentifier().
+     */
+    public function testLoginWithDifferentEmailCaseSucceeds(): void
+    {
+        $client = $this->getCredentials('User-Fixture-0@test.com', 'pass_1234');
+
+        $this->assertResponseRedirects('/fr/tableau-de-bord');
+        $crawler = $client->followRedirect();
+        $this->assertResponseIsSuccessful();
+        $this->assertSame('Tableau de bord | Enurus', $crawler->filter('title')->text());
+    }
+
     public function testAlreadyAuthenticatedUserIsRedirectedFromLogin(): void
     {
         $client = $this->login();
