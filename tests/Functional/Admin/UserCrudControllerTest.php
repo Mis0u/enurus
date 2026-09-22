@@ -547,6 +547,31 @@ final class UserCrudControllerTest extends WebTestCase
         $this->deleteTestUser($user);
     }
 
+    /**
+     * Support : un admin doit pouvoir voir d'un coup d'œil si un utilisateur partage son profil
+     * (`isDiscoverable`) et ses séances (`shareWorkouts`), sans requêter la base à la main.
+     */
+    public function testDetailShowsProfileAndWorkoutSharingState(): void
+    {
+        $client = $this->login(self::ADMIN);
+        $user = $this->createTestUser('user-crud-sharing@test.com');
+        $user->isDiscoverable = true;
+        $user->shareWorkouts = true;
+        $this->flush();
+
+        $crawler = $client->request(Request::METHOD_GET, $this->actionUrl($client, $user, 'detail'));
+
+        self::assertResponseIsSuccessful();
+        /**
+         * "Yes"/"No" plutôt que "Oui"/"Non" : bug de synchronisation de locale connu et accepté
+         * sur les badges booléens EasyAdmin (cf. discussion PR), pas dans le scope de ce fix.
+         */
+        self::assertSame('Yes', $this->fieldValueByLabel($crawler, 'Partage son profil'));
+        self::assertSame('Yes', $this->fieldValueByLabel($crawler, 'Partage ses séances'));
+
+        $this->deleteTestUser($user);
+    }
+
     private function indexUrl(): string
     {
         /** @var AdminUrlGenerator $adminUrlGenerator */
