@@ -7,6 +7,7 @@ namespace App\Service\Security;
 use App\Entity\User;
 use App\Exception\ResetPassword\UserNotFoundException;
 use App\Repository\ResetPasswordRequestRepository;
+use App\Repository\UserRepository;
 use App\Service\Email\SymfonyMailerEmailService;
 use App\Service\Entity\UserService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,6 +28,7 @@ final readonly class ResetPasswordService
         private SymfonyMailerEmailService $emailService,
         private TranslatorInterface $translator,
         private ResetPasswordRequestRepository $resetPasswordRequestRepository,
+        private UserRepository $userRepository,
         private LoggerInterface $logger,
     ) {
     }
@@ -100,11 +102,14 @@ final readonly class ResetPasswordService
         $this->sendResetPasswordEmail($user, $resetToken, $locale);
     }
 
+    /**
+     * L'email est stocké en lowercase (UserService::createUser()) — la casse saisie dans le
+     * formulaire de demande de reset n'a jamais été un critère métier, cf.
+     * UserRepository::loadUserByIdentifier() pour le même traitement au login.
+     */
     private function findUserByEmail(string $email): ?User
     {
-        return $this->entityManager->getRepository(User::class)->findOneBy([
-            'email' => $email,
-        ]);
+        return $this->userRepository->findOneByEmail(mb_strtolower($email));
     }
 
     /**
