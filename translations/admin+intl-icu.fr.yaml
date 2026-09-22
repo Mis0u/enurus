@@ -211,11 +211,13 @@ admin:
             created_at: "Inscrit le"
             deletion_requested_at: "Suppression demandée le"
             gender: Genre
+            is_discoverable: "Partage son profil"
             is_verified: "Email vérifié"
             last_login: "Dernière connexion"
             locale: Langue
             nickname: Pseudo
             routines: Routines
+            share_workouts: "Partage ses séances"
             telegram_notifications_muted: "Notifications Telegram coupées"
             unit_of_measure: Unité
             workouts: Séances

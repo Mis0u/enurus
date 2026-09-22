@@ -196,6 +196,21 @@ final class UserCrudController extends AbstractCrudController
             ->hideOnForm()
         ;
         /**
+         * Détail uniquement, à but de support — mêmes raisons de lecture seule que `isVerified` :
+         * `shareWorkouts` ne peut être vrai que si `isDiscoverable` l'est aussi, cascade appliquée
+         * par `ProfileConnectionSharingToggleController` (jamais un simple setter). Un switch Ajax
+         * ici court-circuiterait cette règle et pourrait laisser `shareWorkouts` vrai alors que
+         * `isDiscoverable` vient de repasser à faux.
+         */
+        yield BooleanField::new('isDiscoverable', $this->trans('admin.user.field.is_discoverable'))
+            ->renderAsSwitch(false)
+            ->onlyOnDetail()
+        ;
+        yield BooleanField::new('shareWorkouts', $this->trans('admin.user.field.share_workouts'))
+            ->renderAsSwitch(false)
+            ->onlyOnDetail()
+        ;
+        /**
          * Détail uniquement, à but de modération — même pattern que `WorkoutCrudController::$photoPath`
          * (`_photo.html.twig`) : un avatar signalé inapproprié doit rester visible depuis l'admin
          * sans avoir à requêter la base.
