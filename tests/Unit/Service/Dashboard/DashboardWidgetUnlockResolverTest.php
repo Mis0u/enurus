@@ -49,6 +49,12 @@ final class DashboardWidgetUnlockResolverTest extends TestCase
         self::assertTrue($this->resolve(workoutCount: 1, hasAnyGoal: false)[DashboardWidgetEnum::BADGES->value]);
     }
 
+    public function testHeatmapWidgetUnlocksFromFirstWorkout(): void
+    {
+        self::assertFalse($this->resolve(workoutCount: 0, hasAnyGoal: false)[DashboardWidgetEnum::HEATMAP->value]);
+        self::assertTrue($this->resolve(workoutCount: 1, hasAnyGoal: false)[DashboardWidgetEnum::HEATMAP->value]);
+    }
+
     /**
      * @return array<string, bool>
      */

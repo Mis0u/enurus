@@ -64,6 +64,13 @@
         } only %}
     {% endif %}
 
+    {# Ligne 3 col 2 : Calendrier d'activité (opt-in) — à côté des Objectifs, toujours sur une colonne #}
+    {% if data.visibleWidgets.heatmap %}
+        {% include 'dashboard/_widgets/_heatmap.html.twig' with {
+            heatmapData: data.heatmapData,
+        } only %}
+    {% endif %}
+
     {# Ligne 4 : Badges de paliers — pleine largeur #}
     {% if data.visibleWidgets.badges %}
         {% include 'dashboard/_widgets/_badges.html.twig' with {

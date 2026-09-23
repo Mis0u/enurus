@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\Entity\Trait\TimestampTrait;
 use App\Enum\Contact\ContactRestrictionDurationEnum;
+use App\Enum\Dashboard\DashboardWidgetEnum;
 use App\Enum\Entity\User\GenderEnum;
 use App\Enum\Entity\User\UnitOfMeasureEnum;
 use App\Enum\Translations\LocaleAllowedEnum;
@@ -250,14 +251,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Clés `DashboardWidgetEnum` que l'utilisateur a choisi de masquer sur son dashboard — un
      * widget encore verrouillé (palier non atteint) ne peut pas y figurer, la case à cocher
      * correspondante n'étant proposée en réglages qu'une fois débloquée
-     * (`DashboardWidgetUnlockResolver`).
+     * (`DashboardWidgetUnlockResolver`). Exception : la heatmap est opt-in, donc masquée d'office
+     * même avant son déblocage — l'utilisateur l'active lui-même en réglages.
      *
      * @var array<int, string>
      */
     #[ORM\Column(type: 'json', nullable: false, options: [
-        'default' => '[]',
+        'default' => '["heatmap"]',
     ])]
-    public array $hiddenWidgets = [] {
+    public array $hiddenWidgets = [DashboardWidgetEnum::HEATMAP->value] {
         get {
             return $this->hiddenWidgets;
         }

@@ -1,0 +1,82 @@
+{#
+    Grille heatmap + légende, partagée entre l'onglet "Calendrier" de Mes séances et le widget
+    dashboard. Variables attendues (toutes via `only`) :
+    - heatmapData : HeatmapData de WorkoutHeatmapService::build() —
+                    `{weeks: list<{days: list<{date, level, isDeload}>, showsMonthLabel: bool}>}`
+    - fluid       : bool — les semaines se partagent toute la largeur du bloc (cases carrées qui
+                    grandissent avec lui) ; sinon cases fixes de 10px et scroll horizontal (un an
+                    entier ne tient pas sur mobile)
+#}
+{% set week_class = fluid ? 'flex-1 min-w-0' : 'w-[10px] shrink-0' %}
+{% set cell_size_class = fluid ? 'w-full aspect-square rounded-[3px]' : 'w-[10px] h-[10px] rounded-[2px]' %}
+{% set day_label_class = fluid ? 'flex-1 flex items-center' : 'h-[10px] leading-[10px]' %}
+
+<div class="{{ fluid ? '' : 'overflow-x-auto scrollbar-thin' }}">
+    <div class="{{ fluid ? '' : 'inline-block min-w-full' }}">
+        <div class="flex gap-[3px] mb-1.5" aria-hidden="true">
+            <div class="w-[22px] shrink-0"></div>
+            {% for week in heatmapData.weeks %}
+                <div class="{{ week_class }} text-[10px] text-[#4a5568] whitespace-nowrap">
+                    {% if week.showsMonthLabel %}
+                        {{ week.days[0].date|format_date(pattern='MMM', locale=app.locale) }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="flex gap-[3px]">
+            <div class="flex flex-col gap-[3px] w-[22px] shrink-0" aria-hidden="true">
+                {% for day in heatmapData.weeks[0].days %}
+                    <div class="{{ day_label_class }} text-[9px] text-[#4a5568]">
+                        {{ day.date|format_date(pattern='EEEEE', locale=app.locale) }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% for week in heatmapData.weeks %}
+                <div class="{{ week_class }} flex flex-col gap-[3px]">
+                    {% for day in week.days %}
+                        {% if day.isDeload %}
+                            {% set cell_color_class = 'bg-cyan-ft/35 border border-dashed border-cyan-ft/60' %}
+                        {% elseif day.level == 3 %}
+                            {% set cell_color_class = 'bg-rose-ft' %}
+                        {% elseif day.level == 2 %}
+                            {% set cell_color_class = 'bg-rose-ft/50' %}
+                        {% elseif day.level == 1 %}
+                            {% set cell_color_class = 'bg-rose-ft/25' %}
+                        {% else %}
+                            {% set cell_color_class = 'bg-white/[0.04]' %}
+                        {% endif %}
+                        <div
+                            class="{{ cell_size_class }} {{ cell_color_class }}"
+                            title="{{ day.date|format_date('full', locale=app.locale) }}"
+                        ></div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="flex items-center justify-end gap-4 mt-4 text-[10.5px] text-[#4a5568] flex-wrap">
+    <div class="flex items-center gap-1.5">
+        <div class="w-[10px] h-[10px] rounded-[2px] bg-rose-ft/25"></div>
+        {{ 'workout.list.calendar.heatmap.legend_session_short'|trans({}, 'navigation') }}
+    </div>
+    <div class="flex items-center gap-1.5">
+        <div class="w-[10px] h-[10px] rounded-[2px] bg-rose-ft/50"></div>
+        {{ 'workout.list.calendar.heatmap.legend_session_medium'|trans({}, 'navigation') }}
+    </div>
+    <div class="flex items-center gap-1.5">
+        <div class="w-[10px] h-[10px] rounded-[2px] bg-rose-ft"></div>
+        {{ 'workout.list.calendar.heatmap.legend_session_long'|trans({}, 'navigation') }}
+    </div>
+    <div class="flex items-center gap-1.5">
+        <div class="w-[10px] h-[10px] rounded-[2px] bg-cyan-ft/35 border border-dashed border-cyan-ft/60"></div>
+        {{ 'workout.list.calendar.heatmap.legend_deload'|trans({}, 'navigation') }}
+    </div>
+    <div class="flex items-center gap-1.5">
+        <div class="w-[10px] h-[10px] rounded-[2px] bg-white/[0.04]"></div>
+        {{ 'workout.list.calendar.heatmap.legend_rest'|trans({}, 'navigation') }}
+    </div>
+</div>

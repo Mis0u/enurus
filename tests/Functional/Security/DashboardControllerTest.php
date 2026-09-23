@@ -165,11 +165,35 @@ class DashboardControllerTest extends WebTestCase
         self::assertSelectorExists('[data-controller="dashboard--session"]');
     }
 
+    public function testHeatmapWidgetIsNotRenderedUntilTheUserEnablesIt(): void
+    {
+        $client = $this->login(self::USER_WITH_WORKOUTS);
+        $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorNotExists('[data-dashboard-widget="heatmap"]');
+    }
+
+    public function testHeatmapWidgetIsRenderedOnceEnabledByTheUser(): void
+    {
+        $client = $this->login(self::USER_WITH_WORKOUTS);
+        $this->getUserByEmail(self::USER_WITH_WORKOUTS)->hiddenWidgets = [];
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $em->flush();
+
+        $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists('[data-dashboard-widget="heatmap"]');
+        self::assertSelectorTextContains('[data-dashboard-widget="heatmap"]', 'Calendrier');
+    }
+
     public function testHidingEveryWidgetShowsAnEmptyStateInsteadOfABlankScreen(): void
     {
         $client = $this->login(self::USER_WITH_WORKOUTS);
         $user = $this->getUserByEmail(self::USER_WITH_WORKOUTS);
-        $user->hiddenWidgets = ['session', 'tonnage', 'muscle_distribution', 'regularity', 'goals', 'badges'];
+        $user->hiddenWidgets = ['session', 'tonnage', 'muscle_distribution', 'regularity', 'goals', 'badges', 'heatmap'];
         /** @var EntityManagerInterface $em */
         $em = static::getContainer()->get(EntityManagerInterface::class);
         $em->flush();

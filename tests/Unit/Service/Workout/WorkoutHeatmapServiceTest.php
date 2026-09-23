@@ -9,8 +9,12 @@ use App\Repository\WorkoutRepository;
 use App\Service\Dashboard\DashboardPeriodCalculator;
 use App\Service\Workout\DeloadPeriodSetService;
 use App\Service\Workout\WorkoutHeatmapService;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @phpstan-import-type HeatmapData from WorkoutHeatmapService
+ */
 final class WorkoutHeatmapServiceTest extends TestCase
 {
     public function testGridHasFiftyThreeWeeksOfSevenDaysEndingOnTheCurrentWeek(): void
@@ -24,6 +28,46 @@ final class WorkoutHeatmapServiceTest extends TestCase
 
         self::assertCount(7, $lastWeek['days']);
         self::assertSame($currentWeekStart->format('Y-m-d'), $lastWeek['days'][0]['date']->format('Y-m-d'));
+    }
+
+    public function testDashboardGridHasTheRequestedNumberOfWeeksEndingOnTheCurrentWeek(): void
+    {
+        $result = $this->build([], weekCount: 26);
+
+        self::assertCount(26, $result['weeks']);
+
+        $currentWeekStart = (new DashboardPeriodCalculator())->weekStartOf(new \DateTimeImmutable());
+        self::assertSame($currentWeekStart->format('Y-m-d'), $result['weeks'][25]['days'][0]['date']->format('Y-m-d'));
+    }
+
+    /**
+     * @return array<string, array{int}>
+     */
+    public static function weekCountProvider(): array
+    {
+        return [
+            'dashboard' => [26],
+            'full year' => [WorkoutHeatmapService::FULL_YEAR_WEEKS],
+        ];
+    }
+
+    /**
+     * Le 1er mois de la grille n'est souvent couvert que par une ou deux colonnes : son libellé
+     * chevaucherait celui du mois suivant ("mars" et "avr." collés). Un libellé fait ~3 colonnes.
+     */
+    #[DataProvider('weekCountProvider')]
+    public function testMonthLabelsAreNeverCloserThanThreeWeeks(int $weekCount): void
+    {
+        $labelledWeekIndexes = array_keys(array_filter(
+            $this->build([], weekCount: $weekCount)['weeks'],
+            static fn (array $week): bool => $week['showsMonthLabel'],
+        ));
+
+        self::assertNotEmpty($labelledWeekIndexes);
+
+        for ($i = 1, $count = \count($labelledWeekIndexes); $count > $i; $i++) {
+            self::assertGreaterThanOrEqual(3, $labelledWeekIndexes[$i] - $labelledWeekIndexes[$i - 1]);
+        }
     }
 
     public function testDayWithNoSessionHasLevelZero(): void
@@ -109,9 +153,9 @@ final class WorkoutHeatmapServiceTest extends TestCase
     /**
      * @param list<array{performedAt: \DateTimeImmutable, duration: int|null}> $rows
      * @param \DateTimeImmutable[] $deloadDayDates
-     * @return array{weeks: list<array{days: list<array{date: \DateTimeImmutable, level: int, isDeload: bool}>, isNewMonth: bool}>}
+     * @return HeatmapData
      */
-    private function build(array $rows, array $deloadDayDates = []): array
+    private function build(array $rows, array $deloadDayDates = [], int $weekCount = WorkoutHeatmapService::FULL_YEAR_WEEKS): array
     {
         $workoutRepository = $this->createStub(WorkoutRepository::class);
         $workoutRepository->method('findPerformedAtAndDurationSince')->willReturn($rows);
@@ -124,11 +168,11 @@ final class WorkoutHeatmapServiceTest extends TestCase
 
         $service = new WorkoutHeatmapService($workoutRepository, new DashboardPeriodCalculator(), $deloadPeriodSetService);
 
-        return $service->build($this->createStub(User::class));
+        return $service->build($this->createStub(User::class), $weekCount);
     }
 
     /**
-     * @param array{weeks: list<array{days: list<array{date: \DateTimeImmutable, level: int, isDeload: bool}>, isNewMonth: bool}>} $result
+     * @param HeatmapData $result
      */
     private function levelForDate(array $result, \DateTimeImmutable $date): int
     {
@@ -136,7 +180,7 @@ final class WorkoutHeatmapServiceTest extends TestCase
     }
 
     /**
-     * @param array{weeks: list<array{days: list<array{date: \DateTimeImmutable, level: int, isDeload: bool}>, isNewMonth: bool}>} $result
+     * @param HeatmapData $result
      */
     private function isDeloadForDate(array $result, \DateTimeImmutable $date): bool
     {
@@ -144,7 +188,7 @@ final class WorkoutHeatmapServiceTest extends TestCase
     }
 
     /**
-     * @param array{weeks: list<array{days: list<array{date: \DateTimeImmutable, level: int, isDeload: bool}>, isNewMonth: bool}>} $result
+     * @param HeatmapData $result
      * @return array{date: \DateTimeImmutable, level: int, isDeload: bool}
      */
     private function dayForDate(array $result, \DateTimeImmutable $date): array

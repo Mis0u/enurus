@@ -714,6 +714,7 @@ settings:
         widget:
             badges: "Badges"
             goals: Goals
+            heatmap: "Activity calendar"
             muscle_distribution: Muscles worked
             regularity: Regularity
             session: Session

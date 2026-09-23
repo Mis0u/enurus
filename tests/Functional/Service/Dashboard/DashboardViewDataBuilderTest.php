@@ -134,6 +134,28 @@ final class DashboardViewDataBuilderTest extends KernelTestCase
         self::assertSame([], $data->muscles->month->primary);
     }
 
+    public function testHeatmapIsHiddenByDefaultAndNotComputed(): void
+    {
+        $user = $this->findUser(self::USER_WITH_WORKOUTS);
+
+        $data = $this->builder->build($user, $user, $this->unlockService->getStateForUser($user));
+
+        self::assertFalse($data->visibleWidgets[DashboardWidgetEnum::HEATMAP->value]);
+        self::assertNull($data->heatmapData);
+    }
+
+    public function testHeatmapEnabledByTheUserCoversTheLastSixMonths(): void
+    {
+        $user = $this->findUser(self::USER_WITH_WORKOUTS);
+        $user->hiddenWidgets = [];
+
+        $data = $this->builder->build($user, $user, $this->unlockService->getStateForUser($user));
+
+        self::assertTrue($data->visibleWidgets[DashboardWidgetEnum::HEATMAP->value]);
+        self::assertNotNull($data->heatmapData);
+        self::assertCount(26, $data->heatmapData['weeks']);
+    }
+
     public function testWeightUnitFollowsTheViewerWhileTheDataIsTheOwners(): void
     {
         $owner = $this->findUser(self::USER_WITH_WORKOUTS);

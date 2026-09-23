@@ -44,8 +44,18 @@ final class SettingsIndexControllerTest extends WebTestCase
         $crawler = $client->request(Request::METHOD_GET, self::URL);
 
         self::assertResponseIsSuccessful();
-        // Session, Tonnage, Muscles, Régularité, Badges — pas Objectifs, ce fixture n'en a jamais créé.
-        self::assertCount(5, $crawler->filter('[data-controller="settings--dashboard-widgets"] input[type="checkbox"]'));
+        // Session, Tonnage, Muscles, Régularité, Badges, Calendrier — pas Objectifs, ce fixture n'en a jamais créé.
+        self::assertCount(6, $crawler->filter('[data-controller="settings--dashboard-widgets"] input[type="checkbox"]'));
+    }
+
+    public function testHeatmapWidgetIsProposedUncheckedByDefault(): void
+    {
+        $client = $this->login(self::USER_WITH_WORKOUTS);
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+
+        $checkbox = $crawler->filter('input[data-settings--dashboard-widgets-widget-param="heatmap"]');
+        self::assertCount(1, $checkbox);
+        self::assertNull($checkbox->attr('checked'));
     }
 
     public function testAWidgetHiddenByTheUserIsRenderedUnchecked(): void
