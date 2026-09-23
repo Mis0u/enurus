@@ -1,0 +1,24 @@
+{#
+    Widget Calendrier d'activité (opt-in, activé depuis les réglages) : version courte de la heatmap
+    de l'onglet "Calendrier" de Mes séances, toujours sur une seule colonne de la grille — pleine
+    largeur, ses cases seraient étirées bien au-delà de leur taille lisible.
+    Variable attendue (via `only`) :
+    - heatmapData : HeatmapData de WorkoutHeatmapService::build()
+#}
+<div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
+     data-dashboard-widget="heatmap">
+
+    <div class="flex items-center gap-[7px] mb-1 text-[#8b9bb4]">
+        {% include 'partials/_svg/_calendar.html.twig' with {width: 3.75, height: 3.75} only %}
+        <h2 class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase">
+            {{ 'workout.list.calendar.heatmap.title'|trans({}, 'navigation') }}
+        </h2>
+    </div>
+    <p class="text-[12px] text-[#4a5568] mb-4">
+        {{ 'workout.list.calendar.heatmap.subtitle'|trans({}, 'navigation') }}
+    </p>
+
+    <div class="flex-1 flex flex-col justify-center">
+        {% include 'partials/_heatmap/_heatmap_grid.html.twig' with {heatmapData: heatmapData, fluid: true} only %}
+    </div>
+</div>

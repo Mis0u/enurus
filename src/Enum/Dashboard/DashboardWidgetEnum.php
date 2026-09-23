@@ -12,4 +12,5 @@ enum DashboardWidgetEnum: string
     case REGULARITY = 'regularity';
     case GOALS = 'goals';
     case BADGES = 'badges';
+    case HEATMAP = 'heatmap';
 }

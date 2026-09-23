@@ -48,15 +48,39 @@ final class DashboardGridTest extends KernelTestCase
     }
 
     /**
+     * Même sans Objectifs à côté, la heatmap reste sur une colonne : en pleine largeur ses cases
+     * fluides seraient étirées bien au-delà d'une taille lisible.
+     */
+    public function testHeatmapNeverSpansBothColumnsEvenWithoutTheGoalsWidget(): void
+    {
+        self::bootKernel();
+        $owner = $this->findOwner();
+        $owner->hiddenWidgets = [DashboardWidgetEnum::GOALS->value];
+
+        /** @var DashboardViewDataBuilder $builder */
+        $builder = static::getContainer()->get(DashboardViewDataBuilder::class);
+        $html = $this->renderGrid($builder->build($owner, $owner, new DashboardState(1)), $owner, readOnly: false);
+
+        self::assertMatchesRegularExpression('/<div[^>]*data-dashboard-widget="heatmap"/', $html);
+        self::assertDoesNotMatchRegularExpression('/<div[^>]*md:col-span-2[^>]*data-dashboard-widget="heatmap"/', $html);
+    }
+
+    private function findOwner(): User
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+
+        return $userRepository->findOneByEmail(self::OWNER) ?? throw new \LogicException('Fixture user not found.');
+    }
+
+    /**
      * @return array{User, DashboardViewData}
      */
     private function buildDataWithEveryWidgetHidden(): array
     {
         self::bootKernel();
 
-        /** @var UserRepository $userRepository */
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        $owner = $userRepository->findOneByEmail(self::OWNER) ?? throw new \LogicException('Fixture user not found.');
+        $owner = $this->findOwner();
         $owner->hiddenWidgets = array_map(static fn (DashboardWidgetEnum $widget): string => $widget->value, DashboardWidgetEnum::cases());
 
         /** @var DashboardViewDataBuilder $builder */

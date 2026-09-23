@@ -564,9 +564,6 @@
   .ml-3 {
     margin-left: calc(var(--spacing) * 3);
   }
-  .ml-\[26px\] {
-    margin-left: 26px;
-  }
   .ml-auto {
     margin-left: auto;
   }
@@ -1355,6 +1352,9 @@
   }
   .rounded-\[2px\] {
     border-radius: 2px;
+  }
+  .rounded-\[3px\] {
+    border-radius: 3px;
   }
   .rounded-\[5px\] {
     border-radius: 5px;

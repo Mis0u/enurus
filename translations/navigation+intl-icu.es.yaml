@@ -714,6 +714,7 @@ settings:
         widget:
             badges: "Insignias"
             goals: Objetivos
+            heatmap: "Calendario de actividad"
             muscle_distribution: Músculos trabajados
             regularity: Regularidad
             session: Sesión

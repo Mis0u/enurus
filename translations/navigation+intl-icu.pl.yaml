@@ -724,6 +724,7 @@ settings:
         widget:
             badges: "Odznaki"
             goals: Cele
+            heatmap: "Kalendarz aktywności"
             muscle_distribution: Trenowane mięśnie
             regularity: Regularność
             session: Trening

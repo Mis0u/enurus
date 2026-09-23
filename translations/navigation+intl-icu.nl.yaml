@@ -714,6 +714,7 @@ settings:
         widget:
             badges: "Badges"
             goals: Doelen
+            heatmap: "Activiteitenkalender"
             muscle_distribution: Getrainde spieren
             regularity: Regelmaat
             session: Training

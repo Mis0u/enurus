@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Dashboard;
 
 use App\Entity\User;
+use App\Enum\Dashboard\DashboardWidgetEnum;
 use App\Repository\WorkoutRepository;
 use App\Repository\WorkoutStatsRepository;
 use App\Service\Badge\BadgeProgress;
@@ -12,6 +13,7 @@ use App\Service\Badge\BadgeProgressCalculator;
 use App\Service\Badge\BadgeViewBuilder;
 use App\Service\Goal\GoalCardFormatter;
 use App\Service\Goal\GoalProgress;
+use App\Service\Workout\WorkoutHeatmapService;
 
 /**
  * Calcule le dashboard d'un utilisateur (`$subject`) tel que le lit `$viewer` : les données et les
@@ -21,6 +23,9 @@ use App\Service\Goal\GoalProgress;
  */
 final readonly class DashboardViewDataBuilder
 {
+    // 6 mois : tient dans une demi-colonne à côté des Objectifs, sans scroll horizontal.
+    public const int HEATMAP_WEEKS = 26;
+
     public function __construct(
         private WorkoutRepository $workoutRepository,
         private WorkoutStatsRepository $workoutStatsRepository,
@@ -34,6 +39,7 @@ final readonly class DashboardViewDataBuilder
         private DashboardWidgetUnlockResolver $widgetUnlockResolver,
         private BadgeProgressCalculator $badgeProgressCalculator,
         private BadgeViewBuilder $badgeViewBuilder,
+        private WorkoutHeatmapService $heatmapService,
     ) {
     }
 
@@ -61,6 +67,7 @@ final readonly class DashboardViewDataBuilder
             $hasNoVisibleWidgets,
             $hasNoVisibleWidgets && $dashboardState->regularityUnlocked,
             $this->badgeViewBuilder->build($subject, $viewer, $badgeProgress ?? $this->badgeProgressCalculator->calculate($subject)),
+            $visibleWidgets[DashboardWidgetEnum::HEATMAP->value] ? $this->heatmapService->build($subject, self::HEATMAP_WEEKS) : null,
         );
     }
 

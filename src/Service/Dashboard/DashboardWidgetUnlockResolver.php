@@ -34,6 +34,7 @@ final readonly class DashboardWidgetUnlockResolver
             DashboardWidgetEnum::REGULARITY->value => $dashboardState->regularityUnlocked,
             DashboardWidgetEnum::GOALS->value => $hasAnyGoal,
             DashboardWidgetEnum::BADGES->value => $dashboardState->lastWorkoutUnlocked,
+            DashboardWidgetEnum::HEATMAP->value => $dashboardState->lastWorkoutUnlocked,
         ];
     }
 }
