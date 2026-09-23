@@ -20,7 +20,7 @@
 
         <div class="flex flex-col gap-3">
             {% for widget in dashboardWidgets %}
-                <label class="flex items-center justify-between gap-3 cursor-pointer">
+                <label class="relative flex items-center justify-between gap-3 cursor-pointer">
                     <span class="text-sm text-[#f0f4ff]">{{ widget.label }}</span>
                     <input type="checkbox"
                            class="peer sr-only"

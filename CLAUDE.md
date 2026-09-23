@@ -314,6 +314,12 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
 - `_base_dashboard.html.twig` pose volontairement `overflow-hidden` deux fois (wrapper + `<main>`)
   — chaque page doit fournir son propre scroll via un wrapper `<div class="flex-1 overflow-y-auto">`
   dans son bloc `state`.
+- **Input `peer sr-only` (interrupteurs, radios custom) → toujours `relative` sur son `<label>`
+  parent.** `sr-only` = `position: absolute` : sans parent positionné, l'input se positionne par
+  rapport au `<main class="overflow-hidden relative">` et ne suit pas le scroll du wrapper
+  `overflow-y-auto`. Au clic, le focus fait défiler `<main>` (un `overflow-hidden` reste défilable
+  par le focus) : écran noir sur mobile, seule la barre du bas fixe reste visible. Test de
+  non-régression : `tests/e2e/settings-toggle-mobile.spec.ts`.
 
 ### Tests
 - Pattern `FunctionalTestTrait`, un seul `static::createClient()`/`login()` par test, jamais deux.
