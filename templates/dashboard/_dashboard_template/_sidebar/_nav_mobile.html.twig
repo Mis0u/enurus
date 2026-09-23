@@ -21,7 +21,14 @@
         {% include 'partials/_svg/_add.html.twig' with {'width': 6.5, 'height': 6.5, 'strokeColor': 'white'} only %}
     </a>
 
-    {% if not is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <twig:Navigation:Sidebar:NavigationItem
+            link="{{ path('admin') }}"
+            menu="Admin"
+            icon="gear"
+            mobile="true"
+        />
+    {% else %}
         {% set unread_contact_count = contact_unread_count(app.user) %}
 
         <twig:Navigation:Sidebar:NavigationItem
