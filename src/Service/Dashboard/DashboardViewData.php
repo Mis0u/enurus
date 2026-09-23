@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Dashboard;
 
+use App\Service\Badge\View\BadgeCollectionView;
+
 /**
  * Tout ce que la vue dashboard affiche, déjà calculé : le controller ne fait que le transmettre.
  *
@@ -22,6 +24,7 @@ final readonly class DashboardViewData
      * @param bool                            $hasNoVisibleContent  l'écran serait réellement vide : aucun widget visible ET
      *                                                              Régularité débloquée — verrouillée, son placeholder
      *                                                              occupe toujours de l'espace
+     * @param BadgeCollectionView             $badges            widget Badges et section "Tous mes badges"
      */
     public function __construct(
         public DashboardState $dashboardState,
@@ -34,6 +37,7 @@ final readonly class DashboardViewData
         public array $visibleWidgets,
         public bool $hasNoVisibleWidgets,
         public bool $hasNoVisibleContent,
+        public BadgeCollectionView $badges,
     ) {
     }
 }

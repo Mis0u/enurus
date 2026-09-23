@@ -74,6 +74,7 @@ final class DashboardGridTest extends KernelTestCase
             'data' => $data,
             'subject' => $owner,
             'readOnly' => $readOnly,
+            'badgesUrl' => null,
         ]);
     }
 }

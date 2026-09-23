@@ -10,9 +10,9 @@ use App\Repository\DeloadPeriodRepository;
 
 /**
  * Expanse les périodes de deload d'un utilisateur en ensembles de clés jour/semaine — partagé par
- * `DashboardRegularityService` (une semaine deload ne casse pas la série) et le futur service
- * heatmap (badge deload par jour). Pure transformation en mémoire depuis les entités déjà
- * chargées, aucune requête supplémentaire par appel.
+ * le widget et le badge Régularité (via `WeeklyStreakCalculator` : une semaine deload relie la
+ * série sans l'allonger) et le service heatmap (badge deload par jour). Pure transformation en
+ * mémoire depuis les entités déjà chargées, aucune requête supplémentaire par appel.
  */
 readonly class DeloadPeriodSetService
 {
@@ -44,7 +44,7 @@ readonly class DeloadPeriodSetService
     /**
      * @return array<string, true> clé lundi `Y-m-d` de la semaine => true, pour chaque semaine
      *         touchée, même partiellement, par un deload — même convention que
-     *         `DashboardRegularityService::mondayKeyOf()`.
+     *         `WeeklyStreakCalculator` (un deload relie la série sans l'allonger).
      */
     public function weekKeySet(User $user): array
     {

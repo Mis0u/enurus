@@ -106,6 +106,8 @@ final class ProfileConnectionWorkoutListController extends AbstractController
             'exerciseCountMap' => $data['exerciseCountMap'],
             'hasPrMap' => $data['hasPrMap'],
             'hasRepsRecordMap' => $data['hasRepsRecordMap'],
+            // Mêmes droits que la page de ses badges : rien si la connexion a masqué son widget Badges.
+            'badgesMap' => $this->isGranted(ProfileConnectionVoter::VIEW_BADGES, $connection) ? $data['badgesMap'] : [],
         ]);
     }
 

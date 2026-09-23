@@ -7,6 +7,7 @@ namespace App\Controller\ProfileConnection;
 use App\Entity\ProfileConnection;
 use App\Entity\User;
 use App\Security\Voter\ProfileConnectionVoter;
+use App\Service\Badge\BadgeSyncService;
 use App\Service\Dashboard\DashboardUnlockService;
 use App\Service\Dashboard\DashboardViewDataBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,6 +36,7 @@ final class ProfileConnectionDashboardController extends AbstractController
     public function __construct(
         private readonly DashboardUnlockService $dashboardUnlockService,
         private readonly DashboardViewDataBuilder $viewDataBuilder,
+        private readonly BadgeSyncService $badgeSyncService,
     ) {
     }
 
@@ -57,10 +59,14 @@ final class ProfileConnectionDashboardController extends AbstractController
             ]);
         }
 
+        // Synchro silencieuse (jamais de flash : il irait dans la session de celui qui regarde),
+        // pour que l'ancienneté de la connexion reste à jour même si elle ne s'est pas reconnectée.
+        $badgeProgress = $this->badgeSyncService->sync($subject)->progress;
+
         return $this->render('profile_connection/dashboard/index.html.twig', [
             'subject' => $subject,
             'connection' => $connection,
-            'data' => $this->viewDataBuilder->build($subject, $viewer, $dashboardState),
+            'data' => $this->viewDataBuilder->build($subject, $viewer, $dashboardState, $badgeProgress),
         ]);
     }
 }

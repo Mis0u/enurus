@@ -1,7 +1,15 @@
+{#
+    Variables attendues (toutes via `only`) : workout, exerciseData, totalTonnage, totalSets,
+    totalReps, unit, unlockedBadges (list<BadgeTileView> — badges gagnés grâce à cette séance)
+#}
 <div class="show-header-card relative border border-white/[0.07] rounded-2xl p-6 mb-5 overflow-hidden max-md:p-5">
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(244,63,94,0.03),transparent_60%)] pointer-events-none"></div>
 
     {% include 'workout/show/header/_title.html.twig' with {'workout': workout} only %}
+
+    {% if unlockedBadges is not empty %}
+        {% include 'workout/show/header/_badges.html.twig' with {'unlockedBadges': unlockedBadges} only %}
+    {% endif %}
 
     <div class="grid grid-cols-5 gap-4 mb-5 max-md:grid-cols-2 max-md:gap-2.5">
         {% include 'workout/show/header/_tonnage.html.twig' with {'totalTonnage': totalTonnage, 'unit': unit} only %}

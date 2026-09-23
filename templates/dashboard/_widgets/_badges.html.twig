@@ -1,0 +1,72 @@
+{#
+    Widget Badges : derniers obtenus + prochains paliers les plus avancés.
+    Variables attendues (toutes via `only`) :
+    - badges       : App\Service\Badge\View\BadgeCollectionView
+    - allBadgesUrl : string|null — page "Mes badges" sur son propre dashboard, page des badges d'une
+                     connexion ; null pour ne pas afficher le lien
+    - readOnly     : bool — dashboard d'une connexion (libellé du lien à la 3ᵉ personne)
+#}
+<div class="md:col-span-2 bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] md:p-[26px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(244,63,94,0.05),transparent_60%)] pointer-events-none"></div>
+
+    <div class="relative flex items-center gap-[7px] mb-5">
+        {% include 'partials/_svg/_shield.html.twig' with {width: 3.75, height: 3.75, extraClass: 'text-[#8b9bb4]', ariaHidden: true} only %}
+        <h2 class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
+            {{ 'badge.widget.title'|trans({}, 'navigation') }}
+        </h2>
+        <span class="ml-auto text-[12px] text-[#4a5568] tabular-nums">
+            {{ 'badge.widget.earned_count'|trans({earned: badges.earnedCount, total: badges.totalCount}, 'navigation') }}
+        </span>
+    </div>
+
+    <div class="relative grid md:grid-cols-[1.1fr_1fr] gap-6">
+        <div>
+            <h3 class="text-[12px] font-semibold uppercase tracking-[0.4px] text-[#4a5568] mb-3">
+                {{ 'badge.widget.latest'|trans({}, 'navigation') }}
+            </h3>
+            <ul class="grid grid-cols-3 gap-2.5 md:gap-3">
+                {% for tile in badges.latest %}
+                    <li class="badge-hover flex flex-col items-center gap-1.5 text-center rounded-[14px] px-2 py-3.5 bg-white/[0.03] border border-white/[0.07]">
+                        {% include 'badge/_visual.html.twig' with {tile: tile, size: 'md'} only %}
+                        <span class="font-rajdhani text-[15px] font-bold leading-tight text-[#f0f4ff]">{{ tile.name }}</span>
+                        <span class="text-[11px] text-[#4a5568]">{{ tile.unlockedAt|format_date('medium', locale=app.request.locale) }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div>
+            <h3 class="text-[12px] font-semibold uppercase tracking-[0.4px] text-[#4a5568] mb-3">
+                {{ 'badge.widget.next'|trans({}, 'navigation') }}
+            </h3>
+            {% if badges.next is empty %}
+                <p class="text-[13px] text-[#8b9bb4] py-4">{{ 'badge.widget.all_complete'|trans({}, 'navigation') }}</p>
+            {% else %}
+                <ul class="flex flex-col gap-3.5">
+                    {% for tile in badges.next %}
+                        <li class="grid grid-cols-[48px_1fr] gap-3 items-center">
+                            {% include 'badge/_visual.html.twig' with {tile: tile, size: 'sm'} only %}
+                            <div class="min-w-0">
+                                <div class="flex justify-between gap-2 text-[13px]">
+                                    <span class="font-semibold text-[#f0f4ff] truncate">{{ tile.name }}</span>
+                                    <span class="text-[#8b9bb4] tabular-nums whitespace-nowrap">{{ tile.progressLabel }}</span>
+                                </div>
+                                <div class="mt-1.5">
+                                    {% include 'badge/_progress_bar.html.twig' with {tile: tile} only %}
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if allBadgesUrl is not null %}
+        <a href="{{ allBadgesUrl }}"
+           class="relative self-start mt-5 inline-flex items-center gap-1.5 text-[13px] font-medium text-rose-ft hover:opacity-80 transition-ft">
+            {{ (readOnly ? 'badge.widget.see_all_shared' : 'badge.widget.see_all')|trans({}, 'navigation') }}
+            <span aria-hidden="true">→</span>
+        </a>
+    {% endif %}
+</div>

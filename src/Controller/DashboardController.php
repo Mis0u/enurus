@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Controller\Trait\NotifiesBadgeUnlockTrait;
 use App\Entity\User;
+use App\Service\Badge\BadgeLabelFormatter;
+use App\Service\Badge\BadgeSyncService;
 use App\Service\Dashboard\DashboardUnlockService;
 use App\Service\Dashboard\DashboardViewDataBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,9 +17,13 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class DashboardController extends AbstractController
 {
+    use NotifiesBadgeUnlockTrait;
+
     public function __construct(
         private readonly DashboardUnlockService $dashboardUnlockService,
         private readonly DashboardViewDataBuilder $viewDataBuilder,
+        private readonly BadgeSyncService $badgeSyncService,
+        private readonly BadgeLabelFormatter $badgeLabelFormatter,
     ) {
     }
 
@@ -42,6 +49,10 @@ final class DashboardController extends AbstractController
             throw new \LogicException('User must be authenticated.');
         }
 
+        // L'ancienneté progresse sans aucune séance : seul le chargement du dashboard la rattrape.
+        $badgeSync = $this->badgeSyncService->sync($user);
+        $this->notifyBadgeUnlocks($badgeSync, $user, $this->badgeLabelFormatter);
+
         $dashboardState = $this->dashboardUnlockService->getStateForUser($user);
 
         if (0 === $dashboardState->workoutCount) {
@@ -51,7 +62,7 @@ final class DashboardController extends AbstractController
             ]);
         }
 
-        $data = $this->viewDataBuilder->build($user, $user, $dashboardState);
+        $data = $this->viewDataBuilder->build($user, $user, $dashboardState, $badgeSync->progress);
 
         return $this->render('dashboard/dashboard.html.twig', [
             'user' => $user,

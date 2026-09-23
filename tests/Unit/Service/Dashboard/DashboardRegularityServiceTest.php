@@ -9,6 +9,7 @@ use App\Repository\WorkoutStatsRepository;
 use App\Service\Dashboard\DashboardPeriodCalculator;
 use App\Service\Dashboard\DashboardRegularityService;
 use App\Service\Workout\DeloadPeriodSetService;
+use App\Service\Workout\WeeklyStreakCalculator;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -243,24 +244,24 @@ final class DashboardRegularityServiceTest extends TestCase
         self::assertSame(1, $result['bestStreak']);
     }
 
-    public function testStreakIsNotBrokenByADeloadWeek(): void
+    public function testDeloadWeekBridgesTheStreakWithoutCountingIt(): void
     {
         $weekStart = $this->currentWeekStart();
         $allDates = [
             $weekStart, // semaine en cours
-            // semaine -1 : deload, aucune séance
+            // semaine -1 : deload, aucune séance — relie la série sans l'allonger
             $weekStart->modify('-14 days'), // semaine -2
         ];
 
         $result = $this->getData($allDates, deloadWeekDates: [$weekStart->modify('-7 days')]);
 
-        self::assertSame(3, $result['streak']);
+        self::assertSame(2, $result['streak']);
     }
 
-    public function testBestStreakCountsDeloadWeeksAsActive(): void
+    public function testBestStreakBridgesDeloadWeekWithoutCountingIt(): void
     {
         // 3 semaines consécutives où seule la première et la dernière ont une séance, la
-        // semaine du milieu est un deload — ne doit pas casser le record.
+        // semaine du milieu est un deload — même règle que le badge Régularité.
         $allDates = [
             new \DateTimeImmutable('2026-01-05'), // lundi, semaine 1
             new \DateTimeImmutable('2026-01-19'), // lundi, semaine 3
@@ -268,7 +269,17 @@ final class DashboardRegularityServiceTest extends TestCase
 
         $result = $this->getData($allDates, deloadWeekDates: [new \DateTimeImmutable('2026-01-12')]);
 
-        self::assertSame(3, $result['bestStreak']);
+        self::assertSame(2, $result['bestStreak']);
+    }
+
+    public function testDeloadAloneNeverCountsAsAStreak(): void
+    {
+        $weekStart = $this->currentWeekStart();
+
+        $result = $this->getData([], deloadWeekDates: [$weekStart->modify('-7 days'), $weekStart->modify('-14 days')]);
+
+        self::assertSame(0, $result['streak']);
+        self::assertSame(0, $result['bestStreak']);
     }
 
     public function testWeekDaysMarksDeloadFlagOnCoveredDays(): void
@@ -342,7 +353,7 @@ final class DashboardRegularityServiceTest extends TestCase
             true,
         ));
 
-        $service = new DashboardRegularityService($workoutStatsRepository, new DashboardPeriodCalculator(), $deloadPeriodSetService);
+        $service = new DashboardRegularityService($workoutStatsRepository, new DashboardPeriodCalculator(), $deloadPeriodSetService, new WeeklyStreakCalculator());
 
         return $service->getData($this->createStub(User::class));
     }

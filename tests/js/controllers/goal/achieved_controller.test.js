@@ -60,7 +60,7 @@ describe('goal--achieved controller', () => {
         }));
     });
 
-    it('celebrates each achievement once, staggered over time', async () => {
+    it('celebrates each achievement once, one popup after the other', async () => {
         connectWith([
             { title: 'Objectif atteint ! 🎉', text: 'Squat : 100 kg !', confirmButtonText: 'Continuer' },
             { title: 'Objectif atteint ! 🎉', text: 'Développé couché : 80 kg !', confirmButtonText: 'Continuer' },

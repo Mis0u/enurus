@@ -58,6 +58,104 @@ final class WorkoutTonnageRepositoryTest extends KernelTestCase
         $em->flush();
     }
 
+    public function testSumTotalByUserAddsEveryWorkoutOfThatUserOnly(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var WorkoutTonnageRepository $workoutTonnageRepository */
+        $workoutTonnageRepository = static::getContainer()->get(WorkoutTonnageRepository::class);
+
+        $user = $this->createTestUser($em);
+        $otherUser = $this->createTestUser($em);
+        $exercise = $this->createTestExercise($em);
+
+        $recent = $this->createTestWorkout($em, $user, $exercise, new \DateTimeImmutable('-1 day'), [
+            [
+                'weight' => 100.0,
+                'reps' => 5,
+            ], // 500
+        ]);
+        $old = $this->createTestWorkout($em, $user, $exercise, new \DateTimeImmutable('-400 days'), [
+            [
+                'weight' => 60.0,
+                'reps' => 10,
+            ], // 600
+        ]);
+        $foreign = $this->createTestWorkout($em, $otherUser, $exercise, new \DateTimeImmutable('-1 day'), [
+            [
+                'weight' => 999.0,
+                'reps' => 1,
+            ],
+        ]);
+
+        self::assertSame(1100.0, $workoutTonnageRepository->sumTotalByUser($user));
+
+        $em->remove($recent);
+        $em->remove($old);
+        $em->remove($foreign);
+        $em->remove($exercise);
+        $em->remove($user);
+        $em->remove($otherUser);
+        $em->flush();
+    }
+
+    public function testFindTimelineByUserListsWorkoutsFromOldestWithTheirTonnage(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var WorkoutTonnageRepository $workoutTonnageRepository */
+        $workoutTonnageRepository = static::getContainer()->get(WorkoutTonnageRepository::class);
+
+        $user = $this->createTestUser($em);
+        $exercise = $this->createTestExercise($em);
+        $recent = $this->createTestWorkout($em, $user, $exercise, new \DateTimeImmutable('-1 day'), [
+            [
+                'weight' => 100.0,
+                'reps' => 5,
+            ],
+        ]);
+        $old = $this->createTestWorkout($em, $user, $exercise, new \DateTimeImmutable('-30 days'), [
+            [
+                'weight' => 60.0,
+                'reps' => 10,
+            ],
+        ]);
+
+        $timeline = $workoutTonnageRepository->findTimelineByUser($user);
+
+        self::assertCount(2, $timeline);
+        self::assertSame((string) $old->id, $timeline[0]['id']);
+        self::assertSame(600.0, $timeline[0]['tonnage']);
+        self::assertSame((string) $recent->id, $timeline[1]['id']);
+
+        $em->remove($recent);
+        $em->remove($old);
+        $em->remove($exercise);
+        $em->remove($user);
+        $em->flush();
+    }
+
+    public function testSumTotalByUserIsZeroWithoutWorkout(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var WorkoutTonnageRepository $workoutTonnageRepository */
+        $workoutTonnageRepository = static::getContainer()->get(WorkoutTonnageRepository::class);
+
+        $user = $this->createTestUser($em);
+
+        self::assertSame(0.0, $workoutTonnageRepository->sumTotalByUser($user));
+
+        $em->remove($user);
+        $em->flush();
+    }
+
     public function testFindTonnageSeriesByUserOnlyIncludesWorkoutsWithinTheDateRange(): void
     {
         self::bootKernel();

@@ -1,0 +1,13 @@
+{#
+    Barre de progression vers un palier verrouillé. Largeur en style inline : une classe Tailwind
+    construite depuis la valeur ne serait jamais générée (cf. CLAUDE.md).
+    Variable attendue (via `only`) : tile — App\Service\Badge\View\BadgeTileView
+#}
+<div class="badge-progress w-full"
+     role="progressbar"
+     aria-valuemin="0"
+     aria-valuemax="100"
+     aria-valuenow="{{ tile.progressPercent }}"
+     aria-label="{{ tile.name }}">
+    <span class="badge-progress__fill" style="width: {{ tile.progressPercent }}%"></span>
+</div>

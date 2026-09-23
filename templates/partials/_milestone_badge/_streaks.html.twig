@@ -1,0 +1,15 @@
+{#
+    Traînées de vitesse reprises du logo (à partir de l'or ; des deux côtés au rubis).
+    Variable attendue (via `only`) : side — 'left'|'right'
+#}
+<g stroke="#070c18" stroke-width="1.5" stroke-linejoin="round">
+    {% if side == 'left' %}
+        <path d="M-12 36 L13 30 L13 38 Z" fill="url(#badge-streak-left)"/>
+        <path d="M-6 52 L13 46 L13 54 Z" fill="url(#badge-streak-left)"/>
+        <path d="M-14 68 L16 62 L17 70 Z" fill="url(#badge-streak-left)"/>
+    {% else %}
+        <path d="M132 36 L107 30 L107 38 Z" fill="url(#badge-streak-right)"/>
+        <path d="M126 52 L107 46 L107 54 Z" fill="url(#badge-streak-right)"/>
+        <path d="M134 68 L104 62 L103 70 Z" fill="url(#badge-streak-right)"/>
+    {% endif %}
+</g>

@@ -1,0 +1,18 @@
+{#
+    Badges débloqués par l'enregistrement de cette séance (`UserBadge::$workout`).
+    Variable attendue (via `only`) :
+    - unlockedBadges : list<App\Service\Badge\View\BadgeTileView> — non vide
+#}
+<div class="flex flex-wrap items-center gap-x-3 gap-y-2 mb-5 -mt-1">
+    <span class="text-[12px] font-semibold uppercase tracking-[0.4px] text-[#8b9bb4]">
+        {{ 'badge.workout.title'|trans({count: unlockedBadges|length}, 'navigation') }}
+    </span>
+    <ul class="flex flex-wrap items-center gap-2">
+        {% for tile in unlockedBadges %}
+            <li class="badge-hover inline-flex items-center gap-2">
+                {% include 'badge/_visual.html.twig' with {tile: tile, size: 'xs'} only %}
+                <span class="font-rajdhani text-[14px] font-bold text-[#f0f4ff]">{{ tile.name }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

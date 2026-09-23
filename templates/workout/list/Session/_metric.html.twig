@@ -1,3 +1,7 @@
+{#
+    Variables attendues (toutes via `only`) : workout, tonnage, exerciseCount, hasPr, hasRepsRecord,
+    user, badges (list<BadgeTileView> — miniatures des badges débloqués par cette séance)
+#}
 <div class="session-tonnage flex items-center gap-4 text-[12px]">
     {% if tonnage is not null and tonnage > 0 %}
         <span class="flex items-center gap-1.5 text-[#8b9bb4]">
@@ -37,5 +41,26 @@
               data-action="click->tooltip#toggle"
               aria-label="{{ 'dashboard.widget.session.reps_record_tooltip'|trans({}, 'navigation') }}"
               title="{{ 'dashboard.widget.session.reps_record_tooltip'|trans({}, 'navigation') }}">🔁</span>
+    {% endif %}
+    {% if badges is not empty %}
+        {% set badge_names = badges|map(tile => tile.name)|join(', ') %}
+        {% set badges_label = 'badge.workout.tooltip'|trans({count: badges|length, names: badge_names}, 'navigation') %}
+        <span class="relative flex items-center gap-1 cursor-help"
+              data-controller="tooltip"
+              data-tooltip-text-value="{{ badges_label }}"
+              data-action="click->tooltip#toggle"
+              aria-label="{{ badges_label }}"
+              title="{{ badges_label }}">
+            {% for tile in badges %}
+                {% include 'partials/_milestone_badge/_badge.html.twig' with {
+                    family: tile.family,
+                    tier: tile.tier,
+                    ribbon: tile.ribbon,
+                    label: tile.name,
+                    locked: false,
+                    size: 'xxs',
+                } only %}
+            {% endfor %}
+        </span>
     {% endif %}
 </div>

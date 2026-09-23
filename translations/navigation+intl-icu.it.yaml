@@ -18,6 +18,78 @@ admin:
         body: "L'indirizzo {email} corrisponde a un account eliminato il {deletedAt}. Verifica se si tratta di un abuso."
         subject: Nuova registrazione rilevata
 
+badge:
+    family:
+        assiduity:
+            description: "Numero totale di allenamenti"
+            title: "Costanza"
+        regularity:
+            description: "Settimane consecutive con almeno un allenamento · le settimane di riposo programmate non interrompono la serie"
+            title: "Regolarità"
+        seniority:
+            description: "Tempo dalla tua iscrizione · non si perde mai"
+            title: "Anzianità"
+        tonnage:
+            description: "Totale sollevato dall'inizio"
+            title: "Volume totale"
+    legend:
+        description: "Conquista il rubino in tutte e 4 le famiglie. Lo perdi se un rubino viene meno, tranne quello dell'anzianità, che resta tuo."
+        kicker: "Meta-badge"
+        mystery_label: "Badge misterioso (bloccato)"
+        rubies_label: "Rubini ottenuti per famiglia"
+        ruby_earned: "rubino ottenuto"
+        ruby_missing: "rubino mancante"
+    locked_label: "{name} (bloccato)"
+    max_reached: "Livello massimo raggiunto"
+    name:
+        assiduity: "{count, plural, =1 {# allenamento} other {# allenamenti}}"
+        legend: "Leggenda Enurus"
+        regularity: "{count, plural, =1 {# settimana} other {# settimane}}"
+        seniority_months: "{count, plural, =1 {# mese} other {# mesi}}"
+        seniority_years: "{count, plural, =1 {# anno} other {# anni}}"
+        tonnage: "{count, plural, =1 {# tonnellata} other {# tonnellate}}"
+        tonnage_lbs: "{count, number} lb"
+    popup:
+        close: "Continua"
+        legend:
+            text: "Rubino in tutte e 4 le famiglie: hai raggiunto la vetta."
+            title: "Leggenda Enurus!"
+        retroactive:
+            text: "{count, plural, =1 {Hai già sbloccato # badge grazie ai tuoi allenamenti passati.} other {Hai già sbloccato # badge grazie ai tuoi allenamenti passati.}}"
+            title: "I tuoi badge sono arrivati!"
+        see_all: "Vedi i miei badge"
+        text_many: "{count, plural, other {Hai sbloccato # badge.}}"
+        text_single: "Hai sbloccato il badge «{name}»."
+        title: "{count, plural, =1 {Nuovo badge!} other {# nuovi badge!}}"
+    progress:
+        assiduity: "{current, number} / {target, number} allenamenti"
+        regularity: "{current, number} / {target, number} sett."
+        seniority: "{current, number} / {target, number} mesi"
+        tonnage: "{current, number} / {target, number} t"
+        tonnage_lbs: "{current, number} / {target, number} lb"
+    ribbon:
+        assiduity: "{count, number}"
+        legend: "LEGGENDA"
+        regularity: "{count, number} SETT"
+        seniority_months: "{count, plural, =1 {# MESE} other {# MESI}}"
+        seniority_years: "{count, plural, =1 {# ANNO} other {# ANNI}}"
+        tonnage: "{count, number} T"
+        tonnage_lbs: "{value} LB"
+    section:
+        title: "Tutti i miei badge"
+    unlocked_on: "Ottenuto il {date}"
+    widget:
+        all_complete: "Tutti i livelli raggiunti. Rispetto."
+        earned_count: "{earned} / {total} ottenuti"
+        latest: "Ultimi ottenuti"
+        next: "Prossimi traguardi"
+        see_all: "Vedi tutti i miei badge"
+        see_all_shared: "Vedi tutti i suoi badge"
+        title: "Badge"
+    workout:
+        title: "{count, plural, =1 {Badge sbloccato con questo allenamento} other {Badge sbloccati con questo allenamento}}"
+        tooltip: "{count, plural, =1 {Badge sbloccato: {names}} other {Badge sbloccati: {names}}}"
+
 contact:
     category:
         bug: Bug
@@ -77,6 +149,7 @@ dashboard:
     library: Biblioteca
     logout: Disconnetti
     messaging: Messaggi
+    my_badges: "I miei badge"
     my_routines: Le mie routine
     my_workouts: I miei allenamenti
     profile: Profilo
@@ -381,6 +454,8 @@ pagination:
     results: Risultati
 
 profile_connection:
+    badge:
+        title: "Badge di {nickname}"
     dashboard:
         back: "Torna al mio cruscotto"
         guard:
@@ -637,6 +712,7 @@ settings:
         explanation: Scegli i blocchi visualizzati sulla tua dashboard.
         title: Widget della dashboard
         widget:
+            badges: "Badge"
             goals: Obiettivi
             muscle_distribution: Muscoli allenati
             regularity: Regolarità

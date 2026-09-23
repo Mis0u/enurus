@@ -6,6 +6,7 @@ namespace App\Security\Voter;
 
 use App\Entity\ProfileConnection;
 use App\Entity\User;
+use App\Enum\Dashboard\DashboardWidgetEnum;
 use App\Enum\Entity\ProfileConnection\ProfileConnectionStatusEnum;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -35,6 +36,14 @@ final class ProfileConnectionVoter extends Voter
     public const string VIEW_WORKOUTS = 'PROFILE_CONNECTION_VIEW_WORKOUTS';
 
     /**
+     * Voir tous les badges de l'autre partie : mêmes conditions que `VIEW`, sans opt-in dédié
+     * (décision actée, rien de sensible). Refusé si le propriétaire a masqué son widget Badges,
+     * sur son propre dashboard ou pour ses seules connexions — même règle que les widgets du
+     * dashboard partagé (`DashboardViewDataBuilder::resolveVisibleWidgets()`).
+     */
+    public const string VIEW_BADGES = 'PROFILE_CONNECTION_VIEW_BADGES';
+
+    /**
      * Accepter ou refuser : réservé au destinataire. L'état de la demande (encore en attente ?)
      * n'est pas vérifié ici mais par `ProfileConnectionResponseService`.
      */
@@ -53,6 +62,7 @@ final class ProfileConnectionVoter extends Voter
     private const array SUPPORTED_ATTRIBUTES = [
         self::VIEW,
         self::VIEW_WORKOUTS,
+        self::VIEW_BADGES,
         self::RESPOND,
         self::CANCEL,
         self::REVOKE,
@@ -74,6 +84,7 @@ final class ProfileConnectionVoter extends Voter
         return match ($attribute) {
             self::VIEW => $this->canView($subject, $user),
             self::VIEW_WORKOUTS => $this->canView($subject, $user) && $subject->counterpartOf($user)->shareWorkouts,
+            self::VIEW_BADGES => $this->canView($subject, $user) && $this->sharesBadges($subject->counterpartOf($user)),
             self::RESPOND => $subject->addressee === $user,
             self::CANCEL => $subject->requester === $user,
             self::REVOKE => $subject->involves($user),
@@ -87,5 +98,13 @@ final class ProfileConnectionVoter extends Voter
             && $connection->involves($user)
             && $user->isDiscoverable
             && $connection->counterpartOf($user)->isDiscoverable;
+    }
+
+    private function sharesBadges(User $owner): bool
+    {
+        $badges = DashboardWidgetEnum::BADGES->value;
+
+        return ! \in_array($badges, $owner->hiddenWidgets, true)
+            && ! \in_array($badges, $owner->hiddenSharedWidgets, true);
     }
 }

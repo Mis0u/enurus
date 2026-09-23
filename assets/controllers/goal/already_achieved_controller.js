@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 import Swal from 'sweetalert2';
+import { enqueueCelebration } from '../../utils/celebration_queue.js';
 
 /**
  * Déclenché une fois par affichage (flash bag lu et vidé côté serveur) — pas de garde
@@ -11,13 +12,13 @@ export default class extends Controller {
     static values = { achievements: Array };
 
     connect() {
-        this.achievementsValue.forEach((achievement, index) => {
-            window.setTimeout(() => this.#inform(achievement), index * 700);
+        this.achievementsValue.forEach(achievement => {
+            enqueueCelebration(() => this.#inform(achievement));
         });
     }
 
     #inform(achievement) {
-        Swal.fire({
+        return Swal.fire({
             icon: 'info',
             title: achievement.title,
             text: achievement.text,

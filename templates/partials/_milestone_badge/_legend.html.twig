@@ -1,0 +1,52 @@
+{#
+    Méta-badge "Légende Enurus" (rubis dans les 4 familles). Obtenu : le logo sans texte devient
+    lui-même l'écusson, entouré des ornements holographiques, couronne flottant au-dessus.
+    Pas encore obtenu : silhouette mystère, qui ne dévoile rien du logo.
+
+    Variables attendues (toutes via `only`) :
+    - label  : string — texte accessible
+    - ribbon : string — texte du bandeau, déjà traduit ("LÉGENDE")
+    - locked : bool
+    - size   : 'xxs'|'xs'|'sm'|'md'|'lg'
+#}
+{% set outline = '#070c18' %}
+{% if locked %}
+    {% set dim = '#1a2436' %}
+    <svg class="badge-svg badge-svg--legend badge-svg--{{ size }}"
+         viewBox="-16 -30 152 172"
+         role="img"
+         aria-label="{{ label }}">
+        <g opacity=".9">
+            {% include 'partials/_milestone_badge/_laurels.html.twig' with {fill: dim} only %}
+        </g>
+        <use href="#badge-shield" fill="{{ dim }}" stroke="{{ outline }}" stroke-width="4" stroke-linejoin="round"/>
+        <use href="#badge-shield" transform="translate(60 66) scale(.82) translate(-60 -66)" fill="#0b1220" stroke="{{ outline }}" stroke-width="3"/>
+        <use href="#badge-shield" transform="translate(60 66) scale(.75) translate(-60 -66)" fill="none" stroke="#2a3850" stroke-width="1.6" stroke-dasharray="4 4"/>
+        <text class="badge-svg__ribbon-text" x="60" y="80" text-anchor="middle" font-size="46" fill="#2f3d57">?</text>
+        {% include 'partials/_milestone_badge/_ribbon.html.twig' with {fill: dim, text: '? ? ?', withTails: true} only %}
+        <path d="M40 13 L44 -4 L52 5 L60 -8 L68 5 L76 -4 L80 13 Z" fill="{{ dim }}" stroke="{{ outline }}" stroke-width="2.5" stroke-linejoin="round"/>
+    </svg>
+{% else %}
+    <svg class="badge-svg badge-svg--legend badge-svg--{{ size }}"
+         viewBox="-16 -30 152 172"
+         role="img"
+         aria-label="{{ label }}">
+        {% include 'partials/_milestone_badge/_laurels.html.twig' with {fill: 'url(#badge-holo)'} only %}
+        {% include 'partials/_milestone_badge/_streaks.html.twig' with {side: 'right'} only %}
+        <g filter="url(#badge-glow-6)">
+            <image href="{{ asset('images/logo.png') }}" x="-6" y="2" width="132" height="107" preserveAspectRatio="xMidYMid meet"/>
+        </g>
+        <g transform="translate(0 16)">
+            {% include 'partials/_milestone_badge/_ribbon.html.twig' with {fill: 'url(#badge-holo)', text: ribbon, withTails: true} only %}
+        </g>
+        <g transform="translate(0 -16)">
+            <g class="badge-svg__crown-float">
+                <ellipse cx="60" cy="18" rx="17" ry="2.2" fill="#f43f5e" fill-opacity=".35"/>
+                {% include 'partials/_milestone_badge/_crown.html.twig' with {fill: 'url(#badge-holo)'} only %}
+            </g>
+        </g>
+        {% include 'partials/_milestone_badge/_sparkle.html.twig' with {x: 112, y: 8, radius: 12} only %}
+        {% include 'partials/_milestone_badge/_sparkle.html.twig' with {x: 118, y: 90, radius: 7} only %}
+        {% include 'partials/_milestone_badge/_sparkle.html.twig' with {x: 4, y: 118, radius: 6} only %}
+    </svg>
+{% endif %}

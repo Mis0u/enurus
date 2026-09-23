@@ -18,6 +18,78 @@ admin:
         body: "Die E-Mail {email} entspricht einem am {deletedAt} gelöschten Konto. Prüfe, ob es sich um Missbrauch handelt."
         subject: Neuanmeldung erkannt
 
+badge:
+    family:
+        assiduity:
+            description: "Gesamtzahl der Trainings"
+            title: "Beständigkeit"
+        regularity:
+            description: "Aufeinanderfolgende Wochen mit mindestens einem Training · geplante Erholungswochen unterbrechen die Serie nicht"
+            title: "Regelmäßigkeit"
+        seniority:
+            description: "Zeit seit deiner Anmeldung · geht nie verloren"
+            title: "Treue"
+        tonnage:
+            description: "Insgesamt gehobenes Gewicht seit Beginn"
+            title: "Gesamtvolumen"
+    legend:
+        description: "Hol dir den Rubin in allen 4 Kategorien. Du verlierst dieses Abzeichen, wenn ein Rubin wegfällt – außer dem für Treue, der bleibt dir."
+        kicker: "Meta-Abzeichen"
+        mystery_label: "Geheimes Abzeichen (gesperrt)"
+        rubies_label: "Rubine pro Kategorie"
+        ruby_earned: "Rubin erhalten"
+        ruby_missing: "Rubin fehlt"
+    locked_label: "{name} (gesperrt)"
+    max_reached: "Höchste Stufe erreicht"
+    name:
+        assiduity: "{count, plural, =1 {# Training} other {# Trainings}}"
+        legend: "Enurus-Legende"
+        regularity: "{count, plural, =1 {# Woche} other {# Wochen}}"
+        seniority_months: "{count, plural, =1 {# Monat} other {# Monate}}"
+        seniority_years: "{count, plural, =1 {# Jahr} other {# Jahre}}"
+        tonnage: "{count, plural, =1 {# Tonne} other {# Tonnen}}"
+        tonnage_lbs: "{count, number} lb"
+    popup:
+        close: "Weiter"
+        legend:
+            text: "Rubin in allen 4 Kategorien: Du hast den Gipfel erreicht."
+            title: "Enurus-Legende!"
+        retroactive:
+            text: "{count, plural, =1 {Dank deiner bisherigen Trainings hast du bereits # Abzeichen freigeschaltet.} other {Dank deiner bisherigen Trainings hast du bereits # Abzeichen freigeschaltet.}}"
+            title: "Deine Abzeichen sind da!"
+        see_all: "Meine Abzeichen ansehen"
+        text_many: "{count, plural, other {Du hast # Abzeichen freigeschaltet.}}"
+        text_single: "Du hast das Abzeichen „{name}“ freigeschaltet."
+        title: "{count, plural, =1 {Neues Abzeichen!} other {# neue Abzeichen!}}"
+    progress:
+        assiduity: "{current, number} / {target, number} Trainings"
+        regularity: "{current, number} / {target, number} Wo."
+        seniority: "{current, number} / {target, number} Monate"
+        tonnage: "{current, number} / {target, number} t"
+        tonnage_lbs: "{current, number} / {target, number} lb"
+    ribbon:
+        assiduity: "{count, number}"
+        legend: "LEGENDE"
+        regularity: "{count, number} WO"
+        seniority_months: "{count, number} MON"
+        seniority_years: "{count, plural, =1 {# JAHR} other {# JAHRE}}"
+        tonnage: "{count, number} T"
+        tonnage_lbs: "{value} LB"
+    section:
+        title: "Alle meine Abzeichen"
+    unlocked_on: "Erhalten am {date}"
+    widget:
+        all_complete: "Alle Stufen erreicht. Respekt."
+        earned_count: "{earned} / {total} erhalten"
+        latest: "Zuletzt erhalten"
+        next: "Nächste Meilensteine"
+        see_all: "Alle meine Abzeichen ansehen"
+        see_all_shared: "Alle Abzeichen ansehen"
+        title: "Abzeichen"
+    workout:
+        title: "{count, plural, =1 {Mit diesem Training freigeschaltetes Abzeichen} other {Mit diesem Training freigeschaltete Abzeichen}}"
+        tooltip: "{count, plural, =1 {Abzeichen freigeschaltet: {names}} other {Abzeichen freigeschaltet: {names}}}"
+
 contact:
     category:
         bug: Fehler
@@ -77,6 +149,7 @@ dashboard:
     library: Bibliothek
     logout: Abmelden
     messaging: Nachrichten
+    my_badges: "Meine Abzeichen"
     my_routines: Meine Routinen
     my_workouts: Meine Trainings
     profile: Profil
@@ -381,6 +454,8 @@ pagination:
     results: Ergebnisse
 
 profile_connection:
+    badge:
+        title: "Abzeichen von {nickname}"
     dashboard:
         back: "Zurück zu meiner Übersicht"
         guard:
@@ -637,6 +712,7 @@ settings:
         explanation: Wähle die Blöcke, die auf deinem Dashboard angezeigt werden.
         title: Dashboard-Widgets
         widget:
+            badges: "Abzeichen"
             goals: Ziele
             muscle_distribution: Trainierte Muskeln
             regularity: Regelmäßigkeit
