@@ -18,6 +18,78 @@ admin:
         body: "The email {email} matches an account deleted on {deletedAt}. Check whether this is abuse."
         subject: Re-registration detected
 
+badge:
+    family:
+        assiduity:
+            description: "Total number of workouts"
+            title: "Consistency"
+        regularity:
+            description: "Consecutive weeks with at least one workout · scheduled rest weeks don't break the streak"
+            title: "Regularity"
+        seniority:
+            description: "Time since you signed up · never lost"
+            title: "Seniority"
+        tonnage:
+            description: "Total lifted since day one"
+            title: "Total volume"
+    legend:
+        description: "Earn the ruby in all 4 families. You lose it if a ruby drops, except the seniority one, which is yours for good."
+        kicker: "Meta-badge"
+        mystery_label: "Mystery badge (locked)"
+        rubies_label: "Rubies earned per family"
+        ruby_earned: "ruby earned"
+        ruby_missing: "ruby missing"
+    locked_label: "{name} (locked)"
+    max_reached: "Top tier reached"
+    name:
+        assiduity: "{count, plural, =1 {# workout} other {# workouts}}"
+        legend: "Enurus Legend"
+        regularity: "{count, plural, =1 {# week} other {# weeks}}"
+        seniority_months: "{count, plural, =1 {# month} other {# months}}"
+        seniority_years: "{count, plural, =1 {# year} other {# years}}"
+        tonnage: "{count, plural, =1 {# tonne} other {# tonnes}}"
+        tonnage_lbs: "{count, number} lb"
+    popup:
+        close: "Continue"
+        legend:
+            text: "Ruby in all 4 families: you've reached the top."
+            title: "Enurus Legend!"
+        retroactive:
+            text: "{count, plural, =1 {You've already unlocked # badge thanks to your past workouts.} other {You've already unlocked # badges thanks to your past workouts.}}"
+            title: "Your badges are here!"
+        see_all: "See my badges"
+        text_many: "{count, plural, other {You unlocked # badges.}}"
+        text_single: "You unlocked the “{name}” badge."
+        title: "{count, plural, =1 {New badge!} other {# new badges!}}"
+    progress:
+        assiduity: "{current, number} / {target, number} workouts"
+        regularity: "{current, number} / {target, number} wks"
+        seniority: "{current, number} / {target, number} months"
+        tonnage: "{current, number} / {target, number} t"
+        tonnage_lbs: "{current, number} / {target, number} lb"
+    ribbon:
+        assiduity: "{count, number}"
+        legend: "LEGEND"
+        regularity: "{count, number} WK"
+        seniority_months: "{count, plural, =1 {# MONTH} other {# MONTHS}}"
+        seniority_years: "{count, plural, =1 {# YEAR} other {# YEARS}}"
+        tonnage: "{count, number} T"
+        tonnage_lbs: "{value} LB"
+    section:
+        title: "All my badges"
+    unlocked_on: "Earned on {date}"
+    widget:
+        all_complete: "Every tier reached. Respect."
+        earned_count: "{earned} / {total} earned"
+        latest: "Latest earned"
+        next: "Next milestones"
+        see_all: "See all my badges"
+        see_all_shared: "See all their badges"
+        title: "Badges"
+    workout:
+        title: "{count, plural, =1 {Badge unlocked with this workout} other {Badges unlocked with this workout}}"
+        tooltip: "{count, plural, =1 {Badge unlocked: {names}} other {Badges unlocked: {names}}}"
+
 contact:
     category:
         bug: Bug
@@ -77,6 +149,7 @@ dashboard:
     library: Library
     logout: Log out
     messaging: Messages
+    my_badges: "My badges"
     my_routines: My routines
     my_workouts: My workouts
     profile: Profile
@@ -381,6 +454,8 @@ pagination:
     results: Results
 
 profile_connection:
+    badge:
+        title: "{nickname}'s badges"
     dashboard:
         back: "Back to my dashboard"
         guard:
@@ -637,6 +712,7 @@ settings:
         explanation: Choose which blocks appear on your dashboard.
         title: Dashboard widgets
         widget:
+            badges: "Badges"
             goals: Goals
             muscle_distribution: Muscles worked
             regularity: Regularity

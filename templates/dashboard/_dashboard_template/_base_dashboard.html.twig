@@ -3,6 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/badges.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -16,6 +17,8 @@
 
     {% include 'partials/_popup/_goal_achieved.html.twig' with {achievements: app.flashes('goal_achieved')} only %}
     {% include 'partials/_popup/_goal_already_achieved.html.twig' with {achievements: app.flashes('goal_already_achieved')} only %}
+    {% include 'partials/_milestone_badge/_defs.html.twig' only %}
+    {% include 'partials/_popup/_badge_unlocked.html.twig' with {unlocks: app.flashes('badge_unlocked')} only %}
 <div class="flex h-screen w-screen overflow-hidden bg-bg-base text-[#f0f4ff] text-sm leading-relaxed font-dm-sans" data-controller="mobile-nav">
 
     {% block sidebar %}

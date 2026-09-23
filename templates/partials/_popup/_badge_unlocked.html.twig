@@ -1,0 +1,74 @@
+{#
+    Popup(s) de badges débloqués, lue(s) depuis le flash bag posé par `NotifiesBadgeUnlockTrait`.
+    Le SVG de chaque badge est rendu ici par Twig dans un `<template>`, que le controller
+    `badge--unlocked` injecte dans la popup SweetAlert2 : aucun dessin dupliqué côté JS.
+
+    Variable attendue (via `only`) :
+    - unlocks : array<array{
+          retroactive: bool,
+          badges: array<array{family: BadgeFamilyEnum, tier: BadgeTierEnum, name: string, ribbon: string}>,
+          legend: array{family: BadgeFamilyEnum, tier: BadgeTierEnum, name: string, ribbon: string}|null
+      }> (app.flashes('badge_unlocked'))
+#}
+{% for unlock in unlocks %}
+    {% set badge_count = unlock.badges|length %}
+    {% if badge_count > 0 %}
+        {% if unlock.retroactive %}
+            {% set popup_title = 'badge.popup.retroactive.title'|trans({}, 'navigation') %}
+            {% set popup_text = 'badge.popup.retroactive.text'|trans({count: badge_count}, 'navigation') %}
+        {% elseif badge_count == 1 %}
+            {% set popup_title = 'badge.popup.title'|trans({count: 1}, 'navigation') %}
+            {% set popup_text = 'badge.popup.text_single'|trans({name: unlock.badges|first.name}, 'navigation') %}
+        {% else %}
+            {% set popup_title = 'badge.popup.title'|trans({count: badge_count}, 'navigation') %}
+            {% set popup_text = 'badge.popup.text_many'|trans({count: badge_count}, 'navigation') %}
+        {% endif %}
+        <div data-controller="badge--unlocked"
+             data-badge--unlocked-title-value="{{ popup_title }}"
+             data-badge--unlocked-text-value="{{ popup_text }}"
+             data-badge--unlocked-see-all-url-value="{{ path('app_badge_list') }}"
+             data-badge--unlocked-see-all-label-value="{{ 'badge.popup.see_all'|trans({}, 'navigation') }}"
+             data-badge--unlocked-close-label-value="{{ 'badge.popup.close'|trans({}, 'navigation') }}">
+            <template data-badge--unlocked-target="content">
+                <div class="badge-popup__badges">
+                    {% for badge in unlock.badges %}
+                        <div class="badge-popup__item">
+                            {% include 'partials/_milestone_badge/_badge.html.twig' with {
+                                family: badge.family,
+                                tier: badge.tier,
+                                ribbon: badge.ribbon,
+                                label: badge.name,
+                                locked: false,
+                                size: badge_count > 3 ? 'sm' : 'lg',
+                            } only %}
+                            <span class="badge-popup__name">{{ badge.name }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            </template>
+        </div>
+    {% endif %}
+
+    {% if unlock.legend is not null %}
+        <div data-controller="badge--unlocked"
+             data-badge--unlocked-legend-value="true"
+             data-badge--unlocked-title-value="{{ 'badge.popup.legend.title'|trans({}, 'navigation') }}"
+             data-badge--unlocked-text-value="{{ 'badge.popup.legend.text'|trans({}, 'navigation') }}"
+             data-badge--unlocked-see-all-url-value="{{ path('app_badge_list') }}"
+             data-badge--unlocked-see-all-label-value="{{ 'badge.popup.see_all'|trans({}, 'navigation') }}"
+             data-badge--unlocked-close-label-value="{{ 'badge.popup.close'|trans({}, 'navigation') }}">
+            <template data-badge--unlocked-target="content">
+                <div class="badge-popup__badges">
+                    {% include 'partials/_milestone_badge/_badge.html.twig' with {
+                        family: unlock.legend.family,
+                        tier: unlock.legend.tier,
+                        ribbon: unlock.legend.ribbon,
+                        label: unlock.legend.name,
+                        locked: false,
+                        size: 'lg',
+                    } only %}
+                </div>
+            </template>
+        </div>
+    {% endif %}
+{% endfor %}

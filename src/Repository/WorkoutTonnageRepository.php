@@ -82,6 +82,50 @@ class WorkoutTonnageRepository
     }
 
     /**
+     * Tonnage cumulé (en kg) de toutes les séances de l'utilisateur, pour le badge Tonnage — mêmes
+     * règles de calcul que le reste de l'appli, via la sous-requête partagée.
+     */
+    public function sumTotalByUser(User $user): float
+    {
+        /** @var array<int, array{tonnage: mixed}> $rows */
+        $rows = $this->workoutRepository->createQueryBuilder('w')
+            ->select(self::TONNAGE_SUBQUERY_DQL)
+            ->andWhere('w.owner = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY);
+
+        return array_sum(array_map(static fn (array $row): float => is_numeric($row['tonnage']) ? (float) $row['tonnage'] : 0.0, $rows));
+    }
+
+    /**
+     * Toutes les séances de l'utilisateur (id, date, tonnage en kg), de la plus ancienne à la plus
+     * récente — l'id départage deux séances à la même heure (UUIDv7, ordre de création). Sert à
+     * dater le franchissement d'un palier de badge.
+     *
+     * @return list<array{id: string, performedAt: DateTimeImmutable, tonnage: float}>
+     */
+    public function findTimelineByUser(User $user): array
+    {
+        /** @var array<int, array{id: mixed, performedAt: DateTimeImmutable, tonnage: mixed}> $rows */
+        $rows = $this->workoutRepository->createQueryBuilder('w')
+            ->select('w.id as id', 'w.performedAt as performedAt')
+            ->addSelect(self::TONNAGE_SUBQUERY_DQL)
+            ->andWhere('w.owner = :user')
+            ->setParameter('user', $user)
+            ->orderBy('w.performedAt', 'ASC')
+            ->addOrderBy('w.id', 'ASC')
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY);
+
+        return array_values(array_map(static fn (array $row): array => [
+            'id' => \is_scalar($row['id']) || $row['id'] instanceof \Stringable ? (string) $row['id'] : throw new \LogicException('Unexpected workout id type.'),
+            'performedAt' => $row['performedAt'],
+            'tonnage' => is_numeric($row['tonnage']) ? (float) $row['tonnage'] : 0.0,
+        ], $rows));
+    }
+
+    /**
      * Une ligne par séance (date + tonnage en kg) sur la plage donnée, triée chronologiquement.
      * Sert de base à toutes les granularités du graphique de tonnage (jour, semaine, mois),
      * le regroupement se fait ensuite en PHP.

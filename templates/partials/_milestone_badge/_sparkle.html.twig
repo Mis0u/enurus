@@ -1,0 +1,9 @@
+{#
+    Étincelle à quatre branches, reprise de l'emoji "grosse perf".
+    Variables attendues (toutes via `only`) : x, y — centre ; radius — demi-envergure
+#}
+{% set r = radius %}
+{% set k = radius * 0.18 %}
+<path class="badge-svg__sparkle"
+      d="M{{ x }} {{ y - r }} Q{{ x + k }} {{ y - k }} {{ x + r }} {{ y }} Q{{ x + k }} {{ y + k }} {{ x }} {{ y + r }} Q{{ x - k }} {{ y + k }} {{ x - r }} {{ y }} Q{{ x - k }} {{ y - k }} {{ x }} {{ y - r }} Z"
+      fill="url(#badge-spark)"/>

@@ -33,6 +33,7 @@ final readonly class DashboardWidgetUnlockResolver
             DashboardWidgetEnum::MUSCLE_DISTRIBUTION->value => $dashboardState->muscleSingleUnlocked,
             DashboardWidgetEnum::REGULARITY->value => $dashboardState->regularityUnlocked,
             DashboardWidgetEnum::GOALS->value => $hasAnyGoal,
+            DashboardWidgetEnum::BADGES->value => $dashboardState->lastWorkoutUnlocked,
         ];
     }
 }

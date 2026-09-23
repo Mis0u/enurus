@@ -1,0 +1,63 @@
+{#
+    Un badge de palier en SVG. Les dégradés viennent de `_defs.html.twig` (inclus une fois par
+    page). Le métal suit le niveau, les ornements s'accumulent d'un niveau à l'autre
+    (`BadgeTierEnum::has*()`) ; l'icône, le cœur marine et le liseré rose → cyan ne changent jamais.
+    Le méta-badge Légende a son propre visuel (`_legend.html.twig`).
+
+    Variables attendues (toutes via `only`) :
+    - family : App\Enum\Badge\BadgeFamilyEnum
+    - tier   : App\Enum\Badge\BadgeTierEnum
+    - ribbon : string — texte court du bandeau, déjà traduit ("100", "1 AN", "22K LB")
+    - label  : string — nom complet, texte accessible
+    - locked : bool — grisé (palier pas encore atteint)
+    - size   : 'xxs'|'xs'|'sm'|'md'|'lg'
+#}
+{% if family.value == 'legend' %}
+    {% include 'partials/_milestone_badge/_legend.html.twig' with {label: label, ribbon: ribbon, locked: locked, size: size} only %}
+{% else %}
+    {% set outline = '#070c18' %}
+    {% set metal = 'url(#badge-metal-' ~ tier.value ~ ')' %}
+    <svg class="badge-svg badge-svg--{{ size }}{{ locked ? ' badge-svg--locked' }}"
+         viewBox="-16 -12 152 150"
+         role="img"
+         aria-label="{{ label }}">
+        {% if tier.hasLaurels() %}
+            {% include 'partials/_milestone_badge/_laurels.html.twig' with {fill: metal} only %}
+        {% endif %}
+        {% if tier.hasSpeedStreaks() %}
+            {% include 'partials/_milestone_badge/_streaks.html.twig' with {side: 'left'} only %}
+        {% endif %}
+        {% if tier.hasDoubleStreaks() %}
+            {% include 'partials/_milestone_badge/_streaks.html.twig' with {side: 'right'} only %}
+        {% endif %}
+
+        <g {% if tier.hasGlow() %}filter="url(#badge-glow-{{ tier.value }})"{% endif %}>
+            <use href="#badge-shield" fill="{{ metal }}" stroke="{{ outline }}" stroke-width="4" stroke-linejoin="round"/>
+        </g>
+        <use href="#badge-shield" transform="translate(60 66) scale(.82) translate(-60 -66)" fill="url(#badge-core)" stroke="{{ outline }}" stroke-width="3"/>
+        <use href="#badge-shield" transform="translate(60 66) scale(.75) translate(-60 -66)" fill="none" stroke="url(#badge-rim)" stroke-width="1.8" stroke-opacity=".85"/>
+        <path d="M22 16 H58 Q40 22 24 44 Z" fill="#fff" fill-opacity=".28"/>
+
+        {% if tier.hasRivets() %}
+            {% for rivet in [[20, 17], [100, 17], [15.5, 50], [104.5, 50]] %}
+                <circle cx="{{ rivet[0] }}" cy="{{ rivet[1] }}" r="2.6" fill="{{ metal }}" stroke="{{ outline }}" stroke-width="1.2"/>
+            {% endfor %}
+        {% endif %}
+
+        <g transform="translate(0 -5)">
+            {% include 'partials/_milestone_badge/_icon_' ~ family.value ~ '.html.twig' only %}
+        </g>
+
+        {% include 'partials/_milestone_badge/_ribbon.html.twig' with {fill: metal, text: ribbon, withTails: tier.hasRibbonTails()} only %}
+
+        {% if tier.hasCrown() %}
+            {% include 'partials/_milestone_badge/_crown.html.twig' with {fill: metal} only %}
+        {% endif %}
+        {% if tier.hasSparkle() %}
+            {% include 'partials/_milestone_badge/_sparkle.html.twig' with {x: 104, y: 12, radius: tier.hasGlow() ? 11 : 8} only %}
+        {% endif %}
+        {% if tier.hasDoubleStreaks() %}
+            {% include 'partials/_milestone_badge/_sparkle.html.twig' with {x: 113, y: 84, radius: 7} only %}
+        {% endif %}
+    </svg>
+{% endif %}

@@ -18,6 +18,78 @@ admin:
         body: "Het e-mailadres {email} komt overeen met een account dat op {deletedAt} is verwijderd. Controleer of dit misbruik betreft."
         subject: Herregistratie gedetecteerd
 
+badge:
+    family:
+        assiduity:
+            description: "Totaal aantal trainingen"
+            title: "Toewijding"
+        regularity:
+            description: "Opeenvolgende weken met minstens één training · geplande rustweken onderbreken de reeks niet"
+            title: "Regelmaat"
+        seniority:
+            description: "Tijd sinds je inschrijving · gaat nooit verloren"
+            title: "Anciënniteit"
+        tonnage:
+            description: "Totaal geheven gewicht sinds het begin"
+            title: "Totaal volume"
+    legend:
+        description: "Behaal de robijn in alle 4 families. Je verliest deze badge als een robijn wegvalt, behalve die van anciënniteit: die blijft van jou."
+        kicker: "Meta-badge"
+        mystery_label: "Mysterieuze badge (vergrendeld)"
+        rubies_label: "Robijnen per familie"
+        ruby_earned: "robijn behaald"
+        ruby_missing: "robijn ontbreekt"
+    locked_label: "{name} (vergrendeld)"
+    max_reached: "Hoogste niveau bereikt"
+    name:
+        assiduity: "{count, plural, =1 {# training} other {# trainingen}}"
+        legend: "Enurus-legende"
+        regularity: "{count, plural, =1 {# week} other {# weken}}"
+        seniority_months: "{count, plural, =1 {# maand} other {# maanden}}"
+        seniority_years: "{count, plural, =1 {# jaar} other {# jaar}}"
+        tonnage: "{count, plural, =1 {# ton} other {# ton}}"
+        tonnage_lbs: "{count, number} lb"
+    popup:
+        close: "Doorgaan"
+        legend:
+            text: "Robijn in alle 4 families: je hebt de top bereikt."
+            title: "Enurus-legende!"
+        retroactive:
+            text: "{count, plural, =1 {Dankzij je eerdere trainingen heb je al # badge vrijgespeeld.} other {Dankzij je eerdere trainingen heb je al # badges vrijgespeeld.}}"
+            title: "Je badges zijn er!"
+        see_all: "Mijn badges bekijken"
+        text_many: "{count, plural, other {Je hebt # badges vrijgespeeld.}}"
+        text_single: "Je hebt de badge ‘{name}’ vrijgespeeld."
+        title: "{count, plural, =1 {Nieuwe badge!} other {# nieuwe badges!}}"
+    progress:
+        assiduity: "{current, number} / {target, number} trainingen"
+        regularity: "{current, number} / {target, number} wk"
+        seniority: "{current, number} / {target, number} maanden"
+        tonnage: "{current, number} / {target, number} t"
+        tonnage_lbs: "{current, number} / {target, number} lb"
+    ribbon:
+        assiduity: "{count, number}"
+        legend: "LEGENDE"
+        regularity: "{count, number} WK"
+        seniority_months: "{count, number} MND"
+        seniority_years: "{count, number} JAAR"
+        tonnage: "{count, number} T"
+        tonnage_lbs: "{value} LB"
+    section:
+        title: "Al mijn badges"
+    unlocked_on: "Behaald op {date}"
+    widget:
+        all_complete: "Alle niveaus bereikt. Respect."
+        earned_count: "{earned} / {total} behaald"
+        latest: "Laatst behaald"
+        next: "Volgende mijlpalen"
+        see_all: "Al mijn badges bekijken"
+        see_all_shared: "Al zijn/haar badges bekijken"
+        title: "Badges"
+    workout:
+        title: "{count, plural, =1 {Badge vrijgespeeld met deze training} other {Badges vrijgespeeld met deze training}}"
+        tooltip: "{count, plural, =1 {Badge vrijgespeeld: {names}} other {Badges vrijgespeeld: {names}}}"
+
 contact:
     category:
         bug: Bug
@@ -77,6 +149,7 @@ dashboard:
     library: Bibliotheek
     logout: Uitloggen
     messaging: Berichten
+    my_badges: "Mijn badges"
     my_routines: Mijn routines
     my_workouts: Mijn trainingen
     profile: Profiel
@@ -381,6 +454,8 @@ pagination:
     results: Resultaten
 
 profile_connection:
+    badge:
+        title: "Badges van {nickname}"
     dashboard:
         back: "Terug naar mijn overzicht"
         guard:
@@ -637,6 +712,7 @@ settings:
         explanation: Kies welke blokken op je dashboard worden weergegeven.
         title: Dashboard-widgets
         widget:
+            badges: "Badges"
             goals: Doelen
             muscle_distribution: Getrainde spieren
             regularity: Regelmaat

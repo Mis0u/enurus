@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Security\Voter;
 
 use App\Entity\ProfileConnection;
 use App\Entity\User;
+use App\Enum\Dashboard\DashboardWidgetEnum;
 use App\Enum\Entity\ProfileConnection\ProfileConnectionStatusEnum;
 use App\Security\Voter\ProfileConnectionVoter;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -176,6 +177,44 @@ final class ProfileConnectionVoterTest extends TestCase
         foreach ([ProfileConnectionVoter::RESPOND, ProfileConnectionVoter::CANCEL, ProfileConnectionVoter::REVOKE] as $attribute) {
             self::assertSame(Voter::ACCESS_DENIED, $this->voter->vote($token, $connection, [$attribute]));
         }
+    }
+
+    public function testViewBadgesIsGrantedOnAcceptedMutualSharingWithoutDedicatedOptIn(): void
+    {
+        $viewer = $this->createDiscoverableUser();
+        $owner = $this->createDiscoverableUser();
+        $connection = $this->createConnection($viewer, $owner, ProfileConnectionStatusEnum::ACCEPTED);
+
+        self::assertSame(Voter::ACCESS_GRANTED, $this->vote($viewer, $connection, ProfileConnectionVoter::VIEW_BADGES));
+    }
+
+    public function testViewBadgesIsDeniedWhenOwnerHidesBadgesWidgetOnOwnDashboard(): void
+    {
+        $viewer = $this->createDiscoverableUser();
+        $owner = $this->createDiscoverableUser();
+        $owner->hiddenWidgets = [DashboardWidgetEnum::BADGES->value];
+        $connection = $this->createConnection($viewer, $owner, ProfileConnectionStatusEnum::ACCEPTED);
+
+        self::assertSame(Voter::ACCESS_DENIED, $this->vote($viewer, $connection, ProfileConnectionVoter::VIEW_BADGES));
+    }
+
+    public function testViewBadgesIsDeniedWhenOwnerHidesBadgesWidgetForConnectionsOnly(): void
+    {
+        $viewer = $this->createDiscoverableUser();
+        $owner = $this->createDiscoverableUser();
+        $owner->hiddenSharedWidgets = [DashboardWidgetEnum::BADGES->value];
+        $connection = $this->createConnection($viewer, $owner, ProfileConnectionStatusEnum::ACCEPTED);
+
+        self::assertSame(Voter::ACCESS_DENIED, $this->vote($viewer, $connection, ProfileConnectionVoter::VIEW_BADGES));
+    }
+
+    public function testViewBadgesIsDeniedOnPendingConnection(): void
+    {
+        $viewer = $this->createDiscoverableUser();
+        $owner = $this->createDiscoverableUser();
+        $connection = $this->createConnection($viewer, $owner, ProfileConnectionStatusEnum::PENDING);
+
+        self::assertSame(Voter::ACCESS_DENIED, $this->vote($viewer, $connection, ProfileConnectionVoter::VIEW_BADGES));
     }
 
     private function vote(User $user, ProfileConnection $connection, string $attribute): int

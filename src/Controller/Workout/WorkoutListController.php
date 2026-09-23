@@ -115,6 +115,7 @@ class WorkoutListController extends AbstractController
             'exerciseCountMap' => $data['exerciseCountMap'],
             'hasPrMap' => $data['hasPrMap'],
             'hasRepsRecordMap' => $data['hasRepsRecordMap'],
+            'badgesMap' => $data['badgesMap'],
         ]);
     }
 

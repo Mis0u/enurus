@@ -3,7 +3,7 @@
     Controller : ProfileConnectionWorkoutListController (GET /{_locale}/connexions/{id}/seances)
     Variables : connection, subject, pagination, tonnageMap, musclesMap, hiddenCountMap,
     filterType, filterDate, routines, filterRoutine, muscleGroups, filterMuscles,
-    filterMusclesParam, limitAllowed, exerciseCountMap, hasPrMap, hasRepsRecordMap — mêmes
+    filterMusclesParam, limitAllowed, exerciseCountMap, hasPrMap, hasRepsRecordMap, badgesMap — mêmes
     données que `workout/list/index.html.twig`, calculées pour `subject`.
 #}
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
@@ -61,6 +61,7 @@
                         exerciseCount: exerciseCountMap[workout.id ~ ''] ?? 0,
                         hasPr: hasPrMap[workout.id] ?? false,
                         hasRepsRecord: hasRepsRecordMap[workout.id] ?? false,
+                        badges: badgesMap[workout.id ~ ''] ?? [],
                         user: app.user,
                         showUrl: path('app_profile_connection_workout_show', {id: connection.id, workoutId: workout.id}),
                         readOnly: true,

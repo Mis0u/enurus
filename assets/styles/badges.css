@@ -1,0 +1,132 @@
+/* Badges de paliers (templates/partials/_milestone_badge/) — tailles fixes en classes sémantiques
+   plutôt qu'en classes Tailwind interpolées par Twig (jamais générées, cf. CLAUDE.md), état
+   verrouillé et animations (étincelles, couronne de la Légende). */
+
+.badge-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.badge-svg {
+    display: block;
+    height: auto;
+    overflow: visible;
+    flex-shrink: 0;
+}
+
+.badge-svg--xxs { width: 26px; }
+.badge-svg--xs { width: 40px; }
+.badge-svg--sm { width: 48px; }
+.badge-svg--md { width: 76px; }
+.badge-svg--lg { width: 132px; }
+
+/* La Légende a un viewBox plus haut (couronne flottante) : même largeur visuelle d'écusson. */
+.badge-svg--legend.badge-svg--xxs { width: 29px; }
+.badge-svg--legend.badge-svg--xs { width: 44px; }
+.badge-svg--legend.badge-svg--sm { width: 52px; }
+.badge-svg--legend.badge-svg--md { width: 84px; }
+.badge-svg--legend.badge-svg--lg { width: 150px; }
+
+.badge-svg--locked {
+    filter: grayscale(1) brightness(0.5);
+    opacity: 0.7;
+}
+
+.badge-svg__ribbon-text {
+    font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.badge-svg__sparkle,
+.badge-svg__crown-float {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+/* Barre de progression d'un palier verrouillé — dégradé rose → cyan du logo. */
+.badge-progress {
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+}
+
+.badge-progress__fill {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #f43f5e, #06b6d4);
+}
+
+/* Encart Légende de la page "Mes badges". */
+.badge-legend-tile {
+    border: 1px solid rgba(168, 85, 247, 0.28);
+    background: linear-gradient(120deg, rgba(244, 63, 94, 0.07), rgba(168, 85, 247, 0.05) 50%, rgba(6, 182, 212, 0.07));
+}
+
+.badge-ruby-pill {
+    border: 1px dashed rgba(255, 255, 255, 0.12);
+    color: #4a5568;
+}
+
+.badge-ruby-pill--earned {
+    border-style: solid;
+    border-color: rgba(251, 59, 100, 0.5);
+    background: rgba(251, 59, 100, 0.1);
+    color: #fb7185;
+}
+
+/* Popup de déblocage (SweetAlert2) : badges côte à côte. */
+.badge-popup__badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.badge-popup__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    max-width: 140px;
+}
+
+.badge-popup__name {
+    font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #f0f4ff;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .badge-svg {
+        transition: transform 0.25s ease;
+    }
+
+    .badge-hover:hover .badge-svg:not(.badge-svg--locked) {
+        transform: translateY(-3px) rotate(-2deg);
+    }
+
+    .badge-svg__sparkle {
+        animation: badge-twinkle 2.6s ease-in-out infinite;
+    }
+
+    .badge-svg__crown-float {
+        animation: badge-crown-float 3.2s ease-in-out infinite;
+    }
+}
+
+@keyframes badge-twinkle {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(0.7); opacity: 0.6; }
+}
+
+@keyframes badge-crown-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}

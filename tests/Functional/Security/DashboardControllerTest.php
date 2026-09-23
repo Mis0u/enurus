@@ -169,7 +169,7 @@ class DashboardControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER_WITH_WORKOUTS);
         $user = $this->getUserByEmail(self::USER_WITH_WORKOUTS);
-        $user->hiddenWidgets = ['session', 'tonnage', 'muscle_distribution', 'regularity', 'goals'];
+        $user->hiddenWidgets = ['session', 'tonnage', 'muscle_distribution', 'regularity', 'goals', 'badges'];
         /** @var EntityManagerInterface $em */
         $em = static::getContainer()->get(EntityManagerInterface::class);
         $em->flush();

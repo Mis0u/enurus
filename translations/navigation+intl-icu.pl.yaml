@@ -18,6 +18,78 @@ admin:
         body: "Adres e-mail {email} odpowiada kontu usuniętemu {deletedAt}. Sprawdź, czy to nadużycie."
         subject: Wykryto ponowną rejestrację
 
+badge:
+    family:
+        assiduity:
+            description: "Łączna liczba treningów"
+            title: "Wytrwałość"
+        regularity:
+            description: "Kolejne tygodnie z co najmniej jednym treningiem · zaplanowane tygodnie odpoczynku nie przerywają serii"
+            title: "Regularność"
+        seniority:
+            description: "Czas od rejestracji · nigdy nie przepada"
+            title: "Staż"
+        tonnage:
+            description: "Łącznie podniesiony ciężar od początku"
+            title: "Łączna objętość"
+    legend:
+        description: "Zdobądź rubin we wszystkich 4 kategoriach. Tracisz tę odznakę, jeśli któryś rubin przepadnie – poza rubinem za staż, który zostaje na zawsze."
+        kicker: "Meta-odznaka"
+        mystery_label: "Tajemnicza odznaka (zablokowana)"
+        rubies_label: "Zdobyte rubiny według kategorii"
+        ruby_earned: "rubin zdobyty"
+        ruby_missing: "brak rubinu"
+    locked_label: "{name} (zablokowana)"
+    max_reached: "Osiągnięto najwyższy poziom"
+    name:
+        assiduity: "{count, plural, =1 {# trening} few {# treningi} many {# treningów} other {# treningu}}"
+        legend: "Legenda Enurus"
+        regularity: "{count, plural, =1 {# tydzień} few {# tygodnie} many {# tygodni} other {# tygodnia}}"
+        seniority_months: "{count, plural, =1 {# miesiąc} few {# miesiące} many {# miesięcy} other {# miesiąca}}"
+        seniority_years: "{count, plural, =1 {# rok} few {# lata} many {# lat} other {# roku}}"
+        tonnage: "{count, plural, =1 {# tona} few {# tony} many {# ton} other {# tony}}"
+        tonnage_lbs: "{count, number} lb"
+    popup:
+        close: "Dalej"
+        legend:
+            text: "Rubin we wszystkich 4 kategoriach: jesteś na szczycie."
+            title: "Legenda Enurus!"
+        retroactive:
+            text: "{count, plural, =1 {Dzięki dotychczasowym treningom masz już # odznakę.} few {Dzięki dotychczasowym treningom masz już # odznaki.} many {Dzięki dotychczasowym treningom masz już # odznak.} other {Dzięki dotychczasowym treningom masz już # odznaki.}}"
+            title: "Twoje odznaki już są!"
+        see_all: "Zobacz moje odznaki"
+        text_many: "{count, plural, =1 {Odblokowano # odznakę.} few {Odblokowano # odznaki.} many {Odblokowano # odznak.} other {Odblokowano # odznaki.}}"
+        text_single: "Odblokowano odznakę „{name}”."
+        title: "{count, plural, =1 {Nowa odznaka!} few {# nowe odznaki!} many {# nowych odznak!} other {# nowej odznaki!}}"
+    progress:
+        assiduity: "{current, number} / {target, number} treningów"
+        regularity: "{current, number} / {target, number} tyg."
+        seniority: "{current, number} / {target, number} mies."
+        tonnage: "{current, number} / {target, number} t"
+        tonnage_lbs: "{current, number} / {target, number} lb"
+    ribbon:
+        assiduity: "{count, number}"
+        legend: "LEGENDA"
+        regularity: "{count, number} TYG"
+        seniority_months: "{count, number} MIES"
+        seniority_years: "{count, plural, =1 {# ROK} few {# LATA} many {# LAT} other {# ROKU}}"
+        tonnage: "{count, number} T"
+        tonnage_lbs: "{value} LB"
+    section:
+        title: "Wszystkie moje odznaki"
+    unlocked_on: "Zdobyta {date}"
+    widget:
+        all_complete: "Wszystkie poziomy osiągnięte. Szacunek."
+        earned_count: "{earned} / {total} zdobytych"
+        latest: "Ostatnio zdobyte"
+        next: "Kolejne cele"
+        see_all: "Zobacz wszystkie moje odznaki"
+        see_all_shared: "Zobacz wszystkie jego/jej odznaki"
+        title: "Odznaki"
+    workout:
+        title: "{count, plural, =1 {Odznaka zdobyta dzięki temu treningowi} few {Odznaki zdobyte dzięki temu treningowi} many {Odznaki zdobyte dzięki temu treningowi} other {Odznaki zdobyte dzięki temu treningowi}}"
+        tooltip: "{count, plural, =1 {Zdobyta odznaka: {names}} few {Zdobyte odznaki: {names}} many {Zdobyte odznaki: {names}} other {Zdobyte odznaki: {names}}}"
+
 contact:
     category:
         bug: Błąd
@@ -77,6 +149,7 @@ dashboard:
     library: Biblioteka
     logout: Wyloguj się
     messaging: Wiadomości
+    my_badges: "Moje odznaki"
     my_routines: Moje programy
     my_workouts: Moje treningi
     profile: Profil
@@ -385,6 +458,8 @@ pagination:
     results: Wyniki
 
 profile_connection:
+    badge:
+        title: "Odznaki użytkownika {nickname}"
     dashboard:
         back: "Wróć do mojego panelu"
         guard:
@@ -647,6 +722,7 @@ settings:
         explanation: Wybierz bloki wyświetlane na Twoim panelu.
         title: Widżety panelu
         widget:
+            badges: "Odznaki"
             goals: Cele
             muscle_distribution: Trenowane mięśnie
             regularity: Regularność

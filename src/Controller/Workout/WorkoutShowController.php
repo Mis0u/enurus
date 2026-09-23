@@ -7,6 +7,7 @@ namespace App\Controller\Workout;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Security\Voter\WorkoutVoter;
+use App\Service\Badge\BadgeViewBuilder;
 use App\Service\Workout\WorkoutShowDataService;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,6 +32,7 @@ class WorkoutShowController extends AbstractController
         #[MapEntity(id: 'id')]
         Workout $workout,
         WorkoutShowDataService $workoutShowDataService,
+        BadgeViewBuilder $badgeViewBuilder,
     ): Response {
         $this->denyAccessUnlessGranted(WorkoutVoter::VIEW, $workout);
 
@@ -49,6 +51,7 @@ class WorkoutShowController extends AbstractController
             'allPrimarySvgIds' => $data['allPrimarySvgIds'],
             'allSecondarySvgIds' => $data['allSecondarySvgIds'],
             'user' => $user,
+            'unlockedBadges' => $badgeViewBuilder->buildForWorkout($workout, $user),
         ]);
     }
 }

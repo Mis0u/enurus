@@ -43,6 +43,12 @@ final class DashboardWidgetUnlockResolverTest extends TestCase
         self::assertTrue($this->resolve(workoutCount: 5, hasAnyGoal: true)[DashboardWidgetEnum::GOALS->value]);
     }
 
+    public function testBadgesWidgetUnlocksFromFirstWorkout(): void
+    {
+        self::assertFalse($this->resolve(workoutCount: 0, hasAnyGoal: false)[DashboardWidgetEnum::BADGES->value]);
+        self::assertTrue($this->resolve(workoutCount: 1, hasAnyGoal: false)[DashboardWidgetEnum::BADGES->value]);
+    }
+
     /**
      * @return array<string, bool>
      */

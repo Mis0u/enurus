@@ -1,0 +1,36 @@
+{#
+    Tous les badges d'une connexion, en lecture seule.
+    Controller : ProfileConnectionBadgeListController (GET /{_locale}/connexions/{id}/badges)
+    Variables : connection, subject, badges (App\Service\Badge\View\BadgeCollectionView, calculée
+    pour `subject`, libellés dans la langue et l'unité de celui qui regarde).
+#}
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block title %}{{ 'profile_connection.badge.title'|trans({nickname: subject.nickname}, 'navigation')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'profile_connection/dashboard/_banner.html.twig' with {subject: subject} only %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]">
+        <a href="{{ path('app_profile_connection_dashboard', {id: connection.id}) }}"
+           class="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-lg border border-white/[0.07] text-sm font-medium text-[#8b9bb4] hover:border-rose-ft/40 hover:text-rose-ft transition-colors whitespace-nowrap">
+            {% include 'partials/_svg/_inferior.html.twig' with {'width': 4, 'height': 4} only %}
+            <span>{{ 'profile_connection.workout.list.back_to_dashboard'|trans({nickname: subject.nickname}, 'navigation') }}</span>
+        </a>
+
+        <section class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] md:p-[26px]">
+            <div class="flex items-center gap-2.5 mb-5">
+                {% include 'partials/_svg/_shield.html.twig' with {width: 3.75, height: 3.75, extraClass: 'text-[#8b9bb4]', ariaHidden: true} only %}
+                <h2 class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
+                    {{ 'profile_connection.badge.title'|trans({nickname: subject.nickname}, 'navigation') }}
+                </h2>
+                <span class="ml-auto text-[12px] text-[#4a5568] tabular-nums">
+                    {{ 'badge.widget.earned_count'|trans({earned: badges.earnedCount, total: badges.totalCount}, 'navigation') }}
+                </span>
+            </div>
+            {% include 'badge/_collection.html.twig' with {badges: badges} only %}
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{#
+    Dégradés et filtres partagés par tous les badges (`_badge.html.twig`, `_legend.html.twig`),
+    inclus une seule fois par page dans `_base_dashboard.html.twig`. Jamais `display: none` sur ce
+    SVG : Firefox ignore alors les dégradés qu'il définit — on le réduit à 0×0 à la place.
+    Métaux de palier : 1 bronze · 2 argent · 3 or · 4 platine · 5 émeraude · 6 rubis.
+#}
+<svg class="badge-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+        <radialGradient id="badge-core" cx=".5" cy=".38" r=".75">
+            <stop offset="0" stop-color="#1c2b47"/>
+            <stop offset=".7" stop-color="#0f1928"/>
+            <stop offset="1" stop-color="#0a111f"/>
+        </radialGradient>
+        <linearGradient id="badge-rim" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ff5a7a"/>
+            <stop offset=".22" stop-color="#f43f5e"/>
+            <stop offset=".55" stop-color="#a855f7"/>
+            <stop offset=".8" stop-color="#0ea5e9"/>
+            <stop offset="1" stop-color="#22d3ee"/>
+        </linearGradient>
+        <linearGradient id="badge-holo" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fb7185"/>
+            <stop offset=".2" stop-color="#f43f5e"/>
+            <stop offset=".38" stop-color="#e879f9"/>
+            <stop offset=".5" stop-color="#ffffff"/>
+            <stop offset=".62" stop-color="#7dd3fc"/>
+            <stop offset=".8" stop-color="#06b6d4"/>
+            <stop offset="1" stop-color="#a855f7"/>
+        </linearGradient>
+        <linearGradient id="badge-rose" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fb7185"/>
+            <stop offset="1" stop-color="#e11d48"/>
+        </linearGradient>
+        <linearGradient id="badge-cyan" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#67e8f9"/>
+            <stop offset="1" stop-color="#0891b2"/>
+        </linearGradient>
+        <linearGradient id="badge-streak-left" x1="1" y1="0" x2="0" y2="0">
+            <stop offset="0" stop-color="#f43f5e"/>
+            <stop offset="1" stop-color="#f43f5e" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="badge-streak-right" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#06b6d4"/>
+            <stop offset="1" stop-color="#06b6d4" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="badge-spark" cx=".5" cy=".5" r=".5">
+            <stop offset="0" stop-color="#ffffff"/>
+            <stop offset=".5" stop-color="#a5f3fc"/>
+            <stop offset="1" stop-color="#22d3ee"/>
+        </radialGradient>
+        <linearGradient id="badge-metal-1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ffd0a1"/><stop offset=".35" stop-color="#d98a4e"/><stop offset=".7" stop-color="#9c5528"/><stop offset="1" stop-color="#6b3514"/>
+        </linearGradient>
+        <linearGradient id="badge-metal-2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#cbd5e1"/><stop offset=".7" stop-color="#8b98ab"/><stop offset="1" stop-color="#5b6678"/>
+        </linearGradient>
+        <linearGradient id="badge-metal-3" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fff3b0"/><stop offset=".35" stop-color="#fbbf24"/><stop offset=".7" stop-color="#d48806"/><stop offset="1" stop-color="#8a5300"/>
+        </linearGradient>
+        <linearGradient id="badge-metal-4" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="#e0f2fe"/><stop offset=".65" stop-color="#a5c8d6"/><stop offset="1" stop-color="#6d8fa0"/>
+        </linearGradient>
+        <linearGradient id="badge-metal-5" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#a7f3d0"/><stop offset=".35" stop-color="#34d399"/><stop offset=".7" stop-color="#059669"/><stop offset="1" stop-color="#064e3b"/>
+        </linearGradient>
+        <linearGradient id="badge-metal-6" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fecdd3"/><stop offset=".3" stop-color="#fb3b64"/><stop offset=".65" stop-color="#be123c"/><stop offset="1" stop-color="#6b0a24"/>
+        </linearGradient>
+        <filter id="badge-glow-4" x="-40%" y="-40%" width="180%" height="180%">
+            <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#bae6fd" flood-opacity=".5"/>
+        </filter>
+        <filter id="badge-glow-5" x="-40%" y="-40%" width="180%" height="180%">
+            <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#34d399" flood-opacity=".55"/>
+        </filter>
+        <filter id="badge-glow-6" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="-3" dy="0" stdDeviation="7" flood-color="#f43f5e" flood-opacity=".65"/>
+            <feDropShadow dx="3" dy="0" stdDeviation="7" flood-color="#06b6d4" flood-opacity=".55"/>
+        </filter>
+        <path id="badge-shield" d="M18 10 H102 Q108 10 108 16 V54 Q108 98 60 126 Q12 98 12 54 V16 Q12 10 18 10 Z"/>
+    </defs>
+</svg>

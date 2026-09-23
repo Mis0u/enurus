@@ -1,0 +1,30 @@
+{#
+    SVG d'un badge à partir de sa vue, avec cadenas en surimpression s'il est verrouillé (la
+    Légende verrouillée est une silhouette mystère : pas de cadenas en plus).
+    Variables attendues (toutes via `only`) :
+    - tile : App\Service\Badge\View\BadgeTileView
+    - size : 'xs'|'sm'|'md'|'lg'
+#}
+{% set locked = not tile.isEarned %}
+{% if not locked %}
+    {% set label = tile.name %}
+{% elseif tile.isLegend %}
+    {% set label = 'badge.legend.mystery_label'|trans({}, 'navigation') %}
+{% else %}
+    {% set label = 'badge.locked_label'|trans({name: tile.name}, 'navigation') %}
+{% endif %}
+<div class="relative inline-flex">
+    {% include 'partials/_milestone_badge/_badge.html.twig' with {
+        family: tile.family,
+        tier: tile.tier,
+        ribbon: tile.ribbon,
+        label: label,
+        locked: locked,
+        size: size,
+    } only %}
+    {% if locked and not tile.isLegend %}
+        <span class="absolute right-0 bottom-1 w-5 h-5 rounded-full bg-[#1a2436] border-2 border-bg-card flex items-center justify-center text-[#8b9bb4]" aria-hidden="true">
+            {% include 'partials/_svg/_lock.html.twig' with {width: 2.5, height: 2.5} only %}
+        </span>
+    {% endif %}
+</div>

@@ -20,6 +20,7 @@
             data: data,
             subject: subject,
             readOnly: true,
+            badgesUrl: is_granted('PROFILE_CONNECTION_VIEW_BADGES', connection) ? path('app_profile_connection_badge_list', {id: connection.id}) : null,
         } only %}
     </div>
 {% endblock %}

@@ -7,17 +7,17 @@ namespace App\Service\Dashboard;
 use App\Entity\User;
 use App\Repository\WorkoutStatsRepository;
 use App\Service\Workout\DeloadPeriodSetService;
+use App\Service\Workout\WeeklyStreakCalculator;
 
 final readonly class DashboardRegularityService
 {
-    private const int SECONDS_PER_DAY = 86400;
-
     private const int DAYS_PER_WEEK = 7;
 
     public function __construct(
         private WorkoutStatsRepository $workoutStatsRepository,
         private DashboardPeriodCalculator $periodCalculator,
         private DeloadPeriodSetService $deloadPeriodSetService,
+        private WeeklyStreakCalculator $weeklyStreakCalculator,
     ) {
     }
 
@@ -83,8 +83,9 @@ final readonly class DashboardRegularityService
         $previousYearCount = $this->workoutStatsRepository->countByUserAndDate($user, $previousYear->start, $previousYear->end);
 
         return [
-            'streak' => $this->computeStreak($allDates, $week->start, $deloadWeekSet),
-            'bestStreak' => $this->computeBestStreak($allDates, $deloadWeekSet),
+            // Même règle que le badge Régularité : un deload relie la série sans l'allonger.
+            'streak' => $this->weeklyStreakCalculator->currentStreak($allDates, $deloadWeekSet, $now),
+            'bestStreak' => $this->weeklyStreakCalculator->longestStreak($allDates, $deloadWeekSet, $now),
             'weekCount' => $weekCount,
             'monthCount' => $monthCount,
             'yearCount' => $yearCount,
@@ -95,85 +96,6 @@ final readonly class DashboardRegularityService
             'weekDays' => $this->buildWeekDays($week->start, $workoutDaySet, $today, $deloadDaySet),
             'previousWeekDays' => $this->buildWeekDays($previousWeek->start, $workoutDaySet, $today, $deloadDaySet),
         ];
-    }
-
-    /**
-     * Une semaine couverte par un deload (même sans séance) ne casse jamais la série — voir
-     * `App\Entity\DeloadPeriod`. `$deloadWeekSet` est déjà indexé par lundi `Y-m-d`, même clé que
-     * `$currentWeekStart` (toujours un lundi, cf. `DashboardPeriodCalculator::weekStartOf()`).
-     *
-     * @param \DateTimeImmutable[] $allDates
-     * @param array<string, true> $deloadWeekSet
-     */
-    private function computeStreak(array $allDates, \DateTimeImmutable $currentWeekStart, array $deloadWeekSet): int
-    {
-        if ([] === $allDates && [] === $deloadWeekSet) {
-            return 0;
-        }
-
-        $weekSet = $deloadWeekSet;
-        foreach ($allDates as $date) {
-            $weekSet[self::mondayKeyOf($date)] = true;
-        }
-
-        $week = $currentWeekStart;
-
-        // If current week has no workout, start counting from previous week
-        if (! isset($weekSet[$week->format('Y-m-d')])) {
-            $week = $week->modify('-7 days');
-        }
-
-        $streak = 0;
-        while (isset($weekSet[$week->format('Y-m-d')])) {
-            $streak++;
-            $week = $week->modify('-7 days');
-        }
-
-        return $streak;
-    }
-
-    /**
-     * Record — plus long streak (semaines consécutives avec au moins une séance, ou couvertes par
-     * un deload) sur tout l'historique, streak en cours inclus s'il en fait partie.
-     *
-     * @param \DateTimeImmutable[] $allDates
-     * @param array<string, true> $deloadWeekSet
-     */
-    private function computeBestStreak(array $allDates, array $deloadWeekSet): int
-    {
-        if ([] === $allDates && [] === $deloadWeekSet) {
-            return 0;
-        }
-
-        /** @var array<string, \DateTimeImmutable> $weekStarts */
-        $weekStarts = [];
-        foreach ($allDates as $date) {
-            $monday = $date->modify(sprintf('-%d days', ((int) $date->format('N')) - 1))->setTime(0, 0, 0);
-            $weekStarts[$monday->format('Y-m-d')] = $monday;
-        }
-
-        foreach (array_keys($deloadWeekSet) as $mondayKey) {
-            $weekStarts[$mondayKey] ??= new \DateTimeImmutable($mondayKey);
-        }
-
-        $sorted = array_values($weekStarts);
-        usort($sorted, static fn (\DateTimeImmutable $a, \DateTimeImmutable $b): int => $a <=> $b);
-
-        $best = 1;
-        $current = 1;
-
-        for ($i = 1, $count = \count($sorted); $i < $count; $i++) {
-            $diffDays = (int) round(($sorted[$i]->getTimestamp() - $sorted[$i - 1]->getTimestamp()) / self::SECONDS_PER_DAY);
-
-            if (self::DAYS_PER_WEEK === $diffDays) {
-                $current++;
-                $best = max($best, $current);
-            } else {
-                $current = 1;
-            }
-        }
-
-        return $best;
     }
 
     /**
@@ -197,10 +119,5 @@ final readonly class DashboardRegularityService
         }
 
         return $days;
-    }
-
-    private static function mondayKeyOf(\DateTimeImmutable $date): string
-    {
-        return $date->modify(sprintf('-%d days', ((int) $date->format('N')) - 1))->format('Y-m-d');
     }
 }

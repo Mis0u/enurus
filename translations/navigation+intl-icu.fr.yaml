@@ -18,6 +18,78 @@ admin:
         body: "L'adresse {email} correspond à un compte supprimé le {deletedAt}. Vérifie s'il s'agit d'un abus."
         subject: Réinscription détectée
 
+badge:
+    family:
+        assiduity:
+            description: "Nombre total de séances"
+            title: "Assiduité"
+        regularity:
+            description: "Semaines d'affilée avec au moins une séance · les semaines de repos programmées ne cassent pas la série"
+            title: "Régularité"
+        seniority:
+            description: "Temps depuis ton inscription · ne se perd jamais"
+            title: "Ancienneté"
+        tonnage:
+            description: "Total soulevé depuis le début"
+            title: "Tonnage cumulé"
+    legend:
+        description: "Décroche le rubis dans les 4 familles. Tu le perds si un rubis retombe, sauf celui d'ancienneté qui reste acquis."
+        kicker: "Méta-badge"
+        mystery_label: "Badge mystère (verrouillé)"
+        rubies_label: "Rubis obtenus par famille"
+        ruby_earned: "rubis obtenu"
+        ruby_missing: "rubis manquant"
+    locked_label: "{name} (verrouillé)"
+    max_reached: "Palier maximum atteint"
+    name:
+        assiduity: "{count, plural, =1 {# séance} other {# séances}}"
+        legend: "Légende Enurus"
+        regularity: "{count, plural, =1 {# semaine} other {# semaines}}"
+        seniority_months: "{count, plural, other {# mois}}"
+        seniority_years: "{count, plural, =1 {# an} other {# ans}}"
+        tonnage: "{count, plural, =1 {# tonne} other {# tonnes}}"
+        tonnage_lbs: "{count, number} lb"
+    popup:
+        close: "Continuer"
+        legend:
+            text: "Rubis dans les 4 familles : tu as atteint le sommet."
+            title: "Légende Enurus !"
+        retroactive:
+            text: "{count, plural, =1 {Tu as déjà débloqué # badge grâce à tes séances passées.} other {Tu as déjà débloqué # badges grâce à tes séances passées.}}"
+            title: "Tes badges sont arrivés !"
+        see_all: "Voir mes badges"
+        text_many: "{count, plural, other {Tu as débloqué # badges.}}"
+        text_single: "Tu as débloqué le badge « {name} »."
+        title: "{count, plural, =1 {Nouveau badge !} other {# nouveaux badges !}}"
+    progress:
+        assiduity: "{current, number} / {target, number} séances"
+        regularity: "{current, number} / {target, number} sem."
+        seniority: "{current, number} / {target, number} mois"
+        tonnage: "{current, number} / {target, number} t"
+        tonnage_lbs: "{current, number} / {target, number} lb"
+    ribbon:
+        assiduity: "{count, number}"
+        legend: "LÉGENDE"
+        regularity: "{count, number} SEM"
+        seniority_months: "{count, number} MOIS"
+        seniority_years: "{count, plural, =1 {# AN} other {# ANS}}"
+        tonnage: "{count, number} T"
+        tonnage_lbs: "{value} LB"
+    section:
+        title: "Tous mes badges"
+    unlocked_on: "Obtenu le {date}"
+    widget:
+        all_complete: "Tous les paliers sont atteints. Respect."
+        earned_count: "{earned} / {total} obtenus"
+        latest: "Derniers obtenus"
+        next: "Prochains paliers"
+        see_all: "Voir tous mes badges"
+        see_all_shared: "Voir tous ses badges"
+        title: "Badges"
+    workout:
+        title: "{count, plural, =1 {Badge débloqué lors de cette séance} other {Badges débloqués lors de cette séance}}"
+        tooltip: "{count, plural, =1 {Badge débloqué : {names}} other {Badges débloqués : {names}}}"
+
 contact:
     category:
         bug: Bug
@@ -77,6 +149,7 @@ dashboard:
     library: Bibliothèque
     logout: Déconnexion
     messaging: Messagerie
+    my_badges: "Mes badges"
     my_routines: Mes routines
     my_workouts: Mes séances
     profile: Profil
@@ -381,6 +454,8 @@ pagination:
     results: Résultats
 
 profile_connection:
+    badge:
+        title: "Badges de {nickname}"
     dashboard:
         back: "Retour à mon tableau de bord"
         guard:
@@ -637,6 +712,7 @@ settings:
         explanation: Choisis les blocs affichés sur ton tableau de bord.
         title: Widgets du dashboard
         widget:
+            badges: "Badges"
             goals: Objectifs
             muscle_distribution: Muscles travaillés
             regularity: Régularité

@@ -1,0 +1,32 @@
+{#
+    Tous les badges de l'utilisateur connecté.
+    Controller : BadgeListController (GET /{_locale}/mes-badges)
+    Variables : user, badges (App\Service\Badge\View\BadgeCollectionView)
+#}
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block title %}{{ 'dashboard.my_badges'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        'title': 'dashboard.my_badges'|trans({}, 'navigation'),
+        'subtitle': user.nickname|formatInitials,
+    } only %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 overflow-y-auto p-4 max-md:pb-[160px] md:p-[24px_28px]">
+        <section class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] md:p-[26px]">
+            <div class="flex items-center gap-2.5 mb-5">
+                {% include 'partials/_svg/_shield.html.twig' with {width: 3.75, height: 3.75, extraClass: 'text-[#8b9bb4]', ariaHidden: true} only %}
+                <h2 class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
+                    {{ 'badge.section.title'|trans({}, 'navigation') }}
+                </h2>
+                <span class="ml-auto text-[12px] text-[#4a5568] tabular-nums">
+                    {{ 'badge.widget.earned_count'|trans({earned: badges.earnedCount, total: badges.totalCount}, 'navigation') }}
+                </span>
+            </div>
+            {% include 'badge/_collection.html.twig' with {badges: badges} only %}
+        </section>
+    </div>
+{% endblock %}

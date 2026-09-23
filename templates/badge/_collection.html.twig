@@ -1,0 +1,72 @@
+{#
+    Tous les badges d'un utilisateur : encart Légende puis les 4 familles, du bronze au rubis.
+    Partagé entre la page "Mes badges" et la page des badges d'une connexion.
+    Variables attendues (toutes via `only`) :
+    - badges : App\Service\Badge\View\BadgeCollectionView
+#}
+<div class="flex flex-col gap-7">
+    <div class="badge-legend-tile rounded-2xl p-4 md:p-5 flex items-center gap-4 md:gap-5">
+        {% include 'badge/_visual.html.twig' with {tile: badges.legend, size: 'md'} only %}
+        <div class="min-w-0">
+            <div class="text-[11px] font-bold uppercase tracking-[0.6px] text-[#c084fc]">
+                {{ 'badge.legend.kicker'|trans({}, 'navigation') }}
+            </div>
+            <h3 class="font-rajdhani text-xl font-bold text-[#f0f4ff] mt-0.5 mb-1">
+                {{ badges.legend.name }}
+            </h3>
+            <p class="text-[12.5px] text-[#8b9bb4] mb-2.5 max-w-[60ch]">
+                {% if badges.legend.isEarned %}
+                    {{ 'badge.unlocked_on'|trans({date: badges.legend.unlockedAt|format_date('long', locale=app.request.locale)}, 'navigation') }}
+                {% else %}
+                    {{ 'badge.legend.description'|trans({}, 'navigation') }}
+                {% endif %}
+            </p>
+            <ul class="flex flex-wrap gap-1.5" aria-label="{{ 'badge.legend.rubies_label'|trans({}, 'navigation') }}">
+                {% for family, has_ruby in badges.rubyByFamily %}
+                    <li class="badge-ruby-pill{{ has_ruby ? ' badge-ruby-pill--earned' }} text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
+                        {{ ('badge.family.' ~ family ~ '.title')|trans({}, 'navigation') }}
+                        <span class="sr-only">{{ (has_ruby ? 'badge.legend.ruby_earned' : 'badge.legend.ruby_missing')|trans({}, 'navigation') }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    {% for family_view in badges.families %}
+        <section aria-labelledby="badge-family-{{ family_view.family.value }}">
+            <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 mb-3">
+                <h3 id="badge-family-{{ family_view.family.value }}" class="font-rajdhani text-lg font-bold text-[#f0f4ff]">
+                    {{ ('badge.family.' ~ family_view.family.value ~ '.title')|trans({}, 'navigation') }}
+                </h3>
+                <p class="text-[12.5px] text-[#4a5568]">
+                    {{ ('badge.family.' ~ family_view.family.value ~ '.description')|trans({}, 'navigation') }}
+                </p>
+                {% if family_view.isComplete %}
+                    <span class="badge-ruby-pill badge-ruby-pill--earned text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
+                        {{ 'badge.max_reached'|trans({}, 'navigation') }}
+                    </span>
+                {% endif %}
+            </div>
+            <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+                {% for tile in family_view.tiles %}
+                    <li class="badge-hover flex flex-col items-center gap-1.5 text-center rounded-xl px-2 py-3 border {{ tile.isEarned ? 'border-white/[0.07] bg-white/[0.02]' : 'border-dashed border-white/[0.07]' }}">
+                        {% include 'badge/_visual.html.twig' with {tile: tile, size: 'md'} only %}
+                        <span class="font-rajdhani text-[14.5px] font-bold leading-tight {{ tile.isEarned ? 'text-[#f0f4ff]' : 'text-[#8b9bb4]' }}">
+                            {{ tile.name }}
+                        </span>
+                        {% if tile.isEarned %}
+                            <span class="text-[11px] text-[#4a5568]">
+                                {{ 'badge.unlocked_on'|trans({date: tile.unlockedAt|format_date('medium', locale=app.request.locale)}, 'navigation') }}
+                            </span>
+                        {% else %}
+                            <span class="text-[11px] text-[#4a5568] tabular-nums">{{ tile.progressLabel }}</span>
+                            <div class="w-4/5">
+                                {% include 'badge/_progress_bar.html.twig' with {tile: tile} only %}
+                            </div>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    {% endfor %}
+</div>

@@ -18,6 +18,78 @@ admin:
         body: "O email {email} corresponde a uma conta eliminada em {deletedAt}. Verifica se se trata de abuso."
         subject: Reinscrição detetada
 
+badge:
+    family:
+        assiduity:
+            description: "Número total de treinos"
+            title: "Constância"
+        regularity:
+            description: "Semanas seguidas com pelo menos um treino · as semanas de descanso programadas não quebram a sequência"
+            title: "Regularidade"
+        seniority:
+            description: "Tempo desde o teu registo · nunca se perde"
+            title: "Antiguidade"
+        tonnage:
+            description: "Total levantado desde o início"
+            title: "Volume acumulado"
+    legend:
+        description: "Conquista o rubi nas 4 famílias. Perdes esta insígnia se um rubi cair, exceto o da antiguidade, que é teu para sempre."
+        kicker: "Meta-insígnia"
+        mystery_label: "Insígnia misteriosa (bloqueada)"
+        rubies_label: "Rubis obtidos por família"
+        ruby_earned: "rubi obtido"
+        ruby_missing: "rubi em falta"
+    locked_label: "{name} (bloqueada)"
+    max_reached: "Nível máximo atingido"
+    name:
+        assiduity: "{count, plural, =1 {# treino} other {# treinos}}"
+        legend: "Lenda Enurus"
+        regularity: "{count, plural, =1 {# semana} other {# semanas}}"
+        seniority_months: "{count, plural, =1 {# mês} other {# meses}}"
+        seniority_years: "{count, plural, =1 {# ano} other {# anos}}"
+        tonnage: "{count, plural, =1 {# tonelada} other {# toneladas}}"
+        tonnage_lbs: "{count, number} lb"
+    popup:
+        close: "Continuar"
+        legend:
+            text: "Rubi nas 4 famílias: chegaste ao topo."
+            title: "Lenda Enurus!"
+        retroactive:
+            text: "{count, plural, =1 {Já desbloqueaste # insígnia graças aos teus treinos anteriores.} other {Já desbloqueaste # insígnias graças aos teus treinos anteriores.}}"
+            title: "As tuas insígnias chegaram!"
+        see_all: "Ver as minhas insígnias"
+        text_many: "{count, plural, other {Desbloqueaste # insígnias.}}"
+        text_single: "Desbloqueaste a insígnia «{name}»."
+        title: "{count, plural, =1 {Nova insígnia!} other {# novas insígnias!}}"
+    progress:
+        assiduity: "{current, number} / {target, number} treinos"
+        regularity: "{current, number} / {target, number} sem."
+        seniority: "{current, number} / {target, number} meses"
+        tonnage: "{current, number} / {target, number} t"
+        tonnage_lbs: "{current, number} / {target, number} lb"
+    ribbon:
+        assiduity: "{count, number}"
+        legend: "LENDA"
+        regularity: "{count, number} SEM"
+        seniority_months: "{count, plural, =1 {# MÊS} other {# MESES}}"
+        seniority_years: "{count, plural, =1 {# ANO} other {# ANOS}}"
+        tonnage: "{count, number} T"
+        tonnage_lbs: "{value} LB"
+    section:
+        title: "Todas as minhas insígnias"
+    unlocked_on: "Obtida a {date}"
+    widget:
+        all_complete: "Todos os níveis atingidos. Respeito."
+        earned_count: "{earned} / {total} obtidas"
+        latest: "Últimas obtidas"
+        next: "Próximas metas"
+        see_all: "Ver todas as minhas insígnias"
+        see_all_shared: "Ver todas as insígnias dele/dela"
+        title: "Insígnias"
+    workout:
+        title: "{count, plural, =1 {Insígnia desbloqueada com este treino} other {Insígnias desbloqueadas com este treino}}"
+        tooltip: "{count, plural, =1 {Insígnia desbloqueada: {names}} other {Insígnias desbloqueadas: {names}}}"
+
 contact:
     category:
         bug: Bug
@@ -77,6 +149,7 @@ dashboard:
     library: Biblioteca
     logout: Terminar sessão
     messaging: Mensagens
+    my_badges: "As minhas insígnias"
     my_routines: As minhas rotinas
     my_workouts: Os meus treinos
     profile: Perfil
@@ -381,6 +454,8 @@ pagination:
     results: Resultados
 
 profile_connection:
+    badge:
+        title: "Insígnias de {nickname}"
     dashboard:
         back: "Voltar ao meu painel"
         guard:
@@ -637,6 +712,7 @@ settings:
         explanation: Escolhe os blocos apresentados no teu painel.
         title: Widgets do painel
         widget:
+            badges: "Insígnias"
             goals: Objetivos
             muscle_distribution: Músculos trabalhados
             regularity: Regularidade

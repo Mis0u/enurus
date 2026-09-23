@@ -1,6 +1,7 @@
 {#
     Variables attendues (toutes via `only`) :
     - workout, tonnage, muscles, hiddenCount, exerciseCount, hasPr, hasRepsRecord, user
+    - badges : list<App\Service\Badge\View\BadgeTileView> — badges débloqués par cette séance
     - showUrl : string — URL de destination au clic (propre séance ou séance d'une connexion)
     - readOnly : bool — masque les boutons d'édition/suppression quand vrai
 #}
@@ -23,6 +24,7 @@
             'exerciseCount': exerciseCount,
             'hasPr': hasPr,
             'hasRepsRecord': hasRepsRecord,
+            'badges': badges,
             'user': user,
         } only %}
 

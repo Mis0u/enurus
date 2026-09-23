@@ -7,6 +7,9 @@ namespace App\Service\Dashboard;
 use App\Entity\User;
 use App\Repository\WorkoutRepository;
 use App\Repository\WorkoutStatsRepository;
+use App\Service\Badge\BadgeProgress;
+use App\Service\Badge\BadgeProgressCalculator;
+use App\Service\Badge\BadgeViewBuilder;
 use App\Service\Goal\GoalCardFormatter;
 use App\Service\Goal\GoalProgress;
 
@@ -29,10 +32,16 @@ final readonly class DashboardViewDataBuilder
         private DashboardGoalService $goalService,
         private GoalCardFormatter $goalCardFormatter,
         private DashboardWidgetUnlockResolver $widgetUnlockResolver,
+        private BadgeProgressCalculator $badgeProgressCalculator,
+        private BadgeViewBuilder $badgeViewBuilder,
     ) {
     }
 
-    public function build(User $subject, User $viewer, DashboardState $dashboardState): DashboardViewData
+    /**
+     * `$badgeProgress` est celui déjà calculé par la synchro des badges qui précède l'affichage
+     * (`BadgeSyncResult::$progress`) — recalculé seulement s'il n'est pas fourni.
+     */
+    public function build(User $subject, User $viewer, DashboardState $dashboardState, ?BadgeProgress $badgeProgress = null): DashboardViewData
     {
         $periods = $this->resolvePeriods($subject);
         $dayIds = $this->workoutStatsRepository->findIdsByUserAndDateRange($subject, $periods->day->start, $periods->day->end);
@@ -51,6 +60,7 @@ final readonly class DashboardViewDataBuilder
             $visibleWidgets,
             $hasNoVisibleWidgets,
             $hasNoVisibleWidgets && $dashboardState->regularityUnlocked,
+            $this->badgeViewBuilder->build($subject, $viewer, $badgeProgress ?? $this->badgeProgressCalculator->calculate($subject)),
         );
     }
 

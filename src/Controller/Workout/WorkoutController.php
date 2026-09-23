@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace App\Controller\Workout;
 
 use App\Constraint\ImageConstraints;
+use App\Controller\Trait\NotifiesBadgeUnlockTrait;
 use App\Controller\Trait\NotifiesGoalAchievementTrait;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Enum\Entity\Workout\WorkoutMoodEnum;
 use App\Form\WorkoutType;
+use App\Service\Badge\BadgeLabelFormatter;
+use App\Service\Badge\BadgeSyncService;
 use App\Service\Goal\GoalAchievementDetector;
 use App\Service\Goal\GoalCardFormatter;
 use App\Service\Utils\WeightConverterService;
@@ -26,6 +29,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted('ROLE_USER')]
 final class WorkoutController extends AbstractController
 {
+    use NotifiesBadgeUnlockTrait;
     use NotifiesGoalAchievementTrait;
 
     public function __construct(
@@ -33,6 +37,8 @@ final class WorkoutController extends AbstractController
         private readonly BodyweightSnapshotService $bodyweightSnapshotService,
         private readonly GoalAchievementDetector $goalAchievementDetector,
         private readonly GoalCardFormatter $goalCardFormatter,
+        private readonly BadgeSyncService $badgeSyncService,
+        private readonly BadgeLabelFormatter $badgeLabelFormatter,
         private readonly EntityManagerInterface $em,
         private readonly TranslatorInterface $translator,
     ) {
@@ -96,6 +102,7 @@ final class WorkoutController extends AbstractController
 
         $this->addFlash('success', $this->translator->trans('workout.flash.created', [], 'navigation'));
         $this->notifyGoalAchievements($user, $workout, $this->goalAchievementDetector, $this->goalCardFormatter);
+        $this->notifyBadgeUnlocks($this->badgeSyncService->sync($user, $workout), $user, $this->badgeLabelFormatter);
 
         if ($request->isXmlHttpRequest()) {
             return $this->jsonSuccessResponse($workout, $request);

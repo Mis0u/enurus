@@ -36,10 +36,17 @@
         totalNotification="{{ pending_connections_count }}"
     />
 
+    <div class="h-px bg-white/[0.07] my-2 mx-1"></div>
+
+    <twig:Navigation:Sidebar:NavigationItem
+        link="{{ path('app_badge_list') }}"
+        route="app_badge_list"
+        menu="{{ 'dashboard.my_badges'|trans({}, 'navigation') }}"
+        icon="medal"
+    />
+
     {% if not is_granted('ROLE_ADMIN') %}
         {% set unread_contact_count = contact_unread_count(app.user) %}
-
-        <div class="h-px bg-white/[0.07] my-2 mx-1"></div>
 
         <twig:Navigation:Sidebar:NavigationItem
             link="{{ path('app_contact_thread_list') }}"

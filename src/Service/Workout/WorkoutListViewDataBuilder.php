@@ -11,6 +11,8 @@ use App\Repository\WorkoutMuscleRepository;
 use App\Repository\WorkoutRepository;
 use App\Repository\WorkoutStatsRepository;
 use App\Repository\WorkoutTonnageRepository;
+use App\Service\Badge\BadgeViewBuilder;
+use App\Service\Badge\View\BadgeTileView;
 use App\Service\Utils\WeightConverterService;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -35,6 +37,7 @@ final readonly class WorkoutListViewDataBuilder
         private PaginatorInterface $paginator,
         private WeightConverterService $weightConverter,
         private WorkoutRecordDetectionService $workoutRecordDetectionService,
+        private BadgeViewBuilder $badgeViewBuilder,
     ) {
     }
 
@@ -48,6 +51,7 @@ final readonly class WorkoutListViewDataBuilder
      *     exerciseCountMap: array<string, int>,
      *     hasPrMap: array<string, bool>,
      *     hasRepsRecordMap: array<string, bool>,
+     *     badgesMap: array<string, list<BadgeTileView>>,
      * }
      */
     public function build(User $subject, User $viewer, array $filters, int $page, int $limit): array
@@ -74,6 +78,7 @@ final readonly class WorkoutListViewDataBuilder
             'exerciseCountMap' => $this->workoutStatsRepository->findExerciseCountByWorkoutIds($workoutIds),
             'hasPrMap' => $this->workoutRecordDetectionService->hasPrByWorkoutId($subject, $workoutIds),
             'hasRepsRecordMap' => $this->workoutRecordDetectionService->hasRepsRecordByWorkoutId($subject, $workoutIds),
+            'badgesMap' => $this->badgeViewBuilder->buildForWorkouts(array_values($workoutIds), $viewer),
         ];
     }
 

@@ -7,6 +7,7 @@ namespace App\Controller\Workout;
 use App\Controller\Trait\ValidatesDeleteRequestTrait;
 use App\Entity\Workout;
 use App\Security\Voter\WorkoutVoter;
+use App\Service\Badge\BadgeSyncService;
 use App\Service\Entity\WorkoutPhotoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -25,6 +26,7 @@ final class WorkoutDeleteController extends AbstractController
 
     public function __construct(
         private readonly WorkoutPhotoService $workoutPhotoService,
+        private readonly BadgeSyncService $badgeSyncService,
         private readonly EntityManagerInterface $em,
         private readonly TranslatorInterface $translator,
     ) {
@@ -67,8 +69,12 @@ final class WorkoutDeleteController extends AbstractController
         // si le flush échoue, la photo est conservée (pas de perte de données)
         $this->workoutPhotoService->deletePhoto($workout);
 
+        $owner = $workout->owner;
         $this->em->remove($workout);
         $this->em->flush();
+
+        // Retrait silencieux : un badge redevenu immérité disparaît sans popup.
+        $this->badgeSyncService->sync($owner);
 
         return $this->json([
             'success' => true,

@@ -8,6 +8,7 @@ use App\Entity\ProfileConnection;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Security\Voter\ProfileConnectionVoter;
+use App\Service\Badge\BadgeViewBuilder;
 use App\Service\Workout\WorkoutShowDataService;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,6 +36,7 @@ final class ProfileConnectionWorkoutShowController extends AbstractController
 {
     public function __construct(
         private readonly WorkoutShowDataService $workoutShowDataService,
+        private readonly BadgeViewBuilder $badgeViewBuilder,
     ) {
     }
 
@@ -69,6 +71,9 @@ final class ProfileConnectionWorkoutShowController extends AbstractController
             'unit' => $viewer->unitOfMeasure,
             'allPrimarySvgIds' => $data['allPrimarySvgIds'],
             'allSecondarySvgIds' => $data['allSecondarySvgIds'],
+            'unlockedBadges' => $this->isGranted(ProfileConnectionVoter::VIEW_BADGES, $connection)
+                ? $this->badgeViewBuilder->buildForWorkout($workout, $viewer)
+                : [],
         ]);
     }
 }
