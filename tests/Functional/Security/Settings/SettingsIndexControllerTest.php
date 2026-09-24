@@ -49,6 +49,14 @@ final class SettingsIndexControllerTest extends WebTestCase
         self::assertCount(7, $crawler->filter('[data-controller="settings--dashboard-widgets"] input[type="checkbox"]'));
     }
 
+    public function testDashboardWidgetsCardIsCollapsedByDefault(): void
+    {
+        $client = $this->login(self::USER_WITH_WORKOUTS);
+        $client->request(Request::METHOD_GET, self::URL);
+
+        self::assertSelectorExists('#dashboard-widgets details:not([open]) > summary #dashboard-widgets-title');
+    }
+
     public function testConnectionsWidgetIsProposedCheckedByDefault(): void
     {
         $client = $this->login(self::USER_WITH_WORKOUTS);

@@ -46,6 +46,18 @@ final class ProfileConnectionListControllerTest extends WebTestCase
         });
     }
 
+    public function testSharingCardsAreCollapsedByDefault(): void
+    {
+        // Hub de ProfileConnectionFixtures : partage actif, les deux cartes sont rendues.
+        $client = $this->login(self::OTHER);
+
+        $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists('details:not([open]) > summary #profile-connection-sharing-title');
+        self::assertSelectorExists('details:not([open]) > summary #profile-connection-shared-widgets-title');
+    }
+
     public function testPersonalConnectionsWidgetIsNeverProposedForSharing(): void
     {
         // Hub de ProfileConnectionFixtures : widget Connexions débloqué.

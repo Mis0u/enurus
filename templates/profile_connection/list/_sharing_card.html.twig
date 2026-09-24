@@ -23,49 +23,54 @@
          data-profile-connection--profile-sharing-enable-workouts-message-value="{{ 'profile_connection.list.sharing.feedback.workouts_enabled'|trans({}, 'navigation') }}"
          data-profile-connection--profile-sharing-disable-workouts-message-value="{{ 'profile_connection.list.sharing.feedback.workouts_disabled'|trans({}, 'navigation') }}">
 
-    <h2 id="profile-connection-sharing-title" class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
-        {{ 'profile_connection.list.sharing.title'|trans({}, 'navigation') }}
-    </h2>
-    <p class="text-[13px] text-[#8b9bb4] mt-1">
-        {{ 'profile_connection.list.sharing.explanation'|trans({}, 'navigation') }}
-    </p>
-
-    <label class="relative mt-4 flex items-center justify-between gap-3 cursor-pointer">
-        <span class="text-sm text-[#f0f4ff]">{{ 'profile_connection.list.sharing.switch_label'|trans({}, 'navigation') }}</span>
-        <input type="checkbox"
-               class="peer sr-only"
-               {% if isDiscoverable %}checked{% endif %}
-               data-action="change->profile-connection--profile-sharing#toggle">
-        <span class="shrink-0 w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-rose-ft after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
-    </label>
-
-    <div data-profile-connection--profile-sharing-target="codeWrapper" {% if not shareCode %}hidden{% endif %} class="mt-4 flex items-center justify-between gap-3 flex-wrap">
-        <p class="text-sm text-[#8b9bb4]">
-            {{ 'profile_connection.list.sharing.code_label'|trans({}, 'navigation') }}
-            <span class="font-mono text-[#f0f4ff]" data-profile-connection--profile-sharing-target="fullCode">{{ nickname }}#<span data-profile-connection--profile-sharing-target="code">{{ shareCode }}</span></span>
+    {# Repliée par défaut, comme « Affichage du dashboard partagé » : la page s'ouvre sur les connexions. #}
+    <details class="group/collapsible">
+        {% include 'partials/_collapsible_summary.html.twig' with {
+            title: 'profile_connection.list.sharing.title'|trans({}, 'navigation'),
+            titleId: 'profile-connection-sharing-title',
+            variant: 'connection',
+        } only %}
+        <p class="text-[13px] text-[#8b9bb4] mt-2">
+            {{ 'profile_connection.list.sharing.explanation'|trans({}, 'navigation') }}
         </p>
-        <div class="flex items-center gap-2">
-            <button type="button"
-                    class="px-3 py-1.5 rounded-[10px] text-[13px] font-semibold text-[#f0f4ff] bg-white/[0.06] hover:bg-white/[0.1] transition-ft"
-                    data-action="profile-connection--profile-sharing#copy">
-                {{ 'profile_connection.list.sharing.copy'|trans({}, 'navigation') }}
-            </button>
-            <button type="button"
-                    class="px-3 py-1.5 rounded-[10px] text-[13px] font-semibold text-[#f0f4ff] bg-white/[0.06] hover:bg-white/[0.1] transition-ft"
-                    data-action="profile-connection--profile-sharing#regenerate">
-                {{ 'profile_connection.list.sharing.regenerate'|trans({}, 'navigation') }}
-            </button>
-        </div>
-    </div>
 
-    <label class="relative mt-4 flex items-center justify-between gap-3 cursor-pointer has-disabled:cursor-not-allowed">
-        <span class="text-sm text-[#f0f4ff]">{{ 'profile_connection.list.sharing.share_workouts_label'|trans({}, 'navigation') }}</span>
-        <input type="checkbox"
-               class="peer sr-only"
-               {% if shareWorkoutsChecked %}checked{% endif %}
-               {% if not isDiscoverable %}disabled{% endif %}
-               data-profile-connection--profile-sharing-target="workoutCheckbox"
-               data-action="change->profile-connection--profile-sharing#toggleWorkouts">
-        <span class="shrink-0 w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-rose-ft peer-disabled:opacity-50 after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
-    </label>
+        <label class="relative mt-4 flex items-center justify-between gap-3 cursor-pointer">
+            <span class="text-sm text-[#f0f4ff]">{{ 'profile_connection.list.sharing.switch_label'|trans({}, 'navigation') }}</span>
+            <input type="checkbox"
+                   class="peer sr-only"
+                   {% if isDiscoverable %}checked{% endif %}
+                   data-action="change->profile-connection--profile-sharing#toggle">
+            <span class="shrink-0 w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-rose-ft after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
+        </label>
+
+        <div data-profile-connection--profile-sharing-target="codeWrapper" {% if not shareCode %}hidden{% endif %} class="mt-4 flex items-center justify-between gap-3 flex-wrap">
+            <p class="text-sm text-[#8b9bb4]">
+                {{ 'profile_connection.list.sharing.code_label'|trans({}, 'navigation') }}
+                <span class="font-mono text-[#f0f4ff]" data-profile-connection--profile-sharing-target="fullCode">{{ nickname }}#<span data-profile-connection--profile-sharing-target="code">{{ shareCode }}</span></span>
+            </p>
+            <div class="flex items-center gap-2">
+                <button type="button"
+                        class="px-3 py-1.5 rounded-[10px] text-[13px] font-semibold text-[#f0f4ff] bg-white/[0.06] hover:bg-white/[0.1] transition-ft"
+                        data-action="profile-connection--profile-sharing#copy">
+                    {{ 'profile_connection.list.sharing.copy'|trans({}, 'navigation') }}
+                </button>
+                <button type="button"
+                        class="px-3 py-1.5 rounded-[10px] text-[13px] font-semibold text-[#f0f4ff] bg-white/[0.06] hover:bg-white/[0.1] transition-ft"
+                        data-action="profile-connection--profile-sharing#regenerate">
+                    {{ 'profile_connection.list.sharing.regenerate'|trans({}, 'navigation') }}
+                </button>
+            </div>
+        </div>
+
+        <label class="relative mt-4 flex items-center justify-between gap-3 cursor-pointer has-disabled:cursor-not-allowed">
+            <span class="text-sm text-[#f0f4ff]">{{ 'profile_connection.list.sharing.share_workouts_label'|trans({}, 'navigation') }}</span>
+            <input type="checkbox"
+                   class="peer sr-only"
+                   {% if shareWorkoutsChecked %}checked{% endif %}
+                   {% if not isDiscoverable %}disabled{% endif %}
+                   data-profile-connection--profile-sharing-target="workoutCheckbox"
+                   data-action="change->profile-connection--profile-sharing#toggleWorkouts">
+            <span class="shrink-0 w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-rose-ft peer-disabled:opacity-50 after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
+        </label>
+    </details>
 </section>

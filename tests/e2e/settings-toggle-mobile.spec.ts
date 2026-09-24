@@ -14,6 +14,8 @@ test('toggling a dashboard widget on mobile keeps the settings page on screen', 
     await page.goto('/fr/reglages');
     await page.waitForLoadState('networkidle');
 
+    // Carte repliée par défaut : on la déplie avant d'atteindre l'interrupteur.
+    await page.locator('#dashboard-widgets summary').click();
     const toggle = page.locator('#dashboard-widgets label').first();
     await toggle.scrollIntoViewIfNeeded();
 

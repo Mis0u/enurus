@@ -1121,6 +1121,9 @@
   .resize-y {
     resize: vertical;
   }
+  .list-none {
+    list-style-type: none;
+  }
   .appearance-none {
     appearance: none;
   }
@@ -3029,6 +3032,11 @@
   .\[scrollbar-width\:none\] {
     scrollbar-width: none;
   }
+  .group-open\/collapsible\:rotate-180 {
+    &:is(:where(.group\/collapsible):is([open], :popover-open, :open) *) {
+      rotate: 180deg;
+    }
+  }
   .group-hover\:-translate-x-1 {
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
@@ -4044,6 +4052,11 @@
       outline-offset: 2px;
     }
   }
+  .focus-visible\:outline-offset-4 {
+    &:focus-visible {
+      outline-offset: 4px;
+    }
+  }
   .focus-visible\:outline-rose-ft {
     &:focus-visible {
       outline-color: var(--color-rose-ft);
@@ -4882,6 +4895,11 @@
   .\[\&\.uploading\]\:opacity-60 {
     &.uploading {
       opacity: 60%;
+    }
+  }
+  .\[\&\:\:-webkit-details-marker\]\:hidden {
+    &::-webkit-details-marker {
+      display: none;
     }
   }
   .\[\&\:\:-webkit-scrollbar\]\:hidden {
