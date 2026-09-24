@@ -44,8 +44,19 @@ final class SettingsIndexControllerTest extends WebTestCase
         $crawler = $client->request(Request::METHOD_GET, self::URL);
 
         self::assertResponseIsSuccessful();
-        // Session, Tonnage, Muscles, Régularité, Badges, Calendrier — pas Objectifs, ce fixture n'en a jamais créé.
-        self::assertCount(6, $crawler->filter('[data-controller="settings--dashboard-widgets"] input[type="checkbox"]'));
+        // Session, Tonnage, Muscles, Régularité, Badges, Calendrier, Connexions (hub de
+        // ProfileConnectionFixtures) — pas Objectifs, ce fixture n'en a jamais créé.
+        self::assertCount(7, $crawler->filter('[data-controller="settings--dashboard-widgets"] input[type="checkbox"]'));
+    }
+
+    public function testConnectionsWidgetIsProposedCheckedByDefault(): void
+    {
+        $client = $this->login(self::USER_WITH_WORKOUTS);
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+
+        $checkbox = $crawler->filter('input[data-settings--dashboard-widgets-widget-param="connections"]');
+        self::assertCount(1, $checkbox);
+        self::assertSame('', $checkbox->attr('checked'));
     }
 
     public function testHeatmapWidgetIsProposedUncheckedByDefault(): void

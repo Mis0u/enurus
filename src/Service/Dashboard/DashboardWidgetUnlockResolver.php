@@ -7,6 +7,7 @@ namespace App\Service\Dashboard;
 use App\Entity\User;
 use App\Enum\Dashboard\DashboardWidgetEnum;
 use App\Repository\ExerciseGoalRepository;
+use App\Repository\ProfileConnectionRepository;
 
 /**
  * Source unique de "quels widgets sont débloqués pour cet utilisateur" — partagée entre le
@@ -17,6 +18,7 @@ final readonly class DashboardWidgetUnlockResolver
 {
     public function __construct(
         private ExerciseGoalRepository $exerciseGoalRepository,
+        private ProfileConnectionRepository $connectionRepository,
     ) {
     }
 
@@ -35,6 +37,7 @@ final readonly class DashboardWidgetUnlockResolver
             DashboardWidgetEnum::GOALS->value => $hasAnyGoal,
             DashboardWidgetEnum::BADGES->value => $dashboardState->lastWorkoutUnlocked,
             DashboardWidgetEnum::HEATMAP->value => $dashboardState->lastWorkoutUnlocked,
+            DashboardWidgetEnum::CONNECTIONS->value => 0 < $this->connectionRepository->countAcceptedInvolving($user),
         ];
     }
 }

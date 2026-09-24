@@ -46,6 +46,18 @@ final class ProfileConnectionListControllerTest extends WebTestCase
         });
     }
 
+    public function testPersonalConnectionsWidgetIsNeverProposedForSharing(): void
+    {
+        // Hub de ProfileConnectionFixtures : widget Connexions débloqué.
+        $client = $this->login(self::OTHER);
+
+        $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists('[data-profile-connection--shared-widgets-widget-param="tonnage"]');
+        self::assertSelectorNotExists('[data-profile-connection--shared-widgets-widget-param="connections"]');
+    }
+
     public function testAWidgetHiddenForSharingIsRenderedUnchecked(): void
     {
         $client = $this->login(self::ACTOR);

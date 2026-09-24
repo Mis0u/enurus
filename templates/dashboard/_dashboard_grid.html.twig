@@ -71,6 +71,14 @@
         } only %}
     {% endif %}
 
+    {# Connexions — widget personnel, jamais visible en lecture seule (data.visibleWidgets le garantit) #}
+    {% if data.visibleWidgets.connections %}
+        {% include 'dashboard/_widgets/_connections.html.twig' with {
+            connections: data.connections,
+            viewerIsDiscoverable: subject.isDiscoverable,
+        } only %}
+    {% endif %}
+
     {# Ligne 4 : Badges de paliers — pleine largeur #}
     {% if data.visibleWidgets.badges %}
         {% include 'dashboard/_widgets/_badges.html.twig' with {

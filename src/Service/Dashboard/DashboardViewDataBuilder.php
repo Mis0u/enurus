@@ -13,6 +13,7 @@ use App\Service\Badge\BadgeProgressCalculator;
 use App\Service\Badge\BadgeViewBuilder;
 use App\Service\Goal\GoalCardFormatter;
 use App\Service\Goal\GoalProgress;
+use App\Service\ProfileSharing\ProfileConnectionOverviewService;
 use App\Service\Workout\WorkoutHeatmapService;
 
 /**
@@ -40,6 +41,7 @@ final readonly class DashboardViewDataBuilder
         private BadgeProgressCalculator $badgeProgressCalculator,
         private BadgeViewBuilder $badgeViewBuilder,
         private WorkoutHeatmapService $heatmapService,
+        private ProfileConnectionOverviewService $connectionOverviewService,
     ) {
     }
 
@@ -68,6 +70,7 @@ final readonly class DashboardViewDataBuilder
             $hasNoVisibleWidgets && $dashboardState->regularityUnlocked,
             $this->badgeViewBuilder->build($subject, $viewer, $badgeProgress ?? $this->badgeProgressCalculator->calculate($subject)),
             $visibleWidgets[DashboardWidgetEnum::HEATMAP->value] ? $this->heatmapService->build($subject, self::HEATMAP_WEEKS) : null,
+            $visibleWidgets[DashboardWidgetEnum::CONNECTIONS->value] ? $this->connectionOverviewService->forUser($viewer)->connections : [],
         );
     }
 
@@ -95,7 +98,8 @@ final readonly class DashboardViewDataBuilder
      * même source de vérité que la liste de cases à cocher proposée dans les réglages
      * (`DashboardWidgetUnlockResolver`), pour ne jamais désynchroniser les deux. Sur le dashboard
      * partagé (`$subject !== $viewer`), `hiddenSharedWidgets` restreint en plus — jamais l'inverse :
-     * un widget masqué via `hiddenWidgets` reste masqué même pour soi-même.
+     * un widget masqué via `hiddenWidgets` reste masqué même pour soi-même. Un widget personnel
+     * (`DashboardWidgetEnum::isShareable()`) n'y est jamais visible.
      *
      * @return array<string, bool> clé = DashboardWidgetEnum::value
      */
@@ -106,11 +110,17 @@ final readonly class DashboardViewDataBuilder
 
         foreach ($this->widgetUnlockResolver->resolve($subject, $dashboardState) as $widget => $unlocked) {
             $hidden = \in_array($widget, $subject->hiddenWidgets, true)
-                || ($isSharedView && \in_array($widget, $subject->hiddenSharedWidgets, true));
+                || ($isSharedView && $this->isHiddenFromConnections($widget, $subject));
             $visibleWidgets[$widget] = $unlocked && ! $hidden;
         }
 
         return $visibleWidgets;
+    }
+
+    private function isHiddenFromConnections(string $widget, User $subject): bool
+    {
+        return ! DashboardWidgetEnum::from($widget)->isShareable()
+            || \in_array($widget, $subject->hiddenSharedWidgets, true);
     }
 
     /**

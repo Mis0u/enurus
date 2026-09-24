@@ -179,6 +179,38 @@ final class DashboardViewDataBuilderTest extends KernelTestCase
         self::assertTrue($data->visibleWidgets[DashboardWidgetEnum::TONNAGE->value]);
     }
 
+    public function testConnectionsWidgetListsTheOwnersAcceptedConnections(): void
+    {
+        // Hub de ProfileConnectionFixtures : 10 connexions acceptées.
+        $user = $this->findUser(self::USER_WITH_WORKOUTS);
+
+        $data = $this->builder->build($user, $user, $this->unlockService->getStateForUser($user));
+
+        self::assertTrue($data->visibleWidgets[DashboardWidgetEnum::CONNECTIONS->value]);
+        self::assertCount(10, $data->connections);
+    }
+
+    public function testConnectionsWidgetHiddenByTheUserIsNotComputed(): void
+    {
+        $user = $this->findUser(self::USER_WITH_WORKOUTS);
+        $user->hiddenWidgets = [DashboardWidgetEnum::CONNECTIONS->value];
+
+        $data = $this->builder->build($user, $user, $this->unlockService->getStateForUser($user));
+
+        self::assertFalse($data->visibleWidgets[DashboardWidgetEnum::CONNECTIONS->value]);
+        self::assertSame([], $data->connections);
+    }
+
+    public function testConnectionsWidgetIsNeverVisibleOnASharedDashboard(): void
+    {
+        $owner = $this->findUser(self::USER_WITH_WORKOUTS);
+
+        $data = $this->builder->build($owner, new User(), $this->unlockService->getStateForUser($owner));
+
+        self::assertFalse($data->visibleWidgets[DashboardWidgetEnum::CONNECTIONS->value]);
+        self::assertSame([], $data->connections);
+    }
+
     public function testRefusesADashboardWithoutAnyWorkout(): void
     {
         $user = $this->findUser(self::USER_WITH_NO_DATA);

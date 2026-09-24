@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Dashboard;
 
 use App\Service\Badge\View\BadgeCollectionView;
+use App\Service\ProfileSharing\ProfileConnectionEntry;
 use App\Service\Workout\WorkoutHeatmapService;
 
 /**
@@ -28,6 +29,8 @@ final readonly class DashboardViewData
      *                                                              occupe toujours de l'espace
      * @param BadgeCollectionView             $badges            widget Badges et section "Tous mes badges"
      * @param HeatmapData|null                $heatmapData       nul tant que le widget Calendrier n'est pas visible
+     * @param list<ProfileConnectionEntry>    $connections       connexions acceptées de celui qui regarde, vide tant que
+     *                                                           le widget Connexions (personnel) n'est pas visible
      */
     public function __construct(
         public DashboardState $dashboardState,
@@ -42,6 +45,7 @@ final readonly class DashboardViewData
         public bool $hasNoVisibleContent,
         public BadgeCollectionView $badges,
         public ?array $heatmapData,
+        public array $connections,
     ) {
     }
 }

@@ -56,7 +56,7 @@ final class ProfileConnectionSharedWidgetsToggleController extends AbstractContr
 
         $widget = DashboardWidgetEnum::tryFrom($payload['widget'] ?? '');
 
-        if (null === $widget) {
+        if (null === $widget || ! $widget->isShareable()) {
             return $this->json([
                 'error' => 'Invalid widget',
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
