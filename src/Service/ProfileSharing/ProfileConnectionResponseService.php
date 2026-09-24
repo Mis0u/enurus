@@ -26,16 +26,23 @@ final readonly class ProfileConnectionResponseService
     public function accept(ProfileConnection $connection): void
     {
         $this->transition($connection, ProfileConnectionStatusEnum::PENDING, ProfileConnectionStatusEnum::ACCEPTED);
+        $connection->markSeenByBothParties($connection->respondedAt ?? throw new \LogicException('An answered connection has a response date.'));
+
+        $this->entityManager->flush();
     }
 
     public function decline(ProfileConnection $connection): void
     {
         $this->transition($connection, ProfileConnectionStatusEnum::PENDING, ProfileConnectionStatusEnum::DECLINED);
+
+        $this->entityManager->flush();
     }
 
     public function revoke(ProfileConnection $connection): void
     {
         $this->transition($connection, ProfileConnectionStatusEnum::ACCEPTED, ProfileConnectionStatusEnum::REVOKED);
+
+        $this->entityManager->flush();
     }
 
     /**
@@ -60,8 +67,6 @@ final readonly class ProfileConnectionResponseService
 
         $connection->status = $target;
         $connection->respondedAt = $this->clock->now();
-
-        $this->entityManager->flush();
     }
 
     private function assertStatus(ProfileConnection $connection, ProfileConnectionStatusEnum $expected): void

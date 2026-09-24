@@ -158,6 +158,8 @@ dashboard:
     setting: Ustawienia
     title: Panel
     widget:
+        connections:
+            manage: "Zarządzaj moimi połączeniami"
         goal:
             achieved_on: "Osiągnięto {date}"
             empty_achieved: Jeszcze żaden cel nie został osiągnięty.
@@ -503,6 +505,7 @@ profile_connection:
             empty: "Nie masz jeszcze żadnych połączeń."
             title: "Moje połączenia"
         intro: "Po zaakceptowaniu prośby każdy widzi panel drugiej osoby."
+        new_workout: "Nowy trening od Twojej ostatniej wizyty"
         received:
             title: "Otrzymane prośby"
         request:
@@ -723,6 +726,7 @@ settings:
         title: Widżety panelu
         widget:
             badges: "Odznaki"
+            connections: "Moje połączenia"
             goals: Cele
             heatmap: "Kalendarz aktywności"
             muscle_distribution: Trenowane mięśnie

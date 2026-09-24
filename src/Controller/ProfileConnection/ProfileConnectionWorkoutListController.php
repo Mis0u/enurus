@@ -12,6 +12,7 @@ use App\Repository\MuscleGroupRepository;
 use App\Repository\RoutineRepository;
 use App\Security\Voter\ProfileConnectionVoter;
 use App\Service\Entity\MuscleGroupSorterService;
+use App\Service\ProfileSharing\ProfileConnectionVisitRecorder;
 use App\Service\Workout\WorkoutListViewDataBuilder;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,6 +51,7 @@ final class ProfileConnectionWorkoutListController extends AbstractController
         private readonly MuscleGroupRepository $muscleGroupRepository,
         private readonly MuscleGroupSorterService $muscleGroupSorter,
         private readonly WorkoutListViewDataBuilder $viewDataBuilder,
+        private readonly ProfileConnectionVisitRecorder $visitRecorder,
     ) {
     }
 
@@ -63,6 +65,7 @@ final class ProfileConnectionWorkoutListController extends AbstractController
         }
 
         $subject = $connection->counterpartOf($viewer);
+        $this->visitRecorder->record($connection, $viewer);
 
         /** @var array<Routine> $routines */
         $routines = $this->routineRepository->findByOwnerOrderedByDate($subject)->getQuery()->getResult();

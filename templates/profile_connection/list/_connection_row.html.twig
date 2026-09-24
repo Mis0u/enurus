@@ -1,0 +1,43 @@
+{#
+    Une connexion acceptée — partagée entre la page « Mes connexions » et le widget Connexions du
+    dashboard, pour que le lien protégé, le cas « a désactivé son partage » et le point de nouvelle
+    séance ne divergent jamais.
+    Variables attendues (toutes via `only`) :
+    - entry              : ProfileConnectionEntry
+    - viewerIsDiscoverable : bool — partage de profil de celui qui regarde (lien bloqué sinon)
+    - showRevoke         : bool — bouton « Retirer » (page Connexions seulement)
+#}
+<li class="bg-bg-card border border-white/[0.07] rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+    {% include 'profile_connection/list/_person.html.twig' with {
+        person: entry.counterpart,
+        hasNewWorkout: entry.hasNewWorkout,
+    } only %}
+    <div class="flex flex-wrap items-center gap-2">
+        {% if entry.counterpart.isDiscoverable %}
+            <a href="{{ path('app_profile_connection_dashboard', {id: entry.connection.id}) }}"
+               aria-label="{{ 'profile_connection.list.action.view_for'|trans({nickname: entry.counterpart.nickname}, 'navigation') }}"
+               data-controller="profile-connection--dashboard-link"
+               data-profile-connection--dashboard-link-blocked-value="{{ viewerIsDiscoverable ? 'false' : 'true' }}"
+               data-profile-connection--dashboard-link-title-value="{{ 'profile_connection.dashboard.guard.title'|trans({}, 'navigation') }}"
+               data-profile-connection--dashboard-link-body-value="{{ 'profile_connection.dashboard.guard.body'|trans({}, 'navigation') }}"
+               data-profile-connection--dashboard-link-confirm-label-value="{{ 'profile_connection.dashboard.guard.confirm'|trans({}, 'navigation') }}"
+               data-action="click->profile-connection--dashboard-link#guard"
+               class="inline-flex items-center justify-center px-4 py-2 rounded-[10px] text-[13px] font-semibold text-white bg-gradient-to-br from-rose-ft to-red-600 shadow-[0_4px_15px_rgba(244,63,94,0.3)] hover:-translate-y-px transition-all duration-200 whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-ft">
+                {{ 'profile_connection.list.action.view'|trans({}, 'navigation') }}
+            </a>
+        {% else %}
+            <p class="text-[12px] text-[#8b9bb4] italic max-w-[220px]">
+                {{ 'profile_connection.list.action.counterpart_not_sharing'|trans({nickname: entry.counterpart.nickname}, 'navigation') }}
+            </p>
+        {% endif %}
+        {% if showRevoke %}
+            {% include 'profile_connection/list/_action_form.html.twig' with {
+                url: path('app_profile_connection_revoke', {id: entry.connection.id}),
+                tokenId: 'profile_connection_revoke',
+                label: 'profile_connection.list.action.revoke'|trans({}, 'navigation'),
+                ariaLabel: 'profile_connection.list.action.revoke_for'|trans({nickname: entry.counterpart.nickname}, 'navigation'),
+                variant: 'secondary',
+            } only %}
+        {% endif %}
+    </div>
+</li>

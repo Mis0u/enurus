@@ -123,6 +123,28 @@ final class ProfileConnectionSharedWidgetsToggleControllerTest extends WebTestCa
         self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
+    public function testPersonalWidgetCannotBeSharedWithConnections(): void
+    {
+        $client = $this->login(self::USER_WITH_WORKOUTS);
+        $this->makeSharingActive();
+        $csrfToken = $this->csrfTokenFor($client);
+
+        $client->request(
+            Request::METHOD_PATCH,
+            self::URL,
+            server: [
+                'CONTENT_TYPE' => 'application/json',
+            ],
+            content: json_encode([
+                'widget' => 'connections',
+                'hiddenForShare' => false,
+                '_token' => $csrfToken,
+            ], JSON_THROW_ON_ERROR),
+        );
+
+        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
     public function testInvalidCsrfTokenIsRejected(): void
     {
         $client = $this->login(self::USER_WITH_WORKOUTS);

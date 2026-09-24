@@ -83,6 +83,44 @@ class ProfileConnection
         }
     }
 
+    /**
+     * Dernière visite de chaque partie sur les pages de l'autre (dashboard, séances) — sert à
+     * signaler une séance créée depuis. Un seul champ ne suffirait pas : chacun a son propre « vu ».
+     * Écrits uniquement via `markSeenBy()`/`markSeenByBothParties()`.
+     */
+    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $requesterLastSeenAt = null;
+
+    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $addresseeLastSeenAt = null;
+
+    public function markSeenBy(User $user, \DateTimeImmutable $seenAt): void
+    {
+        match (true) {
+            $this->requester === $user => $this->requesterLastSeenAt = $seenAt,
+            $this->addressee === $user => $this->addresseeLastSeenAt = $seenAt,
+            default => throw new \LogicException('The user is not a party of this connection.'),
+        };
+    }
+
+    /**
+     * À l'acceptation : l'historique de l'autre ne compte jamais comme « nouveau ».
+     */
+    public function markSeenByBothParties(\DateTimeImmutable $seenAt): void
+    {
+        $this->requesterLastSeenAt = $seenAt;
+        $this->addresseeLastSeenAt = $seenAt;
+    }
+
+    public function lastSeenBy(User $user): ?\DateTimeImmutable
+    {
+        return match (true) {
+            $this->requester === $user => $this->requesterLastSeenAt,
+            $this->addressee === $user => $this->addresseeLastSeenAt,
+            default => throw new \LogicException('The user is not a party of this connection.'),
+        };
+    }
+
     public function involves(User $user): bool
     {
         return $this->requester === $user || $this->addressee === $user;

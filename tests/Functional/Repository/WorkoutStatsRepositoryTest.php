@@ -49,6 +49,48 @@ final class WorkoutStatsRepositoryTest extends KernelTestCase
         $em->flush();
     }
 
+    public function testFindOwnerIdsWithWorkoutCreatedSinceComparesCreationTimeNotPerformedAt(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var WorkoutStatsRepository $workoutStatsRepository */
+        $workoutStatsRepository = static::getContainer()->get(WorkoutStatsRepository::class);
+
+        $withNewWorkout = $this->createTestUser($em);
+        $alreadySeen = $this->createTestUser($em);
+        $notAsked = $this->createTestUser($em);
+        $exercise = $this->createTestExercise($em);
+
+        // Séance saisie maintenant mais datée d'il y a un mois : c'est la création qui compte.
+        $backdated = $this->createTestWorkout($em, $withNewWorkout, $exercise, new \DateTimeImmutable('-30 days'), 1, 5);
+        $seen = $this->createTestWorkout($em, $alreadySeen, $exercise, new \DateTimeImmutable('-1 day'), 1, 5);
+        $ignored = $this->createTestWorkout($em, $notAsked, $exercise, new \DateTimeImmutable('-1 day'), 1, 5);
+
+        $ownerIds = $workoutStatsRepository->findOwnerIdsWithWorkoutCreatedSince([
+            (string) $withNewWorkout->id => new \DateTimeImmutable('-1 hour'),
+            (string) $alreadySeen->id => new \DateTimeImmutable('+1 hour'),
+        ]);
+
+        self::assertSame([(string) $withNewWorkout->id], $ownerIds);
+
+        foreach ([$backdated, $seen, $ignored, $exercise, $withNewWorkout, $alreadySeen, $notAsked] as $entity) {
+            $em->remove($entity);
+        }
+        $em->flush();
+    }
+
+    public function testFindOwnerIdsWithWorkoutCreatedSinceWithoutOwnersRunsNoQuery(): void
+    {
+        self::bootKernel();
+
+        /** @var WorkoutStatsRepository $workoutStatsRepository */
+        $workoutStatsRepository = static::getContainer()->get(WorkoutStatsRepository::class);
+
+        self::assertSame([], $workoutStatsRepository->findOwnerIdsWithWorkoutCreatedSince([]));
+    }
+
     public function testFindAllPerformedDatesByUserReturnsOneEntryPerWorkout(): void
     {
         self::bootKernel();

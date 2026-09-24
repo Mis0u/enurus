@@ -158,6 +158,8 @@ dashboard:
     setting: Impostazioni
     title: Cruscotto
     widget:
+        connections:
+            manage: "Gestisci le mie connessioni"
         goal:
             achieved_on: "Raggiunto il {date}"
             empty_achieved: Nessun obiettivo raggiunto per ora.
@@ -499,6 +501,7 @@ profile_connection:
             empty: "Non hai ancora nessuna connessione."
             title: "Le mie connessioni"
         intro: "Una volta accettata una richiesta, ognuno vede il cruscotto dell'altro."
+        new_workout: "Nuovo allenamento dalla tua ultima visita"
         received:
             title: "Richieste ricevute"
         request:
@@ -713,6 +716,7 @@ settings:
         title: Widget della dashboard
         widget:
             badges: "Badge"
+            connections: "Le mie connessioni"
             goals: Obiettivi
             heatmap: "Calendario dell'attività"
             muscle_distribution: Muscoli allenati

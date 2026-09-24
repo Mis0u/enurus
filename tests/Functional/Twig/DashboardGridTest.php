@@ -65,6 +65,21 @@ final class DashboardGridTest extends KernelTestCase
         self::assertDoesNotMatchRegularExpression('/<div[^>]*md:col-span-2[^>]*data-dashboard-widget="heatmap"/', $html);
     }
 
+    public function testConnectionsWidgetListsEachConnectionWithoutTheRevokeAction(): void
+    {
+        self::bootKernel();
+        $owner = $this->findOwner();
+
+        /** @var DashboardViewDataBuilder $builder */
+        $builder = static::getContainer()->get(DashboardViewDataBuilder::class);
+        $html = $this->renderGrid($builder->build($owner, $owner, new DashboardState(1)), $owner, readOnly: false);
+
+        self::assertMatchesRegularExpression('/<div[^>]*data-dashboard-widget="connections"/', $html);
+        self::assertSame(10, substr_count($html, 'data-controller="profile-connection--dashboard-link"'));
+        self::assertStringNotContainsString('profile_connection_revoke', $html);
+        self::assertStringContainsString('Manage my connections', $html);
+    }
+
     private function findOwner(): User
     {
         /** @var UserRepository $userRepository */

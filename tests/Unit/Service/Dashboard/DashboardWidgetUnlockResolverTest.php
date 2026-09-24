@@ -8,6 +8,7 @@ use App\Entity\ExerciseGoal;
 use App\Entity\User;
 use App\Enum\Dashboard\DashboardWidgetEnum;
 use App\Repository\ExerciseGoalRepository;
+use App\Repository\ProfileConnectionRepository;
 use App\Service\Dashboard\DashboardState;
 use App\Service\Dashboard\DashboardWidgetUnlockResolver;
 use PHPUnit\Framework\TestCase;
@@ -55,15 +56,23 @@ final class DashboardWidgetUnlockResolverTest extends TestCase
         self::assertTrue($this->resolve(workoutCount: 1, hasAnyGoal: false)[DashboardWidgetEnum::HEATMAP->value]);
     }
 
+    public function testConnectionsWidgetUnlocksOnlyOnceAConnectionIsAccepted(): void
+    {
+        self::assertFalse($this->resolve(workoutCount: 5, hasAnyGoal: false)[DashboardWidgetEnum::CONNECTIONS->value]);
+        self::assertTrue($this->resolve(workoutCount: 5, hasAnyGoal: false, acceptedConnections: 1)[DashboardWidgetEnum::CONNECTIONS->value]);
+    }
+
     /**
      * @return array<string, bool>
      */
-    private function resolve(int $workoutCount, bool $hasAnyGoal): array
+    private function resolve(int $workoutCount, bool $hasAnyGoal, int $acceptedConnections = 0): array
     {
         $exerciseGoalRepository = $this->createStub(ExerciseGoalRepository::class);
         $exerciseGoalRepository->method('findByOwner')->willReturn($hasAnyGoal ? [$this->createStub(ExerciseGoal::class)] : []);
+        $connectionRepository = $this->createStub(ProfileConnectionRepository::class);
+        $connectionRepository->method('countAcceptedInvolving')->willReturn($acceptedConnections);
 
-        return (new DashboardWidgetUnlockResolver($exerciseGoalRepository))
+        return (new DashboardWidgetUnlockResolver($exerciseGoalRepository, $connectionRepository))
             ->resolve($this->createStub(User::class), new DashboardState(workoutCount: $workoutCount));
     }
 }

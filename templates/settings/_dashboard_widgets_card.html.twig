@@ -6,30 +6,36 @@
 {% if dashboardWidgets is not empty %}
     <section id="dashboard-widgets"
              class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-6"
+             aria-labelledby="dashboard-widgets-title"
              data-controller="settings--dashboard-widgets"
              data-settings--dashboard-widgets-url-value="{{ path('app_settings_dashboard_widgets_update') }}"
              data-settings--dashboard-widgets-csrf-token-value="{{ csrf_token('settings_dashboard_widgets') }}"
              data-settings--dashboard-widgets-success-message-value="{{ 'settings.feedback.success'|trans({}, 'navigation') }}">
 
-        <h2 class="font-['Rajdhani'] text-lg font-bold text-[#f0f4ff] mb-1">
-            {{ 'settings.dashboard_widgets.title'|trans({}, 'navigation') }}
-        </h2>
-        <p class="text-sm text-[#8b9bb4] mb-5 leading-relaxed">
-            {{ 'settings.dashboard_widgets.explanation'|trans({}, 'navigation') }}
-        </p>
+        {# Repliée par défaut : la liste s'allonge à chaque nouveau widget. #}
+        <details class="group/collapsible">
+            {% include 'partials/_collapsible_summary.html.twig' with {
+                title: 'settings.dashboard_widgets.title'|trans({}, 'navigation'),
+                titleId: 'dashboard-widgets-title',
+                variant: 'settings',
+            } only %}
+            <p class="text-sm text-[#8b9bb4] mt-2 mb-5 leading-relaxed">
+                {{ 'settings.dashboard_widgets.explanation'|trans({}, 'navigation') }}
+            </p>
 
-        <div class="flex flex-col gap-3">
-            {% for widget in dashboardWidgets %}
-                <label class="relative flex items-center justify-between gap-3 cursor-pointer">
-                    <span class="text-sm text-[#f0f4ff]">{{ widget.label }}</span>
-                    <input type="checkbox"
-                           class="peer sr-only"
-                           {% if not widget.hidden %}checked{% endif %}
-                           data-action="change->settings--dashboard-widgets#toggle"
-                           data-settings--dashboard-widgets-widget-param="{{ widget.key }}">
-                    <span class="shrink-0 w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-rose-ft after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
-                </label>
-            {% endfor %}
-        </div>
+            <div class="flex flex-col gap-3">
+                {% for widget in dashboardWidgets %}
+                    <label class="relative flex items-center justify-between gap-3 cursor-pointer">
+                        <span class="text-sm text-[#f0f4ff]">{{ widget.label }}</span>
+                        <input type="checkbox"
+                               class="peer sr-only"
+                               {% if not widget.hidden %}checked{% endif %}
+                               data-action="change->settings--dashboard-widgets#toggle"
+                               data-settings--dashboard-widgets-widget-param="{{ widget.key }}">
+                        <span class="shrink-0 w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-rose-ft after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
+                    </label>
+                {% endfor %}
+            </div>
+        </details>
     </section>
 {% endif %}

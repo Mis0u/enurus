@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\ProfileConnection;
 
 use App\Entity\User;
+use App\Enum\Dashboard\DashboardWidgetEnum;
 use App\Form\ProfileConnectionRequestType;
 use App\Service\Dashboard\DashboardUnlockService;
 use App\Service\Dashboard\DashboardWidgetUnlockResolver;
@@ -57,8 +58,9 @@ final class ProfileConnectionListController extends AbstractController
 
     /**
      * Widgets encore visibles sur son propre dashboard (`hiddenWidgets` déjà appliqué en amont)
-     * — un widget qu'on masque déjà chez soi n'a pas sa place ici, `hiddenSharedWidgets` ne fait
-     * que restreindre davantage, jamais réafficher. `checked`/`disabled` intègrent en plus le
+     * et partageables — un widget qu'on masque déjà chez soi n'a pas sa place ici, un widget
+     * personnel (Connexions) non plus. `hiddenSharedWidgets` ne fait que restreindre davantage,
+     * jamais réafficher. `checked`/`disabled` intègrent en plus le
      * verrou en cascade : impossible d'afficher un widget sur le partage tant que le partage de
      * profil et celui des séances ne sont pas tous les deux actifs (cf. les cascades côté
      * ProfileConnectionSharingToggleController / ProfileConnectionWorkoutSharingToggleController).
@@ -74,7 +76,7 @@ final class ProfileConnectionListController extends AbstractController
         $rows = [];
 
         foreach ($unlockedWidgets as $widget => $unlocked) {
-            if (! $unlocked || in_array($widget, $user->hiddenWidgets, true)) {
+            if (! $unlocked || in_array($widget, $user->hiddenWidgets, true) || ! DashboardWidgetEnum::from($widget)->isShareable()) {
                 continue;
             }
 

@@ -62,6 +62,18 @@ class ProfileConnectionRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function countAcceptedInvolving(User $user): int
+    {
+        return (int) $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->andWhere('c.requester = :user OR c.addressee = :user')
+            ->andWhere('c.status = :accepted')
+            ->setParameter('user', $user)
+            ->setParameter('accepted', ProfileConnectionStatusEnum::ACCEPTED)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function countPendingReceivedBy(User $user): int
     {
         return (int) $this->createQueryBuilder('c')

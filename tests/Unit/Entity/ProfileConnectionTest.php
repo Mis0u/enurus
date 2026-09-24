@@ -45,6 +45,54 @@ final class ProfileConnectionTest extends TestCase
         $connection->counterpartOf(new User());
     }
 
+    public function testNeitherPartyHasVisitedANewConnection(): void
+    {
+        $connection = $this->createConnection($requester = new User(), $addressee = new User());
+
+        self::assertNull($connection->lastSeenBy($requester));
+        self::assertNull($connection->lastSeenBy($addressee));
+    }
+
+    public function testEachPartyHasItsOwnLastVisit(): void
+    {
+        $connection = $this->createConnection($requester = new User(), $addressee = new User());
+        $visitedAt = new \DateTimeImmutable('2026-09-24 10:00:00');
+
+        $connection->markSeenBy($addressee, $visitedAt);
+
+        self::assertSame($visitedAt, $connection->lastSeenBy($addressee));
+        self::assertNull($connection->lastSeenBy($requester));
+    }
+
+    public function testMarkSeenByBothPartiesSetsTheSameVisitForEachOfThem(): void
+    {
+        $connection = $this->createConnection($requester = new User(), $addressee = new User());
+        $acceptedAt = new \DateTimeImmutable('2026-09-24 10:00:00');
+
+        $connection->markSeenByBothParties($acceptedAt);
+
+        self::assertSame($acceptedAt, $connection->lastSeenBy($requester));
+        self::assertSame($acceptedAt, $connection->lastSeenBy($addressee));
+    }
+
+    public function testAStrangerCannotMarkAConnectionAsSeen(): void
+    {
+        $connection = $this->createConnection(new User(), new User());
+
+        $this->expectException(\LogicException::class);
+
+        $connection->markSeenBy(new User(), new \DateTimeImmutable());
+    }
+
+    public function testAStrangerHasNoLastVisit(): void
+    {
+        $connection = $this->createConnection(new User(), new User());
+
+        $this->expectException(\LogicException::class);
+
+        $connection->lastSeenBy(new User());
+    }
+
     private function createConnection(User $requester, User $addressee): ProfileConnection
     {
         $connection = new ProfileConnection();

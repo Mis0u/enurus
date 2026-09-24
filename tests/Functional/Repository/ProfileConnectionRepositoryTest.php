@@ -114,6 +114,17 @@ final class ProfileConnectionRepositoryTest extends KernelTestCase
         self::assertSame(0, $this->repository->countPendingReceivedBy($this->createUser('count-none', 'N2O3N4')));
     }
 
+    public function testCountAcceptedInvolvingCountsAcceptedConnectionsOfBothRoles(): void
+    {
+        $me = $this->createUser('accepted-me', 'A2M3E4');
+        $this->connect($this->createUser('accepted-in', 'A5I6N7'), $me, ProfileConnectionStatusEnum::ACCEPTED);
+        $this->connect($me, $this->createUser('accepted-out', 'A8O9U2'), ProfileConnectionStatusEnum::ACCEPTED);
+        $this->connect($this->createUser('accepted-pending', 'A3P4E5'), $me);
+        $this->connect($me, $this->createUser('accepted-revoked', 'A6R7E8'), ProfileConnectionStatusEnum::REVOKED);
+
+        self::assertSame(2, $this->repository->countAcceptedInvolving($me));
+    }
+
     /**
      * @return array{User, User}
      */

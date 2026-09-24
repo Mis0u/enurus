@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Service\ProfileSharing;
 
 use App\Entity\ProfileConnection;
+use App\Entity\User;
 use App\Enum\Entity\ProfileConnection\ProfileConnectionStatusEnum;
 use App\Exception\ProfileSharing\ProfileConnectionException;
 use App\Exception\ProfileSharing\ProfileConnectionFailureReasonEnum;
@@ -28,6 +29,18 @@ final class ProfileConnectionResponseServiceTest extends TestCase
 
         self::assertSame(ProfileConnectionStatusEnum::ACCEPTED, $connection->status);
         self::assertEquals(new \DateTimeImmutable(self::NOW), $connection->respondedAt);
+    }
+
+    public function testAcceptingAConnectionCountsAsAVisitForBothParties(): void
+    {
+        $connection = $this->createConnection(ProfileConnectionStatusEnum::PENDING);
+        $connection->requester = $requester = new User();
+        $connection->addressee = $addressee = new User();
+
+        $this->createService($this->createStub(EntityManagerInterface::class))->accept($connection);
+
+        self::assertEquals(new \DateTimeImmutable(self::NOW), $connection->lastSeenBy($requester));
+        self::assertEquals(new \DateTimeImmutable(self::NOW), $connection->lastSeenBy($addressee));
     }
 
     public function testDecliningAPendingConnectionMarksItDeclinedAtTheCurrentTime(): void

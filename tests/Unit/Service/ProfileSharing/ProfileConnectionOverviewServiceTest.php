@@ -8,6 +8,7 @@ use App\Entity\ProfileConnection;
 use App\Entity\User;
 use App\Enum\Entity\ProfileConnection\ProfileConnectionStatusEnum;
 use App\Repository\ProfileConnectionRepository;
+use App\Service\ProfileSharing\ProfileConnectionActivityDetector;
 use App\Service\ProfileSharing\ProfileConnectionOverviewService;
 use PHPUnit\Framework\TestCase;
 
@@ -78,6 +79,28 @@ final class ProfileConnectionOverviewServiceTest extends TestCase
         self::assertTrue($overview->isEmpty);
     }
 
+    public function testAcceptedConnectionsAreFlaggedWhenTheCounterpartHasANewWorkout(): void
+    {
+        $me = $this->createSearchableUser('Me', 'M3M3M3');
+        $active = $this->createConnection($me, $this->createSearchableUser('Active', 'A1C7V3'), ProfileConnectionStatusEnum::ACCEPTED);
+        $quiet = $this->createConnection($me, $this->createSearchableUser('Quiet', 'Q1U3T4'), ProfileConnectionStatusEnum::ACCEPTED);
+
+        $overview = $this->createService([$active, $quiet], withNewWorkout: [$active])->forUser($me);
+
+        self::assertTrue($overview->connections[0]->hasNewWorkout);
+        self::assertFalse($overview->connections[1]->hasNewWorkout);
+    }
+
+    public function testPendingRequestsAreNeverFlagged(): void
+    {
+        $me = $this->createSearchableUser('Me', 'M3M3M3');
+        $received = $this->createConnection($this->createSearchableUser('Sender', 'S3ND3R'), $me, ProfileConnectionStatusEnum::PENDING);
+
+        $overview = $this->createService([$received], withNewWorkout: [$received])->forUser($me);
+
+        self::assertFalse($overview->receivedRequests[0]->hasNewWorkout);
+    }
+
     public function testOverviewIsEmptyWithoutAnyConnection(): void
     {
         self::assertTrue($this->createService([])->forUser($this->createSearchableUser())->isEmpty);
@@ -85,13 +108,22 @@ final class ProfileConnectionOverviewServiceTest extends TestCase
 
     /**
      * @param list<ProfileConnection> $connections
+     * @param list<ProfileConnection> $withNewWorkout
      */
-    private function createService(array $connections): ProfileConnectionOverviewService
+    private function createService(array $connections, array $withNewWorkout = []): ProfileConnectionOverviewService
     {
         $repository = $this->createStub(ProfileConnectionRepository::class);
         $repository->method('findActiveInvolving')->willReturn($connections);
 
-        return new ProfileConnectionOverviewService($repository);
+        $activityDetector = $this->createStub(ProfileConnectionActivityDetector::class);
+        $activityDetector->method('findWithNewWorkout')->willReturnCallback(
+            static fn (User $viewer, array $candidates): array => array_values(array_filter(
+                $withNewWorkout,
+                static fn (ProfileConnection $connection): bool => \in_array($connection, $candidates, true),
+            )),
+        );
+
+        return new ProfileConnectionOverviewService($repository, $activityDetector);
     }
 
     private function createConnection(User $requester, User $addressee, ProfileConnectionStatusEnum $status): ProfileConnection
