@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\Workout;
 use App\Security\Voter\ProfileConnectionVoter;
 use App\Service\Badge\BadgeViewBuilder;
+use App\Service\ProfileSharing\ProfileConnectionVisitRecorder;
 use App\Service\Workout\WorkoutShowDataService;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,6 +38,7 @@ final class ProfileConnectionWorkoutShowController extends AbstractController
     public function __construct(
         private readonly WorkoutShowDataService $workoutShowDataService,
         private readonly BadgeViewBuilder $badgeViewBuilder,
+        private readonly ProfileConnectionVisitRecorder $visitRecorder,
     ) {
     }
 
@@ -57,6 +59,8 @@ final class ProfileConnectionWorkoutShowController extends AbstractController
         if ($workout->owner !== $subject) {
             throw $this->createNotFoundException();
         }
+
+        $this->visitRecorder->record($connection, $viewer);
 
         $data = $this->workoutShowDataService->build($workout, $subject, $viewer);
 

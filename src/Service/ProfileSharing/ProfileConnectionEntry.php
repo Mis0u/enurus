@@ -9,13 +9,15 @@ use App\Entity\User;
 
 /**
  * Une connexion vue du côté d'un utilisateur : `$counterpart` est l'autre partie, déjà résolue pour
- * que la vue n'ait pas à savoir de quel côté se trouve celui qui regarde.
+ * que la vue n'ait pas à savoir de quel côté se trouve celui qui regarde. `$hasNewWorkout` : une
+ * séance créée par `$counterpart` depuis la dernière visite (connexions acceptées seulement).
  */
 final readonly class ProfileConnectionEntry
 {
     public function __construct(
         public ProfileConnection $connection,
         public User $counterpart,
+        public bool $hasNewWorkout = false,
     ) {
     }
 }

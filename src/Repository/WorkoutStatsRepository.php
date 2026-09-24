@@ -8,6 +8,7 @@ use App\Entity\User;
 use DateTimeImmutable;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -21,6 +22,40 @@ class WorkoutStatsRepository
         private readonly WorkoutRepository $workoutRepository,
         private readonly EntityManagerInterface $entityManager,
     ) {
+    }
+
+    /**
+     * Propriétaires ayant créé au moins une séance depuis la date donnée pour chacun, en une seule
+     * requête. `Workout` n'a pas de date de création : elle est lue dans son identifiant UUIDv7,
+     * dont l'ordre suit celui des insertions — jamais `performedAt`, date métier saisie à la main
+     * (une séance saisie aujourd'hui peut être datée du mois dernier).
+     *
+     * @param array<string, DateTimeImmutable> $sinceByOwnerId clé = identifiant du propriétaire
+     * @return list<string>
+     */
+    public function findOwnerIdsWithWorkoutCreatedSince(array $sinceByOwnerId): array
+    {
+        if ([] === $sinceByOwnerId) {
+            return [];
+        }
+
+        $queryBuilder = $this->workoutRepository->createQueryBuilder('w')
+            ->select('DISTINCT IDENTITY(w.owner) AS ownerId');
+        $conditions = $queryBuilder->expr()->orX();
+        $index = 0;
+
+        foreach ($sinceByOwnerId as $ownerId => $since) {
+            $conditions->add(\sprintf('w.owner = :owner%1$d AND w.id >= :boundary%1$d', $index));
+            $queryBuilder
+                ->setParameter('owner' . $index, Uuid::fromString($ownerId), UuidType::NAME)
+                ->setParameter('boundary' . $index, $this->firstUuidV7At($since), UuidType::NAME);
+            ++$index;
+        }
+
+        /** @var list<array{ownerId: string}> $rows */
+        $rows = $queryBuilder->andWhere($conditions)->getQuery()->getScalarResult();
+
+        return array_map(static fn (array $row): string => $row['ownerId'], $rows);
     }
 
     /**
@@ -174,5 +209,16 @@ class WorkoutStatsRepository
         }
 
         return $result;
+    }
+
+    /**
+     * Plus petit UUIDv7 possible à cet instant : les 48 premiers bits portent le timestamp en
+     * millisecondes, tout le reste (hors version et variante) à zéro.
+     */
+    private function firstUuidV7At(DateTimeImmutable $instant): Uuid
+    {
+        $timestampHex = str_pad(dechex((int) $instant->format('Uv')), 12, '0', \STR_PAD_LEFT);
+
+        return Uuid::fromString(\sprintf('%s-%s-7000-8000-000000000000', substr($timestampHex, 0, 8), substr($timestampHex, 8)));
     }
 }

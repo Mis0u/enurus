@@ -158,6 +158,8 @@ dashboard:
     setting: Instellingen
     title: Overzicht
     widget:
+        connections:
+            manage: "Mijn verbindingen beheren"
         goal:
             achieved_on: "Behaald op {date}"
             empty_achieved: Nog geen doel behaald.
@@ -499,6 +501,7 @@ profile_connection:
             empty: "Je hebt nog geen verbindingen."
             title: "Mijn verbindingen"
         intro: "Zodra een verzoek is geaccepteerd, zien jullie elkaars overzicht."
+        new_workout: "Nieuwe training sinds je laatste bezoek"
         received:
             title: "Ontvangen verzoeken"
         request:
@@ -713,6 +716,7 @@ settings:
         title: Dashboard-widgets
         widget:
             badges: "Badges"
+            connections: "Mijn verbindingen"
             goals: Doelen
             heatmap: "Activiteitenkalender"
             muscle_distribution: Getrainde spieren

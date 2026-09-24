@@ -10,6 +10,7 @@ use App\Security\Voter\ProfileConnectionVoter;
 use App\Service\Badge\BadgeSyncService;
 use App\Service\Dashboard\DashboardUnlockService;
 use App\Service\Dashboard\DashboardViewDataBuilder;
+use App\Service\ProfileSharing\ProfileConnectionVisitRecorder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -37,6 +38,7 @@ final class ProfileConnectionDashboardController extends AbstractController
         private readonly DashboardUnlockService $dashboardUnlockService,
         private readonly DashboardViewDataBuilder $viewDataBuilder,
         private readonly BadgeSyncService $badgeSyncService,
+        private readonly ProfileConnectionVisitRecorder $visitRecorder,
     ) {
     }
 
@@ -50,6 +52,7 @@ final class ProfileConnectionDashboardController extends AbstractController
         }
 
         $subject = $connection->counterpartOf($viewer);
+        $this->visitRecorder->record($connection, $viewer);
         $dashboardState = $this->dashboardUnlockService->getStateForUser($subject);
 
         if (0 === $dashboardState->workoutCount) {
