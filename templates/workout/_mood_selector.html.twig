@@ -5,18 +5,23 @@
     form_end() — il doit rester un descendant du conteneur data-controller pour le ciblage
     Stimulus, et en édition (render_rest: false) un champ jamais rendu ne serait pas soumis.
 
+    Sur mobile, la grille de 5 colonnes devient des pastilles (icône + libellé côte à côte) qui
+    passent à la ligne : 5 colonnes ne laissent pas la place d'un libellé lisible (« Infortunato »,
+    « Zmęczony »…), et une icône seule ne dit pas ce qu'elle signifie (le `title` n'apparaît pas au
+    toucher).
+
     Variables attendues : `field` (FormView de form.mood), `moods` (list<WorkoutMoodEnum>).
 #}
 <div data-controller="workout--mood-selector">
     <div
-        class="grid grid-cols-5 gap-2 max-md:gap-1.5"
+        class="grid grid-cols-5 gap-2 max-md:flex max-md:flex-wrap max-md:justify-center"
         role="group"
         aria-label="{{ 'workout.mood.label'|trans({}, 'navigation') }}"
     >
         {% for mood in moods %}
             <button
                 type="button"
-                class="mood-chip cursor-pointer flex flex-col items-center gap-1.5 py-2.5 px-1 rounded-xl border border-white/[0.07] bg-white/[0.02] transition-all duration-150 hover:bg-white/[0.06] max-md:py-3"
+                class="mood-chip cursor-pointer flex flex-col items-center gap-1.5 py-2.5 px-1 rounded-xl border border-white/[0.07] bg-white/[0.02] transition-all duration-150 hover:bg-white/[0.06] max-md:flex-row max-md:gap-2 max-md:py-2 max-md:pl-2 max-md:pr-3.5 max-md:rounded-full"
                 data-workout--mood-selector-target="chip"
                 data-action="click->workout--mood-selector#select"
                 data-mood-value="{{ mood.value }}"
@@ -28,9 +33,9 @@
                     src="{{ asset('images/emojis/' ~ mood.value ~ '.png') }}"
                     alt=""
                     aria-hidden="true"
-                    class="w-9 h-9 object-contain max-md:w-8 max-md:h-8"
+                    class="w-9 h-9 object-contain max-md:w-6 max-md:h-6"
                 >
-                <span class="text-[11px] font-semibold text-center leading-tight text-slate-400 max-md:hidden">
+                <span class="text-[11px] font-semibold text-center leading-tight text-slate-400 max-md:text-[12px] max-md:whitespace-nowrap">
                     {{ ('workout.mood.' ~ mood.value)|trans({}, 'navigation') }}
                 </span>
             </button>
