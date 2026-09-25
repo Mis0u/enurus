@@ -1,0 +1,18 @@
+{# Zones tactiles de 40 px (icône inchangée) et espacées : à 20 px et collés, « supprimer »
+   était souvent touché à la place de « répéter » sur mobile. #}
+{% set is_blocked = isBlocked|default(false) %}
+<div class="flex items-center justify-center gap-2 max-md:gap-1">
+    <button type="button"
+            {% if is_blocked %}disabled{% endif %}
+            data-action="click->{{ controllerName }}#repeatSet"
+            aria-label="{{ 'workout.repeat_series'|trans({}, 'navigation') }}"
+            class="text-[#4a5568] hover:text-[#06b6d4] transition-colors duration-250 flex items-center justify-center w-10 h-10 rounded-md disabled:opacity-40 disabled:cursor-not-allowed">
+        {% include 'partials/_svg/_repeat.html.twig' only %}
+    </button>
+    <button type="button"
+            data-action="click->{{ controllerName }}#deleteSet"
+            aria-label="{{ 'workout.delete_series'|trans({}, 'navigation') }}"
+            class="text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250 flex items-center justify-center w-10 h-10 rounded-md">
+        {% include 'partials/_svg/_red_cross.html.twig' with {'spacingClass': ''} only %}
+    </button>
+</div>

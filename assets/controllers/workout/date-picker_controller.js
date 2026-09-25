@@ -27,7 +27,7 @@ const LOCALES = {
 };
 
 export default class extends Controller {
-    static values = { locale: String };
+    static values = { locale: String, defaultToday: Boolean };
 
     #flatpickr = null;
 
@@ -36,10 +36,19 @@ export default class extends Controller {
             dateFormat: 'Y-m-d',
             maxDate: 'today',
             locale: LOCALES[this.localeValue] ?? 'default',
+            ...this.#defaultDateOption(),
         });
     }
 
     disconnect() {
         this.#flatpickr?.destroy();
+    }
+
+    // « Aujourd'hui » calculé par le navigateur, comme `maxDate` : une date posée côté serveur
+    // pourrait tomber le lendemain de la date locale de l'utilisateur (fuseau différent, vers
+    // minuit) et être refusée par le calendrier. Pas d'événement `change` au pré-remplissage, donc
+    // pas de vérification de doublon (controller `date`) tant que l'utilisateur ne change pas la date.
+    #defaultDateOption() {
+        return this.defaultTodayValue ? { defaultDate: 'today' } : {};
     }
 }

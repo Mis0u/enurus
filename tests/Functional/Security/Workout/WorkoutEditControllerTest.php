@@ -221,6 +221,26 @@ class WorkoutEditControllerTest extends WebTestCase
         self::assertSame((string) $workout->id, $dateInput->attr('data-date-exclude-id-value'));
     }
 
+    public function testEditFormKeepsTheWorkoutDateInsteadOfToday(): void
+    {
+        $client = $this->login(self::USER);
+        $workout = $this->getFirstWorkout(self::USER);
+
+        $crawler = $client->request(Request::METHOD_GET, $this->getEditUrl($workout));
+
+        self::assertNull($crawler->filter('#workout_performedAt')->attr('data-workout--date-picker-default-today-value'));
+    }
+
+    public function testMobileNavHidesTheLogWorkoutButtonOnThisPage(): void
+    {
+        $client = $this->login(self::USER);
+        $workout = $this->getFirstWorkout(self::USER);
+
+        $crawler = $client->request(Request::METHOD_GET, $this->getEditUrl($workout));
+
+        self::assertCount(0, $crawler->filter('.bottom-nav-cta'));
+    }
+
     public function testEditPageProvidesTheMissingSetValuesMessage(): void
     {
         $client = $this->login(self::USER);

@@ -419,6 +419,30 @@ class WorkoutControllerTest extends WebTestCase
         $this->assertCount(1, $options);
     }
 
+    public function testDatePickerPreselectsToday(): void
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, '/fr/enregistre-seance');
+
+        self::assertSame('true', $crawler->filter('#workout_performedAt')->attr('data-workout--date-picker-default-today-value'));
+    }
+
+    public function testMobileNavHidesTheLogWorkoutButtonOnThisPage(): void
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, '/fr/enregistre-seance');
+
+        self::assertCount(0, $crawler->filter('.bottom-nav-cta'));
+    }
+
+    public function testMobileNavKeepsTheLogWorkoutButtonElsewhere(): void
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, '/fr/mes-seances');
+
+        self::assertCount(1, $crawler->filter('.bottom-nav-cta'));
+    }
+
     public function testPageProvidesTheMissingSetValuesMessage(): void
     {
         $client = $this->login(self::USER);

@@ -768,6 +768,7 @@ workout:
     created: Dein Training wurde gespeichert
     date: Datum
     date_placeholder: Datum auswählen
+    delete_series: Diesen Satz löschen
     duration_optional: Dauer (Optional)
     duration_placeholder: Dauer (Min)
     edit:

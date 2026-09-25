@@ -768,6 +768,7 @@ workout:
     created: Ta séance a bien été enregistrée
     date: Date
     date_placeholder: Choisir une date
+    delete_series: Supprimer cette série
     duration_optional: Durée (Optionnel)
     duration_placeholder: Durée (min)
     edit:
