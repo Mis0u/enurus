@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
-import { FIXTURE_USERS, loginAs } from './helpers';
+import { FIXTURE_USERS, addExercises, loginAs } from './helpers';
 
 // La date du jour est pré-remplie sans émettre de `change` : la vérification des doublons de
 // date doit quand même avoir lieu, au clic sur « Submit », avant la fenêtre de note.
@@ -8,8 +8,7 @@ import { FIXTURE_USERS, loginAs } from './helpers';
 async function startWorkoutWithOneSet(page: Page): Promise<void> {
     await page.goto('/en/log-workout');
     await page.waitForLoadState('networkidle');
-    await page.getByText('Add an exercise').click();
-    await page.locator('[data-live-action-param="selectExercise"]').first().click();
+    await addExercises(page, 1);
     await page.locator('input[name*="[exerciseSets][0][weight]"]').fill('50');
     await page.locator('input[name*="[exerciseSets][0][reps]"]').fill('10');
 }

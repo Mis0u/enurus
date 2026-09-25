@@ -74,3 +74,46 @@ export async function submitWorkout(page: Page): Promise<void> {
     await noteSubmit.click();
     await expect(page).toHaveURL(/\/en\/workout\/[0-9a-f-]+/, { timeout: 15_000 });
 }
+
+/**
+ * Ouvre le sélecteur d'exercices, coche les `count` premiers exercices distincts de la liste et
+ * les ajoute à la séance. Un exercice peut apparaître deux fois (« Tes habituels » + liste
+ * complète) : les doublons sont ignorés. Retourne les identifiants cochés, dans l'ordre.
+ */
+export async function addExercises(page: Page, count: number): Promise<string[]> {
+    await openExerciseSelector(page);
+    const allIds = await exerciseCheckboxes(page).evaluateAll((inputs) => inputs.map((input) => (input as HTMLInputElement).value));
+    const ids = [...new Set(allIds)].slice(0, count);
+
+    await checkAndAdd(page, ids);
+
+    return ids;
+}
+
+/**
+ * Ajoute des exercices précis (identifiants), dans cet ordre — l'ordre de la liste peut changer
+ * d'une séance à l'autre avec la section « Tes habituels ».
+ */
+export async function addExercisesByIds(page: Page, ids: string[]): Promise<void> {
+    await openExerciseSelector(page);
+    await checkAndAdd(page, ids);
+}
+
+function exerciseCheckboxes(page: Page) {
+    return page.locator('input[data-model="norender|selectedIds[]"]');
+}
+
+async function openExerciseSelector(page: Page): Promise<void> {
+    await page.locator('[data-live-action-param="open"]').click();
+    await expect(exerciseCheckboxes(page).first()).toBeAttached();
+}
+
+async function checkAndAdd(page: Page, ids: string[]): Promise<void> {
+    const cardsBefore = await page.locator('[data-exercise-index]').count();
+
+    for (const id of ids) {
+        await page.locator(`label:has(input[value="${id}"])`).first().click();
+    }
+    await page.locator('[data-exercise-selector-target="addButton"]').click();
+    await expect(page.locator('[data-exercise-index]')).toHaveCount(cardsBefore + ids.length);
+}

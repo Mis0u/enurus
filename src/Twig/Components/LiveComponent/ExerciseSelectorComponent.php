@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
 use App\Repository\ExerciseRepository;
 use App\Repository\MuscleGroupRepository;
+use App\Repository\WorkoutStatsRepository;
 use App\Service\Entity\ExerciseSorterService;
 use App\Service\Entity\MuscleGroupSorterService;
 use App\Service\Workout\WorkoutExerciseCardDataBuilder;
@@ -29,11 +30,25 @@ final class ExerciseSelectorComponent
     use DefaultActionTrait;
     use ComponentToolsTrait;
 
+    private const int HABITUAL_EXERCISES_LIMIT = 8;
+
+    private const string HABITUAL_EXERCISES_PERIOD = '-60 days';
+
     #[LiveProp(writable: true)]
     public string $search = '';
 
     #[LiveProp(writable: true)]
     public bool $isOpen = false;
+
+    /**
+     * Exercices cochés, dans l'ordre où ils l'ont été (LiveComponent ajoute chaque case cochée en
+     * fin de tableau) — c'est l'ordre des cartes ajoutées à la séance. Lié en `norender` : cocher
+     * ne déclenche aucun aller-retour serveur.
+     *
+     * @var list<string>
+     */
+    #[LiveProp(writable: true)]
+    public array $selectedIds = [];
 
     /**
      * Groupe musculaire (id) => type de filtre actif — 1er clic = primaire, 2e clic = secondaire,
@@ -53,6 +68,11 @@ final class ExerciseSelectorComponent
     #[LiveProp]
     public string $controllerName = 'exercise';
 
+    /**
+     * @var list<Exercise>|null exercices proposés à l'utilisateur, chargés une fois par requête
+     */
+    private ?array $availableExercises = null;
+
     public function __construct(
         private readonly ExerciseRepository $exerciseRepository,
         private readonly MuscleGroupRepository $muscleGroupRepository,
@@ -62,6 +82,7 @@ final class ExerciseSelectorComponent
         private readonly MuscleGroupSorterService $muscleGroupSorter,
         private readonly Environment $twig,
         private readonly WorkoutExerciseCardDataBuilder $cardDataBuilder,
+        private readonly WorkoutStatsRepository $workoutStatsRepository,
     ) {
     }
 
@@ -77,49 +98,34 @@ final class ExerciseSelectorComponent
         $this->isOpen = false;
         $this->search = '';
         $this->muscleGroupFilters = [];
+        $this->selectedIds = [];
     }
 
     /**
-     * Rend la carte exercice côté serveur (i18n, MuscleTags, structure du formulaire — jamais
-     * dupliqué en JS) et l'envoie directement dans l'événement plutôt que de laisser le
-     * controller Stimulus consommateur refaire un aller-retour HTTP pour la récupérer (ancien
-     * `workout_exercise_block` / `workout_edit_exercise_block`, supprimés). L'`index` réel n'est
-     * connu que côté client (position dans la liste déjà affichée) : on rend avec un placeholder
-     * littéral `__EXERCISE_INDEX__`, substitué en JS avant insertion — même convention que
-     * `_template.html.twig` pour l'ajout de série.
+     * Rend les cartes des exercices cochés côté serveur (i18n, MuscleTags, séries pré-remplies,
+     * structure du formulaire — jamais dupliqué en JS) et les envoie directement dans l'événement,
+     * dans l'ordre de sélection. L'`index` réel n'est connu que côté client (position dans la
+     * liste déjà affichée) : rendu avec un placeholder littéral `__EXERCISE_INDEX__`, substitué en
+     * JS avant insertion — même convention que `_template.html.twig` pour l'ajout de série.
      */
     #[LiveAction]
-    public function selectExercise(#[LiveArg] string $id): void
+    public function addSelectedExercises(): void
     {
-        $exercise = $this->exerciseRepository->find($id);
+        $exercises = $this->selectedAddableExercises();
 
-        if (null === $exercise) {
+        if ([] === $exercises) {
             return;
         }
 
-        if (null !== $exercise->bodyweightPercent && ! $this->userHasBodyweight()) {
-            return;
-        }
+        $cardData = $this->cardDataBuilder->build($this->getUser(), $exercises);
+        $htmls = array_map(
+            fn (Exercise $exercise): string => $this->renderCard($exercise, $cardData[(string) $exercise->id]),
+            $exercises,
+        );
 
-        $cardData = $this->cardDataBuilder->build($this->getUser(), [$exercise])[(string) $exercise->id];
-
-        $html = $this->twig->render('workout/create/_exercise_card.html.twig', [
-            'exercise' => $exercise,
-            'index' => '__EXERCISE_INDEX__',
-            'controllerName' => $this->controllerName,
-            'cardBodyweightShare' => $cardData['cardBodyweightShare'],
-            'existingSets' => $cardData['existingSets'],
-            'prefilledFrom' => $cardData['prefilledFrom'],
-            // Toujours true ici : le guard ci-dessus a déjà refusé le rendu si l'exercice est
-            // PDC et que l'utilisateur n'a pas de poids — cette branche n'est jamais atteinte
-            // dans le cas contraire.
-            'userHasBodyweight' => true,
-        ]);
-
-        $this->search = '';
-        $this->isOpen = false;
+        $this->close();
         $this->dispatchBrowserEvent('exercise:selected', [
-            'html' => $html,
+            'htmls' => $htmls,
         ]);
     }
 
@@ -154,8 +160,7 @@ final class ExerciseSelectorComponent
             return [];
         }
 
-        $exercises = $this->exerciseRepository->findAvailableForUser($this->getUser());
-        $sorted = $this->exerciseSorter->sortByName($exercises, $this->getUser()->locale);
+        $sorted = $this->exerciseSorter->sortByName($this->availableExercises(), $this->getUser()->locale);
 
         if ('' !== $this->search) {
             $sorted = $this->filterByTranslatedName($sorted);
@@ -166,6 +171,37 @@ final class ExerciseSelectorComponent
         }
 
         return $sorted;
+    }
+
+    /**
+     * « Tes habituels » : les exercices les plus pratiqués ces 60 derniers jours, affichés par
+     * ordre alphabétique en tête du sélecteur — seulement sans recherche ni filtre, qui
+     * ciblent déjà un exercice précis.
+     *
+     * @return list<Exercise>
+     */
+    public function getHabitualExercises(): array
+    {
+        if (! $this->isOpen || '' !== $this->search || [] !== $this->muscleGroupFilters) {
+            return [];
+        }
+
+        $habitualIds = $this->workoutStatsRepository->findMostFrequentExerciseIdsSince(
+            $this->getUser(),
+            new \DateTimeImmutable(self::HABITUAL_EXERCISES_PERIOD),
+            self::HABITUAL_EXERCISES_LIMIT,
+        );
+        $habitualExercises = array_values(array_filter(
+            $this->availableExercises(),
+            static fn (Exercise $exercise): bool => \in_array((string) $exercise->id, $habitualIds, true),
+        ));
+
+        return $this->exerciseSorter->sortByName($habitualExercises, $this->getUser()->locale);
+    }
+
+    public function isSelected(Exercise $exercise): bool
+    {
+        return \in_array((string) $exercise->id, $this->selectedIds, true);
     }
 
     /**
@@ -182,6 +218,58 @@ final class ExerciseSelectorComponent
     public function userHasBodyweight(): bool
     {
         return null !== $this->getUser()->bodyweightKg;
+    }
+
+    /**
+     * Les identifiants cochés viennent du navigateur : seuls les exercices réellement proposés à
+     * l'utilisateur (publics ou à lui, non archivés) sont retenus, jamais l'exercice privé d'un
+     * autre. Un exercice au poids de corps reste exclu tant que l'utilisateur n'a pas de poids.
+     *
+     * @return list<Exercise> dans l'ordre de sélection
+     */
+    private function selectedAddableExercises(): array
+    {
+        $availableById = [];
+        foreach ($this->availableExercises() as $exercise) {
+            $availableById[(string) $exercise->id] = $exercise;
+        }
+
+        $exercises = [];
+        foreach ($this->selectedIds as $selectedId) {
+            $exercise = $availableById[$selectedId] ?? null;
+
+            if (null !== $exercise && (null === $exercise->bodyweightPercent || $this->userHasBodyweight())) {
+                $exercises[] = $exercise;
+            }
+        }
+
+        return $exercises;
+    }
+
+    /**
+     * @param array{cardBodyweightShare: ?float, existingSets: list<array<string, mixed>>, prefilledFrom: ?\DateTimeImmutable} $cardData
+     */
+    private function renderCard(Exercise $exercise, array $cardData): string
+    {
+        return $this->twig->render('workout/create/_exercise_card.html.twig', [
+            'exercise' => $exercise,
+            'index' => '__EXERCISE_INDEX__',
+            'controllerName' => $this->controllerName,
+            'cardBodyweightShare' => $cardData['cardBodyweightShare'],
+            'existingSets' => $cardData['existingSets'],
+            'prefilledFrom' => $cardData['prefilledFrom'],
+            // Toujours true ici : `selectedAddableExercises()` écarte un exercice au poids de
+            // corps tant que l'utilisateur n'a pas de poids.
+            'userHasBodyweight' => true,
+        ]);
+    }
+
+    /**
+     * @return list<Exercise>
+     */
+    private function availableExercises(): array
+    {
+        return $this->availableExercises ??= $this->exerciseRepository->findAvailableForUser($this->getUser());
     }
 
     private function getUser(): User

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { FIXTURE_USERS, fillDatePicker, loginAs } from './helpers';
+import { FIXTURE_USERS, addExercises, fillDatePicker, loginAs } from './helpers';
 
 // Un seul utilisateur, deux tests dépendants (le second supprime la séance créée par le premier) :
 // serial pour éviter qu'un run parallèle (playwright.config.ts a `fullyParallel: true`) ne fasse
@@ -22,9 +22,8 @@ test('user can create a workout with an exercise and a set', async ({ page }) =>
     }
 
     // Sélection d'exercice via la LiveComponent ExerciseSelectorComponent (modale AJAX) : peu
-    // importe lequel, on prend le premier résultat de la liste (référentiel public d'exercices).
-    await page.getByText('Add an exercise').click();
-    await page.locator('[data-live-action-param="selectExercise"]').first().click();
+    // importe lequel, on prend le premier résultat de la liste.
+    await addExercises(page, 1);
 
     // Une carte d'exercice avec un premier set vide est injectée par exercise-controller.js
     // (onExerciseSelected) — cf. templates/workout/create/_table.html.twig.
@@ -54,8 +53,7 @@ test('user can delete a workout from the list', async ({ page }) => {
     if (await dateInfoModal.isVisible().catch(() => false)) {
         await dateInfoModal.click();
     }
-    await page.getByText('Add an exercise').click();
-    await page.locator('[data-live-action-param="selectExercise"]').first().click();
+    await addExercises(page, 1);
     await page.locator('input[name*="[weight]"]').first().fill('50');
     await page.locator('input[name*="[reps]"]').first().fill('12');
     await page.getByRole('button', { name: 'Submit' }).click();

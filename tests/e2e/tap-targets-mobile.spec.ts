@@ -1,5 +1,5 @@
 import { test, expect, devices, type Page } from '@playwright/test';
-import { loginAs } from './helpers';
+import { addExercises, loginAs } from './helpers';
 
 // Garde-fou de l'audit mobile : aucun élément interactif ne doit être trop petit pour le doigt sur
 // les pages principales. Cible 44 px (recommandation Apple/WCAG AAA), plancher 40 px toléré pour
@@ -97,9 +97,7 @@ test('tap targets are large enough in the open menu', async ({ page }) => {
 
 test('tap targets are large enough when logging a workout', async ({ page }) => {
     await goto(page, '/fr/enregistre-seance');
-    await page.getByText('Ajouter un exercice').click();
-    await page.locator('[data-live-action-param="selectExercise"]').first().click();
-    await expect(page.locator('[data-exercise-index]')).toHaveCount(1);
+    await addExercises(page, 1);
 
     expect(await findTooSmallTapTargets(page)).toEqual([]);
 });

@@ -73,11 +73,12 @@ export default class extends Controller {
     // ─── Actions publiques ────────────────────────────────────────
 
     onExerciseSelected(event) {
-        const { html } = event.detail;
-        const index = this.exerciseListTarget.children.length;
+        event.detail.htmls.forEach((html) => {
+            const index = this.exerciseListTarget.children.length;
 
-        this.exerciseListTarget.insertAdjacentHTML('beforeend', html.replaceAll('__EXERCISE_INDEX__', index));
-        initLiftedWeights(this.exerciseListTarget.lastElementChild, this.liftedWeightTemplateValue);
+            this.exerciseListTarget.insertAdjacentHTML('beforeend', html.replaceAll('__EXERCISE_INDEX__', index));
+            initLiftedWeights(this.exerciseListTarget.lastElementChild, this.liftedWeightTemplateValue);
+        });
         this.#updateSubmitAvailability();
     }
 

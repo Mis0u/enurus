@@ -910,6 +910,8 @@ workout:
         select: Choose your routine
         title: Routine
     search_exercise:
+        add_selected: "Add ({count})"
+        all: "All exercises"
         bodyweight_required: Set your bodyweight in settings to use this exercise.
         create_link:
             cancel_button: Cancel
@@ -917,6 +919,7 @@ workout:
             message: "You're creating a workout: leaving this page will lose your current selection."
             text: "Can't find your exercise? Create it!"
             title: Create a new exercise?
+        habitual: "Your usual exercises"
         muscle_filter:
             toggle: "Filter by muscle"
         no_result: No exercise found !

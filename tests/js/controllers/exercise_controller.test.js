@@ -81,6 +81,21 @@ describe('exercise controller', () => {
         expect(modal.classList.contains('flex')).toBe(false);
     });
 
+    it('appends every selected exercise card, in order, with its real index', async () => {
+        buildDom({ dateValue: '2026-08-02', exerciseCards: '<div data-exercise-index="0"></div>' });
+        await nextTick();
+
+        window.dispatchEvent(new CustomEvent('exercise:selected', { detail: { htmls: [
+            '<div data-exercise-index="__EXERCISE_INDEX__" data-name="squat"></div>',
+            '<div data-exercise-index="__EXERCISE_INDEX__" data-name="bench"></div>',
+        ] } }));
+        await nextTick();
+
+        const added = [...document.querySelectorAll('[data-name]')];
+        expect(added.map((card) => card.dataset.name)).toEqual(['squat', 'bench']);
+        expect(added.map((card) => card.dataset.exerciseIndex)).toEqual(['1', '2']);
+    });
+
     it('opens the note modal when a date and at least one exercise are present', async () => {
         buildDom({ dateValue: '2026-08-02', exerciseCards: '<div data-exercise-index="0"></div>' });
         await nextTick();

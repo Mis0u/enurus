@@ -1,5 +1,5 @@
 import { test, expect, devices, type Locator, type Page } from '@playwright/test';
-import { FIXTURE_USERS, loginAs } from './helpers';
+import { FIXTURE_USERS, addExercises, loginAs } from './helpers';
 
 // Régressions de l'audit mobile (enregistrer une séance) : écran réel d'un iPhone récent
 // (390×844), où barre de navigation du bas + barre « Valider » fixes occupent le bas de l'écran.
@@ -24,9 +24,7 @@ async function openLogWorkoutWithOneExercise(page: Page): Promise<void> {
     await page.goto('/en/log-workout');
     await page.waitForLoadState('networkidle');
 
-    await page.getByText('Add an exercise').click();
-    await page.locator('[data-live-action-param="selectExercise"]').first().click();
-    await expect(page.locator('[data-exercise-index]')).toHaveCount(1);
+    await addExercises(page, 1);
 }
 
 test('the workout date defaults to today and the log button is hidden from the bottom bar', async ({ page }) => {

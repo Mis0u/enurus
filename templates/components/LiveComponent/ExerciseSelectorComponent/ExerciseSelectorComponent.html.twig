@@ -6,18 +6,22 @@
     />
     {% if isOpen %}
         <div
-            class="fixed inset-0 bg-[rgba(8,14,26,0.92)] backdrop-blur-sm z-[100] flex items-center justify-center animate-[fadeIn_0.2s_ease]"
+            class="fixed inset-0 bg-[rgba(8,14,26,0.92)] backdrop-blur-sm z-[110] flex items-center justify-center animate-[fadeIn_0.2s_ease]"
             data-action="click->live#action"
             data-live-action-param="close"
         >
             <div
-                class="bg-[#0f1928] border border-white/[0.07] rounded-2xl px-7 py-7 max-w-[600px] w-[calc(100%-40px)] shadow-[0_20px_60px_rgba(0,0,0,0.5)] animate-[slideUp_0.3s_cubic-bezier(0.34,1.56,0.64,1)] max-md:max-w-full max-md:h-screen max-md:rounded-none max-md:px-5"
-                data-controller="search-modal"
+                class="bg-[#0f1928] border border-white/[0.07] rounded-2xl px-7 py-7 max-w-[600px] w-[calc(100%-40px)] shadow-[0_20px_60px_rgba(0,0,0,0.5)] animate-[slideUp_0.3s_cubic-bezier(0.34,1.56,0.64,1)] max-md:max-w-full max-md:h-full max-md:flex max-md:flex-col max-md:rounded-none max-md:px-5"
+                data-controller="search-modal exercise-selector"
                 data-action="click->search-modal#stop"
+                data-exercise-selector-selected-ids-value="{{ selectedIds|json_encode }}"
+                data-exercise-selector-add-label-value="{{ 'workout.search_exercise.add_selected'|trans({count: '__COUNT__'}, 'navigation') }}"
             >
                {% include 'components/LiveComponent/ExerciseSelectorComponent/_search_bar.html.twig' with {'this': this, 'muscleGroupFilters': muscleGroupFilters} only %}
 
-                <div class="max-h-[400px] overflow-y-auto mb-4 scrollbar-thin scrollbar-thumb-white/[0.07] scrollbar-track-transparent">
+                {# Mobile : la liste prend toute la hauteur restante (plein écran, `h-full` et non
+                   `h-screen`, cf. le menu mobile — 100vh inclut la zone sous la barre d'adresse). #}
+                <div class="max-h-[400px] max-md:max-h-none max-md:flex-1 max-md:min-h-0 overflow-y-auto mb-4 scrollbar-thin scrollbar-thumb-white/[0.07] scrollbar-track-transparent">
                     {% include 'components/LiveComponent/ExerciseSelectorComponent/_result.html.twig' with {'this': this} only %}
                 </div>
                 <div class="flex gap-2.5 mt-4">
@@ -25,6 +29,12 @@
                         type="button"
                         message="{{ 'word.close'|trans({}, 'common') }}"
                         data="data-action=live#action data-live-action-param=close"
+                    />
+                    <twig:Button:Primary:Primary
+                        type="button"
+                        :disabled="selectedIds is empty"
+                        message="{{ 'workout.search_exercise.add_selected'|trans({count: selectedIds|length}, 'navigation') }}"
+                        data="data-exercise-selector-target=addButton data-action=live#action data-live-action-param=addSelectedExercises"
                     />
                 </div>
             </div>
