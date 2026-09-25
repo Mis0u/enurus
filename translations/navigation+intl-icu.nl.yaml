@@ -910,6 +910,8 @@ workout:
         select: Kies je routine
         title: Routine
     search_exercise:
+        add_selected: "Toevoegen ({count})"
+        all: "Alle oefeningen"
         bodyweight_required: Vul je lichaamsgewicht in bij de instellingen om deze oefening te gebruiken.
         create_link:
             cancel_button: Annuleren
@@ -917,6 +919,7 @@ workout:
             message: "Je bent een training aan het maken: als je deze pagina verlaat, verlies je je huidige selectie."
             text: "Vind je jouw oefening niet? Maak hem aan!"
             title: Nieuwe oefening aanmaken?
+        habitual: "Je vaste oefeningen"
         muscle_filter:
             toggle: "Filteren op spier"
         no_result: Geen oefening gevonden !

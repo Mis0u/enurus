@@ -1,5 +1,5 @@
-import { test, expect, type Page } from '@playwright/test';
-import { FIXTURE_USERS, loginAs, submitWorkout } from './helpers';
+import { test, expect } from '@playwright/test';
+import { FIXTURE_USERS, addExercises, addExercisesByIds, loginAs, submitWorkout } from './helpers';
 
 // Une séance enregistrée aujourd'hui (date du jour pré-remplie, heure courante) devient la
 // dernière performance de son exercice : l'ajouter de nouveau doit reprendre ses séries.
@@ -7,18 +7,12 @@ import { FIXTURE_USERS, loginAs, submitWorkout } from './helpers';
 // entrer en concurrence avec `workout.spec.ts` sur `workout11` en exécution parallèle) :
 // recharger les fixtures de test après un run e2e.
 
-async function addFirstExercise(page: Page): Promise<void> {
-    await page.getByText('Add an exercise').click();
-    await page.locator('[data-live-action-param="selectExercise"]').first().click();
-    await expect(page.locator('[data-exercise-index]')).toHaveCount(1);
-}
-
 test('a new exercise card is prefilled with the last performance', async ({ page }) => {
     await loginAs(page, FIXTURE_USERS.dashboardSingle.email);
 
     await page.goto('/en/log-workout');
     await page.waitForLoadState('networkidle');
-    await addFirstExercise(page);
+    const [exerciseId] = await addExercises(page, 1);
     const weight = page.locator('input[name*="[exerciseSets][0][weight]"]');
     const reps = page.locator('input[name*="[exerciseSets][0][reps]"]');
     await weight.fill('77.5');
@@ -27,7 +21,7 @@ test('a new exercise card is prefilled with the last performance', async ({ page
 
     await page.goto('/en/log-workout');
     await page.waitForLoadState('networkidle');
-    await addFirstExercise(page);
+    await addExercisesByIds(page, [exerciseId]);
 
     await expect(weight).toHaveValue('77.5');
     await expect(reps).toHaveValue('7');

@@ -1,0 +1,38 @@
+{#
+    Ligne d'un exercice du sélecteur. Case à cocher liée à la LiveProp `selectedIds` en
+    `norender` (aucun rendu serveur au toucher, cf. exercise_selector_controller.js). Un exercice
+    au poids de corps reste non cochable tant que l'utilisateur n'a pas renseigné son poids.
+
+    Paramètres :
+      - exercise : Exercise
+      - this     : ExerciseSelectorComponent
+#}
+{% set is_blocked = exercise.bodyweightPercent is not null and not this.userHasBodyweight %}
+{% if is_blocked %}
+    <div
+        class="px-3.5 py-3 bg-white/[0.02] border border-white/[0.07] rounded-[10px] mb-2 opacity-40 cursor-not-allowed"
+        aria-disabled="true"
+        data-action="click->search-modal#bodyweightRequired"
+        data-search-modal-message-param="{{ 'workout.search_exercise.bodyweight_required'|trans({}, 'navigation') }}"
+    >
+        {% include 'components/LiveComponent/ExerciseSelectorComponent/_exercise_row_content.html.twig' with {'exercise': exercise} only %}
+    </div>
+{% else %}
+    {# `relative` obligatoire : l'input `peer sr-only` est en position absolue (cf. CLAUDE.md). #}
+    <label class="relative flex items-start gap-3 px-3.5 py-3 bg-white/[0.02] border border-white/[0.07] rounded-[10px] mb-2 cursor-pointer transition-all duration-250 hover:bg-white/[0.06] hover:border-white/[0.12] has-checked:bg-[rgba(244,63,94,0.08)] has-checked:border-[rgba(244,63,94,0.5)]">
+        <input
+            type="checkbox"
+            class="peer sr-only"
+            value="{{ exercise.id }}"
+            data-model="norender|selectedIds[]"
+            data-action="change->exercise-selector#toggle"
+            {% if this.isSelected(exercise) %}checked{% endif %}
+        >
+        <span class="mt-0.5 flex shrink-0 items-center justify-center w-5 h-5 rounded-md border border-white/[0.2] text-transparent transition-colors duration-250 peer-checked:bg-rose-ft peer-checked:border-rose-ft peer-checked:text-white peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-rose-ft" aria-hidden="true">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+        </span>
+        <span class="min-w-0">
+            {% include 'components/LiveComponent/ExerciseSelectorComponent/_exercise_row_content.html.twig' with {'exercise': exercise} only %}
+        </span>
+    </label>
+{% endif %}

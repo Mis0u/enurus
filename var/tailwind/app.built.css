@@ -1685,6 +1685,12 @@
       border-color: color-mix(in oklab, var(--color-white) 10%, transparent);
     }
   }
+  .border-white\/\[0\.2\] {
+    border-color: color-mix(in srgb, #fff 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-white) 20%, transparent);
+    }
+  }
   .border-white\/\[0\.04\] {
     border-color: color-mix(in srgb, #fff 4%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -2796,6 +2802,9 @@
   .text-slate-600 {
     color: var(--color-slate-600);
   }
+  .text-transparent {
+    color: transparent;
+  }
   .text-white {
     color: var(--color-white);
   }
@@ -3191,6 +3200,11 @@
       border-color: var(--color-rose-500);
     }
   }
+  .peer-checked\:border-rose-ft {
+    &:is(:where(.peer):checked ~ *) {
+      border-color: var(--color-rose-ft);
+    }
+  }
   .peer-checked\:bg-\[\#f43f5e\] {
     &:is(:where(.peer):checked ~ *) {
       background-color: #f43f5e;
@@ -3242,6 +3256,11 @@
       color: var(--color-rose-200);
     }
   }
+  .peer-checked\:text-white {
+    &:is(:where(.peer):checked ~ *) {
+      color: var(--color-white);
+    }
+  }
   .peer-checked\:opacity-100 {
     &:is(:where(.peer):checked ~ *) {
       opacity: 100%;
@@ -3267,6 +3286,28 @@
       @supports (color: color-mix(in lab, red, red)) {
         --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-rose-500) 30%, transparent) var(--tw-shadow-alpha), transparent);
       }
+    }
+  }
+  .peer-focus-visible\:outline {
+    &:is(:where(.peer):focus-visible ~ *) {
+      outline-style: var(--tw-outline-style);
+      outline-width: 1px;
+    }
+  }
+  .peer-focus-visible\:outline-2 {
+    &:is(:where(.peer):focus-visible ~ *) {
+      outline-style: var(--tw-outline-style);
+      outline-width: 2px;
+    }
+  }
+  .peer-focus-visible\:outline-offset-2 {
+    &:is(:where(.peer):focus-visible ~ *) {
+      outline-offset: 2px;
+    }
+  }
+  .peer-focus-visible\:outline-rose-ft {
+    &:is(:where(.peer):focus-visible ~ *) {
+      outline-color: var(--color-rose-ft);
     }
   }
   .peer-disabled\:opacity-50 {
@@ -4136,6 +4177,16 @@
       }
     }
   }
+  .has-checked\:border-\[rgba\(244\,63\,94\,0\.5\)\] {
+    &:has(*:checked) {
+      border-color: rgba(244,63,94,0.5);
+    }
+  }
+  .has-checked\:bg-\[rgba\(244\,63\,94\,0\.08\)\] {
+    &:has(*:checked) {
+      background-color: rgba(244,63,94,0.08);
+    }
+  }
   .has-disabled\:cursor-not-allowed {
     &:has(*:disabled) {
       cursor: not-allowed;
@@ -4236,9 +4287,24 @@
       height: calc(var(--spacing) * 11);
     }
   }
+  .max-md\:h-full {
+    @media (width < 48rem) {
+      height: 100%;
+    }
+  }
   .max-md\:h-screen {
     @media (width < 48rem) {
       height: 100vh;
+    }
+  }
+  .max-md\:max-h-none {
+    @media (width < 48rem) {
+      max-height: none;
+    }
+  }
+  .max-md\:min-h-0 {
+    @media (width < 48rem) {
+      min-height: calc(var(--spacing) * 0);
     }
   }
   .max-md\:min-h-10 {

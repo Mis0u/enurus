@@ -910,6 +910,8 @@ workout:
         select: Wähle deine Routine
         title: Routine
     search_exercise:
+        add_selected: "Hinzufügen ({count})"
+        all: "Alle Übungen"
         bodyweight_required: Gib dein Körpergewicht in den Einstellungen an, um diese Übung zu nutzen.
         create_link:
             cancel_button: Abbrechen
@@ -917,6 +919,7 @@ workout:
             message: "Du erstellst gerade ein Workout: Wenn du diese Seite verlässt, geht deine aktuelle Auswahl verloren."
             text: "Findest du deine Übung nicht? Erstelle sie!"
             title: Neue Übung erstellen?
+        habitual: "Deine üblichen Übungen"
         muscle_filter:
             toggle: "Nach Muskel filtern"
         no_result: Keine Übung gefunden !

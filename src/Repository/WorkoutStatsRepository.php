@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\WorkoutExercise;
 use DateTimeImmutable;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
@@ -209,6 +210,35 @@ class WorkoutStatsRepository
         }
 
         return $result;
+    }
+
+    /**
+     * Exercices les plus pratiqués par l'utilisateur depuis `$since`, classés par nombre de
+     * séances (une séance compte une fois, quel que soit son nombre de séries), à égalité par
+     * séance la plus récente — sert à la section « Tes habituels » du sélecteur d'exercices.
+     * `setMaxResults()` sans risque ici : agrégat par exercice, aucune collection jointe.
+     *
+     * @return list<string> identifiants d'exercices
+     */
+    public function findMostFrequentExerciseIdsSince(User $user, DateTimeImmutable $since, int $limit): array
+    {
+        /** @var list<array{exerciseId: \Stringable|string}> $rows */
+        $rows = $this->entityManager->createQueryBuilder()
+            ->select('IDENTITY(we.exercise) AS exerciseId')
+            ->from(WorkoutExercise::class, 'we')
+            ->join('we.workout', 'w')
+            ->andWhere('w.owner = :user')
+            ->andWhere('w.performedAt >= :since')
+            ->setParameter('user', $user)
+            ->setParameter('since', $since)
+            ->groupBy('we.exercise')
+            ->orderBy('COUNT(DISTINCT w.id)', 'DESC')
+            ->addOrderBy('MAX(w.performedAt)', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getScalarResult();
+
+        return array_map(static fn (array $row): string => (string) $row['exerciseId'], $rows);
     }
 
     /**

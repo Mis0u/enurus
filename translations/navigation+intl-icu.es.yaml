@@ -910,6 +910,8 @@ workout:
         select: Elige tu rutina
         title: Rutina
     search_exercise:
+        add_selected: "Añadir ({count})"
+        all: "Todos los ejercicios"
         bodyweight_required: Indica tu peso corporal en los ajustes para usar este ejercicio.
         create_link:
             cancel_button: Cancelar
@@ -917,6 +919,7 @@ workout:
             message: "Estás creando un entrenamiento: si sales de esta página perderás tu selección actual."
             text: "¿No encuentras tu ejercicio? ¡Créalo!"
             title: ¿Crear un nuevo ejercicio?
+        habitual: "Tus habituales"
         muscle_filter:
             toggle: "Filtrar por músculo"
         no_result: ¡Ningún ejercicio encontrado !

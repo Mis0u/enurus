@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Twig\Components\LiveComponent;
 
 use App\DataFixtures\ExerciseFixtures;
+use App\DataFixtures\RoutineFixtures;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Exercise;
 use App\Entity\User;
@@ -23,6 +24,12 @@ final class ExerciseSelectorComponentTest extends WebTestCase
     use InteractsWithLiveComponents;
 
     private const string COMPONENT_NAME = 'LiveComponent:ExerciseSelectorComponent:ExerciseSelectorComponent';
+
+    /**
+     * Exercice public (« Ab wheel (rollout) » en français) — alphabétiquement avant l'exercice
+     * privé `Reverse fly` de `USER_REVERSE_FLY`.
+     */
+    private const string PUBLIC_AB_WHEEL = 'ab_wheel_rollout.name';
 
     public function testExercisesAreEmptyWhenClosed(): void
     {
@@ -49,7 +56,7 @@ final class ExerciseSelectorComponentTest extends WebTestCase
         // cette requête (qui, elle, s'est bien exécutée authentifiée), donc fiable ici.
         $crawler = $testComponent->render()->crawler();
 
-        self::assertGreaterThan(0, $crawler->filter('[data-live-action-param="selectExercise"]')->count());
+        self::assertGreaterThan(0, $crawler->filter('input[type="checkbox"][data-model="norender|selectedIds[]"]')->count());
     }
 
     public function testCloseActionResetsSearchAndFilters(): void
@@ -153,25 +160,27 @@ final class ExerciseSelectorComponentTest extends WebTestCase
         }
     }
 
-    public function testSelectExerciseClosesModalAndDispatchesBrowserEvent(): void
+    public function testAddSelectedExercisesDispatchesOneCardPerExerciseInSelectionOrder(): void
     {
+        $reverseFlyId = $this->getExerciseIdByName(ExerciseFixtures::EXERCISE_REVERSE_FLY);
+        $abWheelId = $this->getExerciseIdByName(self::PUBLIC_AB_WHEEL);
+        // Ordre de coche volontairement différent de l'ordre alphabétique.
         $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
             'isOpen' => true,
+            'selectedIds' => [$reverseFlyId, $abWheelId],
         ]);
         $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
 
-        $exerciseId = $this->getExerciseIdByName(ExerciseFixtures::EXERCISE_REVERSE_FLY);
+        $testComponent->call('addSelectedExercises');
 
-        $testComponent->call('selectExercise', [
-            'id' => $exerciseId,
-        ]);
+        $htmls = $this->dispatchedHtmls($testComponent);
+        self::assertCount(2, $htmls);
+        self::assertStringContainsString('[exercise]" value="' . $reverseFlyId . '"', $htmls[0]);
+        self::assertStringContainsString('[exercise]" value="' . $abWheelId . '"', $htmls[1]);
 
         $component = $this->component($testComponent);
         self::assertFalse($component->isOpen);
-        self::assertSame('', $component->search);
-
-        $html = $this->dispatchedHtml($testComponent, 'exercise:selected');
-        self::assertStringContainsString('data-exercise-index="__EXERCISE_INDEX__"', $html);
+        self::assertSame([], $component->selectedIds);
     }
 
     /**
@@ -180,44 +189,25 @@ final class ExerciseSelectorComponentTest extends WebTestCase
      * `index` reste un placeholder littéral : seul le controller Stimulus connaît la position
      * réelle dans la liste déjà affichée au moment de l'insertion.
      */
-    public function testSelectExercisePayloadContainsServerRenderedCard(): void
+    public function testAddedCardIsServerRenderedWithAnIndexPlaceholder(): void
     {
-        /** @var ExerciseRepository $exerciseRepository */
-        $exerciseRepository = static::getContainer()->get(ExerciseRepository::class);
-        $exercise = $exerciseRepository->findOneBy([
-            'name' => ExerciseFixtures::EXERCISE_REVERSE_FLY,
-        ]);
-        self::assertInstanceOf(Exercise::class, $exercise);
-
+        $exercise = $this->getExerciseByName(ExerciseFixtures::EXERCISE_REVERSE_FLY);
         $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
             'isOpen' => true,
+            'selectedIds' => [(string) $exercise->id],
         ]);
         $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
 
-        $testComponent->call('selectExercise', [
-            'id' => (string) $exercise->id,
-        ]);
+        $testComponent->call('addSelectedExercises');
 
-        $html = $this->dispatchedHtml($testComponent, 'exercise:selected');
-
-        self::assertStringContainsString(
-            'name="workout[workoutExercises][__EXERCISE_INDEX__][exercise]" value="' . $exercise->id . '"',
-            $html,
-        );
-        self::assertStringContainsString(
-            'name="workout[workoutExercises][__EXERCISE_INDEX__][exerciseSets][0][weight]"',
-            $html,
-        );
-        self::assertStringContainsString(
-            'name="workout[workoutExercises][__EXERCISE_INDEX__][position]"',
-            $html,
-        );
+        $html = $this->dispatchedHtmls($testComponent)[0];
+        self::assertStringContainsString('data-exercise-index="__EXERCISE_INDEX__"', $html);
+        self::assertStringContainsString('name="workout[workoutExercises][__EXERCISE_INDEX__][exerciseSets][0][weight]"', $html);
+        self::assertStringContainsString('name="workout[workoutExercises][__EXERCISE_INDEX__][position]"', $html);
 
         /** @var TranslatorInterface $translator */
         $translator = static::getContainer()->get(TranslatorInterface::class);
-        $translatedName = $translator->trans($exercise->name, [], 'exercise', 'fr');
-        self::assertStringContainsString($translatedName, $html);
-
+        self::assertStringContainsString($translator->trans($exercise->name, [], 'exercise', 'fr'), $html);
         self::assertNotEmpty($exercise->exerciseMuscles);
         self::assertStringContainsString('text-[#f43f5e]', $html);
     }
@@ -227,25 +217,23 @@ final class ExerciseSelectorComponentTest extends WebTestCase
      * (`workout--edit--exercise`) d'une séance — la carte rendue doit brancher ses `data-action`
      * sur le bon controller Stimulus selon le contexte.
      */
-    public function testSelectExercisePayloadUsesControllerNameFromEditContext(): void
+    public function testAddedCardUsesControllerNameFromEditContext(): void
     {
         $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
             'isOpen' => true,
             'controllerName' => 'workout--edit--exercise',
+            'selectedIds' => [$this->getExerciseIdByName(ExerciseFixtures::EXERCISE_REVERSE_FLY)],
         ]);
         $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
 
-        $exerciseId = $this->getExerciseIdByName(ExerciseFixtures::EXERCISE_REVERSE_FLY);
-        $testComponent->call('selectExercise', [
-            'id' => $exerciseId,
-        ]);
+        $testComponent->call('addSelectedExercises');
 
-        $html = $this->dispatchedHtml($testComponent, 'exercise:selected');
+        $html = $this->dispatchedHtmls($testComponent)[0];
         self::assertStringContainsString('click->workout--edit--exercise#deleteExercise', $html);
         self::assertStringNotContainsString('click->exercise#deleteExercise', $html);
     }
 
-    public function testSelectExercisePrefillsTheLastPerformance(): void
+    public function testAddedCardIsPrefilledWithTheLastPerformance(): void
     {
         $user = $this->getUserByEmail(UserFixtures::USER_REVERSE_FLY);
         $exercise = $this->getExerciseByName(ExerciseFixtures::EXERCISE_REVERSE_FLY);
@@ -255,14 +243,12 @@ final class ExerciseSelectorComponentTest extends WebTestCase
 
         $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
             'isOpen' => true,
+            'selectedIds' => [(string) $exercise->id],
         ]);
         $testComponent->actingAs($user);
-        $testComponent->call('selectExercise', [
-            'id' => (string) $exercise->id,
-        ]);
+        $testComponent->call('addSelectedExercises');
 
-        $html = $this->dispatchedHtml($testComponent, 'exercise:selected');
-        self::assertStringContainsString('name="workout[workoutExercises][__EXERCISE_INDEX__][exerciseSets][1][weight]"', $html);
+        $html = $this->dispatchedHtmls($testComponent)[0];
         self::assertMatchesRegularExpression('/\[exerciseSets\]\[0\]\[weight\]"\s+value="12.5"/', $html);
         self::assertMatchesRegularExpression('/\[exerciseSets\]\[1\]\[reps\]"\s+value="12"/', $html);
         // Le composant de test est appelé sans préfixe `/{_locale}` : rendu dans la locale par
@@ -270,33 +256,125 @@ final class ExerciseSelectorComponentTest extends WebTestCase
         self::assertStringContainsString('Carried over from your workout on Sep 12, 2026', $html);
     }
 
-    public function testSelectExerciseLeavesANeverPerformedExerciseEmpty(): void
+    public function testAddedCardOfANeverPerformedExerciseIsEmpty(): void
     {
         $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
             'isOpen' => true,
+            'selectedIds' => [$this->getExerciseIdByName(ExerciseFixtures::EXERCISE_REVERSE_FLY)],
         ]);
         $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
-        $testComponent->call('selectExercise', [
-            'id' => $this->getExerciseIdByName(ExerciseFixtures::EXERCISE_REVERSE_FLY),
-        ]);
 
-        $html = $this->dispatchedHtml($testComponent, 'exercise:selected');
+        $testComponent->call('addSelectedExercises');
+
+        $html = $this->dispatchedHtmls($testComponent)[0];
         self::assertStringNotContainsString('[exerciseSets][1]', $html);
         self::assertStringNotContainsString('Carried over from your workout', $html);
     }
 
-    public function testSelectExerciseWithUnknownIdDispatchesNoEvent(): void
+    /**
+     * Les identifiants viennent du navigateur : seuls les exercices réellement proposés à
+     * l'utilisateur (publics ou à lui, non archivés) peuvent être ajoutés — jamais l'exercice
+     * privé d'un autre utilisateur, ni un identifiant inconnu.
+     */
+    public function testAddSelectedExercisesIgnoresExercisesNotAvailableToTheUser(): void
+    {
+        $reverseFlyId = $this->getExerciseIdByName(ExerciseFixtures::EXERCISE_REVERSE_FLY);
+        $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
+            'isOpen' => true,
+            'selectedIds' => [
+                $this->getExerciseIdByName(RoutineFixtures::EXERCISE_OTHER_USER),
+                '00000000-0000-0000-0000-000000000000',
+                $reverseFlyId,
+            ],
+        ]);
+        $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
+
+        $testComponent->call('addSelectedExercises');
+
+        $htmls = $this->dispatchedHtmls($testComponent);
+        self::assertCount(1, $htmls);
+        self::assertStringContainsString('[exercise]" value="' . $reverseFlyId . '"', $htmls[0]);
+    }
+
+    public function testAddSelectedExercisesWithNothingSelectedDispatchesNoEvent(): void
     {
         $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
             'isOpen' => true,
         ]);
         $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
 
-        $testComponent->call('selectExercise', [
-            'id' => '00000000-0000-0000-0000-000000000000',
-        ]);
+        $testComponent->call('addSelectedExercises');
 
         $this->assertComponentNotDispatchBrowserEvent($testComponent, 'exercise:selected');
+    }
+
+    public function testCloseActionClearsTheSelection(): void
+    {
+        $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
+            'isOpen' => true,
+            'selectedIds' => [$this->getExerciseIdByName(ExerciseFixtures::EXERCISE_REVERSE_FLY)],
+        ]);
+        $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
+
+        $testComponent->call('close');
+
+        self::assertSame([], $this->component($testComponent)->selectedIds);
+    }
+
+    public function testSelectedExercisesStayCheckedAfterARender(): void
+    {
+        $client = static::createClient();
+        $client->loginUser($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
+        $reverseFlyId = $this->getExerciseIdByName(ExerciseFixtures::EXERCISE_REVERSE_FLY);
+        $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
+            'isOpen' => true,
+            'selectedIds' => [$reverseFlyId],
+        ], $client);
+
+        $crawler = $testComponent->render()->crawler();
+
+        self::assertCount(1, $crawler->filter(\sprintf('input[type="checkbox"][value="%s"][checked]', $reverseFlyId)));
+    }
+
+    public function testHabitualExercisesAreTheMostFrequentRecentOnesInAlphabeticalOrder(): void
+    {
+        $user = $this->getUserByEmail(UserFixtures::USER_REVERSE_FLY);
+        $reverseFly = $this->getExerciseByName(ExerciseFixtures::EXERCISE_REVERSE_FLY);
+        $abWheel = $this->getExerciseByName(self::PUBLIC_AB_WHEEL);
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        // Reverse fly plus fréquent, mais affiché après Ab wheel : tri alphabétique, pas par fréquence.
+        WorkoutTestHelper::persistPastWorkout($em, $user, $reverseFly, '-2 days', [[10.0, 12]]);
+        WorkoutTestHelper::persistPastWorkout($em, $user, $reverseFly, '-4 days', [[10.0, 12]]);
+        WorkoutTestHelper::persistPastWorkout($em, $user, $abWheel, '-3 days', [[0.0, 15]]);
+
+        $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
+            'isOpen' => true,
+        ]);
+        $testComponent->actingAs($user);
+
+        $names = array_map(
+            static fn (Exercise $exercise): string => $exercise->name,
+            $this->component($testComponent)->getHabitualExercises(),
+        );
+
+        self::assertSame([self::PUBLIC_AB_WHEEL, ExerciseFixtures::EXERCISE_REVERSE_FLY], $names);
+    }
+
+    public function testHabitualExercisesAreHiddenWhileSearching(): void
+    {
+        $user = $this->getUserByEmail(UserFixtures::USER_REVERSE_FLY);
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        WorkoutTestHelper::persistPastWorkout($em, $user, $this->getExerciseByName(ExerciseFixtures::EXERCISE_REVERSE_FLY), '-2 days', [[10.0, 12]]);
+
+        $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
+            'isOpen' => true,
+            'search' => 'reverse',
+        ]);
+        $testComponent->actingAs($user);
+
+        self::assertSame([], $this->component($testComponent)->getHabitualExercises());
     }
 
     public function testSearchFiltersExercisesByName(): void
@@ -327,19 +405,22 @@ final class ExerciseSelectorComponentTest extends WebTestCase
         self::assertSame([], $this->component($testComponent)->getFilteredExercises());
     }
 
-    private function dispatchedHtml(TestLiveComponent $testComponent, string $eventName): string
+    /**
+     * @return list<string>
+     */
+    private function dispatchedHtmls(TestLiveComponent $testComponent): array
     {
-        $event = $testComponent->getDispatchedBrowserEvent($testComponent->render(), $eventName);
-        self::assertNotNull($event, \sprintf('Expected browser event "%s" to be dispatched.', $eventName));
+        $event = $testComponent->getDispatchedBrowserEvent($testComponent->render(), 'exercise:selected');
+        self::assertNotNull($event, 'Expected browser event "exercise:selected" to be dispatched.');
 
         /**
          * Le docblock vendor de `getDispatchedBrowserEvents()` (`array{data: ..., event: ...}`)
          * ne correspond pas à la forme réelle du payload JSON décodé (`payload`, pas `data`,
          * confirmé empiriquement — `AssertDispatchedEvent` du même bundle lit aussi `payload`).
          *
-         * @var array{event: string, payload: array{html: string}} $event
+         * @var array{event: string, payload: array{htmls: list<string>}} $event
          */
-        return $event['payload']['html'];
+        return $event['payload']['htmls'];
     }
 
     private function component(TestLiveComponent $testComponent): ExerciseSelectorComponent

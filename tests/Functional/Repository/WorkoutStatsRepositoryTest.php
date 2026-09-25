@@ -208,6 +208,57 @@ final class WorkoutStatsRepositoryTest extends KernelTestCase
         $em->flush();
     }
 
+    public function testFindMostFrequentExerciseIdsSinceRanksByNumberOfSessions(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var WorkoutStatsRepository $workoutStatsRepository */
+        $workoutStatsRepository = static::getContainer()->get(WorkoutStatsRepository::class);
+
+        $user = $this->createTestUser($em);
+        $otherUser = $this->createTestUser($em);
+        $squat = $this->createTestExercise($em);
+        $bench = $this->createTestExercise($em);
+        $curl = $this->createTestExercise($em);
+        $oldFavourite = $this->createTestExercise($em);
+
+        foreach (['-1 day', '-3 days', '-5 days'] as $performedAt) {
+            $this->createTestWorkout($em, $user, $squat, new \DateTimeImmutable($performedAt), 3, 5);
+        }
+        foreach (['-2 days', '-4 days'] as $performedAt) {
+            $this->createTestWorkout($em, $user, $bench, new \DateTimeImmutable($performedAt), 3, 5);
+        }
+        $this->createTestWorkout($em, $user, $curl, new \DateTimeImmutable('-6 days'), 3, 5);
+        foreach (['-100 days', '-101 days', '-102 days', '-103 days'] as $performedAt) {
+            $this->createTestWorkout($em, $user, $oldFavourite, new \DateTimeImmutable($performedAt), 3, 5);
+        }
+        foreach (['-1 day', '-2 days', '-3 days', '-4 days'] as $performedAt) {
+            $this->createTestWorkout($em, $otherUser, $curl, new \DateTimeImmutable($performedAt), 3, 5);
+        }
+
+        $ids = $workoutStatsRepository->findMostFrequentExerciseIdsSince($user, new \DateTimeImmutable('-60 days'), 2);
+
+        // Classement par nombre de séances (jamais par nombre de séries), limité, sur la seule
+        // période demandée et le seul propriétaire.
+        self::assertSame([(string) $squat->id, (string) $bench->id], $ids);
+    }
+
+    public function testFindMostFrequentExerciseIdsSinceReturnsNothingWithoutRecentWorkout(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var WorkoutStatsRepository $workoutStatsRepository */
+        $workoutStatsRepository = static::getContainer()->get(WorkoutStatsRepository::class);
+
+        $user = $this->createTestUser($em);
+
+        self::assertSame([], $workoutStatsRepository->findMostFrequentExerciseIdsSince($user, new \DateTimeImmutable('-60 days'), 8));
+    }
+
     private function createTestUser(EntityManagerInterface $em): User
     {
         $user = new User();

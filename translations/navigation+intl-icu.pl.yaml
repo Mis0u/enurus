@@ -924,6 +924,8 @@ workout:
         select: Wybierz swoją rutynę
         title: Rutyna
     search_exercise:
+        add_selected: "Dodaj ({count})"
+        all: "Wszystkie ćwiczenia"
         bodyweight_required: Podaj swoją masę ciała w ustawieniach, aby użyć tego ćwiczenia.
         create_link:
             cancel_button: Anuluj
@@ -931,6 +933,7 @@ workout:
             message: "Tworzysz trening: opuszczenie tej strony spowoduje utratę bieżącego wyboru."
             text: "Nie możesz znaleźć swojego ćwiczenia? Utwórz je!"
             title: Utworzyć nowe ćwiczenie?
+        habitual: "Twoje stałe ćwiczenia"
         muscle_filter:
             toggle: "Filtruj według mięśnia"
         no_result: Nie znaleziono żadnego ćwiczenia !
