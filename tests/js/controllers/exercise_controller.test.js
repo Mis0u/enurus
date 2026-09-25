@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { Application } from '@hotwired/stimulus';
+import { Application, Controller } from '@hotwired/stimulus';
 
 const fireMock = vi.fn();
 vi.mock('sweetalert2', () => ({ default: { fire: fireMock } }));
@@ -134,6 +134,30 @@ describe('exercise controller', () => {
         expect(inputs).toHaveLength(1);
         expect(inputs[0].value).toBe('');
         expect(document.querySelector('.js-prefilled-from')).toBeNull();
+    });
+
+    it('checks the workout date before opening the note modal', async () => {
+        buildDom({ dateValue: '2026-08-02', exerciseCards: '<div data-exercise-index="0"></div>' });
+        const events = [];
+        const checkUnlessDone = vi.fn(async () => events.push('date checked'));
+        application.register('date', class extends Controller {
+            checkUnlessDone = checkUnlessDone;
+        });
+        document.getElementById('workout_performedAt').setAttribute('data-controller', 'date');
+        document.querySelector('[data-controller="exercise"]').setAttribute('data-exercise-date-outlet', '#workout_performedAt');
+        await nextTick();
+        new MutationObserver(() => {
+            if (document.getElementById('note-modal').classList.contains('flex')) {
+                events.push('note modal opened');
+            }
+        }).observe(document.getElementById('note-modal'), { attributes: true });
+
+        document.querySelector('button[data-action]').click();
+        await nextTick();
+        await nextTick();
+
+        expect(checkUnlessDone).toHaveBeenCalledTimes(1);
+        expect(events).toEqual(['date checked', 'note modal opened']);
     });
 
     it('computes the lifted weight of a routine\'s bodyweight sets once loaded', async () => {

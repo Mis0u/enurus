@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
-import { FIXTURE_USERS, loginAs } from './helpers';
+import { FIXTURE_USERS, loginAs, submitWorkout } from './helpers';
 
 // Une séance enregistrée aujourd'hui (date du jour pré-remplie, heure courante) devient la
 // dernière performance de son exercice : l'ajouter de nouveau doit reprendre ses séries.
@@ -23,9 +23,7 @@ test('a new exercise card is prefilled with the last performance', async ({ page
     const reps = page.locator('input[name*="[exerciseSets][0][reps]"]');
     await weight.fill('77.5');
     await reps.fill('7');
-    await page.getByRole('button', { name: 'Submit' }).click();
-    await page.locator('#note-modal-submit').click();
-    await expect(page).toHaveURL(/\/en\/workout\/[0-9a-f-]+/, { timeout: 15_000 });
+    await submitWorkout(page);
 
     await page.goto('/en/log-workout');
     await page.waitForLoadState('networkidle');

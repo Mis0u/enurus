@@ -9,14 +9,26 @@ export default class extends Controller {
         excludeId: String,
     };
 
+    #lastCheckedDate = null;
+
     connect() {
         this.element.addEventListener('change', () => this.check());
+    }
+
+    // Une date pré-remplie (date du jour, cf. workout--date-picker) n'émet jamais de `change` :
+    // appelé à la validation de la séance pour qu'elle soit quand même vérifiée, une seule fois.
+    async checkUnlessDone() {
+        if (this.element.value === this.#lastCheckedDate) return;
+
+        await this.check();
     }
 
     async check() {
         const date = this.element.value;
 
         if (!date) return;
+
+        this.#lastCheckedDate = date;
 
         const url = new URL(this.checkUrlValue, window.location.origin);
         url.searchParams.set('date', date);
