@@ -16,7 +16,8 @@ function buildDom({ dateValue = '', exerciseCards = '' } = {}) {
              data-workout--edit--exercise-no-date-title-value="Aucune date sélectionnée"
              data-workout--edit--exercise-no-date-text-value="Choisis une date avant de valider ta séance"
              data-workout--edit--exercise-no-exercise-title-value="Aucun exercice"
-             data-workout--edit--exercise-no-exercise-text-value="Ajoute au moins un exercice avant de valider ta séance">
+             data-workout--edit--exercise-no-exercise-text-value="Ajoute au moins un exercice avant de valider ta séance"
+             data-workout--edit--exercise-missing-set-values-message-value="Complète les séries en rouge">
             <div data-workout--edit--exercise-target="exerciseList">${exerciseCards}</div>
         </div>
 
@@ -70,6 +71,31 @@ describe('workout--edit--exercise controller', () => {
 
         expect(fireMock).not.toHaveBeenCalled();
         expect(requestSubmit).toHaveBeenCalledTimes(1);
+    });
+
+    it('reveals the first empty set field with a toast instead of submitting', async () => {
+        buildDom({
+            dateValue: '2026-08-02',
+            exerciseCards: `
+                <div data-exercise-index="0">
+                    <input type="number" name="reps" required data-error-message="Les répétitions sont requises">
+                </div>
+            `,
+        });
+        await nextTick();
+        const emptyReps = document.querySelector('input[name="reps"]');
+        emptyReps.scrollIntoView = vi.fn();
+        const form = document.getElementById('workout-edit-form');
+        const requestSubmit = vi.spyOn(form, 'requestSubmit').mockImplementation(() => {});
+
+        document.getElementById('workout-edit-submit-btn').click();
+        await nextTick();
+
+        expect(emptyReps.scrollIntoView).toHaveBeenCalledTimes(1);
+        expect(document.activeElement).toBe(emptyReps);
+        expect(fireMock).toHaveBeenCalledTimes(1);
+        expect(fireMock.mock.calls[0][0]).toMatchObject({ toast: true, title: 'Complète les séries en rouge' });
+        expect(requestSubmit).not.toHaveBeenCalled();
     });
 
     it('commits pending photo changes before submitting when a photo-upload controller is present', async () => {

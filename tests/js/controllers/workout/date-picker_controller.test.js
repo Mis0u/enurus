@@ -13,13 +13,14 @@ function nextTick() {
     return new Promise(resolve => setTimeout(resolve, 0));
 }
 
-function buildDom(locale = '') {
+function buildDom(locale = '', extraAttributes = '') {
     document.body.innerHTML = `
         <input
             type="text"
             readonly
             data-controller="workout--date-picker"
             data-workout--date-picker-locale-value="${locale}"
+            ${extraAttributes}
         >
     `;
 }
@@ -65,6 +66,20 @@ describe('workout--date-picker controller', () => {
         await nextTick();
 
         expect(flatpickrMock.mock.calls[0][1].locale).toBe(French);
+    });
+
+    it('leaves the date empty by default', async () => {
+        buildDom();
+        await nextTick();
+
+        expect(flatpickrMock.mock.calls[0][1]).not.toHaveProperty('defaultDate');
+    });
+
+    it('preselects today when asked to', async () => {
+        buildDom('', 'data-workout--date-picker-default-today-value="true"');
+        await nextTick();
+
+        expect(flatpickrMock.mock.calls[0][1].defaultDate).toBe('today');
     });
 
     it('destroys the flatpickr instance on disconnect', async () => {

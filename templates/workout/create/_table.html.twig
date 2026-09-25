@@ -3,7 +3,7 @@
 {% set is_bodyweight = exercise.bodyweightPercent is not null %}
 <table class="w-full mb-3">
     <thead>
-    <tr class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#4a5568]">
+    <tr class="text-[11px] font-semibold uppercase tracking-[0.5px] text-[#4a5568] [&>td]:px-2 max-md:[&>td]:px-1">
         <td class="pb-2.5 w-12">{{ 'workout.series'|trans({}, 'navigation') }}</td>
         <td class="pb-2.5 w-40">{{ (is_bodyweight ? 'workout.weight_bodyweight' : 'workout.weight')|trans({}, 'navigation') }}</td>
         <td class="pb-2.5 w-40">
@@ -21,7 +21,7 @@
     <tbody class="js-sets-tbody">
     {% if existingSets is defined and existingSets is not empty %}
         {% for set_index, set in existingSets %}
-            <tr data-set-index="{{ set_index }}" class="border-b border-white/[0.04] last:border-0 bg-[rgba(255,255,255,0.02)] rounded-[8px] [&>td]:px-2 [&>td]:py-2.5">
+            <tr data-set-index="{{ set_index }}" class="border-b border-white/[0.04] last:border-0 bg-[rgba(255,255,255,0.02)] rounded-[8px] [&>td]:px-2 max-md:[&>td]:px-1 [&>td]:py-2.5">
                 <td class="font-rajdhani font-semibold text-[#8b9bb4] text-[15px]">{{ set_index + 1 }}</td>
                 <td class="pr-2">
                     <input type="number"
@@ -32,7 +32,7 @@
                            min="{{ (is_time_based or is_distance_based or is_bodyweight) ? '0' : '0.1' }}"
                            step="0.1"
                            placeholder="{{ is_bodyweight ? 'workout.series_bodyweight_extra_abbreviate'|trans({}, 'navigation')|lower : app.user.unitOfMeasure.value }}"
-                           class="w-20 px-3 py-2 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
+                           class="w-20 max-md:w-16 px-3 py-2 max-md:py-2.5 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
                     <input type="hidden"
                            name="workout[workoutExercises][{{ index }}][exerciseSets][{{ set_index }}][position]"
                            value="{{ set_index }}">
@@ -50,7 +50,7 @@
                                required
                                min="1"
                                placeholder="{{ 'workout.series_duration_abbreviate'|trans({}, 'navigation')|lower }}"
-                               class="w-20 px-3 py-2 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
+                               class="w-20 max-md:w-16 px-3 py-2 max-md:py-2.5 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
                     {% elseif is_distance_based %}
                         <input type="number"
                                name="workout[workoutExercises][{{ index }}][exerciseSets][{{ set_index }}][distance]"
@@ -59,7 +59,7 @@
                                required
                                min="1"
                                placeholder="{{ 'workout.series_distance_abbreviate'|trans({}, 'navigation')|lower }}"
-                               class="w-20 px-3 py-2 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
+                               class="w-20 max-md:w-16 px-3 py-2 max-md:py-2.5 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
                     {% else %}
                         <input type="number"
                                name="workout[workoutExercises][{{ index }}][exerciseSets][{{ set_index }}][reps]"
@@ -68,29 +68,19 @@
                                required
                                min="1"
                                placeholder="{{ 'workout.reps_abbreviate'|trans({}, 'navigation')|lower }}"
-                               class="w-20 px-3 py-2 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
+                               class="w-20 max-md:w-16 px-3 py-2 max-md:py-2.5 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
                     {% endif %}
                 </td>
                 <td class="text-center">
-                    <div class="flex items-center justify-center gap-1">
-                        <button type="button"
-                                data-action="click->{{ controllerName|default('exercise') }}#repeatSet"
-                                aria-label="{{ 'workout.repeat_series'|trans({}, 'navigation') }}"
-                                class="text-[#4a5568] hover:text-[#06b6d4] transition-colors duration-250 flex items-center justify-center w-6 h-6 max-md:w-5 max-md:h-5">
-                            {% include 'partials/_svg/_repeat.html.twig' only %}
-                        </button>
-                        <button type="button"
-                                data-action="click->{{ controllerName|default('exercise') }}#deleteSet"
-                                class="text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250 text-[20px] leading-none flex items-center justify-center w-6 h-6 max-md:w-5 max-md:h-5">
-                            {% include 'partials/_svg/_red_cross.html.twig' only %}
-                        </button>
-                    </div>
+                    {% include 'workout/create/_set_actions.html.twig' with {
+                        'controllerName': controllerName|default('exercise')
+                    } only %}
                 </td>
             </tr>
         {% endfor %}
     {% else %}
         {% set is_blocked = isBlocked|default(false) %}
-        <tr data-set-index="0" class="border-b border-white/[0.04] last:border-0 bg-[rgba(255,255,255,0.02)] rounded-[8px] [&>td]:px-2 [&>td]:py-2.5">
+        <tr data-set-index="0" class="border-b border-white/[0.04] last:border-0 bg-[rgba(255,255,255,0.02)] rounded-[8px] [&>td]:px-2 max-md:[&>td]:px-1 [&>td]:py-2.5">
             <td class="font-rajdhani font-semibold text-[#8b9bb4] text-[15px]">1</td>
             <td class="pr-2">
                 <input type="number"
@@ -101,7 +91,7 @@
                        min="{{ (is_time_based or is_distance_based or is_bodyweight) ? '0' : '0.1' }}"
                        step="0.1"
                        placeholder="{{ is_bodyweight ? 'workout.series_bodyweight_extra_abbreviate'|trans({}, 'navigation')|lower : app.user.unitOfMeasure.value }}"
-                       class="w-20 px-3 py-2 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
+                       class="w-20 max-md:w-16 px-3 py-2 max-md:py-2.5 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
                 <input type="hidden"
                        name="workout[workoutExercises][{{ index }}][exerciseSets][0][position]"
                        value="0"
@@ -120,7 +110,7 @@
                            {% if is_blocked %}disabled{% endif %}
                            min="1"
                            placeholder="{{ 'workout.series_duration_abbreviate'|trans({}, 'navigation')|lower }}"
-                           class="w-20 px-3 py-2 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
+                           class="w-20 max-md:w-16 px-3 py-2 max-md:py-2.5 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
                 {% elseif is_distance_based %}
                     <input type="number"
                            name="workout[workoutExercises][{{ index }}][exerciseSets][0][distance]"
@@ -129,7 +119,7 @@
                            {% if is_blocked %}disabled{% endif %}
                            min="1"
                            placeholder="{{ 'workout.series_distance_abbreviate'|trans({}, 'navigation')|lower }}"
-                           class="w-20 px-3 py-2 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
+                           class="w-20 max-md:w-16 px-3 py-2 max-md:py-2.5 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
                 {% else %}
                     <input type="number"
                            name="workout[workoutExercises][{{ index }}][exerciseSets][0][reps]"
@@ -138,24 +128,14 @@
                            {% if is_blocked %}disabled{% endif %}
                            min="1"
                            placeholder="{{ 'workout.reps_abbreviate'|trans({}, 'navigation')|lower }}"
-                           class="w-20 px-3 py-2 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
+                           class="w-20 max-md:w-16 px-3 py-2 max-md:py-2.5 bg-white/[0.04] border border-white/[0.07] rounded-md text-[#f0f4ff] text-sm font-rajdhani font-semibold text-center outline-none transition-colors duration-250 focus:border-[rgba(244,63,94,0.4)] focus:bg-white/[0.06] placeholder:text-[#4a5568] placeholder:font-normal">
                 {% endif %}
             </td>
             <td class="text-center">
-                <div class="flex items-center justify-center gap-1">
-                    <button type="button"
-                            {% if is_blocked %}disabled{% endif %}
-                            data-action="click->{{ controllerName|default('exercise') }}#repeatSet"
-                            aria-label="{{ 'workout.repeat_series'|trans({}, 'navigation') }}"
-                            class="text-[#4a5568] hover:text-[#06b6d4] transition-colors duration-250 flex items-center justify-center w-6 h-6 max-md:w-5 max-md:h-5 disabled:opacity-40 disabled:cursor-not-allowed">
-                        {% include 'partials/_svg/_repeat.html.twig' only %}
-                    </button>
-                    <button type="button"
-                            data-action="click->{{ controllerName|default('exercise') }}#deleteSet"
-                            class="text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250 text-[20px] leading-none flex items-center justify-center w-6 h-6 max-md:w-5 max-md:h-5">
-                        {% include 'partials/_svg/_red_cross.html.twig' only %}
-                    </button>
-                </div>
+                {% include 'workout/create/_set_actions.html.twig' with {
+                    'controllerName': controllerName|default('exercise'),
+                    'isBlocked': is_blocked,
+                } only %}
             </td>
         </tr>
     {% endif %}

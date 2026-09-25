@@ -20,6 +20,7 @@ function buildDom({ dateValue = '', exerciseCards = '', liftedWeightTemplate = '
              data-exercise-submit-failed-title-value="Échec"
              data-exercise-submit-failed-text-value="Une erreur est survenue"
              data-exercise-upload-photo-url-value="/upload/__ID__"
+             data-exercise-missing-set-values-message-value="Complète les séries en rouge"
              data-exercise-lifted-weight-template-value="${liftedWeightTemplate}">
 
             <input id="workout_performedAt" type="text" value="${dateValue}">
@@ -89,6 +90,29 @@ describe('exercise controller', () => {
 
         const modal = document.getElementById('note-modal');
         expect(modal.classList.contains('flex')).toBe(true);
+    });
+
+    it('reveals the first empty set field with a toast instead of opening the note modal', async () => {
+        buildDom({
+            dateValue: '2026-08-02',
+            exerciseCards: `
+                <div data-exercise-index="0">
+                    <input type="number" name="reps" required data-error-message="Les répétitions sont requises">
+                </div>
+            `,
+        });
+        await nextTick();
+        const emptyReps = document.querySelector('input[name="reps"]');
+        emptyReps.scrollIntoView = vi.fn();
+
+        document.querySelector('button[data-action]').click();
+        await nextTick();
+
+        expect(emptyReps.scrollIntoView).toHaveBeenCalledTimes(1);
+        expect(document.activeElement).toBe(emptyReps);
+        expect(fireMock).toHaveBeenCalledTimes(1);
+        expect(fireMock.mock.calls[0][0]).toMatchObject({ toast: true, title: 'Complète les séries en rouge' });
+        expect(document.getElementById('note-modal').classList.contains('flex')).toBe(false);
     });
 
     it('computes the lifted weight of a routine\'s bodyweight sets once loaded', async () => {

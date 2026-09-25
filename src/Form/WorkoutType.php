@@ -134,6 +134,7 @@ final class WorkoutType extends AbstractType
         return [
             ...$this->datePickerAttr(),
             ...$this->dateDuplicateCheckAttr(),
+            'data-workout--date-picker-default-today-value' => 'true',
         ];
     }
 

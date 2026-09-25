@@ -7,6 +7,7 @@
      data-exercise-submit-failed-text-value="{{ 'workout.error.submit_failed.text'|trans({}, 'navigation') }}"
      data-exercise-user-has-bodyweight-value="{{ app.user.bodyweightKg is not null ? 'true' : 'false' }}"
      data-exercise-bodyweight-required-message-value="{{ 'workout.search_exercise.bodyweight_required'|trans({}, 'navigation') }}"
+     data-exercise-missing-set-values-message-value="{{ 'workout.error.missing_set_values'|trans({}, 'navigation') }}"
      data-exercise-lifted-weight-template-value="{{ 'workout.series_bodyweight_lifted'|trans({weight: '__WEIGHT__ ' ~ app.user.unitOfMeasure.value}, 'navigation') }}"
      data-exercise-upload-photo-url-value="{{ path('workout_upload_photo', {
          '_locale': app.request.locale,

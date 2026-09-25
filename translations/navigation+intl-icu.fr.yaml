@@ -768,6 +768,7 @@ workout:
     created: Ta séance a bien été enregistrée
     date: Date
     date_placeholder: Choisir une date
+    delete_series: Supprimer cette série
     duration_optional: Durée (Optionnel)
     duration_placeholder: Durée (min)
     edit:
@@ -786,6 +787,7 @@ workout:
         topbar_title: Édition de séance
         type_readonly: Le type de séance ne peut pas être modifié
     error:
+        missing_set_values: Complète les champs en rouge pour valider ta séance
         no_date:
             text: Choisis une date avant de valider ta séance
             title: Aucune date sélectionnée

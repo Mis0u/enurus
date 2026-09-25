@@ -16,10 +16,14 @@
         mobile="true"
     />
 
-    <a href="{{ path('app_workout') }}"
-       class="bottom-nav-cta flex items-center justify-center relative -top-5 w-16 h-16 bg-gradient-to-br from-rose-ft to-red-600 rounded-full shadow-[0_4px_20px_rgba(244,63,94,0.3)] border-4 border-bg-base no-underline transition-ft">
-        {% include 'partials/_svg/_add.html.twig' with {'width': 6.5, 'height': 6.5, 'strokeColor': 'white'} only %}
-    </a>
+    {# Masqué sur les formulaires de séance (enregistrement, édition) : il chevauchait leur barre
+       d'action fixe (deux boutons rouges l'un sur l'autre). #}
+    {% if app.request.attributes.get('_route') not in ['app_workout', 'app_workout_edit'] %}
+        <a href="{{ path('app_workout') }}"
+           class="bottom-nav-cta flex items-center justify-center relative -top-5 w-16 h-16 bg-gradient-to-br from-rose-ft to-red-600 rounded-full shadow-[0_4px_20px_rgba(244,63,94,0.3)] border-4 border-bg-base no-underline transition-ft">
+            {% include 'partials/_svg/_add.html.twig' with {'width': 6.5, 'height': 6.5, 'strokeColor': 'white'} only %}
+        </a>
+    {% endif %}
 
     {% if is_granted('ROLE_ADMIN') %}
         <twig:Navigation:Sidebar:NavigationItem

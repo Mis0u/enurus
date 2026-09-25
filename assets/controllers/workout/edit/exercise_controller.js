@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import Swal          from 'sweetalert2';
 import Sortable      from 'sortablejs';
-import { handleErrorField } from '../_error_form.js';
+import { clearFieldError, handleErrorField, revealFirstInvalidField } from '../_error_form.js';
 import { showErrorToast } from '../../../utils/toast.js';
 import { initLiftedWeights, updateLiftedWeightForInput } from '../lifted_weight.js';
 
@@ -17,6 +17,7 @@ export default class extends Controller {
         userHasBodyweight: Boolean,
         bodyweightRequiredMessage: String,
         liftedWeightTemplate: String,
+        missingSetValuesMessage: String,
     };
 
     connect() {
@@ -34,11 +35,7 @@ export default class extends Controller {
 
         this.element.addEventListener('input', (e) => {
             if (e.target.matches('input[required]') && e.target.value) {
-                e.target.classList.remove('!border-[rgba(244,63,94,0.6)]');
-                const next = e.target.nextElementSibling;
-                if (next?.classList.contains('js-error-message')) {
-                    next.remove();
-                }
+                clearFieldError(e.target);
             }
 
             if (e.target.matches('input[name$="[weight]"]')) {
@@ -105,8 +102,11 @@ export default class extends Controller {
             return;
         }
 
-        const valid = handleErrorField(this.exerciseListTarget);
-        if (!valid) return;
+        if (!handleErrorField(this.exerciseListTarget)) {
+            revealFirstInvalidField(this.exerciseListTarget);
+            showErrorToast(this.missingSetValuesMessageValue);
+            return;
+        }
 
         // Photo (upload d'un nouveau fichier ou suppression) reste en attente jusqu'ici — jamais
         // appliquée tant que le formulaire n'est pas réellement soumis (cf. bug "Annuler" gardant

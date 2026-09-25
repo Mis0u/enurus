@@ -780,6 +780,7 @@ workout:
     created: Twój trening został zapisany
     date: Data
     date_placeholder: Wybierz datę
+    delete_series: Usuń tę serię
     duration_optional: Czas trwania (Opcjonalnie)
     duration_placeholder: Czas trwania (min)
     edit:
@@ -798,6 +799,7 @@ workout:
         topbar_title: Edycja treningu
         type_readonly: Rodzaj treningu nie może być zmieniony
     error:
+        missing_set_values: Uzupełnij pola zaznaczone na czerwono, aby zatwierdzić trening
         no_date:
             text: Wybierz datę przed zatwierdzeniem treningu
             title: Nie wybrano daty

@@ -768,6 +768,7 @@ workout:
     created: Your workout has been saved
     date: Date
     date_placeholder: Select a date
+    delete_series: Delete this set
     duration_optional: Duration (Optional)
     duration_placeholder: Duration (min)
     edit:
@@ -786,6 +787,7 @@ workout:
         topbar_title: Workout editing
         type_readonly: Workout type cannot be changed
     error:
+        missing_set_values: Fill in the fields in red to submit your workout
         no_date:
             text: Choose a date before submitting your workout
             title: No date selected
