@@ -3,7 +3,7 @@
 <a
     href="{{ path(route, {'filter': 'week', '_locale': app.request.locale}|merge(routine_params)|merge(muscle_params)|merge(routeParams)) }}"
     data-workout--list--workout-filters-target="tabWeek"
-    class="px-3 py-1.5 rounded-md text-[12px] font-medium transition-all duration-250
+    class="inline-flex items-center px-3 py-1.5 max-md:min-h-11 rounded-md text-[12px] font-medium transition-all duration-250
                 {% if filterType == 'week' and (filterDate is null or filterDate == '') %}
                     bg-[#f43f5e] text-white
                 {% else %}
@@ -16,7 +16,7 @@
 <a
     href="{{ path(route, {'filter': 'month', '_locale': app.request.locale}|merge(routine_params)|merge(muscle_params)|merge(routeParams)) }}"
     data-workout--list--workout-filters-target="tabMonth"
-class="px-3 py-1.5 rounded-md text-[12px] font-medium transition-all duration-250
+class="inline-flex items-center px-3 py-1.5 max-md:min-h-11 rounded-md text-[12px] font-medium transition-all duration-250
                 {% if filterType == 'month' and (filterDate is null or filterDate == '') %}
                     bg-[#f43f5e] text-white
                 {% else %}

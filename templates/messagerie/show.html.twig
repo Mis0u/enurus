@@ -79,7 +79,7 @@
                             data-contact--delete-error-text-value="{{ 'messagerie.delete.error_text'|trans({}, 'navigation') }}"
                             data-action="click->contact--delete#confirmDelete"
                             aria-label="{{ 'messagerie.delete.confirm_button'|trans({}, 'navigation') }}"
-                            class="w-8 h-8 rounded-lg border border-white/[0.07] bg-white/[0.03] text-[#8b9bb4] hover:text-[#f43f5e] hover:border-[rgba(244,63,94,0.3)] flex items-center justify-center transition-colors cursor-pointer">
+                            class="w-8 h-8 max-md:w-10 max-md:h-10 rounded-lg border border-white/[0.07] bg-white/[0.03] text-[#8b9bb4] hover:text-[#f43f5e] hover:border-[rgba(244,63,94,0.3)] flex items-center justify-center transition-colors cursor-pointer">
                         {% include 'partials/_svg/_trash.html.twig' with {'width': 4, 'height': 4} only %}
                     </button>
                 </div>

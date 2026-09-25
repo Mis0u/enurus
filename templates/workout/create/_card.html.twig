@@ -23,7 +23,8 @@
     </div>
     <button type="button"
             data-action="click->{{ controllerName|default('exercise') }}#deleteExercise"
-            class="text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250 cursor-pointer">
+            aria-label="{{ 'workout.delete_exercise'|trans({}, 'navigation') }}"
+            class="flex items-center justify-center w-10 h-10 -mr-2.5 text-[#4a5568] hover:text-[#f43f5e] transition-colors duration-250 cursor-pointer">
         {% include 'partials/_svg/_trash.html.twig' only %}
     </button>
 </div>

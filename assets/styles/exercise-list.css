@@ -265,3 +265,29 @@
 .exercise-page-btn--nav {
     padding: 0 12px;
 }
+
+/* =============================================
+   ZONES TACTILES MOBILE (même seuil que `max-md` de Tailwind)
+   44 px pour filtres et pagination, 40 px pour les icônes d'action d'une carte (liste dense).
+   « Première/dernière page » masqués : avec 5 numéros et Précédent/Suivant à 44 px, ils ne
+   tiennent plus sur un écran de 390 px.
+============================================= */
+@media (width < 48rem) {
+    .exercise-action-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .exercise-filter-btn {
+        min-height: 44px;
+    }
+
+    .exercise-page-btn {
+        min-width: 44px;
+        height: 44px;
+    }
+
+    .exercise-page-btn--edge {
+        display: none;
+    }
+}

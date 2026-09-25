@@ -64,7 +64,7 @@
 
     {% if allBadgesUrl is not null %}
         <a href="{{ allBadgesUrl }}"
-           class="relative self-start mt-5 inline-flex items-center gap-1.5 text-[13px] font-medium text-rose-ft hover:opacity-80 transition-ft">
+           class="relative self-start mt-5 inline-flex items-center gap-1.5 max-md:min-h-11 text-[13px] font-medium text-rose-ft hover:opacity-80 transition-ft">
             {{ (readOnly ? 'badge.widget.see_all_shared' : 'badge.widget.see_all')|trans({}, 'navigation') }}
             <span aria-hidden="true">→</span>
         </a>

@@ -2,7 +2,7 @@
     <span>{{ 'pagination.per_page'|trans({}, 'navigation') }}</span>
     <select
         onchange="window.location.href = '{{ path(route, routeParams|merge({'_locale': app.request.locale, 'page': 1})) }}&limit=' + this.value"
-        class="bg-[#0f1928] border border-white/[0.07] rounded-md px-2 py-1 text-[12px] text-[#f0f4ff] font-['DM_Sans'] outline-none cursor-pointer"
+        class="bg-[#0f1928] border border-white/[0.07] rounded-md px-2 py-1 max-md:min-h-11 max-md:px-3 text-[12px] text-[#f0f4ff] font-['DM_Sans'] outline-none cursor-pointer"
         aria-label="{{ 'pagination.per_page'|trans({}, 'navigation') }}"
     >
         {% for limit in limitAllowed %}

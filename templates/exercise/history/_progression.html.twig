@@ -21,7 +21,7 @@
             <div class="flex items-center gap-1 bg-white/[0.04] border border-white/[0.07] rounded-lg p-1">
                 {% for available in availablePeriods %}
                     <a href="{{ path('app_exercise_history', {id: exercise.id, period: available}) }}"
-                       class="px-3 py-1.5 text-[12px] font-semibold rounded-md transition-ft {{ available == period ? 'dashboard-tab-active' : 'dashboard-tab-inactive' }}">
+                       class="px-3 py-1.5 max-md:min-h-11 max-md:inline-flex max-md:items-center text-[12px] font-semibold rounded-md transition-ft {{ available == period ? 'dashboard-tab-active' : 'dashboard-tab-inactive' }}">
                         {{ ('exercise.history.progression.period.' ~ available)|trans({}, 'navigation') }}
                     </a>
                 {% endfor %}

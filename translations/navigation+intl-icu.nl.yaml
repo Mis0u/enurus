@@ -768,6 +768,7 @@ workout:
     created: Je training is opgeslagen
     date: Datum
     date_placeholder: Selecteer een datum
+    delete_exercise: Deze oefening verwijderen
     delete_series: Deze set verwijderen
     duration_optional: Duur (Optioneel)
     duration_placeholder: Duur (min)

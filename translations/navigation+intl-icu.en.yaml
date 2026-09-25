@@ -768,6 +768,7 @@ workout:
     created: Your workout has been saved
     date: Date
     date_placeholder: Select a date
+    delete_exercise: Delete this exercise
     delete_series: Delete this set
     duration_optional: Duration (Optional)
     duration_placeholder: Duration (min)

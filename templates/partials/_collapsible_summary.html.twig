@@ -10,7 +10,7 @@
     settings: "font-['Rajdhani'] text-lg font-bold text-[#f0f4ff]",
     connection: 'font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]',
 } %}
-<summary class="flex items-center justify-between gap-3 cursor-pointer list-none select-none rounded-lg [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-ft">
+<summary class="flex items-center justify-between gap-3 max-md:min-h-11 cursor-pointer list-none select-none rounded-lg [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-ft">
     <h2 id="{{ titleId }}" class="{{ title_classes[variant] }}">{{ title }}</h2>
     <span class="shrink-0 text-[#8b9bb4] transition-transform duration-200 group-open/collapsible:rotate-180" aria-hidden="true">
         {% include 'partials/_svg/_down_arrow.html.twig' only %}
