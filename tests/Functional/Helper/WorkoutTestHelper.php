@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Helper;
 
 use App\Entity\Exercise;
+use App\Entity\ExerciseSet;
+use App\Entity\User;
 use App\Entity\Workout;
+use App\Entity\WorkoutExercise;
 use App\Repository\ExerciseRepository;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -85,5 +89,41 @@ final class WorkoutTestHelper
         ], $overrides);
 
         $client->request(Request::METHOD_POST, '/fr/enregistre-seance', $data);
+    }
+
+    /**
+     * Séance persistée directement (sans passer par le formulaire), à une date fixe — pour les
+     * tests qui ont besoin d'un historique précis (dernière performance, etc.).
+     *
+     * @param list<array{float, int}> $weightRepsSets poids (kg) et reps, dans l'ordre des séries
+     */
+    public static function persistPastWorkout(
+        EntityManagerInterface $em,
+        User $user,
+        Exercise $exercise,
+        string $performedAt,
+        array $weightRepsSets,
+    ): Workout {
+        $workout = new Workout();
+        $workout->owner = $user;
+        $workout->performedAt = new \DateTimeImmutable($performedAt);
+
+        $workoutExercise = new WorkoutExercise();
+        $workoutExercise->exercise = $exercise;
+        $workoutExercise->position = 0;
+        $workout->addWorkoutExercise($workoutExercise);
+
+        foreach ($weightRepsSets as $position => [$weight, $reps]) {
+            $set = new ExerciseSet();
+            $set->position = $position;
+            $set->weight = $weight;
+            $set->reps = $reps;
+            $workoutExercise->addExerciseSet($set);
+        }
+
+        $em->persist($workout);
+        $em->flush();
+
+        return $workout;
     }
 }

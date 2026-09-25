@@ -73,11 +73,13 @@ test('set actions are large enough to tap and do not overflow the screen', async
 
 test('submitting with an empty set reveals the missing field', async ({ page }) => {
     await openLogWorkoutWithOneExercise(page);
+    const reps = page.locator('input[name*="[reps]"]').first();
     await page.locator('input[name*="[weight]"]').first().fill('80');
+    // Vidé explicitement : la carte peut être pré-remplie avec la dernière performance.
+    await reps.fill('');
 
     await page.getByRole('button', { name: 'Submit' }).click();
 
-    const reps = page.locator('input[name*="[reps]"]').first();
     await expect(reps).toBeFocused();
     await expect(reps).toHaveAttribute('aria-invalid', 'true');
     await expect(page.locator('.swal2-toast')).toContainText('Fill in the fields in red');

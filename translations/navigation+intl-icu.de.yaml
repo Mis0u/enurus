@@ -897,6 +897,9 @@ workout:
         remove: Entfernen
         select: Auswählen
         too_large: Das Foto darf 5 MB nicht überschreiten.
+    prefilled_clear: Leeren
+    prefilled_clear_label: Die aus deinem letzten Training übernommenen Sätze leeren
+    prefilled_from: "Übernommen aus deinem Training vom {date}"
     repeat_series: Diesen Satz wiederholen
     reps: Wiederholungen
     reps_abbreviate: Wdh

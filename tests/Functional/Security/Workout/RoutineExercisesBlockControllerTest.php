@@ -7,7 +7,9 @@ namespace App\Tests\Functional\Security\Workout;
 use App\DataFixtures\UserFixtures;
 use App\Repository\RoutineRepository;
 use App\Repository\UserRepository;
+use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -143,6 +145,30 @@ class RoutineExercisesBlockControllerTest extends WebTestCase
         $blocks = $crawler->filter('[data-exercise-index]');
 
         $this->assertCount($expectedCount, $blocks);
+    }
+
+    public function testRoutineExercisesBlockPrefillsTheLastPerformance(): void
+    {
+        $client = $this->login(self::ROUTINE_OWNER);
+        $routineId = $this->getOwnerRoutineId($client);
+        /** @var RoutineRepository $routineRepository */
+        $routineRepository = static::getContainer()->get(RoutineRepository::class);
+        $routine = $routineRepository->find($routineId);
+        $this->assertNotNull($routine);
+        $routineExercise = $routine->routineExercises->first();
+        $this->assertNotFalse($routineExercise);
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        WorkoutTestHelper::persistPastWorkout($em, $routine->owner, $routineExercise->exercise, '2026-09-12 18:00', [[62.5, 9]]);
+
+        $crawler = $client->request(Request::METHOD_GET, '/fr/enregistre-seance/bloc-exercices-routine', [
+            'routineId' => $routineId,
+        ]);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSame('62.5', $crawler->filter('input[name="workout[workoutExercises][0][exerciseSets][0][weight]"]')->attr('value'));
+        $this->assertSame('9', $crawler->filter('input[name="workout[workoutExercises][0][exerciseSets][0][reps]"]')->attr('value'));
+        $this->assertStringContainsString('Repris de ta séance du 12 sept. 2026', $crawler->filter('[data-exercise-index="0"]')->text());
     }
 
     private function getOwnerRoutineId(KernelBrowser $client): string

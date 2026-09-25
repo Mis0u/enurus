@@ -6,6 +6,7 @@ import { clearFieldError, handleErrorField, revealFirstInvalidField } from './wo
 import { NoteModalManager } from './workout/create/note_modal_manager.js';
 import { showErrorToast } from '../utils/toast.js';
 import { initLiftedWeights, updateLiftedWeightForInput } from './workout/lifted_weight.js';
+import { insertSetRow, resetPrefilledCard } from './workout/set_rows.js';
 
 export default class extends Controller {
     static targets = ['exerciseList', 'submit'];
@@ -89,7 +90,13 @@ export default class extends Controller {
 
         const tbody = card.querySelector('.js-sets-tbody');
 
-        const newRow = this.#insertSetRow(card, tbody);
+        const newRow = insertSetRow(card, tbody);
+        initLiftedWeights(newRow, this.liftedWeightTemplateValue);
+    }
+
+    clearPrefill(event) {
+        const card = event.target.closest('[data-exercise-index]');
+        const newRow = resetPrefilledCard(card);
         initLiftedWeights(newRow, this.liftedWeightTemplateValue);
     }
 
@@ -100,7 +107,7 @@ export default class extends Controller {
         const sourceRow = event.target.closest('tr');
         const tbody = card.querySelector('.js-sets-tbody');
 
-        const newRow = this.#insertSetRow(card, tbody);
+        const newRow = insertSetRow(card, tbody);
         this.#copySetValues(sourceRow, newRow);
         initLiftedWeights(newRow, this.liftedWeightTemplateValue);
     }
@@ -170,21 +177,6 @@ export default class extends Controller {
 
         this.submitTarget.disabled = allBlocked;
         this.submitTarget.title = allBlocked ? this.bodyweightRequiredMessageValue : '';
-    }
-
-    #insertSetRow(card, tbody) {
-        const exerciseIndex = card.dataset.exerciseIndex;
-        const setIndex = tbody.querySelectorAll('tr').length;
-
-        const template = card.querySelector('.js-set-template');
-        const html = template.innerHTML
-            .replaceAll('__EXERCISE_INDEX__', exerciseIndex)
-            .replaceAll('__SET_INDEX__', setIndex)
-            .replaceAll('__SET_NUMBER__', setIndex + 1);
-
-        tbody.insertAdjacentHTML('beforeend', html);
-
-        return tbody.lastElementChild;
     }
 
     #copySetValues(sourceRow, newRow) {

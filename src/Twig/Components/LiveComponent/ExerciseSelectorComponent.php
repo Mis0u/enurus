@@ -12,8 +12,7 @@ use App\Repository\ExerciseRepository;
 use App\Repository\MuscleGroupRepository;
 use App\Service\Entity\ExerciseSorterService;
 use App\Service\Entity\MuscleGroupSorterService;
-use App\Service\Utils\WeightConverterService;
-use App\Service\Workout\BodyweightSnapshotService;
+use App\Service\Workout\WorkoutExerciseCardDataBuilder;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -62,8 +61,7 @@ final class ExerciseSelectorComponent
         private readonly ExerciseSorterService $exerciseSorter,
         private readonly MuscleGroupSorterService $muscleGroupSorter,
         private readonly Environment $twig,
-        private readonly WeightConverterService $weightConverter,
-        private readonly BodyweightSnapshotService $bodyweightSnapshotService,
+        private readonly WorkoutExerciseCardDataBuilder $cardDataBuilder,
     ) {
     }
 
@@ -103,16 +101,15 @@ final class ExerciseSelectorComponent
             return;
         }
 
-        $user = $this->getUser();
-        $shareKg = $this->bodyweightSnapshotService->shareKg($user->bodyweightKg, $exercise->bodyweightPercent);
+        $cardData = $this->cardDataBuilder->build($this->getUser(), [$exercise])[(string) $exercise->id];
 
         $html = $this->twig->render('workout/create/_exercise_card.html.twig', [
             'exercise' => $exercise,
             'index' => '__EXERCISE_INDEX__',
             'controllerName' => $this->controllerName,
-            'cardBodyweightShare' => null !== $exercise->bodyweightPercent
-                ? round($this->weightConverter->convertToLbs($shareKg, $user->unitOfMeasure), 1)
-                : null,
+            'cardBodyweightShare' => $cardData['cardBodyweightShare'],
+            'existingSets' => $cardData['existingSets'],
+            'prefilledFrom' => $cardData['prefilledFrom'],
             // Toujours true ici : le guard ci-dessus a déjà refusé le rendu si l'exercice est
             // PDC et que l'utilisateur n'a pas de poids — cette branche n'est jamais atteinte
             // dans le cas contraire.

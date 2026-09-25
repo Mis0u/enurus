@@ -897,6 +897,9 @@ workout:
         remove: Elimina
         select: Seleziona
         too_large: La foto non deve superare 5 MB.
+    prefilled_clear: Cancella
+    prefilled_clear_label: Cancella le serie riprese dal tuo ultimo allenamento
+    prefilled_from: "Ripreso dal tuo allenamento del {date}"
     repeat_series: Ripeti questa serie
     reps: Ripetizioni
     reps_abbreviate: Rip

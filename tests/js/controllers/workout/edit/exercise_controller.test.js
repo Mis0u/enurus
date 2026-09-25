@@ -98,6 +98,27 @@ describe('workout--edit--exercise controller', () => {
         expect(requestSubmit).not.toHaveBeenCalled();
     });
 
+    it('clears a prefilled card back to a single empty set', async () => {
+        buildDom({ dateValue: '2026-08-02', exerciseCards: `
+                <div data-exercise-index="0">
+                    <div class="js-prefilled-from"><button data-action="click->workout--edit--exercise#clearPrefill">Effacer</button></div>
+                    <table><tbody class="js-sets-tbody">
+                        <tr><td><input name="w[0][exerciseSets][0][weight]" value="80"></td></tr>
+                        <tr><td><input name="w[0][exerciseSets][1][weight]" value="85"></td></tr>
+                    </tbody></table>
+                    <template class="js-set-template"><tr><td><input name="w[__EXERCISE_INDEX__][exerciseSets][__SET_INDEX__][weight]"></td></tr></template>
+                </div>
+            ` });
+        await nextTick();
+
+        document.querySelector('.js-prefilled-from button').click();
+
+        const inputs = document.querySelectorAll('.js-sets-tbody input');
+        expect(inputs).toHaveLength(1);
+        expect(inputs[0].value).toBe('');
+        expect(document.querySelector('.js-prefilled-from')).toBeNull();
+    });
+
     it('commits pending photo changes before submitting when a photo-upload controller is present', async () => {
         buildDom({ dateValue: '2026-08-02', exerciseCards: '<div data-exercise-index="0"></div>' });
         document.body.insertAdjacentHTML('beforeend', '<div data-controller="workout--photo-upload"></div>');
