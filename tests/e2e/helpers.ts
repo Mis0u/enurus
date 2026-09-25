@@ -54,3 +54,23 @@ export async function loginAs(page: Page, email: string, password = FIXTURE_PASS
     // représentatif de la prod, où les assets sont compilés).
     await expect(page).toHaveURL(/\/fr\/tableau-de-bord/, { timeout: 15_000 });
 }
+
+/**
+ * Valide le formulaire d'enregistrement de séance et attend la page de la séance créée. La
+ * vérification des doublons de date (date_controller.js) peut afficher une modale d'information
+ * juste avant la fenêtre de note, si l'utilisateur a déjà une séance ce jour-là (fixtures à dates
+ * aléatoires, cf. CLAUDE.md) : elle est fermée si elle apparaît.
+ */
+export async function submitWorkout(page: Page): Promise<void> {
+    await page.getByRole('button', { name: 'Submit' }).click();
+
+    const dateInfoConfirm = page.locator('.swal2-confirm');
+    const noteSubmit = page.locator('#note-modal-submit');
+    await expect(dateInfoConfirm.or(noteSubmit).filter({ visible: true }).first()).toBeVisible();
+    if (await dateInfoConfirm.isVisible()) {
+        await dateInfoConfirm.click();
+    }
+
+    await noteSubmit.click();
+    await expect(page).toHaveURL(/\/en\/workout\/[0-9a-f-]+/, { timeout: 15_000 });
+}
