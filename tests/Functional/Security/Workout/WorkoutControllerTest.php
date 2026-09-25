@@ -419,6 +419,16 @@ class WorkoutControllerTest extends WebTestCase
         $this->assertCount(1, $options);
     }
 
+    public function testPageProvidesTheMissingSetValuesMessage(): void
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, '/fr/enregistre-seance');
+        $message = $crawler->filter('[data-exercise-missing-set-values-message-value]')
+            ->attr('data-exercise-missing-set-values-message-value');
+
+        self::assertNotEmpty($message);
+    }
+
     // -------------------------------------------------------------------------
     // HELPERS PRIVÉS
     // -------------------------------------------------------------------------

@@ -786,6 +786,7 @@ workout:
         topbar_title: Edição do treino
         type_readonly: O tipo de treino não pode ser modificado
     error:
+        missing_set_values: Preenche os campos a vermelho para validar o teu treino
         no_date:
             text: Escolhe uma data antes de validar o teu treino
             title: Nenhuma data selecionada

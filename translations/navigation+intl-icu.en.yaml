@@ -786,6 +786,7 @@ workout:
         topbar_title: Workout editing
         type_readonly: Workout type cannot be changed
     error:
+        missing_set_values: Fill in the fields in red to submit your workout
         no_date:
             text: Choose a date before submitting your workout
             title: No date selected

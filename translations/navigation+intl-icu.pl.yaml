@@ -798,6 +798,7 @@ workout:
         topbar_title: Edycja treningu
         type_readonly: Rodzaj treningu nie może być zmieniony
     error:
+        missing_set_values: Uzupełnij pola zaznaczone na czerwono, aby zatwierdzić trening
         no_date:
             text: Wybierz datę przed zatwierdzeniem treningu
             title: Nie wybrano daty

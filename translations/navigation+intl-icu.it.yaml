@@ -786,6 +786,7 @@ workout:
         topbar_title: Modifica dell'allenamento
         type_readonly: Il tipo di allenamento non può essere modificato
     error:
+        missing_set_values: Completa i campi in rosso per convalidare il tuo allenamento
         no_date:
             text: Scegli una data prima di convalidare il tuo allenamento
             title: Nessuna data selezionata

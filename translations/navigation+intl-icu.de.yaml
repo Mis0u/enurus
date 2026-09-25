@@ -786,6 +786,7 @@ workout:
         topbar_title: Training bearbeiten
         type_readonly: Die Trainingsart kann nicht geändert werden
     error:
+        missing_set_values: Fülle die rot markierten Felder aus, um dein Training zu bestätigen
         no_date:
             text: Wähle ein Datum, bevor du dein Training bestätigst
             title: Kein Datum ausgewählt

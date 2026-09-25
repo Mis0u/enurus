@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 import Sortable from 'sortablejs';
 import { numerate } from './workout/create/number_series.js';
 import { swalError } from './swal/error/_error.js';
-import { handleErrorField } from './workout/_error_form.js';
+import { clearFieldError, handleErrorField, revealFirstInvalidField } from './workout/_error_form.js';
 import { NoteModalManager } from './workout/create/note_modal_manager.js';
 import { showErrorToast } from '../utils/toast.js';
 import { initLiftedWeights, updateLiftedWeightForInput } from './workout/lifted_weight.js';
@@ -21,6 +21,7 @@ export default class extends Controller {
         userHasBodyweight: Boolean,
         bodyweightRequiredMessage: String,
         liftedWeightTemplate: String,
+        missingSetValuesMessage: String,
     };
 
     #noteModalManager = null;
@@ -140,6 +141,8 @@ export default class extends Controller {
         }
 
         if (!handleErrorField(this.exerciseListTarget)) {
+            revealFirstInvalidField(this.exerciseListTarget);
+            showErrorToast(this.missingSetValuesMessageValue);
             return;
         }
 
@@ -209,8 +212,7 @@ export default class extends Controller {
 
     #clearFieldError(e) {
         if (e.target.matches('input[required]') && e.target.value) {
-            e.target.classList.remove('!border-[rgba(244,63,94,0.6)]');
-            e.target.nextElementSibling?.classList.contains('js-error-message') && e.target.nextElementSibling.remove();
+            clearFieldError(e.target);
         }
     }
 }

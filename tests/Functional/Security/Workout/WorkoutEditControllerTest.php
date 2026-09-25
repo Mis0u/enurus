@@ -221,6 +221,18 @@ class WorkoutEditControllerTest extends WebTestCase
         self::assertSame((string) $workout->id, $dateInput->attr('data-date-exclude-id-value'));
     }
 
+    public function testEditPageProvidesTheMissingSetValuesMessage(): void
+    {
+        $client = $this->login(self::USER);
+        $workout = $this->getFirstWorkout(self::USER);
+
+        $crawler = $client->request(Request::METHOD_GET, $this->getEditUrl($workout));
+        $message = $crawler->filter('[data-workout--edit--exercise-missing-set-values-message-value]')
+            ->attr('data-workout--edit--exercise-missing-set-values-message-value');
+
+        self::assertNotEmpty($message);
+    }
+
     // -------------------------------------------------------------------------
     // Suppression d'un set
     // -------------------------------------------------------------------------

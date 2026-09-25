@@ -786,6 +786,7 @@ workout:
         topbar_title: Training bewerken
         type_readonly: Het trainingstype kan niet worden gewijzigd
     error:
+        missing_set_values: Vul de rode velden in om je training te bevestigen
         no_date:
             text: Kies een datum voordat je je training bevestigt
             title: Geen datum geselecteerd
