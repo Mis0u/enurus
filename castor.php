@@ -378,8 +378,10 @@ function assetMapCompile(): void
 #[AsTask(description: 'Compile importmap and build Tailwind assets')]
 function assets(): void
 {
-    assetMapCompile();
+    // Tailwind d'abord : asset-map:compile copie le CSS Tailwind déjà construit dans public/assets,
+    // dans l'ordre inverse il publierait la version précédente.
     tailwindBuild();
+    assetMapCompile();
 }
 
 #[AsTask(description: 'Start the project')]
