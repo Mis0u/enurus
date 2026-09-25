@@ -11,6 +11,8 @@ import { insertSetRow, resetPrefilledCard } from './workout/set_rows.js';
 export default class extends Controller {
     static targets = ['exerciseList', 'submit'];
 
+    static outlets = ['date'];
+
     static values = {
         noDateTitle: String,
         noDateText: String,
@@ -151,6 +153,10 @@ export default class extends Controller {
             revealFirstInvalidField(this.exerciseListTarget);
             showErrorToast(this.missingSetValuesMessageValue);
             return;
+        }
+
+        if (this.hasDateOutlet) {
+            await this.dateOutlet.checkUnlessDone();
         }
 
         this.#noteModalManager.open();

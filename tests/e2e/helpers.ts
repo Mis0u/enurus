@@ -9,6 +9,9 @@ export const FIXTURE_USERS = {
     workout11: { email: 'user-fixture-11-workout@test.com', nickname: 'user-workout-11' },
     // UserFixtures::USER_DASHBOARD_SINGLE — usage dédié, sûr pour un scénario destructeur.
     dashboardSingle: { email: 'user-fixture-1-workout@test.com', nickname: 'user-dashboard-1' },
+    // UserFixtures::loadIndexedUsers() — aucune séance, utilisé par aucun autre test : réservé à
+    // `workout-duplicate-date.spec.ts`, qui enregistre des séances.
+    noWorkout: { email: 'user-fixture-7@test.com', nickname: 'user-fixture-7' },
 };
 
 // Le controller Stimulus csrf-protection est chargé en lazy (import dynamique fetché sur le

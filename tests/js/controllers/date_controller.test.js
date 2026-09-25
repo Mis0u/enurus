@@ -112,4 +112,39 @@ describe('date controller', () => {
         expect(calledUrl.searchParams.get('date')).toBe('2026-01-15');
         expect(calledUrl.searchParams.get('excludeId')).toBe('abc-123');
     });
+
+    it('checks a prefilled date that was never checked when asked to', async () => {
+        buildDom();
+        await nextTick();
+        document.querySelector('input').value = '2026-09-25';
+        const fetchMock = vi.fn().mockResolvedValue({
+            ok: true,
+            json: () => Promise.resolve({ exists: true, message: 'Tu as déjà une séance ce jour.' }),
+        });
+        vi.stubGlobal('fetch', fetchMock);
+
+        const controller = application.getControllerForElementAndIdentifier(document.querySelector('input'), 'date');
+        await controller.checkUnlessDone();
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fireMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not check the same date twice', async () => {
+        buildDom();
+        await nextTick();
+        const input = document.querySelector('input');
+        input.value = '2026-09-25';
+        const fetchMock = vi.fn().mockResolvedValue({
+            ok: true,
+            json: () => Promise.resolve({ exists: false }),
+        });
+        vi.stubGlobal('fetch', fetchMock);
+
+        input.dispatchEvent(new Event('change'));
+        await nextTick();
+        await application.getControllerForElementAndIdentifier(input, 'date').checkUnlessDone();
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+    });
 });
