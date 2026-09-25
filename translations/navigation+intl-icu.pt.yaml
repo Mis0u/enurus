@@ -768,6 +768,7 @@ workout:
     created: O teu treino foi registado
     date: Data
     date_placeholder: Selecionar uma data
+    delete_exercise: Eliminar este exercício
     delete_series: Eliminar esta série
     duration_optional: Duração (Opcional)
     duration_placeholder: Duração (min)

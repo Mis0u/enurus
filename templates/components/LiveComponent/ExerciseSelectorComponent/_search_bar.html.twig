@@ -16,7 +16,7 @@
 </div>
 
 <details class="mb-5">
-    <summary class="cursor-pointer text-[13px] font-medium text-white/60 hover:text-white/80 select-none">
+    <summary class="cursor-pointer max-md:py-3 text-[13px] font-medium text-white/60 hover:text-white/80 select-none">
         {{ 'workout.search_exercise.muscle_filter.toggle'|trans({}, 'navigation') }}
         {% if muscleGroupFilters is not empty %}
             <span class="text-[#f43f5e]">({{ muscleGroupFilters|length }})</span>
@@ -28,7 +28,7 @@
             {% set filter_type = muscleGroupFilters[muscle_group.id] ?? null %}
             <button
                 type="button"
-                class="muscle-filter-chip inline-flex items-center px-3 py-1.5 rounded-full text-[13px] font-medium border border-white/[0.07] bg-white/[0.04] text-white/70 transition-colors duration-150 cursor-pointer select-none {{ filter_type ? 'pill--' ~ filter_type : '' }}"
+                class="muscle-filter-chip inline-flex items-center px-3 py-1.5 max-md:min-h-10 rounded-full text-[13px] font-medium border border-white/[0.07] bg-white/[0.04] text-white/70 transition-colors duration-150 cursor-pointer select-none {{ filter_type ? 'pill--' ~ filter_type : '' }}"
                 data-action="click->live#action"
                 data-live-action-param="cycleMuscleFilter"
                 data-live-id-param="{{ muscle_group.id }}"

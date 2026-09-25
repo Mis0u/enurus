@@ -55,7 +55,7 @@
                         data-error-text="{{ 'workout.list.calendar.deload.delete.error_text'|trans({}, 'navigation') }}"
                         data-delete-url="{{ path('app_deload_period_delete', {'id': deload.id, '_locale': app.request.locale}) }}"
                         data-token="{{ csrf_token('deload_period_delete_' ~ deload.id) }}"
-                        class="w-8 h-8 rounded-lg border border-white/[0.07] bg-white/[0.03] flex items-center justify-center text-[#8b9bb4] hover:bg-[rgba(244,63,94,0.15)] hover:border-[rgba(244,63,94,0.4)] hover:text-[#f43f5e] hover:scale-105 transition-all duration-250 cursor-pointer shrink-0"
+                        class="w-8 h-8 max-md:w-10 max-md:h-10 rounded-lg border border-white/[0.07] bg-white/[0.03] flex items-center justify-center text-[#8b9bb4] hover:bg-[rgba(244,63,94,0.15)] hover:border-[rgba(244,63,94,0.4)] hover:text-[#f43f5e] hover:scale-105 transition-all duration-250 cursor-pointer shrink-0"
                     >
                         {% include 'partials/_svg/_trash.html.twig' with {'width': 4, 'height': 4} only %}
                     </button>

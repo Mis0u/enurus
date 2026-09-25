@@ -6,7 +6,7 @@
     <div class="flex items-center gap-2 text-[12px] text-slate-400 max-md:justify-center">
         <span>{{ 'exercise.list.pagination.show'|trans({}, 'navigation') }}</span>
         <select
-            class="bg-[#0f1928] border border-white/[0.07] rounded-md px-2 py-1
+            class="bg-[#0f1928] border border-white/[0.07] rounded-md px-2 py-1 max-md:min-h-11 max-md:px-3
                    text-[#f0f4ff] text-[12px] font-['DM_Sans'] outline-none cursor-pointer
                    hover:border-white/[0.12] transition-colors duration-200"
             aria-label="{{ 'exercise.list.pagination.per_page'|trans({}, 'navigation') }}"
@@ -24,7 +24,7 @@
     <div class="flex items-center gap-1 max-md:justify-center max-md:flex-wrap" role="navigation" aria-label="{{ 'exercise.list.pagination.navigation'|trans({}, 'navigation') }}">
         <button
             type="button"
-            class="exercise-page-btn exercise-page-btn--nav"
+            class="exercise-page-btn exercise-page-btn--nav exercise-page-btn--edge"
             hidden
             data-exercise--list-target="firstBtn"
             data-action="click->exercise--list#goFirst"
@@ -47,7 +47,7 @@
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
             </svg>
-            {{ 'exercise.list.pagination.previous'|trans({}, 'navigation') }}
+            <span class="max-md:sr-only">{{ 'exercise.list.pagination.previous'|trans({}, 'navigation') }}</span>
         </button>
 
         <div
@@ -64,7 +64,7 @@
             data-action="click->exercise--list#nextPage"
             aria-label="{{ 'exercise.list.pagination.next'|trans({}, 'navigation') }}"
         >
-            {{ 'exercise.list.pagination.next'|trans({}, 'navigation') }}
+            <span class="max-md:sr-only">{{ 'exercise.list.pagination.next'|trans({}, 'navigation') }}</span>
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
             </svg>
@@ -72,7 +72,7 @@
 
         <button
             type="button"
-            class="exercise-page-btn exercise-page-btn--nav"
+            class="exercise-page-btn exercise-page-btn--nav exercise-page-btn--edge"
             hidden
             data-exercise--list-target="lastBtn"
             data-action="click->exercise--list#goLast"

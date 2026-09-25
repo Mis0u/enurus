@@ -32,7 +32,7 @@
         <button type="submit"
                 {% if not isDiscoverable %}disabled{% endif %}
                 data-profile-connection--request-form-target="submit"
-                class="inline-flex items-center justify-center px-4 py-2 rounded-[10px] text-[13px] font-semibold text-white bg-gradient-to-br from-rose-ft to-red-600 shadow-[0_4px_15px_rgba(244,63,94,0.3)] hover:-translate-y-px transition-all duration-200 whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-ft disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0">
+                class="inline-flex items-center justify-center px-4 py-2 max-md:min-h-11 rounded-[10px] text-[13px] font-semibold text-white bg-gradient-to-br from-rose-ft to-red-600 shadow-[0_4px_15px_rgba(244,63,94,0.3)] hover:-translate-y-px transition-all duration-200 whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-ft disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0">
             {{ 'profile_connection.list.request.submit'|trans({}, 'navigation') }}
         </button>
     {{ form_end(requestForm) }}

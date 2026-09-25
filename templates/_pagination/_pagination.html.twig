@@ -22,6 +22,8 @@
         } only %}
 
         {% if data.pageCount > 1 %}
+            {# Mobile : « première/dernière page » masqués et Précédent/Suivant réduits à leur flèche —
+               sinon 9 boutons de 44 px (428 px) ne tiennent pas sur un écran de 390 px. #}
             <div class="flex items-center gap-1 max-md:justify-center">
                 {% if data.firstPageInRange > 1 %}
                     {% include '_pagination/_first_page.html.twig' with {
