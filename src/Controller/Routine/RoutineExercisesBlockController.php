@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller\Routine;
 
+use App\Entity\Exercise;
+use App\Entity\RoutineExercise;
 use App\Entity\User;
 use App\Repository\RoutineRepository;
-use App\Service\Utils\WeightConverterService;
-use App\Service\Workout\BodyweightSnapshotService;
+use App\Service\Workout\WorkoutExerciseCardDataBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,8 +20,7 @@ final class RoutineExercisesBlockController extends AbstractController
 {
     public function __construct(
         private readonly RoutineRepository $routineRepository,
-        private readonly WeightConverterService $weightConverter,
-        private readonly BodyweightSnapshotService $bodyweightSnapshotService,
+        private readonly WorkoutExerciseCardDataBuilder $cardDataBuilder,
     ) {
     }
 
@@ -56,22 +56,14 @@ final class RoutineExercisesBlockController extends AbstractController
             return new Response('', Response::HTTP_FORBIDDEN);
         }
 
-        $cardBodyweightShares = [];
-        foreach ($routine->routineExercises as $routineExercise) {
-            $exercise = $routineExercise->exercise;
-
-            if (null === $exercise->bodyweightPercent) {
-                continue;
-            }
-
-            $shareKg = $this->bodyweightSnapshotService->shareKg($user->bodyweightKg, $exercise->bodyweightPercent);
-            $cardBodyweightShares[(string) $exercise->id] = round($this->weightConverter->convertToLbs($shareKg, $user->unitOfMeasure), 1);
-        }
+        $exercises = $routine->routineExercises->map(
+            static fn (RoutineExercise $routineExercise): Exercise => $routineExercise->exercise,
+        )->toArray();
 
         return $this->render('workout/create/_routine_exercises_block.html.twig', [
             'routineExercises' => $routine->routineExercises,
             'startIndex' => $startIndex,
-            'cardBodyweightShares' => $cardBodyweightShares,
+            'cardData' => $this->cardDataBuilder->build($user, $exercises),
             'userHasBodyweight' => null !== $user->bodyweightKg,
         ]);
     }

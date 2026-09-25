@@ -897,6 +897,9 @@ workout:
         remove: Remove
         select: Select
         too_large: The photo must not exceed 5 MB.
+    prefilled_clear: Clear
+    prefilled_clear_label: Clear the sets carried over from your last workout
+    prefilled_from: "Carried over from your workout on {date}"
     repeat_series: Repeat this set
     reps: Reps
     reps_abbreviate: Reps

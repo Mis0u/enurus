@@ -10,7 +10,9 @@ use App\Entity\Exercise;
 use App\Entity\User;
 use App\Repository\ExerciseRepository;
 use App\Repository\UserRepository;
+use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Twig\Components\LiveComponent\ExerciseSelectorComponent;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Test\InteractsWithLiveComponents;
@@ -243,6 +245,46 @@ final class ExerciseSelectorComponentTest extends WebTestCase
         self::assertStringNotContainsString('click->exercise#deleteExercise', $html);
     }
 
+    public function testSelectExercisePrefillsTheLastPerformance(): void
+    {
+        $user = $this->getUserByEmail(UserFixtures::USER_REVERSE_FLY);
+        $exercise = $this->getExerciseByName(ExerciseFixtures::EXERCISE_REVERSE_FLY);
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        WorkoutTestHelper::persistPastWorkout($em, $user, $exercise, '2026-09-12 18:00', [[12.5, 15], [15.0, 12]]);
+
+        $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
+            'isOpen' => true,
+        ]);
+        $testComponent->actingAs($user);
+        $testComponent->call('selectExercise', [
+            'id' => (string) $exercise->id,
+        ]);
+
+        $html = $this->dispatchedHtml($testComponent, 'exercise:selected');
+        self::assertStringContainsString('name="workout[workoutExercises][__EXERCISE_INDEX__][exerciseSets][1][weight]"', $html);
+        self::assertMatchesRegularExpression('/\[exerciseSets\]\[0\]\[weight\]"\s+value="12.5"/', $html);
+        self::assertMatchesRegularExpression('/\[exerciseSets\]\[1\]\[reps\]"\s+value="12"/', $html);
+        // Le composant de test est appelé sans préfixe `/{_locale}` : rendu dans la locale par
+        // défaut (en). En vrai, la route des LiveComponents est préfixée par la locale.
+        self::assertStringContainsString('Carried over from your workout on Sep 12, 2026', $html);
+    }
+
+    public function testSelectExerciseLeavesANeverPerformedExerciseEmpty(): void
+    {
+        $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
+            'isOpen' => true,
+        ]);
+        $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
+        $testComponent->call('selectExercise', [
+            'id' => $this->getExerciseIdByName(ExerciseFixtures::EXERCISE_REVERSE_FLY),
+        ]);
+
+        $html = $this->dispatchedHtml($testComponent, 'exercise:selected');
+        self::assertStringNotContainsString('[exerciseSets][1]', $html);
+        self::assertStringNotContainsString('Carried over from your workout', $html);
+    }
+
     public function testSelectExerciseWithUnknownIdDispatchesNoEvent(): void
     {
         $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
@@ -324,7 +366,7 @@ final class ExerciseSelectorComponentTest extends WebTestCase
         return $user;
     }
 
-    private function getExerciseIdByName(string $name): string
+    private function getExerciseByName(string $name): Exercise
     {
         /** @var ExerciseRepository $exerciseRepository */
         $exerciseRepository = static::getContainer()->get(ExerciseRepository::class);
@@ -336,6 +378,11 @@ final class ExerciseSelectorComponentTest extends WebTestCase
             throw new \LogicException(\sprintf('Fixture exercise "%s" not found.', $name));
         }
 
-        return (string) $exercise->id;
+        return $exercise;
+    }
+
+    private function getExerciseIdByName(string $name): string
+    {
+        return (string) $this->getExerciseByName($name)->id;
     }
 }

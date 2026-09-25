@@ -4,6 +4,7 @@ import Sortable      from 'sortablejs';
 import { clearFieldError, handleErrorField, revealFirstInvalidField } from '../_error_form.js';
 import { showErrorToast } from '../../../utils/toast.js';
 import { initLiftedWeights, updateLiftedWeightForInput } from '../lifted_weight.js';
+import { insertSetRow, resetPrefilledCard } from '../set_rows.js';
 
 export default class extends Controller {
 
@@ -142,7 +143,13 @@ export default class extends Controller {
 
         const tbody = card.querySelector('.js-sets-tbody');
 
-        const newRow = this._insertSetRow(card, tbody);
+        const newRow = insertSetRow(card, tbody);
+        initLiftedWeights(newRow, this.liftedWeightTemplateValue);
+    }
+
+    clearPrefill(event) {
+        const card = event.target.closest('[data-exercise-index]');
+        const newRow = resetPrefilledCard(card);
         initLiftedWeights(newRow, this.liftedWeightTemplateValue);
     }
 
@@ -153,7 +160,7 @@ export default class extends Controller {
         const sourceRow = event.target.closest('tr');
         const tbody      = card.querySelector('.js-sets-tbody');
 
-        const newRow = this._insertSetRow(card, tbody);
+        const newRow = insertSetRow(card, tbody);
         this._copySetValues(sourceRow, newRow);
         initLiftedWeights(newRow, this.liftedWeightTemplateValue);
     }
@@ -213,21 +220,6 @@ export default class extends Controller {
                 const badge = card.querySelector('[data-exercise-number]');
                 if (badge) badge.textContent = index + 1;
             });
-    }
-
-    _insertSetRow(card, tbody) {
-        const exerciseIndex = card.dataset.exerciseIndex;
-        const setIndex      = tbody.querySelectorAll('tr').length;
-        const template      = card.querySelector('.js-set-template');
-
-        const html = template.innerHTML
-            .replaceAll('__EXERCISE_INDEX__', exerciseIndex)
-            .replaceAll('__SET_INDEX__',      setIndex)
-            .replaceAll('__SET_NUMBER__',     setIndex + 1);
-
-        tbody.insertAdjacentHTML('beforeend', html);
-
-        return tbody.lastElementChild;
     }
 
     _copySetValues(sourceRow, newRow) {

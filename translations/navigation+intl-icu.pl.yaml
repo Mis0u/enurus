@@ -911,6 +911,9 @@ workout:
         remove: Usuń
         select: Wybierz
         too_large: Zdjęcie nie może przekraczać 5 MB.
+    prefilled_clear: Wyczyść
+    prefilled_clear_label: Wyczyść serie przeniesione z ostatniego treningu
+    prefilled_from: "Przeniesione z treningu z dnia {date}"
     repeat_series: Powtórz tę serię
     reps: Powtórzenia
     reps_abbreviate: Powt

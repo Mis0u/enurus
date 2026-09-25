@@ -7,6 +7,20 @@
     <input type="hidden" name="workout[workoutExercises][{{ index }}][exercise]" value="{{ exercise.id }}">
     <input type="hidden" name="workout[workoutExercises][{{ index }}][position]" value="{{ index }}" class="js-position-input">
     {% include 'workout/create/_card.html.twig' with {'controllerName': controllerName|default('exercise'), 'exercise': exercise} only %}
+    {% if prefilledFrom|default(null) is not null %}
+        <div class="js-prefilled-from flex items-center justify-between gap-2 mb-2 -mt-1 text-[12px] text-[#8b9bb4]">
+            <p class="flex items-center gap-1.5">
+                {% include 'partials/_svg/_repeat.html.twig' with {'width': 3.5, 'height': 3.5, 'ariaHidden': true} only %}
+                {{ 'workout.prefilled_from'|trans({date: prefilledFrom|format_date('medium', locale=app.request.locale)}, 'navigation') }}
+            </p>
+            <button type="button"
+                    data-action="click->{{ controllerName|default('exercise') }}#clearPrefill"
+                    aria-label="{{ 'workout.prefilled_clear_label'|trans({}, 'navigation') }}"
+                    class="shrink-0 inline-flex items-center min-h-10 px-3 -mr-3 rounded-md font-semibold text-[#f43f5e] hover:bg-[rgba(244,63,94,0.08)] transition-colors duration-250">
+                {{ 'workout.prefilled_clear'|trans({}, 'navigation') }}
+            </button>
+        </div>
+    {% endif %}
     {# Masqués sur mobile pendant la saisie : 1-2 lignes de bruit par carte, déjà visibles dans le sélecteur. #}
     {% if exercise.exerciseMuscles is not empty %}
         <div class="flex flex-wrap gap-1.5 mb-4 max-md:hidden {{ is_blocked ? 'opacity-40' : '' }}">
