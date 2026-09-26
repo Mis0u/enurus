@@ -297,6 +297,9 @@
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
+  .top-1\.5 {
+    top: calc(var(--spacing) * 1.5);
+  }
   .top-1\/2 {
     top: calc(1/2 * 100%);
   }
@@ -2264,6 +2267,9 @@
   }
   .px-1 {
     padding-inline: calc(var(--spacing) * 1);
+  }
+  .px-1\.5 {
+    padding-inline: calc(var(--spacing) * 1.5);
   }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
@@ -4278,6 +4284,11 @@
       left: calc(var(--spacing) * 0);
     }
   }
+  .max-md\:m-0 {
+    @media (width < 48rem) {
+      margin: calc(var(--spacing) * 0);
+    }
+  }
   .max-md\:-mx-4 {
     @media (width < 48rem) {
       margin-inline: calc(var(--spacing) * -4);
@@ -4506,6 +4517,17 @@
   .max-md\:rounded-none {
     @media (width < 48rem) {
       border-radius: 0;
+    }
+  }
+  .max-md\:border-0 {
+    @media (width < 48rem) {
+      border-style: var(--tw-border-style);
+      border-width: 0px;
+    }
+  }
+  .max-md\:p-0 {
+    @media (width < 48rem) {
+      padding: calc(var(--spacing) * 0);
     }
   }
   .max-md\:p-4 {
@@ -5096,6 +5118,16 @@
   .\[\&\:\:-webkit-scrollbar\]\:hidden {
     &::-webkit-scrollbar {
       display: none;
+    }
+  }
+  .\[data-exercise--list-target\=\"card\"\]\:visible {
+    &:is(data-exercise--list-target="card") {
+      visibility: visible;
+    }
+  }
+  .\[data-exercise--list-target\=\"counter\"\]\:visible {
+    &:is(data-exercise--list-target="counter") {
+      visibility: visible;
     }
   }
   .\[\&\>img\]\:animate-\[scaleIn_0\.2s_ease\] {

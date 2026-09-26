@@ -72,46 +72,38 @@
         {{ 'exercise.list.filter.reset'|trans({}, 'navigation') }}
     </button>
 
-    {# Compteur dynamique #}
-    <div
-        class="flex items-center gap-1.5 px-3 py-1.5 ml-auto
-               bg-cyan-500/[0.12] border border-cyan-500/[0.25] rounded-lg
-               text-[12px] font-semibold text-cyan-400 whitespace-nowrap"
-        data-exercise--list-target="counter"
-        aria-live="polite"
-        aria-atomic="true"
-    >
-        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-        </svg>
-        <span data-exercise--list-target="counterText">
-            {# Valeur initiale rendue par Twig — mise à jour par Stimulus #}
-            {{ 'exercise.list.filter.count'|trans({count: totalCount}, 'navigation') }}
-        </span>
-    </div>
-
+    {# Compteur dynamique — sur mobile, posé sur la ligne « Filtrer par muscle » quand elle existe #}
+    {% include 'exercise/list/_counter.html.twig' with {
+        'totalCount': totalCount,
+        'extraClass': muscleGroups is empty ? 'ml-auto' : 'max-md:hidden ml-auto',
+    } only %}
 </div>
 
 {% if muscleGroups is not empty %}
-    {# Filtre par muscle — 1er clic = primaire (rose), 2e clic = secondaire (cyan), 3e clic = aucun #}
-    <details class="mb-2">
-        <summary class="cursor-pointer max-md:py-3 text-[13px] font-medium text-white/60 hover:text-white/80 select-none">
-            {{ 'exercise.list.filter.muscle_label'|trans({}, 'navigation') }}
-            <span data-exercise--list-target="muscleFilterCount" hidden class="text-[#f43f5e]"></span>
-        </summary>
-        <div class="flex flex-wrap gap-2 mt-3">
-            {% for muscle_group in muscleGroups %}
-                <button
-                    type="button"
-                    class="muscle-filter-chip inline-flex items-center px-3 py-1.5 max-md:min-h-10 rounded-full text-[13px] font-medium border border-white/[0.07] bg-[#0f1928] text-white/70 transition-colors duration-150 cursor-pointer select-none"
-                    data-state="none"
-                    data-muscle-id="{{ muscle_group.id }}"
-                    data-exercise--list-target="muscleFilterChip"
-                    data-action="click->exercise--list#cycleMuscleFilter"
-                >
-                    {{ muscle_group.name|trans({}, 'muscle') }}
-                </button>
-            {% endfor %}
-        </div>
-    </details>
+    {# Filtre par muscle — 1er clic = primaire (rose), 2e clic = secondaire (cyan), 3e clic = aucun.
+       Sur mobile, le compteur est posé à droite de sa ligne de titre (vide à cet endroit) : l'en-tête
+       raccourcit sans réduire la largeur des puces. #}
+    <div class="relative mb-2">
+        <details>
+            <summary class="cursor-pointer max-md:py-3 text-[13px] font-medium text-white/60 hover:text-white/80 select-none">
+                {{ 'exercise.list.filter.muscle_label'|trans({}, 'navigation') }}
+                <span data-exercise--list-target="muscleFilterCount" hidden class="text-[#f43f5e]"></span>
+            </summary>
+            <div class="flex flex-wrap gap-2 mt-3">
+                {% for muscle_group in muscleGroups %}
+                    <button
+                        type="button"
+                        class="muscle-filter-chip inline-flex items-center px-3 py-1.5 max-md:min-h-10 rounded-full text-[13px] font-medium border border-white/[0.07] bg-[#0f1928] text-white/70 transition-colors duration-150 cursor-pointer select-none"
+                        data-state="none"
+                        data-muscle-id="{{ muscle_group.id }}"
+                        data-exercise--list-target="muscleFilterChip"
+                        data-action="click->exercise--list#cycleMuscleFilter"
+                    >
+                        {{ muscle_group.name|trans({}, 'muscle') }}
+                    </button>
+                {% endfor %}
+            </div>
+        </details>
+        {% include 'exercise/list/_counter.html.twig' with {'totalCount': totalCount, 'extraClass': 'md:hidden absolute top-1.5 right-0'} only %}
+    </div>
 {% endif %}

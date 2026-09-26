@@ -291,3 +291,55 @@
         display: none;
     }
 }
+
+/* =============================================
+   LIGNE COMPACTE MOBILE
+   Même carte que sur desktop, réorganisée en ligne : nom + muscles à gauche (bouton qui déplie
+   les détails), actions à droite, pastilles et description masquées tant que la ligne n'est pas
+   dépliée (`is-expanded`, posé par card_controller.js).
+============================================= */
+@media (width < 48rem) {
+    .exercise-list-grid {
+        gap: 8px;
+    }
+
+    .exercise-list-card {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        column-gap: 8px;
+        padding: 8px 10px 8px 8px;
+    }
+
+    .exercise-list-card:hover {
+        transform: none;
+    }
+
+    .exercise-list-card__toggle {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .exercise-list-card__actions {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .exercise-list-card__details {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        padding-bottom: 6px;
+    }
+
+    .exercise-list-card:not(.is-expanded) .exercise-list-card__details {
+        display: none;
+    }
+
+    .exercise-row-chevron {
+        transition: transform 0.2s ease;
+    }
+
+    .exercise-list-card__toggle[aria-expanded="true"] .exercise-row-chevron {
+        transform: rotate(180deg);
+    }
+}
