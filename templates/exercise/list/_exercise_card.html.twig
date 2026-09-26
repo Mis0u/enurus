@@ -2,6 +2,9 @@
 {% set exercise_name = is_custom ? exercise.name : exercise.name|trans({}, 'exercise')
 %}
 {% set card_type = exercise.archived ? 'archived' : (is_custom ? 'custom' : 'official') %}
+{% set details_id = 'exercise-details-' ~ exercise.id %}
+{% set primary_muscles = exercise.exerciseMuscles|filter(exercise_muscle => exercise_muscle.type.value == 'primary')|map(exercise_muscle => exercise_muscle.muscleGroup.name|trans({}, 'muscle')) %}
+{% set secondary_muscles = exercise.exerciseMuscles|filter(exercise_muscle => exercise_muscle.type.value != 'primary')|map(exercise_muscle => exercise_muscle.muscleGroup.name|trans({}, 'muscle')) %}
 
 <div
     class="exercise-list-card {{ is_custom ? 'exercise-list-card--custom' : 'exercise-list-card--official' }}"
@@ -10,9 +13,42 @@
     data-primary-muscle-group-ids="{{ primaryMuscleGroupIds[exercise.id] ?? '' }}"
     data-secondary-muscle-group-ids="{{ secondaryMuscleGroupIds[exercise.id] ?? '' }}"
     data-exercise--list-target="card"
+    data-controller="exercise--card"
 >
-    {# En-tête : nom + badge #}
-    <div class="flex items-start justify-between gap-2.5 pl-2.5">
+    {# Ligne compacte (mobile) : nom et muscles sur deux lignes, dépliée par un appui pour montrer
+       les pastilles de muscles et la description (cf. exercise-list.css, card_controller.js). #}
+    <button
+        type="button"
+        class="exercise-list-card__toggle md:hidden flex flex-col gap-0.5 w-full min-w-0 min-h-11 pl-2.5 bg-transparent border-0 text-left cursor-pointer"
+        aria-expanded="false"
+        aria-controls="{{ details_id }}"
+        data-exercise--card-target="toggle"
+        data-action="exercise--card#toggle"
+    >
+        <span class="flex items-center gap-1.5 min-w-0">
+            <span class="font-['Rajdhani'] text-[16px] font-bold text-[#f0f4ff] leading-snug truncate">{{ exercise_name }}</span>
+            {% if exercise.bodyweightPercent is not null %}
+                {% include 'partials/_badge/_bodyweight_badge.html.twig' with {percent: exercise.bodyweightPercent} only %}
+            {% endif %}
+            {% if exercise.archived %}
+                <span class="shrink-0 px-1.5 rounded text-[10px] font-medium bg-white/[0.06] border border-white/[0.15] text-slate-400">
+                    {{ 'exercise.list.badge.archived'|trans({}, 'navigation') }}
+                </span>
+            {% endif %}
+            <span class="exercise-row-chevron shrink-0 ml-auto text-slate-500" aria-hidden="true">
+                {% include 'partials/_svg/_down_arrow.html.twig' only %}
+            </span>
+        </span>
+        <span class="block text-[12px] leading-snug truncate">
+            <span class="exercise-row-muscles__primary text-rose-400">{{ primary_muscles|join(', ') }}</span>
+            {%- if secondary_muscles is not empty -%}
+                <span class="text-slate-500" aria-hidden="true"> · </span><span class="exercise-row-muscles__secondary text-cyan-400">{{ secondary_muscles|join(', ') }}</span>
+            {%- endif -%}
+        </span>
+    </button>
+
+    {# En-tête (desktop) : nom + badge #}
+    <div class="max-md:hidden flex items-start justify-between gap-2.5 pl-2.5">
         <span class="font-['Rajdhani'] text-[17px] font-bold text-[#f0f4ff] leading-snug flex-1">
             {{ exercise_name }}
             {% if exercise.bodyweightPercent is not null %}
@@ -42,11 +78,12 @@
         {% endif %}
     </div>
 
-    {# Muscles pills #}
+    {# Détails : toujours visibles sur desktop, dépliables sur mobile #}
+    <div id="{{ details_id }}" class="exercise-list-card__details">
     <div class="flex flex-wrap gap-1.5 mt-2.5 pl-2.5">
         {% for exercise_muscle in exercise.exerciseMuscles %}
             {% set is_primary = exercise_muscle.type.value == enum('App\\Enum\\Entity\\ExerciceMuscle\\MuscleTypeEnum').PRIMARY.value %}
-            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium
+            <span class="exercise-muscle-pill inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium
                 {{ is_primary ? 'bg-rose-500/[0.12] border border-rose-500/[0.3] text-rose-400' : 'bg-cyan-500/[0.12] border border-cyan-500/[0.3] text-cyan-400' }}">
                 {{ exercise_muscle.muscleGroup.name|trans({}, 'muscle') }}
             </span>
@@ -63,10 +100,11 @@
             {% endif %}
         </p>
     {% endif %}
+    </div>
 
     {# Actions #}
     {% if exercise.archived %}
-        <div class="flex items-center gap-2 mt-3.5 pt-3 pl-2.5 border-t border-white/[0.07]">
+        <div class="exercise-list-card__actions flex items-center gap-2 mt-3.5 pt-3 pl-2.5 border-t border-white/[0.07] max-md:m-0 max-md:p-0 max-md:border-0">
             <div
                 data-controller="exercise--restore"
                 data-exercise--restore-url-value="{{ path('app_exercise_restore', {id: exercise.id}) }}"
@@ -85,7 +123,7 @@
             </div>
         </div>
     {% elseif is_custom %}
-        <div class="flex items-center gap-2 mt-3.5 pt-3 pl-2.5 border-t border-white/[0.07]">
+        <div class="exercise-list-card__actions flex items-center gap-2 mt-3.5 pt-3 pl-2.5 border-t border-white/[0.07] max-md:m-0 max-md:p-0 max-md:border-0">
             <a
                 href="{{ path('app_exercise_history', {id: exercise.id}) }}"
                 class="exercise-action-btn exercise-action-btn--history"
@@ -127,7 +165,7 @@
             </div>
         </div>
     {% else %}
-        <div class="flex items-center gap-2 mt-3.5 pt-3 pl-2.5 border-t border-white/[0.07]">
+        <div class="exercise-list-card__actions flex items-center gap-2 mt-3.5 pt-3 pl-2.5 border-t border-white/[0.07] max-md:m-0 max-md:p-0 max-md:border-0">
             <a
                 href="{{ path('app_exercise_history', {id: exercise.id}) }}"
                 class="exercise-action-btn exercise-action-btn--history"

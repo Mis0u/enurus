@@ -227,13 +227,15 @@ export default class extends Controller {
     }
 
     /**
-     * Met à jour le texte du compteur.
+     * Met à jour le texte du compteur — rendu deux fois (desktop et mobile, cf. _filters.html.twig).
      * @param {number} count
      */
     #updateCounter(count) {
-        this.counterTextTarget.textContent = count <= 1
-            ? `${count} exercice`
-            : `${count} exercices`;
+        const text = count <= 1 ? `${count} exercice` : `${count} exercices`;
+
+        this.counterTextTargets.forEach((target) => {
+            target.textContent = text;
+        });
     }
 
     /**

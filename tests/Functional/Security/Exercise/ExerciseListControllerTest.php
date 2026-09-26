@@ -6,6 +6,7 @@ namespace App\Tests\Functional\Security\Exercise;
 
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
 
 final class ExerciseListControllerTest extends WebTestCase
@@ -207,6 +208,38 @@ final class ExerciseListControllerTest extends WebTestCase
         );
     }
 
+    // =========================================================
+    // Ligne compacte (mobile)
+    // =========================================================
+
+    public function testCardHasACompactRowTogglingItsDetails(): void
+    {
+        $card = $this->reverseFlyCard();
+
+        $toggle = $card->filter('[data-exercise--card-target="toggle"]');
+        $this->assertSame('false', $toggle->attr('aria-expanded'));
+        $this->assertStringContainsString('Reverse fly', $toggle->text());
+
+        $detailsId = (string) $toggle->attr('aria-controls');
+        $this->assertCount(1, $card->filter('#' . $detailsId));
+    }
+
+    public function testCompactRowSummarisesPrimaryThenSecondaryMuscles(): void
+    {
+        $card = $this->reverseFlyCard();
+
+        $this->assertSame('Deltoïdes postérieurs', $card->filter('.exercise-row-muscles__primary')->text());
+        $this->assertSame('Trapèzes inférieurs', $card->filter('.exercise-row-muscles__secondary')->text());
+    }
+
+    public function testMusclePillsAndDescriptionAreInTheFoldableDetails(): void
+    {
+        $card = $this->reverseFlyCard();
+        $details = $card->filter('#' . $card->filter('[data-exercise--card-target="toggle"]')->attr('aria-controls'));
+
+        $this->assertCount(2, $details->filter('.exercise-muscle-pill'));
+    }
+
     public function testEditAndDeleteButtonsAreAbsentOnOfficialExercise(): void
     {
         $client = $this->login(self::USER);
@@ -229,5 +262,14 @@ final class ExerciseListControllerTest extends WebTestCase
                 'Le bouton supprimer ne doit pas apparaître sur un exercice de base.',
             );
         });
+    }
+
+    private function reverseFlyCard(): Crawler
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+        $this->assertResponseIsSuccessful();
+
+        return $crawler->filter('[data-name="reverse fly"]');
     }
 }

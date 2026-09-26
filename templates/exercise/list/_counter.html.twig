@@ -1,0 +1,22 @@
+{#
+    Compteur d'exercices affichés, mis à jour par exercise--list (counterText).
+    Paramètres (via `only`) :
+      - totalCount : int
+      - extraClass : string — classes de placement (rendu deux fois : desktop et mobile)
+#}
+<div
+    class="{{ extraClass }} flex items-center gap-1.5 px-3 py-1.5
+           bg-cyan-500/[0.12] border border-cyan-500/[0.25] rounded-lg
+           text-[12px] font-semibold text-cyan-400 whitespace-nowrap"
+    data-exercise--list-target="counter"
+    aria-live="polite"
+    aria-atomic="true"
+>
+    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+    </svg>
+    <span data-exercise--list-target="counterText">
+        {# Valeur initiale rendue par Twig — mise à jour par Stimulus #}
+        {{ 'exercise.list.filter.count'|trans({count: totalCount}, 'navigation') }}
+    </span>
+</div>
