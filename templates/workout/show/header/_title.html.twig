@@ -1,4 +1,4 @@
-<div class="flex items-start justify-between gap-5 mb-5 max-md:flex-col">
+<div class="flex items-start justify-between gap-5 mb-5 max-md:flex-col max-md:mb-3">
     <div class="flex-1">
         {% if workout.routine is not null %}
             <div class="show-routine-badge inline-flex items-center gap-1.5 px-2.5 py-1 border rounded-md text-[11px] font-semibold mb-2.5">
@@ -10,7 +10,8 @@
             </div>
         {% endif %}
 
-        <h2 class="font-['Rajdhani'] text-[28px] font-bold text-[var(--text-primary)] mb-1.5 max-md:text-[22px]">
+        {# Masqué sur mobile : même titre que la barre du haut, juste au-dessus #}
+        <h2 class="font-['Rajdhani'] text-[28px] font-bold text-[var(--text-primary)] mb-1.5 max-md:hidden">
             {{ workout.routine is not null ? workout.routine.name : 'workout.list.free_session'|trans({}, 'navigation') }}
         </h2>
 
