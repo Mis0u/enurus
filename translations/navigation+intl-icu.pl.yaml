@@ -391,6 +391,7 @@ exercise:
             last: Ostatnia strona
             navigation: Nawigacja stron
             next: Następny
+            page_label: "Strona {page}"
             per_page: Wyświetl
             previous: Poprzedni
             results: Wyniki
@@ -916,6 +917,7 @@ workout:
         remove: Usuń
         select: Wybierz
         too_large: Zdjęcie nie może przekraczać 5 MB.
+        upload_failed: "Nie udało się przesłać zdjęcia. Spróbuj ponownie."
     prefilled_clear: Wyczyść
     prefilled_clear_label: Wyczyść serie przeniesione z ostatniego treningu
     prefilled_from: "Przeniesione z treningu z dnia {date}"

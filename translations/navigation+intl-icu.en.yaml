@@ -389,6 +389,7 @@ exercise:
             last: Last page
             navigation: Page navigation
             next: Next
+            page_label: "Page {page}"
             per_page: Show
             previous: Previous
             results: Results
@@ -902,6 +903,7 @@ workout:
         remove: Remove
         select: Select
         too_large: The photo must not exceed 5 MB.
+        upload_failed: "The photo could not be uploaded. Please try again."
     prefilled_clear: Clear
     prefilled_clear_label: Clear the sets carried over from your last workout
     prefilled_from: "Carried over from your workout on {date}"

@@ -17,9 +17,14 @@ function muscleChip(id) {
                     data-action="click->exercise--list#cycleMuscleFilter"></button>`;
 }
 
+// Libellés néerlandais : un texte français écrit en dur dans le controller ferait échouer les tests.
+const COUNT_LABELS = Array.from({ length: 100 }, (_, count) => (count === 1 ? '1 oefening' : `${count} oefeningen`));
+
 async function buildDom(cardsHtml, muscleChipsHtml = '') {
     document.body.innerHTML = `
-        <div data-controller="exercise--list">
+        <div data-controller="exercise--list"
+             data-exercise--list-count-labels-value='${JSON.stringify(COUNT_LABELS)}'
+             data-exercise--list-page-label-value="Pagina __PAGE__">
             <input data-exercise--list-target="searchInput" data-action="input->exercise--list#onSearch">
             <button data-exercise--list-target="filterBtn" data-filter-type="chest"
                     data-action="click->exercise--list#toggleFilter"></button>
@@ -90,7 +95,16 @@ describe('exercise--list controller', () => {
         ].join(''));
 
         expect(visibleCardIds()).toEqual(['c1', 'c2']);
-        expect(document.querySelector('[data-exercise--list-target="counterText"]').textContent).toBe('2 exercices');
+        expect(document.querySelector('[data-exercise--list-target="counterText"]').textContent).toBe('2 oefeningen');
+    });
+
+    it('names each page button with the translated page label', async () => {
+        await buildDom(Array.from({ length: 13 }, (_, i) => card(`c${i}`, { name: `ex ${i}`, type: 'legs' })).join(''));
+
+        const labels = [...document.querySelectorAll('[data-exercise--list-target="pageNumbers"] button')]
+            .map((button) => button.getAttribute('aria-label'));
+
+        expect(labels).toEqual(['Pagina 1', 'Pagina 2']);
     });
 
     it('filters cards by search text, case-insensitively against the pre-lowercased data-name', async () => {
@@ -104,7 +118,7 @@ describe('exercise--list controller', () => {
         input.dispatchEvent(new Event('input'));
 
         expect(visibleCardIds()).toEqual(['c1']);
-        expect(document.querySelector('[data-exercise--list-target="counterText"]').textContent).toBe('1 exercice');
+        expect(document.querySelector('[data-exercise--list-target="counterText"]').textContent).toBe('1 oefening');
     });
 
     it('matches accented card names against an unaccented search query', async () => {

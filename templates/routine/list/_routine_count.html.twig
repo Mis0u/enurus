@@ -2,11 +2,14 @@
 templates/routine/list/_routine_count.html.twig
 
 Paramètres :
-  - count : int
+  - count       : int
+  - countLabels : list<string> — libellé traduit pour chaque valeur de 0 à count, lu par
+                  routine--delete pour mettre le compteur à jour après une suppression
 #}
 <p
     class="text-[12px] text-[#4a5568] font-medium"
     data-routine-count="{{ count }}"
+    data-routine-count-labels="{{ countLabels|json_encode }}"
 >
     {{ 'routine.list.count'|trans({count: count}, 'navigation') }}
 </p>

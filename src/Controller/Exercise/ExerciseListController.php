@@ -11,6 +11,7 @@ use App\Repository\MuscleGroupRepository;
 use App\Service\Entity\ExercisePrimaryMuscleIdsResolver;
 use App\Service\Entity\ExerciseSorterService;
 use App\Service\Entity\MuscleGroupSorterService;
+use App\Service\Translation\CountLabelsBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,6 +26,7 @@ final class ExerciseListController extends AbstractController
         private readonly MuscleGroupRepository $muscleGroupRepository,
         private readonly MuscleGroupSorterService $muscleGroupSorter,
         private readonly ExercisePrimaryMuscleIdsResolver $primaryMuscleIdsResolver,
+        private readonly CountLabelsBuilder $countLabelsBuilder,
     ) {
     }
 
@@ -58,6 +60,8 @@ final class ExerciseListController extends AbstractController
         return $this->render('exercise/list/index.html.twig', [
             'exercises' => $allExercises,
             'totalCount' => count($sorted),
+            // Jusqu'au nombre total de cartes : le filtre « Archivés » peut en afficher d'autres.
+            'countLabels' => $this->countLabelsBuilder->build('exercise.list.filter.count', 'navigation', \count($allExercises)),
             'muscleGroups' => $sortedMuscleGroups,
             'primaryMuscleGroupIds' => $this->primaryMuscleIdsResolver->resolvePrimaryMuscleGroupIds($allExercises),
             'secondaryMuscleGroupIds' => $this->primaryMuscleIdsResolver->resolveSecondaryMuscleGroupIds($allExercises),

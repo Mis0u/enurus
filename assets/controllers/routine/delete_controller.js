@@ -62,14 +62,14 @@ export default class extends Controller {
         const next    = Math.max(0, current - 1);
 
         counter.dataset.routineCount = String(next);
-        counter.textContent          = this.#formatCount(next);
+        counter.textContent          = this.#labelFor(counter, next);
     }
 
-    #formatCount(count) {
-        // Fallback simple — le pluriel ICU complet reste géré côté serveur
-        // au prochain chargement complet de la page.
-        return count === 0
-            ? '0 routine'
-            : `${count} routine${count > 1 ? 's' : ''}`;
+    // Libellés traduits rendus par le serveur pour chaque valeur (pluriel ICU exact dans toutes
+    // les langues, cf. CountLabelsBuilder) — jamais de texte en dur ici.
+    #labelFor(counter, count) {
+        const labels = JSON.parse(counter.dataset.routineCountLabels ?? '[]');
+
+        return labels[count] ?? String(count);
     }
 }

@@ -389,6 +389,7 @@ exercise:
             last: Laatste pagina
             navigation: Paginanavigatie
             next: Volgende
+            page_label: "Pagina {page}"
             per_page: Tonen
             previous: Vorige
             results: Resultaten
@@ -902,6 +903,7 @@ workout:
         remove: Verwijderen
         select: Selecteren
         too_large: De foto mag niet groter zijn dan 5 MB.
+        upload_failed: "De foto kon niet worden geüpload. Probeer het opnieuw."
     prefilled_clear: Wissen
     prefilled_clear_label: De sets van je vorige training wissen
     prefilled_from: "Overgenomen van je training van {date}"

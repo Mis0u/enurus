@@ -20,6 +20,7 @@ async function buildDom(uploadUrl = '', { deleteUrl = '', hasExistingPhoto = fal
             <div data-workout--photo-upload-target="zone"
                  data-error-type="Type de fichier invalide"
                  data-error-size="Fichier trop volumineux"
+                 data-error-upload="Échec de l'envoi de la photo"
                  data-action="dragover->workout--photo-upload#onDragOver
                               dragleave->workout--photo-upload#onDragLeave
                               drop->workout--photo-upload#onDrop"></div>
@@ -46,6 +47,18 @@ async function buildDom(uploadUrl = '', { deleteUrl = '', hasExistingPhoto = fal
     `;
 
     await nextTick();
+}
+
+function errorMessage() {
+    return document.querySelector('[data-workout--photo-upload-target="error"]').textContent;
+}
+
+async function uploadSelectedPhoto(application) {
+    setInputFile(jpeg('photo.jpg'));
+    await nextTick();
+
+    const element = document.querySelector('[data-controller="workout--photo-upload"]');
+    await application.getControllerForElementAndIdentifier(element, 'workout--photo-upload').uploadIfSelected();
 }
 
 function fileInput() {
@@ -136,6 +149,27 @@ describe('workout--photo-upload controller', () => {
         await controller.uploadIfSelected();
 
         expect(document.querySelector('[data-workout--photo-upload-target="error"]').textContent).toBe('Erreur serveur');
+    });
+
+    it('shows the translated generic message when the upload fails without a server message', async () => {
+        await buildDom('/seance/123/photo');
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+            ok: false,
+            json: async () => { throw new SyntaxError('Unexpected token <'); },
+        }));
+
+        await uploadSelectedPhoto(application);
+
+        expect(errorMessage()).toBe("Échec de l'envoi de la photo");
+    });
+
+    it('never shows the raw network error', async () => {
+        await buildDom('/seance/123/photo');
+        vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('Failed to fetch')));
+
+        await uploadSelectedPhoto(application);
+
+        expect(errorMessage()).toBe("Échec de l'envoi de la photo");
     });
 
     it('onRemove clears the preview and the file input value', async () => {

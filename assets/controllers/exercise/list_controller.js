@@ -35,6 +35,11 @@ export default class extends Controller {
 
     static values = {
         totalCount: Number,
+        // Libellé traduit du compteur pour chaque nombre d'exercices (index = nombre), cf.
+        // CountLabelsBuilder — jamais de texte en dur ici.
+        countLabels: Array,
+        // « Page __PAGE__ » traduit, pour le nom accessible des boutons de page.
+        pageLabel: String,
     };
 
     /** @type {string|null} */
@@ -231,7 +236,7 @@ export default class extends Controller {
      * @param {number} count
      */
     #updateCounter(count) {
-        const text = count <= 1 ? `${count} exercice` : `${count} exercices`;
+        const text = this.countLabelsValue[count] ?? String(count);
 
         this.counterTextTargets.forEach((target) => {
             target.textContent = text;
@@ -342,7 +347,7 @@ export default class extends Controller {
         btn.type        = 'button';
         btn.textContent = String(page);
         btn.className   = `exercise-page-btn${page === this.#currentPage ? ' is-active' : ''}`;
-        btn.setAttribute('aria-label', `Page ${page}`);
+        btn.setAttribute('aria-label', this.pageLabelValue.replace('__PAGE__', String(page)));
         btn.setAttribute('aria-current', page === this.#currentPage ? 'page' : 'false');
 
         btn.addEventListener('click', () => {
