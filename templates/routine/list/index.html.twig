@@ -7,6 +7,7 @@
     Variables passées par le controller :
       - pagination         : PaginationInterface<int, Routine>
       - count              : int (nombre total de routines, toutes pages confondues)
+      - countLabels        : list<string> (libellé traduit du compteur pour chaque valeur de 0 à count)
       - limitAllowed       : int[]
       - bodyweightWarnings : array<string, bool> (routine.id => routine contient un exercice PDC
                               alors que l'utilisateur n'a pas de poids corporel renseigné)
@@ -37,7 +38,7 @@
         {% if pagination.getTotalItemCount() == 0 %}
             {% include 'routine/list/_empty_state.html.twig' only %}
         {% else %}
-            {% include 'routine/list/_routine_count.html.twig' with {count: count} only %}
+            {% include 'routine/list/_routine_count.html.twig' with {count: count, countLabels: countLabels} only %}
 
             <div class="routines-grid mt-5">
                 {% for routine in pagination %}

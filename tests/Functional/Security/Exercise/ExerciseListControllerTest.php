@@ -209,6 +209,33 @@ final class ExerciseListControllerTest extends WebTestCase
     }
 
     // =========================================================
+    // Textes transmis au JS, toujours traduits
+    // =========================================================
+
+    public function testCounterLabelsAreTranslatedForEveryCount(): void
+    {
+        $labels = $this->counterLabels(self::URL);
+
+        $this->assertSame('1 exercice', $labels[1]);
+        $this->assertSame('2 exercices', $labels[2]);
+    }
+
+    public function testCounterLabelsFollowTheLocale(): void
+    {
+        $labels = $this->counterLabels('/en/library');
+
+        $this->assertSame('2 exercises', $labels[2]);
+    }
+
+    public function testPageButtonLabelIsTranslated(): void
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, '/de/bibliothek');
+
+        $this->assertSame('Seite __PAGE__', $crawler->filter('[data-controller="exercise--list"]')->attr('data-exercise--list-page-label-value'));
+    }
+
+    // =========================================================
     // Ligne compacte (mobile)
     // =========================================================
 
@@ -271,5 +298,21 @@ final class ExerciseListControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         return $crawler->filter('[data-name="reverse fly"]');
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function counterLabels(string $url): array
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, $url);
+        $this->assertResponseIsSuccessful();
+
+        $labels = json_decode((string) $crawler->filter('[data-controller="exercise--list"]')->attr('data-exercise--list-count-labels-value'), true, 512, JSON_THROW_ON_ERROR);
+        $this->assertIsArray($labels);
+
+        /** @var list<string> */
+        return $labels;
     }
 }

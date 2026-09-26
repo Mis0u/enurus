@@ -70,6 +70,18 @@ final class RoutineListControllerTest extends WebTestCase
         self::assertSelectorExists('p.text-\\[12px\\]');
     }
 
+    public function testRoutineCounterCarriesItsTranslatedLabelsForTheJs(): void
+    {
+        $client = $this->login(self::OWNER);
+        $crawler = $client->request(Request::METHOD_GET, '/en/my-routines');
+
+        $labels = json_decode((string) $crawler->filter('[data-routine-count]')->attr('data-routine-count-labels'), true, 512, JSON_THROW_ON_ERROR);
+
+        self::assertIsArray($labels);
+        self::assertSame('1 routine', $labels[1]);
+        self::assertSame('No routines', $labels[0]);
+    }
+
     // -------------------------------------------------------------------------
     // CONTENU — état vide
     // -------------------------------------------------------------------------

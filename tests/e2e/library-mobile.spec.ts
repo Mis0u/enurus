@@ -46,3 +46,14 @@ test('the muscle filter keeps the full width while a type filter is active', asy
     expect(chipsBox?.width ?? 0).toBeGreaterThan(page.viewportSize()!.width * 0.8);
     await expect(page.locator('[data-exercise--list-target="counter"]:visible')).toHaveCount(1);
 });
+
+test('the counter stays in the page language after filtering', async ({ page }) => {
+    await page.goto('/en/library');
+    await page.waitForLoadState('networkidle');
+    const counter = page.locator('[data-exercise--list-target="counterText"]:visible');
+    await expect(counter).toHaveText(/^\d+ exercises$/);
+
+    await page.locator('[data-exercise--list-target="searchInput"]').fill('curl');
+
+    await expect(counter).toHaveText(/^\d+ exercises?$/);
+});

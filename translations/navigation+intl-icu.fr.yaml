@@ -389,6 +389,7 @@ exercise:
             last: Dernière page
             navigation: Navigation des pages
             next: Suivant
+            page_label: "Page {page}"
             per_page: Afficher
             previous: Précédent
             results: Résultats
@@ -902,6 +903,7 @@ workout:
         remove: Supprimer
         select: Sélectionner
         too_large: La photo ne doit pas dépasser 5 Mo.
+        upload_failed: "Échec de l'envoi de la photo. Réessaie."
     prefilled_clear: Effacer
     prefilled_clear_label: Effacer les séries reprises de ta dernière séance
     prefilled_from: "Repris de ta séance du {date}"

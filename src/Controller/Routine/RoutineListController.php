@@ -7,6 +7,7 @@ namespace App\Controller\Routine;
 use App\Entity\Routine;
 use App\Entity\User;
 use App\Repository\RoutineRepository;
+use App\Service\Translation\CountLabelsBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,6 +35,7 @@ final class RoutineListController extends AbstractController
 
     public function __construct(
         private readonly RoutineRepository $routineRepository,
+        private readonly CountLabelsBuilder $countLabelsBuilder,
     ) {
     }
 
@@ -55,6 +57,7 @@ final class RoutineListController extends AbstractController
         return $this->render('routine/list/index.html.twig', [
             'pagination' => $pagination,
             'count' => $pagination->getTotalItemCount(),
+            'countLabels' => $this->countLabelsBuilder->build('routine.list.count', 'navigation', $pagination->getTotalItemCount()),
             'limitAllowed' => self::DISPLAY_LIMIT_ALLOWED,
             'bodyweightWarnings' => $this->bodyweightWarnings($pagination, $user),
         ]);

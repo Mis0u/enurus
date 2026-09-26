@@ -24,6 +24,8 @@
             class="p-6 max-md:px-4 max-md:pt-4 max-md:pb-[160px] md:p-7 flex flex-col gap-6 max-md:gap-3"
             data-controller="exercise--list"
             data-exercise--list-total-count-value="{{ totalCount }}"
+            data-exercise--list-count-labels-value="{{ countLabels|json_encode }}"
+            data-exercise--list-page-label-value="{{ 'exercise.list.pagination.page_label'|trans({page: '__PAGE__'}, 'navigation') }}"
         >
 
             {% include 'exercise/list/_filters.html.twig' with {'totalCount': totalCount, 'muscleGroups': muscleGroups} only %}

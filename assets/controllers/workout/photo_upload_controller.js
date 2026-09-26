@@ -1,6 +1,9 @@
 import { Controller } from '@hotwired/stimulus';
 import { sendDeleteRequest } from '../../utils/delete_confirmation.js';
 
+// Refus du serveur, porteur de son message d'erreur déjà traduit.
+class UploadRejectedError extends Error {}
+
 export default class extends Controller {
     static targets = [
         'zone', 'input', 'preview', 'previewWrapper', 'placeholder', 'error', 'filename', 'lightbox', 'lightboxImg',
@@ -196,7 +199,7 @@ export default class extends Controller {
 
             return data;
         } catch (error) {
-            this.#showError(error.message);
+            this.#showError(this.#uploadErrorMessage(error));
             this.#resetPreview();
             this.#selectedFile = null;
             return null;
@@ -217,13 +220,21 @@ export default class extends Controller {
     }
 
     async #parseResponse(response) {
-        const data = await response.json();
+        const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-            throw new Error(data.error ?? 'Upload failed');
+            throw new UploadRejectedError(data.error ?? '');
         }
 
         return data;
+    }
+
+    // Message traduit du serveur s'il en a donné un, sinon message générique traduit (data-error-upload) :
+    // jamais le texte technique brut d'une erreur réseau ou de lecture de la réponse.
+    #uploadErrorMessage(error) {
+        const serverMessage = error instanceof UploadRejectedError ? error.message : '';
+
+        return serverMessage || this.zoneTarget.dataset.errorUpload;
     }
 
     #toggleLightbox(visible) {
