@@ -1,6 +1,6 @@
 <div
     data-controller="workout--list--workout-filters"
-    class="flex flex-wrap items-center gap-3 mb-6"
+    class="flex flex-wrap items-center gap-3 mb-6 max-md:mb-3"
 >
     {% include 'workout/list/Filter/_date_picker.html.twig' with {'filterDate': filterDate} only %}
 
@@ -24,9 +24,13 @@
         {% include 'workout/list/Filter/_routine.html.twig' with {'routines': routines, 'filterRoutine': filterRoutine} only %}
     {% endif %}
 
-    {% include 'workout/list/Filter/_muscle.html.twig' with {'muscleGroups': muscleGroups, 'filterMuscles': filterMuscles} only %}
+    {# Compteur : fin de ligne sur desktop, posé à droite de « Filtrer par muscle » sur mobile
+       (ligne vide à cet endroit) pour raccourcir l'en-tête sans réduire la largeur des puces. #}
+    <div class="relative basis-full md:contents">
+        {% include 'workout/list/Filter/_muscle.html.twig' with {'muscleGroups': muscleGroups, 'filterMuscles': filterMuscles} only %}
 
-    <div class="ml-auto flex items-center gap-1.5 px-3 py-1.5 bg-[rgba(6,182,212,0.12)] border border-[rgba(6,182,212,0.25)] rounded-lg text-[12px] font-semibold text-[#06b6d4]">
-        {% include 'workout/list/Filter/_total_count.html.twig' with {'pagination': pagination} only %}
+        <div class="ml-auto max-md:absolute max-md:top-1.5 max-md:right-0 flex items-center gap-1.5 px-3 py-1.5 bg-[rgba(6,182,212,0.12)] border border-[rgba(6,182,212,0.25)] rounded-lg text-[12px] font-semibold text-[#06b6d4]">
+            {% include 'workout/list/Filter/_total_count.html.twig' with {'pagination': pagination} only %}
+        </div>
     </div>
 </div>

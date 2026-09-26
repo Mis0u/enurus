@@ -2,7 +2,7 @@
     Variables attendues (toutes via `only`) : workout, tonnage, exerciseCount, hasPr, hasRepsRecord,
     user, badges (list<BadgeTileView> — miniatures des badges débloqués par cette séance)
 #}
-<div class="session-tonnage flex items-center gap-4 text-[12px]">
+<div class="session-tonnage flex items-center gap-4 max-md:gap-3 text-[12px]">
     {% if tonnage is not null and tonnage > 0 %}
         <span class="flex items-center gap-1.5 text-[#8b9bb4]">
             {% include 'partials/_svg/_lightning.html.twig' only %}
@@ -27,7 +27,7 @@
     </span>
     {% endif %}
     {% if hasPr %}
-        <span class="relative text-[13px] leading-none cursor-help"
+        <span class="relative z-10 text-[13px] leading-none cursor-help"
               data-controller="tooltip"
               data-tooltip-text-value="{{ 'dashboard.widget.session.pr_tooltip'|trans({}, 'navigation') }}"
               data-action="click->tooltip#toggle"
@@ -35,7 +35,7 @@
               title="{{ 'dashboard.widget.session.pr_tooltip'|trans({}, 'navigation') }}">🏆</span>
     {% endif %}
     {% if hasRepsRecord %}
-        <span class="relative text-[13px] leading-none cursor-help"
+        <span class="relative z-10 text-[13px] leading-none cursor-help"
               data-controller="tooltip"
               data-tooltip-text-value="{{ 'dashboard.widget.session.reps_record_tooltip'|trans({}, 'navigation') }}"
               data-action="click->tooltip#toggle"
@@ -45,7 +45,7 @@
     {% if badges is not empty %}
         {% set badge_names = badges|map(tile => tile.name)|join(', ') %}
         {% set badges_label = 'badge.workout.tooltip'|trans({count: badges|length, names: badge_names}, 'navigation') %}
-        <span class="relative flex items-center gap-1 cursor-help"
+        <span class="relative z-10 flex items-center gap-1 cursor-help"
               data-controller="tooltip"
               data-tooltip-text-value="{{ badges_label }}"
               data-action="click->tooltip#toggle"

@@ -5,18 +5,20 @@
     - showUrl : string — URL de destination au clic (propre séance ou séance d'une connexion)
     - readOnly : bool — masque les boutons d'édition/suppression quand vrai
 #}
+{# Toute la carte mène au détail via le lien du titre, étiré sur la carte (cf. _title.html.twig) :
+   un vrai lien, atteignable au clavier, sans imbriquer les boutons d'action dans un <a>. Sur
+   mobile, carte compacte : infos à gauche, actions empilées à droite. #}
 <div
-    class="group bg-[#0f1928] border border-white/[0.07] rounded-xl px-5 py-4 grid grid-cols-[180px_1fr_auto] max-md:grid-cols-1 gap-5 max-md:gap-3 items-center cursor-pointer relative overflow-hidden transition-all duration-250 hover:border-white/[0.12] hover:bg-[#151f30] hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
+    class="workout-row group bg-[#0f1928] border border-white/[0.07] rounded-xl px-5 py-4 max-md:px-3.5 max-md:py-3 grid grid-cols-[180px_1fr_auto] max-md:grid-cols-[minmax(0,1fr)_auto] gap-5 max-md:gap-x-2 max-md:gap-y-1 items-center cursor-pointer relative overflow-hidden transition-all duration-250 hover:border-white/[0.12] hover:bg-[#151f30] hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] has-[.workout-row-link:focus-visible]:outline-2 has-[.workout-row-link:focus-visible]:outline-[#f43f5e]"
     style="animation: fadeUp 0.3s ease both;"
-    onclick="window.location.href='{{ showUrl }}'"
 >
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(244,63,94,0.03),transparent_60%)] pointer-events-none"></div>
 
     {% include 'workout/list/Session/_date_time.html.twig' with {'workout': workout} only %}
 
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 max-md:gap-1 min-w-0">
 
-        {% include 'workout/list/Session/_title.html.twig' with {'workout': workout} only %}
+        {% include 'workout/list/Session/_title.html.twig' with {'workout': workout, 'showUrl': showUrl} only %}
 
         {% include 'workout/list/Session/_metric.html.twig' with {
             'workout': workout,
@@ -32,10 +34,12 @@
             'muscles': muscles,
             'hiddenCount': hiddenCount,
         } only %}
+
+        {% include 'workout/list/Session/_muscle_line.html.twig' with {'muscles': muscles} only %}
     </div>
 
     {% if not readOnly %}
-        <div class="flex items-center gap-2 max-md:justify-end" onclick="event.stopPropagation()">
+        <div class="relative z-10 flex items-center gap-2 max-md:flex-col max-md:col-start-2 max-md:row-start-1 max-md:row-span-2">
 
             {% include 'workout/list/Session/_edit_button.html.twig' with {'workout': workout} only %}
 

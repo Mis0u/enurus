@@ -1,13 +1,17 @@
-<div class="flex items-center gap-2">
-    {% if workout.routine is not null %}
-        <span class="font-rajdhani text-[18px] font-bold text-[#f0f4ff] leading-tight">
-                    {{ workout.routine.name }}
-                </span>
-    {% else %}
-        <span class="font-rajdhani text-[18px] font-semibold text-[#f0f4ff] italic leading-tight">
-                    {{ 'workout.list.free_session'|trans({}, 'navigation') }}
-                </span>
-    {% endif %}
+{#
+    Variables attendues (toutes via `only`) : workout, showUrl (détail de la séance).
+    Le lien est étiré sur toute la carte (after:absolute inset-0) : c'est lui que l'on touche en
+    touchant la carte ; les éléments interactifs de la carte passent au-dessus (relative z-10).
+#}
+<div class="flex items-center gap-2 min-w-0">
+    <a href="{{ showUrl }}"
+       class="workout-row-link min-w-0 truncate font-rajdhani text-[18px] max-md:text-[16px] text-[#f0f4ff] leading-tight no-underline outline-none after:absolute after:inset-0 {{ workout.routine is not null ? 'font-bold' : 'font-semibold italic' }}">
+        {%- if workout.routine is not null -%}
+            {{ workout.routine.name }}
+        {%- else -%}
+            {{ 'workout.list.free_session'|trans({}, 'navigation') }}
+        {%- endif -%}
+    </a>
 
     {% if workout.mood is not null %}
         {% include 'workout/_mood_icon.html.twig' with {'workout': workout, 'compact': true} only %}
