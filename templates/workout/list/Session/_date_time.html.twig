@@ -1,11 +1,15 @@
 <div class="flex flex-col gap-1 max-md:flex-row max-md:items-center max-md:gap-2">
-        <span class="text-[13px] font-semibold text-[#f0f4ff]">
-            {{ workout.performedAt|format_date('full', locale=app.request.locale) }}
-        </span>
+    <span class="max-md:hidden text-[13px] font-semibold text-[#f0f4ff]">
+        {{ workout.performedAt|format_date('full', locale=app.request.locale) }}
+    </span>
+    {# Mobile : jour abrégé + date moyenne, tous deux au format de la langue #}
+    <span class="workout-row-date-short md:hidden text-[12.5px] font-semibold text-[#f0f4ff]">
+        {{ workout.performedAt|format_date(pattern: 'EEE', locale: app.request.locale) }} · {{ workout.performedAt|format_date('medium', locale=app.request.locale) }}
+    </span>
     {% if workout.duration is not null %}
         <span class="inline-flex items-center gap-1 text-[11.5px] text-[#4a5568]">
-                {% include 'partials/_svg/_time.html.twig' only %}
-                {{ workout.duration|format_hour }}
-            </span>
+            {% include 'partials/_svg/_time.html.twig' only %}
+            {{ workout.duration|format_hour }}
+        </span>
     {% endif %}
 </div>

@@ -11,6 +11,8 @@ import { addExercises, loginAs } from './helpers';
 // - lien au fil d'un texte (`display: inline` dans un `<p>`) : exception WCAG 2.5.8 ;
 // - éléments visuellement masqués (`sr-only`, input `peer` d'un interrupteur dont le `<label>`
 //   est la vraie zone tactile).
+// Lien « étiré » (`::after` en position absolue, ex. titre d'une carte de « Mes séances ») : sa zone
+// tactile est le bloc qu'il recouvre, pas son texte — c'est ce bloc qui est mesuré.
 //
 // `user-fixture-51-workout` : 51 séances (pagination sur plusieurs pages), pages non vides. Pas
 // `user-fixture-26-workout` : sa visite synchronise ses badges en base de test et casse
@@ -36,8 +38,15 @@ async function findTooSmallTapTargets(page: Page): Promise<string[]> {
         const isVisuallyHidden = (el: Element, rect: DOMRect): boolean =>
             rect.width === 0 || rect.height === 0 || getComputedStyle(el).visibility === 'hidden' || null !== el.closest('.sr-only');
 
+        const tapArea = (el: Element): DOMRect => {
+            const isStretchedLink = el.tagName === 'A' && getComputedStyle(el, '::after').position === 'absolute';
+            const coveredBlock = isStretchedLink ? (el as HTMLElement).offsetParent : null;
+
+            return (coveredBlock ?? el).getBoundingClientRect();
+        };
+
         return [...document.querySelectorAll(selector)].flatMap((el) => {
-            const rect = el.getBoundingClientRect();
+            const rect = tapArea(el);
             if (isVisuallyHidden(el, rect) || isTextFieldLabel(el) || isInlineTextLink(el)) {
                 return [];
             }

@@ -233,6 +233,27 @@ class WorkoutListControllerTest extends WebTestCase
         );
     }
 
+    public function testEachWorkoutRowIsARealLinkToItsDetail(): void
+    {
+        $client = $this->login(self::USER_11);
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+
+        $rows = $crawler->filter('.workout-row');
+        $this->assertCount(10, $rows);
+        $this->assertCount(10, $rows->filter('a.workout-row-link[href^="/fr/seance/"]'));
+        $this->assertCount(0, $crawler->filter('.workout-row[onclick], .workout-row [onclick]'));
+    }
+
+    public function testCompactRowHasAShortDateAndTheMusclesAsText(): void
+    {
+        $client = $this->login(self::USER_11);
+        $crawler = $client->request(Request::METHOD_GET, self::URL);
+        $row = $crawler->filter('.workout-row')->first();
+
+        $this->assertNotSame('', trim($row->filter('.workout-row-date-short')->text()));
+        $this->assertNotSame('', trim($row->filter('.workout-row-muscles__primary')->text()));
+    }
+
     public function testFreeSessionLabelIsDisplayed(): void
     {
         $client = $this->login(self::USER_11);

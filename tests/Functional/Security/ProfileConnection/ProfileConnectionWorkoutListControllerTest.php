@@ -75,6 +75,22 @@ final class ProfileConnectionWorkoutListControllerTest extends WebTestCase
         self::assertGreaterThan(0, $client->getCrawler()->filter('.show-back-btn, [class*="rounded-xl"]')->count());
     }
 
+    public function testEachSharedWorkoutLinksToItsReadOnlyDetail(): void
+    {
+        $client = $this->login(self::VIEWER);
+        $viewer = $this->getUserByEmail(self::VIEWER);
+        $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
+        $this->makeDiscoverable($viewer, 'WLC013');
+        $this->makeWorkoutsShareable($subject, 'WLC014');
+        $connection = $this->createSharedConnection($viewer, $subject);
+
+        $crawler = $client->request('GET', $this->listUrl($connection));
+
+        $links = $crawler->filter('.workout-row a.workout-row-link');
+        self::assertGreaterThan(0, $links->count());
+        self::assertStringStartsWith($this->listUrl($connection) . '/', (string) $links->first()->attr('href'));
+    }
+
     public function testWeightUnitIsTheViewersNotTheOwners(): void
     {
         $client = $this->login(self::LBS_VIEWER);

@@ -1,0 +1,15 @@
+{#
+    Muscles d'une séance en une ligne de texte (mobile) : principaux en rose, secondaires en cyan,
+    tronquée si trop longue. Variables attendues (toutes via `only`) : muscles (liste déjà triée,
+    principaux d'abord — cf. WorkoutMuscleRepository).
+#}
+{% set primary_muscles = muscles|filter(muscle => muscle.type == enum('App\\Enum\\Entity\\ExerciceMuscle\\MuscleTypeEnum').PRIMARY.value)|map(muscle => muscle.name|trans({}, 'muscle')) %}
+{% set secondary_muscles = muscles|filter(muscle => muscle.type != enum('App\\Enum\\Entity\\ExerciceMuscle\\MuscleTypeEnum').PRIMARY.value)|map(muscle => muscle.name|trans({}, 'muscle')) %}
+{% if muscles|length > 0 %}
+    <p class="md:hidden text-[12px] leading-snug truncate">
+        <span class="workout-row-muscles__primary text-rose-400">{{ primary_muscles|join(', ') }}</span>
+        {%- if secondary_muscles is not empty -%}
+            <span class="text-slate-500" aria-hidden="true"> · </span><span class="workout-row-muscles__secondary text-cyan-400">{{ secondary_muscles|join(', ') }}</span>
+        {%- endif -%}
+    </p>
+{% endif %}

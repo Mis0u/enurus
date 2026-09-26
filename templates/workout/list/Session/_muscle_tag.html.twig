@@ -1,5 +1,6 @@
 {% if muscles|length > 0 %}
-    <div class="flex flex-wrap gap-1.5">
+    {# Desktop : pastilles. Mobile : ligne de texte (_muscle_line.html.twig) #}
+    <div class="max-md:hidden flex flex-wrap gap-1.5">
         {% for muscle in muscles %}
             <span class="
                         {% if loop.index > 5 %}hidden sm:inline-flex{% else %}inline-flex{% endif %}
