@@ -148,11 +148,13 @@ dashboard:
         text: Ukryto wszystkie dostępne widżety. Włącz ponownie przynajmniej jeden w ustawieniach.
     library: Biblioteka
     logout: Wyloguj się
+    main_navigation: "Nawigacja główna"
     messaging: Wiadomości
+    more: "Więcej"
+    more_notification: "Nowości w tym menu"
     my_badges: "Moje odznaki"
     my_routines: Moje programy
     my_workouts: Moje treningi
-    profile: Profil
     save_first_workout: Zapisz swój pierwszy trening
     save_workout: Zapisz swój trening
     setting: Ustawienia

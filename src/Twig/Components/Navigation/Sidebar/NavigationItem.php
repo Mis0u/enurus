@@ -22,5 +22,9 @@ final class NavigationItem
 
     public int $totalNotification = 0;
 
-    public bool $mobile = false;
+    /**
+     * Rendu de l'entrée : `desktop` (sidebar), `mobile` (barre du bas) ou `tile` (tuile du panneau
+     * « Plus » de la navigation mobile) — cf. `_<format>_format.html.twig`.
+     */
+    public string $format = 'desktop';
 }

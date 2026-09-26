@@ -148,11 +148,13 @@ dashboard:
         text: Je hebt alle beschikbare widgets verborgen. Schakel er minstens één opnieuw in via je instellingen.
     library: Bibliotheek
     logout: Uitloggen
+    main_navigation: "Hoofdnavigatie"
     messaging: Berichten
+    more: "Meer"
+    more_notification: "Nieuws in dit menu"
     my_badges: "Mijn badges"
     my_routines: Mijn routines
     my_workouts: Mijn trainingen
-    profile: Profiel
     save_first_workout: Registreer je eerste training
     save_workout: Registreer je training
     setting: Instellingen

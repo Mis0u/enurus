@@ -15,7 +15,6 @@ field:
         male: Male
         title: Gender
     new_password: New password
-    open_menu: Open menu
     password: Password
     reduce: Collapse
     security_password: Choose a secure password

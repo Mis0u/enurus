@@ -1,0 +1,104 @@
+{# Bouton « Plus » de la barre du bas (display: contents : il reste un élément de la barre) et son
+   panneau, un <dialog> modal natif (Échap, focus gardé à l'intérieur) piloté par mobile-more-menu. #}
+<div class="contents" data-controller="mobile-more-menu">
+    <button type="button"
+            aria-controls="mobile-more-menu"
+            aria-haspopup="dialog"
+            aria-expanded="false"
+            data-active="{{ this.active ? 'true' : 'false' }}"
+            data-mobile-more-menu-target="button"
+            data-action="mobile-more-menu#open"
+            class="flex flex-col items-center justify-center gap-1 py-2 px-3 {{ this.active ? 'text-rose-ft' : 'text-[#4a5568] hover:text-[#f0f4ff]' }} bg-transparent border-0 cursor-pointer transition-ft relative flex-1 max-w-[80px]">
+        <span class="flex items-center justify-center w-6 h-6">
+            {% include 'partials/_svg/_more.html.twig' with {'ariaHidden': true} only %}
+        </span>
+        <span class="text-[10px] font-medium whitespace-nowrap">{{ 'dashboard.more'|trans({}, 'navigation') }}</span>
+        {% if this.hasNotification %}
+            <span class="more-notification-dot absolute top-[6px] right-4 w-2.5 h-2.5 rounded-full bg-rose-ft border-2 border-bg-card" aria-hidden="true"></span>
+            <span class="sr-only">{{ 'dashboard.more_notification'|trans({}, 'navigation') }}</span>
+        {% endif %}
+    </button>
+
+    <dialog id="mobile-more-menu"
+            aria-labelledby="mobile-more-menu-title"
+            data-mobile-more-menu-target="dialog"
+            data-action="click->mobile-more-menu#closeOnBackdrop"
+            class="mobile-more-sheet w-full max-w-none p-0 bg-bg-card text-[#f0f4ff] border-t border-white/[0.07] rounded-t-[20px]">
+        <div class="px-4 pt-3 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
+            <div class="mx-auto mb-2 h-1 w-10 rounded-full bg-white/15" aria-hidden="true"></div>
+            <div class="flex items-center justify-between mb-3">
+                <h2 id="mobile-more-menu-title" class="font-rajdhani text-lg font-bold">{{ 'dashboard.more'|trans({}, 'navigation') }}</h2>
+                <button type="button"
+                        data-action="mobile-more-menu#close"
+                        aria-label="{{ 'field.close_menu'|trans({}, 'common') }}"
+                        class="flex items-center justify-center w-11 h-11 -mr-2 text-[#8b9bb4] hover:text-[#f0f4ff] bg-transparent border-0 cursor-pointer transition-ft">
+                    {% include 'partials/_svg/_cross.html.twig' with {'width': 4.5, 'height': 4.5, 'ariaHidden': true} only %}
+                </button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3">
+                <twig:Navigation:Sidebar:NavigationItem
+                    link="{{ path('app_routine_list') }}"
+                    route="app_routine_list"
+                    menu="{{ 'dashboard.my_routines'|trans({}, 'navigation') }}"
+                    icon="repeat"
+                    format="tile"
+                />
+                <twig:Navigation:Sidebar:NavigationItem
+                    link="{{ path('app_profile_connection_list') }}"
+                    route="app_profile_connection_list"
+                    menu="{{ 'dashboard.connections'|trans({}, 'navigation') }}"
+                    icon="add_people"
+                    badge="{{ this.pendingConnectionCount > 0 }}"
+                    totalNotification="{{ this.pendingConnectionCount }}"
+                    format="tile"
+                />
+                <twig:Navigation:Sidebar:NavigationItem
+                    link="{{ path('app_badge_list') }}"
+                    route="app_badge_list"
+                    menu="{{ 'dashboard.my_badges'|trans({}, 'navigation') }}"
+                    icon="medal"
+                    format="tile"
+                />
+                {% if this.isAdmin %}
+                    <twig:Navigation:Sidebar:NavigationItem
+                        link="{{ path('admin') }}"
+                        menu="Administration"
+                        icon="gear"
+                        format="tile"
+                    />
+                {% else %}
+                    <twig:Navigation:Sidebar:NavigationItem
+                        link="{{ path('app_contact_thread_list') }}"
+                        route="app_contact_thread_list"
+                        menu="{{ 'dashboard.messaging'|trans({}, 'navigation') }}"
+                        icon="messaging"
+                        badge="{{ this.unreadMessageCount > 0 }}"
+                        totalNotification="{{ this.unreadMessageCount }}"
+                        format="tile"
+                    />
+                    <twig:Navigation:Sidebar:NavigationItem
+                        link="{{ path('app_contact') }}"
+                        route="app_contact"
+                        menu="{{ 'dashboard.contact'|trans({}, 'navigation') }}"
+                        icon="envelope"
+                        format="tile"
+                    />
+                {% endif %}
+                <twig:Navigation:Sidebar:NavigationItem
+                    link="{{ path('app_settings') }}"
+                    route="app_settings"
+                    menu="{{ 'dashboard.setting'|trans({}, 'navigation') }}"
+                    icon="gear"
+                    format="tile"
+                />
+            </div>
+
+            <a href="{{ logout_path() }}"
+               class="mt-4 flex items-center justify-center gap-2 min-h-11 rounded-[12px] border border-white/[0.07] text-[13px] font-medium text-[#8b9bb4] no-underline hover:text-[#f0f4ff] hover:bg-white/[0.04] transition-ft">
+                {% include 'partials/_svg/_logout.html.twig' with {'ariaHidden': true} only %}
+                {{ 'dashboard.logout'|trans({}, 'navigation') }}
+            </a>
+        </div>
+    </dialog>
+</div>

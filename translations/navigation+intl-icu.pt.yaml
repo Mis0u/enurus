@@ -148,11 +148,13 @@ dashboard:
         text: Ocultaste todos os widgets disponíveis. Reativa pelo menos um nas tuas definições.
     library: Biblioteca
     logout: Terminar sessão
+    main_navigation: "Navegação principal"
     messaging: Mensagens
+    more: "Mais"
+    more_notification: "Novidades neste menu"
     my_badges: "As minhas insígnias"
     my_routines: As minhas rotinas
     my_workouts: Os meus treinos
-    profile: Perfil
     save_first_workout: Regista o teu primeiro treino
     save_workout: Regista o teu treino
     setting: Definições

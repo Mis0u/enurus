@@ -148,11 +148,13 @@ dashboard:
         text: Du hast alle verfügbaren Widgets ausgeblendet. Aktiviere mindestens eines wieder in deinen Einstellungen.
     library: Bibliothek
     logout: Abmelden
+    main_navigation: "Hauptnavigation"
     messaging: Nachrichten
+    more: "Mehr"
+    more_notification: "Neuigkeiten in diesem Menü"
     my_badges: "Meine Abzeichen"
     my_routines: Meine Routinen
     my_workouts: Meine Trainings
-    profile: Profil
     save_first_workout: Erfasse dein erstes Training
     save_workout: Erfasse dein Training
     setting: Einstellungen
