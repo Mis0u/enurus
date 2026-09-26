@@ -184,3 +184,33 @@ body { font-family: 'DM Sans', sans-serif; }
     background: rgba(255, 255, 255, 0.07);
     border-radius: 4px;
 }
+
+/* Panneau « Plus » de la navigation mobile (<dialog> modal, mobile_more_menu_controller.js) :
+   collé en bas d'écran, à portée de pouce, à la place du centrage par défaut du navigateur. */
+.mobile-more-sheet {
+    width: 100%;
+    max-width: 100%;
+    max-height: 85dvh;
+    margin: auto 0 0;
+    overflow-y: auto;
+}
+
+.mobile-more-sheet[open] {
+    animation: mobile-more-sheet-up 0.25s ease-out;
+}
+
+.mobile-more-sheet::backdrop {
+    background: rgba(8, 14, 26, 0.85);
+    backdrop-filter: blur(4px);
+}
+
+@keyframes mobile-more-sheet-up {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mobile-more-sheet[open] {
+        animation: none;
+    }
+}

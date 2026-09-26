@@ -148,11 +148,13 @@ dashboard:
         text: Has ocultado todos los widgets disponibles. Reactiva al menos uno desde tus ajustes.
     library: Biblioteca
     logout: Cerrar sesión
+    main_navigation: "Navegación principal"
     messaging: Mensajes
+    more: "Más"
+    more_notification: "Novedades en este menú"
     my_badges: "Mis insignias"
     my_routines: Mis rutinas
     my_workouts: Mis entrenamientos
-    profile: Perfil
     save_first_workout: Registra tu primer entrenamiento
     save_workout: Registra tu entrenamiento
     setting: Ajustes

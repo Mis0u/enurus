@@ -1,0 +1,15 @@
+<a href="{{ this.link }}"
+   {% if is_active %}aria-current="page"{% endif %}
+   class="relative flex flex-col items-center justify-center gap-2 min-h-[84px] px-2 py-3 rounded-[14px] border text-center no-underline transition-ft {{ is_active ? 'text-rose-ft bg-[rgba(244,63,94,0.12)] border-[rgba(244,63,94,0.4)]' : 'text-[#c3cee0] bg-white/[0.03] border-white/[0.07] hover:bg-white/[0.06] hover:text-[#f0f4ff]' }}">
+    {% if this.svg %}
+        <span class="flex items-center justify-center w-6 h-6">
+            {% include this.svg only %}
+        </span>
+    {% endif %}
+    <span class="text-[12px] font-medium leading-tight">{{ this.menu }}</span>
+    {% if this.badge %}
+        <span class="tile-badge absolute top-2 right-2 bg-rose-ft text-white text-[10px] font-bold min-w-[18px] h-[18px] rounded-full flex items-center justify-center px-1">
+            {{ this.totalNotification }}
+        </span>
+    {% endif %}
+</a>

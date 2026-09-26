@@ -148,11 +148,13 @@ dashboard:
         text: Tu as masqué tous les widgets affichables. Réactives-en au moins un depuis tes réglages.
     library: Bibliothèque
     logout: Déconnexion
+    main_navigation: "Navigation principale"
     messaging: Messagerie
+    more: "Plus"
+    more_notification: "Nouveautés dans ce menu"
     my_badges: "Mes badges"
     my_routines: Mes routines
     my_workouts: Mes séances
-    profile: Profil
     save_first_workout: Enregistre ta première séance
     save_workout: Enregistre ta séance
     setting: Réglages

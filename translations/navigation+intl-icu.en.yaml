@@ -148,11 +148,13 @@ dashboard:
         text: You've hidden every available widget. Re-enable at least one from your settings.
     library: Library
     logout: Log out
+    main_navigation: "Main navigation"
     messaging: Messages
+    more: "More"
+    more_notification: "New activity in this menu"
     my_badges: "My badges"
     my_routines: My routines
     my_workouts: My workouts
-    profile: Profile
     save_first_workout: Log your first workout
     save_workout: Log your workout
     setting: Settings

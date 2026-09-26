@@ -87,9 +87,9 @@ test('tap targets are large enough on the workout calendar', async ({ page }) =>
     expect(await findTooSmallTapTargets(page)).toEqual([]);
 });
 
-test('tap targets are large enough in the open menu', async ({ page }) => {
+test('tap targets are large enough in the open "More" panel', async ({ page }) => {
     await goto(page, '/fr/tableau-de-bord');
-    await page.getByRole('button', { name: 'Ouvrir le menu' }).click();
+    await page.locator('button[aria-controls="mobile-more-menu"]').click();
     await expect(page.getByRole('button', { name: 'Fermer le menu' })).toBeVisible();
 
     expect(await findTooSmallTapTargets(page)).toEqual([]);

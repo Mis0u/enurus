@@ -1,7 +1,3 @@
 {% set is_active = app.current_route == this.route %}
 
-{% if this.mobile %}
-    {% include 'components/Navigation/Sidebar/_mobile_format.html.twig' with {'this': this, 'is_active': is_active} only %}
-{% else %}
-    {% include 'components/Navigation/Sidebar/_desktop_format.html.twig' with {'this': this, 'is_active': is_active} only %}
-{% endif %}
+{% include 'components/Navigation/Sidebar/_' ~ this.format ~ '_format.html.twig' with {'this': this, 'is_active': is_active} only %}

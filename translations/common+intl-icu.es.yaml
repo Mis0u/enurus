@@ -15,7 +15,6 @@ field:
         male: Hombre
         title: Género
     new_password: Nueva contraseña
-    open_menu: Abrir el menú
     password: Contraseña
     reduce: Reducir
     security_password: Elige una contraseña segura
