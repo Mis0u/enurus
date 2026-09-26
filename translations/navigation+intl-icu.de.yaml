@@ -770,6 +770,9 @@ workout:
     date_placeholder: Datum auswählen
     delete_exercise: Diese Übung löschen
     delete_series: Diesen Satz löschen
+    draft:
+        discard: "Neu beginnen"
+        restored: "Laufendes Workout wiederhergestellt"
     duration_optional: Dauer (Optional)
     duration_placeholder: Dauer (Min)
     edit:
@@ -917,6 +920,7 @@ workout:
             cancel_button: Abbrechen
             confirm_button: Erstellen
             message: "Du erstellst gerade ein Workout: Wenn du diese Seite verlässt, geht deine aktuelle Auswahl verloren."
+            message_draft_kept: "Dein Workout ist gespeichert: Du findest es wieder, wenn du zurückkommst – mit deiner neuen Übung."
             text: "Findest du deine Übung nicht? Erstelle sie!"
             title: Neue Übung erstellen?
         habitual: "Deine üblichen Übungen"

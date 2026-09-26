@@ -55,7 +55,7 @@
             {% include 'exercise/create/_svg_preview.html.twig' with {gender: gender} only %}
             {% include 'exercise/create/_description_accordion.html.twig' with {form: form, controllerName: 'exercise--create'} only %}
             {% include 'exercise/create/_form_actions.html.twig' with {
-                cancelUrl: path('app_exercise_list'),
+                cancelUrl: cancelUrl,
                 submitLabel: 'exercise.create.submit'|trans({}, 'navigation'),
             } only %}
             {{ form_row(form._token) }}

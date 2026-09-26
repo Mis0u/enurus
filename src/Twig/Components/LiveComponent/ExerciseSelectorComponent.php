@@ -8,12 +8,14 @@ use App\Entity\Exercise;
 use App\Entity\MuscleGroup;
 use App\Entity\User;
 use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
+use App\Enum\Exercise\ExerciseCreationOriginEnum;
 use App\Repository\ExerciseRepository;
 use App\Repository\MuscleGroupRepository;
 use App\Repository\WorkoutStatsRepository;
 use App\Service\Entity\ExerciseSorterService;
 use App\Service\Entity\MuscleGroupSorterService;
 use App\Service\Workout\WorkoutExerciseCardDataBuilder;
+use App\Service\Workout\WorkoutExerciseCardRenderer;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -22,7 +24,6 @@ use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
-use Twig\Environment;
 
 #[AsLiveComponent('LiveComponent:ExerciseSelectorComponent:ExerciseSelectorComponent')]
 final class ExerciseSelectorComponent
@@ -61,12 +62,20 @@ final class ExerciseSelectorComponent
     public array $muscleGroupFilters = [];
 
     /**
-     * Nom du controller Stimulus consommateur de la carte rendue par `selectExercise()`
+     * Nom du controller Stimulus consommateur des cartes rendues par `addSelectedExercises()`
      * (`exercise` en création, `workout--edit--exercise` en édition) — fixé une fois par la page
      * hôte au moment du `component(...)`, jamais modifié en cours de vie du composant.
      */
     #[LiveProp]
     public string $controllerName = 'exercise';
+
+    /**
+     * Vrai sur la page de création de séance, dont la saisie est gardée en brouillon
+     * (`workout--draft` controller) : l'utilisateur peut partir créer un exercice manquant et
+     * revenir sur sa séance, où l'exercice créé est ajouté (`ExerciseCreationOriginEnum`).
+     */
+    #[LiveProp]
+    public bool $keepsWorkoutDraft = false;
 
     /**
      * @var list<Exercise>|null exercices proposés à l'utilisateur, chargés une fois par requête
@@ -80,8 +89,8 @@ final class ExerciseSelectorComponent
         private readonly TranslatorInterface $translator,
         private readonly ExerciseSorterService $exerciseSorter,
         private readonly MuscleGroupSorterService $muscleGroupSorter,
-        private readonly Environment $twig,
         private readonly WorkoutExerciseCardDataBuilder $cardDataBuilder,
+        private readonly WorkoutExerciseCardRenderer $cardRenderer,
         private readonly WorkoutStatsRepository $workoutStatsRepository,
     ) {
     }
@@ -102,11 +111,8 @@ final class ExerciseSelectorComponent
     }
 
     /**
-     * Rend les cartes des exercices cochés côté serveur (i18n, MuscleTags, séries pré-remplies,
-     * structure du formulaire — jamais dupliqué en JS) et les envoie directement dans l'événement,
-     * dans l'ordre de sélection. L'`index` réel n'est connu que côté client (position dans la
-     * liste déjà affichée) : rendu avec un placeholder littéral `__EXERCISE_INDEX__`, substitué en
-     * JS avant insertion — même convention que `_template.html.twig` pour l'ajout de série.
+     * Rend les cartes des exercices cochés côté serveur (cf. WorkoutExerciseCardRenderer) et les
+     * envoie directement dans l'événement, dans l'ordre de sélection.
      */
     #[LiveAction]
     public function addSelectedExercises(): void
@@ -119,7 +125,7 @@ final class ExerciseSelectorComponent
 
         $cardData = $this->cardDataBuilder->build($this->getUser(), $exercises);
         $htmls = array_map(
-            fn (Exercise $exercise): string => $this->renderCard($exercise, $cardData[(string) $exercise->id]),
+            fn (Exercise $exercise): string => $this->cardRenderer->render($exercise, $cardData[(string) $exercise->id], $this->controllerName),
             $exercises,
         );
 
@@ -215,6 +221,16 @@ final class ExerciseSelectorComponent
         );
     }
 
+    /**
+     * @return array<string, string> paramètres de la route `app_exercise_create`
+     */
+    public function getCreateExerciseRouteParams(): array
+    {
+        return $this->keepsWorkoutDraft ? [
+            'returnTo' => ExerciseCreationOriginEnum::WORKOUT->value,
+        ] : [];
+    }
+
     public function userHasBodyweight(): bool
     {
         return null !== $this->getUser()->bodyweightKg;
@@ -244,24 +260,6 @@ final class ExerciseSelectorComponent
         }
 
         return $exercises;
-    }
-
-    /**
-     * @param array{cardBodyweightShare: ?float, existingSets: list<array<string, mixed>>, prefilledFrom: ?\DateTimeImmutable} $cardData
-     */
-    private function renderCard(Exercise $exercise, array $cardData): string
-    {
-        return $this->twig->render('workout/create/_exercise_card.html.twig', [
-            'exercise' => $exercise,
-            'index' => '__EXERCISE_INDEX__',
-            'controllerName' => $this->controllerName,
-            'cardBodyweightShare' => $cardData['cardBodyweightShare'],
-            'existingSets' => $cardData['existingSets'],
-            'prefilledFrom' => $cardData['prefilledFrom'],
-            // Toujours true ici : `selectedAddableExercises()` écarte un exercice au poids de
-            // corps tant que l'utilisateur n'a pas de poids.
-            'userHasBodyweight' => true,
-        ]);
     }
 
     /**

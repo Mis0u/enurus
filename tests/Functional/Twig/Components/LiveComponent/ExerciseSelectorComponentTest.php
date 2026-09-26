@@ -15,6 +15,7 @@ use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Twig\Components\LiveComponent\ExerciseSelectorComponent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\Test\InteractsWithLiveComponents;
 use Symfony\UX\LiveComponent\Test\TestLiveComponent;
@@ -403,6 +404,35 @@ final class ExerciseSelectorComponentTest extends WebTestCase
         $testComponent->actingAs($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
 
         self::assertSame([], $this->component($testComponent)->getFilteredExercises());
+    }
+
+    public function testCreateExerciseLinkComesBackToTheWorkoutWhenItKeepsADraft(): void
+    {
+        $link = $this->createExerciseLink(keepsWorkoutDraft: true);
+
+        self::assertSame('/en/library/exercise/create?returnTo=workout', $link->attr('href'));
+        self::assertStringContainsString('Your workout is saved', (string) $link->attr('data-message'));
+    }
+
+    public function testCreateExerciseLinkLeadsToThePlainCreationPageByDefault(): void
+    {
+        $link = $this->createExerciseLink(keepsWorkoutDraft: false);
+
+        self::assertSame('/en/library/exercise/create', $link->attr('href'));
+    }
+
+    private function createExerciseLink(bool $keepsWorkoutDraft): Crawler
+    {
+        $client = static::createClient();
+        $client->loginUser($this->getUserByEmail(UserFixtures::USER_REVERSE_FLY));
+
+        $testComponent = $this->createLiveComponent(self::COMPONENT_NAME, [
+            'isOpen' => true,
+            'search' => 'this-exercise-does-not-exist-anywhere',
+            'keepsWorkoutDraft' => $keepsWorkoutDraft,
+        ], $client);
+
+        return $testComponent->render()->crawler()->filter('a[data-action="click->search-modal#confirmNavigate"]');
     }
 
     /**
