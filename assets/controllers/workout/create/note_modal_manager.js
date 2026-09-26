@@ -77,6 +77,9 @@ export class NoteModalManager {
             swalError(this.#submitFailedTitle, this.#submitFailedText, '#0f1928', '#f0f4ff', '#f43f5e');
             return;
         }
+        // Séance enregistrée : son brouillon (workout--draft) ne doit plus jamais être restauré,
+        // même si l'envoi de la photo qui suit échoue.
+        window.dispatchEvent(new CustomEvent('workout:saved'));
         await this.#uploadPhotoIfSelected(workoutId);
         window.location.href = redirectUrl;
     }

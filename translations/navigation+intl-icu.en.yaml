@@ -770,6 +770,9 @@ workout:
     date_placeholder: Select a date
     delete_exercise: Delete this exercise
     delete_series: Delete this set
+    draft:
+        discard: "Start over"
+        restored: "Workout in progress restored"
     duration_optional: Duration (Optional)
     duration_placeholder: Duration (min)
     edit:
@@ -917,6 +920,7 @@ workout:
             cancel_button: Cancel
             confirm_button: Create
             message: "You're creating a workout: leaving this page will lose your current selection."
+            message_draft_kept: "Your workout is saved: you'll find it when you come back, with your new exercise added."
             text: "Can't find your exercise? Create it!"
             title: Create a new exercise?
         habitual: "Your usual exercises"

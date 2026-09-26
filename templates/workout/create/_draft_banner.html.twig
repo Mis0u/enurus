@@ -1,0 +1,15 @@
+{# Affiché par workout--draft quand la saisie d'une séance en cours vient d'être restaurée. #}
+<div data-workout--draft-target="banner"
+     role="status"
+     hidden
+     class="flex items-center justify-between gap-3 mb-4 pl-4 pr-2 py-2 bg-[rgba(6,182,212,0.08)] border border-[rgba(6,182,212,0.3)] rounded-[14px] text-[13px] text-[#f0f4ff]">
+    <p class="flex items-center gap-2">
+        {% include 'partials/_svg/_repeat.html.twig' with {'width': 3.5, 'height': 3.5, 'ariaHidden': true} only %}
+        {{ 'workout.draft.restored'|trans({}, 'navigation') }}
+    </p>
+    <button type="button"
+            data-action="click->workout--draft#discard"
+            class="shrink-0 inline-flex items-center min-h-10 max-md:min-h-11 px-3 rounded-md font-semibold text-[#f43f5e] hover:bg-[rgba(244,63,94,0.08)] transition-colors duration-250 cursor-pointer">
+        {{ 'workout.draft.discard'|trans({}, 'navigation') }}
+    </button>
+</div>

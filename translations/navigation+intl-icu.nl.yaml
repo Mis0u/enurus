@@ -770,6 +770,9 @@ workout:
     date_placeholder: Selecteer een datum
     delete_exercise: Deze oefening verwijderen
     delete_series: Deze set verwijderen
+    draft:
+        discard: "Opnieuw beginnen"
+        restored: "Lopende training hersteld"
     duration_optional: Duur (Optioneel)
     duration_placeholder: Duur (min)
     edit:
@@ -917,6 +920,7 @@ workout:
             cancel_button: Annuleren
             confirm_button: Aanmaken
             message: "Je bent een training aan het maken: als je deze pagina verlaat, verlies je je huidige selectie."
+            message_draft_kept: "Je training is opgeslagen: je vindt hem terug wanneer je terugkomt, met je nieuwe oefening erbij."
             text: "Vind je jouw oefening niet? Maak hem aan!"
             title: Nieuwe oefening aanmaken?
         habitual: "Je vaste oefeningen"

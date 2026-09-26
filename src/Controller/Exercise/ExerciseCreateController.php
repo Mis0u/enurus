@@ -7,6 +7,7 @@ namespace App\Controller\Exercise;
 use App\Entity\Exercise;
 use App\Entity\ExerciseMuscle;
 use App\Entity\User;
+use App\Enum\Exercise\ExerciseCreationOriginEnum;
 use App\Form\ExerciseType;
 use App\Repository\MuscleGroupRepository;
 use App\Security\Voter\ExerciseVoter;
@@ -52,18 +53,19 @@ final class ExerciseCreateController extends AbstractController
         $form = $this->createForm(ExerciseType::class, $exercise);
 
         $form->handleRequest($request);
+        $origin = ExerciseCreationOriginEnum::tryFrom($request->query->getString('returnTo'));
 
         if ($form->isSubmitted() && $form->isValid() && $this->hasPrimaryMuscle($form)) {
-            return $this->handleValidForm($form, $exercise);
+            return $this->handleValidForm($form, $exercise, $origin);
         }
 
-        return $this->renderCreateForm($form, $request->getLocale());
+        return $this->renderCreateForm($form, $request->getLocale(), $origin);
     }
 
     /**
      * @param FormInterface<Exercise> $form
      */
-    private function handleValidForm(FormInterface $form, Exercise $exercise): Response
+    private function handleValidForm(FormInterface $form, Exercise $exercise, ?ExerciseCreationOriginEnum $origin): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -75,13 +77,32 @@ final class ExerciseCreateController extends AbstractController
 
         $this->addFlash('success', $this->translator->trans('exercise.flash.created', [], 'navigation'));
 
-        return $this->redirectToRoute('app_exercise_list');
+        return $this->redirectAfterCreation($exercise, $origin);
+    }
+
+    /**
+     * Venu d'une séance en cours : retour sur celle-ci, où le brouillon est restauré et le nouvel
+     * exercice ajouté (`workout--draft` controller).
+     */
+    private function redirectAfterCreation(Exercise $exercise, ?ExerciseCreationOriginEnum $origin): Response
+    {
+        if (ExerciseCreationOriginEnum::WORKOUT !== $origin) {
+            return $this->redirectToRoute('app_exercise_list');
+        }
+
+        if (null === $exercise->id) {
+            throw new \LogicException('Exercise id cannot be null after creation.');
+        }
+
+        return $this->redirectToRoute('app_workout', [
+            'addedExercise' => $exercise->id->toRfc4122(),
+        ]);
     }
 
     /**
      * @param FormInterface<Exercise> $form
      */
-    private function renderCreateForm(FormInterface $form, string $locale): Response
+    private function renderCreateForm(FormInterface $form, string $locale, ?ExerciseCreationOriginEnum $origin): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -94,6 +115,7 @@ final class ExerciseCreateController extends AbstractController
             ),
             'gender' => $user->gender,
             'user' => $user,
+            'cancelUrl' => $this->generateUrl(ExerciseCreationOriginEnum::WORKOUT === $origin ? 'app_workout' : 'app_exercise_list'),
         ]);
     }
 

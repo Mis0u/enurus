@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="{{ asset('styles/mood-selector.css') }}">
 {% endblock %}
 
+{# Pas de copie en cache Turbo : affichée le temps du chargement au retour sur la page, elle
+   restaurerait le brouillon (workout--draft) une 2e fois, en doublant les cartes. #}
+{% block meta %}
+    <meta name="turbo-cache-control" content="no-cache">
+{% endblock %}
+
 {% block title %}{{ 'workout.title'|trans({}, 'navigation')|format_title }}{% endblock %}
 
 {% block topbar %}
@@ -19,16 +25,21 @@
 
 {% block state %}
     <div class="flex-1 relative overflow-y-auto overflow-x-hidden px-7 pt-6 pb-[120px] max-md:px-4 max-md:pb-[160px]">
-        {{ form_start(form) }}
-        {% include 'workout/create/_config-bar.html.twig' with {'form': form, 'user': user} only %}
-        {% include 'workout/create/_exercise_list.html.twig' only %}
-        {% include 'workout/create/_note_modal.html.twig' with {
-            'imageMaxSizeBytes': imageMaxSizeBytes,
-            'imageAllowedMimeTypes': imageAllowedMimeTypes,
-            'field': form.mood,
-            'moods': moods,
-        } only %}
-        {{ component('LiveComponent:ExerciseSelectorComponent:ExerciseSelectorComponent') }}
-        {{ form_end(form) }}
+        <div data-controller="workout--draft"
+             data-workout--draft-user-id-value="{{ user.id }}"
+             data-workout--draft-block-url-value="{{ path('workout_draft_exercises_block') }}">
+            {% include 'workout/create/_draft_banner.html.twig' only %}
+            {{ form_start(form) }}
+            {% include 'workout/create/_config-bar.html.twig' with {'form': form, 'user': user} only %}
+            {% include 'workout/create/_exercise_list.html.twig' only %}
+            {% include 'workout/create/_note_modal.html.twig' with {
+                'imageMaxSizeBytes': imageMaxSizeBytes,
+                'imageAllowedMimeTypes': imageAllowedMimeTypes,
+                'field': form.mood,
+                'moods': moods,
+            } only %}
+            {{ component('LiveComponent:ExerciseSelectorComponent:ExerciseSelectorComponent', {keepsWorkoutDraft: true}) }}
+            {{ form_end(form) }}
+        </div>
     </div>
 {% endblock %}

@@ -95,12 +95,14 @@ export default class extends Controller {
 
         const newRow = insertSetRow(card, tbody);
         initLiftedWeights(newRow, this.liftedWeightTemplateValue);
+        this.#notifyStructureChange();
     }
 
     clearPrefill(event) {
         const card = event.target.closest('[data-exercise-index]');
         const newRow = resetPrefilledCard(card);
         initLiftedWeights(newRow, this.liftedWeightTemplateValue);
+        this.#notifyStructureChange();
     }
 
     repeatSet(event) {
@@ -113,6 +115,7 @@ export default class extends Controller {
         const newRow = insertSetRow(card, tbody);
         this.#copySetValues(sourceRow, newRow);
         initLiftedWeights(newRow, this.liftedWeightTemplateValue);
+        this.#notifyStructureChange();
     }
 
     deleteSet(event) {
@@ -126,12 +129,14 @@ export default class extends Controller {
 
         row.remove();
         numerate(tbody);
+        this.#notifyStructureChange();
     }
 
     deleteExercise(event) {
         const card = event.target.closest('[data-exercise-index]');
         card.remove();
         this.#updateSubmitAvailability();
+        this.#notifyStructureChange();
     }
 
     async validateAndSubmit(event) {
@@ -164,6 +169,12 @@ export default class extends Controller {
     }
 
     // ─── Privé ───────────────────────────────────────────────────
+
+    // Séries ou cartes ajoutées, retirées ou déplacées : aucun événement de formulaire ne le
+    // signale, alors que le brouillon de séance (workout--draft) doit être sauvegardé.
+    #notifyStructureChange() {
+        window.dispatchEvent(new CustomEvent('workout:changed'));
+    }
 
     #blockedByMissingBodyweight(card) {
         if (card.dataset.bodyweight !== 'true' || this.userHasBodyweightValue) {
@@ -207,6 +218,7 @@ export default class extends Controller {
                 positionInput.value = index;
             }
         });
+        this.#notifyStructureChange();
     }
 
     #clearFieldError(e) {

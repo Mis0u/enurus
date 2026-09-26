@@ -175,6 +175,36 @@ class ExerciseCreateControllerTest extends WebTestCase
         $this->assertSame(MeasurementType::DISTANCE, $exercise->measurementType);
     }
 
+    public function testCreatedExerciseIsAddedToTheWorkoutWhenComingFromIt(): void
+    {
+        $client = $this->login(self::USER);
+        $this->submitExercise($client, url: self::URL . '?returnTo=workout');
+
+        /** @var Exercise $exercise */
+        $exercise = $this->findExercise(self::USER, 'Test Exercise');
+        $this->assertNotNull($exercise->id);
+
+        $this->assertResponseRedirects('/fr/enregistre-seance?addedExercise=' . $exercise->id->toRfc4122());
+    }
+
+    public function testUnknownReturnTargetFallsBackToTheLibrary(): void
+    {
+        $client = $this->login(self::USER);
+        $this->submitExercise($client, url: self::URL . '?returnTo=https://evil.example');
+
+        $this->assertResponseRedirects('/fr/bibliotheque');
+    }
+
+    public function testCancelLinkLeadsBackToTheWorkoutWhenComingFromIt(): void
+    {
+        $client = $this->login(self::USER);
+
+        $crawler = $client->request(Request::METHOD_GET, self::URL . '?returnTo=workout');
+
+        $cancelLink = $crawler->filter('form')->selectLink('Annuler');
+        $this->assertSame('/fr/enregistre-seance', $cancelLink->attr('href'));
+    }
+
     public function testExerciseIsIsolatedFromOtherUser(): void
     {
         $client = $this->login(self::USER);
@@ -191,11 +221,12 @@ class ExerciseCreateControllerTest extends WebTestCase
         ?string $muscles = null,
         ?string $description = null,
         ?string $measurementType = null,
+        string $url = self::URL,
     ): void {
-        $crawler = $client->request(Request::METHOD_GET, self::URL);
+        $crawler = $client->request(Request::METHOD_GET, $url);
         $csrfToken = $crawler->filter('input[name="exercise[_token]"]')->attr('value');
 
-        $client->request(Request::METHOD_POST, self::URL, [
+        $client->request(Request::METHOD_POST, $url, [
             'exercise' => [
                 '_token' => $csrfToken,
                 'name' => $name,

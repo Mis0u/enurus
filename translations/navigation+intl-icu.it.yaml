@@ -770,6 +770,9 @@ workout:
     date_placeholder: Seleziona una data
     delete_exercise: Elimina questo esercizio
     delete_series: Elimina questa serie
+    draft:
+        discard: "Ricomincia da zero"
+        restored: "Allenamento in corso ripristinato"
     duration_optional: Durata (Facoltativo)
     duration_placeholder: Durata (min)
     edit:
@@ -917,6 +920,7 @@ workout:
             cancel_button: Annulla
             confirm_button: Crea
             message: "Stai creando un allenamento: uscendo da questa pagina perderai la selezione in corso."
+            message_draft_kept: "Il tuo allenamento è salvato: lo ritroverai tornando, con il nuovo esercizio aggiunto."
             text: "Non trovi il tuo esercizio? Crealo!"
             title: Creare un nuovo esercizio?
         habitual: "I tuoi abituali"
