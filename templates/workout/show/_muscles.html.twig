@@ -1,23 +1,24 @@
 <div class="show-muscles-card border border-white/[0.07] rounded-2xl px-6 py-4 mb-5 max-md:px-5 max-md:py-3">
 
-    <h3 class="flex items-center gap-2.5 font-['Rajdhani'] text-[18px] font-bold text-[var(--text-primary)] mb-4">
+    <h3 class="flex items-center gap-2.5 font-['Rajdhani'] text-[18px] font-bold text-[var(--text-primary)] mb-4 max-md:mb-2">
         {% include 'partials/_svg/_profile.html.twig' with {'width': 5, 'height': 5, 'extraClass': 'show-muscles-title'} only %}
         {{ 'workout.show.muscles_title'|trans({}, 'navigation') }}
     </h3>
 
-    <div class="svg-body-container flex items-center justify-center gap-10 mb-2 max-md:flex-col max-md:gap-5"
+    {# Face et dos côte à côte, y compris sur mobile (empilées, elles prenaient plus d'un écran) #}
+    <div class="svg-body-container flex items-center justify-center gap-10 mb-2 max-md:gap-3"
          data-controller="workout--show--muscles"
          data-workout--show--muscles-primary-value='{{ allPrimarySvgIds|json_encode }}'
          data-workout--show--muscles-secondary-value='{{ allSecondarySvgIds|json_encode }}'>
-        <div class="w-[160px] max-md:w-[130px] [&_svg]:!h-auto [&_svg]:max-h-[300px]">
+        <div class="w-[160px] max-md:w-[140px] [&_svg]:!h-auto [&_svg]:max-h-[300px]">
             {% include 'SVG_BODY/' ~ user.gender.value ~ '/front.html.twig' only %}
         </div>
-        <div class="w-[160px] max-md:w-[130px] [&_svg]:!h-auto [&_svg]:max-h-[300px]">
+        <div class="w-[160px] max-md:w-[140px] [&_svg]:!h-auto [&_svg]:max-h-[300px]">
             {% include 'SVG_BODY/' ~ user.gender.value ~ '/back.html.twig' only %}
         </div>
     </div>
 
-    <div class="flex items-center justify-center gap-6 text-xs max-md:flex-col max-md:gap-2">
+    <div class="flex items-center justify-center gap-6 text-xs max-md:gap-4">
         <div class="flex items-center gap-2">
             <span class="show-muscles-dot-primary w-2.5 h-2.5 rounded-full shrink-0"></span>
             <span class="show-muscles-legend-text">{{ 'workout.show.muscles_primary'|trans({}, 'navigation') }}</span>

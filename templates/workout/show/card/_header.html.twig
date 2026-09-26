@@ -1,9 +1,10 @@
-<div class="flex-1">
-    <div class="show-position-badge inline-block font-['Rajdhani'] text-sm font-bold px-2.5 py-1 rounded-md mb-2">
+<div class="flex-1 min-w-0">
+    {# Mobile : numéro sur la ligne du nom #}
+    <div class="show-position-badge inline-block font-['Rajdhani'] text-sm font-bold px-2.5 py-1 rounded-md mb-2 max-md:mb-0 max-md:mr-1.5 max-md:px-2 max-md:py-0.5 max-md:text-xs max-md:align-middle">
         {{ position < 10 ? '0' ~ position : position }}
     </div>
 
-    <h4 class="font-['Rajdhani'] text-[20px] font-bold text-[var(--text-primary)] mb-2 max-md:text-[18px]">
+    <h4 class="font-['Rajdhani'] text-[20px] font-bold text-[var(--text-primary)] mb-2 max-md:inline max-md:text-[17px] max-md:align-middle">
         {{ exercise.name|trans({}, 'exercise') }}
         {% if exercise.archived %}
             <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10.5px] font-medium bg-white/[0.06] border border-white/[0.15] text-slate-400 align-middle ml-1">
@@ -17,7 +18,16 @@
         {% endif %}
     </h4>
 
-    <div class="flex flex-wrap gap-1.5">
+    {# Desktop : pastilles. Mobile : ligne de texte, principaux en rose, secondaires en cyan. #}
+    {% set primary_muscles = item.muscles|filter(em => em.type.value == enum('App\\Enum\\Entity\\ExerciceMuscle\\MuscleTypeEnum').PRIMARY.value)|map(em => em.muscleGroup.name|trans({}, 'muscle')) %}
+    {% set secondary_muscles = item.muscles|filter(em => em.type.value != enum('App\\Enum\\Entity\\ExerciceMuscle\\MuscleTypeEnum').PRIMARY.value)|map(em => em.muscleGroup.name|trans({}, 'muscle')) %}
+    <p class="md:hidden mt-1 text-[12px] leading-snug">
+        <span class="show-exercise-muscles__primary text-rose-400">{{ primary_muscles|join(', ') }}</span>
+        {%- if secondary_muscles is not empty -%}
+            <span class="text-slate-500" aria-hidden="true"> · </span><span class="show-exercise-muscles__secondary text-cyan-400">{{ secondary_muscles|join(', ') }}</span>
+        {%- endif -%}
+    </p>
+    <div class="max-md:hidden flex flex-wrap gap-1.5">
         {% for em in item.muscles %}
             <span class="{{ em.type.value == enum('App\\Enum\\Entity\\ExerciceMuscle\\MuscleTypeEnum').PRIMARY.value ? 'show-muscle-tag-primary' : 'show-muscle-tag-secondary' }} px-2 py-0.5 rounded-md text-[10.5px] border">
                         {{ em.muscleGroup.name|trans({}, 'muscle') }}
@@ -26,7 +36,7 @@
     </div>
 </div>
 
-<div class="text-right max-md:text-left">
+<div class="text-right shrink-0">
     <div class="show-exercise-tonnage-value font-['Rajdhani'] text-[18px] font-bold">
         {{ item.tonnage|number_format(0, ',', ' ') }} {{ unit.value }}
     </div>

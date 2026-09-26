@@ -176,6 +176,16 @@ class WorkoutShowControllerTest extends WebTestCase
         );
     }
 
+    public function testEachExerciseSummarisesItsMusclesAsTextForMobile(): void
+    {
+        $crawler = $this->requestToWorkoutWhenLoggedIn(self::USER_WITH_NOTE);
+
+        $cards = $crawler->filter('.show-exercise-card');
+        $this->assertGreaterThan(0, $cards->count());
+        $this->assertSame($cards->count(), $cards->filter('.show-exercise-muscles__primary')->count());
+        $this->assertNotSame('', trim($cards->first()->filter('.show-exercise-muscles__primary')->text()));
+    }
+
     public function testSetsTableIsDisplayed(): void
     {
         $this->displayElement(

@@ -1,10 +1,10 @@
 {% set we = item.workoutExercise %}
 {% set exercise = we.exercise %}
 
-<div class="show-exercise-card border border-white/[0.07] rounded-[14px] p-5 max-md:p-4"
+<div class="show-exercise-card border border-white/[0.07] rounded-[14px] p-5 max-md:p-3.5"
      style="animation: fadeUp 0.3s ease both; animation-delay: {{ (position * 0.03 + 0.02)|round(2) }}s;"> {# STYLE À LAISSER CAR DYNAMIQUE #}
 
-    <div class="flex items-start justify-between gap-4 mb-4 max-md:flex-col max-md:gap-3">
+    <div class="flex items-start justify-between gap-4 mb-4 max-md:gap-3 max-md:mb-2">
         {% include 'workout/show/card/_header.html.twig' with {
             'exercise': exercise,
             'item': item,
@@ -16,9 +16,9 @@
     <table class="w-full border-collapse">
         <thead>
         <tr>
-            <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5">#</th>
-            <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5">{{ 'workout.show.sets_table.weight'|trans({}, 'navigation') }}</th>
-            <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5">
+            <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5 max-md:px-2 max-md:py-1.5">#</th>
+            <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5 max-md:px-2 max-md:py-1.5">{{ 'workout.show.sets_table.weight'|trans({}, 'navigation') }}</th>
+            <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5 max-md:px-2 max-md:py-1.5">
                 {% if exercise.measurementType.value == 'time' %}
                     {{ 'workout.show.sets_table.duration'|trans({}, 'navigation') }}
                 {% elseif exercise.measurementType.value == 'distance' %}
@@ -27,15 +27,15 @@
                     {{ 'workout.show.sets_table.reps'|trans({}, 'navigation') }}
                 {% endif %}
             </th>
-            <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5 max-md:hidden">{{ 'workout.show.sets_table.tonnage'|trans({}, 'navigation') }}</th>
-            <th class="show-table-th text-right text-[11px] font-semibold uppercase px-3 py-2.5"></th>
+            <th class="show-table-th text-left text-[11px] font-semibold uppercase px-3 py-2.5 max-md:px-2 max-md:py-1.5 max-md:hidden">{{ 'workout.show.sets_table.tonnage'|trans({}, 'navigation') }}</th>
+            <th class="show-table-th text-right text-[11px] font-semibold uppercase px-3 py-2.5 max-md:px-2 max-md:py-1.5"></th>
         </tr>
         </thead>
         <tbody>
         {% for set in item.sets %}
             <tr class="show-table-row">
-                <td class="show-table-td-muted px-3 py-2.5 text-[12px]">{{ set.position + 1 }}</td>
-                <td class="show-table-td-value px-3 py-2.5 font-['Rajdhani'] text-[15px] font-semibold">
+                <td class="show-table-td-muted px-3 py-2.5 max-md:px-2 max-md:py-1.5 text-[12px]">{{ set.position + 1 }}</td>
+                <td class="show-table-td-value px-3 py-2.5 max-md:px-2 max-md:py-1.5 font-['Rajdhani'] text-[15px] font-semibold">
                     {{ set.weightFormatted }}
                     {% if set.bodyweightSnapshotFormatted is not null %}
                         <span class="inline-flex align-middle ml-1 text-[#4a5568] hover:text-[#8b9bb4] cursor-help"
@@ -49,7 +49,7 @@
                         </span>
                     {% endif %}
                 </td>
-                <td class="show-table-td-value px-3 py-2.5 font-['Rajdhani'] text-[15px] font-semibold">
+                <td class="show-table-td-value px-3 py-2.5 max-md:px-2 max-md:py-1.5 font-['Rajdhani'] text-[15px] font-semibold">
                     {% if set.isTimeBased %}
                         {{ set.duration|format_set_duration }}
                     {% elseif set.isDistanceBased %}
@@ -58,8 +58,8 @@
                         × {{ set.reps }}
                     {% endif %}
                 </td>
-                <td class="show-table-td-secondary px-3 py-2.5 font-['Rajdhani'] text-[15px] font-semibold max-md:hidden">{{ set.tonnage|number_format(0, ',', ' ') }} {{ unit.value }}</td>
-                <td class="px-3 py-2.5 text-right">
+                <td class="show-table-td-secondary px-3 py-2.5 max-md:px-2 max-md:py-1.5 font-['Rajdhani'] text-[15px] font-semibold max-md:hidden">{{ set.tonnage|number_format(0, ',', ' ') }} {{ unit.value }}</td>
+                <td class="px-3 py-2.5 max-md:px-2 max-md:py-1.5 text-right">
                     {% if set.isPr %}
                         <span class="show-pr-badge relative inline-flex items-center gap-1 px-2 py-0.5 border rounded-md text-[11px] font-bold"
                               data-controller="tooltip"
