@@ -7,11 +7,16 @@ namespace App\Service\Dashboard;
 use App\Repository\WorkoutMuscleRepository;
 
 /**
- * @phpstan-type MuscleBars array{bars: array<int, array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null}>, remainingCount: int}
+ * @phpstan-type MuscleBars array{bars: array<int, array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null, hiddenWhenCompact: bool}>, remainingCount: int, compactRemainingCount: int}
  */
 final readonly class DashboardMuscleDistributionService
 {
     private const int MAX_BARS = 8;
+
+    /**
+     * Barres gardées sur mobile, où les 8 allongeraient trop le widget.
+     */
+    private const int COMPACT_MAX_BARS = 5;
 
     private const int PERCENTAGE_SCALE = 100;
 
@@ -26,7 +31,8 @@ final readonly class DashboardMuscleDistributionService
      * (primaire + secondaire confondus), sans distinction de niveau d'implication — un tri brut
      * assumé plutôt qu'une pondération primaire/secondaire jugée arbitraire. Le pourcentage de
      * chaque barre reste relatif au groupe le plus sollicité de la période complète, pas
-     * seulement du top 8.
+     * seulement du top 8. Sur mobile, seules les 5 premières sont affichées : chaque barre dit si
+     * elle est masquée en vue compacte, et `compactRemainingCount` compte les muscles non affichés.
      *
      * @param string[]                          $workoutIds
      * @param array<string, \DateTimeImmutable> $lastSolicitationDates groupe musculaire (id) => date de
@@ -43,6 +49,7 @@ final readonly class DashboardMuscleDistributionService
             return [
                 'bars' => [],
                 'remainingCount' => 0,
+                'compactRemainingCount' => 0,
             ];
         }
 
@@ -58,7 +65,7 @@ final readonly class DashboardMuscleDistributionService
         $today = new \DateTimeImmutable('today');
 
         $bars = array_map(
-            function (array $count) use ($max, $lastSolicitationDates, $today): array {
+            function (array $count, int $rank) use ($max, $lastSolicitationDates, $today): array {
                 $primaryPercentage = (int) round($count['primarySets'] / $count['sets'] * self::PERCENTAGE_SCALE);
 
                 $lastSolicitedAt = $lastSolicitationDates[$count['id']] ?? null;
@@ -74,14 +81,17 @@ final readonly class DashboardMuscleDistributionService
                     'daysSinceLastSolicited' => null !== $lastSolicitedAt
                         ? $this->daysBetween($lastSolicitedAt, $today)
                         : null,
+                    'hiddenWhenCompact' => self::COMPACT_MAX_BARS <= $rank,
                 ];
             },
             $limited,
+            array_keys($limited),
         );
 
         return [
             'bars' => $bars,
             'remainingCount' => max(0, $total - self::MAX_BARS),
+            'compactRemainingCount' => max(0, $total - self::COMPACT_MAX_BARS),
         ];
     }
 

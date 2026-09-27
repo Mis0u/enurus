@@ -8,11 +8,11 @@
     - weekSecondary           : string[]
     - monthPrimary            : string[]
     - monthSecondary          : string[]
-    - sessionBars             : array{bars: array<array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null}>, remainingCount: int}
-    - weekBars                : array{bars: array<array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null}>, remainingCount: int}
-    - monthBars               : array{bars: array<array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null}>, remainingCount: int}
+    - sessionBars             : array{bars: array<array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null, hiddenWhenCompact: bool}>, remainingCount: int, compactRemainingCount: int}
+    - weekBars                : array{bars: array<array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null, hiddenWhenCompact: bool}>, remainingCount: int, compactRemainingCount: int}
+    - monthBars               : array{bars: array<array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null, hiddenWhenCompact: bool}>, remainingCount: int, compactRemainingCount: int}
 #}
-<div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
+<div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4 md:p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
      data-controller="dashboard--muscles"
      data-dashboard--muscles-session-primary-value='{{ sessionPrimary|json_encode }}'
      data-dashboard--muscles-session-secondary-value='{{ sessionSecondary|json_encode }}'
@@ -22,7 +22,7 @@
      data-dashboard--muscles-month-secondary-value='{{ monthSecondary|json_encode }}'>
 
     {# En-tête #}
-    <div class="flex items-center gap-[7px] mb-4">
+    <div class="flex items-center gap-[7px] mb-3 md:mb-4">
         {% include 'partials/_svg/_profile.html.twig' with {'width': 3.75, 'height': 3.75, 'extraClass': 'text-[#8b9bb4]'} only %}
         <span class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
             {{ 'dashboard.widget.muscles.title'|trans({}, 'navigation') }}
@@ -43,13 +43,14 @@
     <div class="flex-1 flex flex-col justify-center">
         {# Filtres (Semaine/Mois affichés uniquement si débloqués) #}
         {% if muscleWeekMonthUnlocked %}
-        <div class="flex items-center gap-1 bg-white/[0.04] border border-white/[0.07] rounded-lg p-1 mb-5">
+        <div class="flex items-center gap-1 bg-white/[0.04] border border-white/[0.07] rounded-lg p-1 mb-4 md:mb-5">
             <button type="button"
                     data-dashboard--muscles-target="tab"
                     data-filter="session"
                     data-action="click->dashboard--muscles#switchFilter"
                     class="dashboard-tab-active flex-1 px-3 py-1.5 max-md:min-h-11 text-[12px] font-semibold rounded-md transition-ft">
-                {{ 'dashboard.widget.muscles.filter.session'|trans({}, 'navigation') }}
+                <span class="md:hidden">{{ 'dashboard.widget.muscles.filter.session_short'|trans({}, 'navigation') }}</span>
+                <span class="max-md:hidden">{{ 'dashboard.widget.muscles.filter.session'|trans({}, 'navigation') }}</span>
             </button>
             <button type="button"
                     data-dashboard--muscles-target="tab"
@@ -69,11 +70,11 @@
         {% endif %}
 
         {# Silhouettes SVG avant + dos #}
-        <div class="flex items-center justify-center gap-6 mb-4">
-            <div class="w-[120px] [&_svg]:!h-auto [&_svg]:max-h-[240px]">
+        <div class="flex items-center justify-center gap-6 mb-3 md:mb-4">
+            <div class="w-[92px] md:w-[120px] [&_svg]:!h-auto [&_svg]:max-h-[184px] md:[&_svg]:max-h-[240px]">
                 {% include 'SVG_BODY/' ~ gender.value ~ '/front.html.twig' only %}
             </div>
-            <div class="w-[120px] [&_svg]:!h-auto [&_svg]:max-h-[240px]">
+            <div class="w-[92px] md:w-[120px] [&_svg]:!h-auto [&_svg]:max-h-[184px] md:[&_svg]:max-h-[240px]">
                 {% include 'SVG_BODY/' ~ gender.value ~ '/back.html.twig' only %}
             </div>
         </div>

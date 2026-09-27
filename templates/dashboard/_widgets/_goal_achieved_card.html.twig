@@ -3,9 +3,10 @@
     Variables attendues (toutes via `only`) :
     - card : array{exerciseName: string, targetLabel: string, achievedAt: ?\DateTimeImmutable}
 #}
-<div class="flex items-center justify-between gap-2">
+{# Mobile : valeur sous le nom, comme la carte d'objectif en cours #}
+<div class="flex flex-col gap-0.5 md:flex-row md:items-center md:justify-between md:gap-2">
     <span class="text-[13px] font-medium text-[#f0f4ff] truncate">🏆 {{ card.exerciseName }}</span>
-    <span class="text-[12px] text-cyan-ft shrink-0">{{ card.targetLabel }}</span>
+    <span class="text-[11px] md:text-[12px] text-cyan-ft shrink-0">{{ card.targetLabel }}</span>
 </div>
 {% if card.achievedAt is not null %}
     <p class="text-[12px] text-[#8b9bb4] mt-1">

@@ -18,6 +18,7 @@ final class DashboardMuscleViewBuilderTest extends TestCase
     private const array EMPTY_BARS = [
         'bars' => [],
         'remainingCount' => 0,
+        'compactRemainingCount' => 0,
     ];
 
     public function testSessionFilterIsBuiltFromTheGivenLastTrainingDayWorkouts(): void

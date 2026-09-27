@@ -8,7 +8,7 @@
           month: array{sessions: int, sessionsLabel: string, exercises: int, exercisesLabel: string, sets: int, setsLabel: string, reps: int, prCount: int, prLabel: string, repsRecordCount: int, repsRecordLabel: string}
       }
 #}
-<div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
+<div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4 md:p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
      data-controller="dashboard--session"
      data-dashboard--session-last-value='{{ sessionStats.last|json_encode }}'
      data-dashboard--session-week-value='{{ sessionStats.week|json_encode }}'
@@ -16,17 +16,17 @@
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(244,63,94,0.04),transparent_60%)] pointer-events-none"></div>
 
     {# En-tête #}
-    <div class="flex items-center gap-[7px] mb-4">
+    <div class="flex items-center gap-[7px] mb-3 md:mb-4">
         {% include 'partials/_svg/_lightning.html.twig' with {'width': 3.75, 'height': 3.75, 'extraClass': 'text-[#8b9bb4]'} only %}
         <span class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
             {{ 'dashboard.widget.session.title'|trans({}, 'navigation') }}
         </span>
     </div>
 
-    <div class="flex-1 flex flex-col justify-between gap-4">
+    <div class="flex-1 flex flex-col justify-between gap-3 md:gap-4">
         {# Total annuel — fixe, indépendant du filtre actif #}
         <div class="text-center">
-            <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-rose-ft flex flex-col md:block">
+            <div class="font-rajdhani text-[18px] md:text-[22px] font-bold leading-[1.1] text-rose-ft flex flex-wrap justify-center gap-x-1.5 md:block">
                 <span>
                     {{ 'dashboard.widget.session.annual_total_label'|trans({
                         year: sessionStats.year,
@@ -45,7 +45,8 @@
                     data-filter="last"
                     data-action="click->dashboard--session#switchFilter"
                     class="dashboard-tab-active flex-1 px-3 py-1.5 max-md:min-h-11 text-[12px] font-semibold rounded-md transition-ft">
-                {{ 'dashboard.widget.session.filter.last'|trans({}, 'navigation') }}
+                <span class="md:hidden">{{ 'dashboard.widget.session.filter.last_short'|trans({}, 'navigation') }}</span>
+                <span class="max-md:hidden">{{ 'dashboard.widget.session.filter.last'|trans({}, 'navigation') }}</span>
             </button>
             <button type="button"
                     data-dashboard--session-target="tab"
@@ -63,19 +64,18 @@
             </button>
         </div>
 
-        {# Nombre de séances sur la période active — pleine largeur, distinct de la grille 3 colonnes #}
-        <div class="bg-white/[0.03] border border-white/[0.07] rounded-[10px] p-[10px_12px] text-center">
-            <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-white" data-dashboard--session-target="sessions">
-                {{ sessionStats.last.sessions }}
+        {# Métriques : séances (pleine largeur sur desktop, 1ʳᵉ des 4 tuiles d'une rangée sur mobile) | exercices | séries | reps #}
+        <div class="grid grid-cols-4 md:grid-cols-3 gap-2 md:gap-x-[10px] md:gap-y-4">
+            <div class="md:col-span-3 bg-white/[0.03] border border-white/[0.07] rounded-[10px] p-[8px_4px] md:p-[10px_12px] text-center">
+                <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-white" data-dashboard--session-target="sessions">
+                    {{ sessionStats.last.sessions }}
+                </div>
+                <div class="text-[11px] text-[#4a5568] mt-0.5" data-dashboard--session-target="sessionsLabel">
+                    {{ sessionStats.last.sessionsLabel }}
+                </div>
             </div>
-            <div class="text-[11px] text-[#4a5568] mt-0.5" data-dashboard--session-target="sessionsLabel">
-                {{ sessionStats.last.sessionsLabel }}
-            </div>
-        </div>
 
-        {# Métriques : exercices | séries | reps #}
-        <div class="grid grid-cols-3 gap-[10px]">
-            <div class="bg-white/[0.03] border border-white/[0.07] rounded-[10px] p-[10px_12px] text-center">
+            <div class="bg-white/[0.03] border border-white/[0.07] rounded-[10px] p-[8px_4px] md:p-[10px_12px] text-center">
                 <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-white" data-dashboard--session-target="exercises">
                     {{ sessionStats.last.exercises }}
                 </div>
@@ -84,7 +84,7 @@
                 </div>
             </div>
 
-            <div class="bg-white/[0.03] border border-white/[0.07] rounded-[10px] p-[10px_12px] text-center">
+            <div class="bg-white/[0.03] border border-white/[0.07] rounded-[10px] p-[8px_4px] md:p-[10px_12px] text-center">
                 <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-white" data-dashboard--session-target="sets">
                     {{ sessionStats.last.sets }}
                 </div>
@@ -93,7 +93,7 @@
                 </div>
             </div>
 
-            <div class="bg-white/[0.03] border border-white/[0.07] rounded-[10px] p-[10px_12px] text-center">
+            <div class="bg-white/[0.03] border border-white/[0.07] rounded-[10px] p-[8px_4px] md:p-[10px_12px] text-center">
                 <div class="font-rajdhani text-[22px] font-bold leading-[1.1] text-white" data-dashboard--session-target="reps">
                     {{ sessionStats.last.reps }}
                 </div>
@@ -103,8 +103,8 @@
             </div>
         </div>
 
-        {# PR battus sur la période — mis en avant, distinct des 3 chiffres neutres au-dessus #}
-        <div class="bg-cyan-ft/[0.1] border border-cyan-ft/30 rounded-[10px] p-[10px_12px] flex items-center justify-center gap-2 text-center">
+        {# PR battus sur la période — mis en avant, distinct des chiffres neutres au-dessus #}
+        <div class="bg-cyan-ft/[0.1] border border-cyan-ft/30 rounded-[10px] p-[8px_12px] md:p-[10px_12px] flex items-center justify-center gap-2 text-center">
             <span class="text-[17px] leading-none{{ sessionStats.last.prCount > 0 ? '' : ' hidden' }}" data-dashboard--session-target="prIcon">🏆</span>
             <span class="font-rajdhani text-[14px] font-bold text-cyan-ft" data-dashboard--session-target="prLabel">
                 {{ sessionStats.last.prLabel }}

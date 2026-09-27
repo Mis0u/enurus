@@ -5,10 +5,10 @@
     - readOnly          : bool — dashboard d'une connexion : cartes sans lien, l'historique d'un exercice
                           étant celui de l'utilisateur connecté, jamais du propriétaire des objectifs
 #}
-<div class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
+<div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4 md:p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
      data-controller="dashboard--goal">
 
-    <div class="flex items-center gap-[7px] mb-4">
+    <div class="flex items-center gap-[7px] mb-3 md:mb-4">
         <svg class="w-[15px] h-[15px] text-[#8b9bb4]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 14a4 4 0 1 1 4-4 4 4 0 0 1-4 4Z"/>
         </svg>
@@ -22,14 +22,14 @@
                 data-dashboard--goal-target="tab"
                 data-filter="current"
                 data-action="click->dashboard--goal#switchFilter"
-                class="dashboard-tab-active flex-1 px-3 py-1.5 text-[12px] font-semibold rounded-md transition-ft">
+                class="dashboard-tab-active flex-1 px-3 py-1.5 max-md:min-h-11 text-[12px] font-semibold rounded-md transition-ft">
             {{ 'dashboard.widget.goal.tab.current'|trans({}, 'navigation') }}
         </button>
         <button type="button"
                 data-dashboard--goal-target="tab"
                 data-filter="achieved"
                 data-action="click->dashboard--goal#switchFilter"
-                class="dashboard-tab-inactive flex-1 px-3 py-1.5 text-[12px] font-semibold rounded-md transition-ft">
+                class="dashboard-tab-inactive flex-1 px-3 py-1.5 max-md:min-h-11 text-[12px] font-semibold rounded-md transition-ft">
             {{ 'dashboard.widget.goal.tab.achieved'|trans({}, 'navigation') }}
         </button>
     </div>

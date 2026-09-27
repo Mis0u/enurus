@@ -182,6 +182,7 @@ dashboard:
             filter:
                 month: Maand
                 session: Laatste trainingsdag
+                session_short: "Laatste dag"
                 week: Week
             last_solicited: "{days, plural, =0 {Vandaag getraind} =1 {Laatste keer: 1 dag geleden} other {Laatste keer: # dagen geleden}}"
             more_muscles: "{count, plural, =1 {+ # andere getrainde spier} other {+ # andere getrainde spieren}}"
@@ -191,6 +192,7 @@ dashboard:
         regularity:
             best_streak: "{count, plural, =1 {Record: # week} other {Record: # weken}}"
             deload_day: Geplande rustweek
+            delta_short: "{count, number, ::sign-except-zero} vs vorige"
             last_week: Vorige week
             month_delta_negative: "{count, plural, =1 {-# training vs vorige maand} other {-# trainingen vs vorige maand}}"
             month_delta_positive: "{count, plural, =1 {+# training vs vorige maand} other {+# trainingen vs vorige maand}}"
@@ -214,6 +216,7 @@ dashboard:
             exercises: "{count, plural, =1 {Oefening} other {Oefeningen}}"
             filter:
                 last: Laatste trainingsdag
+                last_short: "Laatste dag"
                 month: Maand
                 week: Week
             pr_count: "{count, plural, =1 {# PR verbroken} other {# PR's verbroken}}"
@@ -500,6 +503,7 @@ profile_connection:
             revoke_for: "Verbinding met {nickname} verwijderen"
             view: "Overzicht bekijken"
             view_for: "Overzicht van {nickname} bekijken"
+            view_short: "Bekijken"
         connections:
             empty: "Je hebt nog geen verbindingen."
             title: "Mijn verbindingen"
