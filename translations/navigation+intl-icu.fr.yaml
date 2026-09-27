@@ -465,7 +465,7 @@ profile_connection:
     badge:
         title: "Badges de {nickname}"
     dashboard:
-        back: "Retour à mon tableau de bord"
+        back: "Retour à mes connexions"
         guard:
             body: "Réactive le partage de ton profil pour pouvoir consulter le tableau de bord d'une connexion."
             confirm: "Compris"
@@ -474,6 +474,14 @@ profile_connection:
         no_workout: "{nickname} n'a pas encore créé de séance"
         title: "Tableau de bord de {nickname}"
         view_workouts: "Voir ses séances"
+    email:
+        request:
+            body: "{nickname} aimerait se connecter avec toi sur {brand}. Si tu acceptes, vous pourrez chacun voir le tableau de bord de l'autre."
+            cta: "Voir la demande"
+            subject: "{nickname} veut se connecter avec toi"
+            title: "Nouvelle demande de connexion"
+            unsubscribe: "Ne plus recevoir ces emails"
+            why: "Tu reçois cet email car quelqu'un t'a envoyé une demande de connexion."
     error:
         already_connected: "Vous êtes déjà connectés."
         already_pending: "Une demande est déjà en attente avec cette personne."
@@ -509,6 +517,11 @@ profile_connection:
             title: "Mes connexions"
         intro: "Une fois une demande acceptée, vous voyez chacun le dashboard de l'autre."
         new_workout: "Nouvelle séance depuis ta dernière visite"
+        notifications:
+            email_on_request: "M'envoyer un email quand je reçois une demande de connexion"
+            feedback:
+                success: "Préférence mise à jour"
+            title: "Notifications"
         received:
             title: "Demandes reçues"
         request:
@@ -521,7 +534,7 @@ profile_connection:
         sent:
             title: "Demandes envoyées"
         shared_widgets:
-            explanation: "Choisis ce que tes connexions voient sur ton dashboard partagé, indépendamment de ce que toi tu affiches."
+            explanation: "Choisis ce que tes connexions voient sur ton dashboard partagé. Un bloc que tu as masqué sur ton propre tableau de bord ne leur est jamais montré."
             feedback:
                 success: "Préférence mise à jour"
             title: "Affichage du dashboard partagé"
@@ -719,7 +732,7 @@ settings:
         request_error: Une erreur est survenue, réessaie plus tard
         title: Suppression du compte
     dashboard_widgets:
-        explanation: Choisis les blocs affichés sur ton tableau de bord.
+        explanation: "Choisis les blocs affichés sur ton tableau de bord. Un bloc masqué ici l'est aussi pour tes connexions."
         title: Widgets du dashboard
         widget:
             badges: "Badges"

@@ -465,7 +465,7 @@ profile_connection:
     badge:
         title: "{nickname}'s badges"
     dashboard:
-        back: "Back to my dashboard"
+        back: "Back to my connections"
         guard:
             body: "Turn profile sharing back on to view a connection's dashboard."
             confirm: "Got it"
@@ -474,6 +474,14 @@ profile_connection:
         no_workout: "{nickname} hasn't created a workout yet"
         title: "{nickname}'s dashboard"
         view_workouts: "View their workouts"
+    email:
+        request:
+            body: "{nickname} would like to connect with you on {brand}. If you accept, you will each be able to see the other's dashboard."
+            cta: "View the request"
+            subject: "{nickname} wants to connect with you"
+            title: "New connection request"
+            unsubscribe: "Stop receiving these emails"
+            why: "You are receiving this email because someone sent you a connection request."
     error:
         already_connected: "You are already connected."
         already_pending: "A request is already pending with this person."
@@ -509,6 +517,11 @@ profile_connection:
             title: "My connections"
         intro: "Once a request is accepted, you each see the other's dashboard."
         new_workout: "New workout since your last visit"
+        notifications:
+            email_on_request: "Email me when I receive a connection request"
+            feedback:
+                success: "Preference updated"
+            title: "Notifications"
         received:
             title: "Requests received"
         request:
@@ -521,7 +534,7 @@ profile_connection:
         sent:
             title: "Requests sent"
         shared_widgets:
-            explanation: "Choose what your connections see on your shared dashboard, independently of what you display yourself."
+            explanation: "Choose what your connections see on your shared dashboard. A block you hid on your own dashboard is never shown to them."
             feedback:
                 success: "Preference updated"
             title: "Shared dashboard display"
@@ -719,7 +732,7 @@ settings:
         request_error: An error occurred, please try again later
         title: Account deletion
     dashboard_widgets:
-        explanation: Choose which blocks appear on your dashboard.
+        explanation: "Choose which blocks appear on your dashboard. A block hidden here is hidden from your connections too."
         title: Dashboard widgets
         widget:
             badges: "Badges"

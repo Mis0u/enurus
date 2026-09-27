@@ -469,7 +469,7 @@ profile_connection:
     badge:
         title: "Odznaki użytkownika {nickname}"
     dashboard:
-        back: "Wróć do mojego panelu"
+        back: "Wróć do moich połączeń"
         guard:
             body: "Włącz ponownie udostępnianie swojego profilu, aby móc zobaczyć panel połączenia."
             confirm: "Rozumiem"
@@ -478,6 +478,14 @@ profile_connection:
         no_workout: "{nickname} nie ma jeszcze żadnego treningu"
         title: "Panel użytkownika {nickname}"
         view_workouts: "Zobacz jego/jej treningi"
+    email:
+        request:
+            body: "{nickname} chce połączyć się z Tobą w {brand}. Jeśli zaakceptujesz, każde z was będzie mogło zobaczyć panel drugiej osoby."
+            cta: "Zobacz prośbę"
+            subject: "{nickname} chce się z Tobą połączyć"
+            title: "Nowa prośba o połączenie"
+            unsubscribe: "Nie chcę otrzymywać tych wiadomości"
+            why: "Otrzymujesz tę wiadomość, ponieważ ktoś wysłał Ci prośbę o połączenie."
     error:
         already_connected: "Jesteście już połączeni."
         already_pending: "Z tą osobą oczekuje już prośba."
@@ -513,6 +521,11 @@ profile_connection:
             title: "Moje połączenia"
         intro: "Po zaakceptowaniu prośby każdy widzi panel drugiej osoby."
         new_workout: "Nowy trening od Twojej ostatniej wizyty"
+        notifications:
+            email_on_request: "Wyślij mi e-mail, gdy otrzymam prośbę o połączenie"
+            feedback:
+                success: "Preferencja zaktualizowana"
+            title: "Powiadomienia"
         received:
             title: "Otrzymane prośby"
         request:
@@ -525,7 +538,7 @@ profile_connection:
         sent:
             title: "Wysłane prośby"
         shared_widgets:
-            explanation: "Wybierz, co Twoje połączenia widzą na Twoim udostępnionym panelu, niezależnie od tego, co Ty sam wyświetlasz."
+            explanation: "Wybierz, co Twoje połączenia widzą na Twoim udostępnionym panelu. Blok ukryty na Twoim własnym panelu nigdy nie jest im pokazywany."
             feedback:
                 success: "Preferencja zaktualizowana"
             title: "Wyświetlanie udostępnionego panelu"
@@ -729,7 +742,7 @@ settings:
         request_error: Wystąpił błąd, spróbuj ponownie później
         title: Usunięcie konta
     dashboard_widgets:
-        explanation: Wybierz bloki wyświetlane na Twoim panelu.
+        explanation: "Wybierz bloki wyświetlane na Twoim panelu. Blok ukryty tutaj jest ukryty również dla Twoich połączeń."
         title: Widżety panelu
         widget:
             badges: "Odznaki"

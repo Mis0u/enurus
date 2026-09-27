@@ -11,6 +11,7 @@ use App\Exception\ProfileSharing\ProfileConnectionException;
 use App\Exception\ProfileSharing\ProfileConnectionFailureReasonEnum;
 use App\Exception\ProfileSharing\TooManyProfileSharingAttemptsException;
 use App\Repository\ProfileConnectionRepository;
+use App\Service\ProfileSharing\ProfileConnectionRequestNotifier;
 use App\Service\ProfileSharing\ProfileConnectionRequestService;
 use App\Service\ProfileSharing\ProfileSharingRateLimitGuard;
 use App\Service\Security\RateLimiterService;
@@ -167,6 +168,40 @@ final class ProfileConnectionRequestServiceTest extends TestCase
         self::assertNull($connection->respondedAt);
     }
 
+    public function testNotifiesTheAddresseeOfANewRequest(): void
+    {
+        [$requester, $addressee] = $this->createPair();
+        $notifier = $this->createMock(ProfileConnectionRequestNotifier::class);
+        $notifier->expects(self::once())
+            ->method('notify')
+            ->with(self::callback(static fn (ProfileConnection $connection): bool => $connection->addressee === $addressee));
+
+        $this->createService(null, notifier: $notifier)->request($requester, $addressee);
+    }
+
+    public function testNotifiesTheAddresseeWhenAnEndedConnectionIsReopened(): void
+    {
+        [$firstRequester, $firstAddressee] = $this->createPair();
+        $ended = $this->createConnection($firstRequester, $firstAddressee, ProfileConnectionStatusEnum::DECLINED);
+        $ended->respondedAt = new \DateTimeImmutable(self::NOW)->modify('-30 days');
+        $notifier = $this->createMock(ProfileConnectionRequestNotifier::class);
+        $notifier->expects(self::once())->method('notify')->with($ended);
+
+        $this->createService($ended, notifier: $notifier)->request($firstAddressee, $firstRequester);
+    }
+
+    public function testRejectedRequestNotifiesNobody(): void
+    {
+        [$requester, $addressee] = $this->createPair();
+        $pending = $this->createConnection($requester, $addressee, ProfileConnectionStatusEnum::PENDING);
+        $notifier = $this->createMock(ProfileConnectionRequestNotifier::class);
+        $notifier->expects(self::never())->method('notify');
+
+        $this->expectException(ProfileConnectionException::class);
+
+        $this->createService($pending, notifier: $notifier)->request($requester, $addressee);
+    }
+
     public function testRequestsBeyondTheLimitThrowAndPersistNothing(): void
     {
         $requester = $this->createSearchableUser('Requester', 'B8L3YN');
@@ -204,8 +239,11 @@ final class ProfileConnectionRequestServiceTest extends TestCase
         return $connection;
     }
 
-    private function createService(?ProfileConnection $existingConnection, ?EntityManagerInterface $entityManager = null): ProfileConnectionRequestService
-    {
+    private function createService(
+        ?ProfileConnection $existingConnection,
+        ?EntityManagerInterface $entityManager = null,
+        ?ProfileConnectionRequestNotifier $notifier = null,
+    ): ProfileConnectionRequestService {
         $repository = $this->createStub(ProfileConnectionRepository::class);
         $repository->method('findBetween')->willReturn($existingConnection);
 
@@ -215,6 +253,7 @@ final class ProfileConnectionRequestServiceTest extends TestCase
             new ProfileSharingRateLimitGuard(new RateLimiterService()),
             $this->limiterFactory,
             $this->clock,
+            $notifier ?? $this->createStub(ProfileConnectionRequestNotifier::class),
         );
     }
 

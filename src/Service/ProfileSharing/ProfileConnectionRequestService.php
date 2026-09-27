@@ -35,6 +35,7 @@ final readonly class ProfileConnectionRequestService
         private ProfileSharingRateLimitGuard $rateLimitGuard,
         private RateLimiterFactoryInterface $profileConnectionRequestLimiter,
         private ClockInterface $clock,
+        private ProfileConnectionRequestNotifier $requestNotifier,
     ) {
     }
 
@@ -44,12 +45,13 @@ final readonly class ProfileConnectionRequestService
         $this->assertCanBeRequested($requester, $addressee);
 
         $existing = $this->connectionRepository->findBetween($requester, $addressee);
+        $connection = null === $existing
+            ? $this->create($requester, $addressee)
+            : $this->reopen($existing, $requester, $addressee);
 
-        if (null === $existing) {
-            return $this->create($requester, $addressee);
-        }
+        $this->requestNotifier->notify($connection);
 
-        return $this->reopen($existing, $requester, $addressee);
+        return $connection;
     }
 
     private function assertCanBeRequested(User $requester, User $addressee): void

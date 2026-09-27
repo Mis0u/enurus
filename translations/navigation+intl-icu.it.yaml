@@ -465,7 +465,7 @@ profile_connection:
     badge:
         title: "Badge di {nickname}"
     dashboard:
-        back: "Torna al mio cruscotto"
+        back: "Torna alle mie connessioni"
         guard:
             body: "Riattiva la condivisione del tuo profilo per poter consultare il cruscotto di una connessione."
             confirm: "Ho capito"
@@ -474,6 +474,14 @@ profile_connection:
         no_workout: "{nickname} non ha ancora creato nessun allenamento"
         title: "Cruscotto di {nickname}"
         view_workouts: "Vedi i suoi allenamenti"
+    email:
+        request:
+            body: "{nickname} vorrebbe connettersi con te su {brand}. Se accetti, potrete vedere l'uno la dashboard dell'altro."
+            cta: "Vedi la richiesta"
+            subject: "{nickname} vuole connettersi con te"
+            title: "Nuova richiesta di connessione"
+            unsubscribe: "Non ricevere più queste email"
+            why: "Ricevi questa email perché qualcuno ti ha inviato una richiesta di connessione."
     error:
         already_connected: "Siete già connessi."
         already_pending: "C'è già una richiesta in sospeso con questa persona."
@@ -509,6 +517,11 @@ profile_connection:
             title: "Le mie connessioni"
         intro: "Una volta accettata una richiesta, ognuno vede il cruscotto dell'altro."
         new_workout: "Nuovo allenamento dalla tua ultima visita"
+        notifications:
+            email_on_request: "Inviami un'email quando ricevo una richiesta di connessione"
+            feedback:
+                success: "Preferenza aggiornata"
+            title: "Notifiche"
         received:
             title: "Richieste ricevute"
         request:
@@ -521,7 +534,7 @@ profile_connection:
         sent:
             title: "Richieste inviate"
         shared_widgets:
-            explanation: "Scegli cosa vedono le tue connessioni sulla tua dashboard condivisa, indipendentemente da ciò che mostri tu."
+            explanation: "Scegli cosa vedono le tue connessioni sulla tua dashboard condivisa. Un blocco che hai nascosto sulla tua dashboard non viene mai mostrato loro."
             feedback:
                 success: "Preferenza aggiornata"
             title: "Visualizzazione della dashboard condivisa"
@@ -719,7 +732,7 @@ settings:
         request_error: Si è verificato un errore, riprova più tardi
         title: Eliminazione dell'account
     dashboard_widgets:
-        explanation: Scegli i blocchi visualizzati sulla tua dashboard.
+        explanation: "Scegli i blocchi visualizzati sulla tua dashboard. Un blocco nascosto qui è nascosto anche alle tue connessioni."
         title: Widget della dashboard
         widget:
             badges: "Badge"
