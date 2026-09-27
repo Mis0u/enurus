@@ -41,6 +41,21 @@
     [aria-disabled='true'] {
         cursor: not-allowed;
     }
+
+    /*
+     * Liste déroulante d'un <select> natif : sous Windows, Chrome/Edge la dessinent sur fond blanc
+     * système alors que les <option> héritent du texte clair du <select> → options invisibles.
+     * `color-scheme: dark` fait dessiner la liste en sombre (surlignage compris) ; fond et texte
+     * explicites sur les <option> pour les navigateurs qui ignorent `color-scheme` (Firefox).
+     */
+    select {
+        color-scheme: dark;
+    }
+
+    select option {
+        background-color: #0f1928;
+        color: #f0f4ff;
+    }
 }
 
 @keyframes shake {
