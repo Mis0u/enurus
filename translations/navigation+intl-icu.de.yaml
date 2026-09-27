@@ -465,7 +465,7 @@ profile_connection:
     badge:
         title: "Abzeichen von {nickname}"
     dashboard:
-        back: "Zurück zu meiner Übersicht"
+        back: "Zurück zu meinen Verbindungen"
         guard:
             body: "Aktiviere die Profilfreigabe wieder, um die Übersicht einer Verbindung ansehen zu können."
             confirm: "Verstanden"
@@ -474,6 +474,14 @@ profile_connection:
         no_workout: "{nickname} hat noch kein Training erstellt"
         title: "Übersicht von {nickname}"
         view_workouts: "Trainings ansehen"
+    email:
+        request:
+            body: "{nickname} möchte sich auf {brand} mit dir verbinden. Wenn du annimmst, könnt ihr gegenseitig eure Dashboards sehen."
+            cta: "Anfrage ansehen"
+            subject: "{nickname} möchte sich mit dir verbinden"
+            title: "Neue Verbindungsanfrage"
+            unsubscribe: "Diese E-Mails nicht mehr erhalten"
+            why: "Du erhältst diese E-Mail, weil dir jemand eine Verbindungsanfrage geschickt hat."
     error:
         already_connected: "Ihr seid bereits verbunden."
         already_pending: "Mit dieser Person ist bereits eine Anfrage offen."
@@ -509,6 +517,11 @@ profile_connection:
             title: "Meine Verbindungen"
         intro: "Sobald eine Anfrage angenommen ist, seht ihr jeweils die Übersicht des anderen."
         new_workout: "Neues Training seit deinem letzten Besuch"
+        notifications:
+            email_on_request: "Mir eine E-Mail senden, wenn ich eine Verbindungsanfrage erhalte"
+            feedback:
+                success: "Einstellung aktualisiert"
+            title: "Benachrichtigungen"
         received:
             title: "Erhaltene Anfragen"
         request:
@@ -521,7 +534,7 @@ profile_connection:
         sent:
             title: "Gesendete Anfragen"
         shared_widgets:
-            explanation: "Wähle, was deine Verbindungen auf deinem geteilten Dashboard sehen, unabhängig davon, was du selbst anzeigst."
+            explanation: "Wähle, was deine Verbindungen auf deinem geteilten Dashboard sehen. Ein Block, den du auf deinem eigenen Dashboard ausgeblendet hast, wird ihnen nie angezeigt."
             feedback:
                 success: "Einstellung aktualisiert"
             title: "Anzeige des geteilten Dashboards"
@@ -719,7 +732,7 @@ settings:
         request_error: Ein Fehler ist aufgetreten, bitte versuche es später erneut
         title: Kontolöschung
     dashboard_widgets:
-        explanation: Wähle die Blöcke, die auf deinem Dashboard angezeigt werden.
+        explanation: "Wähle die Blöcke, die auf deinem Dashboard angezeigt werden. Ein hier ausgeblendeter Block ist auch für deine Verbindungen ausgeblendet."
         title: Dashboard-Widgets
         widget:
             badges: "Abzeichen"

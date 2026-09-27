@@ -53,6 +53,7 @@ final class ProfileConnectionListController extends AbstractController
             'shareWorkoutsChecked' => $user->shareWorkouts && $user->isDiscoverable,
             'nickname' => $user->nickname,
             'sharedWidgets' => $this->buildSharedWidgetRows($user),
+            'emailOnConnectionRequest' => $user->emailOnConnectionRequest,
         ]);
     }
 

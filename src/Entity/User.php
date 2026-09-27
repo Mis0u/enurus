@@ -354,6 +354,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Email reçu à chaque demande de connexion (ProfileConnectionRequestNotifier). Actif par défaut,
+     * sinon la notification ne toucherait presque personne ; se coupe depuis la page Connexions.
+     */
+    #[ORM\Column(options: [
+        'default' => true,
+    ])]
+    public bool $emailOnConnectionRequest = true {
+        get {
+            return $this->emailOnConnectionRequest;
+        }
+        set(bool $emailOnConnectionRequest) {
+            $this->emailOnConnectionRequest = $emailOnConnectionRequest;
+        }
+    }
+
+    /**
      * Toujours en kg (même convention que ExerciseSet::weight) — conversion à l'affichage/la
      * saisie via WeightConverterService selon unitOfMeasure. Optionnel : sert uniquement à
      * calculer le tonnage des exercices "au poids de corps" (Exercise::bodyweightPercent).

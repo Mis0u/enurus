@@ -13,6 +13,7 @@
       - sharedWidgets  : array<array{key: string, label: string, checked: bool, disabled: bool}>
         — widgets du dashboard encore visibles pour soi-même, verrouillés en cascade tant que le
         partage de profil et celui des séances ne sont pas tous les deux actifs
+      - emailOnConnectionRequest : bool (email reçu à chaque demande de connexion)
 #}
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
 
@@ -42,6 +43,10 @@
 
             {% include 'profile_connection/list/_shared_widgets_card.html.twig' with {
                 sharedWidgets: sharedWidgets,
+            } only %}
+
+            {% include 'profile_connection/list/_notifications_card.html.twig' with {
+                emailOnConnectionRequest: emailOnConnectionRequest,
             } only %}
 
             {% include 'profile_connection/list/_request_form.html.twig' with {

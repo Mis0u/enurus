@@ -465,7 +465,7 @@ profile_connection:
     badge:
         title: "Insignias de {nickname}"
     dashboard:
-        back: "Volver a mi panel"
+        back: "Volver a mis conexiones"
         guard:
             body: "Vuelve a activar la compartición de tu perfil para poder consultar el panel de una conexión."
             confirm: "Entendido"
@@ -474,6 +474,14 @@ profile_connection:
         no_workout: "{nickname} aún no ha creado ningún entrenamiento"
         title: "Panel de {nickname}"
         view_workouts: "Ver sus entrenamientos"
+    email:
+        request:
+            body: "{nickname} quiere conectar contigo en {brand}. Si aceptas, cada uno podrá ver el panel del otro."
+            cta: "Ver la solicitud"
+            subject: "{nickname} quiere conectar contigo"
+            title: "Nueva solicitud de conexión"
+            unsubscribe: "Dejar de recibir estos emails"
+            why: "Recibes este email porque alguien te ha enviado una solicitud de conexión."
     error:
         already_connected: "Ya estáis conectados."
         already_pending: "Ya hay una solicitud pendiente con esta persona."
@@ -509,6 +517,11 @@ profile_connection:
             title: "Mis conexiones"
         intro: "Una vez aceptada una solicitud, cada uno ve el panel del otro."
         new_workout: "Nuevo entrenamiento desde tu última visita"
+        notifications:
+            email_on_request: "Enviarme un email cuando reciba una solicitud de conexión"
+            feedback:
+                success: "Preferencia actualizada"
+            title: "Notificaciones"
         received:
             title: "Solicitudes recibidas"
         request:
@@ -521,7 +534,7 @@ profile_connection:
         sent:
             title: "Solicitudes enviadas"
         shared_widgets:
-            explanation: "Elige lo que ven tus conexiones en tu panel compartido, independientemente de lo que muestras tú."
+            explanation: "Elige lo que ven tus conexiones en tu panel compartido. Un bloque que has ocultado en tu propio panel nunca se les muestra."
             feedback:
                 success: "Preferencia actualizada"
             title: "Visualización del panel compartido"
@@ -719,7 +732,7 @@ settings:
         request_error: Se produjo un error, inténtalo de nuevo más tarde
         title: Eliminación de la cuenta
     dashboard_widgets:
-        explanation: Elige los bloques que aparecen en tu panel.
+        explanation: "Elige los bloques que aparecen en tu panel. Un bloque oculto aquí también se oculta a tus conexiones."
         title: Widgets del panel
         widget:
             badges: "Insignias"

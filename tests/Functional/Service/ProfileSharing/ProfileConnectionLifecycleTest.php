@@ -11,6 +11,7 @@ use App\Exception\ProfileSharing\ProfileConnectionException;
 use App\Exception\ProfileSharing\ProfileConnectionFailureReasonEnum;
 use App\Repository\ProfileConnectionRepository;
 use App\Repository\UserRepository;
+use App\Service\ProfileSharing\ProfileConnectionRequestNotifier;
 use App\Service\ProfileSharing\ProfileConnectionRequestService;
 use App\Service\ProfileSharing\ProfileConnectionResponseService;
 use App\Service\ProfileSharing\ProfileLookupService;
@@ -73,6 +74,7 @@ final class ProfileConnectionLifecycleTest extends KernelTestCase
             $guard,
             $this->createLimiterFactory('profile_connection_request'),
             $this->clock,
+            $this->createStub(ProfileConnectionRequestNotifier::class),
         );
         $this->responseService = new ProfileConnectionResponseService($this->entityManager, $this->clock);
         $this->lookupService = new ProfileLookupService(

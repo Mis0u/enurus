@@ -465,7 +465,7 @@ profile_connection:
     badge:
         title: "Badges van {nickname}"
     dashboard:
-        back: "Terug naar mijn overzicht"
+        back: "Terug naar mijn verbindingen"
         guard:
             body: "Zet profiel delen weer aan om het overzicht van een verbinding te kunnen bekijken."
             confirm: "Begrepen"
@@ -474,6 +474,14 @@ profile_connection:
         no_workout: "{nickname} heeft nog geen training aangemaakt"
         title: "Overzicht van {nickname}"
         view_workouts: "Bekijk zijn/haar trainingen"
+    email:
+        request:
+            body: "{nickname} wil op {brand} met je verbinden. Als je accepteert, kunnen jullie elkaars dashboard bekijken."
+            cta: "Verzoek bekijken"
+            subject: "{nickname} wil met je verbinden"
+            title: "Nieuw verbindingsverzoek"
+            unsubscribe: "Deze e-mails niet meer ontvangen"
+            why: "Je ontvangt deze e-mail omdat iemand je een verbindingsverzoek heeft gestuurd."
     error:
         already_connected: "Jullie zijn al verbonden."
         already_pending: "Er staat al een verzoek open met deze persoon."
@@ -509,6 +517,11 @@ profile_connection:
             title: "Mijn verbindingen"
         intro: "Zodra een verzoek is geaccepteerd, zien jullie elkaars overzicht."
         new_workout: "Nieuwe training sinds je laatste bezoek"
+        notifications:
+            email_on_request: "Stuur me een e-mail als ik een verbindingsverzoek ontvang"
+            feedback:
+                success: "Voorkeur bijgewerkt"
+            title: "Meldingen"
         received:
             title: "Ontvangen verzoeken"
         request:
@@ -521,7 +534,7 @@ profile_connection:
         sent:
             title: "Verzonden verzoeken"
         shared_widgets:
-            explanation: "Kies wat je verbindingen zien op je gedeelde dashboard, onafhankelijk van wat je zelf laat zien."
+            explanation: "Kies wat je verbindingen zien op je gedeelde dashboard. Een blok dat je op je eigen dashboard hebt verborgen, wordt nooit aan hen getoond."
             feedback:
                 success: "Voorkeur bijgewerkt"
             title: "Weergave van het gedeelde dashboard"
@@ -719,7 +732,7 @@ settings:
         request_error: Er is een fout opgetreden, probeer het later opnieuw
         title: Accountverwijdering
     dashboard_widgets:
-        explanation: Kies welke blokken op je dashboard worden weergegeven.
+        explanation: "Kies welke blokken op je dashboard worden weergegeven. Een blok dat je hier verbergt, is ook verborgen voor je verbindingen."
         title: Dashboard-widgets
         widget:
             badges: "Badges"

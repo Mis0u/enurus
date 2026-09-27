@@ -282,6 +282,20 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
         self::assertSelectorExists('main img[src*="avatars/owner-avatar.jpg"]');
     }
 
+    public function testBannerLeadsBackToTheConnectionsList(): void
+    {
+        $client = $this->login(self::VIEWER);
+        $viewer = $this->getUserByEmail(self::VIEWER);
+        $subject = $this->getUserByEmail(self::SUBJECT_WITH_WORKOUTS);
+        $this->makeDiscoverable($viewer, 'CCCC15');
+        $this->makeDiscoverable($subject, 'CCCC16');
+        $connection = $this->createConnection($viewer, $subject, ProfileConnectionStatusEnum::ACCEPTED);
+
+        $client->request('GET', $this->dashboardUrl($connection, 'fr'));
+
+        self::assertSelectorTextContains('main a[href="/fr/connexions"]', 'Retour à mes connexions');
+    }
+
     public function testGoalCardsOfTheOwnerAreNotLinksToAnExerciseHistory(): void
     {
         $client = $this->login(self::VIEWER);
