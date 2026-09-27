@@ -5434,6 +5434,13 @@
   button:disabled, [aria-disabled='true'] {
     cursor: not-allowed;
   }
+  select {
+    color-scheme: dark;
+  }
+  select option {
+    background-color: #0f1928;
+    color: #f0f4ff;
+  }
 }
 @keyframes shake {
   0%, 100% {

@@ -49,6 +49,12 @@ input[data-controller*="workout--date-picker"] {
     background: rgba(255, 255, 255, 0.04) !important;
 }
 
+/* flatpickr rend ses mois transparents : liste ouverte blanche sous Windows, texte clair illisible
+   (même souci que la règle globale `select option` de app.css, qu'elle écrase ici). */
+.flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month {
+    background-color: #0f1928 !important;
+}
+
 .flatpickr-current-month .numInputWrapper span.arrowUp:after {
     border-bottom-color: #8b9bb4 !important;
 }
