@@ -1,0 +1,95 @@
+intro: "Tout ce qu'il faut savoir pour utiliser Enurus, fonctionnalité par fonctionnalité."
+section:
+    badges:
+        intro: "Des badges récompensent ta constance et tes progrès, du bronze au rubis."
+        open: "Voir mes badges"
+        points:
+            families: "4 familles : nombre de séances, ancienneté, régularité (semaines d'entraînement d'affilée) et tonnage cumulé. Chacune compte 6 niveaux : bronze, argent, or, platine, émeraude et rubis."
+            legend: "Décroche le rubis dans les 4 familles pour obtenir le badge ultime : « Légende Enurus »."
+            where: "Retrouve-les tous dans « Mes badges », avec ta progression vers le prochain palier. Un nouveau badge est annoncé dès que tu l'obtiens."
+        title: "Badges"
+    connections:
+        intro: "Connecte-toi avec tes partenaires d'entraînement pour suivre vos progrès mutuels."
+        open: "Voir mes connexions"
+        points:
+            control: "Tu choisis ce que tes connexions voient : tes séances (en option) et les blocs de ton tableau de bord. Tu peux retirer une connexion ou couper ton partage à tout moment."
+            principle: "Une fois connectés, vous voyez chacun le tableau de bord de l'autre, en lecture seule."
+            request: "Saisis le code d'un ami dans « Ajouter une connexion » : il reçoit ta demande (et un email, désactivable) et peut l'accepter ou la refuser."
+            share: "Active d'abord « Partage de mon profil » : tu obtiens un code à donner à tes amis, sous la forme Alias#CODE."
+        title: "Connexions"
+    dashboard:
+        intro: "Ton tableau de bord résume ton activité et s'enrichit au fil de tes séances."
+        open: "Voir mon tableau de bord"
+        points:
+            blocks: "Séance (chiffres de ta dernière journée, de la semaine, du mois), Tonnage (poids total soulevé), Muscles travaillés, Régularité (semaines d'affilée), Objectifs, Badges, Connexions."
+            customize: "Choisis les blocs affichés dans Réglages › Widgets du dashboard. Le Calendrier d'activité s'y active aussi."
+            progressive: "De nouveaux blocs se débloquent au fil du temps : dès ta 2e séance pour la régularité et les muscles de la semaine ou du mois, dès ton premier objectif pour les objectifs."
+        title: "Tableau de bord"
+    getting_started:
+        intro: "Enurus garde la trace de tes séances de musculation pour que tu voies tes progrès, semaine après semaine."
+        open: "Enregistrer une séance"
+        points:
+            come_back: "Reviens sur ton tableau de bord : il s'enrichit à chaque nouvelle séance."
+            fill: "Ajoute tes exercices, puis le poids et les répétitions de chaque série."
+            log: "Enregistre ta première séance avec le bouton « + » (« Enregistre ta séance » sur ordinateur)."
+        title: "Par où commencer"
+    library:
+        intro: "La bibliothèque réunit les exercices de base et ceux que tu crées."
+        open: "Ouvrir la bibliothèque"
+        points:
+            archive: "Supprimer un exercice perso déjà utilisé l'archive : il disparaît de la bibliothèque, mais ton historique est conservé (filtre « Archivés »)."
+            bodyweight: "Pour un exercice au poids du corps (tractions, dips…), indique la part de ton poids soulevée : elle compte dans ton tonnage si ton poids est renseigné dans les réglages."
+            browse: "Les exercices de base portent un trait bleu, les tiens un trait rouge. Cherche par nom ou filtre par muscle."
+            create: "« Créer un exercice » : donne-lui un nom, ses muscles principaux et secondaires, et sa façon de le mesurer (poids et répétitions, durée ou distance)."
+            goals: "Sur cette même page, fixe-toi un objectif (par exemple 100 kg × 5) : sa progression s'affiche sur ton tableau de bord."
+            history: "L'icône graphique d'un exercice ouvre son historique : courbe de progression, séances passées et records."
+        title: "Bibliothèque et exercices"
+    messaging:
+        intro: "Une question, un bug, une idée ? Je te réponds directement."
+        open: "Me contacter"
+        points:
+            answer: "La réponse arrive dans ta Messagerie : un point te signale les nouveaux messages."
+            contact: "Écris-moi depuis « Contact », en choisissant une catégorie. Tu peux joindre une capture d'écran."
+        title: "Contact et messagerie"
+    routines:
+        intro: "Une routine est une liste d'exercices que tu fais souvent, par exemple « Push day »."
+        open: "Voir mes routines"
+        points:
+            order: "Réorganise ses exercices en les faisant glisser."
+            use: "En enregistrant une séance, choisis ta routine : tous ses exercices sont ajoutés d'un coup, dans l'ordre."
+            what: "Crée-la une fois depuis « Mes routines », en y ajoutant tes exercices."
+        title: "Routines"
+    settings:
+        intro: "Adapte Enurus à tes habitudes depuis les Réglages."
+        open: "Ouvrir les réglages"
+        points:
+            account: "Change ton mot de passe, ou supprime ton compte : la suppression reste annulable pendant 30 jours."
+            bodyweight: "Ton poids de corps sert à calculer le tonnage des exercices au poids du corps."
+            profile: "Alias, avatar, langue et genre (qui choisit la silhouette des muscles)."
+            unit: "Unité de poids (kg ou lbs) : tout l'affichage s'adapte, sans rien changer à ton historique."
+        title: "Réglages"
+    workout_log:
+        intro: "Tout se passe sur la page « Enregistre ta séance »."
+        open: "Enregistrer une séance"
+        points:
+            date: "La date du jour est déjà remplie : change-la si tu enregistres une séance passée."
+            details: "Tu peux aussi noter la durée, ton humeur, un commentaire et ajouter une photo."
+            draft: "Ta saisie est gardée en brouillon sur ton appareil pendant 1 heure : si tu quittes la page ou si l'appli se recharge, tu la retrouves en revenant."
+            exercises: "« Ajouter un exercice » ouvre la liste : coche plusieurs exercices, puis valide. Tes exercices habituels sont en tête."
+            missing_exercise: "Un exercice manque ? Crée-le depuis la liste : tu reviens ensuite à ta séance, avec l'exercice ajouté."
+            prefill: "Quand tu refais un exercice, les charges de ta dernière séance sont reprises automatiquement (« Repris de ta séance du… ») : il suffit de les ajuster."
+            records: "À la validation, tes nouveaux records (PR) et tes nouveaux badges te sont annoncés."
+            routine: "Tu peux partir d'une routine : tous ses exercices sont ajoutés d'un coup."
+            sets: "Pour chaque série, indique le poids et les répétitions (ou la durée, ou la distance, selon l'exercice). « Répéter cette série » recopie la précédente."
+        title: "Enregistrer une séance"
+    workouts:
+        intro: "« Mes séances » regroupe tout ton historique."
+        open: "Voir mes séances"
+        points:
+            calendar: "L'onglet « Calendrier » montre ton activité sur l'année : plus une case est foncée, plus la séance a été longue."
+            deload: "Tu y programmes aussi tes semaines de repos (deload) : elles ne cassent pas ta série de semaines d'entraînement."
+            detail: "Ouvre une séance pour voir le détail de tes séries, les muscles sollicités et tes records. Tu peux la modifier ou la supprimer."
+            list: "Tes séances de la plus récente à la plus ancienne, filtrables par date, semaine, mois, routine ou muscle travaillé."
+        title: "Mes séances"
+summary: "Sommaire"
+title: "Aide"

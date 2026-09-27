@@ -146,6 +146,7 @@ dashboard:
     empty_widgets:
         cta: Widgets verwalten
         text: Du hast alle verfügbaren Widgets ausgeblendet. Aktiviere mindestens eines wieder in deinen Einstellungen.
+    help: "Hilfe"
     library: Bibliothek
     logout: Abmelden
     main_navigation: "Hauptnavigation"

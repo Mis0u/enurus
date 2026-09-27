@@ -86,6 +86,13 @@
                     />
                 {% endif %}
                 <twig:Navigation:Sidebar:NavigationItem
+                    link="{{ path('app_help') }}"
+                    route="app_help"
+                    menu="{{ 'dashboard.help'|trans({}, 'navigation') }}"
+                    icon="help"
+                    format="tile"
+                />
+                <twig:Navigation:Sidebar:NavigationItem
                     link="{{ path('app_settings') }}"
                     route="app_settings"
                     menu="{{ 'dashboard.setting'|trans({}, 'navigation') }}"

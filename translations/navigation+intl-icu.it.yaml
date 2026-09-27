@@ -146,6 +146,7 @@ dashboard:
     empty_widgets:
         cta: Gestisci i miei widget
         text: Hai nascosto tutti i widget disponibili. Riattivane almeno uno dalle tue impostazioni.
+    help: "Aiuto"
     library: Biblioteca
     logout: Disconnetti
     main_navigation: "Navigazione principale"

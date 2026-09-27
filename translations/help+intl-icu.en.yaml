@@ -1,0 +1,95 @@
+intro: "Everything you need to know to use Enurus, feature by feature."
+section:
+    badges:
+        intro: "Badges reward your consistency and progress, from bronze to ruby."
+        open: "See my badges"
+        points:
+            families: "4 families: number of workouts, seniority, regularity (training weeks in a row) and total tonnage. Each has 6 levels: bronze, silver, gold, platinum, emerald and ruby."
+            legend: "Earn the ruby in all 4 families to get the ultimate badge: “Enurus Legend”."
+            where: "Find them all in “My badges”, with your progress towards the next level. A new badge is announced as soon as you earn it."
+        title: "Badges"
+    connections:
+        intro: "Connect with your training partners to follow each other's progress."
+        open: "See my connections"
+        points:
+            control: "You choose what your connections see: your workouts (optional) and the blocks of your dashboard. You can remove a connection or stop sharing at any time."
+            principle: "Once connected, you can each see the other's dashboard, read-only."
+            request: "Enter a friend's code in “Add a connection”: they receive your request (and an email, which they can turn off) and can accept or decline it."
+            share: "First turn on “Share my profile”: you get a code to give to your friends, in the form Alias#CODE."
+        title: "Connections"
+    dashboard:
+        intro: "Your dashboard sums up your activity and grows richer with each workout."
+        open: "See my dashboard"
+        points:
+            blocks: "Session (figures for your last training day, the week, the month), Tonnage (total weight lifted), Muscles worked, Regularity (weeks in a row), Goals, Badges, Connections."
+            customize: "Choose which blocks are shown in Settings › Dashboard widgets. The Activity calendar is turned on there too."
+            progressive: "New blocks unlock over time: from your 2nd workout for regularity and the muscles of the week or month, from your first goal for goals."
+        title: "Dashboard"
+    getting_started:
+        intro: "Enurus keeps track of your strength training workouts so you can see your progress, week after week."
+        open: "Log a workout"
+        points:
+            come_back: "Come back to your dashboard: it grows richer with every new workout."
+            fill: "Add your exercises, then the weight and reps of each set."
+            log: "Log your first workout with the “+” button (“Log your workout” on a computer)."
+        title: "Getting started"
+    library:
+        intro: "The library brings together the base exercises and the ones you create."
+        open: "Open the library"
+        points:
+            archive: "Deleting a custom exercise you have already used archives it: it disappears from the library, but your history is kept (“Archived” filter)."
+            bodyweight: "For a bodyweight exercise (pull-ups, dips…), set the share of your weight you lift: it counts in your tonnage if your weight is filled in the settings."
+            browse: "Base exercises have a blue stripe, yours a red one. Search by name or filter by muscle."
+            create: "“Create an exercise”: give it a name, its primary and secondary muscles, and how it is measured (weight and reps, time or distance)."
+            goals: "On that same page, set yourself a goal (for example 100 kg × 5): its progress shows on your dashboard."
+            history: "An exercise's chart icon opens its history: progress curve, past workouts and records."
+        title: "Library and exercises"
+    messaging:
+        intro: "A question, a bug, an idea? I answer you directly."
+        open: "Contact me"
+        points:
+            answer: "The answer arrives in your Messages: a dot flags new messages."
+            contact: "Write to me from “Contact”, choosing a category. You can attach a screenshot."
+        title: "Contact and messages"
+    routines:
+        intro: "A routine is a list of exercises you do often, for example “Push day”."
+        open: "See my routines"
+        points:
+            order: "Reorder its exercises by dragging them."
+            use: "When logging a workout, pick your routine: all its exercises are added at once, in order."
+            what: "Create it once from “My routines”, adding your exercises to it."
+        title: "Routines"
+    settings:
+        intro: "Adapt Enurus to your habits from the Settings."
+        open: "Open the settings"
+        points:
+            account: "Change your password, or delete your account: the deletion can be cancelled for 30 days."
+            bodyweight: "Your body weight is used to compute the tonnage of bodyweight exercises."
+            profile: "Alias, avatar, language and gender (which picks the muscle silhouette)."
+            unit: "Weight unit (kg or lbs): the whole display adapts, without changing anything in your history."
+        title: "Settings"
+    workout_log:
+        intro: "Everything happens on the “Log your workout” page."
+        open: "Log a workout"
+        points:
+            date: "Today's date is already filled in: change it if you are logging a past workout."
+            details: "You can also note the duration, your mood, a comment and add a photo."
+            draft: "Your entry is kept as a draft on your device for 1 hour: if you leave the page or the app reloads, you find it again when you come back."
+            exercises: "“Add an exercise” opens the list: tick several exercises, then confirm. Your usual exercises are at the top."
+            missing_exercise: "An exercise is missing? Create it from the list: you then come back to your workout, with the exercise added."
+            prefill: "When you do an exercise again, the loads from your last workout are filled in automatically (“Carried over from your workout on…”): just adjust them."
+            records: "When you confirm, your new records (PRs) and new badges are announced."
+            routine: "You can start from a routine: all its exercises are added at once."
+            sets: "For each set, enter the weight and reps (or the time, or the distance, depending on the exercise). “Repeat this set” copies the previous one."
+        title: "Logging a workout"
+    workouts:
+        intro: "“My workouts” gathers your whole history."
+        open: "See my workouts"
+        points:
+            calendar: "The “Calendar” tab shows your activity over the year: the darker a square, the longer the workout."
+            deload: "You also schedule your rest weeks (deload) there: they don't break your streak of training weeks."
+            detail: "Open a workout to see your sets, the muscles worked and your records. You can edit or delete it."
+            list: "Your workouts from newest to oldest, filterable by date, week, month, routine or muscle worked."
+        title: "My workouts"
+summary: "Contents"
+title: "Help"

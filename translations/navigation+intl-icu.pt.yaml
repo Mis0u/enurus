@@ -146,6 +146,7 @@ dashboard:
     empty_widgets:
         cta: Gerir os meus widgets
         text: Ocultaste todos os widgets disponíveis. Reativa pelo menos um nas tuas definições.
+    help: "Ajuda"
     library: Biblioteca
     logout: Terminar sessão
     main_navigation: "Navegação principal"

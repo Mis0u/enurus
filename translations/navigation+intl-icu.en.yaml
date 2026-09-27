@@ -146,6 +146,7 @@ dashboard:
     empty_widgets:
         cta: Manage my widgets
         text: You've hidden every available widget. Re-enable at least one from your settings.
+    help: "Help"
     library: Library
     logout: Log out
     main_navigation: "Main navigation"

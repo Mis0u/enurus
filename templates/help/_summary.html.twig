@@ -1,0 +1,23 @@
+{#
+    Sommaire de la page Aide : une puce par section, vers son ancre (le controller `help--sections`
+    ouvre la section visée).
+    Variables attendues (via `only`) :
+    - sections : list<HelpSectionEnum>
+#}
+<nav class="bg-bg-card border border-white/[0.07] rounded-2xl p-4 md:p-[22px]" aria-labelledby="help-summary-title">
+    <h2 id="help-summary-title" class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4] mb-3">
+        {{ 'summary'|trans({}, 'help') }}
+    </h2>
+    <ul class="flex flex-wrap gap-2">
+        {% for section in sections %}
+            <li>
+                <a href="#{{ section.value }}"
+                   data-action="help--sections#open"
+                   data-help--sections-section-param="{{ section.value }}"
+                   class="inline-flex items-center px-3 py-1.5 max-md:min-h-10 rounded-full text-[13px] font-medium border border-white/[0.07] bg-[#0f1928] text-white/70 hover:text-white hover:border-white/[0.15] transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-ft">
+                    {{ ('section.' ~ section.value ~ '.title')|trans({}, 'help') }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>

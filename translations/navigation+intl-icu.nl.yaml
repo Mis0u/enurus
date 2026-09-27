@@ -146,6 +146,7 @@ dashboard:
     empty_widgets:
         cta: Mijn widgets beheren
         text: Je hebt alle beschikbare widgets verborgen. Schakel er minstens één opnieuw in via je instellingen.
+    help: "Hulp"
     library: Bibliotheek
     logout: Uitloggen
     main_navigation: "Hoofdnavigatie"
