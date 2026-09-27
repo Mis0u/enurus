@@ -1,0 +1,95 @@
+intro: "Wszystko, co musisz wiedzieć, żeby korzystać z Enurus – funkcja po funkcji."
+section:
+    badges:
+        intro: "Odznaki nagradzają Twoją systematyczność i postępy, od brązu po rubin."
+        open: "Zobacz moje odznaki"
+        points:
+            families: "4 rodziny: liczba treningów, staż, regularność (tygodnie treningowe z rzędu) i łączny tonaż. Każda ma 6 poziomów: brąz, srebro, złoto, platyna, szmaragd i rubin."
+            legend: "Zdobądź rubin we wszystkich 4 rodzinach, aby otrzymać najwyższą odznakę: „Legenda Enurus”."
+            where: "Znajdziesz je wszystkie w „Moje odznaki”, razem z postępem do następnego poziomu. Nowa odznaka jest ogłaszana, gdy tylko ją zdobędziesz."
+        title: "Odznaki"
+    connections:
+        intro: "Połącz się z partnerami treningowymi, aby wzajemnie śledzić swoje postępy."
+        open: "Zobacz moje połączenia"
+        points:
+            control: "To Ty decydujesz, co widzą Twoje połączenia: Twoje treningi (opcjonalnie) i bloki Twojego panelu. W każdej chwili możesz usunąć połączenie lub przestać udostępniać."
+            principle: "Po połączeniu każde z was widzi panel drugiej osoby, tylko do odczytu."
+            request: "Wpisz kod znajomego w „Dodaj połączenie”: otrzyma Twoją prośbę (i e-mail, który może wyłączyć) i może ją zaakceptować lub odrzucić."
+            share: "Najpierw włącz „Udostępnij mój profil”: otrzymasz kod do przekazania znajomym, w formacie Alias#KOD."
+        title: "Połączenia"
+    dashboard:
+        intro: "Twój panel podsumowuje Twoją aktywność i wzbogaca się z każdym treningiem."
+        open: "Zobacz mój panel"
+        points:
+            blocks: "Sesja (liczby z ostatniego dnia treningowego, tygodnia, miesiąca), Tonaż (łączny podniesiony ciężar), Trenowane mięśnie, Regularność (tygodnie z rzędu), Cele, Odznaki, Połączenia."
+            customize: "Wybierz wyświetlane bloki w Ustawienia › Widżety panelu. Tam też włączysz Kalendarz aktywności."
+            progressive: "Z czasem odblokowują się nowe bloki: od 2. treningu regularność i mięśnie z tygodnia lub miesiąca, od pierwszego celu – cele."
+        title: "Panel"
+    getting_started:
+        intro: "Enurus zapisuje Twoje treningi siłowe, żebyś widział swoje postępy tydzień po tygodniu."
+        open: "Zapisz trening"
+        points:
+            come_back: "Wróć do swojego panelu: wzbogaca się z każdym nowym treningiem."
+            fill: "Dodaj ćwiczenia, a potem ciężar i powtórzenia każdej serii."
+            log: "Zapisz swój pierwszy trening przyciskiem „+” („Zapisz swój trening” na komputerze)."
+        title: "Od czego zacząć"
+    library:
+        intro: "Biblioteka zawiera ćwiczenia podstawowe i te, które tworzysz sam."
+        open: "Otwórz bibliotekę"
+        points:
+            archive: "Usunięcie własnego ćwiczenia, którego już używałeś, archiwizuje je: znika z biblioteki, ale Twoja historia zostaje zachowana (filtr „Zarchiwizowane”)."
+            bodyweight: "Przy ćwiczeniu z masą ciała (podciąganie, dipy…) podaj, jaką część swojej wagi podnosisz: liczy się do tonażu, jeśli Twoja waga jest podana w ustawieniach."
+            browse: "Ćwiczenia podstawowe mają niebieski pasek, Twoje – czerwony. Szukaj po nazwie lub filtruj według mięśnia."
+            create: "„Utwórz ćwiczenie”: nadaj mu nazwę, mięśnie główne i dodatkowe oraz sposób pomiaru (ciężar i powtórzenia, czas lub dystans)."
+            goals: "Na tej samej stronie wyznacz sobie cel (na przykład 100 kg × 5): jego postęp pojawi się na Twoim panelu."
+            history: "Ikona wykresu przy ćwiczeniu otwiera jego historię: krzywą postępów, wcześniejsze treningi i rekordy."
+        title: "Biblioteka i ćwiczenia"
+    messaging:
+        intro: "Pytanie, błąd, pomysł? Odpowiadam Ci bezpośrednio."
+        open: "Napisz do mnie"
+        points:
+            answer: "Odpowiedź trafia do Twoich Wiadomości: kropka oznacza nowe wiadomości."
+            contact: "Napisz do mnie przez „Kontakt”, wybierając kategorię. Możesz dołączyć zrzut ekranu."
+        title: "Kontakt i wiadomości"
+    routines:
+        intro: "Program to lista ćwiczeń, które często wykonujesz, na przykład „Push day”."
+        open: "Zobacz moje programy"
+        points:
+            order: "Zmieniaj kolejność ćwiczeń, przeciągając je."
+            use: "Zapisując trening, wybierz swój program: wszystkie jego ćwiczenia zostaną dodane naraz, po kolei."
+            what: "Utwórz go raz w „Moje programy”, dodając swoje ćwiczenia."
+        title: "Programy"
+    settings:
+        intro: "Dopasuj Enurus do swoich nawyków w Ustawieniach."
+        open: "Otwórz ustawienia"
+        points:
+            account: "Zmień hasło lub usuń konto: usunięcie można anulować przez 30 dni."
+            bodyweight: "Twoja masa ciała służy do obliczania tonażu ćwiczeń z masą ciała."
+            profile: "Alias, awatar, język i płeć (od której zależy sylwetka mięśni)."
+            unit: "Jednostka wagi (kg lub lbs): cały widok się dostosowuje, bez zmiany czegokolwiek w Twojej historii."
+        title: "Ustawienia"
+    workout_log:
+        intro: "Wszystko dzieje się na stronie „Zapisz swój trening”."
+        open: "Zapisz trening"
+        points:
+            date: "Dzisiejsza data jest już wpisana: zmień ją, jeśli zapisujesz wcześniejszy trening."
+            details: "Możesz też zanotować czas trwania, swój nastrój, komentarz i dodać zdjęcie."
+            draft: "To, co wpisujesz, jest przez 1 godzinę zapisywane jako szkic na Twoim urządzeniu: jeśli opuścisz stronę lub aplikacja się przeładuje, odnajdziesz to po powrocie."
+            exercises: "„Dodaj ćwiczenie” otwiera listę: zaznacz kilka ćwiczeń i zatwierdź. Twoje zwykłe ćwiczenia są na górze."
+            missing_exercise: "Brakuje ćwiczenia? Utwórz je z poziomu listy: potem wrócisz do swojego treningu z dodanym ćwiczeniem."
+            prefill: "Gdy powtarzasz ćwiczenie, ciężary z ostatniego treningu są przenoszone automatycznie („Przeniesione z treningu z dnia…”): wystarczy je dostosować."
+            records: "Po zatwierdzeniu zobaczysz swoje nowe rekordy (PR) i nowe odznaki."
+            routine: "Możesz zacząć od programu: wszystkie jego ćwiczenia zostaną dodane naraz."
+            sets: "Dla każdej serii podaj ciężar i powtórzenia (albo czas lub dystans, zależnie od ćwiczenia). „Powtórz tę serię” kopiuje poprzednią."
+        title: "Zapisywanie treningu"
+    workouts:
+        intro: "„Moje treningi” zawierają całą Twoją historię."
+        open: "Zobacz moje treningi"
+        points:
+            calendar: "Zakładka „Kalendarz” pokazuje Twoją aktywność w ciągu roku: im ciemniejsze pole, tym dłuższy był trening."
+            deload: "Tam też planujesz tygodnie odpoczynku (deload): nie przerywają Twojej serii tygodni treningowych."
+            detail: "Otwórz trening, aby zobaczyć swoje serie, zaangażowane mięśnie i rekordy. Możesz go edytować lub usunąć."
+            list: "Twoje treningi od najnowszego do najstarszego, z filtrami według daty, tygodnia, miesiąca, programu lub trenowanego mięśnia."
+        title: "Moje treningi"
+summary: "Spis treści"
+title: "Pomoc"

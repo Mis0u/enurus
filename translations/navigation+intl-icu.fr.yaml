@@ -146,6 +146,7 @@ dashboard:
     empty_widgets:
         cta: Gérer mes widgets
         text: Tu as masqué tous les widgets affichables. Réactives-en au moins un depuis tes réglages.
+    help: "Aide"
     library: Bibliothèque
     logout: Déconnexion
     main_navigation: "Navigation principale"

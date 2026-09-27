@@ -483,6 +483,9 @@
   .mt-\[6px\] {
     margin-top: 6px;
   }
+  .mt-\[9px\] {
+    margin-top: 9px;
+  }
   .mt-\[60px\] {
     margin-top: 60px;
   }
@@ -2714,6 +2717,9 @@
   }
   .text-\[\#c084fc\] {
     color: #c084fc;
+  }
+  .text-\[\#cbd5e1\] {
+    color: #cbd5e1;
   }
   .text-\[\#f0f4ff\] {
     color: #f0f4ff;
@@ -5410,6 +5416,16 @@
       &>li:nth-child(n+6) {
         display: none;
       }
+    }
+  }
+  .\[\&\>svg\]\:h-\[18px\] {
+    &>svg {
+      height: 18px;
+    }
+  }
+  .\[\&\>svg\]\:w-\[18px\] {
+    &>svg {
+      width: 18px;
     }
   }
   .\[\&\>td\]\:px-2 {

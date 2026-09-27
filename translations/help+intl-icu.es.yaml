@@ -1,0 +1,95 @@
+intro: "Todo lo que necesitas saber para usar Enurus, función por función."
+section:
+    badges:
+        intro: "Las insignias premian tu constancia y tus progresos, del bronce al rubí."
+        open: "Ver mis insignias"
+        points:
+            families: "4 familias: número de entrenamientos, antigüedad, regularidad (semanas de entrenamiento seguidas) y tonelaje acumulado. Cada una tiene 6 niveles: bronce, plata, oro, platino, esmeralda y rubí."
+            legend: "Consigue el rubí en las 4 familias para obtener la insignia suprema: « Leyenda Enurus »."
+            where: "Encuéntralas todas en « Mis insignias », con tu progreso hacia el siguiente nivel. Una nueva insignia se anuncia en cuanto la consigues."
+        title: "Insignias"
+    connections:
+        intro: "Conéctate con tus compañeros de entrenamiento para seguir vuestros progresos mutuamente."
+        open: "Ver mis conexiones"
+        points:
+            control: "Tú eliges lo que ven tus conexiones: tus entrenamientos (opcional) y los bloques de tu panel. Puedes quitar una conexión o dejar de compartir en cualquier momento."
+            principle: "Una vez conectados, cada uno ve el panel del otro, en modo solo lectura."
+            request: "Introduce el código de un amigo en « Añadir una conexión »: recibe tu solicitud (y un email, desactivable) y puede aceptarla o rechazarla."
+            share: "Activa primero « Compartir mi perfil »: obtienes un código para dar a tus amigos, con la forma Alias#CÓDIGO."
+        title: "Conexiones"
+    dashboard:
+        intro: "Tu panel resume tu actividad y se enriquece con cada entrenamiento."
+        open: "Ver mi panel"
+        points:
+            blocks: "Sesión (cifras de tu último día de entrenamiento, de la semana, del mes), Tonelaje (peso total levantado), Músculos trabajados, Regularidad (semanas seguidas), Objetivos, Insignias, Conexiones."
+            customize: "Elige los bloques que se muestran en Ajustes › Widgets del panel. El Calendario de actividad también se activa ahí."
+            progressive: "Se desbloquean nuevos bloques con el tiempo: desde tu 2.º entrenamiento para la regularidad y los músculos de la semana o del mes, desde tu primer objetivo para los objetivos."
+        title: "Panel"
+    getting_started:
+        intro: "Enurus guarda el registro de tus entrenamientos de musculación para que veas tus progresos, semana tras semana."
+        open: "Registrar un entrenamiento"
+        points:
+            come_back: "Vuelve a tu panel: se enriquece con cada nuevo entrenamiento."
+            fill: "Añade tus ejercicios, luego el peso y las repeticiones de cada serie."
+            log: "Registra tu primer entrenamiento con el botón « + » (« Registra tu entrenamiento » en el ordenador)."
+        title: "Por dónde empezar"
+    library:
+        intro: "La biblioteca reúne los ejercicios básicos y los que tú creas."
+        open: "Abrir la biblioteca"
+        points:
+            archive: "Eliminar un ejercicio personal ya utilizado lo archiva: desaparece de la biblioteca, pero tu historial se conserva (filtro « Archivados »)."
+            bodyweight: "Para un ejercicio con el peso corporal (dominadas, fondos…), indica la parte de tu peso que levantas: cuenta en tu tonelaje si tu peso está indicado en los ajustes."
+            browse: "Los ejercicios básicos llevan una línea azul, los tuyos una línea roja. Busca por nombre o filtra por músculo."
+            create: "« Crear un ejercicio »: ponle un nombre, sus músculos principales y secundarios, y cómo se mide (peso y repeticiones, duración o distancia)."
+            goals: "En esa misma página, fíjate un objetivo (por ejemplo 100 kg × 5): su progreso aparece en tu panel."
+            history: "El icono de gráfico de un ejercicio abre su historial: curva de progreso, entrenamientos pasados y récords."
+        title: "Biblioteca y ejercicios"
+    messaging:
+        intro: "¿Una pregunta, un bug, una idea? Te respondo directamente."
+        open: "Contactarme"
+        points:
+            answer: "La respuesta llega a tus Mensajes: un punto señala los mensajes nuevos."
+            contact: "Escríbeme desde « Contacto », eligiendo una categoría. Puedes adjuntar una captura de pantalla."
+        title: "Contacto y mensajes"
+    routines:
+        intro: "Una rutina es una lista de ejercicios que haces a menudo, por ejemplo « Push day »."
+        open: "Ver mis rutinas"
+        points:
+            order: "Reordena sus ejercicios arrastrándolos."
+            use: "Al registrar un entrenamiento, elige tu rutina: todos sus ejercicios se añaden de una vez, en orden."
+            what: "Créala una vez desde « Mis rutinas », añadiendo tus ejercicios."
+        title: "Rutinas"
+    settings:
+        intro: "Adapta Enurus a tus costumbres desde los Ajustes."
+        open: "Abrir los ajustes"
+        points:
+            account: "Cambia tu contraseña o elimina tu cuenta: la eliminación se puede cancelar durante 30 días."
+            bodyweight: "Tu peso corporal sirve para calcular el tonelaje de los ejercicios con el peso corporal."
+            profile: "Alias, avatar, idioma y género (que elige la silueta de los músculos)."
+            unit: "Unidad de peso (kg o lbs): toda la visualización se adapta, sin cambiar nada de tu historial."
+        title: "Ajustes"
+    workout_log:
+        intro: "Todo ocurre en la página « Registra tu entrenamiento »."
+        open: "Registrar un entrenamiento"
+        points:
+            date: "La fecha de hoy ya está puesta: cámbiala si registras un entrenamiento pasado."
+            details: "También puedes anotar la duración, tu estado de ánimo, un comentario y añadir una foto."
+            draft: "Lo que introduces se guarda como borrador en tu dispositivo durante 1 hora: si sales de la página o la app se recarga, lo recuperas al volver."
+            exercises: "« Añadir un ejercicio » abre la lista: marca varios ejercicios y luego confirma. Tus ejercicios habituales aparecen primero."
+            missing_exercise: "¿Falta un ejercicio? Créalo desde la lista: luego vuelves a tu entrenamiento, con el ejercicio añadido."
+            prefill: "Cuando repites un ejercicio, las cargas de tu último entrenamiento se recuperan automáticamente (« Recuperado de tu entrenamiento del… »): solo tienes que ajustarlas."
+            records: "Al confirmar, se te anuncian tus nuevos récords (PR) y tus nuevas insignias."
+            routine: "Puedes partir de una rutina: todos sus ejercicios se añaden de una vez."
+            sets: "Para cada serie, indica el peso y las repeticiones (o la duración, o la distancia, según el ejercicio). « Repetir esta serie » copia la anterior."
+        title: "Registrar un entrenamiento"
+    workouts:
+        intro: "« Mis entrenamientos » reúne todo tu historial."
+        open: "Ver mis entrenamientos"
+        points:
+            calendar: "La pestaña « Calendario » muestra tu actividad durante el año: cuanto más oscura es una casilla, más largo fue el entrenamiento."
+            deload: "Ahí también programas tus semanas de descanso (deload): no rompen tu racha de semanas de entrenamiento."
+            detail: "Abre un entrenamiento para ver tus series, los músculos trabajados y tus récords. Puedes modificarlo o eliminarlo."
+            list: "Tus entrenamientos del más reciente al más antiguo, filtrables por fecha, semana, mes, rutina o músculo trabajado."
+        title: "Mis entrenamientos"
+summary: "Índice"
+title: "Ayuda"

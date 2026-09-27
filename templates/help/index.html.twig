@@ -1,0 +1,29 @@
+{#
+    Page Aide (mode d'emploi).
+    Controller : HelpController (GET /{_locale}/aide)
+    Variables : sections (list<HelpSectionEnum>, dans l'ordre d'affichage)
+#}
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block title %}{{ 'title'|trans({}, 'help')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        title: 'title'|trans({}, 'help'),
+        subtitle: app.user.nickname|formatInitials,
+    } only %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 overflow-y-auto p-4 max-md:pb-[160px] md:p-[24px_28px]">
+        <div class="mx-auto flex w-full max-w-3xl flex-col gap-4" data-controller="help--sections">
+            <p class="text-[13px] text-[#8b9bb4]">{{ 'intro'|trans({}, 'help') }}</p>
+
+            {% include 'help/_summary.html.twig' with {sections: sections} only %}
+
+            {% for section in sections %}
+                {% include 'help/_section.html.twig' with {section: section, open: loop.first} only %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

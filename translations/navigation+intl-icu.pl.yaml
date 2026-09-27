@@ -146,6 +146,7 @@ dashboard:
     empty_widgets:
         cta: Zarządzaj widżetami
         text: Ukryto wszystkie dostępne widżety. Włącz ponownie przynajmniej jeden w ustawieniach.
+    help: "Pomoc"
     library: Biblioteka
     logout: Wyloguj się
     main_navigation: "Nawigacja główna"

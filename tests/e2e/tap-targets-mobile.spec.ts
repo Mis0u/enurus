@@ -80,7 +80,7 @@ test.beforeEach(async ({ page }) => {
     await loginAs(page, USER);
 });
 
-for (const url of ['/fr/tableau-de-bord', '/fr/mes-seances', '/fr/bibliotheque', '/fr/mes-routines', '/fr/connexions', '/fr/mes-badges', '/fr/messagerie', '/fr/reglages']) {
+for (const url of ['/fr/tableau-de-bord', '/fr/mes-seances', '/fr/bibliotheque', '/fr/mes-routines', '/fr/connexions', '/fr/mes-badges', '/fr/messagerie', '/fr/reglages', '/fr/aide']) {
     test(`tap targets are large enough on ${url}`, async ({ page }) => {
         await goto(page, url);
 
