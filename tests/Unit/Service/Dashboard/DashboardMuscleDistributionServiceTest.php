@@ -39,27 +39,33 @@ final class DashboardMuscleDistributionServiceTest extends TestCase
 
     public function testTop8LimitAndRemainingCount(): void
     {
-        $counts = [];
-        for ($i = 1; 10 >= $i; $i++) {
-            $counts[] = [
-                'id' => "muscle-{$i}",
-                'name' => "muscle-{$i}",
-                'sets' => $i,
-                'primarySets' => $i,
-                'secondarySets' => 0,
-            ];
-        }
-
-        $workoutMuscleRepository = $this->createStub(WorkoutMuscleRepository::class);
-        $workoutMuscleRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn($counts);
-
-        $service = new DashboardMuscleDistributionService($workoutMuscleRepository);
+        $service = new DashboardMuscleDistributionService($this->repositoryReturningMuscleCount(10));
         $result = $service->getBars(['workout-1']);
 
         self::assertCount(8, $result['bars']);
         self::assertSame(2, $result['remainingCount']);
         self::assertSame('muscle-10', $result['bars'][0]['name']);
         self::assertSame('muscle-3', $result['bars'][7]['name']);
+    }
+
+    public function testCompactViewKeepsTop5AndCountsTheRestAsRemaining(): void
+    {
+        $service = new DashboardMuscleDistributionService($this->repositoryReturningMuscleCount(10));
+        $result = $service->getBars(['workout-1']);
+
+        self::assertSame(
+            [false, false, false, false, false, true, true, true],
+            array_column($result['bars'], 'hiddenWhenCompact'),
+        );
+        self::assertSame(5, $result['compactRemainingCount']);
+    }
+
+    public function testCompactRemainingCountIsZeroWhenFewMusclesAreWorked(): void
+    {
+        $service = new DashboardMuscleDistributionService($this->repositoryReturningMuscleCount(3));
+        $result = $service->getBars(['workout-1']);
+
+        self::assertSame(0, $result['compactRemainingCount']);
     }
 
     public function testDaysSinceLastSolicitedIsNullWhenNoMapProvided(): void
@@ -216,5 +222,24 @@ final class DashboardMuscleDistributionServiceTest extends TestCase
         $result = $service->getBars(['workout-1']);
 
         self::assertSame(0, $result['remainingCount']);
+    }
+
+    private function repositoryReturningMuscleCount(int $muscleCount): WorkoutMuscleRepository
+    {
+        $counts = [];
+        for ($i = 1; $muscleCount >= $i; $i++) {
+            $counts[] = [
+                'id' => "muscle-{$i}",
+                'name' => "muscle-{$i}",
+                'sets' => $i,
+                'primarySets' => $i,
+                'secondarySets' => 0,
+            ];
+        }
+
+        $workoutMuscleRepository = $this->createStub(WorkoutMuscleRepository::class);
+        $workoutMuscleRepository->method('findMuscleGroupSetCountsByWorkoutIds')->willReturn($counts);
+
+        return $workoutMuscleRepository;
     }
 }

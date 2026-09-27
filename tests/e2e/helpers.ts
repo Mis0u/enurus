@@ -51,8 +51,9 @@ export async function loginAs(page: Page, email: string, password = FIXTURE_PASS
 
     // Timeout généreux : en dev, AssetMapper sert des dizaines de modules JS non bundlés via le
     // serveur PHP mono-thread intégré, ce qui ralentit le chargement de la page suivante (non
-    // représentatif de la prod, où les assets sont compilés).
-    await expect(page).toHaveURL(/\/fr\/tableau-de-bord/, { timeout: 15_000 });
+    // représentatif de la prod, où les assets sont compilés). La plupart des comptes fixtures sont en
+    // français, ceux créés sans locale (ex. `user-fixture-connection-*`) atterrissent en anglais.
+    await expect(page).toHaveURL(/\/(fr\/tableau-de-bord|en\/dashboard)/, { timeout: 15_000 });
 }
 
 /**

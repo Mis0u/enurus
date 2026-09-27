@@ -29,6 +29,13 @@
 .badge-svg--legend.badge-svg--md { width: 84px; }
 .badge-svg--legend.badge-svg--lg { width: 150px; }
 
+/* Widget Badges du dashboard sur mobile : tuiles « derniers obtenus » réduites pour raccourcir la
+   page (même seuil que le `max-md:` de Tailwind). */
+@media (width < 48rem) {
+    .badge-latest-tile .badge-svg--md { width: 56px; }
+    .badge-latest-tile .badge-svg--legend.badge-svg--md { width: 62px; }
+}
+
 .badge-svg--locked {
     filter: grayscale(1) brightness(0.5);
     opacity: 0.7;

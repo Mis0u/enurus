@@ -26,6 +26,7 @@ final readonly class DashboardMuscleFilterView
         return new self([], [], [
             'bars' => [],
             'remainingCount' => 0,
+            'compactRemainingCount' => 0,
         ]);
     }
 }

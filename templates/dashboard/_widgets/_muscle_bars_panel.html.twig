@@ -1,6 +1,6 @@
 {#
     Variables attendues (toutes via `only`) :
-    - distribution : array{bars: array<array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null}>, remainingCount: int}
+    - distribution : array{bars: array<array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null, hiddenWhenCompact: bool}>, remainingCount: int, compactRemainingCount: int}
     - filter       : string  — session|week|month, valeur de l'attribut data-filter
     - active       : bool    — panneau visible au chargement initial
 #}
@@ -10,7 +10,7 @@
     {% for bar in distribution.bars %}
         {% set is_mixed = bar.primarySets > 0 and bar.secondarySets > 0 %}
         {% set fill = 'linear-gradient(to right, var(--color-rose-ft) 0%, var(--color-rose-ft) ' ~ bar.primaryPercentage ~ '%, var(--color-cyan-ft) ' ~ bar.primaryPercentage ~ '%, var(--color-cyan-ft) 100%)' %}
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3{{ bar.hiddenWhenCompact ? ' max-md:hidden' : '' }}">
             <span class="flex flex-col w-[100px] sm:w-[120px] shrink-0">
                 <span class="text-[11.5px] text-[#8b9bb4] truncate">
                     {{ bar.name|trans({}, 'muscle') }}
@@ -36,9 +36,15 @@
             </span>
         </div>
     {% endfor %}
+    {# Mobile : 5 barres seulement, les masquées rejoignent le compteur des « autres muscles » #}
     {% if distribution.remainingCount > 0 %}
-        <p class="text-[11px] text-[#4a5568] text-center mt-1">
+        <p class="max-md:hidden text-[11px] text-[#4a5568] text-center mt-1">
             {{ 'dashboard.widget.muscles.more_muscles'|trans({count: distribution.remainingCount}, 'navigation') }}
+        </p>
+    {% endif %}
+    {% if distribution.compactRemainingCount > 0 %}
+        <p class="md:hidden text-[11px] text-[#4a5568] text-center mt-1">
+            {{ 'dashboard.widget.muscles.more_muscles'|trans({count: distribution.compactRemainingCount}, 'navigation') }}
         </p>
     {% endif %}
 </div>

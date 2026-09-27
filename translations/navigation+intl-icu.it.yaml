@@ -182,6 +182,7 @@ dashboard:
             filter:
                 month: Mese
                 session: Ultimo giorno di allenamento
+                session_short: "Ultimo giorno"
                 week: Settimana
             last_solicited: "{days, plural, =0 {Allenato oggi} =1 {Ultima volta: 1 giorno fa} other {Ultima volta: # giorni fa}}"
             more_muscles: "{count, plural, =1 {+ # altro muscolo allenato} other {+ # altri muscoli allenati}}"
@@ -191,6 +192,7 @@ dashboard:
         regularity:
             best_streak: "{count, plural, =1 {Record: # settimana} other {Record: # settimane}}"
             deload_day: Settimana di riposo programmata
+            delta_short: "{count, number, ::sign-except-zero} vs prec."
             last_week: Settimana scorsa
             month_delta_negative: "{count, plural, =1 {-# allenamento vs mese prec.} other {-# allenamenti vs mese prec.}}"
             month_delta_positive: "{count, plural, =1 {+# allenamento vs mese prec.} other {+# allenamenti vs mese prec.}}"
@@ -214,6 +216,7 @@ dashboard:
             exercises: "{count, plural, =1 {Esercizio} other {Esercizi}}"
             filter:
                 last: Ultimo giorno di allenamento
+                last_short: "Ultimo giorno"
                 month: Mese
                 week: Settimana
             pr_count: "{count, plural, =1 {# PR battuto} other {# PR battuti}}"
@@ -500,6 +503,7 @@ profile_connection:
             revoke_for: "Rimuovi la connessione con {nickname}"
             view: "Vedi il cruscotto"
             view_for: "Vedi il cruscotto di {nickname}"
+            view_short: "Vedi"
         connections:
             empty: "Non hai ancora nessuna connessione."
             title: "Le mie connessioni"

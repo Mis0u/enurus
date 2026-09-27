@@ -182,6 +182,7 @@ dashboard:
             filter:
                 month: Miesiąc
                 session: Ostatni dzień treningowy
+                session_short: "Ostatni dzień"
                 week: Tydzień
             last_solicited: "{days, plural, =0 {Trenowano dzisiaj} =1 {Ostatnio: 1 dzień temu} few {Ostatnio: # dni temu} many {Ostatnio: # dni temu} other {Ostatnio: # dni temu}}"
             more_muscles: "{count, plural, =1 {+ # inny wytrenowany mięsień} few {+ # inne wytrenowane mięśnie} many {+ # innych wytrenowanych mięśni} other {+ # innych wytrenowanych mięśni}}"
@@ -191,6 +192,7 @@ dashboard:
         regularity:
             best_streak: "{count, plural, =1 {Rekord: # tydzień} few {Rekord: # tygodnie} many {Rekord: # tygodni} other {Rekord: # tygodnia}}"
             deload_day: Zaplanowany tydzień odpoczynku
+            delta_short: "{count, number, ::sign-except-zero} vs poprz."
             last_week: Poprzedni tydzień
             month_delta_negative: "{count, plural, =1 {-# trening vs poprz. miesiąc} few {-# treningi vs poprz. miesiąc} many {-# treningów vs poprz. miesiąc} other {-# treningu vs poprz. miesiąc}}"
             month_delta_positive: "{count, plural, =1 {+# trening vs poprz. miesiąc} few {+# treningi vs poprz. miesiąc} many {+# treningów vs poprz. miesiąc} other {+# treningu vs poprz. miesiąc}}"
@@ -214,6 +216,7 @@ dashboard:
             exercises: "{count, plural, =1 {Ćwiczenie} few {Ćwiczenia} many {Ćwiczeń} other {Ćwiczeń}}"
             filter:
                 last: Ostatni dzień treningowy
+                last_short: "Ostatni dzień"
                 month: Miesiąc
                 week: Tydzień
             pr_count: "{count, plural, =1 {# pobity rekord} few {# pobite rekordy} many {# pobitych rekordów} other {# pobitego rekordu}}"
@@ -504,6 +507,7 @@ profile_connection:
             revoke_for: "Usuń połączenie z {nickname}"
             view: "Zobacz panel"
             view_for: "Zobacz panel użytkownika {nickname}"
+            view_short: "Zobacz"
         connections:
             empty: "Nie masz jeszcze żadnych połączeń."
             title: "Moje połączenia"

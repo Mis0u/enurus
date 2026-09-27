@@ -6,10 +6,10 @@
                      connexion ; null pour ne pas afficher le lien
     - readOnly     : bool — dashboard d'une connexion (libellé du lien à la 3ᵉ personne)
 #}
-<div class="md:col-span-2 bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] md:p-[26px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col">
+<div class="md:col-span-2 bg-bg-card border border-white/[0.07] rounded-2xl p-4 md:p-[26px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col">
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(244,63,94,0.05),transparent_60%)] pointer-events-none"></div>
 
-    <div class="relative flex items-center gap-[7px] mb-5">
+    <div class="relative flex items-center gap-[7px] mb-4 md:mb-5">
         {% include 'partials/_svg/_shield.html.twig' with {width: 3.75, height: 3.75, extraClass: 'text-[#8b9bb4]', ariaHidden: true} only %}
         <h2 class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
             {{ 'badge.widget.title'|trans({}, 'navigation') }}
@@ -19,17 +19,17 @@
         </span>
     </div>
 
-    <div class="relative grid md:grid-cols-[1.1fr_1fr] gap-6">
+    <div class="relative grid md:grid-cols-[1.1fr_1fr] gap-5 md:gap-6">
         <div>
             <h3 class="text-[12px] font-semibold uppercase tracking-[0.4px] text-[#4a5568] mb-3">
                 {{ 'badge.widget.latest'|trans({}, 'navigation') }}
             </h3>
             <ul class="grid grid-cols-3 gap-2.5 md:gap-3">
                 {% for tile in badges.latest %}
-                    <li class="badge-hover flex flex-col items-center gap-1.5 text-center rounded-[14px] px-2 py-3.5 bg-white/[0.03] border border-white/[0.07]">
+                    <li class="badge-hover badge-latest-tile flex flex-col items-center gap-1.5 text-center rounded-[14px] px-2 py-2.5 md:py-3.5 bg-white/[0.03] border border-white/[0.07]">
                         {% include 'badge/_visual.html.twig' with {tile: tile, size: 'md'} only %}
-                        <span class="font-rajdhani text-[15px] font-bold leading-tight text-[#f0f4ff]">{{ tile.name }}</span>
-                        <span class="text-[11px] text-[#4a5568]">{{ tile.unlockedAt|format_date('medium', locale=app.request.locale) }}</span>
+                        <span class="font-rajdhani text-[14px] md:text-[15px] font-bold leading-tight text-[#f0f4ff]">{{ tile.name }}</span>
+                        <span class="max-md:hidden text-[11px] text-[#4a5568]">{{ tile.unlockedAt|format_date('medium', locale=app.request.locale) }}</span>
                     </li>
                 {% endfor %}
             </ul>
@@ -64,7 +64,7 @@
 
     {% if allBadgesUrl is not null %}
         <a href="{{ allBadgesUrl }}"
-           class="relative self-start mt-5 inline-flex items-center gap-1.5 max-md:min-h-11 text-[13px] font-medium text-rose-ft hover:opacity-80 transition-ft">
+           class="relative self-start mt-3 md:mt-5 inline-flex items-center gap-1.5 max-md:min-h-11 text-[13px] font-medium text-rose-ft hover:opacity-80 transition-ft">
             {{ (readOnly ? 'badge.widget.see_all_shared' : 'badge.widget.see_all')|trans({}, 'navigation') }}
             <span aria-hidden="true">→</span>
         </a>

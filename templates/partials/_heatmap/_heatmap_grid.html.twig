@@ -9,7 +9,9 @@
 #}
 {% set week_class = fluid ? 'flex-1 min-w-0' : 'w-[10px] shrink-0' %}
 {% set cell_size_class = fluid ? 'w-full aspect-square rounded-[3px]' : 'w-[10px] h-[10px] rounded-[2px]' %}
-{% set day_label_class = fluid ? 'flex-1 flex items-center' : 'h-[10px] leading-[10px]' %}
+{# `min-h-0 leading-none` : sur mobile les cases fluides font ~8 px, moins qu'une ligne de texte —
+   sans ça la colonne des jours dépasse la grille et les lettres se décalent. #}
+{% set day_label_class = fluid ? 'flex-1 min-h-0 flex items-center leading-none' : 'h-[10px] leading-[10px]' %}
 
 <div class="{{ fluid ? '' : 'overflow-x-auto scrollbar-thin' }}">
     <div class="{{ fluid ? '' : 'inline-block min-w-full' }}">
