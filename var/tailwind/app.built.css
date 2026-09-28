@@ -4765,6 +4765,11 @@
       padding-right: calc(var(--spacing) * 3.5);
     }
   }
+  .max-md\:pb-4 {
+    @media (width < 48rem) {
+      padding-bottom: calc(var(--spacing) * 4);
+    }
+  }
   .max-md\:pb-20 {
     @media (width < 48rem) {
       padding-bottom: calc(var(--spacing) * 20);
@@ -4773,16 +4778,6 @@
   .max-md\:pb-\[100px\] {
     @media (width < 48rem) {
       padding-bottom: 100px;
-    }
-  }
-  .max-md\:pb-\[160px\] {
-    @media (width < 48rem) {
-      padding-bottom: 160px;
-    }
-  }
-  .max-md\:pb-\[200px\] {
-    @media (width < 48rem) {
-      padding-bottom: 200px;
     }
   }
   .max-md\:pl-2 {
