@@ -741,7 +741,9 @@ settings:
         request_error: Wystąpił błąd, spróbuj ponownie później
         title: Usunięcie konta
     dashboard_widgets:
-        explanation: "Wybierz bloki wyświetlane na Twoim panelu. Blok ukryty tutaj jest ukryty również dla Twoich połączeń."
+        explanation: "Wybierz bloki wyświetlane na Twoim panelu i ich kolejność: przeciągnij je lub użyj strzałek. Twoje połączenia widzą tę samą kolejność, a blok ukryty tutaj jest ukryty również dla nich."
+        move_down: "Przesuń „{widget}” w dół"
+        move_up: "Przesuń „{widget}” w górę"
         title: Widżety panelu
         widget:
             badges: "Odznaki"

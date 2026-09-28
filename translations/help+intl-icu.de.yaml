@@ -21,7 +21,7 @@ section:
         open: "Mein Dashboard ansehen"
         points:
             blocks: "Einheit (Zahlen deines letzten Trainingstags, der Woche, des Monats), Tonnage (insgesamt bewegtes Gewicht), Trainierte Muskeln, Regelmäßigkeit (Wochen am Stück), Ziele, Abzeichen, Verbindungen."
-            customize: "Wähle die angezeigten Blöcke unter Einstellungen › Dashboard-Widgets. Dort wird auch der Aktivitätskalender aktiviert."
+            customize: "Wähle die angezeigten Blöcke und ihre Reihenfolge unter Einstellungen › Dashboard-Widgets (Ziehen und Ablegen oder Pfeile ↑ ↓). Dort wird auch der Aktivitätskalender aktiviert."
             progressive: "Mit der Zeit werden neue Blöcke freigeschaltet: ab deinem 2. Training die Regelmäßigkeit und die Muskeln der Woche oder des Monats, ab deinem ersten Ziel die Ziele."
         title: "Dashboard"
     getting_started:

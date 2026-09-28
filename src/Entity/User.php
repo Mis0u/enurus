@@ -269,6 +269,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Ordre des widgets choisi en réglages (clés `DashboardWidgetEnum`), vide tant que l'utilisateur
+     * n'a jamais réorganisé : l'ordre affiché passe toujours par `DashboardWidgetEnum::inOrder()`,
+     * qui ajoute à la fin les widgets absents d'ici (débloqués ensuite). Vaut aussi pour son
+     * dashboard vu par une connexion.
+     *
+     * @var array<int, string>
+     */
+    #[ORM\Column(type: 'json', nullable: false, options: [
+        'default' => '[]',
+    ])]
+    public array $widgetOrder = [] {
+        get {
+            return $this->widgetOrder;
+        }
+        set(array $widgetOrder) {
+            $this->widgetOrder = $widgetOrder;
+        }
+    }
+
+    /**
      * Clés `DashboardWidgetEnum` masquées spécifiquement pour les connexions (dashboard partagé en
      * lecture seule), en plus de `hiddenWidgets` — jamais l'inverse : un widget déjà masqué sur son
      * propre dashboard reste masqué partout, cette liste ne fait que restreindre davantage, jamais

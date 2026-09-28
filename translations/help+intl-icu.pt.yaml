@@ -21,7 +21,7 @@ section:
         open: "Ver o meu painel"
         points:
             blocks: "Sessão (números do teu último dia de treino, da semana, do mês), Tonelagem (peso total levantado), Músculos trabalhados, Regularidade (semanas seguidas), Objetivos, Insígnias, Conexões."
-            customize: "Escolhe os blocos apresentados em Definições › Widgets do painel. O Calendário de atividade também se ativa aí."
+            customize: "Escolhe os blocos apresentados e a sua ordem em Definições › Widgets do painel (arrastar e largar ou setas ↑ ↓). O Calendário de atividade também se ativa aí."
             progressive: "Novos blocos desbloqueiam-se com o tempo: a partir do teu 2.º treino para a regularidade e os músculos da semana ou do mês, a partir do teu primeiro objetivo para os objetivos."
         title: "Painel"
     getting_started:

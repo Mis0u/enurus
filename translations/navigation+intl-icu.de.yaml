@@ -731,7 +731,9 @@ settings:
         request_error: Ein Fehler ist aufgetreten, bitte versuche es später erneut
         title: Kontolöschung
     dashboard_widgets:
-        explanation: "Wähle die Blöcke, die auf deinem Dashboard angezeigt werden. Ein hier ausgeblendeter Block ist auch für deine Verbindungen ausgeblendet."
+        explanation: "Wähle die Blöcke auf deinem Dashboard und ihre Reihenfolge: Ziehe sie oder nutze die Pfeile. Deine Verbindungen sehen dieselbe Reihenfolge, und ein hier ausgeblendeter Block ist auch für sie ausgeblendet."
+        move_down: "„{widget}“ nach unten verschieben"
+        move_up: "„{widget}“ nach oben verschieben"
         title: Dashboard-Widgets
         widget:
             badges: "Abzeichen"

@@ -1,7 +1,9 @@
 {#
     Variables attendues (via `only`) :
     - dashboardWidgets : array<array{key: string, label: string, hidden: bool}> — uniquement les
-      widgets débloqués, voir SettingsIndexController::buildDashboardWidgetRows()
+      widgets débloqués, dans l'ordre du dashboard, voir SettingsIndexController::buildDashboardWidgetRows()
+    Chaque ligne se réorganise à la poignée (souris, SortableJS) ou avec ↑ ↓ (tactile, clavier,
+    lecteur d'écran) ; l'ordre est enregistré à chaque déplacement.
 #}
 {% if dashboardWidgets is not empty %}
     <section id="dashboard-widgets"
@@ -9,6 +11,7 @@
              aria-labelledby="dashboard-widgets-title"
              data-controller="settings--dashboard-widgets"
              data-settings--dashboard-widgets-url-value="{{ path('app_settings_dashboard_widgets_update') }}"
+             data-settings--dashboard-widgets-order-url-value="{{ path('app_settings_dashboard_widgets_order_update') }}"
              data-settings--dashboard-widgets-csrf-token-value="{{ csrf_token('settings_dashboard_widgets') }}"
              data-settings--dashboard-widgets-success-message-value="{{ 'settings.feedback.success'|trans({}, 'navigation') }}">
 
@@ -23,19 +26,45 @@
                 {{ 'settings.dashboard_widgets.explanation'|trans({}, 'navigation') }}
             </p>
 
-            <div class="flex flex-col gap-3">
+            <ul class="flex flex-col gap-1" data-settings--dashboard-widgets-target="list">
                 {% for widget in dashboardWidgets %}
-                    <label class="relative flex items-center justify-between gap-3 cursor-pointer">
-                        <span class="text-sm text-[#f0f4ff]">{{ widget.label }}</span>
-                        <input type="checkbox"
-                               class="peer sr-only"
-                               {% if not widget.hidden %}checked{% endif %}
-                               data-action="change->settings--dashboard-widgets#toggle"
-                               data-settings--dashboard-widgets-widget-param="{{ widget.key }}">
-                        <span class="shrink-0 w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-rose-ft after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
-                    </label>
+                    {% set name_id = 'dashboard-widget-name-' ~ widget.key %}
+                    <li class="flex items-center gap-2 rounded-lg bg-[#0f1928]"
+                        data-settings--dashboard-widgets-target="row"
+                        data-widget="{{ widget.key }}">
+                        {# Poignée réservée à la souris : ↑ ↓ font la même chose au clavier et au doigt. #}
+                        <span class="drag-handle max-md:hidden shrink-0 cursor-grab active:cursor-grabbing text-[#4a5568] hover:text-[#8b9bb4] transition-colors" aria-hidden="true">
+                            {% include 'partials/_svg/_drag_handle.html.twig' only %}
+                        </span>
+                        <span id="{{ name_id }}" class="flex-1 min-w-0 text-sm text-[#f0f4ff]">{{ widget.label }}</span>
+
+                        <button type="button"
+                                class="shrink-0 flex items-center justify-center w-10 h-10 rounded-lg text-[#8b9bb4] hover:text-[#f0f4ff] hover:bg-white/5 disabled:opacity-30 disabled:pointer-events-none transition-colors [&>svg]:rotate-180"
+                                aria-label="{{ 'settings.dashboard_widgets.move_up'|trans({widget: widget.label}, 'navigation') }}"
+                                data-settings--dashboard-widgets-target="moveUpButton"
+                                data-action="settings--dashboard-widgets#moveUp">
+                            {% include 'partials/_svg/_down_arrow.html.twig' only %}
+                        </button>
+                        <button type="button"
+                                class="shrink-0 flex items-center justify-center w-10 h-10 rounded-lg text-[#8b9bb4] hover:text-[#f0f4ff] hover:bg-white/5 disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                                aria-label="{{ 'settings.dashboard_widgets.move_down'|trans({widget: widget.label}, 'navigation') }}"
+                                data-settings--dashboard-widgets-target="moveDownButton"
+                                data-action="settings--dashboard-widgets#moveDown">
+                            {% include 'partials/_svg/_down_arrow.html.twig' only %}
+                        </button>
+
+                        <label class="relative shrink-0 flex items-center min-h-10 pl-1 cursor-pointer">
+                            <input type="checkbox"
+                                   class="peer sr-only"
+                                   aria-labelledby="{{ name_id }}"
+                                   {% if not widget.hidden %}checked{% endif %}
+                                   data-action="change->settings--dashboard-widgets#toggle"
+                                   data-settings--dashboard-widgets-widget-param="{{ widget.key }}">
+                            <span class="shrink-0 w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-rose-ft peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-rose-ft after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
+                        </label>
+                    </li>
                 {% endfor %}
-            </div>
+            </ul>
         </details>
     </section>
 {% endif %}

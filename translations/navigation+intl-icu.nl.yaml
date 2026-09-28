@@ -731,7 +731,9 @@ settings:
         request_error: Er is een fout opgetreden, probeer het later opnieuw
         title: Accountverwijdering
     dashboard_widgets:
-        explanation: "Kies welke blokken op je dashboard worden weergegeven. Een blok dat je hier verbergt, is ook verborgen voor je verbindingen."
+        explanation: "Kies welke blokken op je dashboard staan en in welke volgorde: sleep ze of gebruik de pijlen. Je verbindingen zien dezelfde volgorde, en een blok dat je hier verbergt, is ook voor hen verborgen."
+        move_down: "‘{widget}’ omlaag verplaatsen"
+        move_up: "‘{widget}’ omhoog verplaatsen"
         title: Dashboard-widgets
         widget:
             badges: "Badges"

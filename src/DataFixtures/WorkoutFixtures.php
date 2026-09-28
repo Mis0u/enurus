@@ -77,20 +77,28 @@ class WorkoutFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * Crée 1 workout aujourd'hui pour user-fixture-1-workout (palier 1 — tests de frontière).
+     * Crée 1 workout aujourd'hui pour user-fixture-1-workout (palier 1 — tests de frontière) et pour
+     * le compte réservé au test e2e de l'ordre des widgets.
      *
      * @param Exercise[] $exercises
      */
     private function createDashboardWorkouts(array $exercises, ObjectManager $manager): void
     {
-        /** @var User $userSingle */
-        $userSingle = $this->getReference(
-            \sprintf('%s%s', UserFixtures::REFERENCE_PREFIX, UserFixtures::USER_DASHBOARD_SINGLE),
-            User::class,
-        );
+        foreach ([UserFixtures::USER_DASHBOARD_SINGLE, UserFixtures::USER_WIDGET_ORDER] as $email) {
+            $this->createSingleWorkout($email, $exercises, $manager);
+        }
+    }
+
+    /**
+     * @param Exercise[] $exercises
+     */
+    private function createSingleWorkout(string $email, array $exercises, ObjectManager $manager): void
+    {
+        /** @var User $owner */
+        $owner = $this->getReference(\sprintf('%s%s', UserFixtures::REFERENCE_PREFIX, $email), User::class);
 
         $workout = new Workout();
-        $workout->owner = $userSingle;
+        $workout->owner = $owner;
         $workout->performedAt = new \DateTimeImmutable('today 10:00:00');
         $workout->duration = 60;
 

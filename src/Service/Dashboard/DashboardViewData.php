@@ -31,6 +31,8 @@ final readonly class DashboardViewData
      * @param HeatmapData|null                $heatmapData       nul tant que le widget Calendrier n'est pas visible
      * @param list<ProfileConnectionEntry>    $connections       connexions acceptées de celui qui regarde, vide tant que
      *                                                           le widget Connexions (personnel) n'est pas visible
+     * @param list<string>                    $widgetOrder       clés DashboardWidgetEnum dans l'ordre d'affichage choisi par le
+     *                                                           propriétaire du dashboard (visibles ou non)
      */
     public function __construct(
         public DashboardState $dashboardState,
@@ -46,6 +48,7 @@ final readonly class DashboardViewData
         public BadgeCollectionView $badges,
         public ?array $heatmapData,
         public array $connections,
+        public array $widgetOrder,
     ) {
     }
 }

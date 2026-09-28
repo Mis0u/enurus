@@ -21,7 +21,7 @@ section:
         open: "Ver mi panel"
         points:
             blocks: "Sesión (cifras de tu último día de entrenamiento, de la semana, del mes), Tonelaje (peso total levantado), Músculos trabajados, Regularidad (semanas seguidas), Objetivos, Insignias, Conexiones."
-            customize: "Elige los bloques que se muestran en Ajustes › Widgets del panel. El Calendario de actividad también se activa ahí."
+            customize: "Elige los bloques que se muestran y su orden en Ajustes › Widgets del panel (arrastrar y soltar o flechas ↑ ↓). El Calendario de actividad también se activa ahí."
             progressive: "Se desbloquean nuevos bloques con el tiempo: desde tu 2.º entrenamiento para la regularidad y los músculos de la semana o del mes, desde tu primer objetivo para los objetivos."
         title: "Panel"
     getting_started:

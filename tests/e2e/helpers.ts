@@ -16,6 +16,9 @@ export const FIXTURE_USERS = {
     // `workout-prefill.spec.ts`. Sans séance fixture, la seule « dernière performance » possible
     // est celle que le test enregistre, quelle que soit l'heure du run.
     prefill: { email: 'user-fixture-8@test.com', nickname: 'user-fixture-8' },
+    // UserFixtures::USER_WIDGET_ORDER — 1 séance, réservé à `dashboard-widget-order.spec.ts` : il
+    // réorganise ses widgets, ce qui changerait la mise en page lue par les autres specs mobiles.
+    widgetOrder: { email: 'user-fixture-widget-order@test.com', nickname: 'user-widget-order' },
 };
 
 // Le controller Stimulus csrf-protection est chargé en lazy (import dynamique fetché sur le
