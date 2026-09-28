@@ -159,6 +159,35 @@ dashboard:
     setting: Ustawienia
     title: Panel
     widget:
+        comparison:
+            column:
+                change: "Zmiana"
+                current: "Obecnie"
+                metric: "Wskaźnik"
+                previous: "Wcześniej"
+            current_day: "Dzisiaj"
+            current_period: "Od {start} do {end}"
+            deload:
+                current: "☾ Ten okres obejmuje tydzień odpoczynku."
+                previous: "☾ Poprzedni okres obejmuje tydzień odpoczynku."
+            metric:
+                prs: "Rekordy (PR)"
+                reps: "Powtórzenia"
+                sessions: "Treningi"
+                sets: "Serie"
+                tonnage: "Tonaż ({unit})"
+            no_previous: "Brak treningów w poprzednim okresie: porównanie pojawi się, gdy tylko jakiś będzie."
+            previous_day: "vs {start}"
+            previous_period: "vs od {start} do {end}"
+            tab:
+                month: "Miesiąc"
+                week: "Tydzień"
+                year: "Rok"
+            title: "Porównanie"
+            trend:
+                down: "spadek"
+                equal: "bez zmian"
+                up: "wzrost"
         connections:
             manage: "Zarządzaj moimi połączeniami"
         goal:
@@ -171,9 +200,10 @@ dashboard:
             title: Cele
         locked:
             need_days: "{count, plural, =1 {+ # dzień historii} few {+ # dni historii} many {+ # dni historii} other {+ # dni historii}}"
+            need_weeks: "{count, plural, one {Jeszcze # tydzień treningu} few {Jeszcze # tygodnie treningu} many {Jeszcze # tygodni treningu} other {Jeszcze # tygodnia treningu}}"
             need_workouts: "{count, plural, =1 {Jeszcze # trening} few {Jeszcze # treningi} many {Jeszcze # treningów} other {Jeszcze # treningów}}"
+            title_comparison: "Porównanie"
             title_muscle_period: "Mięśnie · Tydzień / Miesiąc"
-            title_progression: Porównania postępów
             title_regularity: Regularność
             title_tonnage: Podniesiony ciężar
         muscles:
@@ -801,6 +831,7 @@ settings:
         title: Widżety panelu
         widget:
             badges: "Odznaki"
+            comparison: "Porównanie"
             connections: "Moje połączenia"
             goals: Cele
             heatmap: "Kalendarz aktywności"

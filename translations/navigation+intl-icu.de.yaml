@@ -159,6 +159,35 @@ dashboard:
     setting: Einstellungen
     title: Übersicht
     widget:
+        comparison:
+            column:
+                change: "Veränderung"
+                current: "Aktuell"
+                metric: "Kennzahl"
+                previous: "Vorher"
+            current_day: "Heute"
+            current_period: "Vom {start} bis {end}"
+            deload:
+                current: "☾ Dieser Zeitraum enthält eine Erholungswoche."
+                previous: "☾ Der vorherige Zeitraum enthält eine Erholungswoche."
+            metric:
+                prs: "Rekorde (PR)"
+                reps: "Wiederholungen"
+                sessions: "Einheiten"
+                sets: "Sätze"
+                tonnage: "Tonnage ({unit})"
+            no_previous: "Noch keine Einheit im vorherigen Zeitraum: Der Vergleich erscheint, sobald es eine gibt."
+            previous_day: "vs {start}"
+            previous_period: "vs vom {start} bis {end}"
+            tab:
+                month: "Monat"
+                week: "Woche"
+                year: "Jahr"
+            title: "Vergleich"
+            trend:
+                down: "fallend"
+                equal: "unverändert"
+                up: "steigend"
         connections:
             manage: "Meine Verbindungen verwalten"
         goal:
@@ -171,9 +200,10 @@ dashboard:
             title: Ziele
         locked:
             need_days: "{count, plural, =1 {+ # Tag Aktivität} other {+ # Tage Aktivität}}"
+            need_weeks: "{count, plural, one {Noch # Trainingswoche} other {Noch # Trainingswochen}}"
             need_workouts: "{count, plural, =1 {Noch # Training} other {Noch # Trainings}}"
+            title_comparison: "Vergleich"
             title_muscle_period: "Muskeln · Woche / Monat"
-            title_progression: Fortschrittsvergleiche
             title_regularity: Regelmäßigkeit
             title_tonnage: Gehobenes Gewicht
         muscles:
@@ -791,6 +821,7 @@ settings:
         title: Dashboard-Widgets
         widget:
             badges: "Abzeichen"
+            comparison: "Vergleich"
             connections: "Meine Verbindungen"
             goals: Ziele
             heatmap: "Aktivitätskalender"

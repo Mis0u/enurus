@@ -159,6 +159,35 @@ dashboard:
     setting: Impostazioni
     title: Cruscotto
     widget:
+        comparison:
+            column:
+                change: "Variazione"
+                current: "Attuale"
+                metric: "Indicatore"
+                previous: "Precedente"
+            current_day: "Oggi"
+            current_period: "Dal {start} al {end}"
+            deload:
+                current: "☾ Questo periodo comprende una settimana di riposo."
+                previous: "☾ Il periodo precedente comprende una settimana di riposo."
+            metric:
+                prs: "Record (PR)"
+                reps: "Ripetizioni"
+                sessions: "Allenamenti"
+                sets: "Serie"
+                tonnage: "Tonnellaggio ({unit})"
+            no_previous: "Ancora nessun allenamento nel periodo precedente: il confronto apparirà appena ce ne sarà uno."
+            previous_day: "vs il {start}"
+            previous_period: "vs dal {start} al {end}"
+            tab:
+                month: "Mese"
+                week: "Settimana"
+                year: "Anno"
+            title: "Confronto"
+            trend:
+                down: "in calo"
+                equal: "stabile"
+                up: "in aumento"
         connections:
             manage: "Gestisci le mie connessioni"
         goal:
@@ -171,9 +200,10 @@ dashboard:
             title: Obiettivi
         locked:
             need_days: "{count, plural, =1 {+ # giorno di storico} other {+ # giorni di storico}}"
+            need_weeks: "{count, plural, one {Ancora # settimana di allenamento} other {Ancora # settimane di allenamento}}"
             need_workouts: "{count, plural, =1 {Ancora # allenamento} other {Ancora # allenamenti}}"
+            title_comparison: "Confronto"
             title_muscle_period: "Muscoli · Settimana / Mese"
-            title_progression: Confronti di progressione
             title_regularity: Regolarità
             title_tonnage: Volume sollevato
         muscles:
@@ -791,6 +821,7 @@ settings:
         title: Widget della dashboard
         widget:
             badges: "Badge"
+            comparison: "Confronto"
             connections: "Le mie connessioni"
             goals: Obiettivi
             heatmap: "Calendario dell'attività"

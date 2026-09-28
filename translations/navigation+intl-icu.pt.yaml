@@ -159,6 +159,35 @@ dashboard:
     setting: Definições
     title: Painel
     widget:
+        comparison:
+            column:
+                change: "Evolução"
+                current: "Atual"
+                metric: "Indicador"
+                previous: "Anterior"
+            current_day: "Hoje"
+            current_period: "De {start} a {end}"
+            deload:
+                current: "☾ Este período inclui uma semana de descanso."
+                previous: "☾ O período anterior inclui uma semana de descanso."
+            metric:
+                prs: "Recordes (PR)"
+                reps: "Repetições"
+                sessions: "Treinos"
+                sets: "Séries"
+                tonnage: "Tonelagem ({unit})"
+            no_previous: "Ainda não há treinos no período anterior: a comparação aparece assim que houver um."
+            previous_day: "vs {start}"
+            previous_period: "vs de {start} a {end}"
+            tab:
+                month: "Mês"
+                week: "Semana"
+                year: "Ano"
+            title: "Comparação"
+            trend:
+                down: "a descer"
+                equal: "estável"
+                up: "a subir"
         connections:
             manage: "Gerir as minhas conexões"
         goal:
@@ -171,9 +200,10 @@ dashboard:
             title: Objetivos
         locked:
             need_days: "{count, plural, =1 {+ # dia de histórico} other {+ # dias de histórico}}"
+            need_weeks: "{count, plural, one {Falta # semana de treino} other {Faltam # semanas de treino}}"
             need_workouts: "{count, plural, =1 {Ainda # treino} other {Ainda # treinos}}"
+            title_comparison: "Comparação"
             title_muscle_period: "Músculos · Semana / Mês"
-            title_progression: Comparativos de progressão
             title_regularity: Regularidade
             title_tonnage: Volume levantado
         muscles:
@@ -791,6 +821,7 @@ settings:
         title: Widgets do painel
         widget:
             badges: "Insígnias"
+            comparison: "Comparação"
             connections: "As minhas conexões"
             goals: Objetivos
             heatmap: "Calendário de atividade"

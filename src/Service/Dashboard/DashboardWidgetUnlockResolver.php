@@ -38,6 +38,7 @@ final readonly class DashboardWidgetUnlockResolver
             DashboardWidgetEnum::REGULARITY->value => $dashboardState->regularityUnlocked,
             // Comme les Objectifs : visible dès le premier objectif créé depuis l'onglet Calendrier.
             DashboardWidgetEnum::REGULARITY_GOAL->value => $this->regularityGoalRepository->hasAnyForOwner($user),
+            DashboardWidgetEnum::COMPARISON->value => $dashboardState->comparisonUnlocked,
             DashboardWidgetEnum::GOALS->value => $hasAnyGoal,
             DashboardWidgetEnum::BADGES->value => $dashboardState->lastWorkoutUnlocked,
             DashboardWidgetEnum::HEATMAP->value => $dashboardState->lastWorkoutUnlocked,

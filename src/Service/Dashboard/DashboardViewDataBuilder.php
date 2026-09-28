@@ -11,6 +11,7 @@ use App\Repository\WorkoutStatsRepository;
 use App\Service\Badge\BadgeProgress;
 use App\Service\Badge\BadgeProgressCalculator;
 use App\Service\Badge\BadgeViewBuilder;
+use App\Service\Dashboard\Comparison\DashboardComparisonService;
 use App\Service\Goal\GoalCardFormatter;
 use App\Service\Goal\GoalProgress;
 use App\Service\ProfileSharing\ProfileConnectionOverviewService;
@@ -44,6 +45,7 @@ final readonly class DashboardViewDataBuilder
         private WorkoutHeatmapService $heatmapService,
         private ProfileConnectionOverviewService $connectionOverviewService,
         private RegularityGoalOverviewBuilder $regularityGoalOverviewBuilder,
+        private DashboardComparisonService $comparisonService,
     ) {
     }
 
@@ -74,6 +76,7 @@ final readonly class DashboardViewDataBuilder
             $visibleWidgets[DashboardWidgetEnum::HEATMAP->value] ? $this->heatmapService->build($subject, self::HEATMAP_WEEKS) : null,
             $visibleWidgets[DashboardWidgetEnum::CONNECTIONS->value] ? $this->connectionOverviewService->forUser($viewer)->connections : [],
             $visibleWidgets[DashboardWidgetEnum::REGULARITY_GOAL->value] ? $this->regularityGoalOverviewBuilder->build($subject) : null,
+            $visibleWidgets[DashboardWidgetEnum::COMPARISON->value] ? $this->comparisonService->build($subject, $viewer) : null,
             // Ordre du propriétaire, même vu par une connexion : c'est son dashboard.
             array_map(static fn (DashboardWidgetEnum $widget): string => $widget->value, DashboardWidgetEnum::inOrder($subject->widgetOrder)),
         );

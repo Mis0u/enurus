@@ -20,9 +20,9 @@ section:
         intro: "Dein Dashboard fasst deine Aktivität zusammen und wird mit jedem Training reichhaltiger."
         open: "Mein Dashboard ansehen"
         points:
-            blocks: "Einheit (Zahlen deines letzten Trainingstags, der Woche, des Monats), Tonnage (insgesamt bewegtes Gewicht), Trainierte Muskeln, Regelmäßigkeit (Wochen am Stück), Regelmäßigkeitsziel, Ziele, Abzeichen, Verbindungen."
+            blocks: "Einheit (Zahlen deines letzten Trainingstags, der Woche, des Monats), Tonnage (insgesamt bewegtes Gewicht), Trainierte Muskeln, Regelmäßigkeit (Wochen am Stück), Regelmäßigkeitsziel, Vergleich, Ziele, Abzeichen, Verbindungen."
             customize: "Wähle die angezeigten Blöcke und ihre Reihenfolge unter Einstellungen › Dashboard-Widgets (Ziehen und Ablegen oder Pfeile ↑ ↓). Dort wird auch der Aktivitätskalender aktiviert."
-            progressive: "Mit der Zeit werden neue Blöcke freigeschaltet: ab deinem 2. Training die Regelmäßigkeit und die Muskeln der Woche oder des Monats, ab deinem ersten Ziel die Ziele."
+            progressive: "Mit der Zeit werden neue Blöcke freigeschaltet: ab deinem 2. Training die Regelmäßigkeit und die Muskeln der Woche oder des Monats, ab deinem ersten Ziel die Ziele. Der Vergleich wird freigeschaltet, sobald du in zwei verschiedenen Wochen trainiert hast."
         title: "Dashboard"
     getting_started:
         intro: "Enurus hält deine Krafttrainings fest, damit du deine Fortschritte Woche für Woche siehst."

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Dashboard;
 
 use App\Service\Badge\View\BadgeCollectionView;
+use App\Service\Dashboard\Comparison\ComparisonView;
 use App\Service\ProfileSharing\ProfileConnectionEntry;
 use App\Service\RegularityGoal\RegularityGoalOverview;
 use App\Service\Workout\WorkoutHeatmapService;
@@ -33,6 +34,7 @@ final readonly class DashboardViewData
      * @param list<ProfileConnectionEntry>    $connections       connexions acceptées de celui qui regarde, vide tant que
      *                                                           le widget Connexions (personnel) n'est pas visible
      * @param RegularityGoalOverview|null     $regularityGoalOverview nul tant que le widget Objectif de régularité n'est pas visible
+     * @param list<ComparisonView>|null       $comparisons       onglets semaine/mois/année, nul tant que le widget Comparaison n'est pas visible
      * @param list<string>                    $widgetOrder       clés DashboardWidgetEnum dans l'ordre d'affichage choisi par le
      *                                                           propriétaire du dashboard (visibles ou non)
      */
@@ -51,6 +53,7 @@ final readonly class DashboardViewData
         public ?array $heatmapData,
         public array $connections,
         public ?RegularityGoalOverview $regularityGoalOverview,
+        public ?array $comparisons,
         public array $widgetOrder,
     ) {
     }

@@ -20,9 +20,9 @@ section:
         intro: "Ton tableau de bord résume ton activité et s'enrichit au fil de tes séances."
         open: "Voir mon tableau de bord"
         points:
-            blocks: "Séance (chiffres de ta dernière journée, de la semaine, du mois), Tonnage (poids total soulevé), Muscles travaillés, Régularité (semaines d'affilée), Objectif de régularité, Objectifs, Badges, Connexions."
+            blocks: "Séance (chiffres de ta dernière journée, de la semaine, du mois), Tonnage (poids total soulevé), Muscles travaillés, Régularité (semaines d'affilée), Objectif de régularité, Comparaison, Objectifs, Badges, Connexions."
             customize: "Choisis les blocs affichés et leur ordre dans Réglages › Widgets du dashboard (glisser-déposer ou flèches ↑ ↓). Le Calendrier d'activité s'y active aussi."
-            progressive: "De nouveaux blocs se débloquent au fil du temps : dès ta 2e séance pour la régularité et les muscles de la semaine ou du mois, dès ton premier objectif pour les objectifs."
+            progressive: "De nouveaux blocs se débloquent au fil du temps : dès ta 2e séance pour la régularité et les muscles de la semaine ou du mois, dès ton premier objectif pour les objectifs. La comparaison s'ouvre dès que tu as des séances sur deux semaines différentes."
         title: "Tableau de bord"
     getting_started:
         intro: "Enurus garde la trace de tes séances de musculation pour que tu voies tes progrès, semaine après semaine."

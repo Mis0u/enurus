@@ -101,6 +101,37 @@ class WorkoutStatsRepository
     }
 
     /**
+     * Une ligne par séance (date, nombre de séries, répétitions) sur la plage donnée — le widget
+     * Comparaison additionne ensuite ses six périodes en mémoire plutôt que de lancer une requête
+     * d'agrégat par période.
+     *
+     * @return list<array{performedAt: \DateTimeImmutable, sets: int, reps: int}>
+     */
+    public function findSetAndRepTotalsPerWorkout(User $user, DateTimeImmutable $start, DateTimeImmutable $end): array
+    {
+        /** @var list<array{performedAt: \DateTimeImmutable, sets: mixed, reps: mixed}> $rows */
+        $rows = $this->workoutRepository->createQueryBuilder('w')
+            ->select('w.performedAt AS performedAt', 'COUNT(es.id) AS sets', 'COALESCE(SUM(es.reps), 0) AS reps')
+            ->leftJoin('w.workoutExercises', 'we')
+            ->leftJoin('we.exerciseSets', 'es')
+            ->andWhere('w.owner = :user')
+            ->andWhere('w.performedAt >= :start')
+            ->andWhere('w.performedAt <= :end')
+            ->setParameter('user', $user)
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->groupBy('w.id', 'w.performedAt')
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY);
+
+        return array_map(static fn (array $row): array => [
+            'performedAt' => $row['performedAt'],
+            'sets' => is_numeric($row['sets']) ? (int) $row['sets'] : 0,
+            'reps' => is_numeric($row['reps']) ? (int) $row['reps'] : 0,
+        ], $rows);
+    }
+
+    /**
      * `$excludeWorkoutId` permet à l'édition d'une séance de vérifier les doublons sans compter la
      * séance en cours d'édition elle-même (sinon toute date déjà utilisée par CE workout serait
      * systématiquement signalée comme doublon).

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Security;
 
 use App\Entity\DeloadPeriod;
+use App\Enum\Dashboard\DashboardWidgetEnum;
 use App\Repository\WorkoutRepository;
 use App\Repository\WorkoutStatsRepository;
 use App\Service\Dashboard\DashboardPeriodCalculator;
@@ -193,7 +194,9 @@ class DashboardControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER_WITH_WORKOUTS);
         $user = $this->getUserByEmail(self::USER_WITH_WORKOUTS);
-        $user->hiddenWidgets = ['session', 'tonnage', 'muscle_distribution', 'regularity', 'goals', 'badges', 'heatmap', 'connections'];
+        // Tous les widgets, y compris ceux ajoutés depuis : une liste en dur laisserait le dernier
+        // widget visible et le dashboard ne serait plus vide.
+        $user->hiddenWidgets = array_map(static fn (DashboardWidgetEnum $widget): string => $widget->value, DashboardWidgetEnum::cases());
         /** @var EntityManagerInterface $em */
         $em = static::getContainer()->get(EntityManagerInterface::class);
         $em->flush();

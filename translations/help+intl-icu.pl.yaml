@@ -20,9 +20,9 @@ section:
         intro: "Twój panel podsumowuje Twoją aktywność i wzbogaca się z każdym treningiem."
         open: "Zobacz mój panel"
         points:
-            blocks: "Sesja (liczby z ostatniego dnia treningowego, tygodnia, miesiąca), Tonaż (łączny podniesiony ciężar), Trenowane mięśnie, Regularność (tygodnie z rzędu), Cel regularności, Cele, Odznaki, Połączenia."
+            blocks: "Sesja (liczby z ostatniego dnia treningowego, tygodnia, miesiąca), Tonaż (łączny podniesiony ciężar), Trenowane mięśnie, Regularność (tygodnie z rzędu), Cel regularności, Porównanie, Cele, Odznaki, Połączenia."
             customize: "Wybierz wyświetlane bloki i ich kolejność w Ustawienia › Widżety panelu (przeciągnij i upuść lub strzałki ↑ ↓). Tam też włączysz Kalendarz aktywności."
-            progressive: "Z czasem odblokowują się nowe bloki: od 2. treningu regularność i mięśnie z tygodnia lub miesiąca, od pierwszego celu – cele."
+            progressive: "Z czasem odblokowują się nowe bloki: od 2. treningu regularność i mięśnie z tygodnia lub miesiąca, od pierwszego celu – cele. Porównanie odblokowuje się, gdy trenujesz w dwóch różnych tygodniach."
         title: "Panel"
     getting_started:
         intro: "Enurus zapisuje Twoje treningi siłowe, żebyś widział swoje postępy tydzień po tygodniu."

@@ -64,6 +64,21 @@ final class DashboardWidgetUnlockResolverTest extends TestCase
     }
 
     /**
+     * Rien à comparer tant que les séances ne couvrent pas deux semaines différentes.
+     */
+    public function testComparisonWidgetUnlocksFromTwoDifferentWeeksOfTraining(): void
+    {
+        $resolver = new DashboardWidgetUnlockResolver(
+            $this->createStub(ExerciseGoalRepository::class),
+            $this->createStub(ProfileConnectionRepository::class),
+            $this->createStub(RegularityGoalRepository::class),
+        );
+
+        self::assertFalse($resolver->resolve($this->createStub(User::class), new DashboardState(workoutCount: 5, trainedWeekCount: 1))[DashboardWidgetEnum::COMPARISON->value]);
+        self::assertTrue($resolver->resolve($this->createStub(User::class), new DashboardState(workoutCount: 5, trainedWeekCount: 2))[DashboardWidgetEnum::COMPARISON->value]);
+    }
+
+    /**
      * Comme les Objectifs : le widget apparaît dès le premier objectif créé depuis l'onglet Calendrier.
      */
     public function testRegularityGoalWidgetUnlocksOnlyOnceAGoalWasCreated(): void

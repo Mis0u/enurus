@@ -159,6 +159,35 @@ dashboard:
     setting: Ajustes
     title: Panel
     widget:
+        comparison:
+            column:
+                change: "Evolución"
+                current: "Actual"
+                metric: "Indicador"
+                previous: "Anterior"
+            current_day: "Hoy"
+            current_period: "Del {start} al {end}"
+            deload:
+                current: "☾ Este periodo incluye una semana de descanso."
+                previous: "☾ El periodo anterior incluye una semana de descanso."
+            metric:
+                prs: "Récords (PR)"
+                reps: "Repeticiones"
+                sessions: "Sesiones"
+                sets: "Series"
+                tonnage: "Tonelaje ({unit})"
+            no_previous: "Todavía no hay sesiones en el periodo anterior: la comparación aparecerá en cuanto haya una."
+            previous_day: "vs el {start}"
+            previous_period: "vs del {start} al {end}"
+            tab:
+                month: "Mes"
+                week: "Semana"
+                year: "Año"
+            title: "Comparación"
+            trend:
+                down: "a la baja"
+                equal: "estable"
+                up: "al alza"
         connections:
             manage: "Gestionar mis conexiones"
         goal:
@@ -171,9 +200,10 @@ dashboard:
             title: Objetivos
         locked:
             need_days: "{count, plural, =1 {+ # día de historial} other {+ # días de historial}}"
+            need_weeks: "{count, plural, one {Falta # semana de entrenamiento} other {Faltan # semanas de entrenamiento}}"
             need_workouts: "{count, plural, =1 {Aún # entrenamiento} other {Aún # entrenamientos}}"
+            title_comparison: "Comparación"
             title_muscle_period: "Músculos · Semana / Mes"
-            title_progression: Comparativas de progresión
             title_regularity: Regularidad
             title_tonnage: Volumen levantado
         muscles:
@@ -791,6 +821,7 @@ settings:
         title: Widgets del panel
         widget:
             badges: "Insignias"
+            comparison: "Comparación"
             connections: "Mis conexiones"
             goals: Objetivos
             heatmap: "Calendario de actividad"

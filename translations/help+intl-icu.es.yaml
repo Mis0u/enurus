@@ -20,9 +20,9 @@ section:
         intro: "Tu panel resume tu actividad y se enriquece con cada entrenamiento."
         open: "Ver mi panel"
         points:
-            blocks: "Sesión (cifras de tu último día de entrenamiento, de la semana, del mes), Tonelaje (peso total levantado), Músculos trabajados, Regularidad (semanas seguidas), Objetivo de regularidad, Objetivos, Insignias, Conexiones."
+            blocks: "Sesión (cifras de tu último día de entrenamiento, de la semana, del mes), Tonelaje (peso total levantado), Músculos trabajados, Regularidad (semanas seguidas), Objetivo de regularidad, Comparación, Objetivos, Insignias, Conexiones."
             customize: "Elige los bloques que se muestran y su orden en Ajustes › Widgets del panel (arrastrar y soltar o flechas ↑ ↓). El Calendario de actividad también se activa ahí."
-            progressive: "Se desbloquean nuevos bloques con el tiempo: desde tu 2.º entrenamiento para la regularidad y los músculos de la semana o del mes, desde tu primer objetivo para los objetivos."
+            progressive: "Se desbloquean nuevos bloques con el tiempo: desde tu 2.º entrenamiento para la regularidad y los músculos de la semana o del mes, desde tu primer objetivo para los objetivos. La comparación se desbloquea cuando has entrenado en dos semanas distintas."
         title: "Panel"
     getting_started:
         intro: "Enurus guarda el registro de tus entrenamientos de musculación para que veas tus progresos, semana tras semana."
