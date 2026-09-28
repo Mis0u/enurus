@@ -159,6 +159,35 @@ dashboard:
     setting: Instellingen
     title: Overzicht
     widget:
+        comparison:
+            column:
+                change: "Verschil"
+                current: "Huidig"
+                metric: "Indicator"
+                previous: "Vorige"
+            current_day: "Vandaag"
+            current_period: "Van {start} tot {end}"
+            deload:
+                current: "☾ Deze periode bevat een rustweek."
+                previous: "☾ De vorige periode bevat een rustweek."
+            metric:
+                prs: "Records (PR)"
+                reps: "Herhalingen"
+                sessions: "Trainingen"
+                sets: "Sets"
+                tonnage: "Tonnage ({unit})"
+            no_previous: "Nog geen training in de vorige periode: de vergelijking verschijnt zodra er een is."
+            previous_day: "vs {start}"
+            previous_period: "vs van {start} tot {end}"
+            tab:
+                month: "Maand"
+                week: "Week"
+                year: "Jaar"
+            title: "Vergelijking"
+            trend:
+                down: "omlaag"
+                equal: "gelijk"
+                up: "omhoog"
         connections:
             manage: "Mijn verbindingen beheren"
         goal:
@@ -171,9 +200,10 @@ dashboard:
             title: Doelen
         locked:
             need_days: "{count, plural, =1 {+ # dag geschiedenis} other {+ # dagen geschiedenis}}"
+            need_weeks: "{count, plural, one {Nog # trainingsweek} other {Nog # trainingsweken}}"
             need_workouts: "{count, plural, =1 {Nog # training} other {Nog # trainingen}}"
+            title_comparison: "Vergelijking"
             title_muscle_period: "Spieren · Week / Maand"
-            title_progression: Vorderingsvergelijkingen
             title_regularity: Regelmaat
             title_tonnage: Geheven gewicht
         muscles:
@@ -791,6 +821,7 @@ settings:
         title: Dashboard-widgets
         widget:
             badges: "Badges"
+            comparison: "Vergelijking"
             connections: "Mijn verbindingen"
             goals: Doelen
             heatmap: "Activiteitenkalender"

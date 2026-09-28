@@ -31,7 +31,7 @@ final class SettingsDashboardWidgetOrderControllerTest extends WebTestCase
 
         self::assertResponseIsSuccessful();
         self::assertSame(
-            ['badges', 'session', 'tonnage', 'muscle_distribution', 'regularity', 'regularity_goal', 'goals', 'heatmap', 'connections'],
+            ['badges', 'session', 'tonnage', 'muscle_distribution', 'regularity', 'regularity_goal', 'comparison', 'goals', 'heatmap', 'connections'],
             $this->savedWidgetOrder(),
         );
     }

@@ -159,6 +159,35 @@ dashboard:
     setting: Réglages
     title: Tableau de bord
     widget:
+        comparison:
+            column:
+                change: "Évolution"
+                current: "Actuel"
+                metric: "Indicateur"
+                previous: "Précédent"
+            current_day: "Aujourd'hui"
+            current_period: "Du {start} au {end}"
+            deload:
+                current: "☾ Cette période comprend une semaine de repos."
+                previous: "☾ La période précédente comprend une semaine de repos."
+            metric:
+                prs: "Records (PR)"
+                reps: "Répétitions"
+                sessions: "Séances"
+                sets: "Séries"
+                tonnage: "Tonnage ({unit})"
+            no_previous: "Pas encore de séance sur la période précédente : la comparaison apparaîtra dès qu'il y en aura."
+            previous_day: "vs le {start}"
+            previous_period: "vs du {start} au {end}"
+            tab:
+                month: "Mois"
+                week: "Semaine"
+                year: "Année"
+            title: "Comparaison"
+            trend:
+                down: "en baisse"
+                equal: "stable"
+                up: "en hausse"
         connections:
             manage: "Gérer mes connexions"
         goal:
@@ -171,9 +200,10 @@ dashboard:
             title: Objectifs
         locked:
             need_days: "{count, plural, =1 {+ # jour d'ancienneté} other {+ # jours d'ancienneté}}"
+            need_weeks: "{count, plural, =1 {Encore # semaine d'entraînement} other {Encore # semaines d'entraînement}}"
             need_workouts: "{count, plural, =1 {Encore # séance} other {Encore # séances}}"
+            title_comparison: "Comparaison"
             title_muscle_period: "Muscles · Semaine / Mois"
-            title_progression: Comparatifs de progression
             title_regularity: Régularité
             title_tonnage: Tonnage soulevé
         muscles:
@@ -791,6 +821,7 @@ settings:
         title: Widgets du dashboard
         widget:
             badges: "Badges"
+            comparison: "Comparaison"
             connections: "Mes connexions"
             goals: Objectifs
             heatmap: "Calendrier d'activité"

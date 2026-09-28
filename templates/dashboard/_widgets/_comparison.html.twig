@@ -1,0 +1,99 @@
+{#
+    Widget Comparaison : pour la semaine, le mois et l'année, période en cours (du début à
+    aujourd'hui) contre les mêmes jours de la période précédente, dates exactes affichées. Flèches
+    neutres : l'évolution est montrée, jamais jugée. Tout est calculé par DashboardComparisonService.
+    Variable attendue (via `only`) :
+    - comparisons : list<ComparisonView> (semaine, mois, année)
+#}
+<div data-dashboard-widget="comparison"
+     class="bg-bg-card border border-white/[0.07] rounded-2xl p-4 md:p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
+     data-controller="dashboard--goal">
+
+    <div class="flex items-center gap-[7px] mb-3 md:mb-4 text-[#8b9bb4]">
+        {% include 'partials/_svg/_chart.html.twig' with {width: 3.75, height: 3.75} only %}
+        <h2 class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase">
+            {{ 'dashboard.widget.comparison.title'|trans({}, 'navigation') }}
+        </h2>
+    </div>
+
+    <div class="flex items-center gap-1 bg-white/[0.04] border border-white/[0.07] rounded-lg p-1 mb-4">
+        {% for comparison in comparisons %}
+            <button type="button"
+                    data-dashboard--goal-target="tab"
+                    data-filter="{{ comparison.granularity.value }}"
+                    data-action="click->dashboard--goal#switchFilter"
+                    class="{{ loop.first ? 'dashboard-tab-active' : 'dashboard-tab-inactive' }} flex-1 px-3 py-1.5 max-md:min-h-11 text-[12px] font-semibold rounded-md transition-ft">
+                {{ ('dashboard.widget.comparison.tab.' ~ comparison.granularity.value)|trans({}, 'navigation') }}
+            </button>
+        {% endfor %}
+    </div>
+
+    {% for comparison in comparisons %}
+        <div data-dashboard--goal-target="panel" data-filter="{{ comparison.granularity.value }}" class="{{ loop.first ? 'flex' : 'hidden' }} flex-col gap-3">
+            {# Année seulement pour l'onglet Année : ailleurs, les deux périodes tombent la même année
+               (ou presque) et la répéter alourdit la ligne. Période d'un seul jour (un lundi, un 1er) :
+               une seule date. #}
+            {% set date_pattern = comparison.granularity.value == 'year' ? 'd MMM y' : 'd MMM' %}
+            <p class="text-[12px] text-[#8b9bb4] leading-snug">
+                {% for side in ['current', 'previous'] %}
+                    {% set period = attribute(comparison.periods, side) %}
+                    {% set start = period.start|format_date(pattern=date_pattern, locale=app.request.locale) %}
+                    {% set end = period.end|format_date(pattern=date_pattern, locale=app.request.locale) %}
+                    {{ (start == end ? 'dashboard.widget.comparison.' ~ side ~ '_day' : 'dashboard.widget.comparison.' ~ side ~ '_period')|trans({start: start, end: end}, 'navigation') }}
+                    {% if loop.first %}<br>{% endif %}
+                {% endfor %}
+            </p>
+
+            {% if not comparison.hasPreviousData %}
+                <p class="text-[13px] text-[#8b9bb4] text-center py-4">
+                    {{ 'dashboard.widget.comparison.no_previous'|trans({}, 'navigation') }}
+                </p>
+            {% else %}
+                <table class="w-full text-[13px]">
+                    <caption class="sr-only">{{ ('dashboard.widget.comparison.tab.' ~ comparison.granularity.value)|trans({}, 'navigation') }}</caption>
+                    <thead>
+                        <tr class="text-[10.5px] uppercase tracking-[0.5px] text-[#4a5568]">
+                            <th scope="col" class="text-left font-semibold pb-1.5">{{ 'dashboard.widget.comparison.column.metric'|trans({}, 'navigation') }}</th>
+                            <th scope="col" class="text-right font-semibold pb-1.5 pl-3">{{ 'dashboard.widget.comparison.column.current'|trans({}, 'navigation') }}</th>
+                            <th scope="col" class="text-right font-semibold pb-1.5 pl-3">{{ 'dashboard.widget.comparison.column.previous'|trans({}, 'navigation') }}</th>
+                            <th scope="col" class="text-right font-semibold pb-1.5 pl-3">{{ 'dashboard.widget.comparison.column.change'|trans({}, 'navigation') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for metric in comparison.metrics %}
+                            <tr class="border-t border-white/[0.05]">
+                                <th scope="row" class="text-left font-medium text-[#8b9bb4] py-2">
+                                    {{ ('dashboard.widget.comparison.metric.' ~ metric.key)|trans({unit: comparison.unit}, 'navigation') }}
+                                </th>
+                                <td class="text-right font-rajdhani text-[15px] font-semibold text-[#f0f4ff] py-2 pl-3 whitespace-nowrap">
+                                    {{ metric.current|number_format(0, ',', ' ') }}
+                                </td>
+                                <td class="text-right font-rajdhani text-[15px] text-[#8b9bb4] py-2 pl-3 whitespace-nowrap">
+                                    {{ metric.previous|number_format(0, ',', ' ') }}
+                                </td>
+                                <td class="text-right text-[12px] text-[#c3cee0] py-2 pl-3 whitespace-nowrap">
+                                    <span aria-hidden="true">{{ {up: '▲', down: '▼', equal: '='}[metric.trend] }}</span>
+                                    <span class="sr-only">{{ ('dashboard.widget.comparison.trend.' ~ metric.trend)|trans({}, 'navigation') }}</span>
+                                    {% if metric.trend != 'equal' %}
+                                        {{ metric.delta > 0 ? '+' : '−' }}{{ metric.delta|abs|number_format(0, ',', ' ') }}
+                                        {% if metric.percent is not null %}
+                                            <span class="block text-[11px] text-[#64748b]">{{ metric.percent > 0 ? '+' : '−' }}{{ metric.percent|abs }} %</span>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
+            {% for side in ['current', 'previous'] %}
+                {% if attribute(comparison, side ~ 'IncludesDeload') %}
+                    <p class="text-[11.5px] text-cyan-ft/80">
+                        {{ ('dashboard.widget.comparison.deload.' ~ side)|trans({}, 'navigation') }}
+                    </p>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>

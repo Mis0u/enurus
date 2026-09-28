@@ -20,9 +20,9 @@ section:
         intro: "Je dashboard vat je activiteit samen en wordt met elke training rijker."
         open: "Mijn dashboard bekijken"
         points:
-            blocks: "Sessie (cijfers van je laatste trainingsdag, de week, de maand), Tonnage (totaal getild gewicht), Getrainde spieren, Regelmaat (weken op rij), Regelmaatdoel, Doelen, Badges, Verbindingen."
+            blocks: "Sessie (cijfers van je laatste trainingsdag, de week, de maand), Tonnage (totaal getild gewicht), Getrainde spieren, Regelmaat (weken op rij), Regelmaatdoel, Vergelijking, Doelen, Badges, Verbindingen."
             customize: "Kies de getoonde blokken en hun volgorde in Instellingen › Dashboard-widgets (slepen of pijlen ↑ ↓). Daar zet je ook de Activiteitenkalender aan."
-            progressive: "Na verloop van tijd worden nieuwe blokken ontgrendeld: vanaf je 2e training de regelmaat en de spieren van de week of maand, vanaf je eerste doel de doelen."
+            progressive: "Na verloop van tijd worden nieuwe blokken ontgrendeld: vanaf je 2e training de regelmaat en de spieren van de week of maand, vanaf je eerste doel de doelen. De vergelijking wordt ontgrendeld zodra je in twee verschillende weken hebt getraind."
         title: "Dashboard"
     getting_started:
         intro: "Enurus houdt je krachttrainingen bij zodat je je vooruitgang ziet, week na week."

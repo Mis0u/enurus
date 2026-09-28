@@ -20,9 +20,9 @@ section:
         intro: "La tua dashboard riassume la tua attività e si arricchisce allenamento dopo allenamento."
         open: "Vedi la mia dashboard"
         points:
-            blocks: "Sessione (numeri del tuo ultimo giorno di allenamento, della settimana, del mese), Tonnellaggio (peso totale sollevato), Muscoli allenati, Regolarità (settimane di fila), Obiettivo di regolarità, Obiettivi, Badge, Connessioni."
+            blocks: "Sessione (numeri del tuo ultimo giorno di allenamento, della settimana, del mese), Tonnellaggio (peso totale sollevato), Muscoli allenati, Regolarità (settimane di fila), Obiettivo di regolarità, Confronto, Obiettivi, Badge, Connessioni."
             customize: "Scegli i blocchi mostrati e il loro ordine in Impostazioni › Widget della dashboard (trascina e rilascia o frecce ↑ ↓). Lì si attiva anche il Calendario dell'attività."
-            progressive: "Nuovi blocchi si sbloccano col tempo: dal tuo 2° allenamento per la regolarità e i muscoli della settimana o del mese, dal tuo primo obiettivo per gli obiettivi."
+            progressive: "Nuovi blocchi si sbloccano col tempo: dal tuo 2° allenamento per la regolarità e i muscoli della settimana o del mese, dal tuo primo obiettivo per gli obiettivi. Il confronto si sblocca quando hai allenamenti in due settimane diverse."
         title: "Dashboard"
     getting_started:
         intro: "Enurus tiene traccia dei tuoi allenamenti in palestra perché tu veda i tuoi progressi, settimana dopo settimana."

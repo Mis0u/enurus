@@ -44,9 +44,10 @@ final class SettingsIndexControllerTest extends WebTestCase
         $crawler = $client->request(Request::METHOD_GET, self::URL);
 
         self::assertResponseIsSuccessful();
-        // Session, Tonnage, Muscles, Régularité, Badges, Calendrier, Connexions (hub de
-        // ProfileConnectionFixtures) — pas Objectifs, ce fixture n'en a jamais créé.
-        self::assertCount(7, $crawler->filter('[data-controller="settings--dashboard-widgets"] input[type="checkbox"]'));
+        // Session, Tonnage, Muscles, Régularité, Comparaison, Badges, Calendrier, Connexions (hub de
+        // ProfileConnectionFixtures) — pas Objectifs ni Objectif de régularité, ce fixture n'en a
+        // jamais créé.
+        self::assertCount(8, $crawler->filter('[data-controller="settings--dashboard-widgets"] input[type="checkbox"]'));
     }
 
     public function testDashboardWidgetsCardIsCollapsedByDefault(): void

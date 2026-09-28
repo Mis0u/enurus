@@ -159,6 +159,35 @@ dashboard:
     setting: Settings
     title: Dashboard
     widget:
+        comparison:
+            column:
+                change: "Change"
+                current: "Current"
+                metric: "Metric"
+                previous: "Previous"
+            current_day: "Today"
+            current_period: "From {start} to {end}"
+            deload:
+                current: "☾ This period includes a rest week."
+                previous: "☾ The previous period includes a rest week."
+            metric:
+                prs: "Records (PR)"
+                reps: "Reps"
+                sessions: "Sessions"
+                sets: "Sets"
+                tonnage: "Tonnage ({unit})"
+            no_previous: "No session yet in the previous period: the comparison will appear as soon as there is one."
+            previous_day: "vs {start}"
+            previous_period: "vs from {start} to {end}"
+            tab:
+                month: "Month"
+                week: "Week"
+                year: "Year"
+            title: "Comparison"
+            trend:
+                down: "down"
+                equal: "unchanged"
+                up: "up"
         connections:
             manage: "Manage my connections"
         goal:
@@ -171,9 +200,10 @@ dashboard:
             title: Goals
         locked:
             need_days: "{count, plural, =1 {+ # day of history} other {+ # days of history}}"
+            need_weeks: "{count, plural, one {# more week of training} other {# more weeks of training}}"
             need_workouts: "{count, plural, =1 {# more workout} other {# more workouts}}"
+            title_comparison: "Comparison"
             title_muscle_period: "Muscles · Week / Month"
-            title_progression: Progress comparisons
             title_regularity: Regularity
             title_tonnage: Volume lifted
         muscles:
@@ -791,6 +821,7 @@ settings:
         title: Dashboard widgets
         widget:
             badges: "Badges"
+            comparison: "Comparison"
             connections: "My connections"
             goals: Goals
             heatmap: "Activity calendar"

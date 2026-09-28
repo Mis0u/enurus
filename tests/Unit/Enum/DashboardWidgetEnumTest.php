@@ -29,7 +29,7 @@ final class DashboardWidgetEnumTest extends TestCase
     public function testWithoutSavedOrderWidgetsFollowTheDefaultDashboardOrder(): void
     {
         self::assertSame(
-            ['session', 'tonnage', 'muscle_distribution', 'regularity', 'regularity_goal', 'goals', 'heatmap', 'connections', 'badges'],
+            ['session', 'tonnage', 'muscle_distribution', 'regularity', 'regularity_goal', 'comparison', 'goals', 'heatmap', 'connections', 'badges'],
             $this->keys(DashboardWidgetEnum::inOrder([])),
         );
     }
@@ -48,7 +48,7 @@ final class DashboardWidgetEnumTest extends TestCase
     public function testWidgetsMissingFromTheSavedOrderAreAppendedInDefaultOrder(): void
     {
         self::assertSame(
-            ['badges', 'session', 'tonnage', 'muscle_distribution', 'regularity', 'regularity_goal', 'goals', 'heatmap', 'connections'],
+            ['badges', 'session', 'tonnage', 'muscle_distribution', 'regularity', 'regularity_goal', 'comparison', 'goals', 'heatmap', 'connections'],
             $this->keys(DashboardWidgetEnum::inOrder(['badges', 'session'])),
         );
     }
