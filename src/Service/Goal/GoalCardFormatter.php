@@ -8,6 +8,7 @@ use App\Entity\Exercise;
 use App\Entity\ExerciseGoal;
 use App\Entity\User;
 use App\Enum\Entity\Exercise\MeasurementType;
+use App\Service\Exercise\ExerciseNameTranslator;
 use App\Service\Utils\WeightConverterService;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -21,6 +22,7 @@ final readonly class GoalCardFormatter
     public function __construct(
         private WeightConverterService $weightConverterService,
         private TranslatorInterface $translator,
+        private ExerciseNameTranslator $exerciseNameTranslator,
     ) {
     }
 
@@ -58,7 +60,7 @@ final readonly class GoalCardFormatter
      */
     public function exerciseName(Exercise $exercise): string
     {
-        return $exercise->isPublic ? $this->translator->trans($exercise->name, [], 'exercise') : $exercise->name;
+        return $this->exerciseNameTranslator->translate($exercise);
     }
 
     /**

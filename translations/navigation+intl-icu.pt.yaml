@@ -799,6 +799,26 @@ settings:
             regularity_goal: "Objetivo de regularidade"
             session: Sessão
             tonnage: Volume levantado
+    data_export:
+        csv_button: "Exportar os meus treinos em CSV"
+        csv_column:
+            date: "Data"
+            distance: "Distância (m)"
+            exercise: "Exercício"
+            mood: "Humor"
+            reps: "Repetições"
+            routine: "Treino"
+            set: "Série"
+            set_duration: "Duração (s)"
+            time: "Hora"
+            unit: "Unidade"
+            weight: "Peso"
+            workout_duration: "Duração do treino (min)"
+        csv_hint: "Para uma folha de cálculo (Excel, Numbers, Google Sheets): uma linha por série, pesos na tua unidade."
+        explanation: "Descarrega todo o histórico dos teus treinos, para o guardares, analisares ou levares para outro lado."
+        json_button: "Exportar os meus treinos em JSON"
+        json_hint: "Dados brutos e estruturados, para outra app ou um script. Pesos em kg."
+        title: "Os meus dados"
     email:
         label: Email
         not_editable: Não modificável

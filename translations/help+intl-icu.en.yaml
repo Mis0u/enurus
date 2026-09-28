@@ -64,6 +64,7 @@ section:
         points:
             account: "Change your password, or delete your account: the deletion can be cancelled for 30 days."
             bodyweight: "Your body weight is used to compute the tonnage of bodyweight exercises."
+            export: "In Settings › My data, download your whole workout history: as CSV for a spreadsheet (one row per set), or as JSON for another app."
             profile: "Alias, avatar, language and gender (which picks the muscle silhouette)."
             unit: "Weight unit (kg or lbs): the whole display adapts, without changing anything in your history."
         title: "Settings"

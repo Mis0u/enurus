@@ -809,6 +809,26 @@ settings:
             regularity_goal: "Cel regularności"
             session: Trening
             tonnage: Podniesiony ciężar
+    data_export:
+        csv_button: "Eksportuj moje treningi do CSV"
+        csv_column:
+            date: "Data"
+            distance: "Dystans (m)"
+            exercise: "Ćwiczenie"
+            mood: "Samopoczucie"
+            reps: "Powtórzenia"
+            routine: "Trening"
+            set: "Seria"
+            set_duration: "Czas (s)"
+            time: "Godzina"
+            unit: "Jednostka"
+            weight: "Ciężar"
+            workout_duration: "Czas treningu (min)"
+        csv_hint: "Do arkusza kalkulacyjnego (Excel, Numbers, Google Sheets): jeden wiersz na serię, ciężary w Twojej jednostce."
+        explanation: "Pobierz całą historię swoich treningów, aby ją zachować, przeanalizować lub przenieść gdzie indziej."
+        json_button: "Eksportuj moje treningi do JSON"
+        json_hint: "Surowe, ustrukturyzowane dane dla innej aplikacji lub skryptu. Ciężary w kg."
+        title: "Moje dane"
     email:
         label: E-mail
         not_editable: Nie można edytować

@@ -36,7 +36,10 @@
             {# ============ LIGNE 2 — WIDGETS DU DASHBOARD, PLEINE LARGEUR ============ #}
             {% include 'settings/_dashboard_widgets_card.html.twig' with {dashboardWidgets: dashboardWidgets} only %}
 
-            {# ============ LIGNE 3 — SUPPRESSION, PLEINE LARGEUR ============ #}
+            {# ============ LIGNE 3 — MES DONNÉES (EXPORT), PLEINE LARGEUR ============ #}
+            {% include 'settings/_data_export_card.html.twig' only %}
+
+            {# ============ LIGNE 4 — SUPPRESSION, PLEINE LARGEUR ============ #}
             {% include 'settings/_danger_zone_card.html.twig' with {user: user} only %}
 
         </div>

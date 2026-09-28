@@ -64,6 +64,7 @@ section:
         points:
             account: "Cambia tu contraseña o elimina tu cuenta: la eliminación se puede cancelar durante 30 días."
             bodyweight: "Tu peso corporal sirve para calcular el tonelaje de los ejercicios con el peso corporal."
+            export: "En Ajustes › Mis datos, descarga todo el historial de tus entrenamientos: en CSV para una hoja de cálculo (una fila por serie) o en JSON para otra app."
             profile: "Alias, avatar, idioma y género (que elige la silueta de los músculos)."
             unit: "Unidad de peso (kg o lbs): toda la visualización se adapta, sin cambiar nada de tu historial."
         title: "Ajustes"
