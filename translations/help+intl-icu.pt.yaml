@@ -86,7 +86,7 @@ section:
         intro: "« Os meus treinos » reúne todo o teu histórico."
         open: "Ver os meus treinos"
         points:
-            calendar: "O separador « Calendário » mostra a tua atividade ao longo do ano: quanto mais escura for uma casa, mais longo foi o treino."
+            calendar: "O separador « Calendário » mostra a tua atividade ao longo do ano: quanto mais escura for uma casa, mais levantaste nesse dia em comparação com os teus outros treinos. Um treino sem carga (cardio, prancha…) aparece no tom mais claro."
             deload: "É também aí que programas as tuas semanas de descanso (deload): não quebram a tua série de semanas de treino."
             detail: "Abre um treino para ver as tuas séries, os músculos trabalhados e os teus recordes. Podes editá-lo ou eliminá-lo."
             list: "Os teus treinos do mais recente ao mais antigo, filtráveis por data, semana, mês, rotina ou músculo trabalhado."

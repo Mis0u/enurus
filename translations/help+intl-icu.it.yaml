@@ -86,7 +86,7 @@ section:
         intro: "« I miei allenamenti » raccoglie tutto il tuo storico."
         open: "Vedi i miei allenamenti"
         points:
-            calendar: "La scheda « Calendario » mostra la tua attività nell'anno: più una casella è scura, più l'allenamento è stato lungo."
+            calendar: "La scheda « Calendario » mostra la tua attività nell'anno: più una casella è scura, più hai sollevato quel giorno rispetto agli altri tuoi allenamenti. Un allenamento senza carico (cardio, plank…) appare nella tonalità più chiara."
             deload: "Lì programmi anche le tue settimane di riposo (deload): non interrompono la tua serie di settimane di allenamento."
             detail: "Apri un allenamento per vedere le tue serie, i muscoli sollecitati e i tuoi record. Puoi modificarlo o eliminarlo."
             list: "I tuoi allenamenti dal più recente al più vecchio, filtrabili per data, settimana, mese, routine o muscolo allenato."

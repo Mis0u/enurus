@@ -86,7 +86,7 @@ section:
         intro: "“My workouts” gathers your whole history."
         open: "See my workouts"
         points:
-            calendar: "The “Calendar” tab shows your activity over the year: the darker a square, the longer the workout."
+            calendar: "The “Calendar” tab shows your activity over the year: the darker a square, the more you lifted that day compared with your other workouts. A workout without load (cardio, planks…) shows in the lightest shade."
             deload: "You also schedule your rest weeks (deload) there: they don't break your streak of training weeks."
             detail: "Open a workout to see your sets, the muscles worked and your records. You can edit or delete it."
             list: "Your workouts from newest to oldest, filterable by date, week, month, routine or muscle worked."

@@ -86,7 +86,7 @@ section:
         intro: "‘Mijn trainingen’ bevat je volledige geschiedenis."
         open: "Mijn trainingen bekijken"
         points:
-            calendar: "Het tabblad ‘Kalender’ toont je activiteit over het jaar: hoe donkerder een vakje, hoe langer de training."
+            calendar: "Het tabblad ‘Kalender’ toont je activiteit over het jaar: hoe donkerder een vakje, hoe meer je die dag hebt getild vergeleken met je andere trainingen. Een training zonder gewicht (cardio, plank…) verschijnt in de lichtste tint."
             deload: "Daar plan je ook je rustweken (deload): ze onderbreken je reeks trainingsweken niet."
             detail: "Open een training om je sets, de getrainde spieren en je records te zien. Je kunt hem bewerken of verwijderen."
             list: "Je trainingen van nieuw naar oud, te filteren op datum, week, maand, routine of getrainde spier."

@@ -86,7 +86,7 @@ section:
         intro: "„Meine Trainings“ enthält deinen gesamten Verlauf."
         open: "Meine Trainings ansehen"
         points:
-            calendar: "Der Tab „Kalender“ zeigt deine Aktivität über das Jahr: Je dunkler ein Feld, desto länger war das Training."
+            calendar: "Der Tab „Kalender“ zeigt deine Aktivität über das Jahr: Je dunkler ein Feld, desto mehr Gewicht hast du an diesem Tag im Vergleich zu deinen anderen Trainings bewegt. Ein Training ohne Zusatzlast (Cardio, Plank…) erscheint im hellsten Ton."
             deload: "Dort planst du auch deine Erholungswochen (Deload): Sie unterbrechen deine Serie von Trainingswochen nicht."
             detail: "Öffne ein Training, um deine Sätze, die beanspruchten Muskeln und deine Rekorde zu sehen. Du kannst es bearbeiten oder löschen."
             list: "Deine Trainings vom neuesten zum ältesten, filterbar nach Datum, Woche, Monat, Routine oder trainiertem Muskel."

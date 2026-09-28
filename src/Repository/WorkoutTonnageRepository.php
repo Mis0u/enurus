@@ -127,8 +127,8 @@ class WorkoutTonnageRepository
 
     /**
      * Une ligne par séance (date + tonnage en kg) sur la plage donnée, triée chronologiquement.
-     * Sert de base à toutes les granularités du graphique de tonnage (jour, semaine, mois),
-     * le regroupement se fait ensuite en PHP.
+     * Sert de base à toutes les granularités du graphique de tonnage (jour, semaine, mois) et au
+     * calendrier heatmap, le regroupement se fait ensuite en PHP.
      *
      * @return array<int, array{performedAt: DateTimeImmutable, tonnage: float}>
      */

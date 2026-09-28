@@ -849,12 +849,14 @@ workout:
                 deleted: Erholungswoche gelöscht.
                 error: Diese Phase konnte nicht gespeichert werden. Prüfe die Daten.
             heatmap:
+                how_it_works_body: "Jedes Feld summiert die Tonnage (Gewicht × Wiederholungen) deiner Trainings an diesem Tag. Deine Trainingstage des Jahres werden dann in drei Drittel aufgeteilt: das leichteste Drittel hell, das schwerste dunkel. Die Farben sind also auf dich bezogen und können sich mit neuen Trainings ändern. Ein Training ohne Zusatzlast (Cardio, Plank…) erscheint hell."
+                how_it_works_toggle: "Wie werden die Farben berechnet?"
                 legend_deload: Erholung
+                legend_intensity_intense: "Intensiv"
+                legend_intensity_light: "Leicht"
+                legend_intensity_medium: "Mittel"
                 legend_rest: Ungeplante Pause
-                legend_session_long: "90 min +"
-                legend_session_medium: "45–90 min"
-                legend_session_short: "< 45 min"
-                subtitle: "Intensität = Gesamtdauer des Trainings an diesem Tag."
+                subtitle: "Intensität = an diesem Tag bewegtes Gewicht, verglichen mit deinen anderen Trainings des Jahres."
                 title: Aktivitätskalender
             modal:
                 cancel: Abbrechen

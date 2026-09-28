@@ -86,7 +86,7 @@ section:
         intro: "« Mes séances » regroupe tout ton historique."
         open: "Voir mes séances"
         points:
-            calendar: "L'onglet « Calendrier » montre ton activité sur l'année : plus une case est foncée, plus la séance a été longue."
+            calendar: "L'onglet « Calendrier » montre ton activité sur l'année : plus une case est foncée, plus tu as soulevé ce jour-là par rapport à tes autres séances. Une séance sans charge (cardio, gainage…) apparaît dans la teinte la plus claire."
             deload: "Tu y programmes aussi tes semaines de repos (deload) : elles ne cassent pas ta série de semaines d'entraînement."
             detail: "Ouvre une séance pour voir le détail de tes séries, les muscles sollicités et tes records. Tu peux la modifier ou la supprimer."
             list: "Tes séances de la plus récente à la plus ancienne, filtrables par date, semaine, mois, routine ou muscle travaillé."
