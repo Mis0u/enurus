@@ -8,7 +8,9 @@ deload_period:
     end_date:
         required: Das Enddatum ist erforderlich.
     note_too_long: "Die Notiz darf {{ limit }} Zeichen nicht überschreiten."
+    regularity_goal_overlap: "Dieser Zeitraum überschneidet sich mit deinem Regelmäßigkeitsziel: Ziel und Erholung lassen sich nicht kombinieren."
     start_date:
+        in_the_past: "Eine Erholungswoche kann nicht in der Vergangenheit beginnen."
         required: Das Startdatum ist erforderlich.
 
 exercise:
@@ -25,6 +27,14 @@ exercise_set:
     weight_positive_or_zero: Das Gewicht darf nicht negativ sein.
     weight_required: Das Gewicht muss angegeben und positiv sein.
 
+regularity_goal:
+    deload_overlap: "Dieses Ziel überschneidet sich mit einer geplanten Erholungswoche. Wähle ein anderes Startdatum oder eine kürzere Dauer."
+    sessions:
+        positive: "Die Anzahl der Einheiten muss größer als 0 sein."
+        too_many: "Nicht mehr als {{ max }} Einheiten für diesen Rhythmus."
+    start_date:
+        in_the_past: "Das Ziel kann nicht in der Vergangenheit beginnen."
+        required: "Das Startdatum ist erforderlich."
 routine:
     name_exists: Du hast bereits eine Routine mit diesem Namen.
     name_not_blank: Der Routinename ist erforderlich.

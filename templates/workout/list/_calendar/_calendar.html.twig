@@ -1,15 +1,26 @@
 {#
     Variables attendues : `heatmapData` (structure de WorkoutHeatmapService::build()),
-    `deloadPeriods` (list<DeloadPeriod>), `deloadForm` (FormView de DeloadPeriodType).
+    `regularityGoalOverview` (RegularityGoalOverview), `regularityGoalForm` (FormView de
+    RegularityGoalType), `deloadPeriods` (list<DeloadPeriod>), `deloadForm` (FormView de DeloadPeriodType).
+    Chaque carte à modale a sa propre instance de workout--list--modal.
 
     Le widget régularité n'est volontairement pas repris ici : il est déjà affiché sur le
     dashboard, le dupliquer sur cet onglet n'apporte rien.
 #}
-<div data-controller="workout--list--deload-modal" class="w-full max-w-[820px] mx-auto flex flex-col gap-5">
+<div class="w-full max-w-[820px] mx-auto flex flex-col gap-5">
     {% include 'workout/list/_calendar/_heatmap.html.twig' with {'heatmapData': heatmapData} only %}
 
-    {% include 'workout/list/_calendar/_deload_management.html.twig' with {
-        'deloadPeriods': deloadPeriods,
-        'deloadForm': deloadForm,
-    } only %}
+    <div data-controller="workout--list--modal">
+        {% include 'workout/list/_calendar/_regularity_goal_management.html.twig' with {
+            'overview': regularityGoalOverview,
+            'form': regularityGoalForm,
+        } only %}
+    </div>
+
+    <div data-controller="workout--list--modal">
+        {% include 'workout/list/_calendar/_deload_management.html.twig' with {
+            'deloadPeriods': deloadPeriods,
+            'deloadForm': deloadForm,
+        } only %}
+    </div>
 </div>

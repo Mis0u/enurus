@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace App\Controller\Workout;
 
 use App\Entity\DeloadPeriod;
+use App\Entity\RegularityGoal;
 use App\Entity\Routine;
 use App\Entity\User;
 use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
 use App\Form\DeloadPeriodType;
+use App\Form\RegularityGoalType;
 use App\Repository\DeloadPeriodRepository;
 use App\Repository\MuscleGroupRepository;
 use App\Repository\RoutineRepository;
 use App\Service\Entity\MuscleGroupSorterService;
+use App\Service\RegularityGoal\RegularityGoalOverviewBuilder;
 use App\Service\Workout\WorkoutHeatmapService;
 use App\Service\Workout\WorkoutListViewDataBuilder;
 use DateTimeImmutable;
@@ -50,11 +53,12 @@ class WorkoutListController extends AbstractController
         WorkoutListViewDataBuilder $viewDataBuilder,
         WorkoutHeatmapService $heatmapService,
         DeloadPeriodRepository $deloadPeriodRepository,
+        RegularityGoalOverviewBuilder $regularityGoalOverviewBuilder,
     ): Response {
         /** @var User $user */
         $user = $this->getUser();
 
-        // Onglet "Calendrier" : vue entièrement différente (heatmap + gestion des deloads), pas
+        // Onglet "Calendrier" : vue entièrement différente (heatmap, objectif de régularité, deloads), pas
         // de filtres ni de pagination — voir la mémoire du projet sur cette décision UX (pas de
         // nouvelle page/route, un simple toggle sur cette même page).
         if ('calendar' === $request->query->get('view')) {
@@ -64,6 +68,8 @@ class WorkoutListController extends AbstractController
                 'heatmapData' => $heatmapService->build($user),
                 'deloadPeriods' => $deloadPeriodRepository->findByOwnerOrderedByStartDate($user),
                 'deloadForm' => $this->createForm(DeloadPeriodType::class, new DeloadPeriod()),
+                'regularityGoalOverview' => $regularityGoalOverviewBuilder->build($user),
+                'regularityGoalForm' => $this->createForm(RegularityGoalType::class, $this->newRegularityGoal()),
             ]);
         }
 
@@ -234,5 +240,16 @@ class WorkoutListController extends AbstractController
         }
 
         return implode(',', $pairs);
+    }
+
+    /**
+     * Pré-rempli pour le cas le plus courant : un défi qui démarre aujourd'hui.
+     */
+    private function newRegularityGoal(): RegularityGoal
+    {
+        $goal = new RegularityGoal();
+        $goal->startDate = new DateTimeImmutable('today');
+
+        return $goal;
     }
 }

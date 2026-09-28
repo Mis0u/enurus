@@ -20,7 +20,7 @@ section:
         intro: "O teu painel resume a tua atividade e enriquece-se a cada treino."
         open: "Ver o meu painel"
         points:
-            blocks: "Sessão (números do teu último dia de treino, da semana, do mês), Tonelagem (peso total levantado), Músculos trabalhados, Regularidade (semanas seguidas), Objetivos, Insígnias, Conexões."
+            blocks: "Sessão (números do teu último dia de treino, da semana, do mês), Tonelagem (peso total levantado), Músculos trabalhados, Regularidade (semanas seguidas), Objetivo de regularidade, Objetivos, Insígnias, Conexões."
             customize: "Escolhe os blocos apresentados e a sua ordem em Definições › Widgets do painel (arrastar e largar ou setas ↑ ↓). O Calendário de atividade também se ativa aí."
             progressive: "Novos blocos desbloqueiam-se com o tempo: a partir do teu 2.º treino para a regularidade e os músculos da semana ou do mês, a partir do teu primeiro objetivo para os objetivos."
         title: "Painel"
@@ -89,6 +89,7 @@ section:
             deload: "É também aí que programas as tuas semanas de descanso (deload): não quebram a tua série de semanas de treino."
             detail: "Abre um treino para ver as tuas séries, os músculos trabalhados e os teus recordes. Podes editá-lo ou eliminá-lo."
             list: "Os teus treinos do mais recente ao mais antigo, filtráveis por data, semana, mês, rotina ou músculo trabalhado."
+            regularity_goal: "Ainda em « Calendário », define um objetivo de regularidade: por exemplo 3 treinos por semana durante 4 semanas, ou 1 treino por dia durante 2 semanas. A duração escolhe-se em semanas inteiras de 7 dias, a partir da data de início. Cada dia ou semana tem de atingir a sua quota (dois treinos no mesmo dia contam como dois). Um objetivo não se acumula com uma semana de descanso: não podes programar um durante o outro. Acompanha o teu progresso no widget « Objetivo de regularidade » do teu painel. Um só objetivo de cada vez, que podes abandonar."
         title: "Os meus treinos"
 summary: "Índice"
 title: "Ajuda"

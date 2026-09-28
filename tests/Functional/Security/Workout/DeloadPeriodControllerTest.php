@@ -40,7 +40,7 @@ final class DeloadPeriodControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
         // Le calendrier n'est jamais présent quand l'onglet Liste est actif — évite un faux
         // positif si la vue calendrier était rendue par erreur en plus de la liste.
-        self::assertCount(0, $crawler->filter('[data-controller="workout--list--deload-modal"]'));
+        self::assertCount(0, $crawler->filter('[data-controller="workout--list--modal"]'));
     }
 
     public function testCreateValidPeriodPersistsAndRedirectsToCalendarView(): void
@@ -48,10 +48,14 @@ final class DeloadPeriodControllerTest extends WebTestCase
         $client = $this->login(self::USER);
         $crawler = $client->request(Request::METHOD_GET, self::CALENDAR_URL);
 
+        // Dates relatives : un repos ne se programme jamais dans le passé.
+        $start = new \DateTimeImmutable('+1 day')->format('Y-m-d');
+        $end = new \DateTimeImmutable('+7 days')->format('Y-m-d');
+
         $form = $crawler->filter('form[name="deload_period"]')->form();
         $form->setValues([
-            'deload_period[startDate]' => '2026-09-29',
-            'deload_period[endDate]' => '2026-10-05',
+            'deload_period[startDate]' => $start,
+            'deload_period[endDate]' => $end,
             'deload_period[note]' => 'Semaine allégée',
         ]);
 
@@ -61,11 +65,55 @@ final class DeloadPeriodControllerTest extends WebTestCase
 
         $deloadPeriod = $this->findLatestDeloadPeriod(self::USER);
         self::assertNotNull($deloadPeriod);
-        self::assertSame('2026-09-29', $deloadPeriod->startDate->format('Y-m-d'));
-        self::assertSame('2026-10-05', $deloadPeriod->endDate->format('Y-m-d'));
+        self::assertSame($start, $deloadPeriod->startDate->format('Y-m-d'));
+        self::assertSame($end, $deloadPeriod->endDate->format('Y-m-d'));
         self::assertSame('Semaine allégée', $deloadPeriod->note);
 
         $this->removeDeloadPeriod($deloadPeriod);
+    }
+
+    /**
+     * Un repos se programme : aujourd'hui ou plus tard, jamais dans le passé.
+     */
+    public function testAPeriodStartingInThePastIsRejected(): void
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, self::CALENDAR_URL);
+
+        $form = $crawler->filter('form[name="deload_period"]')->form();
+        $form->setValues([
+            'deload_period[startDate]' => new \DateTimeImmutable('yesterday')->format('Y-m-d'),
+            'deload_period[endDate]' => new \DateTimeImmutable('+5 days')->format('Y-m-d'),
+        ]);
+        $client->submit($form);
+
+        self::assertNull($this->findLatestDeloadPeriod(self::USER));
+        $client->followRedirect();
+        self::assertSelectorTextContains('body', 'Une semaine de repos ne peut pas commencer dans le passé.');
+    }
+
+    public function testAPeriodStartingTodayIsAccepted(): void
+    {
+        $client = $this->login(self::USER);
+        $crawler = $client->request(Request::METHOD_GET, self::CALENDAR_URL);
+
+        $form = $crawler->filter('form[name="deload_period"]')->form();
+        $form->setValues([
+            'deload_period[startDate]' => new \DateTimeImmutable('today')->format('Y-m-d'),
+            'deload_period[endDate]' => new \DateTimeImmutable('+6 days')->format('Y-m-d'),
+        ]);
+        $client->submit($form);
+
+        self::assertNotNull($this->findLatestDeloadPeriod(self::USER));
+    }
+
+    public function testTheDatePickersOnlyOfferTodayAndLater(): void
+    {
+        $client = $this->login(self::USER);
+        $client->request(Request::METHOD_GET, self::CALENDAR_URL);
+
+        self::assertSelectorExists('#deload_period_startDate[data-workout--date-picker-future-only-value="true"]');
+        self::assertSelectorExists('#deload_period_endDate[data-workout--date-picker-future-only-value="true"]');
     }
 
     public function testCreateWithEndDateBeforeStartDateIsRejected(): void
@@ -75,8 +123,8 @@ final class DeloadPeriodControllerTest extends WebTestCase
 
         $form = $crawler->filter('form[name="deload_period"]')->form();
         $form->setValues([
-            'deload_period[startDate]' => '2026-10-05',
-            'deload_period[endDate]' => '2026-09-29',
+            'deload_period[startDate]' => new \DateTimeImmutable('+7 days')->format('Y-m-d'),
+            'deload_period[endDate]' => new \DateTimeImmutable('+1 day')->format('Y-m-d'),
         ]);
 
         $client->submit($form);

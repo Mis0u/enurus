@@ -210,6 +210,9 @@ dashboard:
             year_delta_positive: "{count, plural, =1 {+# trening vs poprz. rok} few {+# treningi vs poprz. rok} many {+# treningów vs poprz. rok} other {+# treningu vs poprz. rok}}"
             year_delta_zero: Tyle samo co w poprzednim roku
             year_label: "{count, plural, =1 {trening w tym roku} few {treningi w tym roku} many {treningów w tym roku} other {treningu w tym roku}}"
+        regularity_goal:
+            create_link: "Wyznacz cel"
+            empty_history: "Brak zakończonych celów."
         session:
             annual_total_label: "Łącznie w roku {year}:"
             exercises: "{count, plural, =1 {Ćwiczenie} few {Ćwiczenia} many {Ćwiczeń} other {Ćwiczeń}}"
@@ -604,6 +607,53 @@ reset_password_request:
     reseting_password: Resetowanie hasła
     send_link: Wyślij link resetujący
 
+regularity_goal:
+    abandon:
+        button: "Porzuć"
+        cancel: "Anuluj"
+        confirm: "Porzuć"
+        error_text: "Nie udało się porzucić celu, spróbuj ponownie."
+        message: "Zostanie usunięty i nie pojawi się w Twojej historii."
+        title: "Porzucić ten cel?"
+    add_button: "Nowy cel"
+    calendar_label: "Kalendarz celu"
+    dates: "Od {start} do {end}"
+    duration: "{weeks, plural, one {# tydzień} few {# tygodnie} many {# tygodni} other {# tygodnia}}"
+    empty: "Brak celu w trakcie."
+    flash:
+        abandoned: "Cel porzucony."
+        already_ongoing: "Masz już cel w trakcie: ukończ go lub porzuć, zanim utworzysz kolejny."
+        created: "Cel regularności utworzony."
+        error: "Nie udało się utworzyć tego celu. Sprawdź pola."
+    form:
+        duration_help: "Czas trwania w pełnych tygodniach: każdy tydzień wyzwania liczy 7 pełnych dni od daty rozpoczęcia, aby Twój limit był zawsze sprawiedliwy."
+        duration_label: "Przez"
+        period_label: "Na"
+        sessions_label: "Treningi"
+        start_label: "Od dnia"
+    history_title: "Historia"
+    modal:
+        cancel: "Anuluj"
+        submit: "Utwórz cel"
+        subtitle: "Wyznacz sobie rytm i trzymaj się go do końca."
+        title: "Nowy cel regularności"
+    period:
+        day: "dzień"
+        week: "tydzień"
+    period_title: "{date}: {sessions}/{target} — {status}"
+    result:
+        achieved: "Osiągnięty"
+        not_achieved: "Nieosiągnięty"
+    score: "{met} z {required} {period, select, day {dni zaliczonych} other {tygodni zaliczonych}}"
+    status:
+        in_progress: "W trakcie"
+        met: "Zaliczony"
+        missed: "Opuszczony"
+        upcoming: "Nadchodzący"
+    subtitle: "Wyznacz sobie rytm treningów, dziennie lub tygodniowo, i śledź go na swoim panelu."
+    summary: "{sessions, plural, one {# trening} few {# treningi} many {# treningów} other {# treningu}} {period, select, day {dziennie} other {tygodniowo}} przez {duration}"
+    title: "Cel regularności"
+    week_label: "T{number}"
 routine:
     badge:
         base: Bazowe
@@ -752,6 +802,7 @@ settings:
             heatmap: "Kalendarz aktywności"
             muscle_distribution: Trenowane mięśnie
             regularity: Regularność
+            regularity_goal: "Cel regularności"
             session: Trening
             tonnage: Podniesiony ciężar
     email:

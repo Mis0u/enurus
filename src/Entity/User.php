@@ -108,6 +108,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @var Collection<int, RegularityGoal>
+     */
+    #[ORM\OneToMany(targetEntity: RegularityGoal::class, mappedBy: 'owner', cascade: ['remove'], orphanRemoval: true)]
+    public Collection $regularityGoals {
+        get {
+            return $this->regularityGoals;
+        }
+    }
+
+    /**
      * @var Collection<int, UserBadge>
      */
     #[ORM\OneToMany(targetEntity: UserBadge::class, mappedBy: 'owner', cascade: ['remove'], orphanRemoval: true)]
@@ -524,6 +534,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->routines = new ArrayCollection();
         $this->exerciseGoals = new ArrayCollection();
         $this->deloadPeriods = new ArrayCollection();
+        $this->regularityGoals = new ArrayCollection();
         $this->badges = new ArrayCollection();
         $this->sentProfileConnections = new ArrayCollection();
         $this->receivedProfileConnections = new ArrayCollection();

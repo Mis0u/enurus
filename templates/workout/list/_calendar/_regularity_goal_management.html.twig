@@ -1,0 +1,72 @@
+{#
+    Carte « Objectif de régularité » de l'onglet Calendrier : l'objectif en cours (ou à venir), son
+    abandon, la création d'un nouvel objectif quand il n'y en a pas, et l'historique des défis.
+    Variables attendues (via `only`) :
+    - overview : RegularityGoalOverview
+    - form     : FormView de RegularityGoalType
+#}
+<section class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] md:p-[26px]" aria-labelledby="regularity-goal-title">
+    <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+        <div>
+            <h3 id="regularity-goal-title" class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4] mb-1">
+                {{ 'regularity_goal.title'|trans({}, 'navigation') }}
+            </h3>
+            <p class="text-[12px] text-[#4a5568]">
+                {{ 'regularity_goal.subtitle'|trans({}, 'navigation') }}
+            </p>
+        </div>
+        {# Un seul objectif en cours à la fois : pas de création tant qu'il n'est pas terminé ou abandonné. #}
+        {% if overview.current is null %}
+            <button
+                type="button"
+                data-action="click->workout--list--modal#open"
+                class="font-rajdhani inline-flex items-center gap-2 px-4 py-2.5 max-md:min-h-11 rounded-[10px] text-white text-[13px] font-bold bg-gradient-to-br from-rose-ft to-red-600 shadow-[0_4px_15px_rgba(244,63,94,0.3)] hover:shadow-[0_6px_22px_rgba(244,63,94,0.5)] hover:-translate-y-px transition-all duration-200 whitespace-nowrap cursor-pointer"
+            >
+                {% include 'partials/_svg/_add.html.twig' with {'width': 4, 'height': 4, 'ariaHidden': true} only %}
+                {{ 'regularity_goal.add_button'|trans({}, 'navigation') }}
+            </button>
+        {% endif %}
+    </div>
+
+    {% if overview.current is null %}
+        <p class="text-[13px] text-[#4a5568] italic">
+            {{ 'regularity_goal.empty'|trans({}, 'navigation') }}
+        </p>
+    {% else %}
+        {% set current = overview.current %}
+        <div class="px-4 py-4 bg-rose-ft/[0.05] border border-rose-ft/[0.15] rounded-xl">
+            <div class="flex items-start justify-between gap-3 mb-4">
+                <div>
+                    {% include 'partials/_regularity_goal/_summary.html.twig' with {progress: current} only %}
+                    <div class="text-[12px] text-[#8b9bb4] mt-1.5">
+                        {{ 'regularity_goal.score'|trans({met: current.metCount, required: current.requiredCount, period: current.goal.period.value}, 'navigation') }}
+                    </div>
+                </div>
+                <button
+                    type="button"
+                    data-action="click->workout--list--delete-modal#deleteRegularityGoal"
+                    data-title="{{ 'regularity_goal.abandon.title'|trans({}, 'navigation') }}"
+                    data-message="{{ 'regularity_goal.abandon.message'|trans({}, 'navigation') }}"
+                    data-confirm="{{ 'regularity_goal.abandon.confirm'|trans({}, 'navigation') }}"
+                    data-cancel="{{ 'regularity_goal.abandon.cancel'|trans({}, 'navigation') }}"
+                    data-error-text="{{ 'regularity_goal.abandon.error_text'|trans({}, 'navigation') }}"
+                    data-delete-url="{{ path('app_regularity_goal_abandon', {'id': current.goal.id}) }}"
+                    data-token="{{ csrf_token('regularity_goal_abandon_' ~ current.goal.id) }}"
+                    class="shrink-0 px-3 py-2 max-md:min-h-10 rounded-lg border border-white/[0.07] bg-white/[0.03] text-[12px] font-semibold text-[#8b9bb4] hover:bg-[rgba(244,63,94,0.15)] hover:border-[rgba(244,63,94,0.4)] hover:text-[#f43f5e] transition-all duration-250 cursor-pointer"
+                >
+                    {{ 'regularity_goal.abandon.button'|trans({}, 'navigation') }}
+                </button>
+            </div>
+            {% include 'partials/_regularity_goal/_calendar.html.twig' with {progress: current} only %}
+        </div>
+    {% endif %}
+
+    {% if overview.history is not empty %}
+        <h4 class="font-rajdhani text-[13px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4] mt-6 mb-3">
+            {{ 'regularity_goal.history_title'|trans({}, 'navigation') }}
+        </h4>
+        {% include 'partials/_regularity_goal/_history.html.twig' with {history: overview.history} only %}
+    {% endif %}
+</section>
+
+{% include 'workout/list/_calendar/_regularity_goal_modal.html.twig' with {form: form} only %}

@@ -20,7 +20,7 @@ section:
         intro: "Ton tableau de bord résume ton activité et s'enrichit au fil de tes séances."
         open: "Voir mon tableau de bord"
         points:
-            blocks: "Séance (chiffres de ta dernière journée, de la semaine, du mois), Tonnage (poids total soulevé), Muscles travaillés, Régularité (semaines d'affilée), Objectifs, Badges, Connexions."
+            blocks: "Séance (chiffres de ta dernière journée, de la semaine, du mois), Tonnage (poids total soulevé), Muscles travaillés, Régularité (semaines d'affilée), Objectif de régularité, Objectifs, Badges, Connexions."
             customize: "Choisis les blocs affichés et leur ordre dans Réglages › Widgets du dashboard (glisser-déposer ou flèches ↑ ↓). Le Calendrier d'activité s'y active aussi."
             progressive: "De nouveaux blocs se débloquent au fil du temps : dès ta 2e séance pour la régularité et les muscles de la semaine ou du mois, dès ton premier objectif pour les objectifs."
         title: "Tableau de bord"
@@ -89,6 +89,7 @@ section:
             deload: "Tu y programmes aussi tes semaines de repos (deload) : elles ne cassent pas ta série de semaines d'entraînement."
             detail: "Ouvre une séance pour voir le détail de tes séries, les muscles sollicités et tes records. Tu peux la modifier ou la supprimer."
             list: "Tes séances de la plus récente à la plus ancienne, filtrables par date, semaine, mois, routine ou muscle travaillé."
+            regularity_goal: "Toujours dans « Calendrier », fixe-toi un objectif de régularité : par exemple 3 séances par semaine pendant 4 semaines, ou 1 séance par jour pendant 2 semaines. La durée se choisit en semaines entières de 7 jours, à partir de la date de début. Chaque jour ou semaine doit atteindre son quota (deux séances le même jour comptent pour deux). Un objectif ne se cumule pas avec une semaine de repos : impossible de programmer l'un pendant l'autre. Suis ta progression sur le widget « Objectif de régularité » du tableau de bord. Un seul objectif à la fois, que tu peux abandonner."
         title: "Mes séances"
 summary: "Sommaire"
 title: "Aide"

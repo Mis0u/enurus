@@ -17,6 +17,13 @@ export default class extends Controller {
         await this.#confirmAndDelete(event);
     }
 
+    /**
+     * Abandon d'un objectif de régularité : même flux, l'objectif est supprimé.
+     */
+    async deleteRegularityGoal(event) {
+        await this.#confirmAndDelete(event);
+    }
+
     // ─── Privé ───────────────────────────────────────────────────
 
     async #confirmAndDelete(event) {

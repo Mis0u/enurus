@@ -20,7 +20,7 @@ section:
         intro: "Twój panel podsumowuje Twoją aktywność i wzbogaca się z każdym treningiem."
         open: "Zobacz mój panel"
         points:
-            blocks: "Sesja (liczby z ostatniego dnia treningowego, tygodnia, miesiąca), Tonaż (łączny podniesiony ciężar), Trenowane mięśnie, Regularność (tygodnie z rzędu), Cele, Odznaki, Połączenia."
+            blocks: "Sesja (liczby z ostatniego dnia treningowego, tygodnia, miesiąca), Tonaż (łączny podniesiony ciężar), Trenowane mięśnie, Regularność (tygodnie z rzędu), Cel regularności, Cele, Odznaki, Połączenia."
             customize: "Wybierz wyświetlane bloki i ich kolejność w Ustawienia › Widżety panelu (przeciągnij i upuść lub strzałki ↑ ↓). Tam też włączysz Kalendarz aktywności."
             progressive: "Z czasem odblokowują się nowe bloki: od 2. treningu regularność i mięśnie z tygodnia lub miesiąca, od pierwszego celu – cele."
         title: "Panel"
@@ -89,6 +89,7 @@ section:
             deload: "Tam też planujesz tygodnie odpoczynku (deload): nie przerywają Twojej serii tygodni treningowych."
             detail: "Otwórz trening, aby zobaczyć swoje serie, zaangażowane mięśnie i rekordy. Możesz go edytować lub usunąć."
             list: "Twoje treningi od najnowszego do najstarszego, z filtrami według daty, tygodnia, miesiąca, programu lub trenowanego mięśnia."
+            regularity_goal: "Również w „Kalendarzu” wyznaczysz cel regularności: na przykład 3 treningi tygodniowo przez 4 tygodnie albo 1 trening dziennie przez 2 tygodnie. Czas trwania wybierasz w pełnych tygodniach po 7 dni, od daty rozpoczęcia. Każdy dzień lub tydzień musi osiągnąć swój limit (dwa treningi tego samego dnia liczą się podwójnie). Celu nie można łączyć z tygodniem odpoczynku: nie da się zaplanować jednego w trakcie drugiego. Śledź postępy w widżecie „Cel regularności” na swoim panelu. Jeden cel naraz, który możesz porzucić."
         title: "Moje treningi"
 summary: "Spis treści"
 title: "Pomoc"

@@ -23,6 +23,8 @@
         {% if view == 'calendar' %}
             {% include 'workout/list/_calendar/_calendar.html.twig' with {
                 'heatmapData': heatmapData,
+                'regularityGoalOverview': regularityGoalOverview,
+                'regularityGoalForm': regularityGoalForm,
                 'deloadPeriods': deloadPeriods,
                 'deloadForm': deloadForm,
             } only %}

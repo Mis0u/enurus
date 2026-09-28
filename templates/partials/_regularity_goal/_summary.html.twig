@@ -1,0 +1,19 @@
+{#
+    Résumé d'un objectif de régularité : « 3 séances par semaine pendant 4 semaines » + ses dates.
+    Variable attendue (via `only`) :
+    - progress : RegularityGoalProgress
+#}
+{% set goal = progress.goal %}
+<div class="text-[13px] font-semibold text-[#f0f4ff]">
+    {{ 'regularity_goal.summary'|trans({
+        sessions: goal.sessionsPerPeriod,
+        period: goal.period.value,
+        duration: 'regularity_goal.duration'|trans({weeks: goal.duration.value}, 'navigation'),
+    }, 'navigation') }}
+</div>
+<div class="text-[11.5px] text-[#64748b] mt-0.5">
+    {{ 'regularity_goal.dates'|trans({
+        start: goal.firstDay|format_date('medium', locale=app.request.locale),
+        end: goal.lastDay|format_date('medium', locale=app.request.locale),
+    }, 'navigation') }}
+</div>

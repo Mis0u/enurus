@@ -210,6 +210,9 @@ dashboard:
             year_delta_positive: "{count, plural, =1 {+# session vs last year} other {+# sessions vs last year}}"
             year_delta_zero: Same as last year
             year_label: "{count, plural, =1 {session this year} other {sessions this year}}"
+        regularity_goal:
+            create_link: "Set a goal"
+            empty_history: "No finished goal yet."
         session:
             annual_total_label: "Total for year {year}:"
             exercises: "{count, plural, =1 {Exercise} other {Exercises}}"
@@ -600,6 +603,53 @@ reset_password_request:
     reseting_password: Resetting your password
     send_link: Send reset link
 
+regularity_goal:
+    abandon:
+        button: "Abandon"
+        cancel: "Cancel"
+        confirm: "Abandon"
+        error_text: "Couldn't abandon the goal, please try again."
+        message: "It will be deleted and won't appear in your history."
+        title: "Abandon this goal?"
+    add_button: "New goal"
+    calendar_label: "Goal calendar"
+    dates: "From {start} to {end}"
+    duration: "{weeks, plural, one {# week} other {# weeks}}"
+    empty: "No goal in progress."
+    flash:
+        abandoned: "Goal abandoned."
+        already_ongoing: "You already have a goal in progress: finish or abandon it before creating another one."
+        created: "Regularity goal created."
+        error: "Couldn't create this goal. Please check the fields."
+    form:
+        duration_help: "Duration in whole weeks: each week of your challenge counts 7 full days from its start date, so your quota is always fair."
+        duration_label: "For"
+        period_label: "Per"
+        sessions_label: "Sessions"
+        start_label: "Starting on"
+    history_title: "History"
+    modal:
+        cancel: "Cancel"
+        submit: "Create goal"
+        subtitle: "Set yourself a pace and stick to it to the end."
+        title: "New regularity goal"
+    period:
+        day: "day"
+        week: "week"
+    period_title: "{date}: {sessions}/{target} — {status}"
+    result:
+        achieved: "Achieved"
+        not_achieved: "Not achieved"
+    score: "{met} of {required} {period, select, day {days met} other {weeks met}}"
+    status:
+        in_progress: "In progress"
+        met: "Met"
+        missed: "Missed"
+        upcoming: "Upcoming"
+    subtitle: "Set yourself a session pace, per day or per week, and follow it on your dashboard."
+    summary: "{sessions, plural, one {# session} other {# sessions}} per {period, select, day {day} other {week}} for {duration}"
+    title: "Regularity goal"
+    week_label: "W{number}"
 routine:
     badge:
         base: Default
@@ -742,6 +792,7 @@ settings:
             heatmap: "Activity calendar"
             muscle_distribution: Muscles worked
             regularity: Regularity
+            regularity_goal: "Regularity goal"
             session: Session
             tonnage: Volume lifted
     email:

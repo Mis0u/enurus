@@ -210,6 +210,9 @@ dashboard:
             year_delta_positive: "{count, plural, =1 {+# training vs vorig jaar} other {+# trainingen vs vorig jaar}}"
             year_delta_zero: Gelijk aan vorig jaar
             year_label: "{count, plural, =1 {training dit jaar} other {trainingen dit jaar}}"
+        regularity_goal:
+            create_link: "Een doel instellen"
+            empty_history: "Nog geen afgerond doel."
         session:
             annual_total_label: "Totaal voor jaar {year}:"
             exercises: "{count, plural, =1 {Oefening} other {Oefeningen}}"
@@ -600,6 +603,53 @@ reset_password_request:
     reseting_password: Herstellen van je wachtwoord
     send_link: Herstellink verzenden
 
+regularity_goal:
+    abandon:
+        button: "Opgeven"
+        cancel: "Annuleren"
+        confirm: "Opgeven"
+        error_text: "Het doel kon niet worden opgegeven, probeer het opnieuw."
+        message: "Het wordt verwijderd en verschijnt niet in je geschiedenis."
+        title: "Dit doel opgeven?"
+    add_button: "Nieuw doel"
+    calendar_label: "Kalender van het doel"
+    dates: "Van {start} tot {end}"
+    duration: "{weeks, plural, one {# week} other {# weken}}"
+    empty: "Geen doel bezig."
+    flash:
+        abandoned: "Doel opgegeven."
+        already_ongoing: "Je hebt al een doel bezig: rond het af of geef het op voordat je een nieuw maakt."
+        created: "Regelmaatdoel aangemaakt."
+        error: "Dit doel kon niet worden aangemaakt. Controleer de velden."
+    form:
+        duration_help: "Duur in hele weken: elke week van je uitdaging telt 7 volledige dagen vanaf de startdatum, zodat je quotum altijd eerlijk is."
+        duration_label: "Gedurende"
+        period_label: "Per"
+        sessions_label: "Trainingen"
+        start_label: "Vanaf"
+    history_title: "Geschiedenis"
+    modal:
+        cancel: "Annuleren"
+        submit: "Doel aanmaken"
+        subtitle: "Kies een ritme en houd het vol tot het einde."
+        title: "Nieuw regelmaatdoel"
+    period:
+        day: "dag"
+        week: "week"
+    period_title: "{date}: {sessions}/{target} — {status}"
+    result:
+        achieved: "Gehaald"
+        not_achieved: "Niet gehaald"
+    score: "{met} van {required} {period, select, day {dagen gehaald} other {weken gehaald}}"
+    status:
+        in_progress: "Bezig"
+        met: "Gehaald"
+        missed: "Gemist"
+        upcoming: "Gepland"
+    subtitle: "Kies een trainingsritme, per dag of per week, en volg het op je overzicht."
+    summary: "{sessions, plural, one {# training} other {# trainingen}} per {period, select, day {dag} other {week}} gedurende {duration}"
+    title: "Regelmaatdoel"
+    week_label: "W{number}"
 routine:
     badge:
         base: Standaard
@@ -742,6 +792,7 @@ settings:
             heatmap: "Activiteitenkalender"
             muscle_distribution: Getrainde spieren
             regularity: Regelmaat
+            regularity_goal: "Regelmaatdoel"
             session: Training
             tonnage: Geheven gewicht
     email:
