@@ -6,11 +6,14 @@ namespace App\Controller;
 
 use App\Controller\Trait\NotifiesBadgeUnlockTrait;
 use App\Entity\User;
+use App\Enum\Onboarding\GuidedTourStepEnum;
 use App\Service\Badge\BadgeLabelFormatter;
 use App\Service\Badge\BadgeSyncService;
 use App\Service\Dashboard\DashboardUnlockService;
 use App\Service\Dashboard\DashboardViewDataBuilder;
+use App\Service\Onboarding\GuidedTourService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -24,6 +27,7 @@ final class DashboardController extends AbstractController
         private readonly DashboardViewDataBuilder $viewDataBuilder,
         private readonly BadgeSyncService $badgeSyncService,
         private readonly BadgeLabelFormatter $badgeLabelFormatter,
+        private readonly GuidedTourService $guidedTourService,
     ) {
     }
 
@@ -41,7 +45,7 @@ final class DashboardController extends AbstractController
         name: 'app_dashboard'
     )]
     #[IsGranted('ROLE_USER')]
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         $user = $this->getUser();
 
@@ -54,11 +58,13 @@ final class DashboardController extends AbstractController
         $this->notifyBadgeUnlocks($badgeSync, $user, $this->badgeLabelFormatter);
 
         $dashboardState = $this->dashboardUnlockService->getStateForUser($user);
+        $guidedTourSteps = $this->guidedTourSteps($user, $request);
 
         if (0 === $dashboardState->workoutCount) {
             return $this->render('dashboard/dashboard-empty-responsive.html.twig', [
                 'user' => $user,
                 'dashboardState' => $dashboardState,
+                'guidedTourSteps' => $guidedTourSteps,
             ]);
         }
 
@@ -67,6 +73,21 @@ final class DashboardController extends AbstractController
         return $this->render('dashboard/dashboard.html.twig', [
             'user' => $user,
             'data' => $data,
+            'guidedTourSteps' => $guidedTourSteps,
         ]);
+    }
+
+    /**
+     * Étapes du tour guidé à jouer, vide s'il ne doit pas s'afficher : tout premier affichage du
+     * dashboard, ou relance depuis la page Aide (`?tour=1`).
+     *
+     * @return list<GuidedTourStepEnum>
+     */
+    private function guidedTourSteps(User $user, Request $request): array
+    {
+        // Premier affichage consommé même en cas de relance explicite, pour ne pas le rejouer ensuite.
+        $isFirstDisplay = $this->guidedTourService->consumeFirstDisplay($user);
+
+        return $isFirstDisplay || $request->query->getBoolean('tour') ? GuidedTourStepEnum::cases() : [];
     }
 }

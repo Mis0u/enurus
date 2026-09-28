@@ -1,0 +1,28 @@
+{#
+    Tour guidé du dashboard (driver.js, controller Stimulus `onboarding--tour`) : joué au tout
+    premier affichage du dashboard, ou relancé depuis la page Aide. Les cibles vivent dans la
+    navigation (`data-tour-step`), hors de cet élément.
+    Variables attendues (toutes via `only`) :
+    - tourSteps   : list<GuidedTourStepEnum>, dans l'ordre du tour
+    - hasWorkouts : bool — libellé du bouton final : « première séance » tant qu'il n'y en a aucune
+#}
+{% set steps = [] %}
+{% for step in tourSteps %}
+    {% set steps = steps|merge([{
+        target: step.value,
+        title: ('tour.step.' ~ step.value ~ '.title')|trans({}, 'help'),
+        description: ('tour.step.' ~ step.value ~ '.description')|trans({}, 'help'),
+    }]) %}
+{% endfor %}
+
+<div hidden
+     data-controller="onboarding--tour"
+     data-onboarding--tour-steps-value="{{ steps|json_encode }}"
+     data-onboarding--tour-labels-value="{{ {
+         next: 'tour.button.next'|trans({}, 'help'),
+         previous: 'tour.button.previous'|trans({}, 'help'),
+         close: 'tour.button.close'|trans({}, 'help'),
+         progress: 'tour.button.progress'|trans({current: '{{current}}', total: '{{total}}'}, 'help'),
+     }|json_encode }}"
+     data-onboarding--tour-finish-label-value="{{ (hasWorkouts ? 'tour.button.new_workout' : 'tour.button.first_workout')|trans({}, 'help') }}"
+     data-onboarding--tour-finish-url-value="{{ path('app_workout') }}"></div>

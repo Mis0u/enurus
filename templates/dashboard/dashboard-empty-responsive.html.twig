@@ -2,10 +2,19 @@
 
 {% block title %}{{ 'dashboard.title'|trans({}, 'navigation')|format_title }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/guided-tour.css') }}">
+{% endblock %}
+
 {% block state %}
     <div class="flex-1 relative overflow-hidden flex items-center justify-center max-md:pb-[100px]">
         {% include 'dashboard/_empty_dashboard/_ghost_dashboard.html.twig' only %}
 
         {% include 'dashboard/_empty_dashboard/_card_empty_dashboard.html.twig' only %}
     </div>
+
+    {% if guidedTourSteps is not empty %}
+        {% include 'partials/_guided_tour/_guided_tour.html.twig' with {tourSteps: guidedTourSteps, hasWorkouts: false} only %}
+    {% endif %}
 {% endblock %}

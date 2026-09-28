@@ -1589,6 +1589,12 @@
       border-color: color-mix(in oklab, var(--color-cyan-ft) 30%, transparent);
     }
   }
+  .border-cyan-ft\/40 {
+    border-color: color-mix(in srgb, #06b6d4 40%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-cyan-ft) 40%, transparent);
+    }
+  }
   .border-cyan-ft\/60 {
     border-color: color-mix(in srgb, #06b6d4 60%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1915,6 +1921,12 @@
   }
   .bg-cyan-ft {
     background-color: var(--color-cyan-ft);
+  }
+  .bg-cyan-ft\/10 {
+    background-color: color-mix(in srgb, #06b6d4 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-cyan-ft) 10%, transparent);
+    }
   }
   .bg-cyan-ft\/15 {
     background-color: color-mix(in srgb, #06b6d4 15%, transparent);
@@ -3656,6 +3668,16 @@
       }
     }
   }
+  .hover\:bg-cyan-ft\/20 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: color-mix(in srgb, #06b6d4 20%, transparent);
+        @supports (color: color-mix(in lab, red, red)) {
+          background-color: color-mix(in oklab, var(--color-cyan-ft) 20%, transparent);
+        }
+      }
+    }
+  }
   .hover\:bg-rose-500\/20 {
     &:hover {
       @media (hover: hover) {
@@ -4166,6 +4188,11 @@
   .focus-visible\:outline-offset-4 {
     &:focus-visible {
       outline-offset: 4px;
+    }
+  }
+  .focus-visible\:outline-cyan-ft {
+    &:focus-visible {
+      outline-color: var(--color-cyan-ft);
     }
   }
   .focus-visible\:outline-rose-ft {

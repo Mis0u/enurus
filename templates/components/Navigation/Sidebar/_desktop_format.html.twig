@@ -1,4 +1,4 @@
-<a href="{{ this.link }}" class="nav-item flex items-center gap-[10px] px-3 py-[10px] rounded-[10px] whitespace-nowrap overflow-hidden relative transition-ft no-underline
+<a href="{{ this.link }}" {% if this.tourStep %}data-tour-step="{{ this.tourStep }}"{% endif %} class="nav-item flex items-center gap-[10px] px-3 py-[10px] rounded-[10px] whitespace-nowrap overflow-hidden relative transition-ft no-underline
     {{ is_active
 ? 'active text-[#f0f4ff] bg-[rgba(244,63,94,0.15)] border border-[rgba(244,63,94,0.4)]'
 : 'text-[#8b9bb4] hover:bg-white/5 hover:text-[#f0f4ff]'

@@ -52,6 +52,9 @@ class UserFixtures extends Fixture
 
     public const string USER_DASHBOARD_SINGLE = 'user-fixture-1-workout@test.com';
 
+    // Nouveau compte : seul utilisateur fixture qui n'a pas encore vu le tour guidé du dashboard.
+    public const string USER_GUIDED_TOUR_NOT_SEEN = 'user-fixture-guided-tour@test.com';
+
     public const string USER_ADMIN = 'admin-fixture@test.com';
 
     public const string USER_RESTRICTED_ONE_WEEK = 'user-fixture-restricted-1-week@test.com';
@@ -109,6 +112,8 @@ class UserFixtures extends Fixture
         $user->lastLogin = $lastLogin ?? new \DateTimeImmutable();
         $user->password = $this->passwordHasher->hashPassword($user, 'pass_1234');
         $user->isVerified = true;
+        // Sinon le tour guidé s'ouvrirait à chaque connexion et masquerait la page (tests e2e).
+        $user->guidedTourSeen = true;
 
         return $user;
     }
@@ -207,6 +212,12 @@ class UserFixtures extends Fixture
 
         $manager->persist($user);
         $this->addUserReference($user, self::USER_DASHBOARD_SINGLE);
+
+        $newcomer = $this->createUser(self::USER_GUIDED_TOUR_NOT_SEEN, 'user-guided-tour');
+        $newcomer->guidedTourSeen = false;
+
+        $manager->persist($newcomer);
+        $this->addUserReference($newcomer, self::USER_GUIDED_TOUR_NOT_SEEN);
     }
 
     private function loadAdminUser(ObjectManager $manager): void

@@ -370,6 +370,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Tour guidé du dashboard, joué une seule fois : marqué vu dès son premier affichage (pas à sa
+     * fin), pour qu'un utilisateur qui se reconnecte sans avoir enregistré de séance ne le revoie
+     * pas. Relançable à la demande depuis la page Aide, sans toucher ce flag.
+     */
+    #[ORM\Column(options: [
+        'default' => false,
+    ])]
+    public bool $guidedTourSeen = false {
+        get {
+            return $this->guidedTourSeen;
+        }
+        set(bool $guidedTourSeen) {
+            $this->guidedTourSeen = $guidedTourSeen;
+        }
+    }
+
+    /**
      * Toujours en kg (même convention que ExerciseSet::weight) — conversion à l'affichage/la
      * saisie via WeightConverterService selon unitOfMeasure. Optionnel : sert uniquement à
      * calculer le tonnage des exercices "au poids de corps" (Exercise::bodyweightPercent).

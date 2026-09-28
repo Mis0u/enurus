@@ -129,13 +129,11 @@ contact:
         body: |-
             Cześć {nickname}!
 
-            Kilka wskazówek, jak się poruszać po aplikacji:
+            Przewodnik pokazał Ci najważniejsze rzeczy. Jeszcze jedna wskazówka:
 
-            📚 <a href="{library_url}">Biblioteka</a> — tutaj tworzysz własne ćwiczenia, oprócz tych już dostępnych w aplikacji.
+            🗂️ <a href="{routine_url}">Rutyny</a> — zgrupuj ćwiczenia, które często wykonujesz razem (np. "Push day"), aby dodać je jednym kliknięciem podczas zapisywania treningu.
 
-            🗂️ <a href="{routine_url}">Rutyna</a> — grupuje listę ćwiczeń, których często używasz (np. "Push day"). Po utworzeniu będziesz mógł ją wybrać bezpośrednio podczas tworzenia nowego treningu, aby nie wpisywać ćwiczeń za każdym razem od nowa.
-
-            🏋️ <a href="{workout_url}">Utwórz trening</a> — tutaj dzieje się wszystko: wybierz swoje ćwiczenia (lub rutynę), wpisz ciężar/powtórzenia, i gotowe.
+            Masz pytanie? Wszystko jest wyjaśnione na stronie <a href="{help_url}">Pomoc</a>, funkcja po funkcji.
 
             Udanego treningu! 🔥
         subject: "Witaj w {brand} 🎉"
