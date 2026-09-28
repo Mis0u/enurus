@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block state %}
-    <div class="flex-1 overflow-y-auto p-4 max-md:pb-[160px] md:p-[24px_28px]">
+    <div class="flex-1 overflow-y-auto p-4 max-md:pb-4 md:p-[24px_28px]">
         <div class="mx-auto flex w-full max-w-3xl flex-col gap-4" data-controller="help--sections">
             {# Hors des sections repliables : visible même quand « Par où commencer » est fermée. #}
             <a href="{{ path('app_dashboard', {tour: 1}) }}"

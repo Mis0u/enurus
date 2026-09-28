@@ -314,6 +314,11 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
 - `_base_dashboard.html.twig` pose volontairement `overflow-hidden` deux fois (wrapper + `<main>`)
   — chaque page doit fournir son propre scroll via un wrapper `<div class="flex-1 overflow-y-auto">`
   dans son bloc `state`.
+- **Padding bas mobile d'une page = `max-md:pb-4`**, `max-md:pb-20` si la page a une barre d'action
+  fixe au-dessus de la barre du bas (création/édition de séance). `<main>` réserve déjà la place de
+  la barre du bas (`max-md:pb-20`) : l'ancien `max-md:pb-[160px]` s'y ajoutait et laissait ~170 px de
+  vide. Garde-fou dans les deux sens (rien de masqué, pas de grand vide) :
+  `tests/e2e/bottom-space-mobile.spec.ts`.
 - **Input `peer sr-only` (interrupteurs, radios custom) → toujours `relative` sur son `<label>`
   parent.** `sr-only` = `position: absolute` : sans parent positionné, l'input se positionne par
   rapport au `<main class="overflow-hidden relative">` et ne suit pas le scroll du wrapper
