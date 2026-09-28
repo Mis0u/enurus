@@ -12,6 +12,10 @@ export const FIXTURE_USERS = {
     // UserFixtures::loadIndexedUsers() — aucune séance, utilisé par aucun autre test : réservé à
     // `workout-duplicate-date.spec.ts`, qui enregistre des séances.
     noWorkout: { email: 'user-fixture-7@test.com', nickname: 'user-fixture-7' },
+    // UserFixtures::loadIndexedUsers() — aucune séance, utilisé par aucun autre test : réservé à
+    // `workout-prefill.spec.ts`. Sans séance fixture, la seule « dernière performance » possible
+    // est celle que le test enregistre, quelle que soit l'heure du run.
+    prefill: { email: 'user-fixture-8@test.com', nickname: 'user-fixture-8' },
 };
 
 // Le controller Stimulus csrf-protection est chargé en lazy (import dynamique fetché sur le
