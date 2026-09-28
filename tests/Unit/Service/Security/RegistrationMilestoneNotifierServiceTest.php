@@ -134,7 +134,7 @@ final class RegistrationMilestoneNotifierServiceTest extends TestCase
         $entityManager->expects(self::once())->method('persist');
         $entityManager->expects(self::once())->method('flush');
 
-        $emailService = $this->createMock(EmailInterface::class);
+        $emailService = $this->createStub(EmailInterface::class);
         $emailService->method('createEmail')->willReturn(new TemplatedEmail());
         $emailService->method('sendEmail')->willThrowException(new TransportException('mailer down'));
 
