@@ -2,6 +2,11 @@
 
 {% block title %}{{ 'dashboard.title'|trans({}, 'navigation')|format_title }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/guided-tour.css') }}">
+{% endblock %}
+
 {% block state %}
     <div class="flex-1 overflow-y-auto p-4 max-md:pb-[160px] md:p-[24px_28px]">
         {% include 'dashboard/_dashboard_grid.html.twig' with {
@@ -11,4 +16,8 @@
             badgesUrl: path('app_badge_list'),
         } only %}
     </div>
+
+    {% if guidedTourSteps is not empty %}
+        {% include 'partials/_guided_tour/_guided_tour.html.twig' with {tourSteps: guidedTourSteps, hasWorkouts: true} only %}
+    {% endif %}
 {% endblock %}

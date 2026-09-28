@@ -1,4 +1,5 @@
 <a href="{{ this.link }}"
+   {% if this.tourStep %}data-tour-step="{{ this.tourStep }}"{% endif %}
    class="{{ this.classes }}">
     {% if this.svg %}
         <span class="min-w-[20px] flex items-center justify-center text-white">

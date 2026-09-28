@@ -1,4 +1,3 @@
-intro: "Tout ce qu'il faut savoir pour utiliser Enurus, fonctionnalité par fonctionnalité."
 section:
     badges:
         intro: "Des badges récompensent ta constance et tes progrès, du bronze au rubis."
@@ -93,3 +92,31 @@ section:
         title: "Mes séances"
 summary: "Sommaire"
 title: "Aide"
+tour:
+    button:
+        close: "Fermer le tour guidé"
+        first_workout: "Enregistrer ma première séance"
+        new_workout: "Enregistrer une séance"
+        next: "Suivant"
+        previous: "Précédent"
+        progress: "{current} sur {total}"
+    replay: "Revoir le tour guidé"
+    step:
+        dashboard:
+            description: "Ton tableau de bord se remplit au fil de tes séances : tonnage, muscles travaillés, régularité, objectifs, badges…"
+            title: "Ton tableau de bord"
+        help:
+            description: "Chaque fonctionnalité y est expliquée. Tu peux aussi y relancer ce tour à tout moment."
+            title: "Besoin d'aide ?"
+        library:
+            description: "Tous les exercices, filtrables par muscle. Il en manque un ? Crée le tien."
+            title: "La bibliothèque"
+        new_workout:
+            description: "C'est ici que tout commence : ajoute tes exercices, puis le poids et les répétitions de chaque série."
+            title: "Enregistrer une séance"
+        welcome:
+            description: "Enurus garde la trace de tes séances pour que tu voies tes progrès. Petit tour des lieux en 30 secondes ?"
+            title: "Bienvenue sur Enurus !"
+        workouts:
+            description: "L'historique de toutes tes séances, avec un calendrier de ton activité sur l'année."
+            title: "Mes séances"

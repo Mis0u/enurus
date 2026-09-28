@@ -1,4 +1,3 @@
-intro: "Alles, was du wissen musst, um Enurus zu nutzen – Funktion für Funktion."
 section:
     badges:
         intro: "Abzeichen belohnen deine Beständigkeit und deine Fortschritte, von Bronze bis Rubin."
@@ -93,3 +92,31 @@ section:
         title: "Meine Trainings"
 summary: "Inhalt"
 title: "Hilfe"
+tour:
+    button:
+        close: "Geführte Tour schließen"
+        first_workout: "Mein erstes Training erfassen"
+        new_workout: "Ein Training erfassen"
+        next: "Weiter"
+        previous: "Zurück"
+        progress: "{current} von {total}"
+    replay: "Geführte Tour erneut ansehen"
+    step:
+        dashboard:
+            description: "Deine Übersicht füllt sich mit deinen Trainings: Tonnage, trainierte Muskeln, Regelmäßigkeit, Ziele, Abzeichen…"
+            title: "Deine Übersicht"
+        help:
+            description: "Dort wird jede Funktion erklärt. Du kannst diese Tour dort auch jederzeit erneut starten."
+            title: "Brauchst du Hilfe?"
+        library:
+            description: "Alle Übungen, nach Muskel filterbar. Fehlt eine? Erstelle deine eigene."
+            title: "Die Bibliothek"
+        new_workout:
+            description: "Hier fängt alles an: Füge deine Übungen hinzu, dann Gewicht und Wiederholungen jedes Satzes."
+            title: "Ein Training erfassen"
+        welcome:
+            description: "Enurus speichert deine Trainings, damit du deine Fortschritte siehst. Eine kurze Tour in 30 Sekunden?"
+            title: "Willkommen bei Enurus!"
+        workouts:
+            description: "Der Verlauf all deiner Trainings, mit einem Kalender deiner Aktivität über das Jahr."
+            title: "Trainings"

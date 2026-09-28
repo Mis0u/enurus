@@ -1,4 +1,3 @@
-intro: "Tutto quello che serve per usare Enurus, funzionalità per funzionalità."
 section:
     badges:
         intro: "I badge premiano la tua costanza e i tuoi progressi, dal bronzo al rubino."
@@ -93,3 +92,31 @@ section:
         title: "I miei allenamenti"
 summary: "Indice"
 title: "Aiuto"
+tour:
+    button:
+        close: "Chiudi il tour guidato"
+        first_workout: "Registra il mio primo allenamento"
+        new_workout: "Registra un allenamento"
+        next: "Avanti"
+        previous: "Indietro"
+        progress: "{current} di {total}"
+    replay: "Rivedi il tour guidato"
+    step:
+        dashboard:
+            description: "Il tuo cruscotto si riempie con i tuoi allenamenti: tonnellaggio, muscoli lavorati, regolarità, obiettivi, badge…"
+            title: "Il tuo cruscotto"
+        help:
+            description: "Ogni funzionalità è spiegata lì. Puoi anche rivedere questo tour in qualsiasi momento."
+            title: "Serve aiuto?"
+        library:
+            description: "Tutti gli esercizi, filtrabili per muscolo. Ne manca uno? Crea il tuo."
+            title: "La biblioteca"
+        new_workout:
+            description: "Tutto comincia qui: aggiungi i tuoi esercizi, poi il peso e le ripetizioni di ogni serie."
+            title: "Registra un allenamento"
+        welcome:
+            description: "Enurus tiene traccia dei tuoi allenamenti per farti vedere i tuoi progressi. Un giro veloce di 30 secondi?"
+            title: "Benvenuto su Enurus!"
+        workouts:
+            description: "Lo storico di tutti i tuoi allenamenti, con un calendario della tua attività nell'anno."
+            title: "Allenamenti"

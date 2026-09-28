@@ -19,6 +19,9 @@ export default defineConfig({
             'flatpickr/dist/l10n/nl.js': fileURLToPath(new URL('./tests/js/stubs/flatpickr-l10n.js', import.meta.url)),
             'flatpickr/dist/l10n/pl.js': fileURLToPath(new URL('./tests/js/stubs/flatpickr-l10n.js', import.meta.url)),
             'flatpickr/dist/l10n/pt.js': fileURLToPath(new URL('./tests/js/stubs/flatpickr-l10n.js', import.meta.url)),
+            // Clé CSS avant 'driver.js' : un alias est aussi appliqué aux sous-chemins de sa clé.
+            'driver.js/dist/driver.min.css': fileURLToPath(new URL('./tests/js/stubs/driver-js-css.js', import.meta.url)),
+            'driver.js': fileURLToPath(new URL('./tests/js/stubs/driver-js.js', import.meta.url)),
             flatpickr: fileURLToPath(new URL('./tests/js/stubs/flatpickr.js', import.meta.url)),
         },
     },

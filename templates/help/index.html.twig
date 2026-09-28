@@ -17,7 +17,12 @@
 {% block state %}
     <div class="flex-1 overflow-y-auto p-4 max-md:pb-[160px] md:p-[24px_28px]">
         <div class="mx-auto flex w-full max-w-3xl flex-col gap-4" data-controller="help--sections">
-            <p class="text-[13px] text-[#8b9bb4]">{{ 'intro'|trans({}, 'help') }}</p>
+            {# Hors des sections repliables : visible même quand « Par où commencer » est fermée. #}
+            <a href="{{ path('app_dashboard', {tour: 1}) }}"
+               data-guided-tour-replay
+               class="self-start inline-flex items-center gap-2 min-h-11 px-4 rounded-xl border border-cyan-ft/40 bg-cyan-ft/10 text-[13px] font-semibold text-cyan-ft no-underline transition-ft hover:bg-cyan-ft/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-ft">
+                <span aria-hidden="true">↻</span> {{ 'tour.replay'|trans({}, 'help') }}
+            </a>
 
             {% include 'help/_summary.html.twig' with {sections: sections} only %}
 

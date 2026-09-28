@@ -103,4 +103,11 @@ return [
     'canvas-confetti' => [
         'version' => '1.9.4',
     ],
+    'driver.js' => [
+        'version' => '1.8.0',
+    ],
+    'driver.js/dist/driver.min.css' => [
+        'version' => '1.8.0',
+        'type' => 'css',
+    ],
 ];

@@ -129,13 +129,11 @@ contact:
         body: |-
             Olá {nickname}!
 
-            Algumas indicações para te orientares:
+            A visita guiada mostrou-te o essencial. Mais uma dica:
 
-            📚 <a href="{library_url}">Biblioteca</a> — é aqui que crias os teus próprios exercícios, além dos já disponíveis na app.
+            🗂️ <a href="{routine_url}">Rotinas</a> — agrupa os exercícios que fazes muitas vezes juntos (ex. "Push day") para os adicionares com um clique quando registas um treino.
 
-            🗂️ <a href="{routine_url}">Rotina</a> — agrupa uma lista de exercícios que usas frequentemente (ex. "Push day"). Depois de criada, podes selecioná-la diretamente ao criar um novo treino, para não teres de voltar a inserir os teus exercícios sempre.
-
-            🏋️ <a href="{workout_url}">Criar um treino</a> — é aqui que tudo acontece: escolhe os teus exercícios (ou a tua rotina), indica peso/repetições, e pronto.
+            Alguma dúvida? Está tudo explicado na página <a href="{help_url}">Ajuda</a>, funcionalidade a funcionalidade.
 
             Bom treino! 🔥
         subject: "Bem-vindo ao {brand} 🎉"

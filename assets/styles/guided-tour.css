@@ -1,0 +1,125 @@
+/*
+ * Thème dark du tour guidé (driver.js), par-dessus driver.min.css importé en JS dans
+ * `onboarding/tour_controller.js`. Contrairement à flatpickr (cf. date-picker.css), pas besoin de
+ * `!important` : toutes les règles de driver.js sont à une seule classe, le préfixe
+ * `.guided-tour-popover` suffit à gagner la cascade malgré l'injection plus tardive de sa feuille.
+ */
+
+.driver-popover.guided-tour-popover {
+    background: #0f1928;
+    color: #c3cee0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 0 0 1px rgba(244, 63, 94, 0.1), 0 20px 50px rgba(0, 0, 0, 0.5);
+    padding: 20px 22px 18px;
+    max-width: min(340px, calc(100vw - 32px));
+    font-family: 'DM Sans', sans-serif;
+}
+
+.guided-tour-popover .driver-popover-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: #f0f4ff;
+    padding-right: 24px;
+}
+
+.guided-tour-popover .driver-popover-description {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #8b9bb4;
+}
+
+.guided-tour-popover .driver-popover-progress-text {
+    font-size: 12px;
+    color: #4a5568;
+}
+
+.guided-tour-popover .driver-popover-close-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+    color: #4a5568;
+}
+
+.guided-tour-popover .driver-popover-close-btn:hover,
+.guided-tour-popover .driver-popover-close-btn:focus-visible {
+    color: #f0f4ff;
+}
+
+.guided-tour-popover .driver-popover-footer {
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.guided-tour-popover .driver-popover-footer-btn {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 10px;
+    text-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* Le footer de driver.js est en `text-align: right`, hérité par ses boutons. */
+    text-align: center;
+    white-space: nowrap;
+    color: #c3cee0;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.guided-tour-popover .driver-popover-footer-btn:hover {
+    color: #f0f4ff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.guided-tour-popover .driver-popover-footer-btn:focus-visible {
+    outline: 2px solid #f43f5e;
+    outline-offset: 2px;
+}
+
+.guided-tour-popover .driver-popover-next-btn {
+    color: #fff;
+    background: linear-gradient(135deg, #f43f5e, #dc2626);
+    border-color: transparent;
+}
+
+.guided-tour-popover .driver-popover-next-btn:hover {
+    color: #fff;
+    background: linear-gradient(135deg, #f43f5e, #dc2626);
+    box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
+}
+
+/* Libellé final long (« Enregistrer ma première séance », plus long encore en allemand/polonais) :
+   plutôt que de couper le texte sur deux lignes, les boutons passent chacun en pleine largeur. */
+.guided-tour-popover .driver-popover-navigation-btns {
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.guided-tour-popover .driver-popover-navigation-btns button {
+    flex: 1 0 auto;
+}
+
+.guided-tour-popover .driver-popover-navigation-btns button + button {
+    margin-left: 0;
+}
+
+.guided-tour-popover .driver-popover-arrow-side-left {
+    border-left-color: #0f1928;
+}
+
+.guided-tour-popover .driver-popover-arrow-side-right {
+    border-right-color: #0f1928;
+}
+
+.guided-tour-popover .driver-popover-arrow-side-top {
+    border-top-color: #0f1928;
+}
+
+.guided-tour-popover .driver-popover-arrow-side-bottom {
+    border-bottom-color: #0f1928;
+}

@@ -1,4 +1,3 @@
-intro: "Alles wat je moet weten om Enurus te gebruiken, functie voor functie."
 section:
     badges:
         intro: "Badges belonen je volharding en je vooruitgang, van brons tot robijn."
@@ -93,3 +92,31 @@ section:
         title: "Mijn trainingen"
 summary: "Inhoud"
 title: "Hulp"
+tour:
+    button:
+        close: "Rondleiding sluiten"
+        first_workout: "Mijn eerste training registreren"
+        new_workout: "Een training registreren"
+        next: "Volgende"
+        previous: "Vorige"
+        progress: "{current} van {total}"
+    replay: "Rondleiding opnieuw bekijken"
+    step:
+        dashboard:
+            description: "Je overzicht vult zich met je trainingen: tonnage, getrainde spieren, regelmaat, doelen, badges…"
+            title: "Je overzicht"
+        help:
+            description: "Elke functie wordt daar uitgelegd. Je kunt deze rondleiding er ook altijd opnieuw starten."
+            title: "Hulp nodig?"
+        library:
+            description: "Alle oefeningen, te filteren op spier. Mist er een? Maak je eigen oefening."
+            title: "De bibliotheek"
+        new_workout:
+            description: "Hier begint alles: voeg je oefeningen toe, daarna het gewicht en de herhalingen van elke set."
+            title: "Een training registreren"
+        welcome:
+            description: "Enurus houdt je trainingen bij zodat je je vooruitgang ziet. Een korte rondleiding van 30 seconden?"
+            title: "Welkom bij Enurus!"
+        workouts:
+            description: "De geschiedenis van al je trainingen, met een kalender van je activiteit over het jaar."
+            title: "Trainingen"

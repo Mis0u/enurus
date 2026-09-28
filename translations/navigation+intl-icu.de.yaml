@@ -129,13 +129,11 @@ contact:
         body: |-
             Hallo {nickname}!
 
-            Ein paar Hinweise zur Orientierung:
+            Die geführte Tour hat dir das Wichtigste gezeigt. Noch ein Tipp:
 
-            📚 <a href="{library_url}">Bibliothek</a> — hier erstellst du deine eigenen Übungen, zusätzlich zu den bereits verfügbaren.
+            🗂️ <a href="{routine_url}">Routinen</a> — fasse Übungen zusammen, die du oft gemeinsam machst (z. B. "Push day"), um sie beim Erfassen eines Trainings mit einem Klick hinzuzufügen.
 
-            🗂️ <a href="{routine_url}">Routine</a> — fasst eine Liste von Übungen zusammen, die du häufig nutzt (z. B. "Push day"). Einmal erstellt, kannst du sie direkt beim Erstellen eines neuen Workouts auswählen, statt deine Übungen jedes Mal neu einzugeben.
-
-            🏋️ <a href="{workout_url}">Workout erstellen</a> — hier passiert alles: wähle deine Übungen (oder deine Routine), trage Gewicht/Wiederholungen ein, und los geht's.
+            Eine Frage? Auf der Seite <a href="{help_url}">Hilfe</a> wird alles erklärt, Funktion für Funktion.
 
             Viel Erfolg beim Training! 🔥
         subject: "Willkommen bei {brand} 🎉"

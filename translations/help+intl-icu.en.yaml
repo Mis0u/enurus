@@ -1,4 +1,3 @@
-intro: "Everything you need to know to use Enurus, feature by feature."
 section:
     badges:
         intro: "Badges reward your consistency and progress, from bronze to ruby."
@@ -93,3 +92,31 @@ section:
         title: "My workouts"
 summary: "Contents"
 title: "Help"
+tour:
+    button:
+        close: "Close the guided tour"
+        first_workout: "Log my first workout"
+        new_workout: "Log a workout"
+        next: "Next"
+        previous: "Previous"
+        progress: "{current} of {total}"
+    replay: "Replay the guided tour"
+    step:
+        dashboard:
+            description: "Your dashboard fills up as you train: tonnage, muscles worked, consistency, goals, badges…"
+            title: "Your dashboard"
+        help:
+            description: "Every feature is explained there. You can also replay this tour at any time."
+            title: "Need help?"
+        library:
+            description: "All the exercises, filterable by muscle. One is missing? Create your own."
+            title: "The library"
+        new_workout:
+            description: "This is where it all starts: add your exercises, then the weight and reps of each set."
+            title: "Log a workout"
+        welcome:
+            description: "Enurus keeps track of your workouts so you can see your progress. A quick 30-second tour?"
+            title: "Welcome to Enurus!"
+        workouts:
+            description: "The history of all your workouts, with a calendar of your activity over the year."
+            title: "Workouts"

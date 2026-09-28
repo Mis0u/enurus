@@ -129,13 +129,11 @@ contact:
         body: |-
             Hey {nickname}!
 
-            A few pointers to help you find your way around:
+            The guided tour showed you the essentials. One more tip:
 
-            📚 <a href="{library_url}">Library</a> — this is where you create your own exercises, in addition to the ones already available in the app.
+            🗂️ <a href="{routine_url}">Routines</a> — group the exercises you often do together (e.g. "Push day") to add them in one click when you log a workout.
 
-            🗂️ <a href="{routine_url}">Routine</a> — groups a list of exercises you use often (e.g. "Push day"). Once created, you can select it directly when logging a new workout, so you don't have to re-enter your exercises every time.
-
-            🏋️ <a href="{workout_url}">Log a workout</a> — this is where it all happens: pick your exercises (or your routine), enter weight/reps, and you're set.
+            Any question? Everything is explained in the <a href="{help_url}">Help</a> page, feature by feature.
 
             Have a great workout! 🔥
         subject: "Welcome to {brand} 🎉"

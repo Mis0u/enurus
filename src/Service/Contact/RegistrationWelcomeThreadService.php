@@ -52,13 +52,10 @@ final readonly class RegistrationWelcomeThreadService
             'contact.welcome_thread.body',
             [
                 'nickname' => $user->nickname,
-                'library_url' => $this->urlGenerator->generate('app_exercise_list', [
-                    '_locale' => $locale,
-                ]),
                 'routine_url' => $this->urlGenerator->generate('app_routine_list', [
                     '_locale' => $locale,
                 ]),
-                'workout_url' => $this->urlGenerator->generate('app_workout', [
+                'help_url' => $this->urlGenerator->generate('app_help', [
                     '_locale' => $locale,
                 ]),
             ],

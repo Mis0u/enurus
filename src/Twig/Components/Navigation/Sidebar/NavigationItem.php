@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Twig\Components\Navigation\Sidebar;
 
 use App\Twig\Components\Trait\WithSvgIcon;
+use App\Twig\Components\Trait\WithTourStep;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
 final class NavigationItem
 {
     use WithSvgIcon;
+    use WithTourStep;
 
     public string $link = '#';
 
