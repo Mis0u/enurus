@@ -95,8 +95,27 @@ jobs:
             - name: ESLint
               run: vendor/bin/castor eslint --no-interaction
 
+            # Le CLI Symfony télécharge Symfony Language Tools et vérifie sa dernière version via l'API
+            # GitHub : sans cache, à chaque run, et en anonyme (60 appels/h par IP, partagés entre les
+            # runners) — d'où des échecs aléatoires en HTTP 403. Cache renouvelé chaque semaine pour
+            # suivre les nouvelles versions ; jeton de la CI pour authentifier les vérifications.
+            - name: Get the ISO week (Symfony Language Tools cache key)
+              id: iso-week
+              run: echo "week=$(date +%G-%V)" >> "$GITHUB_OUTPUT"
+
+            - name: Cache Symfony Language Tools
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      ~/.symfony5/tools/symfony-language-tools
+                      ~/.config/symfony-cli/tools/symfony-language-tools
+                  key: ${{ runner.os }}-symfony-language-tools-${{ steps.iso-week.outputs.week }}
+                  restore-keys: ${{ runner.os }}-symfony-language-tools-
+
             - name: Symfony LSP
               run: vendor/bin/castor symfony-lsp --no-interaction
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Schema validate
               run: vendor/bin/castor schema-validate --test --no-interaction
