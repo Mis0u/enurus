@@ -731,7 +731,9 @@ settings:
         request_error: Se produjo un error, inténtalo de nuevo más tarde
         title: Eliminación de la cuenta
     dashboard_widgets:
-        explanation: "Elige los bloques que aparecen en tu panel. Un bloque oculto aquí también se oculta a tus conexiones."
+        explanation: "Elige los bloques que aparecen en tu panel y su orden: arrástralos o usa las flechas. Tus conexiones ven el mismo orden, y un bloque oculto aquí también se les oculta."
+        move_down: "Bajar « {widget} »"
+        move_up: "Subir « {widget} »"
         title: Widgets del panel
         widget:
             badges: "Insignias"

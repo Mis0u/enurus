@@ -12,7 +12,7 @@
     - weekBars                : array{bars: array<array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null, hiddenWhenCompact: bool}>, remainingCount: int, compactRemainingCount: int}
     - monthBars               : array{bars: array<array{name: string, sets: int, percentage: int, primarySets: int, secondarySets: int, primaryPercentage: int, secondaryPercentage: int, daysSinceLastSolicited: int|null, hiddenWhenCompact: bool}>, remainingCount: int, compactRemainingCount: int}
 #}
-<div class="bg-bg-card border border-white/[0.07] rounded-2xl p-4 md:p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
+<div data-dashboard-widget="muscle_distribution" class="bg-bg-card border border-white/[0.07] rounded-2xl p-4 md:p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
      data-controller="dashboard--muscles"
      data-dashboard--muscles-session-primary-value='{{ sessionPrimary|json_encode }}'
      data-dashboard--muscles-session-secondary-value='{{ sessionSecondary|json_encode }}'

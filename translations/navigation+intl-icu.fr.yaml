@@ -731,7 +731,9 @@ settings:
         request_error: Une erreur est survenue, réessaie plus tard
         title: Suppression du compte
     dashboard_widgets:
-        explanation: "Choisis les blocs affichés sur ton tableau de bord. Un bloc masqué ici l'est aussi pour tes connexions."
+        explanation: "Choisis les blocs affichés sur ton tableau de bord et leur ordre : fais-les glisser, ou utilise les flèches. Tes connexions voient le même ordre, et un bloc masqué ici l'est aussi pour elles."
+        move_down: "Descendre « {widget} »"
+        move_up: "Monter « {widget} »"
         title: Widgets du dashboard
         widget:
             badges: "Badges"

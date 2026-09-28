@@ -52,6 +52,10 @@ class UserFixtures extends Fixture
 
     public const string USER_DASHBOARD_SINGLE = 'user-fixture-1-workout@test.com';
 
+    // 1 séance, réservé à `dashboard-widget-order.spec.ts` (e2e) : il réorganise ses widgets, ce qui
+    // changerait la mise en page des comptes lus par les autres specs mobiles lancés en parallèle.
+    public const string USER_WIDGET_ORDER = 'user-fixture-widget-order@test.com';
+
     // Nouveau compte : seul utilisateur fixture qui n'a pas encore vu le tour guidé du dashboard.
     public const string USER_GUIDED_TOUR_NOT_SEEN = 'user-fixture-guided-tour@test.com';
 
@@ -212,6 +216,10 @@ class UserFixtures extends Fixture
 
         $manager->persist($user);
         $this->addUserReference($user, self::USER_DASHBOARD_SINGLE);
+
+        $widgetOrderUser = $this->createUser(self::USER_WIDGET_ORDER, 'user-widget-order');
+        $manager->persist($widgetOrderUser);
+        $this->addUserReference($widgetOrderUser, self::USER_WIDGET_ORDER);
 
         $newcomer = $this->createUser(self::USER_GUIDED_TOUR_NOT_SEEN, 'user-guided-tour');
         $newcomer->guidedTourSeen = false;

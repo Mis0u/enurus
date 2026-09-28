@@ -22,6 +22,8 @@ final class DashboardGridTest extends KernelTestCase
 {
     private const string OWNER = 'user-fixture-26-workout@test.com';
 
+    private const string VISITOR = 'user-fixture-51-workout@test.com';
+
     // Le rendu hors requête HTTP se fait dans la locale par défaut de l'application (en).
     private const string LOCKED_CARD_TEXT = '1 more workout';
 
@@ -80,12 +82,58 @@ final class DashboardGridTest extends KernelTestCase
         self::assertStringContainsString('Manage my connections', $html);
     }
 
-    private function findOwner(): User
+    public function testWidgetsFollowTheOrderChosenInSettings(): void
+    {
+        self::bootKernel();
+        $owner = $this->findOwner();
+        $owner->widgetOrder = [DashboardWidgetEnum::BADGES->value, DashboardWidgetEnum::TONNAGE->value];
+
+        /** @var DashboardViewDataBuilder $builder */
+        $builder = static::getContainer()->get(DashboardViewDataBuilder::class);
+        $html = $this->renderGrid($builder->build($owner, $owner, new DashboardState(1)), $owner, readOnly: false);
+
+        self::assertSame(['badges', 'tonnage', 'session'], \array_slice($this->renderedWidgetOrder($html), 0, 3));
+    }
+
+    /**
+     * Une connexion voit le dashboard dans l'ordre choisi par son propriétaire, pas dans le sien.
+     */
+    public function testAVisitorSeesTheOwnerOrderNotTheirOwn(): void
+    {
+        self::bootKernel();
+        $owner = $this->findOwner();
+        $owner->widgetOrder = [DashboardWidgetEnum::BADGES->value];
+        $visitor = $this->findUser(self::VISITOR);
+        $visitor->widgetOrder = [DashboardWidgetEnum::TONNAGE->value];
+
+        /** @var DashboardViewDataBuilder $builder */
+        $builder = static::getContainer()->get(DashboardViewDataBuilder::class);
+        $html = $this->renderGrid($builder->build($owner, $visitor, new DashboardState(1)), $owner, readOnly: true);
+
+        self::assertSame('badges', $this->renderedWidgetOrder($html)[0]);
+    }
+
+    /**
+     * @return list<string> clés des widgets dans l'ordre où ils apparaissent dans le HTML
+     */
+    private function renderedWidgetOrder(string $html): array
+    {
+        preg_match_all('/data-dashboard-widget="([a-z_]+)"/', $html, $matches);
+
+        return $matches[1];
+    }
+
+    private function findUser(string $email): User
     {
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
 
-        return $userRepository->findOneByEmail(self::OWNER) ?? throw new \LogicException('Fixture user not found.');
+        return $userRepository->findOneByEmail($email) ?? throw new \LogicException('Fixture user not found.');
+    }
+
+    private function findOwner(): User
+    {
+        return $this->findUser(self::OWNER);
     }
 
     /**

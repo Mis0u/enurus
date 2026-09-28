@@ -21,7 +21,7 @@ section:
         open: "See my dashboard"
         points:
             blocks: "Session (figures for your last training day, the week, the month), Tonnage (total weight lifted), Muscles worked, Regularity (weeks in a row), Goals, Badges, Connections."
-            customize: "Choose which blocks are shown in Settings › Dashboard widgets. The Activity calendar is turned on there too."
+            customize: "Choose which blocks are shown and their order in Settings › Dashboard widgets (drag and drop or ↑ ↓ arrows). The Activity calendar is turned on there too."
             progressive: "New blocks unlock over time: from your 2nd workout for regularity and the muscles of the week or month, from your first goal for goals."
         title: "Dashboard"
     getting_started:

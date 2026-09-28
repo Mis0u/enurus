@@ -21,7 +21,7 @@ section:
         open: "Mijn dashboard bekijken"
         points:
             blocks: "Sessie (cijfers van je laatste trainingsdag, de week, de maand), Tonnage (totaal getild gewicht), Getrainde spieren, Regelmaat (weken op rij), Doelen, Badges, Verbindingen."
-            customize: "Kies de getoonde blokken in Instellingen › Dashboard-widgets. Daar zet je ook de Activiteitenkalender aan."
+            customize: "Kies de getoonde blokken en hun volgorde in Instellingen › Dashboard-widgets (slepen of pijlen ↑ ↓). Daar zet je ook de Activiteitenkalender aan."
             progressive: "Na verloop van tijd worden nieuwe blokken ontgrendeld: vanaf je 2e training de regelmaat en de spieren van de week of maand, vanaf je eerste doel de doelen."
         title: "Dashboard"
     getting_started:

@@ -731,7 +731,9 @@ settings:
         request_error: An error occurred, please try again later
         title: Account deletion
     dashboard_widgets:
-        explanation: "Choose which blocks appear on your dashboard. A block hidden here is hidden from your connections too."
+        explanation: "Choose which blocks appear on your dashboard and in what order: drag them, or use the arrows. Your connections see the same order, and a block hidden here is hidden from them too."
+        move_down: "Move “{widget}” down"
+        move_up: "Move “{widget}” up"
         title: Dashboard widgets
         widget:
             badges: "Badges"

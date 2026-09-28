@@ -731,7 +731,9 @@ settings:
         request_error: Si è verificato un errore, riprova più tardi
         title: Eliminazione dell'account
     dashboard_widgets:
-        explanation: "Scegli i blocchi visualizzati sulla tua dashboard. Un blocco nascosto qui è nascosto anche alle tue connessioni."
+        explanation: "Scegli i blocchi visualizzati sulla tua dashboard e il loro ordine: trascinali o usa le frecce. Le tue connessioni vedono lo stesso ordine, e un blocco nascosto qui è nascosto anche a loro."
+        move_down: "Sposta giù « {widget} »"
+        move_up: "Sposta su « {widget} »"
         title: Widget della dashboard
         widget:
             badges: "Badge"

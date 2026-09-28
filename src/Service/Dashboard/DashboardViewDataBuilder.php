@@ -71,6 +71,8 @@ final readonly class DashboardViewDataBuilder
             $this->badgeViewBuilder->build($subject, $viewer, $badgeProgress ?? $this->badgeProgressCalculator->calculate($subject)),
             $visibleWidgets[DashboardWidgetEnum::HEATMAP->value] ? $this->heatmapService->build($subject, self::HEATMAP_WEEKS) : null,
             $visibleWidgets[DashboardWidgetEnum::CONNECTIONS->value] ? $this->connectionOverviewService->forUser($viewer)->connections : [],
+            // Ordre du propriétaire, même vu par une connexion : c'est son dashboard.
+            array_map(static fn (DashboardWidgetEnum $widget): string => $widget->value, DashboardWidgetEnum::inOrder($subject->widgetOrder)),
         );
     }
 

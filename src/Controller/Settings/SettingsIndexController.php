@@ -6,6 +6,7 @@ namespace App\Controller\Settings;
 
 use App\Constraint\ImageConstraints;
 use App\Entity\User;
+use App\Enum\Dashboard\DashboardWidgetEnum;
 use App\Enum\Entity\User\UnitOfMeasureEnum;
 use App\Form\ChangePasswordFormType;
 use App\Service\Dashboard\DashboardUnlockService;
@@ -73,7 +74,8 @@ final class SettingsIndexController extends AbstractController
 
     /**
      * Un widget n'est proposé en réglages qu'une fois débloqué — même source de vérité que le
-     * dashboard (`DashboardWidgetUnlockResolver`), pour ne jamais désynchroniser les deux.
+     * dashboard (`DashboardWidgetUnlockResolver`), pour ne jamais désynchroniser les deux — et dans
+     * l'ordre où il s'affiche sur le dashboard, que l'utilisateur réorganise ici.
      *
      * @return array<array{key: string, label: string, hidden: bool}>
      */
@@ -84,15 +86,15 @@ final class SettingsIndexController extends AbstractController
 
         $rows = [];
 
-        foreach ($unlockedWidgets as $widget => $unlocked) {
-            if (! $unlocked) {
+        foreach (DashboardWidgetEnum::inOrder($user->widgetOrder) as $widget) {
+            if (! ($unlockedWidgets[$widget->value] ?? false)) {
                 continue;
             }
 
             $rows[] = [
-                'key' => $widget,
-                'label' => $this->translator->trans(\sprintf('settings.dashboard_widgets.widget.%s', $widget), [], 'navigation'),
-                'hidden' => in_array($widget, $user->hiddenWidgets, true),
+                'key' => $widget->value,
+                'label' => $this->translator->trans(\sprintf('settings.dashboard_widgets.widget.%s', $widget->value), [], 'navigation'),
+                'hidden' => in_array($widget->value, $user->hiddenWidgets, true),
             ];
         }
 

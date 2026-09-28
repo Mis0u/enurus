@@ -5,7 +5,9 @@ Application de suivi de musculation. Développeur solo (Misou). Symfony 7.4 / PH
 directement sur une demande de feature sans avoir fait valider l'approche.
 
 ## Docs par sujet — à lire seulement si le sujet est concerné
-- Chantier dashboard progressif (widgets, paliers, streak, Chart.js) → lire `docs/dashboard-architecture.md`
+- Dashboard (widgets, déblocage progressif, visibilité, ordre) : pas de doc dédiée, partir de
+  `DashboardWidgetEnum` (ordre par défaut + `inOrder()` pour l'ordre choisi en réglages),
+  `DashboardViewDataBuilder` et `templates/dashboard/_dashboard_grid.html.twig`
 - Avant toute création de fichier ou refactoring → lire `docs/consignes.md`
   (Clean Code, SOLID, tests TDD)
 

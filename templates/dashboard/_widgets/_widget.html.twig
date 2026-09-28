@@ -1,0 +1,83 @@
+{#
+    Un widget du dashboard, selon sa clé — appelé en boucle par `_dashboard_grid.html.twig` dans
+    l'ordre choisi par le propriétaire. Variables attendues (toutes via `only`) : `widget`
+    (clé DashboardWidgetEnum) + celles de `_dashboard_grid.html.twig`.
+#}
+{% if widget == 'session' %}
+    {% if data.visibleWidgets.session %}
+        {% include 'dashboard/_widgets/_session.html.twig' with {
+            sessionStats: data.sessionStats,
+        } only %}
+    {% endif %}
+{% elseif widget == 'tonnage' %}
+    {# Chiffre toujours débloqué dès 1 séance #}
+    {% if data.visibleWidgets.tonnage %}
+        {% include 'dashboard/_widgets/_tonnage.html.twig' with {
+            tonnageData: data.tonnageData,
+        } only %}
+    {% endif %}
+{% elseif widget == 'muscle_distribution' %}
+    {% if data.visibleWidgets.muscle_distribution %}
+        {% include 'dashboard/_widgets/_muscles.html.twig' with {
+            gender: subject.gender,
+            muscleWeekMonthUnlocked: data.dashboardState.muscleWeekMonthUnlocked,
+            sessionPrimary: data.muscles.session.primary,
+            sessionSecondary: data.muscles.session.secondary,
+            weekPrimary: data.muscles.week.primary,
+            weekSecondary: data.muscles.week.secondary,
+            monthPrimary: data.muscles.month.primary,
+            monthSecondary: data.muscles.month.secondary,
+            sessionBars: data.muscles.session.bars,
+            weekBars: data.muscles.week.bars,
+            monthBars: data.muscles.month.bars,
+        } only %}
+    {% endif %}
+{% elseif widget == 'regularity' %}
+    {# Verrouillée : la carte « verrouillé » prend sa place, jamais en lecture seule #}
+    {% if data.dashboardState.regularityUnlocked %}
+        {% if data.visibleWidgets.regularity %}
+            {% include 'dashboard/_widgets/_regularity.html.twig' with {
+                regularityData: data.regularityData,
+            } only %}
+        {% endif %}
+    {% elseif not readOnly %}
+        {% include 'dashboard/_widgets/_locked_card.html.twig' with {
+            title: 'dashboard.widget.locked.title_regularity'|trans({}, 'navigation'),
+            need_workouts: data.dashboardState.workoutsNeededForRegularity,
+            need_days: 0,
+        } only %}
+    {% endif %}
+{% elseif widget == 'goals' %}
+    {# Masqué tant que l'utilisateur n'a jamais créé d'objectif, ou qu'il l'a masqué en réglages #}
+    {% if data.visibleWidgets.goals %}
+        {% include 'dashboard/_widgets/_goals.html.twig' with {
+            goalCurrentCards: data.goalCurrentCards,
+            goalAchievedCards: data.goalAchievedCards,
+            readOnly: readOnly,
+        } only %}
+    {% endif %}
+{% elseif widget == 'heatmap' %}
+    {# Opt-in, toujours sur une colonne #}
+    {% if data.visibleWidgets.heatmap %}
+        {% include 'dashboard/_widgets/_heatmap.html.twig' with {
+            heatmapData: data.heatmapData,
+        } only %}
+    {% endif %}
+{% elseif widget == 'connections' %}
+    {# Widget personnel, jamais visible en lecture seule (data.visibleWidgets le garantit) #}
+    {% if data.visibleWidgets.connections %}
+        {% include 'dashboard/_widgets/_connections.html.twig' with {
+            connections: data.connections,
+            viewerIsDiscoverable: subject.isDiscoverable,
+        } only %}
+    {% endif %}
+{% elseif widget == 'badges' %}
+    {# Pleine largeur #}
+    {% if data.visibleWidgets.badges %}
+        {% include 'dashboard/_widgets/_badges.html.twig' with {
+            badges: data.badges,
+            allBadgesUrl: badgesUrl,
+            readOnly: readOnly,
+        } only %}
+    {% endif %}
+{% endif %}
