@@ -3,12 +3,12 @@ import { FIXTURE_USERS, addExercises, addExercisesByIds, loginAs, submitWorkout 
 
 // Une séance enregistrée aujourd'hui (date du jour pré-remplie, heure courante) devient la
 // dernière performance de son exercice : l'ajouter de nouveau doit reprendre ses séries.
-// Crée une séance sur `dashboardSingle` (compte dédié aux scénarios qui écrivent, pour ne pas
-// entrer en concurrence avec `workout.spec.ts` sur `workout11` en exécution parallèle) :
-// recharger les fixtures de test après un run e2e.
+// Compte sans aucune séance fixture (`prefill`) : avec `dashboardSingle`, sa séance fixture datée
+// `today 10:00` devenait la dernière performance à chaque run avant 10h, et le test échouait.
+// Crée une séance : recharger les fixtures de test après un run e2e.
 
 test('a new exercise card is prefilled with the last performance', async ({ page }) => {
-    await loginAs(page, FIXTURE_USERS.dashboardSingle.email);
+    await loginAs(page, FIXTURE_USERS.prefill.email);
 
     await page.goto('/en/log-workout');
     await page.waitForLoadState('networkidle');
