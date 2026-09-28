@@ -14,9 +14,12 @@
 >
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(244,63,94,0.03),transparent_60%)] pointer-events-none"></div>
 
+    {# Mobile : date et infos toujours en colonne 1, placées explicitement. Laissées au placement
+       automatique, elles se répartissaient sur les deux colonnes en lecture seule (séances d'une
+       connexion, sans boutons d'action) : date écrasée dans une colonne étroite, chevauchant le reste. #}
     {% include 'workout/list/Session/_date_time.html.twig' with {'workout': workout} only %}
 
-    <div class="flex flex-col gap-2 max-md:gap-1 min-w-0">
+    <div class="flex flex-col gap-2 max-md:gap-1 min-w-0 max-md:col-start-1">
 
         {% include 'workout/list/Session/_title.html.twig' with {'workout': workout, 'showUrl': showUrl} only %}
 

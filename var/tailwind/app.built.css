@@ -4431,6 +4431,11 @@
       left: calc(var(--spacing) * 0);
     }
   }
+  .max-md\:col-start-1 {
+    @media (width < 48rem) {
+      grid-column-start: 1;
+    }
+  }
   .max-md\:col-start-2 {
     @media (width < 48rem) {
       grid-column-start: 2;
