@@ -14,6 +14,7 @@ enum DashboardWidgetEnum: string
     case TONNAGE = 'tonnage';
     case MUSCLE_DISTRIBUTION = 'muscle_distribution';
     case REGULARITY = 'regularity';
+    case REGULARITY_GOAL = 'regularity_goal';
     case GOALS = 'goals';
     case HEATMAP = 'heatmap';
     case CONNECTIONS = 'connections';

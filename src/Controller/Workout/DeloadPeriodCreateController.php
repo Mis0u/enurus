@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Workout;
 
+use App\Controller\Trait\FlashesFirstFormErrorTrait;
 use App\Entity\DeloadPeriod;
 use App\Entity\User;
 use App\Form\DeloadPeriodType;
@@ -28,6 +29,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 ], name: 'app_deload_period_create', methods: ['POST'])]
 final class DeloadPeriodCreateController extends AbstractController
 {
+    use FlashesFirstFormErrorTrait;
+
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly TranslatorInterface $translator,
@@ -51,12 +54,11 @@ final class DeloadPeriodCreateController extends AbstractController
 
             $this->addFlash('success', $this->translator->trans('workout.list.calendar.flash.created', [], 'navigation'));
         } else {
-            $this->addFlash('error', $this->translator->trans('workout.list.calendar.flash.error', [], 'navigation'));
+            $this->addFlash('error', $this->firstFormErrorMessage($form, $this->translator->trans('workout.list.calendar.flash.error', [], 'navigation')));
         }
 
         return $this->redirectToRoute('app_workout_list', [
             'view' => 'calendar',
-            '_locale' => $request->getLocale(),
         ]);
     }
 }

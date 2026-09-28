@@ -8,7 +8,9 @@ deload_period:
     end_date:
         required: De einddatum is verplicht.
     note_too_long: "De notitie mag niet meer dan {{ limit }} tekens bevatten."
+    regularity_goal_overlap: "Deze periode overlapt met je regelmaatdoel: een doel en een rustperiode gaan niet samen."
     start_date:
+        in_the_past: "Een rustweek kan niet in het verleden beginnen."
         required: De startdatum is verplicht.
 
 exercise:
@@ -25,6 +27,14 @@ exercise_set:
     weight_positive_or_zero: Het gewicht mag niet negatief zijn.
     weight_required: Het gewicht moet worden ingevuld en positief zijn.
 
+regularity_goal:
+    deload_overlap: "Dit doel overlapt met een geplande rustweek. Kies een andere startdatum of een kortere duur."
+    sessions:
+        positive: "Het aantal trainingen moet groter zijn dan 0."
+        too_many: "Niet meer dan {{ max }} trainingen voor dit ritme."
+    start_date:
+        in_the_past: "Het doel kan niet in het verleden beginnen."
+        required: "De startdatum is verplicht."
 routine:
     name_exists: Je hebt al een routine met deze naam.
     name_not_blank: De naam van de routine is verplicht.

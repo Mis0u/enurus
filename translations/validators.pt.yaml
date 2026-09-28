@@ -8,7 +8,9 @@ deload_period:
     end_date:
         required: A data de fim é obrigatória.
     note_too_long: "A nota não pode exceder {{ limit }} caracteres."
+    regularity_goal_overlap: "Este período sobrepõe-se ao teu objetivo de regularidade: um objetivo e um descanso não se acumulam."
     start_date:
+        in_the_past: "Uma semana de descanso não pode começar no passado."
         required: A data de início é obrigatória.
 
 exercise:
@@ -25,6 +27,14 @@ exercise_set:
     weight_positive_or_zero: O peso não pode ser negativo.
     weight_required: O peso deve ser indicado e ser positivo.
 
+regularity_goal:
+    deload_overlap: "Este objetivo sobrepõe-se a uma semana de descanso programada. Escolhe outra data de início ou uma duração mais curta."
+    sessions:
+        positive: "O número de treinos tem de ser superior a 0."
+        too_many: "Não mais de {{ max }} treinos para este ritmo."
+    start_date:
+        in_the_past: "O objetivo não pode começar no passado."
+        required: "A data de início é obrigatória."
 routine:
     name_exists: Já tens uma rotina com este nome.
     name_not_blank: O nome da rotina é obrigatório.

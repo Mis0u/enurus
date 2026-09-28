@@ -210,6 +210,9 @@ dashboard:
             year_delta_positive: "{count, plural, =1 {+# allenamento vs anno prec.} other {+# allenamenti vs anno prec.}}"
             year_delta_zero: Come lo scorso anno
             year_label: "{count, plural, =1 {allenamento questo anno} other {allenamenti questo anno}}"
+        regularity_goal:
+            create_link: "Fissa un obiettivo"
+            empty_history: "Nessun obiettivo concluso per ora."
         session:
             annual_total_label: "Totale per l'anno {year}:"
             exercises: "{count, plural, =1 {Esercizio} other {Esercizi}}"
@@ -600,6 +603,53 @@ reset_password_request:
     reseting_password: Ripristino della tua password
     send_link: Invia il link di ripristino
 
+regularity_goal:
+    abandon:
+        button: "Abbandona"
+        cancel: "Annulla"
+        confirm: "Abbandona"
+        error_text: "Impossibile abbandonare l'obiettivo, riprova."
+        message: "Verrà eliminato e non comparirà nel tuo storico."
+        title: "Abbandonare questo obiettivo?"
+    add_button: "Nuovo obiettivo"
+    calendar_label: "Calendario dell'obiettivo"
+    dates: "Dal {start} al {end}"
+    duration: "{weeks, plural, one {# settimana} other {# settimane}}"
+    empty: "Nessun obiettivo in corso."
+    flash:
+        abandoned: "Obiettivo abbandonato."
+        already_ongoing: "Hai già un obiettivo in corso: completalo o abbandonalo prima di crearne un altro."
+        created: "Obiettivo di regolarità creato."
+        error: "Impossibile creare questo obiettivo. Controlla i campi."
+    form:
+        duration_help: "Durata in settimane intere: ogni settimana della tua sfida conta 7 giorni completi dalla data di inizio, così la tua quota è sempre giusta."
+        duration_label: "Per"
+        period_label: "Ogni"
+        sessions_label: "Allenamenti"
+        start_label: "A partire dal"
+    history_title: "Storico"
+    modal:
+        cancel: "Annulla"
+        submit: "Crea l'obiettivo"
+        subtitle: "Fissati un ritmo e mantienilo fino alla fine."
+        title: "Nuovo obiettivo di regolarità"
+    period:
+        day: "giorno"
+        week: "settimana"
+    period_title: "{date}: {sessions}/{target} — {status}"
+    result:
+        achieved: "Riuscito"
+        not_achieved: "Non raggiunto"
+    score: "{met} su {required} {period, select, day {giorni riusciti} other {settimane riuscite}}"
+    status:
+        in_progress: "In corso"
+        met: "Raggiunto"
+        missed: "Mancato"
+        upcoming: "In arrivo"
+    subtitle: "Fissati un ritmo di allenamenti, al giorno o alla settimana, e seguilo sulla tua dashboard."
+    summary: "{sessions, plural, one {# allenamento} other {# allenamenti}} {period, select, day {al giorno} other {a settimana}} per {duration}"
+    title: "Obiettivo di regolarità"
+    week_label: "S{number}"
 routine:
     badge:
         base: Base
@@ -742,6 +792,7 @@ settings:
             heatmap: "Calendario dell'attività"
             muscle_distribution: Muscoli allenati
             regularity: Regolarità
+            regularity_goal: "Obiettivo di regolarità"
             session: Sessione
             tonnage: Volume sollevato
     email:

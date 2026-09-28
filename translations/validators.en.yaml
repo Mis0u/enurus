@@ -8,7 +8,9 @@ deload_period:
     end_date:
         required: The end date is required.
     note_too_long: The note cannot exceed {{ limit }} characters.
+    regularity_goal_overlap: "This period overlaps your regularity goal: a goal and a rest can't be combined."
     start_date:
+        in_the_past: "A rest week cannot start in the past."
         required: The start date is required.
 
 exercise:
@@ -25,6 +27,14 @@ exercise_set:
     weight_positive_or_zero: Weight cannot be negative.
     weight_required: Weight must be provided and positive.
 
+regularity_goal:
+    deload_overlap: "This goal overlaps a planned rest week. Choose another start date or a shorter duration."
+    sessions:
+        positive: "The number of sessions must be greater than 0."
+        too_many: "No more than {{ max }} sessions for this pace."
+    start_date:
+        in_the_past: "The goal cannot start in the past."
+        required: "The start date is required."
 routine:
     name_exists: You already have a routine with this name.
     name_not_blank: The routine name is required.

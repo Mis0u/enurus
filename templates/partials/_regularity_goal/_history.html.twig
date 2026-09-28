@@ -1,0 +1,20 @@
+{#
+    Défis de régularité terminés, avec leur score : partagé par l'onglet Calendrier et le widget.
+    Variable attendue (via `only`) :
+    - history : list<RegularityGoalProgress>
+#}
+<ul class="flex flex-col gap-2.5">
+    {% for progress in history %}
+        <li class="flex items-center justify-between gap-3 px-4 py-3 bg-white/[0.02] border border-white/[0.07] rounded-xl">
+            <div class="min-w-0">
+                {% include 'partials/_regularity_goal/_summary.html.twig' with {progress: progress} only %}
+                <div class="text-[11.5px] text-[#8b9bb4] mt-1">
+                    {{ 'regularity_goal.score'|trans({met: progress.metCount, required: progress.requiredCount, period: progress.goal.period.value}, 'navigation') }}
+                </div>
+            </div>
+            <span class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold {{ progress.isAchieved ? 'bg-green-ft/15 text-green-ft' : 'bg-white/[0.05] text-[#8b9bb4]' }}">
+                {{ (progress.isAchieved ? 'regularity_goal.result.achieved' : 'regularity_goal.result.not_achieved')|trans({}, 'navigation') }}
+            </span>
+        </li>
+    {% endfor %}
+</ul>

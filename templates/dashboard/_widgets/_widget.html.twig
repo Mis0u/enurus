@@ -47,6 +47,13 @@
             need_days: 0,
         } only %}
     {% endif %}
+{% elseif widget == 'regularity_goal' %}
+    {% if data.visibleWidgets.regularity_goal %}
+        {% include 'dashboard/_widgets/_regularity_goal.html.twig' with {
+            overview: data.regularityGoalOverview,
+            readOnly: readOnly,
+        } only %}
+    {% endif %}
 {% elseif widget == 'goals' %}
     {# Masqué tant que l'utilisateur n'a jamais créé d'objectif, ou qu'il l'a masqué en réglages #}
     {% if data.visibleWidgets.goals %}

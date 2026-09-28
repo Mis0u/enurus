@@ -210,6 +210,9 @@ dashboard:
             year_delta_positive: "{count, plural, =1 {+# Einheit vs. Vorjahr} other {+# Einheiten vs. Vorjahr}}"
             year_delta_zero: Wie im Vorjahr
             year_label: "{count, plural, =1 {Einheit dieses Jahr} other {Einheiten dieses Jahr}}"
+        regularity_goal:
+            create_link: "Ziel festlegen"
+            empty_history: "Noch kein abgeschlossenes Ziel."
         session:
             annual_total_label: "Gesamt für das Jahr {year}:"
             exercises: "{count, plural, =1 {Übung} other {Übungen}}"
@@ -600,6 +603,53 @@ reset_password_request:
     reseting_password: Zurücksetzung deines Passworts
     send_link: Zurücksetzungslink senden
 
+regularity_goal:
+    abandon:
+        button: "Aufgeben"
+        cancel: "Abbrechen"
+        confirm: "Aufgeben"
+        error_text: "Das Ziel konnte nicht aufgegeben werden, bitte versuche es erneut."
+        message: "Es wird gelöscht und erscheint nicht in deinem Verlauf."
+        title: "Dieses Ziel aufgeben?"
+    add_button: "Neues Ziel"
+    calendar_label: "Kalender des Ziels"
+    dates: "Vom {start} bis {end}"
+    duration: "{weeks, plural, one {# Woche} other {# Wochen}}"
+    empty: "Kein laufendes Ziel."
+    flash:
+        abandoned: "Ziel aufgegeben."
+        already_ongoing: "Du hast bereits ein laufendes Ziel: Schließe es ab oder gib es auf, bevor du ein neues erstellst."
+        created: "Regelmäßigkeitsziel erstellt."
+        error: "Dieses Ziel konnte nicht erstellt werden. Bitte prüfe die Felder."
+    form:
+        duration_help: "Dauer in ganzen Wochen: Jede Woche deiner Challenge umfasst 7 volle Tage ab ihrem Startdatum, damit dein Soll immer fair ist."
+        duration_label: "Dauer"
+        period_label: "Pro"
+        sessions_label: "Einheiten"
+        start_label: "Ab dem"
+    history_title: "Verlauf"
+    modal:
+        cancel: "Abbrechen"
+        submit: "Ziel erstellen"
+        subtitle: "Setz dir einen Rhythmus und halte ihn bis zum Ende durch."
+        title: "Neues Regelmäßigkeitsziel"
+    period:
+        day: "Tag"
+        week: "Woche"
+    period_title: "{date}: {sessions}/{target} — {status}"
+    result:
+        achieved: "Erreicht"
+        not_achieved: "Nicht erreicht"
+    score: "{met} von {required} {period, select, day {Tagen erreicht} other {Wochen erreicht}}"
+    status:
+        in_progress: "Läuft"
+        met: "Erreicht"
+        missed: "Verpasst"
+        upcoming: "Anstehend"
+    subtitle: "Setz dir einen Trainingsrhythmus, pro Tag oder pro Woche, und verfolge ihn auf deiner Übersicht."
+    summary: "{sessions, plural, one {# Einheit} other {# Einheiten}} pro {period, select, day {Tag} other {Woche}} für {duration}"
+    title: "Regelmäßigkeitsziel"
+    week_label: "W{number}"
 routine:
     badge:
         base: Standard
@@ -742,6 +792,7 @@ settings:
             heatmap: "Aktivitätskalender"
             muscle_distribution: Trainierte Muskeln
             regularity: Regelmäßigkeit
+            regularity_goal: "Regelmäßigkeitsziel"
             session: Training
             tonnage: Gehobenes Gewicht
     email:

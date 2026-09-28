@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\DeloadPeriod;
+use App\Form\Trait\CalendarModalFieldsTrait;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,9 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class DeloadPeriodType extends AbstractType
 {
-    private const string FIELD_CLASS = 'w-full bg-white/[0.04] border border-white/[0.07] rounded-xl px-3.5 py-3 text-[#f0f4ff] font-dm-sans text-sm outline-none focus:border-[#06b6d4] focus:bg-white/[0.06] transition-all';
-
-    private const string LABEL_CLASS = 'block text-[10.5px] font-semibold text-slate-500 mb-1.5';
+    use CalendarModalFieldsTrait;
 
     public function __construct(
         private readonly TranslatorInterface $translator,
@@ -31,8 +30,9 @@ final class DeloadPeriodType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('startDate', DateType::class, $this->dateOptions('workout.list.calendar.modal.start_label'))
-            ->add('endDate', DateType::class, $this->dateOptions('workout.list.calendar.modal.end_label'))
+            // Un repos se programme : aujourd'hui ou plus tard (revérifié par la validation de l'entité).
+            ->add('startDate', DateType::class, $this->dateOptions('workout.list.calendar.modal.start_label', futureOnly: true))
+            ->add('endDate', DateType::class, $this->dateOptions('workout.list.calendar.modal.end_label', futureOnly: true))
             ->add('note', TextareaType::class, [
                 'label' => 'workout.list.calendar.modal.note_label',
                 'translation_domain' => 'navigation',
@@ -55,39 +55,5 @@ final class DeloadPeriodType extends AbstractType
             'csrf_protection' => true,
             'csrf_token_id' => 'deload_period_create',
         ]);
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function dateOptions(string $label): array
-    {
-        return [
-            'label' => $label,
-            'translation_domain' => 'navigation',
-            'widget' => 'single_text',
-            'html5' => false,
-            'format' => 'yyyy-MM-dd',
-            'input' => 'datetime_immutable',
-            'attr' => [
-                'class' => self::FIELD_CLASS,
-                'data-controller' => 'workout--date-picker',
-                'data-workout--date-picker-locale-value' => $this->currentLocale(),
-            ],
-            'label_attr' => [
-                'class' => self::LABEL_CLASS,
-            ],
-        ];
-    }
-
-    private function currentLocale(): string
-    {
-        $request = $this->requestStack->getCurrentRequest();
-
-        if (null === $request) {
-            throw new \LogicException('Building the deload period form requires an active HTTP request.');
-        }
-
-        return $request->getLocale();
     }
 }

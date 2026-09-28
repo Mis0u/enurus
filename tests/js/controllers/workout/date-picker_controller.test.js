@@ -54,6 +54,22 @@ describe('workout--date-picker controller', () => {
         });
     });
 
+    // Objectif de régularité : un défi ne démarre jamais dans le passé, mais peut démarrer demain.
+    it('only offers today and later dates when asked to', async () => {
+        buildDom('', 'data-workout--date-picker-future-only-value="true"');
+        await nextTick();
+
+        expect(flatpickrMock.mock.calls[0][1]).toMatchObject({ minDate: 'today' });
+        expect(flatpickrMock.mock.calls[0][1]).not.toHaveProperty('maxDate');
+    });
+
+    it('never restricts past dates by default', async () => {
+        buildDom();
+        await nextTick();
+
+        expect(flatpickrMock.mock.calls[0][1]).not.toHaveProperty('minDate');
+    });
+
     it('defaults to the English locale when no locale value is set', async () => {
         buildDom();
         await nextTick();

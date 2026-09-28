@@ -1,0 +1,66 @@
+{#
+    Widget « Objectif de régularité » : affichage seul, l'objectif se crée et s'abandonne depuis
+    l'onglet Calendrier de Mes séances. Onglets En cours / Historique, comme le widget Objectifs.
+    Variables attendues (toutes via `only`) :
+    - overview : RegularityGoalOverview
+    - readOnly : bool — dashboard d'une connexion : pas de lien vers l'onglet Calendrier
+#}
+<div data-dashboard-widget="regularity_goal" class="bg-bg-card border border-white/[0.07] rounded-2xl p-4 md:p-[22px] overflow-hidden relative transition-ft hover:border-white/[0.12] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] flex flex-col"
+     data-controller="dashboard--goal">
+
+    <div class="flex items-center gap-[7px] mb-3 md:mb-4 text-[#8b9bb4]">
+        {% include 'partials/_svg/_calendar.html.twig' with {width: 3.75, height: 3.75} only %}
+        <h2 class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase">
+            {{ 'regularity_goal.title'|trans({}, 'navigation') }}
+        </h2>
+    </div>
+
+    <div class="flex items-center gap-1 bg-white/[0.04] border border-white/[0.07] rounded-lg p-1 mb-4">
+        <button type="button"
+                data-dashboard--goal-target="tab"
+                data-filter="current"
+                data-action="click->dashboard--goal#switchFilter"
+                class="dashboard-tab-active flex-1 px-3 py-1.5 max-md:min-h-11 text-[12px] font-semibold rounded-md transition-ft">
+            {{ 'dashboard.widget.goal.tab.current'|trans({}, 'navigation') }}
+        </button>
+        <button type="button"
+                data-dashboard--goal-target="tab"
+                data-filter="achieved"
+                data-action="click->dashboard--goal#switchFilter"
+                class="dashboard-tab-inactive flex-1 px-3 py-1.5 max-md:min-h-11 text-[12px] font-semibold rounded-md transition-ft">
+            {{ 'dashboard.widget.goal.tab.achieved'|trans({}, 'navigation') }}
+        </button>
+    </div>
+
+    <div data-dashboard--goal-target="panel" data-filter="current" class="flex flex-col gap-3">
+        {% if overview.current is null %}
+            <p class="text-[13px] text-[#8b9bb4] text-center py-4">
+                {{ 'regularity_goal.empty'|trans({}, 'navigation') }}
+                {% if not readOnly %}
+                    <a href="{{ path('app_workout_list', {view: 'calendar'}) }}" class="block mt-2 text-rose-ft font-semibold hover:underline">
+                        {{ 'dashboard.widget.regularity_goal.create_link'|trans({}, 'navigation') }}
+                    </a>
+                {% endif %}
+            </p>
+        {% else %}
+            {% set current = overview.current %}
+            <div>
+                {% include 'partials/_regularity_goal/_summary.html.twig' with {progress: current} only %}
+                <div class="text-[12px] text-[#8b9bb4] mt-1.5">
+                    {{ 'regularity_goal.score'|trans({met: current.metCount, required: current.requiredCount, period: current.goal.period.value}, 'navigation') }}
+                </div>
+            </div>
+            {% include 'partials/_regularity_goal/_calendar.html.twig' with {progress: current} only %}
+        {% endif %}
+    </div>
+
+    <div data-dashboard--goal-target="panel" data-filter="achieved" class="hidden flex-col gap-3 max-h-96 overflow-y-auto pr-1 exercise-list-scroll">
+        {% if overview.history is empty %}
+            <p class="text-[13px] text-[#8b9bb4] text-center py-4">
+                {{ 'dashboard.widget.regularity_goal.empty_history'|trans({}, 'navigation') }}
+            </p>
+        {% else %}
+            {% include 'partials/_regularity_goal/_history.html.twig' with {history: overview.history} only %}
+        {% endif %}
+    </div>
+</div>

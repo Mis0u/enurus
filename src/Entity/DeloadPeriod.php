@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\Entity\Trait\TimestampTrait;
 use App\Repository\DeloadPeriodRepository;
+use App\Validator\NoRegularityGoalOverlap;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -22,6 +23,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 #[ORM\Entity(repositoryClass: DeloadPeriodRepository::class)]
 #[ORM\Table(name: 'deload_period')]
+#[NoRegularityGoalOverlap]
 class DeloadPeriod
 {
     use TimestampTrait;
@@ -81,12 +83,32 @@ class DeloadPeriod
         }
     }
 
+    public function hasDates(): bool
+    {
+        return isset($this->startDate, $this->endDate);
+    }
+
     /**
      * @return bool Vrai si `$day` (n'importe quelle heure) tombe dans cette période.
      */
     public function covers(\DateTimeImmutable $day): bool
     {
         return $day >= $this->startDate && $day <= $this->endDate;
+    }
+
+    /**
+     * Un repos se programme à l'avance : jamais dans le passé. Les périodes passées déjà
+     * enregistrées restent en historique, la règle ne vaut qu'à la création.
+     */
+    #[Assert\Callback]
+    public function validateStartNotInThePast(ExecutionContextInterface $context): void
+    {
+        if (isset($this->startDate) && $this->startDate < new \DateTimeImmutable('today')) {
+            $context->buildViolation('deload_period.start_date.in_the_past')
+                ->atPath('startDate')
+                ->setTranslationDomain('validators')
+                ->addViolation();
+        }
     }
 
     #[Assert\Callback]

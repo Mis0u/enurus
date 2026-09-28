@@ -40,10 +40,12 @@ test('widgets reordered in the settings keep that order on the dashboard', async
 test('the arrows are big enough to tap and the drag handle is hidden on mobile', async ({ page }) => {
     await openWidgetSettings(page);
 
-    const upArrow = page.getByRole('button', { name: 'Monter « Tonnage »' });
+    const upArrow = widgetRows(page).last().locator('[data-settings--dashboard-widgets-target="moveUpButton"]');
     const box = await upArrow.boundingBox();
     expect(box!.width).toBeGreaterThanOrEqual(40);
     expect(box!.height).toBeGreaterThanOrEqual(40);
     await expect(page.locator('#dashboard-widgets .drag-handle').first()).toBeHidden();
-    await expect(page.getByRole('button', { name: 'Monter « Séance »' })).toBeDisabled();
+    // Premier widget de la liste, quel qu'il soit : l'autre test de ce fichier, lancé en parallèle
+    // sur le même compte, change l'ordre.
+    await expect(widgetRows(page).first().locator('[data-settings--dashboard-widgets-target="moveUpButton"]')).toBeDisabled();
 });

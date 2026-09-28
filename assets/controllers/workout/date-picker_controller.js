@@ -4,6 +4,10 @@
 // navigateur — celui-ci ne permet pas de différencier visuellement (curseur, couleurs) les
 // dates sélectionnables des dates futures désactivées. Le format transmis au serveur
 // (yyyy-MM-dd) reste identique à l'input natif, donc aucune conséquence côté validation.
+//
+// Par défaut, dates passées seulement (une séance ne se saisit pas à l'avance). `futureOnly`
+// inverse les bornes : aujourd'hui et après (début d'un objectif de régularité). Sur mobile,
+// flatpickr bascule sur le sélecteur natif, qui reçoit les mêmes bornes.
 
 import { Controller } from '@hotwired/stimulus';
 import flatpickr from 'flatpickr';
@@ -27,14 +31,14 @@ const LOCALES = {
 };
 
 export default class extends Controller {
-    static values = { locale: String, defaultToday: Boolean };
+    static values = { locale: String, defaultToday: Boolean, futureOnly: Boolean };
 
     #flatpickr = null;
 
     connect() {
         this.#flatpickr = flatpickr(this.element, {
             dateFormat: 'Y-m-d',
-            maxDate: 'today',
+            ...this.#boundsOption(),
             locale: LOCALES[this.localeValue] ?? 'default',
             ...this.#defaultDateOption(),
         });
@@ -44,7 +48,11 @@ export default class extends Controller {
         this.#flatpickr?.destroy();
     }
 
-    // « Aujourd'hui » calculé par le navigateur, comme `maxDate` : une date posée côté serveur
+    #boundsOption() {
+        return this.futureOnlyValue ? { minDate: 'today' } : { maxDate: 'today' };
+    }
+
+    // « Aujourd'hui » calculé par le navigateur, comme les bornes : une date posée côté serveur
     // pourrait tomber le lendemain de la date locale de l'utilisateur (fuseau différent, vers
     // minuit) et être refusée par le calendrier. Pas d'événement `change` au pré-remplissage, donc
     // pas de vérification de doublon (controller `date`) tant que l'utilisateur ne change pas la date.

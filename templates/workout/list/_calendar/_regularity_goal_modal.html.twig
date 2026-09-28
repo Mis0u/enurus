@@ -1,0 +1,55 @@
+{#
+    Modale « Nouvel objectif de régularité ». Masquée par défaut, ouverte via workout--list--modal#open.
+    Variable attendue (via `only`) : `form` (FormView de RegularityGoalType).
+#}
+<div
+    data-workout--list--modal-target="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="regularity-goal-modal-title"
+    class="hidden fixed inset-0 z-[120] items-center justify-center bg-[#080e1a]/90 backdrop-blur-sm px-4"
+>
+    <div class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-7 w-full max-w-md shadow-[0_20px_60px_rgba(0,0,0,0.5)] max-md:p-5">
+        <h3 id="regularity-goal-modal-title" class="font-rajdhani text-[22px] font-bold text-center text-[#f0f4ff] mb-2">
+            {{ 'regularity_goal.modal.title'|trans({}, 'navigation') }}
+        </h3>
+        <p class="text-center text-[#8b9bb4] text-[13px] mb-6 max-md:text-[12px]">
+            {{ 'regularity_goal.modal.subtitle'|trans({}, 'navigation') }}
+        </p>
+
+        {{ form_start(form, {
+            'action': path('app_regularity_goal_create'),
+            'attr': {'class': 'w-full'},
+        }) }}
+            <div class="grid grid-cols-2 gap-3">
+                <div>{{ form_row(form.sessionsPerPeriod) }}</div>
+                <div>{{ form_row(form.period) }}</div>
+                <div>
+                    {{ form_label(form.duration) }}
+                    {{ form_widget(form.duration) }}
+                    {{ form_errors(form.duration) }}
+                </div>
+                <div>{{ form_row(form.startDate) }}</div>
+                {# Pleine largeur : trop à l'étroit sous la demi-colonne de la durée sur mobile. #}
+                <div class="col-span-2 -mt-1">{{ form_help(form.duration) }}</div>
+            </div>
+            {{ form_row(form._token) }}
+
+            <div class="flex gap-2.5 mt-5 max-md:flex-col">
+                <button
+                    type="button"
+                    data-action="click->workout--list--modal#close"
+                    class="cursor-pointer flex-1 px-5 py-3 bg-white/[0.06] border border-white/[0.07] rounded-lg text-[#f0f4ff] text-[14px] font-medium transition-all duration-250 hover:bg-white/[0.1] hover:border-white/[0.12]"
+                >
+                    {{ 'regularity_goal.modal.cancel'|trans({}, 'navigation') }}
+                </button>
+                <button
+                    type="submit"
+                    class="cursor-pointer flex-1 px-5 py-3 bg-gradient-to-br from-rose-ft to-red-600 text-white font-rajdhani font-bold text-[14px] rounded-lg shadow-[0_4px_15px_rgba(244,63,94,0.3)] hover:shadow-[0_6px_22px_rgba(244,63,94,0.5)] transition-all duration-250"
+                >
+                    {{ 'regularity_goal.modal.submit'|trans({}, 'navigation') }}
+                </button>
+            </div>
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+</div>

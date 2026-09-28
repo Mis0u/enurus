@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Enum\Dashboard\DashboardWidgetEnum;
 use App\Repository\ExerciseGoalRepository;
 use App\Repository\ProfileConnectionRepository;
+use App\Repository\RegularityGoalRepository;
 use App\Service\Dashboard\DashboardState;
 use App\Service\Dashboard\DashboardWidgetUnlockResolver;
 use PHPUnit\Framework\TestCase;
@@ -63,16 +64,28 @@ final class DashboardWidgetUnlockResolverTest extends TestCase
     }
 
     /**
+     * Comme les Objectifs : le widget apparaît dès le premier objectif créé depuis l'onglet Calendrier.
+     */
+    public function testRegularityGoalWidgetUnlocksOnlyOnceAGoalWasCreated(): void
+    {
+        self::assertFalse($this->resolve(workoutCount: 5, hasAnyGoal: false)[DashboardWidgetEnum::REGULARITY_GOAL->value]);
+        self::assertTrue($this->resolve(workoutCount: 5, hasAnyGoal: false, hasAnyRegularityGoal: true)[DashboardWidgetEnum::REGULARITY_GOAL->value]);
+    }
+
+    /**
      * @return array<string, bool>
      */
-    private function resolve(int $workoutCount, bool $hasAnyGoal, int $acceptedConnections = 0): array
+    private function resolve(int $workoutCount, bool $hasAnyGoal, int $acceptedConnections = 0, bool $hasAnyRegularityGoal = false): array
     {
         $exerciseGoalRepository = $this->createStub(ExerciseGoalRepository::class);
         $exerciseGoalRepository->method('findByOwner')->willReturn($hasAnyGoal ? [$this->createStub(ExerciseGoal::class)] : []);
         $connectionRepository = $this->createStub(ProfileConnectionRepository::class);
         $connectionRepository->method('countAcceptedInvolving')->willReturn($acceptedConnections);
 
-        return (new DashboardWidgetUnlockResolver($exerciseGoalRepository, $connectionRepository))
+        $regularityGoalRepository = $this->createStub(RegularityGoalRepository::class);
+        $regularityGoalRepository->method('hasAnyForOwner')->willReturn($hasAnyRegularityGoal);
+
+        return (new DashboardWidgetUnlockResolver($exerciseGoalRepository, $connectionRepository, $regularityGoalRepository))
             ->resolve($this->createStub(User::class), new DashboardState(workoutCount: $workoutCount));
     }
 }
