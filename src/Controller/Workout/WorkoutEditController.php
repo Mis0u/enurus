@@ -7,6 +7,7 @@ namespace App\Controller\Workout;
 use App\Constraint\ImageConstraints;
 use App\Controller\Trait\NotifiesBadgeUnlockTrait;
 use App\Controller\Trait\NotifiesGoalAchievementTrait;
+use App\Controller\Trait\NotifiesRegularityGoalAchievementTrait;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
@@ -19,6 +20,7 @@ use App\Service\Badge\BadgeLabelFormatter;
 use App\Service\Badge\BadgeSyncService;
 use App\Service\Goal\GoalAchievementDetector;
 use App\Service\Goal\GoalCardFormatter;
+use App\Service\RegularityGoal\RegularityGoalAchievementDetector;
 use App\Service\Utils\WeightConverterService;
 use App\Service\Workout\BodyweightSnapshotService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,6 +37,7 @@ class WorkoutEditController extends AbstractController
 {
     use NotifiesBadgeUnlockTrait;
     use NotifiesGoalAchievementTrait;
+    use NotifiesRegularityGoalAchievementTrait;
 
     #[Route(
         path: [
@@ -62,6 +65,7 @@ class WorkoutEditController extends AbstractController
         BodyweightSnapshotService $bodyweightSnapshotService,
         GoalAchievementDetector $goalAchievementDetector,
         GoalCardFormatter $goalCardFormatter,
+        RegularityGoalAchievementDetector $regularityGoalAchievementDetector,
         BadgeSyncService $badgeSyncService,
         BadgeLabelFormatter $badgeLabelFormatter,
         TranslatorInterface $translator,
@@ -102,6 +106,7 @@ class WorkoutEditController extends AbstractController
             $bodyweightSnapshotService->apply($workout, $user);
             $em->flush();
             $this->notifyGoalAchievements($user, $workout, $goalAchievementDetector, $goalCardFormatter);
+            $this->notifyRegularityGoalAchievements($user, $regularityGoalAchievementDetector);
             $this->notifyBadgeUnlocks($badgeSyncService->sync($user, $workout), $user, $badgeLabelFormatter);
 
             return $this->redirectToRoute('app_workout_show', [

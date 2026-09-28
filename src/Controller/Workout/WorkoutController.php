@@ -7,6 +7,7 @@ namespace App\Controller\Workout;
 use App\Constraint\ImageConstraints;
 use App\Controller\Trait\NotifiesBadgeUnlockTrait;
 use App\Controller\Trait\NotifiesGoalAchievementTrait;
+use App\Controller\Trait\NotifiesRegularityGoalAchievementTrait;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Enum\Entity\Workout\WorkoutMoodEnum;
@@ -15,6 +16,7 @@ use App\Service\Badge\BadgeLabelFormatter;
 use App\Service\Badge\BadgeSyncService;
 use App\Service\Goal\GoalAchievementDetector;
 use App\Service\Goal\GoalCardFormatter;
+use App\Service\RegularityGoal\RegularityGoalAchievementDetector;
 use App\Service\Utils\WeightConverterService;
 use App\Service\Workout\BodyweightSnapshotService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,12 +33,14 @@ final class WorkoutController extends AbstractController
 {
     use NotifiesBadgeUnlockTrait;
     use NotifiesGoalAchievementTrait;
+    use NotifiesRegularityGoalAchievementTrait;
 
     public function __construct(
         private readonly WeightConverterService $weightConverterService,
         private readonly BodyweightSnapshotService $bodyweightSnapshotService,
         private readonly GoalAchievementDetector $goalAchievementDetector,
         private readonly GoalCardFormatter $goalCardFormatter,
+        private readonly RegularityGoalAchievementDetector $regularityGoalAchievementDetector,
         private readonly BadgeSyncService $badgeSyncService,
         private readonly BadgeLabelFormatter $badgeLabelFormatter,
         private readonly EntityManagerInterface $em,
@@ -102,6 +106,7 @@ final class WorkoutController extends AbstractController
 
         $this->addFlash('success', $this->translator->trans('workout.flash.created', [], 'navigation'));
         $this->notifyGoalAchievements($user, $workout, $this->goalAchievementDetector, $this->goalCardFormatter);
+        $this->notifyRegularityGoalAchievements($user, $this->regularityGoalAchievementDetector);
         $this->notifyBadgeUnlocks($this->badgeSyncService->sync($user, $workout), $user, $this->badgeLabelFormatter);
 
         if ($request->isXmlHttpRequest()) {

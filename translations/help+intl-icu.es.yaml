@@ -89,7 +89,7 @@ section:
             deload: "Ahí también programas tus semanas de descanso (deload): no rompen tu racha de semanas de entrenamiento."
             detail: "Abre un entrenamiento para ver tus series, los músculos trabajados y tus récords. Puedes modificarlo o eliminarlo."
             list: "Tus entrenamientos del más reciente al más antiguo, filtrables por fecha, semana, mes, rutina o músculo trabajado."
-            regularity_goal: "También en « Calendario », márcate un objetivo de regularidad: por ejemplo 3 sesiones por semana durante 4 semanas, o 1 sesión por día durante 2 semanas. La duración se elige en semanas completas de 7 días, desde la fecha de inicio. Cada día o semana debe alcanzar su cuota (dos entrenamientos el mismo día cuentan como dos). Un objetivo no se combina con una semana de descanso: no puedes programar uno durante el otro. Sigue tu progreso en el widget « Objetivo de regularidad » de tu panel. Un solo objetivo a la vez, que puedes abandonar."
+            regularity_goal: "También en « Calendario », márcate un objetivo de regularidad: por ejemplo 3 sesiones por semana durante 4 semanas, o 1 sesión por día durante 2 semanas. La duración se elige en semanas completas de 7 días, desde la fecha de inicio. Cada día o semana debe alcanzar su cuota (dos entrenamientos el mismo día cuentan como dos). Un objetivo no se combina con una semana de descanso: no puedes programar uno durante el otro. Sigue tu progreso en el widget « Objetivo de regularidad » de tu panel. Un solo objetivo a la vez, que puedes abandonar. ¿Reto conseguido? Te espera una celebración en cuanto registres la sesión que lo completa."
         title: "Mis entrenamientos"
 summary: "Índice"
 title: "Ayuda"

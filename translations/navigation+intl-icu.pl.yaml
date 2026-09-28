@@ -615,6 +615,10 @@ regularity_goal:
         error_text: "Nie udało się porzucić celu, spróbuj ponownie."
         message: "Zostanie usunięty i nie pojawi się w Twojej historii."
         title: "Porzucić ten cel?"
+    achieved:
+        confirm: "Dalej"
+        text: "Brawo, cel dotrzymany do samego końca: {summary}!"
+        title: "Cel regularności osiągnięty!"
     add_button: "Nowy cel"
     calendar_label: "Kalendarz celu"
     dates: "Od {start} do {end}"

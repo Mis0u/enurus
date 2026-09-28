@@ -611,6 +611,10 @@ regularity_goal:
         error_text: "Das Ziel konnte nicht aufgegeben werden, bitte versuche es erneut."
         message: "Es wird gelöscht und erscheint nicht in deinem Verlauf."
         title: "Dieses Ziel aufgeben?"
+    achieved:
+        confirm: "Weiter"
+        text: "Glückwunsch, du hast dein Ziel bis zum Ende gehalten: {summary}!"
+        title: "Regelmäßigkeitsziel erreicht!"
     add_button: "Neues Ziel"
     calendar_label: "Kalender des Ziels"
     dates: "Vom {start} bis {end}"

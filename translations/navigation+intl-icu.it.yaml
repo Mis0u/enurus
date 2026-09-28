@@ -611,6 +611,10 @@ regularity_goal:
         error_text: "Impossibile abbandonare l'obiettivo, riprova."
         message: "Verrà eliminato e non comparirà nel tuo storico."
         title: "Abbandonare questo obiettivo?"
+    achieved:
+        confirm: "Continua"
+        text: "Bravo, hai mantenuto il tuo obiettivo fino alla fine: {summary}!"
+        title: "Obiettivo di regolarità raggiunto!"
     add_button: "Nuovo obiettivo"
     calendar_label: "Calendario dell'obiettivo"
     dates: "Dal {start} al {end}"

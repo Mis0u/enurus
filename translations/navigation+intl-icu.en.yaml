@@ -611,6 +611,10 @@ regularity_goal:
         error_text: "Couldn't abandon the goal, please try again."
         message: "It will be deleted and won't appear in your history."
         title: "Abandon this goal?"
+    achieved:
+        confirm: "Continue"
+        text: "Well done, you kept your goal to the end: {summary}!"
+        title: "Regularity goal achieved!"
     add_button: "New goal"
     calendar_label: "Goal calendar"
     dates: "From {start} to {end}"

@@ -89,7 +89,7 @@ section:
             deload: "You also schedule your rest weeks (deload) there: they don't break your streak of training weeks."
             detail: "Open a workout to see your sets, the muscles worked and your records. You can edit or delete it."
             list: "Your workouts from newest to oldest, filterable by date, week, month, routine or muscle worked."
-            regularity_goal: "Still in “Calendar”, set yourself a regularity goal: for example 3 sessions per week for 4 weeks, or 1 session per day for 2 weeks. The duration is chosen in whole 7-day weeks, from the start date. Each day or week must reach its quota (two workouts on the same day count as two). A goal can't be combined with a rest week: you can't plan one during the other. Follow your progress on the “Regularity goal” widget of your dashboard. One goal at a time, which you can abandon."
+            regularity_goal: "Still in “Calendar”, set yourself a regularity goal: for example 3 sessions per week for 4 weeks, or 1 session per day for 2 weeks. The duration is chosen in whole 7-day weeks, from the start date. Each day or week must reach its quota (two workouts on the same day count as two). A goal can't be combined with a rest week: you can't plan one during the other. Follow your progress on the “Regularity goal” widget of your dashboard. One goal at a time, which you can abandon. Challenge completed? A celebration awaits you as soon as you log the session that completes it."
         title: "My workouts"
 summary: "Contents"
 title: "Help"
