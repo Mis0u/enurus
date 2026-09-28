@@ -86,7 +86,7 @@ section:
         intro: "« Mis entrenamientos » reúne todo tu historial."
         open: "Ver mis entrenamientos"
         points:
-            calendar: "La pestaña « Calendario » muestra tu actividad durante el año: cuanto más oscura es una casilla, más largo fue el entrenamiento."
+            calendar: "La pestaña « Calendario » muestra tu actividad durante el año: cuanto más oscura es una casilla, más levantaste ese día en comparación con tus otros entrenamientos. Un entrenamiento sin carga (cardio, plancha…) aparece en el tono más claro."
             deload: "Ahí también programas tus semanas de descanso (deload): no rompen tu racha de semanas de entrenamiento."
             detail: "Abre un entrenamiento para ver tus series, los músculos trabajados y tus récords. Puedes modificarlo o eliminarlo."
             list: "Tus entrenamientos del más reciente al más antiguo, filtrables por fecha, semana, mes, rutina o músculo trabajado."

@@ -10,4 +10,15 @@
     </p>
 
     {% include 'partials/_heatmap/_heatmap_grid.html.twig' with {heatmapData: heatmapData, fluid: false} only %}
+
+    {# Couleurs relatives aux séances de l'utilisateur (tiers de tonnage) : sans explication, une
+       case qui change de teinte au fil des nouvelles séances paraîtrait être un bug. #}
+    <details class="mt-4">
+        <summary class="cursor-pointer max-md:py-3 text-[13px] font-medium text-white/60 hover:text-white/80 select-none">
+            {{ 'workout.list.calendar.heatmap.how_it_works_toggle'|trans({}, 'navigation') }}
+        </summary>
+        <p class="mt-2 text-[12px] text-[#8b9bb4] leading-relaxed">
+            {{ 'workout.list.calendar.heatmap.how_it_works_body'|trans({}, 'navigation') }}
+        </p>
+    </details>
 </div>

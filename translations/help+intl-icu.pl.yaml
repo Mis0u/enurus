@@ -86,7 +86,7 @@ section:
         intro: "„Moje treningi” zawierają całą Twoją historię."
         open: "Zobacz moje treningi"
         points:
-            calendar: "Zakładka „Kalendarz” pokazuje Twoją aktywność w ciągu roku: im ciemniejsze pole, tym dłuższy był trening."
+            calendar: "Zakładka „Kalendarz” pokazuje Twoją aktywność w ciągu roku: im ciemniejsze pole, tym większy ciężar podniesiony tego dnia w porównaniu z Twoimi innymi treningami. Trening bez obciążenia (cardio, deska…) pojawia się w najjaśniejszym odcieniu."
             deload: "Tam też planujesz tygodnie odpoczynku (deload): nie przerywają Twojej serii tygodni treningowych."
             detail: "Otwórz trening, aby zobaczyć swoje serie, zaangażowane mięśnie i rekordy. Możesz go edytować lub usunąć."
             list: "Twoje treningi od najnowszego do najstarszego, z filtrami według daty, tygodnia, miesiąca, programu lub trenowanego mięśnia."

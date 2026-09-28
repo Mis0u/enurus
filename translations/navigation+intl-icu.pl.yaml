@@ -861,12 +861,14 @@ workout:
                 deleted: Tydzień odpoczynku usunięty.
                 error: Nie udało się zapisać tego okresu. Sprawdź daty.
             heatmap:
+                how_it_works_body: "Każde pole sumuje tonaż (ciężar × powtórzenia) Twoich treningów z danego dnia. Twoje dni treningowe z roku są następnie dzielone na trzy części: najlżejsza trzecia część na jasno, najcięższa na ciemno. Kolory są więc indywidualne i mogą się zmieniać wraz z nowymi treningami. Trening bez obciążenia (cardio, deska…) pojawia się na jasno."
+                how_it_works_toggle: "Jak obliczane są kolory?"
                 legend_deload: Odpoczynek
+                legend_intensity_intense: "Intensywny"
+                legend_intensity_light: "Lekki"
+                legend_intensity_medium: "Średni"
                 legend_rest: Niezaplanowany odpoczynek
-                legend_session_long: "90 min +"
-                legend_session_medium: "45–90 min"
-                legend_session_short: "< 45 min"
-                subtitle: "Intensywność = całkowity czas trwania treningu tego dnia."
+                subtitle: "Intensywność = ciężar podniesiony tego dnia w porównaniu z Twoimi innymi treningami w tym roku."
                 title: Kalendarz aktywności
             modal:
                 cancel: Anuluj

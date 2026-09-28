@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Service\Workout;
 
 use App\Entity\User;
-use App\Repository\WorkoutRepository;
+use App\Repository\WorkoutTonnageRepository;
 use App\Service\Dashboard\DashboardPeriodCalculator;
 use App\Service\Workout\DeloadPeriodSetService;
+use App\Service\Workout\HeatmapLevelCalculator;
 use App\Service\Workout\WorkoutHeatmapService;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -79,48 +80,19 @@ final class WorkoutHeatmapServiceTest extends TestCase
         }
     }
 
-    public function testShortSessionHasLevelOne(): void
+    /**
+     * Retour utilisateur : une séance sans durée renseignée laissait sa case vide. L'intensité
+     * repose désormais sur le tonnage, et une séance à 0 kg reste visible.
+     */
+    public function testSessionWithoutTonnageIsStillVisible(): void
     {
         $today = new \DateTimeImmutable('today');
         $result = $this->build([[
             'performedAt' => $today,
-            'duration' => 30,
+            'tonnage' => 0.0,
         ]]);
 
         self::assertSame(1, $this->levelForDate($result, $today));
-    }
-
-    public function testMediumSessionHasLevelTwo(): void
-    {
-        $today = new \DateTimeImmutable('today');
-        $result = $this->build([[
-            'performedAt' => $today,
-            'duration' => 60,
-        ]]);
-
-        self::assertSame(2, $this->levelForDate($result, $today));
-    }
-
-    public function testLongSessionHasLevelThree(): void
-    {
-        $today = new \DateTimeImmutable('today');
-        $result = $this->build([[
-            'performedAt' => $today,
-            'duration' => 90,
-        ]]);
-
-        self::assertSame(3, $this->levelForDate($result, $today));
-    }
-
-    public function testSessionWithoutDurationHasLevelZero(): void
-    {
-        $today = new \DateTimeImmutable('today');
-        $result = $this->build([[
-            'performedAt' => $today,
-            'duration' => null,
-        ]]);
-
-        self::assertSame(0, $this->levelForDate($result, $today));
     }
 
     public function testMultipleSessionsTheSameDayAreSummed(): void
@@ -129,17 +101,49 @@ final class WorkoutHeatmapServiceTest extends TestCase
         $result = $this->build([
             [
                 'performedAt' => $today,
-                'duration' => 30,
+                'tonnage' => 500.0,
             ],
             [
                 'performedAt' => $today,
-                'duration' => 30,
+                'tonnage' => 500.0,
+            ],
+            [
+                'performedAt' => $today->modify('-1 day'),
+                'tonnage' => 800.0,
+            ],
+            [
+                'performedAt' => $today->modify('-2 days'),
+                'tonnage' => 1200.0,
             ],
         ]);
 
-        // 30 + 30 = 60 min, palier "medium" (2), pas "short" (1) comme le donnerait chaque
-        // séance isolément.
+        // 500 + 500 = 1000 kg, tiers du milieu (2) — chaque séance isolée serait la plus légère (1).
         self::assertSame(2, $this->levelForDate($result, $today));
+    }
+
+    /**
+     * Le widget dashboard n'affiche que 26 semaines, mais ses couleurs doivent rester identiques à
+     * celles de l'onglet Calendrier : les tiers sont calculés sur l'année entière.
+     */
+    public function testShortGridComparesDaysAgainstTheWholeYear(): void
+    {
+        $today = new \DateTimeImmutable('today');
+        $result = $this->build([
+            [
+                'performedAt' => $today->modify('-41 weeks'),
+                'tonnage' => 6000.0,
+            ],
+            [
+                'performedAt' => $today->modify('-40 weeks'),
+                'tonnage' => 5000.0,
+            ],
+            [
+                'performedAt' => $today,
+                'tonnage' => 1000.0,
+            ],
+        ], weekCount: 26);
+
+        self::assertSame(1, $this->levelForDate($result, $today));
     }
 
     public function testDayCoveredByADeloadPeriodIsFlagged(): void
@@ -151,14 +155,14 @@ final class WorkoutHeatmapServiceTest extends TestCase
     }
 
     /**
-     * @param list<array{performedAt: \DateTimeImmutable, duration: int|null}> $rows
+     * @param list<array{performedAt: \DateTimeImmutable, tonnage: float}> $rows
      * @param \DateTimeImmutable[] $deloadDayDates
      * @return HeatmapData
      */
     private function build(array $rows, array $deloadDayDates = [], int $weekCount = WorkoutHeatmapService::FULL_YEAR_WEEKS): array
     {
-        $workoutRepository = $this->createStub(WorkoutRepository::class);
-        $workoutRepository->method('findPerformedAtAndDurationSince')->willReturn($rows);
+        $tonnageRepository = $this->createStub(WorkoutTonnageRepository::class);
+        $tonnageRepository->method('findTonnageSeriesByUser')->willReturn($rows);
 
         $deloadPeriodSetService = $this->createStub(DeloadPeriodSetService::class);
         $deloadPeriodSetService->method('dayKeySet')->willReturn(array_fill_keys(
@@ -166,7 +170,12 @@ final class WorkoutHeatmapServiceTest extends TestCase
             true,
         ));
 
-        $service = new WorkoutHeatmapService($workoutRepository, new DashboardPeriodCalculator(), $deloadPeriodSetService);
+        $service = new WorkoutHeatmapService(
+            $tonnageRepository,
+            new DashboardPeriodCalculator(),
+            $deloadPeriodSetService,
+            new HeatmapLevelCalculator(),
+        );
 
         return $service->build($this->createStub(User::class), $weekCount);
     }

@@ -849,12 +849,14 @@ workout:
                 deleted: Rest week deleted.
                 error: Could not save this period. Check the dates.
             heatmap:
+                how_it_works_body: "Each square adds up the tonnage (weight × reps) of that day's workouts. Your training days of the year are then split into three thirds: the lightest third in a pale shade, the heaviest in a dark one. The colours are therefore specific to you and may change as you log new workouts. A workout without load (cardio, planks…) shows in the lightest shade."
+                how_it_works_toggle: "How are the colours calculated?"
                 legend_deload: Deload
+                legend_intensity_intense: "Intense"
+                legend_intensity_light: "Light"
+                legend_intensity_medium: "Moderate"
                 legend_rest: Unplanned rest
-                legend_session_long: "90 min +"
-                legend_session_medium: "45–90 min"
-                legend_session_short: "< 45 min"
-                subtitle: "Intensity = total workout duration that day."
+                subtitle: "Intensity = weight lifted that day, compared with your other workouts this year."
                 title: Activity calendar
             modal:
                 cancel: Cancel

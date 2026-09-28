@@ -849,12 +849,14 @@ workout:
                 deleted: Settimana di riposo eliminata.
                 error: Impossibile salvare questo periodo. Controlla le date.
             heatmap:
+                how_it_works_body: "Ogni casella somma il tonnellaggio (peso × ripetizioni) degli allenamenti del giorno. I tuoi giorni di allenamento dell'anno vengono poi divisi in tre terzi: il terzo più leggero in chiaro, il più pesante in scuro. I colori sono quindi personali e possono cambiare con i tuoi nuovi allenamenti. Un allenamento senza carico (cardio, plank…) appare in chiaro."
+                how_it_works_toggle: "Come vengono calcolati i colori?"
                 legend_deload: Riposo
+                legend_intensity_intense: "Intenso"
+                legend_intensity_light: "Leggero"
+                legend_intensity_medium: "Medio"
                 legend_rest: Riposo non programmato
-                legend_session_long: "90 min +"
-                legend_session_medium: "45–90 min"
-                legend_session_short: "< 45 min"
-                subtitle: "Intensità = durata totale dell'allenamento quel giorno."
+                subtitle: "Intensità = carico sollevato quel giorno, rispetto agli altri tuoi allenamenti dell'anno."
                 title: Calendario dell'attività
             modal:
                 cancel: Annulla

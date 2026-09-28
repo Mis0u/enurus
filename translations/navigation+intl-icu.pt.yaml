@@ -849,12 +849,14 @@ workout:
                 deleted: Semana de descanso eliminada.
                 error: Não foi possível guardar este período. Verifica as datas.
             heatmap:
+                how_it_works_body: "Cada casa soma a tonelagem (peso × repetições) dos teus treinos do dia. Os teus dias de treino do ano são depois divididos em três terços: o terço mais leve em claro, o mais pesado em escuro. As cores são, portanto, só tuas e podem mudar com os teus novos treinos. Um treino sem carga (cardio, prancha…) aparece em claro."
+                how_it_works_toggle: "Como são calculadas as cores?"
                 legend_deload: Descanso
+                legend_intensity_intense: "Intenso"
+                legend_intensity_light: "Leve"
+                legend_intensity_medium: "Médio"
                 legend_rest: Descanso não planeado
-                legend_session_long: "90 min +"
-                legend_session_medium: "45–90 min"
-                legend_session_short: "< 45 min"
-                subtitle: "Intensidade = duração total do treino nesse dia."
+                subtitle: "Intensidade = carga levantada nesse dia, comparada com os teus outros treinos do ano."
                 title: Calendário de atividade
             modal:
                 cancel: Cancelar

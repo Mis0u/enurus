@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Service\Workout;
 
 use App\Entity\User;
-use App\Repository\WorkoutRepository;
+use App\Repository\WorkoutTonnageRepository;
 use App\Service\Dashboard\DashboardPeriodCalculator;
 
 /**
  * Calendrier heatmap façon GitHub pour l'onglet "Calendrier" de la liste des séances — intensité
- * par jour = durée cumulée des séances de ce jour (pas le nombre de séances, cf. décision UX dans
- * la mémoire du projet), semaines couvertes par un deload marquées à part. Grille de `$weekCount`
+ * par jour = tonnage cumulé des séances de ce jour, comparé aux autres jours de l'année
+ * (`HeatmapLevelCalculator`), semaines couvertes par un deload marquées à part. Pas la durée :
+ * beaucoup d'utilisateurs ne la renseignent jamais, leurs séances restaient invisibles. Grille de `$weekCount`
  * semaines pleines (lundi → dimanche), se terminant sur la semaine en cours — un an sur l'onglet
  * Calendrier, moins sur le widget dashboard qui n'a qu'une demi-colonne.
  *
@@ -31,22 +32,13 @@ final readonly class WorkoutHeatmapService
     // Un libellé de mois ("sept.") occupe ~3 colonnes : en dessous, il chevauche le suivant.
     private const int MIN_WEEKS_PER_MONTH_LABEL = 3;
 
-    private const int SHORT_SESSION_MAX_MINUTES = 45;
-
-    private const int MEDIUM_SESSION_MAX_MINUTES = 90;
-
-    private const int LEVEL_NONE = 0;
-
-    private const int LEVEL_SHORT = 1;
-
-    private const int LEVEL_MEDIUM = 2;
-
-    private const int LEVEL_HIGH = 3;
+    private const int LEVEL_REST = 0;
 
     public function __construct(
-        private WorkoutRepository $workoutRepository,
+        private WorkoutTonnageRepository $tonnageRepository,
         private DashboardPeriodCalculator $periodCalculator,
         private DeloadPeriodSetService $deloadPeriodSetService,
+        private HeatmapLevelCalculator $levelCalculator,
     ) {
     }
 
@@ -56,9 +48,9 @@ final readonly class WorkoutHeatmapService
     public function build(User $user, int $weekCount = self::FULL_YEAR_WEEKS): array
     {
         $currentWeekStart = $this->periodCalculator->weekStartOf(new \DateTimeImmutable());
-        $gridStart = $currentWeekStart->modify(\sprintf('-%d days', ($weekCount - 1) * self::DAYS_PER_WEEK));
+        $gridStart = $this->gridStartOf($currentWeekStart, $weekCount);
 
-        $durationByDay = $this->buildDurationByDayMap($user, $gridStart);
+        $levelByDay = $this->levelCalculator->levelByDay($this->buildYearTonnageByDayMap($user, $currentWeekStart));
         $deloadDaySet = $this->deloadPeriodSetService->dayKeySet($user);
 
         $weeks = [];
@@ -66,7 +58,7 @@ final readonly class WorkoutHeatmapService
         for ($w = 0; $weekCount > $w; $w++) {
             $weekStart = $gridStart->modify(\sprintf('+%d days', $w * self::DAYS_PER_WEEK));
             $weeks[] = [
-                'days' => $this->buildWeekDays($weekStart, $durationByDay, $deloadDaySet),
+                'days' => $this->buildWeekDays($weekStart, $levelByDay, $deloadDaySet),
                 'showsMonthLabel' => $this->startsLabelledMonth($weekStart, 0 === $w),
             ];
         }
@@ -77,11 +69,11 @@ final readonly class WorkoutHeatmapService
     }
 
     /**
-     * @param array<string, int>  $durationByDay
+     * @param array<string, int>  $levelByDay
      * @param array<string, true> $deloadDaySet
      * @return list<array{date: \DateTimeImmutable, level: int, isDeload: bool}>
      */
-    private function buildWeekDays(\DateTimeImmutable $weekStart, array $durationByDay, array $deloadDaySet): array
+    private function buildWeekDays(\DateTimeImmutable $weekStart, array $levelByDay, array $deloadDaySet): array
     {
         $days = [];
 
@@ -90,7 +82,7 @@ final readonly class WorkoutHeatmapService
             $dayKey = $day->format('Y-m-d');
             $days[] = [
                 'date' => $day,
-                'level' => $this->levelFor($durationByDay[$dayKey] ?? null),
+                'level' => $levelByDay[$dayKey] ?? self::LEVEL_REST,
                 'isDeload' => isset($deloadDaySet[$dayKey]),
             ];
         }
@@ -114,35 +106,28 @@ final readonly class WorkoutHeatmapService
         return $weekStart->format('Y-m') === $labelEnd->format('Y-m');
     }
 
-    /**
-     * @return array<string, int> clé `Y-m-d` => durée cumulée en minutes ce jour-là
-     */
-    private function buildDurationByDayMap(User $user, \DateTimeImmutable $since): array
+    private function gridStartOf(\DateTimeImmutable $currentWeekStart, int $weekCount): \DateTimeImmutable
     {
-        $durationByDay = [];
-
-        foreach ($this->workoutRepository->findPerformedAtAndDurationSince($user, $since) as $row) {
-            $dayKey = $row['performedAt']->format('Y-m-d');
-            $durationByDay[$dayKey] = ($durationByDay[$dayKey] ?? 0) + ($row['duration'] ?? 0);
-        }
-
-        return $durationByDay;
+        return $currentWeekStart->modify(\sprintf('-%d days', ($weekCount - 1) * self::DAYS_PER_WEEK));
     }
 
-    private function levelFor(?int $totalMinutes): int
+    /**
+     * Toujours sur l'année entière, même pour la grille courte du widget dashboard : un même jour
+     * doit avoir la même couleur dans le widget et dans l'onglet Calendrier.
+     *
+     * @return array<string, float> clé `Y-m-d` => tonnage cumulé (kg), uniquement les jours avec séance
+     */
+    private function buildYearTonnageByDayMap(User $user, \DateTimeImmutable $currentWeekStart): array
     {
-        if (null === $totalMinutes || 0 === $totalMinutes) {
-            return self::LEVEL_NONE;
+        $yearStart = $this->gridStartOf($currentWeekStart, self::FULL_YEAR_WEEKS);
+        $currentWeekEnd = $currentWeekStart->modify(\sprintf('+%d days -1 second', self::DAYS_PER_WEEK));
+        $tonnageByDay = [];
+
+        foreach ($this->tonnageRepository->findTonnageSeriesByUser($user, $yearStart, $currentWeekEnd) as $row) {
+            $dayKey = $row['performedAt']->format('Y-m-d');
+            $tonnageByDay[$dayKey] = ($tonnageByDay[$dayKey] ?? 0.0) + $row['tonnage'];
         }
 
-        if (self::SHORT_SESSION_MAX_MINUTES > $totalMinutes) {
-            return self::LEVEL_SHORT;
-        }
-
-        if (self::MEDIUM_SESSION_MAX_MINUTES > $totalMinutes) {
-            return self::LEVEL_MEDIUM;
-        }
-
-        return self::LEVEL_HIGH;
+        return $tonnageByDay;
     }
 }

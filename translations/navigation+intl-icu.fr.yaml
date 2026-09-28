@@ -849,12 +849,14 @@ workout:
                 deleted: Semaine de repos supprimée.
                 error: Impossible d'enregistrer cette période. Vérifie les dates.
             heatmap:
+                how_it_works_body: "Chaque case additionne le tonnage (poids × répétitions) de tes séances du jour. Tes jours d'entraînement de l'année sont ensuite répartis en trois tiers : le tiers le plus léger en clair, le plus lourd en foncé. Les couleurs sont donc propres à toi et peuvent évoluer au fil de tes nouvelles séances. Une séance sans charge (cardio, gainage…) apparaît en clair."
+                how_it_works_toggle: "Comment les couleurs sont-elles calculées ?"
                 legend_deload: Deload
+                legend_intensity_intense: "Intense"
+                legend_intensity_light: "Légère"
+                legend_intensity_medium: "Moyenne"
                 legend_rest: Repos non planifié
-                legend_session_long: "90 min +"
-                legend_session_medium: "45–90 min"
-                legend_session_short: "< 45 min"
-                subtitle: "Intensité = durée de la séance ce jour-là."
+                subtitle: "Intensité = tonnage soulevé ce jour-là, comparé à tes autres séances de l'année."
                 title: Calendrier d'activité
             modal:
                 cancel: Annuler

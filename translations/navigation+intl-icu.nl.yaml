@@ -849,12 +849,14 @@ workout:
                 deleted: Rustweek verwijderd.
                 error: Deze periode kon niet worden opgeslagen. Controleer de datums.
             heatmap:
+                how_it_works_body: "Elk vakje telt de tonnage (gewicht × herhalingen) van je trainingen die dag op. Je trainingsdagen van het jaar worden daarna in drie delen verdeeld: het lichtste derde licht, het zwaarste donker. De kleuren zijn dus persoonlijk en kunnen veranderen met je nieuwe trainingen. Een training zonder gewicht (cardio, plank…) verschijnt licht."
+                how_it_works_toggle: "Hoe worden de kleuren berekend?"
                 legend_deload: Rust
+                legend_intensity_intense: "Intensief"
+                legend_intensity_light: "Licht"
+                legend_intensity_medium: "Gemiddeld"
                 legend_rest: Ongeplande rust
-                legend_session_long: "90 min +"
-                legend_session_medium: "45–90 min"
-                legend_session_short: "< 45 min"
-                subtitle: "Intensiteit = totale trainingsduur die dag."
+                subtitle: "Intensiteit = gewicht getild die dag, vergeleken met je andere trainingen dit jaar."
                 title: Activiteitenkalender
             modal:
                 cancel: Annuleren
