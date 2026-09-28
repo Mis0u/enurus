@@ -611,6 +611,10 @@ regularity_goal:
         error_text: "Het doel kon niet worden opgegeven, probeer het opnieuw."
         message: "Het wordt verwijderd en verschijnt niet in je geschiedenis."
         title: "Dit doel opgeven?"
+    achieved:
+        confirm: "Doorgaan"
+        text: "Goed gedaan, je hebt je doel tot het einde volgehouden: {summary}!"
+        title: "Regelmaatdoel gehaald!"
     add_button: "Nieuw doel"
     calendar_label: "Kalender van het doel"
     dates: "Van {start} tot {end}"

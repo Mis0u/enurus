@@ -102,6 +102,22 @@ class RegularityGoal
         }
     }
 
+    /**
+     * Moment où l'atteinte a été célébrée (`RegularityGoalAchievementDetector`) : garantit une seule
+     * célébration, même si la séance qui a complété le défi est modifiée ensuite. L'affichage, lui,
+     * se fie toujours au calcul depuis les séances, jamais à ce champ. Date sans fuseau, comme
+     * `UserBadge::$unlockedAt`.
+     */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    public ?\DateTimeImmutable $achievedAt = null {
+        get {
+            return $this->achievedAt;
+        }
+        set(?\DateTimeImmutable $achievedAt) {
+            $this->achievedAt = $achievedAt;
+        }
+    }
+
     public function firstDay(): \DateTimeImmutable
     {
         return $this->startDate;

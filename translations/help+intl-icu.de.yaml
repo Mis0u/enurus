@@ -89,7 +89,7 @@ section:
             deload: "Dort planst du auch deine Erholungswochen (Deload): Sie unterbrechen deine Serie von Trainingswochen nicht."
             detail: "Öffne ein Training, um deine Sätze, die beanspruchten Muskeln und deine Rekorde zu sehen. Du kannst es bearbeiten oder löschen."
             list: "Deine Trainings vom neuesten zum ältesten, filterbar nach Datum, Woche, Monat, Routine oder trainiertem Muskel."
-            regularity_goal: "Ebenfalls unter „Kalender“ setzt du dir ein Regelmäßigkeitsziel: zum Beispiel 3 Einheiten pro Woche für 4 Wochen oder 1 Einheit pro Tag für 2 Wochen. Die Dauer wählst du in ganzen Wochen zu 7 Tagen ab dem Startdatum. Jeder Tag bzw. jede Woche muss sein Soll erreichen (zwei Trainings am selben Tag zählen doppelt). Ein Ziel lässt sich nicht mit einer Erholungswoche kombinieren: Das eine kann nicht während des anderen geplant werden. Verfolge deinen Fortschritt im Widget „Regelmäßigkeitsziel“ deiner Übersicht. Immer nur ein Ziel, das du aufgeben kannst."
+            regularity_goal: "Ebenfalls unter „Kalender“ setzt du dir ein Regelmäßigkeitsziel: zum Beispiel 3 Einheiten pro Woche für 4 Wochen oder 1 Einheit pro Tag für 2 Wochen. Die Dauer wählst du in ganzen Wochen zu 7 Tagen ab dem Startdatum. Jeder Tag bzw. jede Woche muss sein Soll erreichen (zwei Trainings am selben Tag zählen doppelt). Ein Ziel lässt sich nicht mit einer Erholungswoche kombinieren: Das eine kann nicht während des anderen geplant werden. Verfolge deinen Fortschritt im Widget „Regelmäßigkeitsziel“ deiner Übersicht. Immer nur ein Ziel, das du aufgeben kannst. Challenge geschafft? Sobald du die Einheit erfasst, die sie abschließt, wartet eine Feier auf dich."
         title: "Meine Trainings"
 summary: "Inhalt"
 title: "Hilfe"

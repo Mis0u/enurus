@@ -1,0 +1,25 @@
+{#
+    Célébration d'un objectif de régularité complété (confettis + popup), via le même controller que
+    les objectifs d'exercice (`goal--achieved`, file `celebration_queue.js` partagée avec les badges).
+    Variable attendue (via `only`) :
+    - achievements : array<array{sessions: int, period: string, weeks: int}> (app.flashes('regularity_goal_achieved'))
+#}
+{% if achievements is not empty %}
+    {% set payload = [] %}
+    {% for achievement in achievements %}
+        {% set payload = payload|merge([{
+            title: 'regularity_goal.achieved.title'|trans({}, 'navigation'),
+            text: 'regularity_goal.achieved.text'|trans({
+                summary: 'regularity_goal.summary'|trans({
+                    sessions: achievement.sessions,
+                    period: achievement.period,
+                    duration: 'regularity_goal.duration'|trans({weeks: achievement.weeks}, 'navigation'),
+                }, 'navigation'),
+            }, 'navigation'),
+            confirmButtonText: 'regularity_goal.achieved.confirm'|trans({}, 'navigation'),
+        }]) %}
+    {% endfor %}
+    <div data-controller="goal--achieved"
+         data-regularity-goal-achieved
+         data-goal--achieved-achievements-value="{{ payload|json_encode }}"></div>
+{% endif %}

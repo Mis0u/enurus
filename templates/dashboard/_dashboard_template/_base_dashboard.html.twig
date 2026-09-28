@@ -16,6 +16,7 @@
     {% endfor %}
 
     {% include 'partials/_popup/_goal_achieved.html.twig' with {achievements: app.flashes('goal_achieved')} only %}
+    {% include 'partials/_popup/_regularity_goal_achieved.html.twig' with {achievements: app.flashes('regularity_goal_achieved')} only %}
     {% include 'partials/_popup/_goal_already_achieved.html.twig' with {achievements: app.flashes('goal_already_achieved')} only %}
     {% include 'partials/_milestone_badge/_defs.html.twig' only %}
     {% include 'partials/_popup/_badge_unlocked.html.twig' with {unlocks: app.flashes('badge_unlocked')} only %}
