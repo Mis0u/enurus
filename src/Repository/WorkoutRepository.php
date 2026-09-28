@@ -80,6 +80,32 @@ class WorkoutRepository extends ServiceEntityRepository
     }
 
     /**
+     * Toutes les séances de l'utilisateur avec leurs exercices et séries, chargés en une requête,
+     * de la plus ancienne à la plus récente — alimente l'export des données (Réglages › Mes données).
+     * Pas de pagination ni de `setMaxResults()` : jointures one-to-many (cf. CLAUDE.md).
+     *
+     * @return list<Workout>
+     */
+    public function findForExportByUser(User $user): array
+    {
+        /** @var list<Workout> */
+        return $this->createQueryBuilder('w')
+            ->addSelect('r', 'we', 'e', 's')
+            ->leftJoin('w.routine', 'r')
+            ->leftJoin('w.workoutExercises', 'we')
+            ->leftJoin('we.exercise', 'e')
+            ->leftJoin('we.exerciseSets', 's')
+            ->andWhere('w.owner = :user')
+            ->setParameter('user', $user)
+            ->orderBy('w.performedAt', 'ASC')
+            ->addOrderBy('w.id', 'ASC')
+            ->addOrderBy('we.position', 'ASC')
+            ->addOrderBy('s.position', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @param array{type?: string, value?: DateTimeImmutable, routine?: 'free'|Routine, muscles?: array<string, string>} $filters
      */
     public function findByUserPaginated(User $user, array $filters = []): QueryBuilder

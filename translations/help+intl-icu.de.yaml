@@ -64,6 +64,7 @@ section:
         points:
             account: "Ändere dein Passwort oder lösche dein Konto: Die Löschung kann 30 Tage lang rückgängig gemacht werden."
             bodyweight: "Dein Körpergewicht dient zur Berechnung der Tonnage von Körpergewichtsübungen."
+            export: "Unter Einstellungen › Meine Daten lädst du deinen gesamten Trainingsverlauf herunter: als CSV für eine Tabellenkalkulation (eine Zeile pro Satz) oder als JSON für eine andere App."
             profile: "Alias, Avatar, Sprache und Geschlecht (bestimmt die Muskel-Silhouette)."
             unit: "Gewichtseinheit (kg oder lbs): Die ganze Anzeige passt sich an, ohne etwas an deinem Verlauf zu ändern."
         title: "Einstellungen"

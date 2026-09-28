@@ -799,6 +799,26 @@ settings:
             regularity_goal: "Regelmaatdoel"
             session: Training
             tonnage: Geheven gewicht
+    data_export:
+        csv_button: "Mijn trainingen exporteren als CSV"
+        csv_column:
+            date: "Datum"
+            distance: "Afstand (m)"
+            exercise: "Oefening"
+            mood: "Stemming"
+            reps: "Herhalingen"
+            routine: "Training"
+            set: "Set"
+            set_duration: "Duur (s)"
+            time: "Tijd"
+            unit: "Eenheid"
+            weight: "Gewicht"
+            workout_duration: "Trainingsduur (min)"
+        csv_hint: "Voor een spreadsheet (Excel, Numbers, Google Sheets): één regel per set, gewichten in jouw eenheid."
+        explanation: "Download je volledige trainingsgeschiedenis om hem te bewaren, te analyseren of elders te gebruiken."
+        json_button: "Mijn trainingen exporteren als JSON"
+        json_hint: "Ruwe, gestructureerde gegevens voor een andere app of een script. Gewichten in kg."
+        title: "Mijn gegevens"
     email:
         label: E-mail
         not_editable: Niet bewerkbaar

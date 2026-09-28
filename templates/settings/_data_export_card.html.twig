@@ -1,0 +1,29 @@
+{#
+    Réglages › Mes données : téléchargement de tout l'historique de séances (SettingsDataExportController),
+    en CSV pour un tableur ou en JSON pour une autre appli. Aucune variable attendue.
+#}
+<section id="mes-donnees" class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-6" aria-labelledby="data-export-title">
+    <h2 id="data-export-title" class="font-['Rajdhani'] text-lg font-bold text-[#f0f4ff] mb-2">
+        {{ 'settings.data_export.title'|trans({}, 'navigation') }}
+    </h2>
+    <p class="text-sm text-[#8b9bb4] mb-5 leading-relaxed">
+        {{ 'settings.data_export.explanation'|trans({}, 'navigation') }}
+    </p>
+
+    <ul class="grid md:grid-cols-2 gap-3">
+        {% for format in ['csv', 'json'] %}
+            <li>
+                <a href="{{ path('app_settings_data_export', {format: format}) }}"
+                   download
+                   aria-describedby="data-export-{{ format }}-hint"
+                   class="flex items-center gap-2.5 min-h-11 px-4 py-3 rounded-xl border border-white/[0.07] bg-white/[0.03] text-sm font-semibold text-[#f0f4ff] no-underline transition-ft hover:bg-white/[0.06] hover:border-white/[0.14] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-ft">
+                    <span class="text-rose-ft" aria-hidden="true">{% include 'partials/_svg/_download.html.twig' with {width: 4.5, height: 4.5} only %}</span>
+                    {{ ('settings.data_export.' ~ format ~ '_button')|trans({}, 'navigation') }}
+                </a>
+                <p id="data-export-{{ format }}-hint" class="text-[12px] text-[#64748b] mt-1.5 px-1 leading-snug">
+                    {{ ('settings.data_export.' ~ format ~ '_hint')|trans({}, 'navigation') }}
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+</section>

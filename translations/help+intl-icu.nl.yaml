@@ -64,6 +64,7 @@ section:
         points:
             account: "Wijzig je wachtwoord of verwijder je account: de verwijdering kan 30 dagen lang worden geannuleerd."
             bodyweight: "Je lichaamsgewicht wordt gebruikt om de tonnage van oefeningen met lichaamsgewicht te berekenen."
+            export: "In Instellingen › Mijn gegevens download je je volledige trainingsgeschiedenis: als CSV voor een spreadsheet (één regel per set) of als JSON voor een andere app."
             profile: "Alias, avatar, taal en geslacht (dat het spiersilhouet bepaalt)."
             unit: "Gewichtseenheid (kg of lbs): de hele weergave past zich aan, zonder iets aan je geschiedenis te veranderen."
         title: "Instellingen"

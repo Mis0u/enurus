@@ -799,6 +799,26 @@ settings:
             regularity_goal: "Regularity goal"
             session: Session
             tonnage: Volume lifted
+    data_export:
+        csv_button: "Export my workouts as CSV"
+        csv_column:
+            date: "Date"
+            distance: "Distance (m)"
+            exercise: "Exercise"
+            mood: "Mood"
+            reps: "Reps"
+            routine: "Workout"
+            set: "Set"
+            set_duration: "Duration (s)"
+            time: "Time"
+            unit: "Unit"
+            weight: "Weight"
+            workout_duration: "Workout duration (min)"
+        csv_hint: "For a spreadsheet (Excel, Numbers, Google Sheets): one row per set, weights in your unit."
+        explanation: "Download your whole workout history, to keep it, analyse it or take it elsewhere."
+        json_button: "Export my workouts as JSON"
+        json_hint: "Raw, structured data for another app or a script. Weights in kg."
+        title: "My data"
     email:
         label: Email
         not_editable: Not editable

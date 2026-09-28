@@ -64,6 +64,7 @@ section:
         points:
             account: "Altera a tua palavra-passe ou elimina a tua conta: a eliminação pode ser cancelada durante 30 dias."
             bodyweight: "O teu peso corporal serve para calcular a tonelagem dos exercícios com o peso do corpo."
+            export: "Em Definições › Os meus dados, descarrega todo o histórico dos teus treinos: em CSV para uma folha de cálculo (uma linha por série) ou em JSON para outra app."
             profile: "Alias, avatar, idioma e género (que escolhe a silhueta dos músculos)."
             unit: "Unidade de peso (kg ou lbs): toda a apresentação se adapta, sem alterar nada no teu histórico."
         title: "Definições"

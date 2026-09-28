@@ -64,6 +64,7 @@ section:
         points:
             account: "Change ton mot de passe, ou supprime ton compte : la suppression reste annulable pendant 30 jours."
             bodyweight: "Ton poids de corps sert à calculer le tonnage des exercices au poids du corps."
+            export: "Dans Réglages › Mes données, télécharge tout l'historique de tes séances : en CSV pour un tableur (une ligne par série), ou en JSON pour une autre appli."
             profile: "Alias, avatar, langue et genre (qui choisit la silhouette des muscles)."
             unit: "Unité de poids (kg ou lbs) : tout l'affichage s'adapte, sans rien changer à ton historique."
         title: "Réglages"

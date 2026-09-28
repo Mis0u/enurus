@@ -64,6 +64,7 @@ section:
         points:
             account: "Zmień hasło lub usuń konto: usunięcie można anulować przez 30 dni."
             bodyweight: "Twoja masa ciała służy do obliczania tonażu ćwiczeń z masą ciała."
+            export: "W Ustawienia › Moje dane pobierzesz całą historię treningów: w CSV do arkusza kalkulacyjnego (jeden wiersz na serię) lub w JSON dla innej aplikacji."
             profile: "Alias, awatar, język i płeć (od której zależy sylwetka mięśni)."
             unit: "Jednostka wagi (kg lub lbs): cały widok się dostosowuje, bez zmiany czegokolwiek w Twojej historii."
         title: "Ustawienia"

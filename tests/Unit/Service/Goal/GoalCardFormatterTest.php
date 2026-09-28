@@ -8,6 +8,7 @@ use App\Entity\Exercise;
 use App\Entity\ExerciseGoal;
 use App\Entity\User;
 use App\Enum\Entity\Exercise\MeasurementType;
+use App\Service\Exercise\ExerciseNameTranslator;
 use App\Service\Goal\GoalCardFormatter;
 use App\Service\Goal\GoalProgress;
 use App\Service\Utils\WeightConverterService;
@@ -93,7 +94,7 @@ final class GoalCardFormatterTest extends TestCase
             },
         );
 
-        return new GoalCardFormatter(new WeightConverterService(), $translator);
+        return new GoalCardFormatter(new WeightConverterService(), $translator, new ExerciseNameTranslator($translator));
     }
 
     private function user(): User
