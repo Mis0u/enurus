@@ -96,6 +96,7 @@ final class DashboardController extends AbstractDashboardController
         yield MenuItem::section($this->trans('admin.menu.section.settings'), 'fa fa-flag-checkered');
         yield MenuItem::linkTo(RegistrationMilestoneSettingCrudController::class, $this->trans('admin.menu.registration_milestone'), 'fa fa-flag-checkered');
         yield MenuItem::linkTo(ContactNotificationSettingCrudController::class, $this->trans('admin.menu.contact_notification_setting'), 'fa fa-bell-slash');
+        yield MenuItem::linkTo(FeatureSettingCrudController::class, $this->trans('admin.menu.feature_setting'), 'fa fa-toggle-on');
 
         /**
          * En plus du menu utilisateur (coin haut-droit, fourni nativement par

@@ -1,7 +1,7 @@
 {#
     Page Aide (mode d'emploi).
     Controller : HelpController (GET /{_locale}/aide)
-    Variables : sections (list<HelpSectionEnum>, dans l'ordre d'affichage)
+    Variables : sections (list<HelpSectionEnum>, dans l'ordre d'affichage), pointParams (paramètres ICU des points)
 #}
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
 
@@ -27,7 +27,7 @@
             {% include 'help/_summary.html.twig' with {sections: sections} only %}
 
             {% for section in sections %}
-                {% include 'help/_section.html.twig' with {section: section, open: loop.first} only %}
+                {% include 'help/_section.html.twig' with {section: section, open: loop.first, pointParams: pointParams} only %}
             {% endfor %}
         </div>
     </div>

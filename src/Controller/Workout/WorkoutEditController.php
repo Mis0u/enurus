@@ -14,6 +14,7 @@ use App\Entity\WorkoutExercise;
 use App\Enum\Entity\Exercise\MeasurementType;
 use App\Enum\Entity\Workout\WorkoutMoodEnum;
 use App\Form\WorkoutType;
+use App\Repository\FeatureSettingRepository;
 use App\Repository\WorkoutExerciseRepository;
 use App\Security\Voter\WorkoutVoter;
 use App\Service\Badge\BadgeLabelFormatter;
@@ -69,6 +70,7 @@ class WorkoutEditController extends AbstractController
         BadgeSyncService $badgeSyncService,
         BadgeLabelFormatter $badgeLabelFormatter,
         TranslatorInterface $translator,
+        FeatureSettingRepository $featureSettingRepository,
     ): Response {
         $this->denyAccessUnlessGranted(WorkoutVoter::EDIT, $workout);
 
@@ -137,6 +139,7 @@ class WorkoutEditController extends AbstractController
             'user' => $user,
             'imageMaxSizeBytes' => ImageConstraints::MAX_SIZE_BYTES,
             'imageAllowedMimeTypes' => ImageConstraints::ALLOWED_MIME_TYPES,
+            'photoUploadEnabled' => $featureSettingRepository->isWorkoutPhotoUploadEnabled(),
             'moods' => WorkoutMoodEnum::cases(),
         ]);
     }

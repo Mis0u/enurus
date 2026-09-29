@@ -12,6 +12,7 @@ use App\Entity\User;
 use App\Entity\Workout;
 use App\Enum\Entity\Workout\WorkoutMoodEnum;
 use App\Form\WorkoutType;
+use App\Repository\FeatureSettingRepository;
 use App\Service\Badge\BadgeLabelFormatter;
 use App\Service\Badge\BadgeSyncService;
 use App\Service\Goal\GoalAchievementDetector;
@@ -44,6 +45,7 @@ final class WorkoutController extends AbstractController
         private readonly BadgeSyncService $badgeSyncService,
         private readonly BadgeLabelFormatter $badgeLabelFormatter,
         private readonly EntityManagerInterface $em,
+        private readonly FeatureSettingRepository $featureSettingRepository,
         private readonly TranslatorInterface $translator,
     ) {
     }
@@ -87,6 +89,7 @@ final class WorkoutController extends AbstractController
             'form' => $form->createView(),
             'imageMaxSizeBytes' => ImageConstraints::MAX_SIZE_BYTES,
             'imageAllowedMimeTypes' => ImageConstraints::ALLOWED_MIME_TYPES,
+            'photoUploadEnabled' => $this->featureSettingRepository->isWorkoutPhotoUploadEnabled(),
             'moods' => WorkoutMoodEnum::cases(),
         ]);
     }

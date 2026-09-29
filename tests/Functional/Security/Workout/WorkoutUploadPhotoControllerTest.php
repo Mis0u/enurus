@@ -10,6 +10,7 @@ use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Helper\ImageTestHelper;
 use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use App\Tests\Functional\Security\Trait\SwitchesFeatureSettingTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class WorkoutUploadPhotoControllerTest extends WebTestCase
 {
     use FunctionalTestTrait;
+    use SwitchesFeatureSettingTrait;
 
     private const string USER = 'user-fixture-26-workout@test.com';
 
@@ -50,6 +52,22 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
+    public function testReturnsNotFoundWhenUploadIsDisabled(): void
+    {
+        $client = $this->login(self::USER);
+        $workout = $this->getFirstWorkout(self::USER);
+        $this->switchWorkoutPhotoUpload(false);
+
+        $client->request(Request::METHOD_POST, $this->getUploadUrl($workout), [], [
+            'photo' => ImageTestHelper::createFakeImage('photo.jpg', 'image/jpeg'),
+        ], [
+            'HTTP_X-Requested-With' => 'XMLHttpRequest',
+        ]);
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+        $this->assertNull($this->findUpdatedWorkout($workout->id)->photoPath);
+    }
+
     // -------------------------------------------------------------------------
     // Validation
     // -------------------------------------------------------------------------
@@ -58,6 +76,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER);
         $workout = $this->getFirstWorkout(self::USER);
+        $this->switchWorkoutPhotoUpload(true);
 
         $client->request(Request::METHOD_POST, $this->getUploadUrl($workout), [], [], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
@@ -70,6 +89,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER);
         $workout = $this->getFirstWorkout(self::USER);
+        $this->switchWorkoutPhotoUpload(true);
 
         $client->request(Request::METHOD_POST, $this->getUploadUrl($workout), [], [
             'photo' => ImageTestHelper::createFakeImage('document.pdf', 'application/pdf'),
@@ -84,6 +104,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER);
         $workout = $this->getFirstWorkout(self::USER);
+        $this->switchWorkoutPhotoUpload(true);
 
         $client->request(Request::METHOD_POST, $this->getUploadUrl($workout), [], [
             'photo' => ImageTestHelper::createLargeJpeg(),
@@ -102,6 +123,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER);
         $workout = $this->getFirstWorkout(self::USER);
+        $this->switchWorkoutPhotoUpload(true);
 
         $client->request(Request::METHOD_POST, $this->getUploadUrl($workout), [], [
             'photo' => ImageTestHelper::createFakeImage('photo.jpg', 'image/jpeg'),
@@ -125,6 +147,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER);
         $workout = $this->getFirstWorkout(self::USER);
+        $this->switchWorkoutPhotoUpload(true);
 
         $client->request(Request::METHOD_POST, $this->getUploadUrl($workout), [], [
             'photo' => ImageTestHelper::createFakeImage('photo.jpg', 'image/jpeg'),
@@ -141,6 +164,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER);
         $workout = $this->getFirstWorkout(self::USER);
+        $this->switchWorkoutPhotoUpload(true);
 
         $client->request(Request::METHOD_POST, $this->getUploadUrl($workout), [], [
             'photo' => ImageTestHelper::createFakeImage('first.jpg', 'image/jpeg'),

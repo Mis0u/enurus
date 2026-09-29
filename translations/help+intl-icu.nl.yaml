@@ -73,7 +73,7 @@ section:
         open: "Een training registreren"
         points:
             date: "De datum van vandaag is al ingevuld: wijzig hem als je een eerdere training registreert."
-            details: "Je kunt ook de duur, je stemming en een opmerking noteren en een foto toevoegen."
+            details: "{photo, select, enabled {Je kunt ook de duur, je stemming en een opmerking noteren en een foto toevoegen.} other {Je kunt ook de duur, je stemming en een opmerking noteren.}}"
             draft: "Wat je invoert, wordt 1 uur als concept op je apparaat bewaard: verlaat je de pagina of herlaadt de app, dan vind je het terug als je terugkomt."
             exercises: "‘Oefening toevoegen’ opent de lijst: vink meerdere oefeningen aan en bevestig. Je gebruikelijke oefeningen staan bovenaan."
             missing_exercise: "Ontbreekt er een oefening? Maak haar aan vanuit de lijst: daarna keer je terug naar je training, met de oefening toegevoegd."

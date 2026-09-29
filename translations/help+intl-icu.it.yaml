@@ -73,7 +73,7 @@ section:
         open: "Registra un allenamento"
         points:
             date: "La data di oggi è già inserita: cambiala se registri un allenamento passato."
-            details: "Puoi anche annotare la durata, il tuo umore, un commento e aggiungere una foto."
+            details: "{photo, select, enabled {Puoi anche annotare la durata, il tuo umore, un commento e aggiungere una foto.} other {Puoi anche annotare la durata, il tuo umore e un commento.}}"
             draft: "Quello che inserisci viene salvato come bozza sul tuo dispositivo per 1 ora: se lasci la pagina o l'app si ricarica, lo ritrovi al tuo ritorno."
             exercises: "« Aggiungi un esercizio » apre l'elenco: spunta più esercizi, poi conferma. I tuoi esercizi abituali sono in cima."
             missing_exercise: "Manca un esercizio? Crealo dall'elenco: poi torni al tuo allenamento, con l'esercizio aggiunto."

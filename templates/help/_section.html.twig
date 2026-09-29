@@ -3,6 +3,7 @@
     Variables attendues (via `only`) :
     - section : HelpSectionEnum
     - open    : bool — ouverte au chargement (la première : « Par où commencer »)
+    - pointParams : map — paramètres ICU passés à chaque point (HelpController::pointParams())
 #}
 {% set title_key = 'section.' ~ section.value ~ '.title' %}
 <details id="{{ section.value }}"
@@ -27,7 +28,7 @@
         {% for point in section.points %}
             <li class="flex gap-2.5 text-sm text-[#8b9bb4] leading-relaxed">
                 <span class="shrink-0 mt-[9px] w-1.5 h-1.5 rounded-full bg-rose-ft" aria-hidden="true"></span>
-                <span>{{ ('section.' ~ section.value ~ '.points.' ~ point)|trans({}, 'help') }}</span>
+                <span>{{ ('section.' ~ section.value ~ '.points.' ~ point)|trans(pointParams, 'help') }}</span>
             </li>
         {% endfor %}
     </ul>

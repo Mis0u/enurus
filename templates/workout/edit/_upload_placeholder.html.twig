@@ -8,7 +8,11 @@
      data-workout--photo-upload-max-size-value="{{ imageMaxSizeBytes }}">
 
     {% include 'workout/edit/_upload/_header.html.twig' only %}
-    {% include 'workout/edit/_upload/_zone.html.twig' with {'workout': workout, 'imageAllowedMimeTypes': imageAllowedMimeTypes} only %}
+    {% include 'workout/edit/_upload/_zone.html.twig' with {
+        'workout': workout,
+        'imageAllowedMimeTypes': imageAllowedMimeTypes,
+        'photoUploadEnabled': photoUploadEnabled,
+    } only %}
 
     <p data-workout--photo-upload-target="error"
        class="hidden text-rose-400 text-[12px] mt-2"></p>

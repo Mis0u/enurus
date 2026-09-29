@@ -87,6 +87,12 @@ admin:
         label:
             plural: "Exercices personnalisés"
             singular: "Exercice personnalisé"
+    feature_setting:
+        field:
+            workout_photo_upload_enabled: "Photo de séance (ajout)"
+        label:
+            plural: "Fonctionnalités"
+            singular: "Fonctionnalités"
     field:
         remove_button: Retirer
         send_button: Envoyer
@@ -96,6 +102,7 @@ admin:
         contact_notification_setting: "Notifications Telegram"
         deleted_account_trace: "Comptes supprimés"
         exercise: "Exercices personnalisés"
+        feature_setting: "Fonctionnalités"
         home: "Tableau de bord"
         logout: Déconnexion
         registration_milestone: "Palier d'inscriptions"

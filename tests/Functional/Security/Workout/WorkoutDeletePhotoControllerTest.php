@@ -10,6 +10,7 @@ use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Helper\ImageTestHelper;
 use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use App\Tests\Functional\Security\Trait\SwitchesFeatureSettingTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class WorkoutDeletePhotoControllerTest extends WebTestCase
 {
     use FunctionalTestTrait;
+    use SwitchesFeatureSettingTrait;
 
     private const string USER = 'user-fixture-26-workout@test.com';
 
@@ -79,6 +81,7 @@ class WorkoutDeletePhotoControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER);
         $workout = $this->getFirstWorkout(self::USER);
+        $this->switchWorkoutPhotoUpload(true);
 
         $client->request(Request::METHOD_POST, $this->getUploadUrl($workout), [], [
             'photo' => ImageTestHelper::createFakeImage('photo.jpg', 'image/jpeg'),
@@ -98,10 +101,29 @@ class WorkoutDeletePhotoControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER);
         $workout = $this->getFirstWorkout(self::USER);
+        $this->switchWorkoutPhotoUpload(true);
 
         $this->deleteRequest($client, $this->getDeleteUrl($workout), $this->getDeleteCsrfToken($client, $workout));
 
         $this->assertResponseIsSuccessful();
+    }
+
+    public function testExistingPhotoCanStillBeDeletedWhenUploadIsDisabled(): void
+    {
+        $client = $this->login(self::USER);
+        $workout = $this->getFirstWorkout(self::USER);
+        $this->switchWorkoutPhotoUpload(true);
+        $client->request(Request::METHOD_POST, $this->getUploadUrl($workout), [], [
+            'photo' => ImageTestHelper::createFakeImage('photo.jpg', 'image/jpeg'),
+        ], [
+            'HTTP_X-Requested-With' => 'XMLHttpRequest',
+        ]);
+        $this->switchWorkoutPhotoUpload(false);
+
+        $this->deleteRequest($client, $this->getDeleteUrl($workout), $this->getDeleteCsrfToken($client, $workout));
+
+        $this->assertResponseIsSuccessful();
+        $this->assertNull($this->findUpdatedWorkout($workout->id)->photoPath);
     }
 
     // -------------------------------------------------------------------------

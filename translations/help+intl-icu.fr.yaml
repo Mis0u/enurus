@@ -73,7 +73,7 @@ section:
         open: "Enregistrer une séance"
         points:
             date: "La date du jour est déjà remplie : change-la si tu enregistres une séance passée."
-            details: "Tu peux aussi noter la durée, ton humeur, un commentaire et ajouter une photo."
+            details: "{photo, select, enabled {Tu peux aussi noter la durée, ton humeur, un commentaire et ajouter une photo.} other {Tu peux aussi noter la durée, ton humeur et un commentaire.}}"
             draft: "Ta saisie est gardée en brouillon sur ton appareil pendant 1 heure : si tu quittes la page ou si l'appli se recharge, tu la retrouves en revenant."
             exercises: "« Ajouter un exercice » ouvre la liste : coche plusieurs exercices, puis valide. Tes exercices habituels sont en tête."
             missing_exercise: "Un exercice manque ? Crée-le depuis la liste : tu reviens ensuite à ta séance, avec l'exercice ajouté."

@@ -73,7 +73,7 @@ section:
         open: "Log a workout"
         points:
             date: "Today's date is already filled in: change it if you are logging a past workout."
-            details: "You can also note the duration, your mood, a comment and add a photo."
+            details: "{photo, select, enabled {You can also note the duration, your mood, a comment and add a photo.} other {You can also note the duration, your mood and a comment.}}"
             draft: "Your entry is kept as a draft on your device for 1 hour: if you leave the page or the app reloads, you find it again when you come back."
             exercises: "“Add an exercise” opens the list: tick several exercises, then confirm. Your usual exercises are at the top."
             missing_exercise: "An exercise is missing? Create it from the list: you then come back to your workout, with the exercise added."

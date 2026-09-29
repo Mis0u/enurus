@@ -7,6 +7,7 @@ namespace App\Controller\Workout;
 use App\Constraint\ImageConstraints;
 use App\Entity\User;
 use App\Entity\Workout;
+use App\Repository\FeatureSettingRepository;
 use App\Security\Voter\WorkoutVoter;
 use App\Service\Entity\WorkoutPhotoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +24,7 @@ final class WorkoutUploadPhotoController extends AbstractController
 {
     public function __construct(
         private readonly WorkoutPhotoService $workoutPhotoService,
+        private readonly FeatureSettingRepository $featureSettingRepository,
     ) {
     }
 
@@ -59,6 +61,12 @@ final class WorkoutUploadPhotoController extends AbstractController
         )]
         ?UploadedFile $photo = null,
     ): JsonResponse {
+        // Coupé depuis l'admin : l'interface n'offre plus l'upload, l'endpoint ne doit pas non plus
+        // rester appelable directement.
+        if (! $this->featureSettingRepository->isWorkoutPhotoUploadEnabled()) {
+            throw $this->createNotFoundException('Workout photo upload is disabled.');
+        }
+
         if (null === $photo) {
             return $this->json(
                 [

@@ -196,6 +196,12 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
 - `ImageConstraints` : constantes partagées back/front (taille max, MIME autorisés), single source
   of truth — jamais de valeur dupliquée en dur côté Twig.
 - Chemins stockés en base = **relatifs**, jamais une URL publique.
+- **Photo de séance coupée par défaut** (`FeatureSetting::workoutPhotoUploadEnabled`, ligne unique
+  seedée à `false` par migration, interrupteur admin « Fonctionnalités ») : personne ne l'utilisait,
+  le code reste actif et testé. Coupé → zone photo absente en création/édition, upload en 404,
+  point de l'Aide sans la photo (ICU `select` sur `photo`) ; une photo existante reste affichée et
+  supprimable. Nouvelle fonctionnalité à rendre pilotable = nouvelle colonne de `FeatureSetting`.
+  En test : `SwitchesFeatureSettingTrait::switchWorkoutPhotoUpload()`.
 - `AttachesContactImageTrait` (`src/Service/Contact/`) : logique d'attache d'image optionnelle à
   un `ContactThreadMessage`, partagée entre `ContactThreadService::create()` et
   `ContactThreadReplyService::reply()` — la garde de nullité sur l'id de l'auteur reste dans

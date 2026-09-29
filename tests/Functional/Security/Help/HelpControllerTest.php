@@ -6,6 +6,7 @@ namespace App\Tests\Functional\Security\Help;
 
 use App\Enum\Help\HelpSectionEnum;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use App\Tests\Functional\Security\Trait\SwitchesFeatureSettingTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 final class HelpControllerTest extends WebTestCase
 {
     use FunctionalTestTrait;
+    use SwitchesFeatureSettingTrait;
 
     private const string USER = 'user-fixture-11-workout@test.com';
 
@@ -55,10 +57,22 @@ final class HelpControllerTest extends WebTestCase
         yield 'pl' => ['/pl/pomoc'];
     }
 
-    #[DataProvider('helpUrlPerLocale')]
-    public function testEveryLanguageShowsTranslatedTextInsteadOfRawKeys(string $url): void
+    /**
+     * @return iterable<string, array{string, bool}>
+     */
+    public static function helpUrlPerLocaleAndPhotoSwitch(): iterable
+    {
+        foreach (self::helpUrlPerLocale() as $locale => [$url]) {
+            yield $locale . ' photo on' => [$url, true];
+            yield $locale . ' photo off' => [$url, false];
+        }
+    }
+
+    #[DataProvider('helpUrlPerLocaleAndPhotoSwitch')]
+    public function testEveryLanguageShowsTranslatedTextInsteadOfRawKeys(string $url, bool $photoUploadEnabled): void
     {
         $client = $this->login(self::USER);
+        $this->switchWorkoutPhotoUpload($photoUploadEnabled);
 
         $crawler = $client->request(Request::METHOD_GET, $url);
 
@@ -82,5 +96,18 @@ final class HelpControllerTest extends WebTestCase
         $crawler = $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
 
         self::assertGreaterThanOrEqual(1, $crawler->filter('a[href="' . self::HELP_URL . '"]')->count());
+    }
+
+    public function testWorkoutLogSectionMentionsThePhotoOnlyWhenUploadIsEnabled(): void
+    {
+        $client = $this->login(self::USER);
+        $this->switchWorkoutPhotoUpload(true);
+        $withPhoto = $client->request(Request::METHOD_GET, self::HELP_URL)->filter('details#workout_log')->text();
+
+        $this->switchWorkoutPhotoUpload(false);
+        $withoutPhoto = $client->request(Request::METHOD_GET, self::HELP_URL)->filter('details#workout_log')->text();
+
+        self::assertStringContainsString('photo', $withPhoto);
+        self::assertStringNotContainsString('photo', $withoutPhoto);
     }
 }

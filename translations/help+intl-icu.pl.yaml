@@ -73,7 +73,7 @@ section:
         open: "Zapisz trening"
         points:
             date: "Dzisiejsza data jest już wpisana: zmień ją, jeśli zapisujesz wcześniejszy trening."
-            details: "Możesz też zanotować czas trwania, swój nastrój, komentarz i dodać zdjęcie."
+            details: "{photo, select, enabled {Możesz też zanotować czas trwania, swój nastrój, komentarz i dodać zdjęcie.} other {Możesz też zanotować czas trwania, swój nastrój i komentarz.}}"
             draft: "To, co wpisujesz, jest przez 1 godzinę zapisywane jako szkic na Twoim urządzeniu: jeśli opuścisz stronę lub aplikacja się przeładuje, odnajdziesz to po powrocie."
             exercises: "„Dodaj ćwiczenie” otwiera listę: zaznacz kilka ćwiczeń i zatwierdź. Twoje zwykłe ćwiczenia są na górze."
             missing_exercise: "Brakuje ćwiczenia? Utwórz je z poziomu listy: potem wrócisz do swojego treningu z dodanym ćwiczeniem."
