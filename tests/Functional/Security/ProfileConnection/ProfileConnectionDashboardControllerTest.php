@@ -282,7 +282,7 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
         self::assertSelectorExists('main img[src*="avatars/owner-avatar.jpg"]');
     }
 
-    public function testBannerLeadsBackToTheConnectionsList(): void
+    public function testBannerHasNoBackLinkToTheConnectionsList(): void
     {
         $client = $this->login(self::VIEWER);
         $viewer = $this->getUserByEmail(self::VIEWER);
@@ -293,7 +293,7 @@ final class ProfileConnectionDashboardControllerTest extends WebTestCase
 
         $client->request('GET', $this->dashboardUrl($connection, 'fr'));
 
-        self::assertSelectorTextContains('main a[href="/fr/connexions"]', 'Retour à mes connexions');
+        self::assertSelectorNotExists('main a[href="/fr/connexions"]');
     }
 
     public function testGoalCardsOfTheOwnerAreNotLinksToAnExerciseHistory(): void

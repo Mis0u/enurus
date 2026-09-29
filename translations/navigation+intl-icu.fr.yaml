@@ -497,7 +497,6 @@ profile_connection:
     badge:
         title: "Badges de {nickname}"
     dashboard:
-        back: "Retour à mes connexions"
         guard:
             body: "Réactive le partage de ton profil pour pouvoir consulter le tableau de bord d'une connexion."
             confirm: "Compris"

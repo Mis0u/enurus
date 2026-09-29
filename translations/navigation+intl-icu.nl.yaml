@@ -497,7 +497,6 @@ profile_connection:
     badge:
         title: "Badges van {nickname}"
     dashboard:
-        back: "Terug naar mijn verbindingen"
         guard:
             body: "Zet profiel delen weer aan om het overzicht van een verbinding te kunnen bekijken."
             confirm: "Begrepen"

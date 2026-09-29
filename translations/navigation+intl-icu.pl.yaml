@@ -501,7 +501,6 @@ profile_connection:
     badge:
         title: "Odznaki użytkownika {nickname}"
     dashboard:
-        back: "Wróć do moich połączeń"
         guard:
             body: "Włącz ponownie udostępnianie swojego profilu, aby móc zobaczyć panel połączenia."
             confirm: "Rozumiem"
