@@ -20,19 +20,15 @@ final readonly class DashboardPrService
      * (poids max sur un exercice, jamais poids × reps, un seul PR possible par séance et par
      * exercice), détectée progressivement sur tout l'historique chronologique (2 séances distinctes
      * battant chacune le record sur le même exercice pendant la période comptent pour 2, pas 1).
-     * Un exercice jamais fait avant compte automatiquement comme un premier record.
+     * Un exercice jamais fait avant compte automatiquement comme un premier record. Le flux est fourni
+     * par l'appelant, qui le partage avec le widget Comparaison pour ne le calculer qu'une fois.
      *
+     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable}> $prEvents cf. `WorkoutRecordDetectionService::findPrEvents()`
      * @return array{last: int, week: int, month: int}
      */
-    public function countPrsByFilter(
-        User $user,
-        DashboardPeriod $day,
-        DashboardPeriod $week,
-        DashboardPeriod $month,
-    ): array {
-        $events = $this->workoutRecordDetectionService->findPrEvents($user);
-
-        return $this->countEventsByFilter($events, $day, $week, $month);
+    public function countPrsByFilter(array $prEvents, DashboardPeriods $periods): array
+    {
+        return $this->countEventsByFilter($prEvents, $periods);
     }
 
     /**
@@ -44,49 +40,36 @@ final readonly class DashboardPrService
      *
      * @return array{last: int, week: int, month: int}
      */
-    public function countRepsRecordsByFilter(
-        User $user,
-        DashboardPeriod $day,
-        DashboardPeriod $week,
-        DashboardPeriod $month,
-    ): array {
+    public function countRepsRecordsByFilter(User $user, DashboardPeriods $periods): array
+    {
         $events = $this->workoutRecordDetectionService->findRepsRecordEvents($user);
 
-        return $this->countEventsByFilter($events, $day, $week, $month);
+        return $this->countEventsByFilter($events, $periods);
     }
 
     /**
      * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable}> $events
      * @return array{last: int, week: int, month: int}
      */
-    private function countEventsByFilter(
-        array $events,
-        DashboardPeriod $day,
-        DashboardPeriod $week,
-        DashboardPeriod $month,
-    ): array {
-        $dayCount = 0;
-        $weekCount = 0;
-        $monthCount = 0;
-
-        foreach ($events as $event) {
-            if ($event['performedAt'] >= $day->start && $event['performedAt'] <= $day->end) {
-                $dayCount++;
-            }
-
-            if ($event['performedAt'] >= $week->start && $event['performedAt'] <= $week->end) {
-                $weekCount++;
-            }
-
-            if ($event['performedAt'] >= $month->start && $event['performedAt'] <= $month->end) {
-                $monthCount++;
-            }
-        }
-
+    private function countEventsByFilter(array $events, DashboardPeriods $periods): array
+    {
         return [
-            'last' => $dayCount,
-            'week' => $weekCount,
-            'month' => $monthCount,
+            'last' => self::countEventsIn($events, $periods->day),
+            'week' => self::countEventsIn($events, $periods->week),
+            'month' => self::countEventsIn($events, $periods->month),
         ];
+    }
+
+    /**
+     * Bornes incluses des deux côtés.
+     *
+     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable}> $events
+     */
+    private static function countEventsIn(array $events, DashboardPeriod $period): int
+    {
+        return \count(array_filter(
+            $events,
+            static fn (array $event): bool => $event['performedAt'] >= $period->start && $event['performedAt'] <= $period->end,
+        ));
     }
 }

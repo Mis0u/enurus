@@ -29,12 +29,13 @@ final readonly class DashboardSessionStatsBuilder
     /**
      * @param int $daySessionsCount séances de la dernière journée d'entraînement — plusieurs peuvent
      *                              partager cette date, d'où un compte fourni plutôt que recalculé
+     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable}> $prEvents cf. `WorkoutRecordDetectionService::findPrEvents()`
      * @return SessionStats
      */
-    public function build(User $user, DashboardPeriods $periods, int $daySessionsCount): array
+    public function build(User $user, DashboardPeriods $periods, int $daySessionsCount, array $prEvents): array
     {
-        $prCounts = $this->prService->countPrsByFilter($user, $periods->day, $periods->week, $periods->month);
-        $repsRecordCounts = $this->prService->countRepsRecordsByFilter($user, $periods->day, $periods->week, $periods->month);
+        $prCounts = $this->prService->countPrsByFilter($prEvents, $periods);
+        $repsRecordCounts = $this->prService->countRepsRecordsByFilter($user, $periods);
 
         return [
             'year' => (int) $periods->year->start->format('Y'),
