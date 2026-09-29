@@ -497,7 +497,6 @@ profile_connection:
     badge:
         title: "{nickname}'s badges"
     dashboard:
-        back: "Back to my connections"
         guard:
             body: "Turn profile sharing back on to view a connection's dashboard."
             confirm: "Got it"

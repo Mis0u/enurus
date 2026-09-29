@@ -497,7 +497,6 @@ profile_connection:
     badge:
         title: "Insignias de {nickname}"
     dashboard:
-        back: "Volver a mis conexiones"
         guard:
             body: "Vuelve a activar la compartición de tu perfil para poder consultar el panel de una conexión."
             confirm: "Entendido"

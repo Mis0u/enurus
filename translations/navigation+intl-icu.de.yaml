@@ -497,7 +497,6 @@ profile_connection:
     badge:
         title: "Abzeichen von {nickname}"
     dashboard:
-        back: "Zurück zu meinen Verbindungen"
         guard:
             body: "Aktiviere die Profilfreigabe wieder, um die Übersicht einer Verbindung ansehen zu können."
             confirm: "Verstanden"

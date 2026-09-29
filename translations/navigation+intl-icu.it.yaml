@@ -497,7 +497,6 @@ profile_connection:
     badge:
         title: "Badge di {nickname}"
     dashboard:
-        back: "Torna alle mie connessioni"
         guard:
             body: "Riattiva la condivisione del tuo profilo per poter consultare il cruscotto di una connessione."
             confirm: "Ho capito"
