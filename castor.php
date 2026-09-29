@@ -149,10 +149,16 @@ function symfonyLsp(): void
 function test(bool $coverage = false): void
 {
     $coverageOption = $coverage ? '--coverage-html coverage' : '';
+    // Rapport JUnit horodaté (7 jours de rétention) : garde la trace d'un échec ponctuel même si
+    // le passage suivant réussit — sans lui, un test instable ne laisse aucune piste.
     execute(
         'PHPUNIT',
         '✅ Running phpunit tests...',
-        \sprintf('./vendor/bin/phpunit tests --testdox %s', $coverageOption),
+        \sprintf(
+            'mkdir -p var/phpunit && find var/phpunit -name "*.xml" -mtime +7 -delete && ./vendor/bin/phpunit tests --testdox --log-junit var/phpunit/%s.xml %s',
+            date('Y-m-d_His'),
+            $coverageOption,
+        ),
         'All the tests passed'
     );
 }

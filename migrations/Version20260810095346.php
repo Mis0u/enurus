@@ -47,7 +47,13 @@ final class Version20260810095346 extends AbstractMigration
     {
         $oldTrapsId = $this->connection->fetchOne("SELECT id FROM muscle_group WHERE name = 'name.traps'");
 
-        $this->skipIf(false === $oldTrapsId, '"name.traps" no longer exists, already split');
+        // Not skipIf(): a skipped migration is never recorded, and every database seeded by
+        // Version20260810061845 (from the already split JSON) would list it as new forever.
+        if (false === $oldTrapsId) {
+            $this->write('"name.traps" no longer exists, already split');
+
+            return;
+        }
 
         if (! is_string($oldTrapsId)) {
             throw new \LogicException('Unexpected non-string id for "name.traps" muscle group.');
