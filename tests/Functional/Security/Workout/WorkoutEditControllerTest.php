@@ -20,6 +20,7 @@ use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use App\Tests\Functional\Security\Trait\SwitchesFeatureSettingTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -29,6 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 class WorkoutEditControllerTest extends WebTestCase
 {
     use FunctionalTestTrait;
+    use SwitchesFeatureSettingTrait;
 
     private const string USER = 'user-fixture-26-workout@test.com';
 
@@ -37,6 +39,8 @@ class WorkoutEditControllerTest extends WebTestCase
     // Seul user fixture en lbs (cf. UserFixtures::loadWorkoutUsers) — nécessaire pour reproduire
     // le bug de double conversion sur un poids de série laissé vide à l'édition.
     private const string LBS_USER = 'user-fixture-51-workout@test.com';
+
+    private const string PHOTO_FILE_INPUT = 'input[type="file"][data-workout--photo-upload-target="input"]';
 
     // -------------------------------------------------------------------------
     // Accès / Sécurité
@@ -567,6 +571,46 @@ class WorkoutEditControllerTest extends WebTestCase
         // Setter défensif `$distance ?? $this->distance` (même convention que `weight`/`reps`) :
         // une soumission vide ne peut jamais écraser la valeur existante par null en base.
         $this->assertSame(100, $firstSet->distance);
+    }
+
+    // -------------------------------------------------------------------------
+    // Photo (interrupteur FeatureSetting::workoutPhotoUploadEnabled)
+    // -------------------------------------------------------------------------
+
+    public function testPhotoFileInputIsShownWhenUploadIsEnabled(): void
+    {
+        $client = $this->login(self::USER);
+        $workout = $this->getFirstWorkout(self::USER);
+        $this->switchWorkoutPhotoUpload(true);
+
+        $client->request(Request::METHOD_GET, $this->getEditUrl($workout));
+
+        $this->assertSelectorExists(self::PHOTO_FILE_INPUT);
+    }
+
+    public function testPhotoBlockIsAbsentWhenUploadIsDisabledAndNoPhotoExists(): void
+    {
+        $client = $this->login(self::USER);
+        $workout = $this->getFirstWorkout(self::USER);
+        $this->switchWorkoutPhotoUpload(false);
+
+        $client->request(Request::METHOD_GET, $this->getEditUrl($workout));
+
+        $this->assertSelectorNotExists('[data-controller="workout--photo-upload"]');
+    }
+
+    public function testExistingPhotoStaysRemovableWhenUploadIsDisabled(): void
+    {
+        $client = $this->login(self::USER);
+        $workout = $this->getFirstWorkout(self::USER);
+        $workout->photoPath = 'workouts/existing.jpg';
+        $this->switchWorkoutPhotoUpload(false);
+
+        $client->request(Request::METHOD_GET, $this->getEditUrl($workout));
+
+        $this->assertSelectorExists('[data-action="click->workout--photo-upload#onRemoveExisting"]');
+        $this->assertSelectorNotExists(self::PHOTO_FILE_INPUT);
+        $this->assertSelectorNotExists('[data-action~="drop->workout--photo-upload#onDrop"]');
     }
 
     // -------------------------------------------------------------------------

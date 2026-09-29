@@ -73,7 +73,7 @@ section:
         open: "Training erfassen"
         points:
             date: "Das heutige Datum ist schon eingetragen: Ändere es, wenn du ein vergangenes Training erfasst."
-            details: "Du kannst auch die Dauer, deine Stimmung und einen Kommentar notieren und ein Foto hinzufügen."
+            details: "{photo, select, enabled {Du kannst auch die Dauer, deine Stimmung und einen Kommentar notieren und ein Foto hinzufügen.} other {Du kannst auch die Dauer, deine Stimmung und einen Kommentar notieren.}}"
             draft: "Deine Eingabe wird 1 Stunde lang als Entwurf auf deinem Gerät gespeichert: Verlässt du die Seite oder lädt die App neu, findest du sie bei deiner Rückkehr wieder."
             exercises: "„Übung hinzufügen“ öffnet die Liste: Hake mehrere Übungen an und bestätige. Deine üblichen Übungen stehen oben."
             missing_exercise: "Eine Übung fehlt? Erstelle sie aus der Liste heraus: Danach kehrst du zu deinem Training zurück, mit der Übung hinzugefügt."

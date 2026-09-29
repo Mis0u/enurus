@@ -15,6 +15,7 @@ use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
 use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use App\Tests\Functional\Security\Trait\SwitchesFeatureSettingTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 class WorkoutControllerTest extends WebTestCase
 {
     use FunctionalTestTrait;
+    use SwitchesFeatureSettingTrait;
 
     private const string USER = 'user-fixture-0@test.com';
 
@@ -451,6 +453,27 @@ class WorkoutControllerTest extends WebTestCase
             ->attr('data-exercise-missing-set-values-message-value');
 
         self::assertNotEmpty($message);
+    }
+
+    public function testNoteModalOffersAPhotoWhenUploadIsEnabled(): void
+    {
+        $client = $this->login(self::USER);
+        $this->switchWorkoutPhotoUpload(true);
+
+        $client->request(Request::METHOD_GET, '/fr/enregistre-seance');
+
+        $this->assertSelectorExists('#note-modal [data-controller="workout--photo-upload"] input[type="file"]');
+    }
+
+    public function testNoteModalHasNoPhotoWhenUploadIsDisabled(): void
+    {
+        $client = $this->login(self::USER);
+        $this->switchWorkoutPhotoUpload(false);
+
+        $client->request(Request::METHOD_GET, '/fr/enregistre-seance');
+
+        $this->assertSelectorExists('#note-modal');
+        $this->assertSelectorNotExists('[data-controller="workout--photo-upload"]');
     }
 
     // -------------------------------------------------------------------------

@@ -1,18 +1,30 @@
+{#
+    Fenêtre « Détails de la séance » (humeur, note, photo).
+    Variables attendues (via `only`) : imageMaxSizeBytes, imageAllowedMimeTypes, field, moods,
+    photoUploadEnabled (FeatureSetting::workoutPhotoUploadEnabled) — coupé, pas de zone photo ni
+    de controller `workout--photo-upload` : `NoteModalManager` n'envoie alors aucune photo.
+#}
 <div id="note-modal"
      class="fixed inset-0 z-[120] hidden items-center justify-center bg-[#080e1a]/90 backdrop-blur-sm px-4">
     <div class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-7 w-full max-w-lg shadow-[0_20px_60px_rgba(0,0,0,0.5)] max-md:p-5 overflow-y-auto max-h-[90vh]"
+         {% if photoUploadEnabled %}
          data-controller="workout--photo-upload"
          data-workout--photo-upload-accepted-types-value="{{ imageAllowedMimeTypes|json_encode }}"
-         data-workout--photo-upload-max-size-value="{{ imageMaxSizeBytes }}">
+         data-workout--photo-upload-max-size-value="{{ imageMaxSizeBytes }}"
+         {% endif %}>
 
         {% include 'workout/create/_note_modal/_header.html.twig' only %}
         <div class="mb-5">
             {% include 'workout/_mood_selector.html.twig' with {'field': field, 'moods': moods} only %}
         </div>
         {% include 'workout/create/_note_modal/_textarea.html.twig' only %}
-        {% include 'workout/create/_note_modal/_photo_upload.html.twig' with {'imageAllowedMimeTypes': imageAllowedMimeTypes} only %}
+        {% if photoUploadEnabled %}
+            {% include 'workout/create/_note_modal/_photo_upload.html.twig' with {'imageAllowedMimeTypes': imageAllowedMimeTypes} only %}
+        {% endif %}
         {% include 'workout/create/_note_modal/_actions.html.twig' only %}
     </div>
 </div>
 
-{% include 'workout/create/_note_modal/_lightbox.html.twig' only %}
+{% if photoUploadEnabled %}
+    {% include 'workout/create/_note_modal/_lightbox.html.twig' only %}
+{% endif %}
