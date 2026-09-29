@@ -12,7 +12,6 @@ use App\Repository\WorkoutTonnageRepository;
 use App\Service\Dashboard\DashboardPeriod;
 use App\Service\Utils\WeightConverterService;
 use App\Service\Workout\DeloadPeriodSetService;
-use App\Service\Workout\WorkoutRecordDetectionService;
 
 /**
  * Widget Comparaison : pour la semaine, le mois et l'année, période en cours contre les mêmes jours
@@ -27,7 +26,6 @@ final readonly class DashboardComparisonService
         private ComparisonPeriodCalculator $periodCalculator,
         private WorkoutStatsRepository $workoutStatsRepository,
         private WorkoutTonnageRepository $workoutTonnageRepository,
-        private WorkoutRecordDetectionService $recordDetectionService,
         private DeloadPeriodSetService $deloadPeriodSetService,
         private WeightConverterService $weightConverter,
     ) {
@@ -35,17 +33,19 @@ final readonly class DashboardComparisonService
 
     /**
      * Données du propriétaire du dashboard (`$subject`), tonnage dans l'unité de celui qui regarde.
+     * `$prEvents` est le flux des records de `$subject`, déjà calculé pour le widget Séance.
      *
+     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable}> $prEvents cf. `WorkoutRecordDetectionService::findPrEvents()`
      * @return list<ComparisonView>
      */
-    public function build(User $subject, User $viewer): array
+    public function build(User $subject, User $viewer, array $prEvents): array
     {
         $now = new \DateTimeImmutable();
         $periodsByGranularity = array_map(
             fn (ComparisonGranularityEnum $granularity): ComparisonPeriods => $this->periodCalculator->calculate($granularity, $now),
             ComparisonGranularityEnum::cases(),
         );
-        $sources = $this->loadSources($subject, $periodsByGranularity, $now);
+        $sources = $this->loadSources($subject, $this->sourceRange($periodsByGranularity, $now), $prEvents);
 
         return array_map(
             fn (ComparisonGranularityEnum $granularity, ComparisonPeriods $periods): ComparisonView => $this->compare($granularity, $periods, $sources, $viewer->unitOfMeasure),
@@ -60,19 +60,26 @@ final readonly class DashboardComparisonService
      *
      * @param list<ComparisonPeriods> $periodsByGranularity
      */
-    private function loadSources(User $subject, array $periodsByGranularity, \DateTimeImmutable $now): ComparisonSources
+    private function sourceRange(array $periodsByGranularity, \DateTimeImmutable $now): DashboardPeriod
     {
         $start = array_reduce(
             $periodsByGranularity,
             static fn (\DateTimeImmutable $earliest, ComparisonPeriods $periods): \DateTimeImmutable => min($earliest, $periods->previous->start),
             $now,
         );
-        $end = $now->setTime(23, 59, 59);
 
+        return new DashboardPeriod($start, $now->setTime(23, 59, 59));
+    }
+
+    /**
+     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable}> $prEvents
+     */
+    private function loadSources(User $subject, DashboardPeriod $range, array $prEvents): ComparisonSources
+    {
         return new ComparisonSources(
-            $this->workoutStatsRepository->findSetAndRepTotalsPerWorkout($subject, $start, $end),
-            $this->workoutTonnageRepository->findTonnageSeriesByUser($subject, $start, $end),
-            $this->recordDetectionService->findPrEvents($subject),
+            $this->workoutStatsRepository->findSetAndRepTotalsPerWorkout($subject, $range->start, $range->end),
+            $this->workoutTonnageRepository->findTonnageSeriesByUser($subject, $range->start, $range->end),
+            $prEvents,
             $this->deloadPeriodSetService->dayKeySet($subject),
         );
     }

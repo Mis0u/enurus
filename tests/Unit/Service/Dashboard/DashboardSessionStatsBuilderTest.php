@@ -14,6 +14,9 @@ use App\Service\Workout\WorkoutRecordDetectionService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @phpstan-import-type SessionStats from DashboardSessionStatsBuilder
+ */
 final class DashboardSessionStatsBuilderTest extends TestCase
 {
     private const int DAY_SESSIONS = 2;
@@ -26,7 +29,7 @@ final class DashboardSessionStatsBuilderTest extends TestCase
 
     public function testBuildsTheStatsOfTheThreeFiltersAndTheAnnualTotal(): void
     {
-        $stats = $this->createBuilder([])->build(new User(), $this->createPeriods(), self::DAY_SESSIONS);
+        $stats = $this->buildStats([]);
 
         self::assertSame(2026, $stats['year']);
         self::assertSame(self::ANNUAL_SESSIONS, $stats['annualTotal']);
@@ -37,7 +40,7 @@ final class DashboardSessionStatsBuilderTest extends TestCase
 
     public function testEachFilterCarriesTheExerciseSetAndRepTotalsOfItsOwnPeriod(): void
     {
-        $stats = $this->createBuilder([])->build(new User(), $this->createPeriods(), self::DAY_SESSIONS);
+        $stats = $this->buildStats([]);
 
         self::assertSame(4, $stats['last']['exercises']);
         self::assertSame(12, $stats['last']['sets']);
@@ -52,7 +55,7 @@ final class DashboardSessionStatsBuilderTest extends TestCase
 
     public function testLabelsAreTranslatedInTheNavigationDomainWithTheirCount(): void
     {
-        $stats = $this->createBuilder([])->build(new User(), $this->createPeriods(), self::DAY_SESSIONS);
+        $stats = $this->buildStats([]);
 
         self::assertSame('dashboard.widget.session.sessions@navigation|{"count":2}', $stats['last']['sessionsLabel']);
         self::assertSame('dashboard.widget.session.exercises@navigation|{"count":4}', $stats['last']['exercisesLabel']);
@@ -63,7 +66,7 @@ final class DashboardSessionStatsBuilderTest extends TestCase
 
     public function testFiltersWithoutRecordUseTheDedicatedZeroLabelForPrs(): void
     {
-        $stats = $this->createBuilder([])->build(new User(), $this->createPeriods(), self::DAY_SESSIONS);
+        $stats = $this->buildStats([]);
 
         self::assertSame(0, $stats['last']['prCount']);
         self::assertSame('dashboard.widget.session.pr_count_zero@navigation|[]', $stats['last']['prLabel']);
@@ -78,7 +81,7 @@ final class DashboardSessionStatsBuilderTest extends TestCase
             'performedAt' => new \DateTimeImmutable('2026-09-10 12:00:00'),
         ];
 
-        $stats = $this->createBuilder([$event])->build(new User(), $this->createPeriods(), self::DAY_SESSIONS);
+        $stats = $this->buildStats([$event]);
 
         foreach (['last', 'week', 'month'] as $filter) {
             self::assertSame(1, $stats[$filter]['prCount']);
@@ -98,9 +101,20 @@ final class DashboardSessionStatsBuilderTest extends TestCase
     }
 
     /**
+     * Mêmes événements pour les PR (passés en argument) et les records de reps (lus par le service).
+     *
      * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable}> $recordEvents
+     * @return SessionStats
      */
-    private function createBuilder(array $recordEvents): DashboardSessionStatsBuilder
+    private function buildStats(array $recordEvents): array
+    {
+        return $this->createBuilder($recordEvents)->build(new User(), $this->createPeriods(), self::DAY_SESSIONS, $recordEvents);
+    }
+
+    /**
+     * @param array<int, array{workoutId: string, performedAt: \DateTimeImmutable}> $repsRecordEvents
+     */
+    private function createBuilder(array $repsRecordEvents): DashboardSessionStatsBuilder
     {
         $statsRepository = $this->createStub(WorkoutStatsRepository::class);
         $statsRepository->method('countByUserAndDate')->willReturnCallback(
@@ -131,8 +145,7 @@ final class DashboardSessionStatsBuilderTest extends TestCase
         );
 
         $detectionService = $this->createStub(WorkoutRecordDetectionService::class);
-        $detectionService->method('findPrEvents')->willReturn($recordEvents);
-        $detectionService->method('findRepsRecordEvents')->willReturn($recordEvents);
+        $detectionService->method('findRepsRecordEvents')->willReturn($repsRecordEvents);
 
         $translator = $this->createStub(TranslatorInterface::class);
         $translator->method('trans')->willReturnCallback(

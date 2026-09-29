@@ -17,6 +17,7 @@ use App\Service\Goal\GoalProgress;
 use App\Service\ProfileSharing\ProfileConnectionOverviewService;
 use App\Service\RegularityGoal\RegularityGoalOverviewBuilder;
 use App\Service\Workout\WorkoutHeatmapService;
+use App\Service\Workout\WorkoutRecordDetectionService;
 
 /**
  * Calcule le dashboard d'un utilisateur (`$subject`) tel que le lit `$viewer` : les données et les
@@ -46,12 +47,14 @@ final readonly class DashboardViewDataBuilder
         private ProfileConnectionOverviewService $connectionOverviewService,
         private RegularityGoalOverviewBuilder $regularityGoalOverviewBuilder,
         private DashboardComparisonService $comparisonService,
+        private WorkoutRecordDetectionService $recordDetectionService,
     ) {
     }
 
     /**
      * `$badgeProgress` est celui déjà calculé par la synchro des badges qui précède l'affichage
-     * (`BadgeSyncResult::$progress`) — recalculé seulement s'il n'est pas fourni.
+     * (`BadgeSyncResult::$progress`) — recalculé seulement s'il n'est pas fourni. Le flux des records,
+     * coûteux (tout l'historique), est calculé une seule fois pour les widgets Séance et Comparaison.
      */
     public function build(User $subject, User $viewer, DashboardState $dashboardState, ?BadgeProgress $badgeProgress = null): DashboardViewData
     {
@@ -60,10 +63,11 @@ final readonly class DashboardViewDataBuilder
         $goalState = $this->goalService->getStateForUser($subject);
         $visibleWidgets = $this->resolveVisibleWidgets($subject, $viewer, $dashboardState);
         $hasNoVisibleWidgets = ! \in_array(true, $visibleWidgets, true);
+        $prEvents = $this->recordDetectionService->findPrEvents($subject);
 
         return new DashboardViewData(
             $dashboardState,
-            $this->sessionStatsBuilder->build($subject, $periods, \count($dayIds)),
+            $this->sessionStatsBuilder->build($subject, $periods, \count($dayIds), $prEvents),
             $this->muscleViewBuilder->build($subject, $periods, $dayIds, $dashboardState->muscleWeekMonthUnlocked),
             $this->tonnageService->getData($subject, $viewer),
             $dashboardState->regularityUnlocked ? $this->regularityService->getData($subject) : null,
@@ -76,7 +80,7 @@ final readonly class DashboardViewDataBuilder
             $visibleWidgets[DashboardWidgetEnum::HEATMAP->value] ? $this->heatmapService->build($subject, self::HEATMAP_WEEKS) : null,
             $visibleWidgets[DashboardWidgetEnum::CONNECTIONS->value] ? $this->connectionOverviewService->forUser($viewer)->connections : [],
             $visibleWidgets[DashboardWidgetEnum::REGULARITY_GOAL->value] ? $this->regularityGoalOverviewBuilder->build($subject) : null,
-            $visibleWidgets[DashboardWidgetEnum::COMPARISON->value] ? $this->comparisonService->build($subject, $viewer) : null,
+            $visibleWidgets[DashboardWidgetEnum::COMPARISON->value] ? $this->comparisonService->build($subject, $viewer, $prEvents) : null,
             // Ordre du propriétaire, même vu par une connexion : c'est son dashboard.
             array_map(static fn (DashboardWidgetEnum $widget): string => $widget->value, DashboardWidgetEnum::inOrder($subject->widgetOrder)),
         );
