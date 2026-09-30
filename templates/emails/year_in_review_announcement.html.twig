@@ -1,0 +1,40 @@
+{#
+    Email « Ton année est prête », envoyé le 16 décembre à 7h (YearInReviewAnnouncer). Aucun chiffre :
+    la surprise reste pour les écrans.
+    Variables : year (int), locale (string — langue du destinataire).
+#}
+{% extends 'emails/_base.html.twig' %}
+
+{% block title %}{{ 'year_in_review.email.subject'|trans({year: year}, 'navigation', locale) }}{% endblock %}
+
+{% block content %}
+    <div style="text-align: center; margin-bottom: 24px;">
+        <span style="display: inline-block; padding: 10px 18px; border: 2px solid #f43f5e; border-radius: 14px; font-size: 28px; font-weight: bold; color: #f43f5e;">{{ year }}</span>
+    </div>
+
+    <h2 style="margin: 0 0 16px; font-size: 24px; font-weight: bold; color: #ffffff; text-align: center;">
+        {{ 'year_in_review.email.title'|trans({year: year}, 'navigation', locale) }}
+    </h2>
+
+    <p style="margin: 0 0 28px; font-size: 16px; line-height: 1.6; color: #cbd5e1; text-align: center;">
+        {{ 'year_in_review.email.body'|trans({}, 'navigation', locale) }}
+    </p>
+
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+            <td align="center">
+                <a href="{{ url('app_year_in_review_show', {year: year, _locale: locale}) }}" style="display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #f43f5e 0%, #dc2626 100%); color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 12px; box-shadow: 0 8px 20px rgba(244, 63, 94, 0.3);">
+                    {{ 'year_in_review.email.cta'|trans({}, 'navigation', locale) }}
+                </a>
+            </td>
+        </tr>
+    </table>
+{% endblock %}
+
+{% block footer %}
+    <p style="margin: 0 0 12px; font-size: 12px; line-height: 1.6; color: #64748b;">
+        {{ 'year_in_review.email.why'|trans({}, 'navigation', locale) }}
+        <a href="{{ url('app_year_in_review_list', {_locale: locale}) }}#email" style="color: #94a3b8; text-decoration: underline;">{{ 'year_in_review.email.unsubscribe'|trans({}, 'navigation', locale) }}</a>
+    </p>
+    {{ parent() }}
+{% endblock %}

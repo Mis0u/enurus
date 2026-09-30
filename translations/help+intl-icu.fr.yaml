@@ -96,7 +96,7 @@ section:
         intro: "Chaque 16 décembre, ton année d'entraînement résumée en quelques écrans."
         open: "Voir mes résumés"
         points:
-            email: "Un email te prévient le jour J. Tu peux le désactiver depuis « Mes résumés »."
+            email: "Le jour J, un email et un bandeau sur ton tableau de bord (jusqu'à fin janvier) te préviennent. Tu peux couper l'email depuis « Mes résumés »."
             frozen: "Les chiffres sont figés le 16 décembre : une séance ajoutée ou modifiée ensuite ne change plus ton résumé."
             what: "Il compte tes séances du 1er janvier au 15 décembre. Il faut au moins 5 séances dans l'année pour le débloquer."
             where: "Retrouve tous tes résumés dans « Mes résumés », sous « Mes badges »."

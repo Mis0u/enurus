@@ -428,6 +428,10 @@ email + bandeau → partage mobile). Règles actées :
   le 16 décembre à 00h heure de Paris (`MaintenanceSchedule` → `GenerateYearInReviewsMessage`), sur les
   séances du 1er janvier au 15 décembre. Jamais recalculé ensuite (`YearInReviewGenerator` idempotent),
   éligibilité (≥ 5 séances, `YearInReview::MINIMUM_WORKOUT_COUNT`) comprise. Langue et unité à l'affichage.
+- **Annonce** : email sans aucun chiffre le 16 décembre **à 7h** Paris (`AnnounceYearInReviewsMessage`,
+  `YearInReviewAnnouncer` : une fois, `emailedAt`, opt-out `User::$emailOnYearInReview`), rattrapé par le
+  handler de génération si 7h est passé ; `app:year-in-review:announce` pour le manuel/dev. Bandeau du
+  dashboard propre (`YearInReviewBannerState`) jusqu'au 31 janvier, masqué à l'ouverture ou à la croix.
 - **Toute date du résumé passe par `YearInReviewCalendar`** (`FIRST_YEAR = 2026`, pas de rétroactif).
   Avant publication, rien n'existe côté utilisateur : lien absent, routes en **404**, section d'Aide
   masquée. Écrans : `/mes-resumes/{year}` (404 si non publié, sans résumé ou non éligible ; 1re

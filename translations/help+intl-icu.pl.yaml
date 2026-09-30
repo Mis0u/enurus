@@ -96,7 +96,7 @@ section:
         intro: "Co roku 16 grudnia: twój rok treningowy podsumowany w kilku ekranach."
         open: "Zobacz moje podsumowania"
         points:
-            email: "E-mail powiadomi cię tego dnia. Możesz go wyłączyć w „Moje podsumowania”."
+            email: "Tego dnia powiadomią cię e-mail i baner na twoim panelu (do końca stycznia). E-mail możesz wyłączyć w „Moje podsumowania”."
             frozen: "Liczby są zamrażane 16 grudnia: trening dodany lub zmieniony później nie zmienia już twojego podsumowania."
             what: "Liczy twoje treningi od 1 stycznia do 15 grudnia. Aby je odblokować, potrzebujesz co najmniej 5 treningów w roku."
             where: "Wszystkie podsumowania znajdziesz w „Moje podsumowania”, pod „Moje odznaki”."

@@ -32,6 +32,24 @@ final class GenerateUserYearInReviewMessageHandlerTest extends KernelTestCase
         ]));
     }
 
+    public function testReviewFrozenAfterSevenInTheMorningIsAnnouncedAtOnce(): void
+    {
+        self::mockTime('2026-12-16 08:00:00 Europe/Paris');
+        self::bootKernel();
+        $review = $this->generateEligibleReview();
+
+        self::assertNotNull($review->emailedAt);
+    }
+
+    public function testReviewFrozenAtMidnightWaitsForTheMorningAnnouncement(): void
+    {
+        self::mockTime('2026-12-16 00:05:00 Europe/Paris');
+        self::bootKernel();
+        $review = $this->generateEligibleReview();
+
+        self::assertNull($review->emailedAt);
+    }
+
     public function testNothingIsFrozenBeforePublication(): void
     {
         self::mockTime('2026-11-10 12:00:00 Europe/Paris');
@@ -54,6 +72,21 @@ final class GenerateUserYearInReviewMessageHandlerTest extends KernelTestCase
         $this->handler()(new GenerateUserYearInReviewMessage((string) Uuid::v7(), 2026));
 
         $this->expectNotToPerformAssertions();
+    }
+
+    private function generateEligibleReview(): YearInReview
+    {
+        $em = $this->entityManager();
+        $user = YearInReviewTestHelper::createVerifiedUser($em);
+        YearInReviewTestHelper::persistWorkouts($em, $user, YearInReviewTestHelper::createExercise($em), [
+            '2026-02-02 10:00:00', '2026-02-04 10:00:00', '2026-02-06 10:00:00', '2026-02-09 10:00:00', '2026-02-11 10:00:00',
+        ]);
+
+        $this->handler()(new GenerateUserYearInReviewMessage((string) $user->id, 2026));
+
+        return $em->getRepository(YearInReview::class)->findOneBy([
+            'owner' => $user,
+        ]) ?? throw new \LogicException('Review not generated.');
     }
 
     private function entityManager(): EntityManagerInterface

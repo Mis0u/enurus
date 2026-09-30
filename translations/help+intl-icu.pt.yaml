@@ -96,7 +96,7 @@ section:
         intro: "Todos os 16 de dezembro, o teu ano de treino resumido em poucos ecrãs."
         open: "Ver os meus resumos"
         points:
-            email: "Um email avisa-te no próprio dia. Podes desativá-lo em « Os meus resumos »."
+            email: "No próprio dia, um email e uma faixa no teu painel (até ao fim de janeiro) avisam-te. Podes desativar o email em « Os meus resumos »."
             frozen: "Os números ficam fixados a 16 de dezembro: um treino adicionado ou alterado depois já não muda o teu resumo."
             what: "Conta os teus treinos de 1 de janeiro a 15 de dezembro. Precisas de pelo menos 5 treinos no ano para o desbloquear."
             where: "Encontra todos os teus resumos em « Os meus resumos », por baixo de « As minhas insígnias »."

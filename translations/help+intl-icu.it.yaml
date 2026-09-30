@@ -96,7 +96,7 @@ section:
         intro: "Ogni 16 dicembre, il tuo anno di allenamento riassunto in poche schermate."
         open: "Vedi i miei riepiloghi"
         points:
-            email: "Un'email ti avvisa il giorno stesso. Puoi disattivarla da « I miei riepiloghi »."
+            email: "Il giorno stesso, un'email e un banner sulla tua dashboard (fino a fine gennaio) ti avvisano. Puoi disattivare l'email da « I miei riepiloghi »."
             frozen: "I numeri vengono fissati il 16 dicembre: un allenamento aggiunto o modificato dopo non cambia più il tuo riepilogo."
             what: "Conta i tuoi allenamenti dal 1° gennaio al 15 dicembre. Servono almeno 5 allenamenti nell'anno per sbloccarlo."
             where: "Ritrova tutti i tuoi riepiloghi in « I miei riepiloghi », sotto « I miei badge »."
