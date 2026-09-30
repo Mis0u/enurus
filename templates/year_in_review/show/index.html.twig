@@ -71,7 +71,7 @@
                              tabindex="-1"
                              aria-roledescription="{{ 'year_in_review.show.slide'|trans({}, 'navigation') }}"
                              aria-label="{{ 'year_in_review.show.screen_label'|trans({position: loop.index, count: screens|length}, 'navigation') }}"
-                             class="flex min-h-[calc(100svh-3.25rem)] flex-col justify-center gap-2.5 px-7 py-10 outline-none group-data-[story=on]:h-full group-data-[story=on]:min-h-0 group-data-[story=on]:overflow-y-auto group-data-[story=on]:py-6">
+                             class="flex min-h-[calc(100svh-3.25rem)] flex-col items-center justify-center gap-2.5 px-7 py-10 text-center outline-none group-data-[story=on]:h-full group-data-[story=on]:min-h-0 group-data-[story=on]:overflow-y-auto group-data-[story=on]:py-6">
                         {% include 'year_in_review/show/_screen_' ~ screen.type.value ~ '.html.twig' with {screen: screen, year: year} only %}
                     </section>
                 {% endfor %}

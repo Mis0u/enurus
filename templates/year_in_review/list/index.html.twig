@@ -21,6 +21,9 @@
 {% block state %}
     <div class="flex-1 overflow-y-auto p-4 max-md:pb-4 md:p-[24px_28px]">
         <div class="mx-auto flex w-full max-w-2xl flex-col gap-3">
+            {# En tête de page : sous les cartes, il descendrait d'une carte chaque année. #}
+            {% include 'year_in_review/list/_email_card.html.twig' with {emailOnYearInReview: emailOnYearInReview} only %}
+
             <p class="text-sm leading-relaxed text-[#8b9bb4]">{{ 'year_in_review.list.intro'|trans({}, 'navigation') }}</p>
 
             {% for card in cards %}
@@ -28,8 +31,6 @@
             {% else %}
                 {% include 'year_in_review/list/_empty.html.twig' only %}
             {% endfor %}
-
-            {% include 'year_in_review/list/_email_card.html.twig' with {emailOnYearInReview: emailOnYearInReview} only %}
 
             {% if equivalenceScale is not empty %}
                 {% include 'year_in_review/list/_equivalence_scale.html.twig' with {rows: equivalenceScale} only %}

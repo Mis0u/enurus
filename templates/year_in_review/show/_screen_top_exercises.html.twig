@@ -4,12 +4,12 @@
 <p class="font-rajdhani text-[40px] leading-none font-bold">
     {% include 'year_in_review/show/_exercise_name.html.twig' with {name: favourite.name, isPublic: favourite.isPublic} only %}
 </p>
-<p class="flex items-baseline gap-2.5">
+<p class="flex items-baseline justify-center gap-2.5">
     <span class="font-rajdhani text-[112px] leading-[0.85] font-bold text-rose-ft">{{ favourite.workoutCount|format_number }}</span>
     <span class="text-[17px] text-[#cbd5e1]">{{ 'year_in_review.show.top_exercises.unit'|trans({count: favourite.workoutCount}, 'navigation') }}</span>
 </p>
 {% if screen.exercises|length > 1 %}
-    <ol start="2" class="mt-5 flex flex-col gap-2.5">
+    <ol start="2" class="mt-5 flex w-full flex-col gap-2.5 text-left">
         {% for exercise in screen.exercises|slice(1) %}
             <li class="flex items-center gap-3 rounded-[14px] border border-white/[0.07] bg-bg-card px-4 py-3.5">
                 <span class="font-rajdhani text-[22px] font-bold text-cyan-ft" aria-hidden="true">{{ loop.index + 1 }}</span>

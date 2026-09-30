@@ -3,7 +3,7 @@
     Variables attendues (via `only`) : screen (RecapScreen), year (int)
 #}
 <h2 class="font-rajdhani text-[32px] leading-none font-bold">{{ 'year_in_review.show.recap.title'|trans({}, 'navigation') }}</h2>
-<dl class="mt-3 grid grid-cols-2 gap-2.5">
+<dl class="mt-3 grid w-full grid-cols-2 gap-2.5">
     {% include 'year_in_review/show/_recap_tile.html.twig' with {label: 'year_in_review.show.recap.sessions'|trans({}, 'navigation'), value: screen.workoutCount|format_number, colorClass: 'text-rose-ft'} only %}
     {% if screen.tonnage is not null %}
         {% include 'year_in_review/show/_recap_tile.html.twig' with {label: 'year_in_review.show.recap.tonnage'|trans({}, 'navigation'), value: include('year_in_review/show/_weight.html.twig', {weight: screen.tonnage}, with_context=false), colorClass: 'text-cyan-ft'} only %}
@@ -18,7 +18,7 @@
     {% endif %}
 </dl>
 {% if screen.topExercise is not null or screen.topMuscleName is not null or screen.mood is not null %}
-    <dl class="mt-1 flex flex-col rounded-[14px] border border-white/[0.07] bg-bg-card">
+    <dl class="mt-1 flex w-full flex-col rounded-[14px] border border-white/[0.07] bg-bg-card">
         {% if screen.topExercise is not null %}
             {% include 'year_in_review/show/_recap_row.html.twig' with {label: 'year_in_review.show.recap.top_exercise'|trans({}, 'navigation'), value: include('year_in_review/show/_exercise_name.html.twig', {name: screen.topExercise.name, isPublic: screen.topExercise.isPublic}, with_context=false)} only %}
         {% endif %}
