@@ -1,0 +1,13 @@
+{#
+    Chiffre mis en avant d'un écran : phrase d'amorce, grand nombre, unité.
+    Variables attendues (via `only`) :
+    - lead : string — phrase au-dessus du chiffre
+    - value : string — chiffre déjà formaté
+    - unit : string — texte sous le chiffre (vide pour aucun)
+    - colorClass : string — classe de couleur du chiffre (ex. text-rose-ft)
+#}
+<p class="text-[17px] text-[#cbd5e1]">{{ lead }}</p>
+<p class="font-rajdhani text-[112px] leading-[0.85] font-bold {{ colorClass }}">{{ value }}</p>
+{% if unit is not empty %}
+    <p class="font-rajdhani text-[32px] leading-tight font-bold">{{ unit }}</p>
+{% endif %}

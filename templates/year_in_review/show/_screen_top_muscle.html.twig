@@ -1,0 +1,20 @@
+{# Variables attendues (via `only`) : screen (TopMuscleScreen), year (int) #}
+<div class="flex flex-col items-center gap-2.5 text-center">
+    <p class="text-[17px] text-[#cbd5e1]">{{ 'year_in_review.show.top_muscle.lead'|trans({}, 'navigation') }}</p>
+    <p class="font-rajdhani text-[44px] leading-none font-bold text-rose-ft">{{ screen.muscleName|trans({}, 'muscle') }}</p>
+    <div class="my-2 flex items-center justify-center gap-4"
+         data-controller="workout--show--muscles"
+         data-workout--show--muscles-primary-value='{{ screen.svgIds|json_encode }}'
+         data-workout--show--muscles-secondary-value='[]'>
+        <div class="w-[130px] [&_svg]:!h-auto [&_svg]:max-h-[260px]">
+            {% include 'SVG_BODY/' ~ screen.gender.value ~ '/front.html.twig' only %}
+        </div>
+        <div class="w-[130px] [&_svg]:!h-auto [&_svg]:max-h-[260px]">
+            {% include 'SVG_BODY/' ~ screen.gender.value ~ '/back.html.twig' only %}
+        </div>
+    </div>
+    <p class="flex items-baseline gap-2">
+        <span class="font-rajdhani text-[64px] leading-[0.9] font-bold">{{ screen.setCount|format_number }}</span>
+        <span class="text-[17px] text-[#cbd5e1]">{{ 'year_in_review.show.top_muscle.unit'|trans({count: screen.setCount}, 'navigation') }}</span>
+    </p>
+</div>

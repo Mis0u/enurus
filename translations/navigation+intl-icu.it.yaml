@@ -1132,3 +1132,81 @@ year_in_review:
             weight: "Peso di riferimento"
             weight_value: "{weight, number} {unit, select, lbs {lb} other {kg}}"
         intro: "Ogni anno, il 16 dicembre, scopri il riepilogo del tuo anno di allenamento (dal 1° gennaio al 15 dicembre). Tutti i tuoi riepiloghi restano consultabili qui."
+    show:
+        badges:
+            lead: "Quest'anno hai conquistato"
+            unit: "{count, plural, =1 {badge} other {badge}}"
+        close: "Chiudi il riepilogo"
+        header: "ENURUS · {year}"
+        heatmap:
+            caption: "Più la casella è accesa, più il volume del giorno è alto."
+            lead: "Il tuo anno, giorno dopo giorno"
+            unit: "{count, plural, =1 {giorno di allenamento} other {giorni di allenamento}}"
+        intro:
+            subtitle: "Dal 1° gennaio al 15 dicembre, ecco tutto quello che hai fatto."
+            title: "Il tuo anno"
+        mood:
+            lead: "Il tuo umore più frequente"
+            percent: "{percent, number, percent}"
+            share: "degli allenamenti in cui hai indicato il tuo umore."
+        recap:
+            badges: "Badge"
+            mood: "Umore più frequente"
+            records: "Record"
+            reps: "Ripetizioni"
+            sessions: "Allenamenti"
+            streak: "Serie migliore"
+            streak_value: "{count, number} sett."
+            title: "Il tuo anno in breve"
+            tonnage: "Volume"
+            top_exercise: "Esercizio preferito"
+            top_muscle: "Muscolo più allenato"
+        records:
+            heaviest: "Il più pesante"
+            heaviest_on: "il {date, date, ::dMMMM}"
+            lead: "Hai battuto"
+            unit: "{count, plural, =1 {record personale} other {record personali}}"
+        regularity:
+            busiest_month: "Il tuo mese più attivo: {month, date, ::MMMM}, con {count, plural, =1 {# allenamento} other {# allenamenti}}."
+            lead: "La tua serie più lunga senza mai mollare"
+            unit: "{count, plural, =1 {settimana di fila} other {settimane di fila}}"
+        reps:
+            lead: "Ripetizione dopo ripetizione, fanno"
+            sets: "Distribuite su {count, plural, =1 {# serie} other {# serie}}."
+            unit: "{count, plural, =1 {ripetizione} other {ripetizioni}}"
+        screen_label: "Schermata {position} di {count}"
+        sessions:
+            average: "In media {average, number} a settimana."
+            lead: "Quest'anno hai registrato"
+            unit: "{count, plural, =1 {allenamento} other {allenamenti}}"
+        slide: "diapositiva"
+        thanks:
+            replay: "Rivedi il mio anno"
+            text: "Ogni allenamento conta. Ci vediamo l'anno prossimo per il tuo prossimo riepilogo."
+            title: "Grazie per usare Enurus!"
+        title: "Il tuo anno {year}"
+        tonnage:
+            equivalence:
+                african_elephant: "{count, plural, =1 {È più del peso di un elefante africano} other {È più del peso di # elefanti africani}}"
+                airbus_a380: "{count, plural, =1 {È più del peso di un Airbus A380} other {È più del peso di # Airbus A380}}"
+                big_ben_bell: "{count, plural, =1 {È più del peso della campana del Big Ben} other {È più del peso di # campane del Big Ben}}"
+                boeing_737: "{count, plural, =1 {È più del peso di un Boeing 737} other {È più del peso di # Boeing 737}}"
+                grand_piano: "{count, plural, =1 {È più del peso di un pianoforte da concerto} other {È più del peso di # pianoforti da concerto}}"
+            lead: "In totale hai sollevato"
+            reference:
+                african_elephant: "Un elefante africano maschio pesa circa {weight}."
+                airbus_a380: "Un Airbus A380 a vuoto pesa circa {weight}."
+                big_ben_bell: "La campana del Big Ben pesa circa {weight}."
+                boeing_737: "Un Boeing 737-800 a vuoto pesa circa {weight}."
+                grand_piano: "Un pianoforte da concerto Steinway D pesa circa {weight}."
+        top_exercises:
+            count: "{count, plural, =1 {# allenamento} other {# allenamenti}}"
+            lead: "Il tuo esercizio preferito"
+            unit: "{count, plural, =1 {allenamento} other {allenamenti}}"
+        top_muscle:
+            lead: "Il muscolo che hai allenato di più"
+            unit: "{count, plural, =1 {serie} other {serie}}"
+    weight:
+        kg: "{value, number} kg"
+        lb: "{value, number} lb"
+        t: "{value, number} t"

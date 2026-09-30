@@ -372,7 +372,9 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
 - `json_encode(..., JSON_THROW_ON_ERROR)` plutôt que `if (false === ...)`.
 - `json_decode()` + usage direct → type guards explicites (`is_array`/`is_string` + `throw new
   \LogicException`) plutôt que `assertIsArray()` si l'extension `phpstan-phpunit` est absente.
-- Jamais de `@phpstan-ignore`.
+- Jamais de `@phpstan-ignore`. Objets de vue lus **uniquement** par Twig (Twig Components, écrans
+  `src/Service/YearInReview/Screen/*`) : exemptés de « Property is never read » dans
+  `tools/phpstan/phpstan.dist.neon` (le dead-code detector ne lit pas les templates).
 - Enum backed n'a **pas** de `__toString()` — toujours `.value` explicite en Twig.
 
 ### Symfony LSP (`castor symfony-lsp`)
@@ -428,7 +430,9 @@ email + bandeau → partage mobile). Règles actées :
   éligibilité (≥ 5 séances, `YearInReview::MINIMUM_WORKOUT_COUNT`) comprise. Langue et unité à l'affichage.
 - **Toute date du résumé passe par `YearInReviewCalendar`** (`FIRST_YEAR = 2026`, pas de rétroactif).
   Avant publication, rien n'existe côté utilisateur : lien absent, routes en **404**, section d'Aide
-  masquée. Lien « Mes résumés » et point bleu (cyan, résumé éligible non ouvert : `seenAt` null) :
+  masquée. Écrans : `/mes-resumes/{year}` (404 si non publié, sans résumé ou non éligible ; 1re
+  ouverture = `seenAt`), un objet de vue par écran (`YearInReviewScreensBuilder`, écran sans donnée
+  omis), un partial `year_in_review/show/_screen_<type>`. Lien « Mes résumés » et point bleu (cyan, résumé éligible non ouvert : `seenAt` null) :
   `YearInReviewNavigationState`, seul point de vérité pour la sidebar, le panneau « Plus » et les 404.
 - **Prévisualisation en dev** : `YEAR_IN_REVIEW_FAKE_NOW="2026-12-17 10:00"` dans `.env.local` (lu
   uniquement sous `when@dev`, via `YearInReviewClockFactory` → service `app.year_in_review.clock`), puis

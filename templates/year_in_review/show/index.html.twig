@@ -1,0 +1,41 @@
+{#
+    Parcours « Ton année » d'un résumé éligible, page immersive (ni sidebar ni barre du bas).
+    Controller : YearInReviewShowController (GET /{_locale}/mes-resumes/{year})
+    Variables :
+    - year : int
+    - screens : list<App\Service\YearInReview\Screen\YearInReviewScreen>, dans l'ordre d'affichage
+    Sans JavaScript, les écrans s'enchaînent verticalement et restent tous lisibles.
+#}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'year_in_review.show.title'|trans({year: year}, 'navigation')|format_title }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/badges.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'partials/_milestone_badge/_defs.html.twig' only %}
+    <div class="min-h-svh bg-bg-base text-[#f0f4ff]">
+        <header class="sticky top-0 z-10 flex items-center justify-between bg-bg-base/90 py-1 pr-1 pl-4 backdrop-blur-[12px]">
+            <span class="font-rajdhani text-sm font-bold tracking-[0.12em] text-[#8b9bb4]">{{ 'year_in_review.show.header'|trans({year: year}, 'navigation') }}</span>
+            <a href="{{ path('app_year_in_review_list') }}"
+               aria-label="{{ 'year_in_review.show.close'|trans({}, 'navigation') }}"
+               class="flex h-11 w-11 items-center justify-center text-[#8b9bb4] transition-ft hover:text-[#f0f4ff]">
+                {% include 'partials/_svg/_cross.html.twig' with {'width': 5, 'height': 5, 'ariaHidden': true} only %}
+            </a>
+        </header>
+
+        <main class="mx-auto flex w-full max-w-[420px] flex-col">
+            {% for screen in screens %}
+                <section data-year-in-review-screen="{{ screen.type.value }}"
+                         aria-roledescription="{{ 'year_in_review.show.slide'|trans({}, 'navigation') }}"
+                         aria-label="{{ 'year_in_review.show.screen_label'|trans({position: loop.index, count: screens|length}, 'navigation') }}"
+                         class="flex min-h-[calc(100svh-3.25rem)] flex-col justify-center gap-2.5 px-7 py-10">
+                    {% include 'year_in_review/show/_screen_' ~ screen.type.value ~ '.html.twig' with {screen: screen, year: year} only %}
+                </section>
+            {% endfor %}
+        </main>
+    </div>
+{% endblock %}

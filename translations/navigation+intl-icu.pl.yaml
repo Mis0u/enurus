@@ -1146,3 +1146,81 @@ year_in_review:
             weight: "Waga referencyjna"
             weight_value: "{weight, number} {unit, select, lbs {lb} other {kg}}"
         intro: "Co roku 16 grudnia odkryj podsumowanie swojego roku treningowego (od 1 stycznia do 15 grudnia). Wszystkie twoje podsumowania pozostają tu dostępne."
+    show:
+        badges:
+            lead: "W tym roku zdobyto"
+            unit: "{count, plural, =1 {odznaka} few {odznaki} many {odznak} other {odznaki}}"
+        close: "Zamknij podsumowanie"
+        header: "ENURUS · {year}"
+        heatmap:
+            caption: "Im jaśniejsze pole, tym większy ciężar tego dnia."
+            lead: "Twój rok, dzień po dniu"
+            unit: "{count, plural, =1 {dzień treningowy} few {dni treningowe} many {dni treningowych} other {dnia treningowego}}"
+        intro:
+            subtitle: "Od 1 stycznia do 15 grudnia: oto wszystko, co udało ci się osiągnąć."
+            title: "Twój rok"
+        mood:
+            lead: "Twój najczęstszy nastrój"
+            percent: "{percent, number, percent}"
+            share: "treningów, przy których podano nastrój."
+        recap:
+            badges: "Odznaki"
+            mood: "Najczęstszy nastrój"
+            records: "Rekordy"
+            reps: "Powtórzenia"
+            sessions: "Treningi"
+            streak: "Najlepsza seria"
+            streak_value: "{count, number} tyg."
+            title: "Twój rok w skrócie"
+            tonnage: "Ciężar"
+            top_exercise: "Ulubione ćwiczenie"
+            top_muscle: "Najczęściej trenowany mięsień"
+        records:
+            heaviest: "Najciężej"
+            heaviest_on: "{date, date, ::dMMMM}"
+            lead: "Pobite rekordy"
+            unit: "{count, plural, =1 {rekord osobisty} few {rekordy osobiste} many {rekordów osobistych} other {rekordu osobistego}}"
+        regularity:
+            busiest_month: "Najbardziej aktywny miesiąc: {month, date, ::LLLL}, {count, plural, =1 {# trening} few {# treningi} many {# treningów} other {# treningu}}."
+            lead: "Najdłuższa seria bez odpuszczania"
+            unit: "{count, plural, =1 {tydzień z rzędu} few {tygodnie z rzędu} many {tygodni z rzędu} other {tygodnia z rzędu}}"
+        reps:
+            lead: "Powtórzenie po powtórzeniu, to daje"
+            sets: "Rozłożone na {count, plural, =1 {# serię} few {# serie} many {# serii} other {# serii}}."
+            unit: "{count, plural, =1 {powtórzenie} few {powtórzenia} many {powtórzeń} other {powtórzenia}}"
+        screen_label: "Ekran {position} z {count}"
+        sessions:
+            average: "Średnio {average, number} w tygodniu."
+            lead: "W tym roku zapisano"
+            unit: "{count, plural, =1 {trening} few {treningi} many {treningów} other {treningu}}"
+        slide: "slajd"
+        thanks:
+            replay: "Obejrzyj mój rok ponownie"
+            text: "Każdy trening się liczy. Do zobaczenia za rok przy kolejnym podsumowaniu."
+            title: "Dziękujemy za korzystanie z Enurus!"
+        title: "Twój rok {year}"
+        tonnage:
+            equivalence:
+                african_elephant: "{count, plural, =1 {To więcej niż waga słonia afrykańskiego} few {To więcej niż waga # słoni afrykańskich} many {To więcej niż waga # słoni afrykańskich} other {To więcej niż waga # słonia afrykańskiego}}"
+                airbus_a380: "{count, plural, =1 {To więcej niż waga Airbusa A380} few {To więcej niż waga # Airbusów A380} many {To więcej niż waga # Airbusów A380} other {To więcej niż waga # Airbusa A380}}"
+                big_ben_bell: "{count, plural, =1 {To więcej niż waga dzwonu Big Bena} few {To więcej niż waga # dzwonów Big Bena} many {To więcej niż waga # dzwonów Big Bena} other {To więcej niż waga # dzwonu Big Bena}}"
+                boeing_737: "{count, plural, =1 {To więcej niż waga Boeinga 737} few {To więcej niż waga # Boeingów 737} many {To więcej niż waga # Boeingów 737} other {To więcej niż waga # Boeinga 737}}"
+                grand_piano: "{count, plural, =1 {To więcej niż waga fortepianu koncertowego} few {To więcej niż waga # fortepianów koncertowych} many {To więcej niż waga # fortepianów koncertowych} other {To więcej niż waga # fortepianu koncertowego}}"
+            lead: "Łącznie podniesiono"
+            reference:
+                african_elephant: "Samiec słonia afrykańskiego waży około {weight}."
+                airbus_a380: "Pusty Airbus A380 waży około {weight}."
+                big_ben_bell: "Dzwon Big Bena waży około {weight}."
+                boeing_737: "Pusty Boeing 737-800 waży około {weight}."
+                grand_piano: "Fortepian koncertowy Steinway D waży około {weight}."
+        top_exercises:
+            count: "{count, plural, =1 {# trening} few {# treningi} many {# treningów} other {# treningu}}"
+            lead: "Twoje ulubione ćwiczenie"
+            unit: "{count, plural, =1 {trening} few {treningi} many {treningów} other {treningu}}"
+        top_muscle:
+            lead: "Mięsień, który trenowano najwięcej"
+            unit: "{count, plural, =1 {seria} few {serie} many {serii} other {serii}}"
+    weight:
+        kg: "{value, number} kg"
+        lb: "{value, number} lb"
+        t: "{value, number} t"

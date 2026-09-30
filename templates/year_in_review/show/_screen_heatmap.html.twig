@@ -1,0 +1,10 @@
+{# Variables attendues (via `only`) : screen (HeatmapScreen), year (int) #}
+<p class="text-[17px] text-[#cbd5e1]">{{ 'year_in_review.show.heatmap.lead'|trans({}, 'navigation') }}</p>
+<p class="flex items-baseline gap-2.5">
+    <span class="font-rajdhani text-[112px] leading-[0.85] font-bold text-rose-ft">{{ screen.trainingDayCount|format_number }}</span>
+    <span class="text-[17px] text-[#cbd5e1]">{{ 'year_in_review.show.heatmap.unit'|trans({count: screen.trainingDayCount}, 'navigation') }}</span>
+</p>
+<div class="mt-5 rounded-[14px] border border-white/[0.07] bg-bg-card p-3">
+    {% include 'year_in_review/show/_heatmap_grid.html.twig' with {heatmapData: screen.heatmapData} only %}
+</div>
+<p class="mt-2 text-[13px] leading-relaxed text-[#8b9bb4]">{{ 'year_in_review.show.heatmap.caption'|trans({}, 'navigation') }}</p>
