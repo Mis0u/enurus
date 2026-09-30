@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Repository;
 
 use App\Entity\User;
+use App\Entity\YearInReview;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -105,6 +106,42 @@ final class UserRepositoryTest extends KernelTestCase
 
         $em->remove($user);
         $em->flush();
+    }
+
+    public function testFindIdsWithoutYearInReviewSkipsUnverifiedLeavingAndAlreadyReviewedUsers(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var UserRepository $userRepository */
+        $userRepository = static::getContainer()->get(UserRepository::class);
+
+        $awaiting = $this->createVerifiedUser($em, 'year-review-awaiting@test.com', null);
+        $unverified = $this->createTestUser($em, 'year-review-unverified@test.com', null);
+        $leaving = $this->createVerifiedUser($em, 'year-review-leaving@test.com', new \DateTimeImmutable('-2 days'));
+        $alreadyReviewed = $this->createVerifiedUser($em, 'year-review-done@test.com', null);
+        $reviewedLastYearOnly = $this->createVerifiedUser($em, 'year-review-last-year@test.com', null);
+        $em->persist(YearInReview::notEligible($alreadyReviewed, 2026, 0));
+        $em->persist(YearInReview::notEligible($reviewedLastYearOnly, 2025, 0));
+        $em->flush();
+
+        $ids = $userRepository->findIdsWithoutYearInReview(2026);
+
+        self::assertContains((string) $awaiting->id, $ids);
+        self::assertContains((string) $reviewedLastYearOnly->id, $ids);
+        self::assertNotContains((string) $unverified->id, $ids);
+        self::assertNotContains((string) $leaving->id, $ids);
+        self::assertNotContains((string) $alreadyReviewed->id, $ids);
+    }
+
+    private function createVerifiedUser(EntityManagerInterface $em, string $email, ?\DateTimeImmutable $deletionRequestedAt): User
+    {
+        $user = $this->createTestUser($em, $email, $deletionRequestedAt);
+        $user->isVerified = true;
+        $em->flush();
+
+        return $user;
     }
 
     private function createTestUser(

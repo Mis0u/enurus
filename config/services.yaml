@@ -64,5 +64,16 @@ services:
         autoconfigure: false
         public: false
 
+    # Horloge du résumé annuel (YearInReviewCalendar) : la vraie partout, simulable en dev seulement.
+    app.year_in_review.clock:
+        alias: clock
+
+when@dev:
+    services:
+        app.year_in_review.clock:
+            class: Symfony\Component\Clock\ClockInterface
+            factory: ['App\Service\YearInReview\YearInReviewClockFactory', 'create']
+            arguments: ['@clock', '%env(default::YEAR_IN_REVIEW_FAKE_NOW)%']
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -9,6 +9,7 @@ use App\Entity\ExerciseSet;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
+use App\Enum\Entity\Workout\WorkoutMoodEnum;
 use App\Repository\WorkoutStatsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -257,6 +258,86 @@ final class WorkoutStatsRepositoryTest extends KernelTestCase
         $user = $this->createTestUser($em);
 
         self::assertSame([], $workoutStatsRepository->findMostFrequentExerciseIdsSince($user, new \DateTimeImmutable('-60 days'), 8));
+    }
+
+    public function testFindMostFrequentExercisesInRangeCountsWorkoutsWithinBoundsOnly(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var WorkoutStatsRepository $workoutStatsRepository */
+        $workoutStatsRepository = static::getContainer()->get(WorkoutStatsRepository::class);
+
+        $user = $this->createTestUser($em);
+        $squat = $this->createTestExercise($em);
+        $bench = $this->createTestExercise($em);
+        $afterRange = $this->createTestExercise($em);
+
+        foreach (['2026-01-01 00:00:00', '2026-06-01 10:00:00', '2026-12-15 23:59:00'] as $performedAt) {
+            $this->createTestWorkout($em, $user, $squat, new \DateTimeImmutable($performedAt), 4, 5);
+        }
+        $this->createTestWorkout($em, $user, $bench, new \DateTimeImmutable('2026-03-01 10:00:00'), 10, 5);
+        foreach (['2026-12-16 00:00:00', '2026-12-17 10:00:00', '2026-12-18 10:00:00', '2026-12-19 10:00:00'] as $performedAt) {
+            $this->createTestWorkout($em, $user, $afterRange, new \DateTimeImmutable($performedAt), 3, 5);
+        }
+
+        $exercises = $workoutStatsRepository->findMostFrequentExercisesInRange(
+            $user,
+            new \DateTimeImmutable('2026-01-01 00:00:00'),
+            new \DateTimeImmutable('2026-12-15 23:59:59'),
+            3,
+        );
+
+        self::assertSame([
+            [
+                'name' => $squat->name,
+                'isPublic' => true,
+                'workoutCount' => 3,
+            ],
+            [
+                'name' => $bench->name,
+                'isPublic' => true,
+                'workoutCount' => 1,
+            ],
+        ], $exercises);
+    }
+
+    public function testCountMoodsInRangeIgnoresWorkoutsWithoutMoodAndOutsideRange(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var WorkoutStatsRepository $workoutStatsRepository */
+        $workoutStatsRepository = static::getContainer()->get(WorkoutStatsRepository::class);
+
+        $user = $this->createTestUser($em);
+        $exercise = $this->createTestExercise($em);
+        $moods = [
+            '2026-02-01 10:00:00' => WorkoutMoodEnum::EN_FORME,
+            '2026-02-03 10:00:00' => WorkoutMoodEnum::EN_FORME,
+            '2026-02-05 10:00:00' => WorkoutMoodEnum::FATIGUE,
+            '2026-02-07 10:00:00' => null,
+            '2026-12-20 10:00:00' => WorkoutMoodEnum::FATIGUE,
+        ];
+
+        foreach ($moods as $performedAt => $mood) {
+            $workout = $this->createTestWorkout($em, $user, $exercise, new \DateTimeImmutable($performedAt), 1, 5);
+            $workout->mood = $mood;
+        }
+        $em->flush();
+
+        $counts = $workoutStatsRepository->countMoodsInRange(
+            $user,
+            new \DateTimeImmutable('2026-01-01 00:00:00'),
+            new \DateTimeImmutable('2026-12-15 23:59:59'),
+        );
+
+        self::assertEqualsCanonicalizing([
+            WorkoutMoodEnum::EN_FORME->value => 2,
+            WorkoutMoodEnum::FATIGUE->value => 1,
+        ], $counts);
     }
 
     private function createTestUser(EntityManagerInterface $em): User

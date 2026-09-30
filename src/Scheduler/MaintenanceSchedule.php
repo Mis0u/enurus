@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Scheduler;
 
+use App\Message\GenerateYearInReviewsMessage;
 use App\Message\PurgeClosedContactThreadsMessage;
 use App\Message\PurgeExpiredAccountDeletionsMessage;
 use App\Message\PurgeExpiredAccountDeletionTracesMessage;
@@ -18,7 +19,8 @@ use Symfony\Contracts\Cache\CacheInterface;
  * Purges quotidiennes de données périmées (comptes en suppression, traces anti-réinscription,
  * comptes jamais vérifiés, fils de contact clôturés) — avant ce chantier, les commandes
  * `app:*:purge` existaient mais n'étaient déclenchées par rien (ni cron, ni Scalingo scheduler),
- * donc jamais exécutées en production.
+ * donc jamais exécutées en production. Plus la génération annuelle des résumés « Ton année », le
+ * 16 décembre à minuit heure de Paris (cf. `YearInReviewCalendar`).
  *
  * `->stateful()` persiste la dernière exécution en cache pour survivre à un redémarrage du worker
  * entre deux passages ; `->processOnlyLastMissedRun()` évite un rattrapage en rafale après une
@@ -28,6 +30,8 @@ use Symfony\Contracts\Cache\CacheInterface;
 final readonly class MaintenanceSchedule implements ScheduleProviderInterface
 {
     private const string DAILY_AT_3AM_UTC = '0 3 * * *';
+
+    private const string DECEMBER_16TH_AT_MIDNIGHT = '0 0 16 12 *';
 
     public function __construct(
         private CacheInterface $cache,
@@ -42,6 +46,7 @@ final readonly class MaintenanceSchedule implements ScheduleProviderInterface
                 RecurringMessage::cron(self::DAILY_AT_3AM_UTC, new PurgeExpiredAccountDeletionTracesMessage(), timezone: 'UTC'),
                 RecurringMessage::cron(self::DAILY_AT_3AM_UTC, new PurgeExpiredUnverifiedAccountsMessage(), timezone: 'UTC'),
                 RecurringMessage::cron(self::DAILY_AT_3AM_UTC, new PurgeClosedContactThreadsMessage(), timezone: 'UTC'),
+                RecurringMessage::cron(self::DECEMBER_16TH_AT_MIDNIGHT, new GenerateYearInReviewsMessage(), timezone: 'Europe/Paris'),
             )
             ->stateful($this->cache)
             ->processOnlyLastMissedRun(true);
