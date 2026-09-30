@@ -15,7 +15,7 @@
         </span>
         <span class="text-[10px] font-medium whitespace-nowrap">{{ 'dashboard.more'|trans({}, 'navigation') }}</span>
         {% if this.hasNotification %}
-            <span class="more-notification-dot absolute top-[6px] right-4 w-2.5 h-2.5 rounded-full bg-rose-ft border-2 border-bg-card" aria-hidden="true"></span>
+            <span class="more-notification-dot absolute top-[6px] right-4 w-2.5 h-2.5 rounded-full {{ this.hasCountedNotification ? 'bg-rose-ft' : 'bg-cyan-ft' }} border-2 border-bg-card" aria-hidden="true"></span>
             <span class="sr-only">{{ 'dashboard.more_notification'|trans({}, 'navigation') }}</span>
         {% endif %}
     </button>
@@ -61,6 +61,17 @@
                     icon="medal"
                     format="tile"
                 />
+                {% if this.isYearInReviewVisible %}
+                    <twig:Navigation:Sidebar:NavigationItem
+                        link="{{ path('app_year_in_review_list') }}"
+                        route="app_year_in_review_list"
+                        menu="{{ 'dashboard.my_recaps'|trans({}, 'navigation') }}"
+                        icon="recap"
+                        dot="{{ this.hasUnseenYearInReview }}"
+                        dotLabel="{{ 'dashboard.recap_unseen'|trans({}, 'navigation') }}"
+                        format="tile"
+                    />
+                {% endif %}
                 {% if this.isAdmin %}
                     <twig:Navigation:Sidebar:NavigationItem
                         link="{{ path('admin') }}"

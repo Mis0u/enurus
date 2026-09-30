@@ -9,16 +9,30 @@ use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use App\Tests\Functional\Security\Trait\SwitchesFeatureSettingTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Clock\Test\ClockSensitiveTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 final class HelpControllerTest extends WebTestCase
 {
+    use ClockSensitiveTrait;
     use FunctionalTestTrait;
     use SwitchesFeatureSettingTrait;
 
     private const string USER = 'user-fixture-11-workout@test.com';
 
     private const string HELP_URL = '/fr/aide';
+
+    private const string YEAR_IN_REVIEW_PUBLISHED = '2026-12-16 00:00:00 Europe/Paris';
+
+    public function testYearInReviewSectionIsHiddenUntilItsPublication(): void
+    {
+        self::mockTime('2026-12-15 23:59:59 Europe/Paris');
+        $client = $this->login(self::USER);
+
+        $crawler = $client->request(Request::METHOD_GET, self::HELP_URL);
+
+        self::assertCount(0, $crawler->filter(\sprintf('#%s', HelpSectionEnum::YEAR_IN_REVIEW->value)));
+    }
 
     public function testAnonymousVisitorIsRedirectedToLogin(): void
     {
@@ -31,6 +45,7 @@ final class HelpControllerTest extends WebTestCase
 
     public function testEverySectionHasItsAnchorAndAnEntryInTheSummary(): void
     {
+        self::mockTime(self::YEAR_IN_REVIEW_PUBLISHED);
         $client = $this->login(self::USER);
 
         $crawler = $client->request(Request::METHOD_GET, self::HELP_URL);
@@ -71,6 +86,8 @@ final class HelpControllerTest extends WebTestCase
     #[DataProvider('helpUrlPerLocaleAndPhotoSwitch')]
     public function testEveryLanguageShowsTranslatedTextInsteadOfRawKeys(string $url, bool $photoUploadEnabled): void
     {
+        // Après publication : la section du résumé annuel est vérifiée elle aussi.
+        self::mockTime(self::YEAR_IN_REVIEW_PUBLISHED);
         $client = $this->login(self::USER);
         $this->switchWorkoutPhotoUpload($photoUploadEnabled);
 

@@ -152,8 +152,10 @@ dashboard:
     more: "Mehr"
     more_notification: "Neuigkeiten in diesem Menü"
     my_badges: "Meine Abzeichen"
+    my_recaps: "Meine Rückblicke"
     my_routines: Meine Routinen
     my_workouts: Meine Trainings
+    recap_unseen: "Neuer Rückblick zu entdecken"
     save_first_workout: Erfasse dein erstes Training
     save_workout: Erfasse dein Training
     setting: Einstellungen
@@ -1102,3 +1104,31 @@ workout:
         title: Trainingsart
     weight: Gewicht
     weight_bodyweight: Gewicht (Zusatz)
+year_in_review:
+    equivalence:
+        african_elephant: "Männlicher Afrikanischer Elefant"
+        airbus_a380: "Airbus A380 (leer)"
+        big_ben_bell: "Glocke von Big Ben"
+        boeing_737: "Boeing 737-800 (leer)"
+        grand_piano: "Steinway-D-Konzertflügel"
+    list:
+        card:
+            new: "Neu"
+            not_enough: "{count, plural, =1 {# Training in diesem Jahr} other {# Trainings in diesem Jahr}}: noch {missing} und du hättest deinen Rückblick freigeschaltet! Wir sehen uns am nächsten 16. Dezember, um dein Jahr zu entdecken."
+            pending: "Dein Rückblick wird gerade erstellt: schau in ein paar Minuten wieder vorbei."
+            ready: "{workouts, plural, =1 {# Training} other {# Trainings}} · {tonnage, number} {unit, select, lbs {lb} other {t}}"
+        email:
+            feedback:
+                success: "Einstellung gespeichert"
+            hint: "Wird am 16. Dezember verschickt, nur wenn dein Rückblick freigeschaltet ist."
+            label: "Benachrichtige mich per E-Mail, wenn mein Rückblick fertig ist"
+            title: "Benachrichtigungen"
+        empty: "Dein erster Rückblick kommt am nächsten 16. Dezember. Bis dahin zählt jedes Training!"
+        equivalence:
+            badge: "Admin"
+            object: "Objekt"
+            rule: "Der Bildschirm Gewicht zeigt das schwerste Objekt, das mindestens einmal gehoben wurde, Anzahl abgerundet."
+            title: "Vergleichsskala"
+            weight: "Referenzgewicht"
+            weight_value: "{weight, number} {unit, select, lbs {lb} other {kg}}"
+        intro: "Jedes Jahr am 16. Dezember entdeckst du den Rückblick auf dein Trainingsjahr (vom 1. Januar bis 15. Dezember). Alle deine Rückblicke bleiben hier abrufbar."

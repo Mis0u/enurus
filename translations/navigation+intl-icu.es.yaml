@@ -152,8 +152,10 @@ dashboard:
     more: "Más"
     more_notification: "Novedades en este menú"
     my_badges: "Mis insignias"
+    my_recaps: "Mis resúmenes"
     my_routines: Mis rutinas
     my_workouts: Mis entrenamientos
+    recap_unseen: "Nuevo resumen por descubrir"
     save_first_workout: Registra tu primer entrenamiento
     save_workout: Registra tu entrenamiento
     setting: Ajustes
@@ -1102,3 +1104,31 @@ workout:
         title: Tipo de entrenamiento
     weight: Peso
     weight_bodyweight: Peso (extra)
+year_in_review:
+    equivalence:
+        african_elephant: "Elefante africano macho"
+        airbus_a380: "Airbus A380 (vacío)"
+        big_ben_bell: "Campana del Big Ben"
+        boeing_737: "Boeing 737-800 (vacío)"
+        grand_piano: "Piano de cola Steinway D"
+    list:
+        card:
+            new: "Nuevo"
+            not_enough: "{count, plural, =1 {# entrenamiento este año} other {# entrenamientos este año}}: ¡con {missing} más habrías desbloqueado tu resumen! Nos vemos el próximo 16 de diciembre para descubrir tu año."
+            pending: "Tu resumen se está preparando: vuelve dentro de unos minutos."
+            ready: "{workouts, plural, =1 {# entrenamiento} other {# entrenamientos}} · {tonnage, number} {unit, select, lbs {lb} other {t}}"
+        email:
+            feedback:
+                success: "Preferencia actualizada"
+            hint: "Se envía el 16 de diciembre, solo si tu resumen está desbloqueado."
+            label: "Avísame por email cuando mi resumen esté listo"
+            title: "Notificaciones"
+        empty: "Tu primer resumen llegará el próximo 16 de diciembre. Hasta entonces, ¡cada entrenamiento cuenta!"
+        equivalence:
+            badge: "Admin"
+            object: "Objeto"
+            rule: "La pantalla Volumen muestra el objeto más pesado levantado al menos una vez, con el número redondeado hacia abajo."
+            title: "Escala de equivalencias"
+            weight: "Peso de referencia"
+            weight_value: "{weight, number} {unit, select, lbs {lb} other {kg}}"
+        intro: "Cada año, el 16 de diciembre, descubre el resumen de tu año de entrenamiento (del 1 de enero al 15 de diciembre). Todos tus resúmenes siguen disponibles aquí."

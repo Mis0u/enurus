@@ -427,7 +427,9 @@ email + bandeau → partage mobile). Règles actées :
   séances du 1er janvier au 15 décembre. Jamais recalculé ensuite (`YearInReviewGenerator` idempotent),
   éligibilité (≥ 5 séances, `YearInReview::MINIMUM_WORKOUT_COUNT`) comprise. Langue et unité à l'affichage.
 - **Toute date du résumé passe par `YearInReviewCalendar`** (`FIRST_YEAR = 2026`, pas de rétroactif).
-  Avant publication, rien n'existe côté utilisateur : lien absent, routes en **404**.
+  Avant publication, rien n'existe côté utilisateur : lien absent, routes en **404**, section d'Aide
+  masquée. Lien « Mes résumés » et point bleu (cyan, résumé éligible non ouvert : `seenAt` null) :
+  `YearInReviewNavigationState`, seul point de vérité pour la sidebar, le panneau « Plus » et les 404.
 - **Prévisualisation en dev** : `YEAR_IN_REVIEW_FAKE_NOW="2026-12-17 10:00"` dans `.env.local` (lu
   uniquement sous `when@dev`, via `YearInReviewClockFactory` → service `app.year_in_review.clock`), puis
   `app:year-in-review:generate 2026 --user=user-fixture-year-in-review@test.com`. Fixture

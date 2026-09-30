@@ -1,0 +1,12 @@
+{#
+    Année sous le seuil de séances : message d'encouragement pour l'année suivante.
+    Variables attendues (via `only`) :
+    - card : App\Service\YearInReview\View\YearInReviewCard
+#}
+<article data-year-in-review-card="not_enough"
+         class="flex items-center gap-4 p-[18px] rounded-2xl bg-bg-card/50 border border-dashed border-white/10">
+    <span class="font-rajdhani text-[40px] font-bold leading-none text-[#4a5568]">{{ card.year }}</span>
+    <p class="text-[13px] leading-relaxed text-[#8b9bb4]">
+        {{ 'year_in_review.list.card.not_enough'|trans({count: card.workoutCount, missing: card.missingWorkoutCount}, 'navigation') }}
+    </p>
+</article>

@@ -7,10 +7,10 @@
 <section id="notifications"
          class="bg-bg-card border border-white/[0.07] rounded-2xl p-[22px] scroll-mt-4"
          aria-labelledby="profile-connection-notifications-title"
-         data-controller="profile-connection--email-notification"
-         data-profile-connection--email-notification-url-value="{{ path('app_profile_connection_email_notification_toggle') }}"
-         data-profile-connection--email-notification-csrf-token-value="{{ csrf_token('profile_connection_email_notification_toggle') }}"
-         data-profile-connection--email-notification-success-message-value="{{ 'profile_connection.list.notifications.feedback.success'|trans({}, 'navigation') }}">
+         data-controller="email-notification-toggle"
+         data-email-notification-toggle-url-value="{{ path('app_profile_connection_email_notification_toggle') }}"
+         data-email-notification-toggle-csrf-token-value="{{ csrf_token('profile_connection_email_notification_toggle') }}"
+         data-email-notification-toggle-success-message-value="{{ 'profile_connection.list.notifications.feedback.success'|trans({}, 'navigation') }}">
 
     <h2 id="profile-connection-notifications-title" class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]">
         {{ 'profile_connection.list.notifications.title'|trans({}, 'navigation') }}
@@ -21,7 +21,7 @@
         <input type="checkbox"
                class="peer sr-only"
                {% if emailOnConnectionRequest %}checked{% endif %}
-               data-action="change->profile-connection--email-notification#toggle">
+               data-action="change->email-notification-toggle#toggle">
         <span class="shrink-0 w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-rose-ft peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-rose-ft after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
     </label>
 </section>

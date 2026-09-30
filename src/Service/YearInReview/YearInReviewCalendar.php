@@ -49,7 +49,7 @@ final readonly class YearInReviewCalendar
         return self::FIRST_YEAR <= $latestYear ? $latestYear : null;
     }
 
-    private function publicationOf(int $year): \DateTimeImmutable
+    public function publicationOf(int $year): \DateTimeImmutable
     {
         return new \DateTimeImmutable(\sprintf('%d-12-16 00:00:00', $year), new \DateTimeZone(self::PUBLICATION_TIMEZONE));
     }

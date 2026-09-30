@@ -92,6 +92,15 @@ section:
             list: "Je trainingen van nieuw naar oud, te filteren op datum, week, maand, routine of getrainde spier."
             regularity_goal: "Ook in ‘Kalender’ stel je een regelmaatdoel in: bijvoorbeeld 3 trainingen per week gedurende 4 weken, of 1 training per dag gedurende 2 weken. De duur kies je in hele weken van 7 dagen, vanaf de startdatum. Elke dag of week moet zijn quotum halen (twee trainingen op dezelfde dag tellen dubbel). Een doel gaat niet samen met een rustweek: je kunt het ene niet tijdens het andere plannen. Volg je voortgang in de widget ‘Regelmaatdoel’ van je overzicht. Eén doel tegelijk, dat je kunt opgeven. Uitdaging gehaald? Een feestje wacht op je zodra je de training vastlegt die haar voltooit."
         title: "Mijn trainingen"
+    year_in_review:
+        intro: "Elke 16 december: je trainingsjaar samengevat in een paar schermen."
+        open: "Mijn overzichten bekijken"
+        points:
+            email: "Een e-mail laat het je op de dag zelf weten. Je kunt die uitzetten via ‘Mijn overzichten’."
+            frozen: "De cijfers worden op 16 december vastgelegd: een training die je daarna toevoegt of wijzigt, verandert je overzicht niet meer."
+            what: "Het telt je trainingen van 1 januari tot 15 december. Je hebt minstens 5 trainingen in het jaar nodig om het te ontgrendelen."
+            where: "Vind al je overzichten in ‘Mijn overzichten’, onder ‘Mijn badges’."
+        title: "Jouw jaar"
 summary: "Inhoud"
 title: "Hulp"
 tour:

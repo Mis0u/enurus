@@ -152,8 +152,10 @@ dashboard:
     more: "Plus"
     more_notification: "Nouveautés dans ce menu"
     my_badges: "Mes badges"
+    my_recaps: "Mes résumés"
     my_routines: Mes routines
     my_workouts: Mes séances
+    recap_unseen: "Nouveau résumé à découvrir"
     save_first_workout: Enregistre ta première séance
     save_workout: Enregistre ta séance
     setting: Réglages
@@ -1102,3 +1104,31 @@ workout:
         title: Type de séance
     weight: Poids
     weight_bodyweight: Poids (lest)
+year_in_review:
+    equivalence:
+        african_elephant: "Éléphant d'Afrique mâle"
+        airbus_a380: "Airbus A380 (à vide)"
+        big_ben_bell: "Cloche de Big Ben"
+        boeing_737: "Boeing 737-800 (à vide)"
+        grand_piano: "Piano de concert Steinway D"
+    list:
+        card:
+            new: "Nouveau"
+            not_enough: "{count, plural, =0 {0 séance cette année} =1 {# séance cette année} other {# séances cette année}} : encore {missing} et tu débloquais ton résumé ! Rendez-vous le 16 décembre prochain pour découvrir ton année."
+            pending: "Ton résumé est en préparation : reviens dans quelques minutes."
+            ready: "{workouts, plural, =1 {# séance} other {# séances}} · {tonnage, number} {unit, select, lbs {lb} other {t}}"
+        email:
+            feedback:
+                success: "Préférence mise à jour"
+            hint: "Envoyé le 16 décembre, seulement si ton résumé est débloqué."
+            label: "M'avertir par email quand mon résumé est prêt"
+            title: "Notifications"
+        empty: "Ton premier résumé arrivera le 16 décembre prochain. D'ici là, chaque séance compte !"
+        equivalence:
+            badge: "Admin"
+            object: "Objet"
+            rule: "L'écran Tonnage affiche le plus gros objet soulevé au moins une fois, nombre arrondi à l'entier inférieur."
+            title: "Échelle des équivalences"
+            weight: "Poids de référence"
+            weight_value: "{weight, number} {unit, select, lbs {lb} other {kg}}"
+        intro: "Chaque année, le 16 décembre, découvre le récap de ton année d'entraînement (du 1er janvier au 15 décembre). Tous tes résumés restent consultables ici."

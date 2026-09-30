@@ -46,6 +46,16 @@
         menu="{{ 'dashboard.my_badges'|trans({}, 'navigation') }}"
         icon="medal"
     />
+    {% if year_in_review_link_visible() %}
+        <twig:Navigation:Sidebar:NavigationItem
+            link="{{ path('app_year_in_review_list') }}"
+            route="app_year_in_review_list"
+            menu="{{ 'dashboard.my_recaps'|trans({}, 'navigation') }}"
+            icon="recap"
+            dot="{{ year_in_review_unseen(app.user) }}"
+            dotLabel="{{ 'dashboard.recap_unseen'|trans({}, 'navigation') }}"
+        />
+    {% endif %}
 
     {% if not is_granted('ROLE_ADMIN') %}
         {% set unread_contact_count = contact_unread_count(app.user) %}

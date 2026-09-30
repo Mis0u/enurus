@@ -19,6 +19,7 @@ enum HelpSectionEnum: string
     case ROUTINES = 'routines';
     case DASHBOARD = 'dashboard';
     case BADGES = 'badges';
+    case YEAR_IN_REVIEW = 'year_in_review';
     case CONNECTIONS = 'connections';
     case MESSAGING = 'messaging';
     case SETTINGS = 'settings';
@@ -36,6 +37,7 @@ enum HelpSectionEnum: string
             self::ROUTINES => ['what', 'use', 'order'],
             self::DASHBOARD => ['progressive', 'blocks', 'customize'],
             self::BADGES => ['families', 'legend', 'where'],
+            self::YEAR_IN_REVIEW => ['what', 'where', 'frozen', 'email'],
             self::CONNECTIONS => ['principle', 'share', 'request', 'control'],
             self::MESSAGING => ['contact', 'answer'],
             self::SETTINGS => ['profile', 'unit', 'bodyweight', 'export', 'account'],
@@ -54,6 +56,7 @@ enum HelpSectionEnum: string
             self::ROUTINES => 'app_routine_list',
             self::DASHBOARD => 'app_dashboard',
             self::BADGES => 'app_badge_list',
+            self::YEAR_IN_REVIEW => 'app_year_in_review_list',
             self::CONNECTIONS => 'app_profile_connection_list',
             self::MESSAGING => 'app_contact',
             self::SETTINGS => 'app_settings',
@@ -73,6 +76,7 @@ enum HelpSectionEnum: string
             self::ROUTINES => 'repeat',
             self::DASHBOARD => 'house',
             self::BADGES => 'medal',
+            self::YEAR_IN_REVIEW => 'recap',
             self::CONNECTIONS => 'add_people',
             self::MESSAGING => 'messaging',
             self::SETTINGS => 'gear',

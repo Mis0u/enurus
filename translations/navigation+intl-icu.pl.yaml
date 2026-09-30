@@ -152,8 +152,10 @@ dashboard:
     more: "Więcej"
     more_notification: "Nowości w tym menu"
     my_badges: "Moje odznaki"
+    my_recaps: "Moje podsumowania"
     my_routines: Moje programy
     my_workouts: Moje treningi
+    recap_unseen: "Nowe podsumowanie do odkrycia"
     save_first_workout: Zapisz swój pierwszy trening
     save_workout: Zapisz swój trening
     setting: Ustawienia
@@ -1116,3 +1118,31 @@ workout:
         title: Rodzaj treningu
     weight: Waga
     weight_bodyweight: Waga (dodatkowo)
+year_in_review:
+    equivalence:
+        african_elephant: "Samiec słonia afrykańskiego"
+        airbus_a380: "Airbus A380 (pusty)"
+        big_ben_bell: "Dzwon Big Bena"
+        boeing_737: "Boeing 737-800 (pusty)"
+        grand_piano: "Fortepian koncertowy Steinway D"
+    list:
+        card:
+            new: "Nowe"
+            not_enough: "{count, plural, =1 {# trening w tym roku} few {# treningi w tym roku} many {# treningów w tym roku} other {# treningu w tym roku}}: jeszcze {missing} i twoje podsumowanie byłoby odblokowane! Do zobaczenia 16 grudnia przyszłego roku, by odkryć swój rok."
+            pending: "Twoje podsumowanie jest w przygotowaniu: wróć za kilka minut."
+            ready: "{workouts, plural, =1 {# trening} few {# treningi} many {# treningów} other {# treningu}} · {tonnage, number} {unit, select, lbs {lb} other {t}}"
+        email:
+            feedback:
+                success: "Preferencja zaktualizowana"
+            hint: "Wysyłany 16 grudnia, tylko jeśli twoje podsumowanie jest odblokowane."
+            label: "Powiadom mnie e-mailem, gdy moje podsumowanie będzie gotowe"
+            title: "Powiadomienia"
+        empty: "Twoje pierwsze podsumowanie pojawi się 16 grudnia. Do tego czasu liczy się każdy trening!"
+        equivalence:
+            badge: "Admin"
+            object: "Obiekt"
+            rule: "Ekran Ciężar pokazuje najcięższy obiekt podniesiony co najmniej raz, liczba zaokrąglona w dół."
+            title: "Skala porównań"
+            weight: "Waga referencyjna"
+            weight_value: "{weight, number} {unit, select, lbs {lb} other {kg}}"
+        intro: "Co roku 16 grudnia odkryj podsumowanie swojego roku treningowego (od 1 stycznia do 15 grudnia). Wszystkie twoje podsumowania pozostają tu dostępne."

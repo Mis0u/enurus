@@ -152,8 +152,10 @@ dashboard:
     more: "Meer"
     more_notification: "Nieuws in dit menu"
     my_badges: "Mijn badges"
+    my_recaps: "Mijn overzichten"
     my_routines: Mijn routines
     my_workouts: Mijn trainingen
+    recap_unseen: "Nieuw overzicht om te ontdekken"
     save_first_workout: Registreer je eerste training
     save_workout: Registreer je training
     setting: Instellingen
@@ -1102,3 +1104,31 @@ workout:
         title: Trainingstype
     weight: Gewicht
     weight_bodyweight: Gewicht (extra)
+year_in_review:
+    equivalence:
+        african_elephant: "Mannelijke Afrikaanse olifant"
+        airbus_a380: "Airbus A380 (leeg)"
+        big_ben_bell: "Klok van de Big Ben"
+        boeing_737: "Boeing 737-800 (leeg)"
+        grand_piano: "Steinway D-concertvleugel"
+    list:
+        card:
+            new: "Nieuw"
+            not_enough: "{count, plural, =1 {# training dit jaar} other {# trainingen dit jaar}}: nog {missing} en je had je overzicht ontgrendeld! Tot volgend jaar 16 december om je jaar te ontdekken."
+            pending: "Je overzicht wordt voorbereid: kom over een paar minuten terug."
+            ready: "{workouts, plural, =1 {# training} other {# trainingen}} · {tonnage, number} {unit, select, lbs {lb} other {t}}"
+        email:
+            feedback:
+                success: "Voorkeur bijgewerkt"
+            hint: "Verstuurd op 16 december, alleen als je overzicht ontgrendeld is."
+            label: "Stuur me een e-mail als mijn overzicht klaar is"
+            title: "Meldingen"
+        empty: "Je eerste overzicht komt op 16 december. Tot dan telt elke training!"
+        equivalence:
+            badge: "Admin"
+            object: "Object"
+            rule: "Het scherm Gewicht toont het zwaarste object dat minstens één keer is geheven, aantal naar beneden afgerond."
+            title: "Vergelijkingsschaal"
+            weight: "Referentiegewicht"
+            weight_value: "{weight, number} {unit, select, lbs {lb} other {kg}}"
+        intro: "Elk jaar op 16 december ontdek je het overzicht van je trainingsjaar (van 1 januari tot 15 december). Al je overzichten blijven hier beschikbaar."

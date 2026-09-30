@@ -92,6 +92,15 @@ section:
             list: "Tes séances de la plus récente à la plus ancienne, filtrables par date, semaine, mois, routine ou muscle travaillé."
             regularity_goal: "Toujours dans « Calendrier », fixe-toi un objectif de régularité : par exemple 3 séances par semaine pendant 4 semaines, ou 1 séance par jour pendant 2 semaines. La durée se choisit en semaines entières de 7 jours, à partir de la date de début. Chaque jour ou semaine doit atteindre son quota (deux séances le même jour comptent pour deux). Un objectif ne se cumule pas avec une semaine de repos : impossible de programmer l'un pendant l'autre. Suis ta progression sur le widget « Objectif de régularité » du tableau de bord. Un seul objectif à la fois, que tu peux abandonner. Défi réussi ? Une célébration t'attend dès la séance qui le complète."
         title: "Mes séances"
+    year_in_review:
+        intro: "Chaque 16 décembre, ton année d'entraînement résumée en quelques écrans."
+        open: "Voir mes résumés"
+        points:
+            email: "Un email te prévient le jour J. Tu peux le désactiver depuis « Mes résumés »."
+            frozen: "Les chiffres sont figés le 16 décembre : une séance ajoutée ou modifiée ensuite ne change plus ton résumé."
+            what: "Il compte tes séances du 1er janvier au 15 décembre. Il faut au moins 5 séances dans l'année pour le débloquer."
+            where: "Retrouve tous tes résumés dans « Mes résumés », sous « Mes badges »."
+        title: "Ton année"
 summary: "Sommaire"
 title: "Aide"
 tour:

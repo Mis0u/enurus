@@ -92,6 +92,15 @@ section:
             list: "Twoje treningi od najnowszego do najstarszego, z filtrami według daty, tygodnia, miesiąca, programu lub trenowanego mięśnia."
             regularity_goal: "Również w „Kalendarzu” wyznaczysz cel regularności: na przykład 3 treningi tygodniowo przez 4 tygodnie albo 1 trening dziennie przez 2 tygodnie. Czas trwania wybierasz w pełnych tygodniach po 7 dni, od daty rozpoczęcia. Każdy dzień lub tydzień musi osiągnąć swój limit (dwa treningi tego samego dnia liczą się podwójnie). Celu nie można łączyć z tygodniem odpoczynku: nie da się zaplanować jednego w trakcie drugiego. Śledź postępy w widżecie „Cel regularności” na swoim panelu. Jeden cel naraz, który możesz porzucić. Wyzwanie zaliczone? Czeka na Ciebie świętowanie, gdy tylko zapiszesz trening, który je kończy."
         title: "Moje treningi"
+    year_in_review:
+        intro: "Co roku 16 grudnia: twój rok treningowy podsumowany w kilku ekranach."
+        open: "Zobacz moje podsumowania"
+        points:
+            email: "E-mail powiadomi cię tego dnia. Możesz go wyłączyć w „Moje podsumowania”."
+            frozen: "Liczby są zamrażane 16 grudnia: trening dodany lub zmieniony później nie zmienia już twojego podsumowania."
+            what: "Liczy twoje treningi od 1 stycznia do 15 grudnia. Aby je odblokować, potrzebujesz co najmniej 5 treningów w roku."
+            where: "Wszystkie podsumowania znajdziesz w „Moje podsumowania”, pod „Moje odznaki”."
+        title: "Twój rok"
 summary: "Spis treści"
 title: "Pomoc"
 tour:

@@ -25,6 +25,14 @@ final class NavigationItem
     public int $totalNotification = 0;
 
     /**
+     * Point bleu sans compteur (nouveauté pas encore ouverte, ex. résumé annuel) — `dotLabel` est
+     * son texte pour les lecteurs d'écran.
+     */
+    public bool $dot = false;
+
+    public string $dotLabel = '';
+
+    /**
      * Rendu de l'entrée : `desktop` (sidebar), `mobile` (barre du bas) ou `tile` (tuile du panneau
      * « Plus » de la navigation mobile) — cf. `_<format>_format.html.twig`.
      */

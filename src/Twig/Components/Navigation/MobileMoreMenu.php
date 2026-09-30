@@ -7,6 +7,7 @@ namespace App\Twig\Components\Navigation;
 use App\Entity\User;
 use App\Repository\ContactThreadMessageRepository;
 use App\Repository\ProfileConnectionRepository;
+use App\Service\YearInReview\YearInReviewNavigationState;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
@@ -27,6 +28,7 @@ final class MobileMoreMenu
         'app_routine',
         'app_profile_connection',
         'app_badge',
+        'app_year_in_review',
         'app_contact',
         'app_settings',
     ];
@@ -37,11 +39,16 @@ final class MobileMoreMenu
 
     public bool $isAdmin = false;
 
+    public bool $isYearInReviewVisible = false;
+
+    public bool $hasUnseenYearInReview = false;
+
     public function __construct(
         private readonly Security $security,
         private readonly RequestStack $requestStack,
         private readonly ProfileConnectionRepository $profileConnectionRepository,
         private readonly ContactThreadMessageRepository $contactThreadMessageRepository,
+        private readonly YearInReviewNavigationState $yearInReviewNavigationState,
     ) {
     }
 
@@ -57,6 +64,8 @@ final class MobileMoreMenu
         $this->pendingConnectionCount = $this->profileConnectionRepository->countPendingReceivedBy($user);
         // Un admin n'a ni messagerie ni contact (cf. la sidebar) : rien à compter.
         $this->unreadMessageCount = $this->isAdmin ? 0 : $this->contactThreadMessageRepository->countUnreadForUser($user);
+        $this->isYearInReviewVisible = $this->yearInReviewNavigationState->isVisible();
+        $this->hasUnseenYearInReview = $this->yearInReviewNavigationState->hasUnseenReview($user);
     }
 
     public function isActive(): bool
@@ -73,6 +82,15 @@ final class MobileMoreMenu
     }
 
     public function hasNotification(): bool
+    {
+        return $this->hasCountedNotification() || $this->hasUnseenYearInReview;
+    }
+
+    /**
+     * Demande de connexion ou message non lu : point rose. Seul un résumé annuel non ouvert donne
+     * le point bleu, comme sur sa tuile.
+     */
+    public function hasCountedNotification(): bool
     {
         return 0 < $this->pendingConnectionCount || 0 < $this->unreadMessageCount;
     }

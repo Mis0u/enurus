@@ -1,0 +1,39 @@
+{#
+    Page « Mes résumés » : une carte par année publiée, l'email d'annonce et, pour l'admin,
+    l'échelle des équivalences.
+    Controller : YearInReviewListController (GET /{_locale}/mes-resumes)
+    Variables :
+    - cards : list<App\Service\YearInReview\View\YearInReviewCard>, année la plus récente en premier
+    - emailOnYearInReview : bool
+    - equivalenceScale : list<App\Service\YearInReview\View\TonnageEquivalenceRow> (vide hors admin)
+#}
+{% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
+
+{% block title %}{{ 'dashboard.my_recaps'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block topbar %}
+    {% include 'dashboard/_dashboard_template/_topbar/_topbar.html.twig' with {
+        title: 'dashboard.my_recaps'|trans({}, 'navigation'),
+        subtitle: app.user.nickname|formatInitials,
+    } only %}
+{% endblock %}
+
+{% block state %}
+    <div class="flex-1 overflow-y-auto p-4 max-md:pb-4 md:p-[24px_28px]">
+        <div class="mx-auto flex w-full max-w-2xl flex-col gap-3">
+            <p class="text-sm leading-relaxed text-[#8b9bb4]">{{ 'year_in_review.list.intro'|trans({}, 'navigation') }}</p>
+
+            {% for card in cards %}
+                {% include 'year_in_review/list/_card_' ~ card.state.value ~ '.html.twig' with {card: card} only %}
+            {% else %}
+                {% include 'year_in_review/list/_empty.html.twig' only %}
+            {% endfor %}
+
+            {% include 'year_in_review/list/_email_card.html.twig' with {emailOnYearInReview: emailOnYearInReview} only %}
+
+            {% if equivalenceScale is not empty %}
+                {% include 'year_in_review/list/_equivalence_scale.html.twig' with {rows: equivalenceScale} only %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
