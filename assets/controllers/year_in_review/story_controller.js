@@ -26,6 +26,7 @@ export default class extends Controller {
     #pressTimeout = null;
     #holding = false;
     #swallowNextTap = false;
+    #suspended = false;
     #onVisibilityChange = () => this.#syncWithVisibility();
 
     connect() {
@@ -69,7 +70,23 @@ export default class extends Controller {
         this.#timer.resume();
     }
 
+    // Aperçu de partage ouvert : le parcours se fige (minuteur, clavier, taps), Échap ne ferme que
+    // l'aperçu.
+    suspend() {
+        this.#suspended = true;
+        this.#timer.pause();
+    }
+
+    release() {
+        this.#suspended = false;
+        this.#syncWithVisibility();
+    }
+
     keydown(event) {
+        if (this.#suspended) {
+            return;
+        }
+
         if ('ArrowRight' === event.key || (' ' === event.key && ! this.#isControl(event.target))) {
             event.preventDefault();
             this.next();
@@ -82,6 +99,10 @@ export default class extends Controller {
     }
 
     tap(event) {
+        if (this.#suspended) {
+            return;
+        }
+
         if (this.#swallowNextTap || this.#isControl(event.target)) {
             this.#swallowNextTap = false;
 
@@ -95,7 +116,7 @@ export default class extends Controller {
     }
 
     pressStart(event) {
-        if (this.#isControl(event.target)) {
+        if (this.#suspended || this.#isControl(event.target)) {
             return;
         }
 
@@ -152,7 +173,7 @@ export default class extends Controller {
     }
 
     #syncWithVisibility() {
-        if (document.hidden) {
+        if (document.hidden || this.#suspended) {
             this.#timer.pause();
         } else if (! this.#userPaused) {
             this.#timer.resume();

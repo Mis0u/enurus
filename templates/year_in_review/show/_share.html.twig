@@ -1,0 +1,38 @@
+{#
+    Partage d'un écran du résumé (contrôleur year-in-review--share, mobile seulement) :
+    - cadre hors-écran de 405 × 720 px (9:16, capturé à ×8/3 → 1080 × 1920 ; assez haut pour
+      « En bref » et neuf badges) où est copié l'écran courant, habillé de « ENURUS · année » et
+      « enurus.fr ». Il embarque ses propres définitions SVG de badges : html-to-image ne capture
+      que le cadre, un `<use href="#…">` vers les définitions de la page y serait vide ;
+    - aperçu de l'image dans un <dialog> natif (Échap, focus gardé), partage au second tap.
+    Variables attendues (via `only`) :
+    - year : int
+#}
+<div data-year-in-review--share-target="frame"
+     class="fixed top-0 -left-[10000px] flex h-[720px] w-[405px] flex-col bg-bg-base text-[#f0f4ff]"
+     aria-hidden="true">
+    {% include 'partials/_milestone_badge/_defs.html.twig' only %}
+    <p class="px-5 pt-5 font-rajdhani text-sm font-bold tracking-[0.12em] text-[#8b9bb4]">{{ 'year_in_review.show.header'|trans({year: year}, 'navigation') }}</p>
+    <div data-year-in-review--share-target="slot" class="flex min-h-0 flex-1 flex-col"></div>
+    <p class="pb-5 text-center font-rajdhani text-base font-bold tracking-[0.08em] text-rose-ft">{{ 'year_in_review.show.share.site'|trans({}, 'navigation') }}</p>
+</div>
+
+<dialog data-year-in-review--share-target="dialog"
+        data-action="close->year-in-review--share#reset"
+        aria-labelledby="year-in-review-share-title"
+        class="m-auto w-[min(90vw,380px)] rounded-2xl border border-white/[0.07] bg-bg-card p-4 text-[#f0f4ff] backdrop:bg-black/75">
+    <h2 id="year-in-review-share-title" class="mb-3 font-rajdhani text-lg font-bold">{{ 'year_in_review.show.share.title'|trans({}, 'navigation') }}</h2>
+    <img data-year-in-review--share-target="previewImage"
+         alt="{{ 'year_in_review.show.share.preview'|trans({}, 'navigation') }}"
+         class="mx-auto max-h-[60svh] w-auto rounded-xl border border-white/10">
+    <div class="mt-4 flex flex-col gap-2.5">
+        <button type="button" data-action="year-in-review--share#share"
+                class="min-h-12 cursor-pointer rounded-full border-0 bg-rose-ft text-[15px] font-semibold text-bg-base">
+            {{ 'year_in_review.show.share.send'|trans({}, 'navigation') }}
+        </button>
+        <button type="button" data-action="year-in-review--share#close"
+                class="min-h-12 cursor-pointer rounded-full border border-white/15 bg-transparent text-[15px] font-semibold text-[#f0f4ff]">
+            {{ 'year_in_review.show.share.cancel'|trans({}, 'navigation') }}
+        </button>
+    </div>
+</dialog>

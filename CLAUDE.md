@@ -439,7 +439,11 @@ email + bandeau → partage mobile). Règles actées :
   omis), un partial `year_in_review/show/_screen_<type>`. Navigation story : contrôleur
   `year-in-review--story` + classe pure `StoryTimer` (5 s/écran, `SCREEN_DURATION_MS`), mode story
   posé par `data-story="on"` sur la racine → variantes `group-data-[story=on]:` (descendants) et
-  `data-[story=on]:` (racine elle-même) ; sans JS, écrans empilés. Lien « Mes résumés » et point bleu (cyan, résumé éligible non ouvert : `seenAt` null) :
+  `data-[story=on]:` (racine elle-même) ; sans JS, écrans empilés. Partage (mobile seulement, `(pointer: coarse)` +
+  fichier partageable) : `year-in-review--share` copie l'écran courant dans un cadre hors-écran
+  405 × 720 (capturé à ×8/3 → 1080 × 1920, défs SVG des badges incluses dans le cadre), aperçu puis
+  partage au 2e tap (Safari exige un geste juste avant `navigator.share`) ; capture/partage communs
+  avec la carte de séance dans `assets/utils/share_image.js`. Lien « Mes résumés » et point bleu (cyan, résumé éligible non ouvert : `seenAt` null) :
   `YearInReviewNavigationState`, seul point de vérité pour la sidebar, le panneau « Plus » et les 404.
 - **Prévisualisation en dev** : `YEAR_IN_REVIEW_FAKE_NOW="2026-12-17 10:00"` dans `.env.local` (lu
   uniquement sous `when@dev`, via `YearInReviewClockFactory` → service `app.year_in_review.clock`), puis

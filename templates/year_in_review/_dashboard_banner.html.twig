@@ -8,15 +8,15 @@
        data-year-in-review--banner-url-value="{{ path('app_year_in_review_banner_dismiss', {year: year}) }}"
        data-year-in-review--banner-csrf-token-value="{{ csrf_token(constant('App\\Controller\\YearInReview\\YearInReviewBannerDismissController::CSRF_TOKEN_ID')) }}"
        aria-label="{{ 'year_in_review.banner.title'|trans({year: year}, 'navigation') }}"
-       class="mb-4 flex items-center rounded-2xl border border-rose-ft/45 bg-bg-card md:mb-5">
+       class="mb-4 flex items-center rounded-2xl border border-cyan-ft/45 bg-bg-card md:mb-5">
     <a href="{{ path('app_year_in_review_show', {year: year}) }}"
        class="flex min-h-11 flex-1 items-center gap-3.5 py-4 pr-1 pl-4 text-[#f0f4ff] no-underline md:gap-4.5 md:py-[18px] md:pl-5">
-        <span class="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[14px] border-2 border-rose-ft font-rajdhani text-lg font-bold text-rose-ft md:h-[60px] md:w-[60px] md:text-xl">{{ year }}</span>
+        <span class="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[14px] border-2 border-cyan-ft font-rajdhani text-lg font-bold text-cyan-ft md:h-[60px] md:w-[60px] md:text-xl">{{ year }}</span>
         <span class="flex min-w-0 flex-1 flex-col gap-0.5">
             <span class="font-rajdhani text-xl leading-tight font-bold md:text-[22px]">{{ 'year_in_review.banner.title'|trans({year: year}, 'navigation') }}</span>
             <span class="text-[13px] leading-snug text-[#8b9bb4] md:text-sm">{{ 'year_in_review.banner.text'|trans({}, 'navigation') }}</span>
         </span>
-        <span class="hidden min-h-10 shrink-0 items-center rounded-full bg-rose-ft px-[18px] text-sm font-semibold text-bg-base md:flex">{{ 'year_in_review.banner.cta'|trans({}, 'navigation') }}</span>
+        <span class="hidden min-h-10 shrink-0 items-center rounded-full bg-cyan-ft px-[18px] text-sm font-semibold text-bg-base md:flex">{{ 'year_in_review.banner.cta'|trans({}, 'navigation') }}</span>
     </a>
     <button type="button"
             data-action="year-in-review--banner#dismiss"

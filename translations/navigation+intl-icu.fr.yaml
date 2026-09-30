@@ -1199,6 +1199,14 @@ year_in_review:
             average: "En moyenne {average, number} par semaine."
             lead: "Cette année, tu as enregistré"
             unit: "{count, plural, =1 {séance} other {séances}}"
+        share:
+            button: "Partager cet écran"
+            cancel: "Annuler"
+            error: "Impossible de préparer l'image. Réessaie."
+            preview: "Aperçu de l'image à partager"
+            send: "Partager"
+            site: "enurus.fr"
+            title: "Partager cet écran"
         slide: "diapositive"
         thanks:
             replay: "Revoir mon année"

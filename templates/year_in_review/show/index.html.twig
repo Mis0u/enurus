@@ -9,7 +9,8 @@
     Le contrôleur `year-in-review--story` pose `data-story="on"` : un écran à la fois, barres de
     progression, pause et boutons précédent/suivant (variantes `group-data-[story=on]:`). Sans
     JavaScript, rien de tout ça : les écrans s'enchaînent verticalement et restent tous lisibles.
-    Ordinateur : carte portrait de 420 px centrée, flèches de part et d'autre.
+    Ordinateur : carte portrait de 420 px centrée, flèches de part et d'autre. Partage d'un écran en
+    image (mobile seulement) : `year-in-review--share`, qui fige le parcours le temps de l'aperçu.
 #}
 {% extends 'base.html.twig' %}
 
@@ -23,8 +24,10 @@
 {% block body %}
     {% include 'partials/_milestone_badge/_defs.html.twig' only %}
     <div class="group min-h-svh bg-bg-base text-[#f0f4ff] md:data-[story=on]:flex md:data-[story=on]:items-center md:data-[story=on]:justify-center md:data-[story=on]:gap-6"
-         data-controller="year-in-review--story"
-         data-action="keydown@window->year-in-review--story#keydown"
+         data-controller="year-in-review--story year-in-review--share"
+         data-action="keydown@window->year-in-review--story#keydown year-in-review--share:opened->year-in-review--story#suspend year-in-review--share:closed->year-in-review--story#release"
+         data-year-in-review--share-file-name-value="enurus-{{ year }}-__screen__.png"
+         data-year-in-review--share-error-value="{{ 'year_in_review.show.share.error'|trans({}, 'navigation') }}"
          data-year-in-review--story-duration-value="{{ screenDurationMs }}"
          data-year-in-review--story-close-url-value="{{ path('app_year_in_review_list') }}"
          data-year-in-review--story-pause-label-value="{{ 'year_in_review.show.pause'|trans({}, 'navigation') }}"
@@ -45,6 +48,14 @@
                 <div class="flex items-center justify-between py-1 pr-1 pl-4">
                     <span class="font-rajdhani text-sm font-bold tracking-[0.12em] text-[#8b9bb4]">{{ 'year_in_review.show.header'|trans({year: year}, 'navigation') }}</span>
                     <div class="flex">
+                        {# Mobile seulement : affiché par year-in-review--share (écran tactile qui sait partager un fichier). #}
+                        <button type="button"
+                                data-year-in-review--share-target="button"
+                                data-action="year-in-review--share#capture"
+                                aria-label="{{ 'year_in_review.show.share.button'|trans({}, 'navigation') }}"
+                                class="hidden h-11 w-11 cursor-pointer items-center justify-center border-0 bg-transparent text-[#8b9bb4] transition-ft hover:text-[#f0f4ff]">
+                            {% include 'partials/_svg/_share.html.twig' with {width: 5, height: 5} only %}
+                        </button>
                         <button type="button"
                                 data-year-in-review--story-target="pauseButton"
                                 data-action="year-in-review--story#togglePause"
@@ -91,6 +102,8 @@
 
             <p class="sr-only" aria-live="polite" data-year-in-review--story-target="status"></p>
         </div>
+
+        {% include 'year_in_review/show/_share.html.twig' with {year: year} only %}
 
         {% include 'year_in_review/show/_side_arrow.html.twig' with {action: 'next', label: 'year_in_review.show.next'|trans({}, 'navigation'), rotation: '-rotate-90'} only %}
     </div>

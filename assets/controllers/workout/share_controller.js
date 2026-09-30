@@ -5,7 +5,7 @@
 // navigateur ou la télécharger directement.
 
 import { Controller } from '@hotwired/stimulus';
-import { toBlob } from 'html-to-image';
+import { captureToBlob, canShareImageFiles, shareImage } from '../../utils/share_image.js';
 import { showErrorToast, showSuccessToast } from '../../utils/toast.js';
 
 const CAPTURE_PIXEL_RATIO = 2;
@@ -29,7 +29,7 @@ export default class extends Controller {
         this.#showLoader();
 
         try {
-            const blob = await this.#captureCard();
+            const blob = await captureToBlob(this.cardTarget, CAPTURE_PIXEL_RATIO);
             this.#openPreview(blob);
         } catch {
             showErrorToast(this.errorValue);
@@ -60,8 +60,7 @@ export default class extends Controller {
         }
 
         try {
-            const file = new File([this.#blob], FILE_NAME, { type: 'image/png' });
-            await navigator.share({ files: [file] });
+            await shareImage(this.#blob, FILE_NAME);
             this.closePreview();
         } catch (error) {
             if ('AbortError' !== error.name) {
@@ -87,25 +86,8 @@ export default class extends Controller {
         this.closePreview();
     }
 
-    async #captureCard() {
-        // La carte est cachée hors-écran via position:fixed + un offset négatif énorme
-        // (voir _share_card.html.twig). html-to-image clone le nœud en conservant son style
-        // inline tel quel — sans ce reset, l'offset se retrouve appliqué à l'intérieur même
-        // de l'image capturée et pousse tout le contenu hors cadre (image vide/décalée).
-        const blob = await toBlob(this.cardTarget, {
-            pixelRatio: CAPTURE_PIXEL_RATIO,
-            style: { position: 'static', left: '0', top: '0' },
-        });
-
-        if (!blob) {
-            throw new Error('Image capture returned no data.');
-        }
-
-        return blob;
-    }
-
     #openPreview(blob) {
-        const canShare = this.#canShareFiles();
+        const canShare = canShareImageFiles();
 
         this.#blob = blob;
         this.#previewUrl = URL.createObjectURL(blob);
@@ -118,12 +100,6 @@ export default class extends Controller {
         this.captionTarget.textContent = canShare ? this.captionShareValue : this.captionDownloadOnlyValue;
         this.modalTarget.classList.remove('hidden');
         this.modalTarget.classList.add('flex');
-    }
-
-    #canShareFiles() {
-        const probe = new File([], FILE_NAME, { type: 'image/png' });
-
-        return Boolean(navigator.canShare?.({ files: [probe] }));
     }
 
     // Loader visuel — Tailwind pur (animate-spin natif, pas de CSS custom),
