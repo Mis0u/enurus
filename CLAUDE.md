@@ -432,7 +432,10 @@ email + bandeau → partage mobile). Règles actées :
   Avant publication, rien n'existe côté utilisateur : lien absent, routes en **404**, section d'Aide
   masquée. Écrans : `/mes-resumes/{year}` (404 si non publié, sans résumé ou non éligible ; 1re
   ouverture = `seenAt`), un objet de vue par écran (`YearInReviewScreensBuilder`, écran sans donnée
-  omis), un partial `year_in_review/show/_screen_<type>`. Lien « Mes résumés » et point bleu (cyan, résumé éligible non ouvert : `seenAt` null) :
+  omis), un partial `year_in_review/show/_screen_<type>`. Navigation story : contrôleur
+  `year-in-review--story` + classe pure `StoryTimer` (10 s/écran, `SCREEN_DURATION_MS`), mode story
+  posé par `data-story="on"` sur la racine → variantes `group-data-[story=on]:` (descendants) et
+  `data-[story=on]:` (racine elle-même) ; sans JS, écrans empilés. Lien « Mes résumés » et point bleu (cyan, résumé éligible non ouvert : `seenAt` null) :
   `YearInReviewNavigationState`, seul point de vérité pour la sidebar, le panneau « Plus » et les 404.
 - **Prévisualisation en dev** : `YEAR_IN_REVIEW_FAKE_NOW="2026-12-17 10:00"` dans `.env.local` (lu
   uniquement sous `when@dev`, via `YearInReviewClockFactory` → service `app.year_in_review.clock`), puis

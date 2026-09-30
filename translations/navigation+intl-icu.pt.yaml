@@ -1135,6 +1135,7 @@ year_in_review:
     show:
         badges:
             lead: "Este ano conquistaste"
+            more: "{count, plural, =1 {e mais # insígnia} other {e mais # insígnias}}"
             unit: "{count, plural, =1 {insígnia} other {insígnias}}"
         close: "Fechar o resumo"
         header: "ENURUS · {year}"
@@ -1149,6 +1150,12 @@ year_in_review:
             lead: "O teu estado de espírito mais frequente"
             percent: "{percent, number, percent}"
             share: "dos treinos em que indicaste o teu estado de espírito."
+        navigation: "Navegação entre ecrãs"
+        next: "Ecrã seguinte"
+        next_button: "Seguinte →"
+        pause: "Pausar"
+        previous: "Ecrã anterior"
+        previous_button: "← Anterior"
         recap:
             badges: "Insígnias"
             mood: "Estado mais frequente"
@@ -1174,6 +1181,7 @@ year_in_review:
             lead: "Repetição após repetição, são"
             sets: "Distribuídas por {count, plural, =1 {# série} other {# séries}}."
             unit: "{count, plural, =1 {repetição} other {repetições}}"
+        resume: "Retomar"
         screen_label: "Ecrã {position} de {count}"
         sessions:
             average: "Em média {average, number} por semana."

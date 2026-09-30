@@ -23,6 +23,12 @@ use App\Service\YearInReview\YearInReviewCalendar;
  */
 final readonly class YearInReviewScreensBuilder
 {
+    /**
+     * Durée d'un écran avant le passage automatique au suivant (hors dernier écran et hors
+     * « réduire les animations »), lue par le contrôleur Stimulus `year-in-review--story`.
+     */
+    public const int SCREEN_DURATION_MS = 10_000;
+
     private const int DAYS_PER_WEEK = 7;
 
     public function __construct(
