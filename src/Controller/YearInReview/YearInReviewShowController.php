@@ -61,6 +61,7 @@ final class YearInReviewShowController extends AbstractController
         return $this->render('year_in_review/show/index.html.twig', [
             'year' => $year,
             'screens' => $this->screensBuilder->build($review, $user),
+            'screenDurationMs' => YearInReviewScreensBuilder::SCREEN_DURATION_MS,
         ]);
     }
 }

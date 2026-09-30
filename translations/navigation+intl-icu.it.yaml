@@ -1135,6 +1135,7 @@ year_in_review:
     show:
         badges:
             lead: "Quest'anno hai conquistato"
+            more: "{count, plural, =1 {e # altro badge} other {e altri # badge}}"
             unit: "{count, plural, =1 {badge} other {badge}}"
         close: "Chiudi il riepilogo"
         header: "ENURUS · {year}"
@@ -1149,6 +1150,12 @@ year_in_review:
             lead: "Il tuo umore più frequente"
             percent: "{percent, number, percent}"
             share: "degli allenamenti in cui hai indicato il tuo umore."
+        navigation: "Navigazione tra le schermate"
+        next: "Schermata successiva"
+        next_button: "Avanti →"
+        pause: "Metti in pausa"
+        previous: "Schermata precedente"
+        previous_button: "← Indietro"
         recap:
             badges: "Badge"
             mood: "Umore più frequente"
@@ -1174,6 +1181,7 @@ year_in_review:
             lead: "Ripetizione dopo ripetizione, fanno"
             sets: "Distribuite su {count, plural, =1 {# serie} other {# serie}}."
             unit: "{count, plural, =1 {ripetizione} other {ripetizioni}}"
+        resume: "Riprendi"
         screen_label: "Schermata {position} di {count}"
         sessions:
             average: "In media {average, number} a settimana."

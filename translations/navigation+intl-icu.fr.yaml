@@ -1135,6 +1135,7 @@ year_in_review:
     show:
         badges:
             lead: "Cette année, tu as décroché"
+            more: "{count, plural, =1 {et # autre badge} other {et # autres badges}}"
             unit: "{count, plural, =1 {badge} other {badges}}"
         close: "Fermer le résumé"
         header: "ENURUS · {year}"
@@ -1149,6 +1150,12 @@ year_in_review:
             lead: "Ton humeur la plus fréquente"
             percent: "{percent, number, percent}"
             share: "des séances où tu as indiqué ton humeur."
+        navigation: "Navigation entre les écrans"
+        next: "Écran suivant"
+        next_button: "Suivant →"
+        pause: "Mettre en pause"
+        previous: "Écran précédent"
+        previous_button: "← Précédent"
         recap:
             badges: "Badges"
             mood: "Humeur la plus fréquente"
@@ -1174,6 +1181,7 @@ year_in_review:
             lead: "Répétition après répétition, ça fait"
             sets: "Réparties sur {count, plural, =1 {# série} other {# séries}}."
             unit: "{count, plural, =1 {répétition} other {répétitions}}"
+        resume: "Reprendre"
         screen_label: "Écran {position} sur {count}"
         sessions:
             average: "En moyenne {average, number} par semaine."

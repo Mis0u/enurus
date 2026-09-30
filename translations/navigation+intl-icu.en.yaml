@@ -1135,6 +1135,7 @@ year_in_review:
     show:
         badges:
             lead: "This year, you earned"
+            more: "{count, plural, =1 {and # more badge} other {and # more badges}}"
             unit: "{count, plural, =1 {badge} other {badges}}"
         close: "Close the recap"
         header: "ENURUS · {year}"
@@ -1149,6 +1150,12 @@ year_in_review:
             lead: "Your most frequent mood"
             percent: "{percent, number, percent}"
             share: "of the workouts where you logged your mood."
+        navigation: "Screen navigation"
+        next: "Next screen"
+        next_button: "Next →"
+        pause: "Pause"
+        previous: "Previous screen"
+        previous_button: "← Previous"
         recap:
             badges: "Badges"
             mood: "Most frequent mood"
@@ -1174,6 +1181,7 @@ year_in_review:
             lead: "Rep after rep, that makes"
             sets: "Spread over {count, plural, =1 {# set} other {# sets}}."
             unit: "{count, plural, =1 {rep} other {reps}}"
+        resume: "Resume"
         screen_label: "Screen {position} of {count}"
         sessions:
             average: "{average, number} per week on average."

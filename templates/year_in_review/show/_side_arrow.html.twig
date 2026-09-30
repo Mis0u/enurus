@@ -1,0 +1,14 @@
+{#
+    Flèche ‹ › de part et d'autre de la carte, sur ordinateur et en mode story seulement.
+    Variables attendues (via `only`) :
+    - action : 'previous'|'next' — méthode du contrôleur year-in-review--story
+    - label : string — texte accessible
+    - rotation : string — classe de rotation de la flèche vers le bas (rotate-90 = gauche)
+#}
+<button type="button"
+        data-action="year-in-review--story#{{ action }}"
+        data-year-in-review--story-target="{{ action }}Button"
+        aria-label="{{ label }}"
+        class="hidden h-12 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-bg-card text-[#cbd5e1] transition-ft hover:text-[#f0f4ff] md:group-data-[story=on]:flex">
+    <span class="{{ rotation }}" aria-hidden="true">{% include 'partials/_svg/_down_arrow.html.twig' only %}</span>
+</button>

@@ -1149,6 +1149,7 @@ year_in_review:
     show:
         badges:
             lead: "W tym roku zdobyto"
+            more: "{count, plural, =1 {i jeszcze # odznaka} few {i jeszcze # odznaki} many {i jeszcze # odznak} other {i jeszcze # odznaki}}"
             unit: "{count, plural, =1 {odznaka} few {odznaki} many {odznak} other {odznaki}}"
         close: "Zamknij podsumowanie"
         header: "ENURUS · {year}"
@@ -1163,6 +1164,12 @@ year_in_review:
             lead: "Twój najczęstszy nastrój"
             percent: "{percent, number, percent}"
             share: "treningów, przy których podano nastrój."
+        navigation: "Nawigacja między ekranami"
+        next: "Następny ekran"
+        next_button: "Dalej →"
+        pause: "Wstrzymaj"
+        previous: "Poprzedni ekran"
+        previous_button: "← Wstecz"
         recap:
             badges: "Odznaki"
             mood: "Najczęstszy nastrój"
@@ -1188,6 +1195,7 @@ year_in_review:
             lead: "Powtórzenie po powtórzeniu, to daje"
             sets: "Rozłożone na {count, plural, =1 {# serię} few {# serie} many {# serii} other {# serii}}."
             unit: "{count, plural, =1 {powtórzenie} few {powtórzenia} many {powtórzeń} other {powtórzenia}}"
+        resume: "Wznów"
         screen_label: "Ekran {position} z {count}"
         sessions:
             average: "Średnio {average, number} w tygodniu."

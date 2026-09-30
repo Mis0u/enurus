@@ -4,7 +4,12 @@
     Variables :
     - year : int
     - screens : list<App\Service\YearInReview\Screen\YearInReviewScreen>, dans l'ordre d'affichage
-    Sans JavaScript, les écrans s'enchaînent verticalement et restent tous lisibles.
+    - screenDurationMs : int — durée d'un écran avant le passage automatique au suivant
+
+    Le contrôleur `year-in-review--story` pose `data-story="on"` : un écran à la fois, barres de
+    progression, pause et boutons précédent/suivant (variantes `group-data-[story=on]:`). Sans
+    JavaScript, rien de tout ça : les écrans s'enchaînent verticalement et restent tous lisibles.
+    Ordinateur : carte portrait de 420 px centrée, flèches de part et d'autre.
 #}
 {% extends 'base.html.twig' %}
 
@@ -17,25 +22,76 @@
 
 {% block body %}
     {% include 'partials/_milestone_badge/_defs.html.twig' only %}
-    <div class="min-h-svh bg-bg-base text-[#f0f4ff]">
-        <header class="sticky top-0 z-10 flex items-center justify-between bg-bg-base/90 py-1 pr-1 pl-4 backdrop-blur-[12px]">
-            <span class="font-rajdhani text-sm font-bold tracking-[0.12em] text-[#8b9bb4]">{{ 'year_in_review.show.header'|trans({year: year}, 'navigation') }}</span>
-            <a href="{{ path('app_year_in_review_list') }}"
-               aria-label="{{ 'year_in_review.show.close'|trans({}, 'navigation') }}"
-               class="flex h-11 w-11 items-center justify-center text-[#8b9bb4] transition-ft hover:text-[#f0f4ff]">
-                {% include 'partials/_svg/_cross.html.twig' with {'width': 5, 'height': 5, 'ariaHidden': true} only %}
-            </a>
-        </header>
+    <div class="group min-h-svh bg-bg-base text-[#f0f4ff] md:data-[story=on]:flex md:data-[story=on]:items-center md:data-[story=on]:justify-center md:data-[story=on]:gap-6"
+         data-controller="year-in-review--story"
+         data-action="keydown@window->year-in-review--story#keydown"
+         data-year-in-review--story-duration-value="{{ screenDurationMs }}"
+         data-year-in-review--story-close-url-value="{{ path('app_year_in_review_list') }}"
+         data-year-in-review--story-pause-label-value="{{ 'year_in_review.show.pause'|trans({}, 'navigation') }}"
+         data-year-in-review--story-resume-label-value="{{ 'year_in_review.show.resume'|trans({}, 'navigation') }}"
+         data-year-in-review--story-status-template-value="{{ 'year_in_review.show.screen_label'|trans({position: '__position__', count: '__count__'}, 'navigation') }}">
 
-        <main class="mx-auto flex w-full max-w-[420px] flex-col">
-            {% for screen in screens %}
-                <section data-year-in-review-screen="{{ screen.type.value }}"
-                         aria-roledescription="{{ 'year_in_review.show.slide'|trans({}, 'navigation') }}"
-                         aria-label="{{ 'year_in_review.show.screen_label'|trans({position: loop.index, count: screens|length}, 'navigation') }}"
-                         class="flex min-h-[calc(100svh-3.25rem)] flex-col justify-center gap-2.5 px-7 py-10">
-                    {% include 'year_in_review/show/_screen_' ~ screen.type.value ~ '.html.twig' with {screen: screen, year: year} only %}
-                </section>
-            {% endfor %}
-        </main>
+        {% include 'year_in_review/show/_side_arrow.html.twig' with {action: 'previous', label: 'year_in_review.show.previous'|trans({}, 'navigation'), rotation: 'rotate-90'} only %}
+
+        <div class="relative mx-auto flex w-full max-w-[420px] flex-col group-data-[story=on]:h-svh md:group-data-[story=on]:mx-0 md:group-data-[story=on]:h-[min(844px,calc(100svh-2rem))] md:group-data-[story=on]:overflow-hidden md:group-data-[story=on]:rounded-3xl md:group-data-[story=on]:border md:group-data-[story=on]:border-white/[0.07]">
+            <header class="sticky top-0 z-10 bg-bg-base/90 backdrop-blur-[12px]">
+                <div class="hidden gap-1 px-4 pt-3.5 group-data-[story=on]:flex" aria-hidden="true">
+                    {% for screen in screens %}
+                        <span class="h-[3px] flex-1 overflow-hidden rounded-full bg-white/20">
+                            <span data-year-in-review--story-target="bar" class="block h-full w-0 bg-[#f0f4ff]"></span>
+                        </span>
+                    {% endfor %}
+                </div>
+                <div class="flex items-center justify-between py-1 pr-1 pl-4">
+                    <span class="font-rajdhani text-sm font-bold tracking-[0.12em] text-[#8b9bb4]">{{ 'year_in_review.show.header'|trans({year: year}, 'navigation') }}</span>
+                    <div class="flex">
+                        <button type="button"
+                                data-year-in-review--story-target="pauseButton"
+                                data-action="year-in-review--story#togglePause"
+                                aria-pressed="false"
+                                aria-label="{{ 'year_in_review.show.pause'|trans({}, 'navigation') }}"
+                                class="hidden h-11 w-11 cursor-pointer items-center justify-center border-0 bg-transparent text-[#8b9bb4] transition-ft group-data-[story=on]:flex hover:text-[#f0f4ff] aria-pressed:text-rose-ft">
+                            <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg>
+                        </button>
+                        <a href="{{ path('app_year_in_review_list') }}"
+                           aria-label="{{ 'year_in_review.show.close'|trans({}, 'navigation') }}"
+                           class="flex h-11 w-11 items-center justify-center text-[#8b9bb4] transition-ft hover:text-[#f0f4ff]">
+                            {% include 'partials/_svg/_cross.html.twig' with {'width': 5, 'height': 5, 'ariaHidden': true} only %}
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            <main data-year-in-review--story-target="track"
+                  data-action="click->year-in-review--story#tap pointerdown->year-in-review--story#pressStart pointerup->year-in-review--story#pressEnd pointercancel->year-in-review--story#pressEnd pointerleave->year-in-review--story#pressEnd"
+                  class="flex flex-col group-data-[story=on]:min-h-0 group-data-[story=on]:flex-1 group-data-[story=on]:select-none">
+                {% for screen in screens %}
+                    <section data-year-in-review-screen="{{ screen.type.value }}"
+                             data-year-in-review--story-target="screen"
+                             tabindex="-1"
+                             aria-roledescription="{{ 'year_in_review.show.slide'|trans({}, 'navigation') }}"
+                             aria-label="{{ 'year_in_review.show.screen_label'|trans({position: loop.index, count: screens|length}, 'navigation') }}"
+                             class="flex min-h-[calc(100svh-3.25rem)] flex-col justify-center gap-2.5 px-7 py-10 outline-none group-data-[story=on]:h-full group-data-[story=on]:min-h-0 group-data-[story=on]:overflow-y-auto group-data-[story=on]:py-6">
+                        {% include 'year_in_review/show/_screen_' ~ screen.type.value ~ '.html.twig' with {screen: screen, year: year} only %}
+                    </section>
+                {% endfor %}
+            </main>
+
+            <nav aria-label="{{ 'year_in_review.show.navigation'|trans({}, 'navigation') }}"
+                 class="hidden items-center justify-between px-4 pt-2 pb-[calc(1.5rem+env(safe-area-inset-bottom))] group-data-[story=on]:flex md:group-data-[story=on]:hidden">
+                <button type="button" data-action="year-in-review--story#previous" data-year-in-review--story-target="previousButton"
+                        class="min-h-11 cursor-pointer border-0 bg-transparent px-3.5 text-sm text-[#8b9bb4]">
+                    {{ 'year_in_review.show.previous_button'|trans({}, 'navigation') }}
+                </button>
+                <button type="button" data-action="year-in-review--story#next" data-year-in-review--story-target="nextButton"
+                        class="min-h-11 cursor-pointer rounded-full border-0 bg-rose-ft px-5 text-[15px] font-semibold text-bg-base">
+                    {{ 'year_in_review.show.next_button'|trans({}, 'navigation') }}
+                </button>
+            </nav>
+
+            <p class="sr-only" aria-live="polite" data-year-in-review--story-target="status"></p>
+        </div>
+
+        {% include 'year_in_review/show/_side_arrow.html.twig' with {action: 'next', label: 'year_in_review.show.next'|trans({}, 'navigation'), rotation: '-rotate-90'} only %}
     </div>
 {% endblock %}

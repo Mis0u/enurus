@@ -1135,6 +1135,7 @@ year_in_review:
     show:
         badges:
             lead: "Dit jaar behaald:"
+            more: "{count, plural, =1 {en nog # badge} other {en nog # badges}}"
             unit: "{count, plural, =1 {badge} other {badges}}"
         close: "Overzicht sluiten"
         header: "ENURUS · {year}"
@@ -1149,6 +1150,12 @@ year_in_review:
             lead: "Je meest voorkomende stemming"
             percent: "{percent, number, percent}"
             share: "van de trainingen waarbij je je stemming hebt ingevuld."
+        navigation: "Navigatie tussen schermen"
+        next: "Volgend scherm"
+        next_button: "Volgende →"
+        pause: "Pauzeren"
+        previous: "Vorig scherm"
+        previous_button: "← Vorige"
         recap:
             badges: "Badges"
             mood: "Meest voorkomende stemming"
@@ -1174,6 +1181,7 @@ year_in_review:
             lead: "Herhaling na herhaling, dat is"
             sets: "Verdeeld over {count, plural, =1 {# set} other {# sets}}."
             unit: "{count, plural, =1 {herhaling} other {herhalingen}}"
+        resume: "Hervatten"
         screen_label: "Scherm {position} van {count}"
         sessions:
             average: "Gemiddeld {average, number} per week."
