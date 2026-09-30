@@ -1105,6 +1105,18 @@ workout:
     weight: Gewicht
     weight_bodyweight: Gewicht (extra)
 year_in_review:
+    banner:
+        cta: "Ontdekken"
+        dismiss: "Deze banner verbergen"
+        text: "Trainingen, gewicht, records: je overzicht in een paar schermen."
+        title: "Jouw jaar {year} staat klaar"
+    email:
+        body: "Trainingen, records, regelmaat… Je trainingsoverzicht wacht op je, in een paar schermen om door te swipen."
+        cta: "Ontdek mijn jaar"
+        subject: "Jouw jaar {year} staat klaar"
+        title: "Jouw jaar {year} staat klaar!"
+        unsubscribe: "Deze e-mail niet meer ontvangen"
+        why: "Je ontvangt deze e-mail omdat je jaaroverzicht klaarstaat."
     equivalence:
         african_elephant: "Mannelijke Afrikaanse olifant"
         airbus_a380: "Airbus A380 (leeg)"

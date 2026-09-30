@@ -1105,6 +1105,18 @@ workout:
     weight: Weight
     weight_bodyweight: Weight (extra)
 year_in_review:
+    banner:
+        cta: "Discover"
+        dismiss: "Hide this banner"
+        text: "Workouts, volume, records: your recap in a few screens."
+        title: "Your {year} year is ready"
+    email:
+        body: "Workouts, records, consistency… Your training recap is waiting for you, in a few screens to swipe through."
+        cta: "Discover my year"
+        subject: "Your {year} year is ready"
+        title: "Your {year} year is ready!"
+        unsubscribe: "Stop receiving this email"
+        why: "You're receiving this email because your yearly recap is ready."
     equivalence:
         african_elephant: "Male African elephant"
         airbus_a380: "Airbus A380 (empty)"

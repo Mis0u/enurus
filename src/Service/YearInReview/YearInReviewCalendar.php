@@ -49,8 +49,30 @@ final readonly class YearInReviewCalendar
         return self::FIRST_YEAR <= $latestYear ? $latestYear : null;
     }
 
+    /**
+     * Emails d'annonce : le matin de la publication, jamais en pleine nuit (une notification de
+     * téléphone à minuit réveillerait).
+     */
+    public function isAnnounced(int $year): bool
+    {
+        return $this->isPublished($year) && $this->parisTime($year, '12-16 07:00:00') <= $this->clock->now();
+    }
+
+    /**
+     * Bandeau du dashboard : de la publication au 31 janvier suivant inclus.
+     */
+    public function isBannerShown(int $year): bool
+    {
+        return $this->isPublished($year) && $this->clock->now() < $this->parisTime($year + 1, '02-01 00:00:00');
+    }
+
     public function publicationOf(int $year): \DateTimeImmutable
     {
-        return new \DateTimeImmutable(\sprintf('%d-12-16 00:00:00', $year), new \DateTimeZone(self::PUBLICATION_TIMEZONE));
+        return $this->parisTime($year, '12-16 00:00:00');
+    }
+
+    private function parisTime(int $year, string $monthDayTime): \DateTimeImmutable
+    {
+        return new \DateTimeImmutable(\sprintf('%d-%s', $year, $monthDayTime), new \DateTimeZone(self::PUBLICATION_TIMEZONE));
     }
 }

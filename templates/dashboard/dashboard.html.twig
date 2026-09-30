@@ -9,6 +9,9 @@
 
 {% block state %}
     <div class="flex-1 overflow-y-auto p-4 max-md:pb-4 md:p-[24px_28px]">
+        {% if yearInReviewBannerYear is not null %}
+            {% include 'year_in_review/_dashboard_banner.html.twig' with {year: yearInReviewBannerYear} only %}
+        {% endif %}
         {% include 'dashboard/_dashboard_grid.html.twig' with {
             data: data,
             subject: user,

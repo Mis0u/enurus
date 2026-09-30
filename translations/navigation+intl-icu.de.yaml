@@ -1105,6 +1105,18 @@ workout:
     weight: Gewicht
     weight_bodyweight: Gewicht (Zusatz)
 year_in_review:
+    banner:
+        cta: "Entdecken"
+        dismiss: "Dieses Banner ausblenden"
+        text: "Trainings, Gewicht, Rekorde: dein Rückblick in wenigen Bildschirmen."
+        title: "Dein Jahr {year} ist bereit"
+    email:
+        body: "Trainings, Rekorde, Regelmäßigkeit… Dein Trainingsrückblick wartet auf dich, in ein paar Bildschirmen zum Durchwischen."
+        cta: "Mein Jahr entdecken"
+        subject: "Dein Jahr {year} ist bereit"
+        title: "Dein Jahr {year} ist bereit!"
+        unsubscribe: "Diese E-Mail nicht mehr erhalten"
+        why: "Du erhältst diese E-Mail, weil dein Jahresrückblick bereit ist."
     equivalence:
         african_elephant: "Männlicher Afrikanischer Elefant"
         airbus_a380: "Airbus A380 (leer)"

@@ -12,6 +12,7 @@ use App\Service\Badge\BadgeSyncService;
 use App\Service\Dashboard\DashboardUnlockService;
 use App\Service\Dashboard\DashboardViewDataBuilder;
 use App\Service\Onboarding\GuidedTourService;
+use App\Service\YearInReview\YearInReviewBannerState;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +29,7 @@ final class DashboardController extends AbstractController
         private readonly BadgeSyncService $badgeSyncService,
         private readonly BadgeLabelFormatter $badgeLabelFormatter,
         private readonly GuidedTourService $guidedTourService,
+        private readonly YearInReviewBannerState $yearInReviewBannerState,
     ) {
     }
 
@@ -74,6 +76,7 @@ final class DashboardController extends AbstractController
             'user' => $user,
             'data' => $data,
             'guidedTourSteps' => $guidedTourSteps,
+            'yearInReviewBannerYear' => $this->yearInReviewBannerState->yearToShow($user),
         ]);
     }
 

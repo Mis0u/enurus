@@ -42,6 +42,31 @@ class YearInReviewRepository extends ServiceEntityRepository
     }
 
     /**
+     * Résumés éligibles de `$year` dont l'email d'annonce reste à envoyer, à des comptes vérifiés,
+     * qui l'acceptent et ne sont pas en cours de suppression.
+     *
+     * @return list<string>
+     */
+    public function findIdsAwaitingAnnouncement(int $year): array
+    {
+        /** @var list<array{id: \Stringable|string}> $rows */
+        $rows = $this->createQueryBuilder('r')
+            ->select('r.id')
+            ->join('r.owner', 'o')
+            ->andWhere('r.year = :year')
+            ->andWhere('r.snapshotData IS NOT NULL')
+            ->andWhere('r.emailedAt IS NULL')
+            ->andWhere('o.emailOnYearInReview = true')
+            ->andWhere('o.isVerified = true')
+            ->andWhere('o.deletionRequestedAt IS NULL')
+            ->setParameter('year', $year)
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_map(static fn (array $row): string => (string) $row['id'], $rows);
+    }
+
+    /**
      * Résumé ouvrable en écrans : éligible (snapshot présent) ; sinon null, la page répond 404.
      */
     public function findEligibleByOwnerAndYear(User $owner, int $year): ?YearInReview

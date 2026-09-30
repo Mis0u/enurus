@@ -96,7 +96,7 @@ section:
         intro: "Cada 16 de diciembre, tu año de entrenamiento resumido en unas pocas pantallas."
         open: "Ver mis resúmenes"
         points:
-            email: "Un email te avisa ese mismo día. Puedes desactivarlo desde « Mis resúmenes »."
+            email: "Ese mismo día, un email y un aviso en tu panel (hasta finales de enero) te lo anuncian. Puedes desactivar el email desde « Mis resúmenes »."
             frozen: "Las cifras se fijan el 16 de diciembre: un entrenamiento añadido o modificado después ya no cambia tu resumen."
             what: "Cuenta tus entrenamientos del 1 de enero al 15 de diciembre. Necesitas al menos 5 entrenamientos en el año para desbloquearlo."
             where: "Encuentra todos tus resúmenes en « Mis resúmenes », debajo de « Mis insignias »."

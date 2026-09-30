@@ -57,6 +57,40 @@ final class YearInReviewCalendarTest extends TestCase
         self::assertSame(2026, $this->calendarAt('2027-12-01 08:00:00 Europe/Paris')->latestPublishedYear());
     }
 
+    /**
+     * @return iterable<string, array{string, bool}>
+     */
+    public static function announcementMoments(): iterable
+    {
+        yield 'midnight publication' => ['2026-12-16 00:00:00 Europe/Paris', false];
+        yield 'last minute before 7 am' => ['2026-12-16 06:59:59 Europe/Paris', false];
+        yield '7 am in Paris' => ['2026-12-16 07:00:00 Europe/Paris', true];
+        yield 'following days' => ['2026-12-20 10:00:00 Europe/Paris', true];
+    }
+
+    #[DataProvider('announcementMoments')]
+    public function testAnnouncementEmailsLeaveAtSevenInTheMorningOfTheSixteenth(string $now, bool $expected): void
+    {
+        self::assertSame($expected, $this->calendarAt($now)->isAnnounced(2026));
+    }
+
+    /**
+     * @return iterable<string, array{string, bool}>
+     */
+    public static function bannerMoments(): iterable
+    {
+        yield 'before publication' => ['2026-12-15 23:59:59 Europe/Paris', false];
+        yield 'publication' => ['2026-12-16 00:00:00 Europe/Paris', true];
+        yield 'last second of January' => ['2027-01-31 23:59:59 Europe/Paris', true];
+        yield 'February' => ['2027-02-01 00:00:00 Europe/Paris', false];
+    }
+
+    #[DataProvider('bannerMoments')]
+    public function testBannerRunsFromPublicationToTheEndOfJanuary(string $now, bool $expected): void
+    {
+        self::assertSame($expected, $this->calendarAt($now)->isBannerShown(2026));
+    }
+
     private function calendarAt(string $now): YearInReviewCalendar
     {
         return new YearInReviewCalendar(new MockClock(new \DateTimeImmutable($now)));
