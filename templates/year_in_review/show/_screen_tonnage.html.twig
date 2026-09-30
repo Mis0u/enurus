@@ -1,0 +1,15 @@
+{# Variables attendues (via `only`) : screen (TonnageScreen), year (int) #}
+<p class="text-[17px] text-[#cbd5e1]">{{ 'year_in_review.show.tonnage.lead'|trans({}, 'navigation') }}</p>
+<p class="font-rajdhani text-[80px] leading-[0.9] font-bold text-cyan-ft">
+    {% include 'year_in_review/show/_weight.html.twig' with {weight: screen.tonnage} only %}
+</p>
+{% if screen.equivalence is not null %}
+    {% set object = screen.equivalence.object.value %}
+    <div class="mt-4 flex flex-col items-center gap-3 rounded-[18px] border border-rose-ft/35 bg-bg-card px-4 py-5 text-center">
+        {% include 'year_in_review/show/_objects/_' ~ object ~ '.html.twig' only %}
+        <p class="text-[17px] font-semibold">{{ ('year_in_review.show.tonnage.equivalence.' ~ object)|trans({count: screen.equivalence.count}, 'navigation') }}</p>
+    </div>
+    <p class="mt-1 text-[12px] leading-relaxed text-[#8b9bb4]">
+        {{ ('year_in_review.show.tonnage.reference.' ~ object)|trans({weight: include('year_in_review/show/_weight.html.twig', {weight: screen.equivalence.referenceWeight}, with_context=false)}, 'navigation') }}
+    </p>
+{% endif %}

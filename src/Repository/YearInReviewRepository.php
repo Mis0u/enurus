@@ -42,6 +42,18 @@ class YearInReviewRepository extends ServiceEntityRepository
     }
 
     /**
+     * Résumé ouvrable en écrans : éligible (snapshot présent) ; sinon null, la page répond 404.
+     */
+    public function findEligibleByOwnerAndYear(User $owner, int $year): ?YearInReview
+    {
+        /** @var YearInReview|null */
+        return $this->ownerAndYearQuery($owner, $year)
+            ->andWhere('r.snapshotData IS NOT NULL')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
      * Résumés de l'utilisateur jusqu'à `$latestYear` inclus, du plus récent au plus ancien.
      *
      * @return list<YearInReview>

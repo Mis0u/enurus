@@ -1,0 +1,29 @@
+{#
+    Heatmap compacte de l'écran du résumé : une colonne par semaine, sans légende (les deloads ne
+    sont pas figés, seule l'intensité compte). Mêmes couleurs que la heatmap de l'onglet Calendrier.
+    Variables attendues (via `only`) :
+    - heatmapData : HeatmapData de YearInReviewHeatmapGridBuilder (mois affiché par trimestre)
+#}
+<div class="grid grid-flow-col grid-rows-7 auto-cols-fr gap-[2px]" aria-hidden="true">
+    {% for week in heatmapData.weeks %}
+        {% for day in week.days %}
+            {% if day.level == 3 %}
+                {% set cell_color_class = 'bg-rose-ft' %}
+            {% elseif day.level == 2 %}
+                {% set cell_color_class = 'bg-rose-ft/50' %}
+            {% elseif day.level == 1 %}
+                {% set cell_color_class = 'bg-rose-ft/25' %}
+            {% else %}
+                {% set cell_color_class = 'bg-white/[0.04]' %}
+            {% endif %}
+            <span class="aspect-square rounded-[1.5px] {{ cell_color_class }}"></span>
+        {% endfor %}
+    {% endfor %}
+</div>
+<div class="mt-2 grid grid-flow-col auto-cols-fr text-[11px] text-[#8b9bb4]" aria-hidden="true">
+    {% for week in heatmapData.weeks %}
+        <span class="overflow-visible whitespace-nowrap">
+            {%- if week.showsMonthLabel -%}{{ week.days[0].date|format_date(pattern='MMM', locale=app.locale) }}{%- endif -%}
+        </span>
+    {% endfor %}
+</div>

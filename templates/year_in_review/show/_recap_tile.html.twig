@@ -1,0 +1,8 @@
+{#
+    Tuile de « En bref ».
+    Variables attendues (via `only`) : label (string), value (string), colorClass (string)
+#}
+<div class="flex flex-col gap-0.5 rounded-[14px] border border-white/[0.07] bg-bg-card px-3.5 py-3">
+    <dt class="text-[13px] text-[#8b9bb4]">{{ label }}</dt>
+    <dd class="font-rajdhani text-[32px] leading-tight font-bold {{ colorClass }}">{{ value }}</dd>
+</div>

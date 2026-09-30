@@ -1,0 +1,20 @@
+{# Variables attendues (via `only`) : screen (RecordsScreen), year (int) #}
+<div class="mb-2 flex h-16 w-16 items-center justify-center rounded-[18px] border border-amber-500/40 bg-amber-500/10 text-amber-500" aria-hidden="true">
+    <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0z"></path><path d="M17 5h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"></path></svg>
+</div>
+{% include 'year_in_review/show/_figure.html.twig' with {
+    lead: 'year_in_review.show.records.lead'|trans({}, 'navigation'),
+    value: screen.count|format_number,
+    unit: 'year_in_review.show.records.unit'|trans({count: screen.count}, 'navigation'),
+    colorClass: 'text-amber-500',
+} only %}
+{% if screen.heaviestSet is not null %}
+    <div class="mt-4 flex flex-col gap-1 rounded-[14px] border border-white/[0.07] bg-bg-card p-4">
+        <span class="text-[13px] text-[#8b9bb4]">{{ 'year_in_review.show.records.heaviest'|trans({}, 'navigation') }}</span>
+        <span class="text-base font-semibold">
+            {% include 'year_in_review/show/_exercise_name.html.twig' with {name: screen.heaviestSet.exerciseName, isPublic: screen.heaviestSet.isPublicExercise} only %}
+            · {% include 'year_in_review/show/_weight.html.twig' with {weight: screen.heaviestSet.weight} only %}
+        </span>
+        <span class="text-[13px] text-[#8b9bb4]">{{ 'year_in_review.show.records.heaviest_on'|trans({date: screen.heaviestSet.performedOn}, 'navigation') }}</span>
+    </div>
+{% endif %}

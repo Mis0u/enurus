@@ -1132,3 +1132,81 @@ year_in_review:
             weight: "Referentiegewicht"
             weight_value: "{weight, number} {unit, select, lbs {lb} other {kg}}"
         intro: "Elk jaar op 16 december ontdek je het overzicht van je trainingsjaar (van 1 januari tot 15 december). Al je overzichten blijven hier beschikbaar."
+    show:
+        badges:
+            lead: "Dit jaar behaald:"
+            unit: "{count, plural, =1 {badge} other {badges}}"
+        close: "Overzicht sluiten"
+        header: "ENURUS · {year}"
+        heatmap:
+            caption: "Hoe feller het vakje, hoe meer gewicht die dag."
+            lead: "Jouw jaar, dag na dag"
+            unit: "{count, plural, =1 {trainingsdag} other {trainingsdagen}}"
+        intro:
+            subtitle: "Van 1 januari tot 15 december: dit is alles wat je hebt bereikt."
+            title: "Jouw jaar"
+        mood:
+            lead: "Je meest voorkomende stemming"
+            percent: "{percent, number, percent}"
+            share: "van de trainingen waarbij je je stemming hebt ingevuld."
+        recap:
+            badges: "Badges"
+            mood: "Meest voorkomende stemming"
+            records: "Records"
+            reps: "Herhalingen"
+            sessions: "Trainingen"
+            streak: "Beste reeks"
+            streak_value: "{count, number} wk"
+            title: "Jouw jaar in het kort"
+            tonnage: "Gewicht"
+            top_exercise: "Favoriete oefening"
+            top_muscle: "Meest getrainde spier"
+        records:
+            heaviest: "Het zwaarst"
+            heaviest_on: "op {date, date, ::dMMMM}"
+            lead: "Verbroken:"
+            unit: "{count, plural, =1 {persoonlijk record} other {persoonlijke records}}"
+        regularity:
+            busiest_month: "Je actiefste maand: {month, date, ::MMMM}, met {count, plural, =1 {# training} other {# trainingen}}."
+            lead: "Je langste reeks zonder op te geven"
+            unit: "{count, plural, =1 {week op rij} other {weken op rij}}"
+        reps:
+            lead: "Herhaling na herhaling, dat is"
+            sets: "Verdeeld over {count, plural, =1 {# set} other {# sets}}."
+            unit: "{count, plural, =1 {herhaling} other {herhalingen}}"
+        screen_label: "Scherm {position} van {count}"
+        sessions:
+            average: "Gemiddeld {average, number} per week."
+            lead: "Dit jaar geregistreerd:"
+            unit: "{count, plural, =1 {training} other {trainingen}}"
+        slide: "dia"
+        thanks:
+            replay: "Mijn jaar opnieuw bekijken"
+            text: "Elke training telt. Tot volgend jaar voor je volgende overzicht."
+            title: "Bedankt dat je Enurus gebruikt!"
+        title: "Jouw jaar {year}"
+        tonnage:
+            equivalence:
+                african_elephant: "{count, plural, =1 {Dat is meer dan het gewicht van een Afrikaanse olifant} other {Dat is meer dan het gewicht van # Afrikaanse olifanten}}"
+                airbus_a380: "{count, plural, =1 {Dat is meer dan het gewicht van een Airbus A380} other {Dat is meer dan het gewicht van # Airbus A380's}}"
+                big_ben_bell: "{count, plural, =1 {Dat is meer dan het gewicht van de klok van de Big Ben} other {Dat is meer dan het gewicht van # Big Ben-klokken}}"
+                boeing_737: "{count, plural, =1 {Dat is meer dan het gewicht van een Boeing 737} other {Dat is meer dan het gewicht van # Boeing 737's}}"
+                grand_piano: "{count, plural, =1 {Dat is meer dan het gewicht van een concertvleugel} other {Dat is meer dan het gewicht van # concertvleugels}}"
+            lead: "In totaal getild:"
+            reference:
+                african_elephant: "Een mannelijke Afrikaanse olifant weegt ongeveer {weight}."
+                airbus_a380: "Een lege Airbus A380 weegt ongeveer {weight}."
+                big_ben_bell: "De klok van de Big Ben weegt ongeveer {weight}."
+                boeing_737: "Een lege Boeing 737-800 weegt ongeveer {weight}."
+                grand_piano: "Een Steinway D-concertvleugel weegt ongeveer {weight}."
+        top_exercises:
+            count: "{count, plural, =1 {# training} other {# trainingen}}"
+            lead: "Je favoriete oefening"
+            unit: "{count, plural, =1 {training} other {trainingen}}"
+        top_muscle:
+            lead: "De spier die je het meest hebt getraind"
+            unit: "{count, plural, =1 {set} other {sets}}"
+    weight:
+        kg: "{value, number} kg"
+        lb: "{value, number} lb"
+        t: "{value, number} t"

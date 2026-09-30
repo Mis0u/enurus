@@ -1,12 +1,13 @@
 {#
-    Année au résumé débloqué. Ses écrans arrivent avec le parcours (lien ajouté à ce moment-là).
+    Année au résumé débloqué : ouvre son parcours en écrans.
     Variables attendues (via `only`) :
     - card : App\Service\YearInReview\View\YearInReviewCard
 #}
-<article data-year-in-review-card="ready"
-         class="flex items-center gap-4 p-[18px] rounded-2xl bg-bg-card border {{ card.isUnseen ? 'border-rose-ft/45' : 'border-white/[0.07]' }}">
+<a href="{{ path('app_year_in_review_show', {year: card.year}) }}"
+   data-year-in-review-card="ready"
+   class="flex items-center gap-4 p-[18px] rounded-2xl bg-bg-card border no-underline text-[#f0f4ff] transition-ft hover:bg-bg-card-hover {{ card.isUnseen ? 'border-rose-ft/45' : 'border-white/[0.07]' }}">
     <span class="font-rajdhani text-[40px] font-bold leading-none {{ card.isUnseen ? 'text-rose-ft' : 'text-cyan-ft' }}">{{ card.year }}</span>
-    <div class="flex min-w-0 flex-col gap-1">
+    <div class="flex min-w-0 flex-1 flex-col gap-1">
         {% if card.isUnseen %}
             <span class="self-start rounded-full bg-rose-ft px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-bg-base">
                 {{ 'year_in_review.list.card.new'|trans({}, 'navigation') }}
@@ -16,4 +17,5 @@
             {{ 'year_in_review.list.card.ready'|trans({workouts: card.workoutCount, tonnage: card.tonnage, unit: card.unit.value}, 'navigation') }}
         </span>
     </div>
-</article>
+    <span class="-rotate-90 text-[#8b9bb4]" aria-hidden="true">{% include 'partials/_svg/_down_arrow.html.twig' only %}</span>
+</a>

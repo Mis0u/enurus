@@ -1,0 +1,15 @@
+{# Variables attendues (via `only`) : screen (BadgesScreen), year (int) #}
+{% include 'year_in_review/show/_figure.html.twig' with {
+    lead: 'year_in_review.show.badges.lead'|trans({}, 'navigation'),
+    value: screen.badges|length|format_number,
+    unit: 'year_in_review.show.badges.unit'|trans({count: screen.badges|length}, 'navigation'),
+    colorClass: 'text-rose-ft',
+} only %}
+<ul class="mt-5 grid grid-cols-3 gap-3">
+    {% for tile in screen.badges %}
+        <li class="flex flex-col items-center gap-2 rounded-[14px] border border-white/[0.07] bg-bg-card px-2 py-3 text-center">
+            {% include 'badge/_visual.html.twig' with {tile: tile, size: 'sm'} only %}
+            <span class="text-[12px] leading-tight font-semibold">{{ tile.name }}</span>
+        </li>
+    {% endfor %}
+</ul>

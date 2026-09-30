@@ -1,0 +1,6 @@
+{#
+    Un poids du résumé dans son unité (App\Service\YearInReview\Screen\YearInReviewWeight).
+    Variables attendues (via `only`) :
+    - weight : YearInReviewWeight
+#}
+{{- ('year_in_review.weight.' ~ weight.unit.value)|trans({value: weight.value}, 'navigation') -}}

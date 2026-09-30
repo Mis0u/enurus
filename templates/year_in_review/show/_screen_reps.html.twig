@@ -1,0 +1,8 @@
+{# Variables attendues (via `only`) : screen (RepsScreen), year (int) #}
+{% include 'year_in_review/show/_figure.html.twig' with {
+    lead: 'year_in_review.show.reps.lead'|trans({}, 'navigation'),
+    value: screen.repCount|format_number,
+    unit: 'year_in_review.show.reps.unit'|trans({count: screen.repCount}, 'navigation'),
+    colorClass: 'text-rose-ft',
+} only %}
+<p class="mt-3 text-[15px] leading-relaxed text-[#8b9bb4]">{{ 'year_in_review.show.reps.sets'|trans({count: screen.setCount}, 'navigation') }}</p>

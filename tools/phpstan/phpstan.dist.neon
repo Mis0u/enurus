@@ -14,6 +14,10 @@ parameters:
           path: ../../src/Twig/Components/*
         - message: '#^Unused .*#'
           path: ../../src/Twig/Components/*
+        # Écrans du résumé annuel : objets de vue lus uniquement par leurs templates Twig
+        # (year_in_review/show/_screen_*), comme les Twig Components ci-dessus.
+        - message: '#^Property .* is never read$#'
+          path: ../../src/Service/YearInReview/Screen/*
         # Actions CRUD EasyAdmin (reply/close/block/unblock) dispatchées par nom de méthode via le
         # paramètre de requête `crudAction`, jamais appelées depuis le code PHP lui-même.
         - message: '#^Unused .*#'

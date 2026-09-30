@@ -1,0 +1,5 @@
+{#
+    Nom d'exercice figé dans le résumé : clé du domaine `exercise` s'il est public, texte libre sinon.
+    Variables attendues (via `only`) : name (string), isPublic (bool)
+#}
+{{- isPublic ? name|trans({}, 'exercise') : name -}}

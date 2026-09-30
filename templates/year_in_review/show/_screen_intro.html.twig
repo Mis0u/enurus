@@ -1,0 +1,9 @@
+{# Variables attendues (via `only`) : screen (IntroScreen), year (int) #}
+<div class="mb-2 flex h-20 w-20 items-center justify-center rounded-[22px] border-2 border-rose-ft text-rose-ft" aria-hidden="true">
+    <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"></path></svg>
+</div>
+<h2 class="font-rajdhani text-[56px] leading-[0.95] font-bold">
+    {{ 'year_in_review.show.intro.title'|trans({}, 'navigation') }}<br>
+    <span class="text-rose-ft">{{ screen.year }}</span>
+</h2>
+<p class="text-[17px] leading-relaxed text-[#cbd5e1]">{{ 'year_in_review.show.intro.subtitle'|trans({}, 'navigation') }}</p>
