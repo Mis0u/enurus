@@ -470,6 +470,36 @@ class ExerciseSetRepository extends ServiceEntityRepository
      * Base commune (jointures + propriétaire) réutilisée par toutes les requêtes de détection de
      * records de ce repository — évite de répéter les mêmes 3 jointures dans chaque méthode.
      */
+    /**
+     * Série la plus lourde (poids effectif, comme les PR) de la plage, exercices `WEIGHT_REPS`
+     * seulement — écran Records du résumé annuel. `setMaxResults(1)` sans risque : une ligne par
+     * série, aucune collection jointe hydratée.
+     *
+     * @return array{exerciseName: string, isPublicExercise: bool, weight: float, performedAt: DateTimeImmutable}|null
+     */
+    public function findHeaviestSetInRange(User $user, DateTimeImmutable $start, DateTimeImmutable $end): ?array
+    {
+        /** @var array{exerciseName: string, isPublicExercise: bool, weight: numeric, performedAt: DateTimeImmutable}|null $row */
+        $row = $this->queryForUser($user)
+            ->select('e.name AS exerciseName', 'e.isPublic AS isPublicExercise', self::EFFECTIVE_WEIGHT_DQL . ' AS weight', 'w.performedAt AS performedAt')
+            ->andWhere('e.measurementType = :weightRepsType')
+            ->andWhere('w.performedAt >= :start')
+            ->andWhere('w.performedAt <= :end')
+            ->setParameter('weightRepsType', MeasurementType::WEIGHT_REPS)
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->orderBy('weight', 'DESC')
+            ->addOrderBy('w.performedAt', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_ARRAY);
+
+        return null === $row ? null : [
+            ...$row,
+            'weight' => (float) $row['weight'],
+        ];
+    }
+
     private function queryForUser(User $user): QueryBuilder
     {
         return $this->createQueryBuilder('es')

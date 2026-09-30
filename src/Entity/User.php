@@ -118,6 +118,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @var Collection<int, YearInReview>
+     */
+    #[ORM\OneToMany(targetEntity: YearInReview::class, mappedBy: 'owner', cascade: ['remove'], orphanRemoval: true)]
+    public Collection $yearInReviews {
+        get {
+            return $this->yearInReviews;
+        }
+    }
+
+    /**
      * @var Collection<int, UserBadge>
      */
     #[ORM\OneToMany(targetEntity: UserBadge::class, mappedBy: 'owner', cascade: ['remove'], orphanRemoval: true)]
@@ -400,6 +410,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Email annonçant le résumé annuel le 16 décembre (seulement si éligible). Actif par défaut ;
+     * se coupe depuis la page « Mes résumés ».
+     */
+    #[ORM\Column(options: [
+        'default' => true,
+    ])]
+    public bool $emailOnYearInReview = true {
+        get {
+            return $this->emailOnYearInReview;
+        }
+        set(bool $emailOnYearInReview) {
+            $this->emailOnYearInReview = $emailOnYearInReview;
+        }
+    }
+
+    /**
      * Tour guidé du dashboard, joué une seule fois : marqué vu dès son premier affichage (pas à sa
      * fin), pour qu'un utilisateur qui se reconnecte sans avoir enregistré de séance ne le revoie
      * pas. Relançable à la demande depuis la page Aide, sans toucher ce flag.
@@ -535,6 +561,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->exerciseGoals = new ArrayCollection();
         $this->deloadPeriods = new ArrayCollection();
         $this->regularityGoals = new ArrayCollection();
+        $this->yearInReviews = new ArrayCollection();
         $this->badges = new ArrayCollection();
         $this->sentProfileConnections = new ArrayCollection();
         $this->receivedProfileConnections = new ArrayCollection();

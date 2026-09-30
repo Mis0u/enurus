@@ -419,7 +419,22 @@ palier précise, préférer des dates fixes en dur.
 
 Chantiers à discuter/planifier avant l'annonce publique. Pas d'ordre de priorité figé.
 
-Aucun chantier en cours actuellement. #24 (page d'historique par exercice) a été implémenté —
+**Chantier en cours : résumé annuel « Ton année »** (5 PR : données/calcul → page + nav → écrans →
+email + bandeau → partage mobile). Règles actées :
+- **Chiffres figés** : `YearInReview` (une ligne par user et par année) stocke un snapshot JSON de valeurs
+  brutes (kg, ids, clés d'enum, noms d'exercices — clé de traduction si public), calculé **une seule fois**
+  le 16 décembre à 00h heure de Paris (`MaintenanceSchedule` → `GenerateYearInReviewsMessage`), sur les
+  séances du 1er janvier au 15 décembre. Jamais recalculé ensuite (`YearInReviewGenerator` idempotent),
+  éligibilité (≥ 5 séances, `YearInReview::MINIMUM_WORKOUT_COUNT`) comprise. Langue et unité à l'affichage.
+- **Toute date du résumé passe par `YearInReviewCalendar`** (`FIRST_YEAR = 2026`, pas de rétroactif).
+  Avant publication, rien n'existe côté utilisateur : lien absent, routes en **404**.
+- **Prévisualisation en dev** : `YEAR_IN_REVIEW_FAKE_NOW="2026-12-17 10:00"` dans `.env.local` (lu
+  uniquement sous `when@dev`, via `YearInReviewClockFactory` → service `app.year_in_review.clock`), puis
+  `app:year-in-review:generate 2026 --user=user-fixture-year-in-review@test.com`. Fixture
+  `YearInReviewFixtures` = dev only (séances futures volontaires, jamais chargées en test). En test :
+  `ClockSensitiveTrait::mockTime()`.
+
+#24 (page d'historique par exercice) a été implémenté —
 `ExerciseVoter::VIEW`, `ExerciseSetRepository::findSessionHistoryForExerciseAndUser()`,
 `ExerciseHistoryDataService`/`ExerciseHistoryChartBuilder`, `ExerciseHistoryController` (route
 `/bibliotheque/exercice/{id}/historique`, 8 locales), templates `exercise/history/*`, traductions

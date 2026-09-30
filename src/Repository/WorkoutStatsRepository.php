@@ -6,9 +6,11 @@ namespace App\Repository;
 
 use App\Entity\User;
 use App\Entity\WorkoutExercise;
+use App\Enum\Entity\Workout\WorkoutMoodEnum;
 use DateTimeImmutable;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
@@ -254,8 +256,74 @@ class WorkoutStatsRepository
     public function findMostFrequentExerciseIdsSince(User $user, DateTimeImmutable $since, int $limit): array
     {
         /** @var list<array{exerciseId: \Stringable|string}> $rows */
-        $rows = $this->entityManager->createQueryBuilder()
+        $rows = $this->mostFrequentExercisesQuery($user, $since, $limit)
             ->select('IDENTITY(we.exercise) AS exerciseId')
+            ->getQuery()
+            ->getScalarResult();
+
+        return array_map(static fn (array $row): string => (string) $row['exerciseId'], $rows);
+    }
+
+    /**
+     * Même classement que `findMostFrequentExerciseIdsSince()`, borné des deux côtés et avec le nom
+     * de l'exercice — top exercices du résumé annuel, qui fige le nom (l'exercice peut être
+     * supprimé ensuite).
+     *
+     * @return list<array{name: string, isPublic: bool, workoutCount: int}>
+     */
+    public function findMostFrequentExercisesInRange(User $user, DateTimeImmutable $start, DateTimeImmutable $end, int $limit): array
+    {
+        /** @var list<array{name: string, isPublic: bool, workoutCount: numeric}> $rows */
+        $rows = $this->mostFrequentExercisesQuery($user, $start, $limit)
+            ->select('e.name AS name', 'e.isPublic AS isPublic', 'COUNT(DISTINCT w.id) AS workoutCount')
+            ->join('we.exercise', 'e')
+            ->andWhere('w.performedAt <= :end')
+            ->setParameter('end', $end)
+            ->addGroupBy('e.name', 'e.isPublic')
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_map(static fn (array $row): array => [
+            ...$row,
+            'workoutCount' => (int) $row['workoutCount'],
+        ], $rows);
+    }
+
+    /**
+     * Nombre de séances par humeur saisie sur la plage (les séances sans humeur sont ignorées).
+     *
+     * @return array<string, int> valeur de `WorkoutMoodEnum` => nombre de séances
+     */
+    public function countMoodsInRange(User $user, DateTimeImmutable $start, DateTimeImmutable $end): array
+    {
+        /** @var list<array{mood: WorkoutMoodEnum, workoutCount: numeric}> $rows */
+        $rows = $this->workoutRepository->createQueryBuilder('w')
+            ->select('w.mood AS mood', 'COUNT(w.id) AS workoutCount')
+            ->andWhere('w.owner = :user')
+            ->andWhere('w.mood IS NOT NULL')
+            ->andWhere('w.performedAt >= :start')
+            ->andWhere('w.performedAt <= :end')
+            ->setParameter('user', $user)
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->groupBy('w.mood')
+            ->getQuery()
+            ->getArrayResult();
+
+        $counts = [];
+        foreach ($rows as $row) {
+            $counts[$row['mood']->value] = (int) $row['workoutCount'];
+        }
+
+        return $counts;
+    }
+
+    /**
+     * Agrégat par exercice, aucune collection jointe : `setMaxResults()` sans risque.
+     */
+    private function mostFrequentExercisesQuery(User $user, DateTimeImmutable $since, int $limit): QueryBuilder
+    {
+        return $this->entityManager->createQueryBuilder()
             ->from(WorkoutExercise::class, 'we')
             ->join('we.workout', 'w')
             ->andWhere('w.owner = :user')
@@ -265,11 +333,7 @@ class WorkoutStatsRepository
             ->groupBy('we.exercise')
             ->orderBy('COUNT(DISTINCT w.id)', 'DESC')
             ->addOrderBy('MAX(w.performedAt)', 'DESC')
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->getScalarResult();
-
-        return array_map(static fn (array $row): string => (string) $row['exerciseId'], $rows);
+            ->setMaxResults($limit);
     }
 
     /**

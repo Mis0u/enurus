@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\YearInReview;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
@@ -105,6 +107,28 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->setParameter('threshold', $threshold)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * Comptes à qui générer le résumé annuel de `$year` : vérifiés, pas en cours de suppression, et
+     * sans résumé pour cette année (relancer la génération ne reprend que les manquants).
+     *
+     * @return list<string>
+     */
+    public function findIdsWithoutYearInReview(int $year): array
+    {
+        /** @var list<array{id: Uuid}> $rows */
+        $rows = $this->createQueryBuilder('u')
+            ->select('u.id')
+            ->leftJoin(YearInReview::class, 'r', Join::WITH, 'r.owner = u AND r.year = :year')
+            ->andWhere('u.isVerified = true')
+            ->andWhere('u.deletionRequestedAt IS NULL')
+            ->andWhere('r.id IS NULL')
+            ->setParameter('year', $year)
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_map(static fn (array $row): string => (string) $row['id'], $rows);
     }
 
     /**

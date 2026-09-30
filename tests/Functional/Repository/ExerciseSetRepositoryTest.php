@@ -276,6 +276,59 @@ final class ExerciseSetRepositoryTest extends KernelTestCase
         $em->flush();
     }
 
+    public function testFindHeaviestSetInRangeIgnoresSetsOutsideTheRangeAndOfOtherUsers(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var ExerciseSetRepository $exerciseSetRepository */
+        $exerciseSetRepository = static::getContainer()->get(ExerciseSetRepository::class);
+
+        $user = $this->createTestUser($em, 'exercise-set-repo-test-heaviest@test.com');
+        $otherUser = $this->createTestUser($em, 'exercise-set-repo-test-heaviest-other@test.com');
+        $exercise = $this->createTestExercise($em);
+        $heavierOutsideExercise = $this->createTestExercise($em);
+
+        $this->createTestWorkout($em, $user, $exercise, new \DateTimeImmutable('2026-01-01 00:00:00'), 120.0);
+        $this->createTestWorkout($em, $user, $exercise, new \DateTimeImmutable('2026-12-15 23:59:00'), 140.0);
+        $this->createTestWorkout($em, $user, $heavierOutsideExercise, new \DateTimeImmutable('2026-12-16 08:00:00'), 200.0);
+        $this->createTestWorkout($em, $otherUser, $heavierOutsideExercise, new \DateTimeImmutable('2026-06-01 08:00:00'), 250.0);
+
+        $heaviest = $exerciseSetRepository->findHeaviestSetInRange(
+            $user,
+            new \DateTimeImmutable('2026-01-01 00:00:00'),
+            new \DateTimeImmutable('2026-12-15 23:59:59'),
+        );
+
+        self::assertEquals([
+            'exerciseName' => $exercise->name,
+            'isPublicExercise' => true,
+            'weight' => 140.0,
+            'performedAt' => new \DateTimeImmutable('2026-12-15 23:59:00'),
+        ], $heaviest);
+    }
+
+    public function testFindHeaviestSetInRangeIgnoresTimeExercises(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var ExerciseSetRepository $exerciseSetRepository */
+        $exerciseSetRepository = static::getContainer()->get(ExerciseSetRepository::class);
+
+        $user = $this->createTestUser($em, 'exercise-set-repo-test-heaviest-time@test.com');
+        $plank = $this->createTestExercise($em, MeasurementType::TIME);
+        $this->createTestTimeWorkout($em, $user, $plank, new \DateTimeImmutable('2026-03-01 08:00:00'), 60);
+
+        self::assertNull($exerciseSetRepository->findHeaviestSetInRange(
+            $user,
+            new \DateTimeImmutable('2026-01-01 00:00:00'),
+            new \DateTimeImmutable('2026-12-15 23:59:59'),
+        ));
+    }
+
     private function createTestUser(EntityManagerInterface $em, string $email): User
     {
         $user = new User();
