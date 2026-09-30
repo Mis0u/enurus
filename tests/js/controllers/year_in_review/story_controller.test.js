@@ -14,7 +14,7 @@ function stubReducedMotion(reduced) {
 function buildDom() {
     document.body.innerHTML = `
         <div data-controller="year-in-review--story"
-             data-action="keydown@window->year-in-review--story#keydown"
+             data-action="keydown@window->year-in-review--story#keydown year-in-review--share:opened->year-in-review--story#suspend year-in-review--share:closed->year-in-review--story#release"
              data-year-in-review--story-duration-value="10000"
              data-year-in-review--story-close-url-value="/fr/mes-resumes"
              data-year-in-review--story-pause-label-value="Mettre en pause"
@@ -173,6 +173,22 @@ describe('year-in-review--story controller', () => {
 
         expect(StoryTimer.prototype.start).not.toHaveBeenCalled();
         expect(document.querySelector('.pause').style.visibility).toBe('hidden');
+    });
+
+    it('stands still while suspended (share preview open) and picks up again afterwards', async () => {
+        await start();
+        const root = document.querySelector('[data-controller]');
+
+        root.dispatchEvent(new CustomEvent('year-in-review--share:opened'));
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+        tapAt(0.8);
+        expect(visibleScreens()).toEqual(['1']);
+        expect(StoryTimer.prototype.pause).toHaveBeenCalled();
+
+        root.dispatchEvent(new CustomEvent('year-in-review--share:closed'));
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+        expect(visibleScreens()).toEqual(['2']);
+        expect(StoryTimer.prototype.resume).toHaveBeenCalled();
     });
 
     it('pauses while the tab is hidden', async () => {

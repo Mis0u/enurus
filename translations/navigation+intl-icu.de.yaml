@@ -1199,6 +1199,14 @@ year_in_review:
             average: "Im Schnitt {average, number} pro Woche."
             lead: "Dieses Jahr eingetragen:"
             unit: "{count, plural, =1 {Training} other {Trainings}}"
+        share:
+            button: "Diesen Bildschirm teilen"
+            cancel: "Abbrechen"
+            error: "Das Bild konnte nicht erstellt werden. Versuche es erneut."
+            preview: "Vorschau des zu teilenden Bildes"
+            send: "Teilen"
+            site: "enurus.fr"
+            title: "Diesen Bildschirm teilen"
         slide: "Folie"
         thanks:
             replay: "Mein Jahr noch mal ansehen"

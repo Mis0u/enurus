@@ -1199,6 +1199,14 @@ year_in_review:
             average: "{average, number} per week on average."
             lead: "This year, you logged"
             unit: "{count, plural, =1 {workout} other {workouts}}"
+        share:
+            button: "Share this screen"
+            cancel: "Cancel"
+            error: "The image couldn't be prepared. Try again."
+            preview: "Preview of the image to share"
+            send: "Share"
+            site: "enurus.fr"
+            title: "Share this screen"
         slide: "slide"
         thanks:
             replay: "Replay my year"

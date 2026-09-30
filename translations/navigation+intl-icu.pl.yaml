@@ -1213,6 +1213,14 @@ year_in_review:
             average: "Średnio {average, number} w tygodniu."
             lead: "W tym roku zapisano"
             unit: "{count, plural, =1 {trening} few {treningi} many {treningów} other {treningu}}"
+        share:
+            button: "Udostępnij ten ekran"
+            cancel: "Anuluj"
+            error: "Nie udało się przygotować obrazu. Spróbuj ponownie."
+            preview: "Podgląd obrazu do udostępnienia"
+            send: "Udostępnij"
+            site: "enurus.fr"
+            title: "Udostępnij ten ekran"
         slide: "slajd"
         thanks:
             replay: "Obejrzyj mój rok ponownie"

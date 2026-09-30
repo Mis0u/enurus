@@ -1199,6 +1199,14 @@ year_in_review:
             average: "Gemiddeld {average, number} per week."
             lead: "Dit jaar geregistreerd:"
             unit: "{count, plural, =1 {training} other {trainingen}}"
+        share:
+            button: "Dit scherm delen"
+            cancel: "Annuleren"
+            error: "De afbeelding kon niet worden voorbereid. Probeer het opnieuw."
+            preview: "Voorbeeld van de te delen afbeelding"
+            send: "Delen"
+            site: "enurus.fr"
+            title: "Dit scherm delen"
         slide: "dia"
         thanks:
             replay: "Mijn jaar opnieuw bekijken"

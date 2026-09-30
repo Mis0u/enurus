@@ -1199,6 +1199,14 @@ year_in_review:
             average: "In media {average, number} a settimana."
             lead: "Quest'anno hai registrato"
             unit: "{count, plural, =1 {allenamento} other {allenamenti}}"
+        share:
+            button: "Condividi questa schermata"
+            cancel: "Annulla"
+            error: "Impossibile preparare l'immagine. Riprova."
+            preview: "Anteprima dell'immagine da condividere"
+            send: "Condividi"
+            site: "enurus.fr"
+            title: "Condividi questa schermata"
         slide: "diapositiva"
         thanks:
             replay: "Rivedi il mio anno"

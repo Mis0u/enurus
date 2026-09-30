@@ -427,6 +427,9 @@
       max-width: 96rem;
     }
   }
+  .m-auto {
+    margin: auto;
+  }
   .-mx-7 {
     margin-inline: calc(var(--spacing) * -7);
   }
@@ -766,6 +769,9 @@
   .h-\[220px\] {
     height: 220px;
   }
+  .h-\[720px\] {
+    height: 720px;
+  }
   .h-auto {
     height: auto;
   }
@@ -789,6 +795,9 @@
   }
   .max-h-96 {
     max-height: calc(var(--spacing) * 96);
+  }
+  .max-h-\[60svh\] {
+    max-height: 60svh;
   }
   .max-h-\[65vh\] {
     max-height: 65vh;
@@ -1015,11 +1024,17 @@
   .w-\[260px\] {
     width: 260px;
   }
+  .w-\[405px\] {
+    width: 405px;
+  }
   .w-\[540px\] {
     width: 540px;
   }
   .w-\[calc\(100\%-40px\)\] {
     width: calc(100% - 40px);
+  }
+  .w-\[min\(90vw\,380px\)\] {
+    width: min(90vw, 380px);
   }
   .w-auto {
     width: auto;
@@ -1677,6 +1692,9 @@
       border-color: color-mix(in oklab, var(--color-cyan-500) 25%, transparent);
     }
   }
+  .border-cyan-ft {
+    border-color: var(--color-cyan-ft);
+  }
   .border-cyan-ft\/25 {
     border-color: color-mix(in srgb, #06b6d4 25%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1693,6 +1711,12 @@
     border-color: color-mix(in srgb, #06b6d4 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       border-color: color-mix(in oklab, var(--color-cyan-ft) 40%, transparent);
+    }
+  }
+  .border-cyan-ft\/45 {
+    border-color: color-mix(in srgb, #06b6d4 45%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-cyan-ft) 45%, transparent);
     }
   }
   .border-cyan-ft\/60 {
@@ -2644,6 +2668,9 @@
   .pb-2\.5 {
     padding-bottom: calc(var(--spacing) * 2.5);
   }
+  .pb-5 {
+    padding-bottom: calc(var(--spacing) * 5);
+  }
   .pb-6 {
     padding-bottom: calc(var(--spacing) * 6);
   }
@@ -2910,6 +2937,10 @@
   .tracking-\[0\.6px\] {
     --tw-tracking: 0.6px;
     letter-spacing: 0.6px;
+  }
+  .tracking-\[0\.08em\] {
+    --tw-tracking: 0.08em;
+    letter-spacing: 0.08em;
   }
   .tracking-\[0\.12em\] {
     --tw-tracking: 0.12em;
@@ -3718,6 +3749,14 @@
   .placeholder\:text-slate-500 {
     &::placeholder {
       color: var(--color-slate-500);
+    }
+  }
+  .backdrop\:bg-black\/75 {
+    &::backdrop {
+      background-color: color-mix(in srgb, #000 75%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-black) 75%, transparent);
+      }
     }
   }
   .after\:absolute {
