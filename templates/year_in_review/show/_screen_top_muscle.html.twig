@@ -13,7 +13,7 @@
             {% include 'SVG_BODY/' ~ screen.gender.value ~ '/back.html.twig' only %}
         </div>
     </div>
-    <p class="flex items-baseline gap-2">
+    <p class="flex items-baseline justify-center gap-2">
         <span class="font-rajdhani text-[64px] leading-[0.9] font-bold">{{ screen.setCount|format_number }}</span>
         <span class="text-[17px] text-[#cbd5e1]">{{ 'year_in_review.show.top_muscle.unit'|trans({count: screen.setCount}, 'navigation') }}</span>
     </p>
