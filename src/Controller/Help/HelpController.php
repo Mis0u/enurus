@@ -6,6 +6,7 @@ namespace App\Controller\Help;
 
 use App\Enum\Help\HelpSectionEnum;
 use App\Repository\FeatureSettingRepository;
+use App\Service\YearInReview\YearInReviewNavigationState;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -30,15 +31,34 @@ final class HelpController extends AbstractController
 {
     public function __construct(
         private readonly FeatureSettingRepository $featureSettingRepository,
+        private readonly YearInReviewNavigationState $yearInReviewNavigationState,
     ) {
     }
 
     public function __invoke(): Response
     {
         return $this->render('help/index.html.twig', [
-            'sections' => HelpSectionEnum::cases(),
+            'sections' => $this->visibleSections(),
             'pointParams' => $this->pointParams(),
         ]);
+    }
+
+    /**
+     * Le résumé annuel n'est décrit qu'une fois publié : l'Aide ne doit pas l'annoncer avant son
+     * lien et sa page.
+     *
+     * @return list<HelpSectionEnum>
+     */
+    private function visibleSections(): array
+    {
+        if ($this->yearInReviewNavigationState->isVisible()) {
+            return HelpSectionEnum::cases();
+        }
+
+        return array_values(array_filter(
+            HelpSectionEnum::cases(),
+            static fn (HelpSectionEnum $section): bool => HelpSectionEnum::YEAR_IN_REVIEW !== $section,
+        ));
     }
 
     /**

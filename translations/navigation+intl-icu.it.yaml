@@ -152,8 +152,10 @@ dashboard:
     more: "Altro"
     more_notification: "Novità in questo menu"
     my_badges: "I miei badge"
+    my_recaps: "I miei riepiloghi"
     my_routines: Le mie routine
     my_workouts: I miei allenamenti
+    recap_unseen: "Nuovo riepilogo da scoprire"
     save_first_workout: Registra il tuo primo allenamento
     save_workout: Registra il tuo allenamento
     setting: Impostazioni
@@ -1102,3 +1104,31 @@ workout:
         title: Tipo di allenamento
     weight: Peso
     weight_bodyweight: Peso (extra)
+year_in_review:
+    equivalence:
+        african_elephant: "Elefante africano maschio"
+        airbus_a380: "Airbus A380 (a vuoto)"
+        big_ben_bell: "Campana del Big Ben"
+        boeing_737: "Boeing 737-800 (a vuoto)"
+        grand_piano: "Pianoforte da concerto Steinway D"
+    list:
+        card:
+            new: "Nuovo"
+            not_enough: "{count, plural, =1 {# allenamento quest'anno} other {# allenamenti quest'anno}}: ancora {missing} e avresti sbloccato il tuo riepilogo! Appuntamento al prossimo 16 dicembre per scoprire il tuo anno."
+            pending: "Il tuo riepilogo è in preparazione: torna tra qualche minuto."
+            ready: "{workouts, plural, =1 {# allenamento} other {# allenamenti}} · {tonnage, number} {unit, select, lbs {lb} other {t}}"
+        email:
+            feedback:
+                success: "Preferenza aggiornata"
+            hint: "Inviata il 16 dicembre, solo se il tuo riepilogo è sbloccato."
+            label: "Avvisami via email quando il mio riepilogo è pronto"
+            title: "Notifiche"
+        empty: "Il tuo primo riepilogo arriverà il prossimo 16 dicembre. Fino ad allora, ogni allenamento conta!"
+        equivalence:
+            badge: "Admin"
+            object: "Oggetto"
+            rule: "La schermata Volume mostra l'oggetto più pesante sollevato almeno una volta, numero arrotondato per difetto."
+            title: "Scala delle equivalenze"
+            weight: "Peso di riferimento"
+            weight_value: "{weight, number} {unit, select, lbs {lb} other {kg}}"
+        intro: "Ogni anno, il 16 dicembre, scopri il riepilogo del tuo anno di allenamento (dal 1° gennaio al 15 dicembre). Tutti i tuoi riepiloghi restano consultabili qui."

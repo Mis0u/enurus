@@ -152,8 +152,10 @@ dashboard:
     more: "More"
     more_notification: "New activity in this menu"
     my_badges: "My badges"
+    my_recaps: "My recaps"
     my_routines: My routines
     my_workouts: My workouts
+    recap_unseen: "New recap to discover"
     save_first_workout: Log your first workout
     save_workout: Log your workout
     setting: Settings
@@ -1102,3 +1104,31 @@ workout:
         title: Workout type
     weight: Weight
     weight_bodyweight: Weight (extra)
+year_in_review:
+    equivalence:
+        african_elephant: "Male African elephant"
+        airbus_a380: "Airbus A380 (empty)"
+        big_ben_bell: "Big Ben's bell"
+        boeing_737: "Boeing 737-800 (empty)"
+        grand_piano: "Steinway D concert grand piano"
+    list:
+        card:
+            new: "New"
+            not_enough: "{count, plural, =1 {# workout this year} other {# workouts this year}}: {missing} more and you'd have unlocked your recap! See you next December 16th to discover your year."
+            pending: "Your recap is being prepared: come back in a few minutes."
+            ready: "{workouts, plural, =1 {# workout} other {# workouts}} · {tonnage, number} {unit, select, lbs {lb} other {t}}"
+        email:
+            feedback:
+                success: "Preference updated"
+            hint: "Sent on December 16th, only if your recap is unlocked."
+            label: "Email me when my recap is ready"
+            title: "Notifications"
+        empty: "Your first recap will arrive next December 16th. Until then, every workout counts!"
+        equivalence:
+            badge: "Admin"
+            object: "Object"
+            rule: "The Volume screen shows the heaviest object lifted at least once, count rounded down."
+            title: "Equivalence scale"
+            weight: "Reference weight"
+            weight_value: "{weight, number} {unit, select, lbs {lb} other {kg}}"
+        intro: "Every year on December 16th, discover the recap of your training year (January 1st to December 15th). All your recaps stay available here."

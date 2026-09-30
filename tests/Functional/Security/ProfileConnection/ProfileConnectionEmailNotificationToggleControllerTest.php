@@ -17,7 +17,7 @@ final class ProfileConnectionEmailNotificationToggleControllerTest extends WebTe
 
     private const string TOGGLE_URL = '/fr/connexions/notifications';
 
-    private const string TOKEN_ATTRIBUTE = 'data-profile-connection--email-notification-csrf-token-value';
+    private const string TOKEN_ATTRIBUTE = 'data-email-notification-toggle-csrf-token-value';
 
     public function testRequestEmailsAreOnByDefault(): void
     {

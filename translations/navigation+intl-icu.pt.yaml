@@ -152,8 +152,10 @@ dashboard:
     more: "Mais"
     more_notification: "Novidades neste menu"
     my_badges: "As minhas insígnias"
+    my_recaps: "Os meus resumos"
     my_routines: As minhas rotinas
     my_workouts: Os meus treinos
+    recap_unseen: "Novo resumo para descobrir"
     save_first_workout: Regista o teu primeiro treino
     save_workout: Regista o teu treino
     setting: Definições
@@ -1102,3 +1104,31 @@ workout:
         title: Tipo de treino
     weight: Peso
     weight_bodyweight: Peso (extra)
+year_in_review:
+    equivalence:
+        african_elephant: "Elefante-africano macho"
+        airbus_a380: "Airbus A380 (vazio)"
+        big_ben_bell: "Sino do Big Ben"
+        boeing_737: "Boeing 737-800 (vazio)"
+        grand_piano: "Piano de cauda Steinway D"
+    list:
+        card:
+            new: "Novo"
+            not_enough: "{count, plural, =1 {# treino este ano} other {# treinos este ano}}: com mais {missing} terias desbloqueado o teu resumo! Encontramo-nos a 16 de dezembro do próximo ano para descobrires o teu ano."
+            pending: "O teu resumo está a ser preparado: volta dentro de alguns minutos."
+            ready: "{workouts, plural, =1 {# treino} other {# treinos}} · {tonnage, number} {unit, select, lbs {lb} other {t}}"
+        email:
+            feedback:
+                success: "Preferência atualizada"
+            hint: "Enviado a 16 de dezembro, apenas se o teu resumo estiver desbloqueado."
+            label: "Avisa-me por email quando o meu resumo estiver pronto"
+            title: "Notificações"
+        empty: "O teu primeiro resumo chega a 16 de dezembro. Até lá, cada treino conta!"
+        equivalence:
+            badge: "Admin"
+            object: "Objeto"
+            rule: "O ecrã Volume mostra o objeto mais pesado levantado pelo menos uma vez, com o número arredondado para baixo."
+            title: "Escala de equivalências"
+            weight: "Peso de referência"
+            weight_value: "{weight, number} {unit, select, lbs {lb} other {kg}}"
+        intro: "Todos os anos, a 16 de dezembro, descobre o resumo do teu ano de treino (de 1 de janeiro a 15 de dezembro). Todos os teus resumos continuam disponíveis aqui."

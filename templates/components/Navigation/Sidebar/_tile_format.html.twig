@@ -12,4 +12,7 @@
             {{ this.totalNotification }}
         </span>
     {% endif %}
+    {% if this.dot %}
+        {% include 'components/Navigation/Sidebar/_dot.html.twig' with {extraClass: 'tile-dot absolute top-2.5 right-2.5', label: this.dotLabel} only %}
+    {% endif %}
 </a>

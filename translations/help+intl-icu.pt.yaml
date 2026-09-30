@@ -92,6 +92,15 @@ section:
             list: "Os teus treinos do mais recente ao mais antigo, filtráveis por data, semana, mês, rotina ou músculo trabalhado."
             regularity_goal: "Ainda em « Calendário », define um objetivo de regularidade: por exemplo 3 treinos por semana durante 4 semanas, ou 1 treino por dia durante 2 semanas. A duração escolhe-se em semanas inteiras de 7 dias, a partir da data de início. Cada dia ou semana tem de atingir a sua quota (dois treinos no mesmo dia contam como dois). Um objetivo não se acumula com uma semana de descanso: não podes programar um durante o outro. Acompanha o teu progresso no widget « Objetivo de regularidade » do teu painel. Um só objetivo de cada vez, que podes abandonar. Desafio cumprido? Uma celebração espera-te assim que registares o treino que o completa."
         title: "Os meus treinos"
+    year_in_review:
+        intro: "Todos os 16 de dezembro, o teu ano de treino resumido em poucos ecrãs."
+        open: "Ver os meus resumos"
+        points:
+            email: "Um email avisa-te no próprio dia. Podes desativá-lo em « Os meus resumos »."
+            frozen: "Os números ficam fixados a 16 de dezembro: um treino adicionado ou alterado depois já não muda o teu resumo."
+            what: "Conta os teus treinos de 1 de janeiro a 15 de dezembro. Precisas de pelo menos 5 treinos no ano para o desbloquear."
+            where: "Encontra todos os teus resumos em « Os meus resumos », por baixo de « As minhas insígnias »."
+        title: "O teu ano"
 summary: "Índice"
 title: "Ajuda"
 tour:

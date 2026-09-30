@@ -92,6 +92,15 @@ section:
             list: "I tuoi allenamenti dal più recente al più vecchio, filtrabili per data, settimana, mese, routine o muscolo allenato."
             regularity_goal: "Sempre in « Calendario », fissati un obiettivo di regolarità: per esempio 3 allenamenti a settimana per 4 settimane, o 1 allenamento al giorno per 2 settimane. La durata si sceglie in settimane intere di 7 giorni, dalla data di inizio. Ogni giorno o settimana deve raggiungere la sua quota (due allenamenti nello stesso giorno contano per due). Un obiettivo non si somma a una settimana di riposo: impossibile programmare l'uno durante l'altro. Segui i tuoi progressi nel widget « Obiettivo di regolarità » della dashboard. Un solo obiettivo alla volta, che puoi abbandonare. Sfida riuscita? Ti aspetta una celebrazione appena registri l'allenamento che la completa."
         title: "I miei allenamenti"
+    year_in_review:
+        intro: "Ogni 16 dicembre, il tuo anno di allenamento riassunto in poche schermate."
+        open: "Vedi i miei riepiloghi"
+        points:
+            email: "Un'email ti avvisa il giorno stesso. Puoi disattivarla da « I miei riepiloghi »."
+            frozen: "I numeri vengono fissati il 16 dicembre: un allenamento aggiunto o modificato dopo non cambia più il tuo riepilogo."
+            what: "Conta i tuoi allenamenti dal 1° gennaio al 15 dicembre. Servono almeno 5 allenamenti nell'anno per sbloccarlo."
+            where: "Ritrova tutti i tuoi riepiloghi in « I miei riepiloghi », sotto « I miei badge »."
+        title: "Il tuo anno"
 summary: "Indice"
 title: "Aiuto"
 tour:

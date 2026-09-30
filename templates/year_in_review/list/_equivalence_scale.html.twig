@@ -1,0 +1,34 @@
+{#
+    Réservé à l'admin (données passées vides sinon) : échelle des équivalences de l'écran Tonnage,
+    repliée par défaut, pour vérifier les poids de référence.
+    Variables attendues (via `only`) :
+    - rows : list<App\Service\YearInReview\View\TonnageEquivalenceRow>
+#}
+<details data-equivalence-scale class="group rounded-2xl border border-amber-500/35 bg-bg-card/50 px-[18px]">
+    <summary class="flex min-h-12 cursor-pointer items-center gap-2.5 text-sm font-semibold text-amber-500 marker:content-none">
+        {{ 'year_in_review.list.equivalence.title'|trans({}, 'navigation') }}
+        <span class="rounded-full bg-amber-500 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-bg-base">
+            {{ 'year_in_review.list.equivalence.badge'|trans({}, 'navigation') }}
+        </span>
+        <span class="ml-auto transition-transform group-open:rotate-180" aria-hidden="true">
+            {% include 'partials/_svg/_down_arrow.html.twig' only %}
+        </span>
+    </summary>
+    <p class="mb-3 text-[13px] leading-relaxed text-[#8b9bb4]">{{ 'year_in_review.list.equivalence.rule'|trans({}, 'navigation') }}</p>
+    <table class="mb-4 w-full text-left text-[13px]">
+        <thead class="text-[#8b9bb4]">
+            <tr>
+                <th scope="col" class="py-1.5 font-medium">{{ 'year_in_review.list.equivalence.object'|trans({}, 'navigation') }}</th>
+                <th scope="col" class="py-1.5 text-right font-medium">{{ 'year_in_review.list.equivalence.weight'|trans({}, 'navigation') }}</th>
+            </tr>
+        </thead>
+        <tbody class="text-[#f0f4ff]">
+            {% for row in rows %}
+                <tr class="border-t border-white/[0.07]">
+                    <td class="py-2">{{ ('year_in_review.equivalence.' ~ row.object.value)|trans({}, 'navigation') }}</td>
+                    <td class="py-2 text-right tabular-nums">{{ 'year_in_review.list.equivalence.weight_value'|trans({weight: row.weight, unit: row.unit.value}, 'navigation') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</details>

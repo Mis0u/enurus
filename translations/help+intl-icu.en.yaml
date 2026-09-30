@@ -92,6 +92,15 @@ section:
             list: "Your workouts from newest to oldest, filterable by date, week, month, routine or muscle worked."
             regularity_goal: "Still in “Calendar”, set yourself a regularity goal: for example 3 sessions per week for 4 weeks, or 1 session per day for 2 weeks. The duration is chosen in whole 7-day weeks, from the start date. Each day or week must reach its quota (two workouts on the same day count as two). A goal can't be combined with a rest week: you can't plan one during the other. Follow your progress on the “Regularity goal” widget of your dashboard. One goal at a time, which you can abandon. Challenge completed? A celebration awaits you as soon as you log the session that completes it."
         title: "My workouts"
+    year_in_review:
+        intro: "Every December 16th, your training year summed up in a few screens."
+        open: "See my recaps"
+        points:
+            email: "An email lets you know on the day. You can turn it off from “My recaps”."
+            frozen: "Figures are frozen on December 16th: a workout added or edited afterwards no longer changes your recap."
+            what: "It counts your workouts from January 1st to December 15th. You need at least 5 workouts in the year to unlock it."
+            where: "Find all your recaps in “My recaps”, below “My badges”."
+        title: "Your year"
 summary: "Contents"
 title: "Help"
 tour:

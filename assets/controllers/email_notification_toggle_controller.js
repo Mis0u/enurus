@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
-import { showSuccessToast } from '../../utils/toast.js';
+import { showSuccessToast } from '../utils/toast.js';
 
-// Interrupteur « email à chaque demande de connexion » de la page Connexions : enregistré à la
+// Interrupteur d'un email de notification (demande de connexion, résumé annuel) : enregistré à la
 // volée, remis dans son état précédent si le serveur refuse ou si le réseau échoue.
 export default class extends Controller {
     static values = {

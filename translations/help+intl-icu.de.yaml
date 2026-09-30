@@ -92,6 +92,15 @@ section:
             list: "Deine Trainings vom neuesten zum ältesten, filterbar nach Datum, Woche, Monat, Routine oder trainiertem Muskel."
             regularity_goal: "Ebenfalls unter „Kalender“ setzt du dir ein Regelmäßigkeitsziel: zum Beispiel 3 Einheiten pro Woche für 4 Wochen oder 1 Einheit pro Tag für 2 Wochen. Die Dauer wählst du in ganzen Wochen zu 7 Tagen ab dem Startdatum. Jeder Tag bzw. jede Woche muss sein Soll erreichen (zwei Trainings am selben Tag zählen doppelt). Ein Ziel lässt sich nicht mit einer Erholungswoche kombinieren: Das eine kann nicht während des anderen geplant werden. Verfolge deinen Fortschritt im Widget „Regelmäßigkeitsziel“ deiner Übersicht. Immer nur ein Ziel, das du aufgeben kannst. Challenge geschafft? Sobald du die Einheit erfasst, die sie abschließt, wartet eine Feier auf dich."
         title: "Meine Trainings"
+    year_in_review:
+        intro: "Jeden 16. Dezember: dein Trainingsjahr in wenigen Bildschirmen zusammengefasst."
+        open: "Meine Rückblicke ansehen"
+        points:
+            email: "Eine E-Mail informiert dich am Stichtag. Du kannst sie unter „Meine Rückblicke“ abschalten."
+            frozen: "Die Zahlen werden am 16. Dezember festgeschrieben: Ein später hinzugefügtes oder geändertes Training ändert deinen Rückblick nicht mehr."
+            what: "Er zählt deine Trainings vom 1. Januar bis 15. Dezember. Du brauchst mindestens 5 Trainings im Jahr, um ihn freizuschalten."
+            where: "Alle deine Rückblicke findest du unter „Meine Rückblicke“, unterhalb von „Meine Abzeichen“."
+        title: "Dein Jahr"
 summary: "Inhalt"
 title: "Hilfe"
 tour:

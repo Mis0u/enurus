@@ -1,15 +1,15 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { Application } from '@hotwired/stimulus';
 
-vi.mock('../../../../assets/utils/toast.js', () => ({
+vi.mock('../../../assets/utils/toast.js', () => ({
     showSuccessToast: vi.fn(),
     showErrorToast: vi.fn(),
 }));
 
-const { showSuccessToast } = await import('../../../../assets/utils/toast.js');
-const EmailNotificationController = (await import('../../../../assets/controllers/profile_connection/email_notification_controller.js')).default;
+const { showSuccessToast } = await import('../../../assets/utils/toast.js');
+const EmailNotificationController = (await import('../../../assets/controllers/email_notification_toggle_controller.js')).default;
 
-describe('profile-connection--email-notification controller', () => {
+describe('email-notification-toggle controller', () => {
     let application;
 
     const checkbox = () => document.querySelector('input[type="checkbox"]');
@@ -24,16 +24,16 @@ describe('profile-connection--email-notification controller', () => {
         vi.clearAllMocks();
 
         document.body.innerHTML = `
-            <section data-controller="profile-connection--email-notification"
-                     data-profile-connection--email-notification-url-value="/connexions/notifications"
-                     data-profile-connection--email-notification-csrf-token-value="token"
-                     data-profile-connection--email-notification-success-message-value="Préférence mise à jour">
-                <input type="checkbox" checked data-action="change->profile-connection--email-notification#toggle">
+            <section data-controller="email-notification-toggle"
+                     data-email-notification-toggle-url-value="/connexions/notifications"
+                     data-email-notification-toggle-csrf-token-value="token"
+                     data-email-notification-toggle-success-message-value="Préférence mise à jour">
+                <input type="checkbox" checked data-action="change->email-notification-toggle#toggle">
             </section>
         `;
 
         application = Application.start();
-        application.register('profile-connection--email-notification', EmailNotificationController);
+        application.register('email-notification-toggle', EmailNotificationController);
     });
 
     afterEach(() => {

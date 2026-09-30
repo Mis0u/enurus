@@ -1,0 +1,8 @@
+{#
+    Point bleu d'une entrée de navigation (nouveauté pas encore ouverte, sans compteur).
+    Variables attendues (via `only`) :
+    - extraClass : string — positionnement propre au format de l'entrée
+    - label : string — texte lu par les lecteurs d'écran
+#}
+<span class="{{ extraClass }} w-2.5 h-2.5 rounded-full bg-cyan-ft" aria-hidden="true"></span>
+<span class="sr-only">{{ label }}</span>
