@@ -113,6 +113,14 @@ Règles :
 
 ## Sécurité
 
+En-têtes de sécurité (`X-Frame-Options: DENY`, `frame-ancestors 'none'`, `nosniff`,
+`Referrer-Policy`, `Permissions-Policy`) posés par `SecurityHeadersListener` ; pas encore de CSP
+complète (scripts/styles inline). HSTS est géré par Cloudflare. `trusted_proxies` (prod) liste les
+plages Cloudflare : sans elles, `getClientIp()` renvoie l'IP du nœud Cloudflare et tous les
+limiteurs par IP sont partagés entre visiteurs. Les options de cookie de session
+(`cookie_secure`, `cookie_samesite`) restent déclarées explicitement : le cookie remember-me ne les
+hérite que si elles sont écrites.
+
 Un Voter par entité avec attributs `_VIEW`/`_EDIT`/`_DELETE` (ex. `WorkoutVoter`, `RoutineVoter`,
 `ExerciseVoter`). Règle unique et centralisée : `$entity->owner === $user`. Jamais de vérification
 de propriété dupliquée dans un controller. Pas de voter `_LIST` : une liste n'est pas une ressource
@@ -127,7 +135,10 @@ falsifiable) mais barrière de base contre les appels directs, doublée d'une vr
 utilisé par tous les controllers de suppression (`RoutineDeleteController`, `WorkoutDeleteController`,
 `ExerciseDeleteController`, `SettingsAvatarDeleteController`, `ContactThreadDeleteController`).
 Le token est généré via `csrf_token('<entité>_delete_' ~ entity.id)` en Twig, transmis en header
-`X-CSRF-Token` par `assets/utils/delete_confirmation.js` (`sendDeleteRequest()`). En test, jamais
+`X-CSRF-Token` par `assets/utils/delete_confirmation.js` (`sendDeleteRequest()`). Même en-tête pour les
+uploads en `fetch` (avatar, photo de séance) via `ValidatesCsrfHeaderTrait` (que
+`ValidatesDeleteRequestTrait` utilise), avec un identifiant fixe (`settings_avatar_upload`,
+`workout_photo_upload` — à la création la séance n'a pas encore d'id). En test, jamais
 régénérer le token via `CsrfTokenManagerInterface::getToken()` hors requête
 (`SessionNotFoundException`) — le lire depuis le DOM déjà rendu via `Crawler`
 (`FunctionalTestTrait::csrfTokenFromPage()`).
@@ -187,6 +198,9 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
 - `ImageUploadService` générique (ne connaît ni Workout ni User), paramétré par `$context`
   (sous-dossier) + `$ownerId`. UUID v4 comme nom de fichier stocké (empêche collision et path
   traversal). `writeStream`, jamais `write` (fichiers 5 Mo).
+- Toute image uploadée est ré-encodée par `ImageMetadataStripper` (GD) avant stockage : plus
+  aucune métadonnée (EXIF/GPS des photos de téléphone) dans des fichiers publics, orientation EXIF
+  appliquée aux pixels. `ext-gd` et `ext-exif` sont donc des dépendances de prod (`require`).
 - Service métier dédié par entité (`WorkoutPhotoService`, `UserAvatarService`) qui orchestre :
   remplace, persiste le nouveau chemin, **supprime l'ancien fichier après le flush** (si le flush
   échoue, l'ancien fichier est préservé).
