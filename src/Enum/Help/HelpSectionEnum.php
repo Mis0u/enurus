@@ -38,7 +38,7 @@ enum HelpSectionEnum: string
             self::DASHBOARD => ['progressive', 'blocks', 'customize'],
             self::BADGES => ['families', 'legend', 'where'],
             self::YEAR_IN_REVIEW => ['what', 'where', 'frozen', 'email'],
-            self::CONNECTIONS => ['principle', 'share', 'request', 'control'],
+            self::CONNECTIONS => ['principle', 'share', 'request', 'invite', 'control'],
             self::MESSAGING => ['contact', 'answer'],
             self::SETTINGS => ['profile', 'unit', 'bodyweight', 'export', 'account'],
         };

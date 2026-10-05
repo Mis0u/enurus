@@ -12,6 +12,7 @@ section:
         open: "Vedi le mie connessioni"
         points:
             control: "Scegli tu cosa vedono le tue connessioni: i tuoi allenamenti (facoltativo) e i blocchi della tua dashboard. Puoi rimuovere una connessione o interrompere la condivisione in qualsiasi momento."
+            invite: "Un amico non ha ancora un account? Inviagli il tuo link da « Invita un amico »: appena conferma l'iscrizione, siete connessi, senza richieste da accettare."
             principle: "Una volta connessi, ognuno vede la dashboard dell'altro, in sola lettura."
             request: "Inserisci il codice di un amico in « Aggiungi una connessione »: riceve la tua richiesta (e un'email, disattivabile) e può accettarla o rifiutarla."
             share: "Attiva prima « Condividi il mio profilo »: ottieni un codice da dare ai tuoi amici, nella forma Alias#CODICE."

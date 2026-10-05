@@ -129,13 +129,14 @@ contact:
         body: |-
             Hey {nickname}!
 
-            The guided tour showed you the essentials. One more tip:
+            {invitation}The guided tour showed you the essentials. One more tip:
 
             🗂️ <a href="{routine_url}">Routines</a> — group the exercises you often do together (e.g. "Push day") to add them in one click when you log a workout.
 
             Any question? Everything is explained in the <a href="{help_url}">Help</a> page, feature by feature.
 
             Have a great workout! 🔥
+        invitation: "🤝 Thanks to {nickname}'s invitation, you're now connected: find their dashboard in <a href=\"{connections_url}\">Connections</a>."
         subject: "Welcome to {brand} 🎉"
 
 dashboard:
@@ -508,6 +509,13 @@ profile_connection:
         title: "{nickname}'s dashboard"
         view_workouts: "View their workouts"
     email:
+        invitation_accepted:
+            body: "{nickname} just created an account on {brand} with your invitation link. You're now connected: you can each see the other's dashboard."
+            cta: "See my connections"
+            subject: "{nickname} accepted your invitation"
+            title: "Your invitation was accepted"
+            unsubscribe: "Stop receiving these emails"
+            why: "You're receiving this email because someone signed up with your invitation link."
         request:
             body: "{nickname} would like to connect with you on {brand}. If you accept, you will each be able to see the other's dashboard."
             cta: "View the request"
@@ -549,9 +557,18 @@ profile_connection:
             empty: "You don't have any connection yet."
             title: "My connections"
         intro: "Once a request is accepted, you each see the other's dashboard."
+        invitation:
+            copy: "Copy link"
+            explanation: "Send this link to a friend who doesn't have an account yet: when they sign up, you'll be connected automatically. Regenerating your share code disables links already sent."
+            feedback:
+                copied: "Link copied"
+            share: "Share"
+            share_text: "Join me on {brand} to track our workouts!"
+            sharing_required_hint: "Turn on profile sharing above to invite a friend."
+            title: "Invite a friend"
         new_workout: "New workout since your last visit"
         notifications:
-            email_on_request: "Email me when I receive a connection request"
+            email_on_request: "Email me when I receive a connection request or an invited friend joins"
             feedback:
                 success: "Preference updated"
             title: "Notifications"
@@ -607,6 +624,9 @@ registration:
         welcome: Welcome to {brand}! Your first workout is waiting for you
     email_sent_to: "A confirmation email has been sent to {email}."
     have_an_account: Already have an account?
+    invitation:
+        explanation: "When you create your account, you'll be connected automatically: you'll each see the other's dashboard. Your profile will therefore be shared with your connections; you can turn sharing off at any time from the Connections page."
+        title: "Invitation from {nickname}"
     nickname:
         label: Choose your alias
         placeholder: What name will you go by?

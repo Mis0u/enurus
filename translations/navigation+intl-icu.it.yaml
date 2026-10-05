@@ -129,13 +129,14 @@ contact:
         body: |-
             Ciao {nickname}!
 
-            Il tour guidato ti ha mostrato l'essenziale. Un consiglio in più:
+            {invitation}Il tour guidato ti ha mostrato l'essenziale. Un consiglio in più:
 
             🗂️ <a href="{routine_url}">Routine</a> — raggruppa gli esercizi che fai spesso insieme (es. "Push day") per ritrovarli con un clic quando registri un allenamento.
 
             Una domanda? Tutto è spiegato nella pagina <a href="{help_url}">Aiuto</a>, funzionalità per funzionalità.
 
             Buon allenamento! 🔥
+        invitation: "🤝 Grazie all'invito di {nickname}, ora siete connessi: trovi il suo cruscotto in <a href=\"{connections_url}\">Connessioni</a>."
         subject: "Benvenuto su {brand} 🎉"
 
 dashboard:
@@ -508,6 +509,13 @@ profile_connection:
         title: "Cruscotto di {nickname}"
         view_workouts: "Vedi i suoi allenamenti"
     email:
+        invitation_accepted:
+            body: "{nickname} ha appena creato il suo account su {brand} con il tuo link di invito. Ora siete connessi: ognuno può vedere il cruscotto dell'altro."
+            cta: "Vedi le mie connessioni"
+            subject: "{nickname} ha accettato il tuo invito"
+            title: "Il tuo invito è stato accettato"
+            unsubscribe: "Non ricevere più queste email"
+            why: "Ricevi questa email perché qualcuno si è iscritto con il tuo link di invito."
         request:
             body: "{nickname} vorrebbe connettersi con te su {brand}. Se accetti, potrete vedere l'uno la dashboard dell'altro."
             cta: "Vedi la richiesta"
@@ -549,9 +557,18 @@ profile_connection:
             empty: "Non hai ancora nessuna connessione."
             title: "Le mie connessioni"
         intro: "Una volta accettata una richiesta, ognuno vede il cruscotto dell'altro."
+        invitation:
+            copy: "Copia il link"
+            explanation: "Invia questo link a un amico che non ha ancora un account: alla sua iscrizione sarete connessi automaticamente. Rigenerare il tuo codice di condivisione disattiva i link già inviati."
+            feedback:
+                copied: "Link copiato"
+            share: "Condividi"
+            share_text: "Unisciti a me su {brand} per seguire i nostri allenamenti!"
+            sharing_required_hint: "Attiva la condivisione del tuo profilo qui sopra per poter invitare un amico."
+            title: "Invita un amico"
         new_workout: "Nuovo allenamento dalla tua ultima visita"
         notifications:
-            email_on_request: "Inviami un'email quando ricevo una richiesta di connessione"
+            email_on_request: "Inviami un'email quando ricevo una richiesta di connessione o quando un amico invitato si iscrive"
             feedback:
                 success: "Preferenza aggiornata"
             title: "Notifiche"
@@ -607,6 +624,9 @@ registration:
         welcome: Benvenuto su {brand}! Il tuo primo allenamento ti aspetta
     email_sent_to: "Un'email di conferma è stata inviata a {email}."
     have_an_account: Hai già un account?
+    invitation:
+        explanation: "Creando il tuo account, sarete connessi automaticamente: ognuno vedrà il cruscotto dell'altro. Il tuo profilo sarà quindi condiviso con le tue connessioni; potrai disattivare la condivisione in qualsiasi momento dalla pagina Connessioni."
+        title: "Invito da {nickname}"
     nickname:
         label: Scegli il tuo alias
         placeholder: Con quale nome vuoi distinguerti?

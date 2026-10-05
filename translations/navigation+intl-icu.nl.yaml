@@ -129,13 +129,14 @@ contact:
         body: |-
             Hoi {nickname}!
 
-            De rondleiding liet je het belangrijkste zien. Nog een tip:
+            {invitation}De rondleiding liet je het belangrijkste zien. Nog een tip:
 
             🗂️ <a href="{routine_url}">Routines</a> — groepeer de oefeningen die je vaak samen doet (bv. "Push day") om ze met één klik toe te voegen als je een training registreert.
 
             Een vraag? Alles wordt uitgelegd op de pagina <a href="{help_url}">Hulp</a>, functie voor functie.
 
             Veel trainingsplezier! 🔥
+        invitation: "🤝 Dankzij de uitnodiging van {nickname} zijn jullie nu verbonden: je vindt het overzicht bij <a href=\"{connections_url}\">Verbindingen</a>."
         subject: "Welkom bij {brand} 🎉"
 
 dashboard:
@@ -508,6 +509,13 @@ profile_connection:
         title: "Overzicht van {nickname}"
         view_workouts: "Bekijk zijn/haar trainingen"
     email:
+        invitation_accepted:
+            body: "{nickname} heeft net een account aangemaakt op {brand} met jouw uitnodigingslink. Jullie zijn nu verbonden: jullie kunnen elkaars overzicht zien."
+            cta: "Mijn verbindingen bekijken"
+            subject: "{nickname} heeft je uitnodiging geaccepteerd"
+            title: "Je uitnodiging is geaccepteerd"
+            unsubscribe: "Deze e-mails niet meer ontvangen"
+            why: "Je ontvangt deze e-mail omdat iemand zich heeft geregistreerd met jouw uitnodigingslink."
         request:
             body: "{nickname} wil op {brand} met je verbinden. Als je accepteert, kunnen jullie elkaars dashboard bekijken."
             cta: "Verzoek bekijken"
@@ -549,9 +557,18 @@ profile_connection:
             empty: "Je hebt nog geen verbindingen."
             title: "Mijn verbindingen"
         intro: "Zodra een verzoek is geaccepteerd, zien jullie elkaars overzicht."
+        invitation:
+            copy: "Link kopiëren"
+            explanation: "Stuur deze link naar een vriend die nog geen account heeft: zodra hij zich registreert, zijn jullie automatisch verbonden. Als je je deelcode opnieuw genereert, werken al verstuurde links niet meer."
+            feedback:
+                copied: "Link gekopieerd"
+            share: "Delen"
+            share_text: "Doe mee op {brand} zodat we onze trainingen kunnen volgen!"
+            sharing_required_hint: "Zet hierboven het delen van je profiel aan om een vriend uit te nodigen."
+            title: "Een vriend uitnodigen"
         new_workout: "Nieuwe training sinds je laatste bezoek"
         notifications:
-            email_on_request: "Stuur me een e-mail als ik een verbindingsverzoek ontvang"
+            email_on_request: "Stuur me een e-mail als ik een verbindingsverzoek ontvang of als een uitgenodigde vriend zich aanmeldt"
             feedback:
                 success: "Voorkeur bijgewerkt"
             title: "Meldingen"
@@ -607,6 +624,9 @@ registration:
         welcome: Welkom bij {brand}! Je eerste training wacht op je
     email_sent_to: "Er is een bevestigingsmail verzonden naar {email}."
     have_an_account: Heb je al een account?
+    invitation:
+        explanation: "Als je je account aanmaakt, worden jullie automatisch verbonden: jullie zien elkaars overzicht. Je profiel wordt dus gedeeld met je verbindingen; je kunt delen op elk moment uitzetten via de pagina Verbindingen."
+        title: "Uitnodiging van {nickname}"
     nickname:
         label: Kies je alias
         placeholder: Onder welke naam wil je schitteren?

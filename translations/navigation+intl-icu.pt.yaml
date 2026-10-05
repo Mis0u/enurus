@@ -129,13 +129,14 @@ contact:
         body: |-
             Olá {nickname}!
 
-            A visita guiada mostrou-te o essencial. Mais uma dica:
+            {invitation}A visita guiada mostrou-te o essencial. Mais uma dica:
 
             🗂️ <a href="{routine_url}">Rotinas</a> — agrupa os exercícios que fazes muitas vezes juntos (ex. "Push day") para os adicionares com um clique quando registas um treino.
 
             Alguma dúvida? Está tudo explicado na página <a href="{help_url}">Ajuda</a>, funcionalidade a funcionalidade.
 
             Bom treino! 🔥
+        invitation: "🤝 Graças ao convite de {nickname}, já estão ligados: encontra o painel na página <a href=\"{connections_url}\">Conexões</a>."
         subject: "Bem-vindo ao {brand} 🎉"
 
 dashboard:
@@ -508,6 +509,13 @@ profile_connection:
         title: "Painel de {nickname}"
         view_workouts: "Ver os treinos dele/dela"
     email:
+        invitation_accepted:
+            body: "{nickname} acabou de criar conta no {brand} com o teu link de convite. Já estão ligados: cada um pode ver o painel do outro."
+            cta: "Ver as minhas conexões"
+            subject: "{nickname} aceitou o teu convite"
+            title: "O teu convite foi aceite"
+            unsubscribe: "Deixar de receber estes emails"
+            why: "Recebes este email porque alguém se registou com o teu link de convite."
         request:
             body: "{nickname} gostaria de se conectar contigo no {brand}. Se aceitares, cada um poderá ver o painel do outro."
             cta: "Ver o pedido"
@@ -549,9 +557,18 @@ profile_connection:
             empty: "Ainda não tens nenhuma conexão."
             title: "As minhas conexões"
         intro: "Depois de aceite um pedido, cada um vê o painel do outro."
+        invitation:
+            copy: "Copiar o link"
+            explanation: "Envia este link a um amigo que ainda não tenha conta: quando se registar, ficam ligados automaticamente. Regenerar o teu código de partilha desativa os links já enviados."
+            feedback:
+                copied: "Link copiado"
+            share: "Partilhar"
+            share_text: "Junta-te a mim no {brand} para acompanharmos os nossos treinos!"
+            sharing_required_hint: "Ativa a partilha do teu perfil acima para poderes convidar um amigo."
+            title: "Convidar um amigo"
         new_workout: "Novo treino desde a tua última visita"
         notifications:
-            email_on_request: "Enviar-me um email quando receber um pedido de conexão"
+            email_on_request: "Enviar-me um email quando receber um pedido de conexão ou quando um amigo convidado se juntar"
             feedback:
                 success: "Preferência atualizada"
             title: "Notificações"
@@ -607,6 +624,9 @@ registration:
         welcome: Bem-vindo ao {brand}! O teu primeiro treino está à tua espera
     email_sent_to: "Um email de confirmação foi enviado para {email}."
     have_an_account: Já tens uma conta?
+    invitation:
+        explanation: "Ao criares a tua conta, ficam ligados automaticamente: cada um verá o painel do outro. O teu perfil será, por isso, partilhado com as tuas conexões; podes desativar a partilha a qualquer momento na página Conexões."
+        title: "Convite de {nickname}"
     nickname:
         label: Escolhe o teu alias
         placeholder: Com que nome queres brilhar?

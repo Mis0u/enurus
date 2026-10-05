@@ -25,7 +25,11 @@ final readonly class RegistrationWelcomeThreadService
     ) {
     }
 
-    public function create(User $user, string $locale): void
+    /**
+     * @param User|null $inviter parrain auquel l'utilisateur vient d'être connecté par son lien
+     *                           d'invitation (InvitationConnectionService), mentionné dans le message
+     */
+    public function create(User $user, string $locale, ?User $inviter = null): void
     {
         $admin = $this->userRepository->findOneByEmail($this->adminEmail);
 
@@ -48,24 +52,52 @@ final readonly class RegistrationWelcomeThreadService
         $message = new ContactThreadMessage();
         $message->author = $admin;
         $message->fromAdmin = true;
-        $message->body = $this->translator->trans(
-            'contact.welcome_thread.body',
-            [
-                'nickname' => $user->nickname,
-                'routine_url' => $this->urlGenerator->generate('app_routine_list', [
-                    '_locale' => $locale,
-                ]),
-                'help_url' => $this->urlGenerator->generate('app_help', [
-                    '_locale' => $locale,
-                ]),
-            ],
-            'navigation',
-            $locale,
-        );
+        $message->body = $this->buildBody($user, $locale, $inviter);
 
         $thread->addMessage($message);
 
         $this->entityManager->persist($thread);
         $this->entityManager->flush();
+    }
+
+    /**
+     * Message d'admin, affiché en HTML brut (liens) : un pseudo, libre de tout caractère, ne doit
+     * jamais y injecter de balise.
+     */
+    private function escape(string $nickname): string
+    {
+        return htmlspecialchars($nickname, \ENT_QUOTES);
+    }
+
+    private function buildBody(User $user, string $locale, ?User $inviter): string
+    {
+        return $this->translator->trans('contact.welcome_thread.body', [
+            'nickname' => $this->escape($user->nickname),
+            'invitation' => $this->buildInvitationParagraph($locale, $inviter),
+            'routine_url' => $this->urlGenerator->generate('app_routine_list', [
+                '_locale' => $locale,
+            ]),
+            'help_url' => $this->urlGenerator->generate('app_help', [
+                '_locale' => $locale,
+            ]),
+        ], 'navigation', $locale);
+    }
+
+    /**
+     * Paragraphe vide sans parrain ; sinon terminé par une ligne vide, pour s'insérer tel quel
+     * entre la salutation et la suite du message.
+     */
+    private function buildInvitationParagraph(string $locale, ?User $inviter): string
+    {
+        if (null === $inviter) {
+            return '';
+        }
+
+        return $this->translator->trans('contact.welcome_thread.invitation', [
+            'nickname' => $this->escape($inviter->nickname),
+            'connections_url' => $this->urlGenerator->generate('app_profile_connection_list', [
+                '_locale' => $locale,
+            ]),
+        ], 'navigation', $locale) . "\n\n";
     }
 }

@@ -21,6 +21,24 @@ final class UserSerializationTest extends TestCase
         self::assertSame(hash('crc32c', 'password-hash'), $this->unserializeUser($serialized)->password);
     }
 
+    public function testTheInviterNeverEndsUpInTheInviteeSession(): void
+    {
+        $inviter = new User();
+        $inviter->email = 'inviter@test.com';
+        $inviter->password = 'inviter-password-hash';
+
+        $invitee = new User();
+        $invitee->email = 'invitee@test.com';
+        $invitee->password = 'invitee-password-hash';
+        $invitee->invitedBy = $inviter;
+
+        $serialized = serialize($invitee);
+
+        self::assertStringNotContainsString('inviter@test.com', $serialized);
+        self::assertStringNotContainsString('inviter-password-hash', $serialized);
+        self::assertNull($this->unserializeUser($serialized)->invitedBy);
+    }
+
     private function unserializeUser(string $serialized): User
     {
         $user = unserialize($serialized, [

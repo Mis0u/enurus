@@ -12,6 +12,7 @@ section:
         open: "Voir mes connexions"
         points:
             control: "Tu choisis ce que tes connexions voient : tes séances (en option) et les blocs de ton tableau de bord. Tu peux retirer une connexion ou couper ton partage à tout moment."
+            invite: "Un ami n'a pas encore de compte ? Envoie-lui ton lien depuis « Inviter un ami » : dès qu'il confirme son inscription, vous êtes connectés, sans demande à accepter."
             principle: "Une fois connectés, vous voyez chacun le tableau de bord de l'autre, en lecture seule."
             request: "Saisis le code d'un ami dans « Ajouter une connexion » : il reçoit ta demande (et un email, désactivable) et peut l'accepter ou la refuser."
             share: "Active d'abord « Partage de mon profil » : tu obtiens un code à donner à tes amis, sous la forme Alias#CODE."

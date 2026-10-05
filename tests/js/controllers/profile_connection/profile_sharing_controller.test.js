@@ -195,6 +195,22 @@ describe('profile-connection--profile-sharing controller', () => {
         expect(showSuccessToast).toHaveBeenCalledWith('Nouveau code généré');
     });
 
+    it('regenerating announces the new code so the invitation link follows it', async () => {
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+            ok: true,
+            json: () => Promise.resolve({ isDiscoverable: true, shareCode: 'ZZZ999' }),
+        }));
+        const listener = vi.fn();
+        window.addEventListener('profile-connection:share-code-changed', listener);
+
+        document.querySelector('button[data-action$="#regenerate"]').click();
+        await vi.waitFor(() => expect(listener).toHaveBeenCalled());
+
+        expect(listener).toHaveBeenCalledWith(expect.objectContaining({ detail: { shareCode: 'ZZZ999' } }));
+
+        window.removeEventListener('profile-connection:share-code-changed', listener);
+    });
+
     it('copy copies the full alias#code, preferring the synchronous execCommand fallback', async () => {
         document.execCommand = vi.fn().mockReturnValue(true);
         const writeText = vi.fn().mockResolvedValue(undefined);

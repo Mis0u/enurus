@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Service\Contact\RegistrationWelcomeThreadService;
 use App\Service\Email\EmailInterface;
 use App\Service\Entity\UserService;
+use App\Service\ProfileSharing\InvitationConnectionService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -22,6 +23,7 @@ final readonly class UserRegistrationService
         private RegistrationWelcomeThreadService $welcomeThreadService,
         private DeletedAccountReregistrationNotifierService $reregistrationNotifier,
         private RegistrationMilestoneNotifierService $milestoneNotifier,
+        private InvitationConnectionService $invitationConnectionService,
         private LoggerInterface $logger,
     ) {
     }
@@ -45,7 +47,8 @@ final readonly class UserRegistrationService
     public function completeRegistration(User $user, string $locale): void
     {
         $this->sendWelcomeEmail($user, $locale);
-        $this->welcomeThreadService->create($user, $locale);
+        $inviter = $this->invitationConnectionService->connect($user);
+        $this->welcomeThreadService->create($user, $locale, $inviter);
         $this->reregistrationNotifier->notifyIfReregistration($user);
         $this->milestoneNotifier->notifyIfMilestoneReached();
     }

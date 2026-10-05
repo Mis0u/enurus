@@ -129,13 +129,14 @@ contact:
         body: |-
             Hallo {nickname}!
 
-            Die geführte Tour hat dir das Wichtigste gezeigt. Noch ein Tipp:
+            {invitation}Die geführte Tour hat dir das Wichtigste gezeigt. Noch ein Tipp:
 
             🗂️ <a href="{routine_url}">Routinen</a> — fasse Übungen zusammen, die du oft gemeinsam machst (z. B. "Push day"), um sie beim Erfassen eines Trainings mit einem Klick hinzuzufügen.
 
             Eine Frage? Auf der Seite <a href="{help_url}">Hilfe</a> wird alles erklärt, Funktion für Funktion.
 
             Viel Erfolg beim Training! 🔥
+        invitation: "🤝 Dank der Einladung von {nickname} seid ihr jetzt verbunden: Du findest die Übersicht unter <a href=\"{connections_url}\">Verbindungen</a>."
         subject: "Willkommen bei {brand} 🎉"
 
 dashboard:
@@ -508,6 +509,13 @@ profile_connection:
         title: "Übersicht von {nickname}"
         view_workouts: "Trainings ansehen"
     email:
+        invitation_accepted:
+            body: "{nickname} hat gerade mit deinem Einladungslink ein Konto bei {brand} erstellt. Ihr seid jetzt verbunden: Ihr könnt jeweils die Übersicht des anderen sehen."
+            cta: "Meine Verbindungen ansehen"
+            subject: "{nickname} hat deine Einladung angenommen"
+            title: "Deine Einladung wurde angenommen"
+            unsubscribe: "Diese E-Mails nicht mehr erhalten"
+            why: "Du erhältst diese E-Mail, weil sich jemand mit deinem Einladungslink registriert hat."
         request:
             body: "{nickname} möchte sich auf {brand} mit dir verbinden. Wenn du annimmst, könnt ihr gegenseitig eure Dashboards sehen."
             cta: "Anfrage ansehen"
@@ -549,9 +557,18 @@ profile_connection:
             empty: "Du hast noch keine Verbindung."
             title: "Meine Verbindungen"
         intro: "Sobald eine Anfrage angenommen ist, seht ihr jeweils die Übersicht des anderen."
+        invitation:
+            copy: "Link kopieren"
+            explanation: "Schicke diesen Link einem Freund, der noch kein Konto hat: Sobald er sich registriert, seid ihr automatisch verbunden. Wenn du deinen Freigabecode neu erzeugst, werden bereits verschickte Links ungültig."
+            feedback:
+                copied: "Link kopiert"
+            share: "Teilen"
+            share_text: "Komm zu mir auf {brand}, damit wir unsere Trainings verfolgen können!"
+            sharing_required_hint: "Aktiviere oben das Teilen deines Profils, um einen Freund einladen zu können."
+            title: "Einen Freund einladen"
         new_workout: "Neues Training seit deinem letzten Besuch"
         notifications:
-            email_on_request: "Mir eine E-Mail senden, wenn ich eine Verbindungsanfrage erhalte"
+            email_on_request: "Mir eine E-Mail senden, wenn ich eine Verbindungsanfrage erhalte oder ein eingeladener Freund beitritt"
             feedback:
                 success: "Einstellung aktualisiert"
             title: "Benachrichtigungen"
@@ -607,6 +624,9 @@ registration:
         welcome: Willkommen bei {brand}! Dein erstes Training wartet auf dich
     email_sent_to: "Eine Bestätigungs-E-Mail wurde an {email} gesendet."
     have_an_account: Du hast bereits ein Konto?
+    invitation:
+        explanation: "Wenn du dein Konto erstellst, werdet ihr automatisch verbunden: Ihr seht jeweils die Übersicht des anderen. Dein Profil wird daher mit deinen Verbindungen geteilt; du kannst das Teilen jederzeit auf der Seite Verbindungen abschalten."
+        title: "Einladung von {nickname}"
     nickname:
         label: Wähle deinen Alias
         placeholder: Unter welchem Namen willst du glänzen?

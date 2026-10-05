@@ -14,6 +14,8 @@
         — widgets du dashboard encore visibles pour soi-même, verrouillés en cascade tant que le
         partage de profil et celui des séances ne sont pas tous les deux actifs
       - emailOnConnectionRequest : bool (email reçu à chaque demande de connexion)
+      - canInvite      : bool (partage de profil actif et code de partage existant)
+      - invitationUrlTemplate / invitationCodePlaceholder : string (lien d'invitation, cf. _invitation_card)
 #}
 {% extends 'dashboard/_dashboard_template/_base_dashboard.html.twig' %}
 
@@ -39,6 +41,14 @@
                 shareCode: shareCode,
                 shareWorkoutsChecked: shareWorkoutsChecked,
                 nickname: nickname,
+            } only %}
+
+            {% include 'profile_connection/list/_invitation_card.html.twig' with {
+                isDiscoverable: isDiscoverable,
+                shareCode: shareCode,
+                canInvite: canInvite,
+                invitationUrlTemplate: invitationUrlTemplate,
+                invitationCodePlaceholder: invitationCodePlaceholder,
             } only %}
 
             {% include 'profile_connection/list/_shared_widgets_card.html.twig' with {
