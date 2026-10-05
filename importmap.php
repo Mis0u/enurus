@@ -44,9 +44,6 @@ return [
     'quill' => [
         'version' => '2.0.3',
     ],
-    'lodash-es' => [
-        'version' => '4.17.21',
-    ],
     'parchment' => [
         'version' => '3.0.0',
     ],
@@ -109,5 +106,8 @@ return [
     'driver.js/dist/driver.min.css' => [
         'version' => '1.8.0',
         'type' => 'css',
+    ],
+    'lodash-es' => [
+        'version' => '4.18.1',
     ],
 ];

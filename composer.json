@@ -6,6 +6,8 @@
     "require": {
         "php": ">=8.2",
         "ext-ctype": "*",
+        "ext-exif": "*",
+        "ext-gd": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^3.2",
         "doctrine/doctrine-migrations-bundle": "^4.0",
@@ -120,7 +122,6 @@
         }
     },
     "require-dev": {
-        "ext-gd": "*",
         "ahmed-bhs/doctrine-doctor": "^2.0",
         "captainhook/captainhook": "^5.27",
         "dama/doctrine-test-bundle": "^8.4",

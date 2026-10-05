@@ -87,6 +87,7 @@ class WorkoutDeletePhotoControllerTest extends WebTestCase
             'photo' => ImageTestHelper::createFakeImage('photo.jpg', 'image/jpeg'),
         ], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            'HTTP_X-CSRF-Token' => $this->getUploadCsrfToken($client, $workout),
         ]);
         $this->assertResponseIsSuccessful();
 
@@ -117,6 +118,7 @@ class WorkoutDeletePhotoControllerTest extends WebTestCase
             'photo' => ImageTestHelper::createFakeImage('photo.jpg', 'image/jpeg'),
         ], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            'HTTP_X-CSRF-Token' => $this->getUploadCsrfToken($client, $workout),
         ]);
         $this->switchWorkoutPhotoUpload(false);
 
@@ -136,6 +138,16 @@ class WorkoutDeletePhotoControllerTest extends WebTestCase
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
             'HTTP_X-CSRF-Token' => $token,
         ]);
+    }
+
+    private function getUploadCsrfToken(KernelBrowser $client, Workout $workout): string
+    {
+        return $this->csrfTokenFromPage(
+            $client,
+            $this->getEditUrl($workout),
+            'div[data-workout--photo-upload-upload-csrf-token-value]',
+            'data-workout--photo-upload-upload-csrf-token-value',
+        );
     }
 
     private function getDeleteCsrfToken(KernelBrowser $client, Workout $workout): string

@@ -416,6 +416,38 @@ final class ContactBroadcastCrudControllerTest extends WebTestCase
         $this->deleteTestUser('broadcast-translate-de-2@test.com');
     }
 
+    public function testComposeToAllSanitizesTheTranslatedBodyToo(): void
+    {
+        $client = $this->login(self::ADMIN);
+        $german = $this->createTestUser('broadcast-translate-sanitize@test.com', 'de');
+
+        $client->request(Request::METHOD_GET, $this->composeUrl());
+        $form = $client->getCrawler()->selectButton('Envoyer')->form([
+            'contact_broadcast_compose_form[target]' => 'all',
+            'contact_broadcast_compose_form[subject]' => 'Annonce traduite',
+            'contact_broadcast_compose_form[body]' => '<p>Corps</p>',
+        ]);
+        $client->request($form->getMethod(), $form->getUri(), $form->getPhpValues(), $form->getPhpFiles());
+        self::assertResponseRedirects();
+
+        $this->processPendingBroadcast('Annonce traduite', static fn (array $payload): MockResponse => new MockResponse(json_encode([
+            'translations' => [
+                [
+                    'text' => 'Betreff',
+                ],
+                [
+                    'text' => '<p>Inhalt</p><script>alert(1)</script>',
+                ],
+            ],
+        ], JSON_THROW_ON_ERROR)));
+
+        $message = $this->findThreadsForOwner($german)[0]->messages->first();
+        self::assertInstanceOf(ContactThreadMessage::class, $message);
+        self::assertSame('<p>Inhalt</p>', $message->body);
+
+        $this->deleteTestUser('broadcast-translate-sanitize@test.com');
+    }
+
     public function testComposeToAllCreatesNoThreadAndNotifiesAdminWhenATranslationFails(): void
     {
         $client = $this->login(self::ADMIN);

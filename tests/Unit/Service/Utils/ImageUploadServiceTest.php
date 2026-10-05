@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Utils;
 
+use App\Service\Utils\ImageMetadataStripper;
 use App\Service\Utils\ImageUploadService;
 use App\Tests\Functional\Helper\ImageTestHelper;
 use League\Flysystem\FilesystemOperator;
@@ -22,7 +23,7 @@ final class ImageUploadServiceTest extends TestCase
                 static fn (string $path): bool => (bool) preg_match('#^contact/owner-1/[0-9a-f-]{36}\.jpg$#', $path)
             ));
 
-        $service = new ImageUploadService($storage);
+        $service = new ImageUploadService($storage, new ImageMetadataStripper());
         $path = $service->upload($file, 'contact', 'owner-1');
 
         self::assertMatchesRegularExpression('#^contact/owner-1/[0-9a-f-]{36}\.jpg$#', $path);
@@ -34,7 +35,7 @@ final class ImageUploadServiceTest extends TestCase
 
         $storage = $this->createStub(FilesystemOperator::class);
 
-        $service = new ImageUploadService($storage);
+        $service = new ImageUploadService($storage, new ImageMetadataStripper());
         $path = $service->upload($file, 'contact', 'owner-1');
 
         self::assertStringEndsWith('.png', $path);
@@ -49,7 +50,7 @@ final class ImageUploadServiceTest extends TestCase
                 static fn (string $path): bool => (bool) preg_match('#^contact/owner-1/[0-9a-f-]{36}\.jpg$#', $path)
             ));
 
-        $service = new ImageUploadService($storage);
+        $service = new ImageUploadService($storage, new ImageMetadataStripper());
         $destination = $service->copy('contact/source/original.jpg', 'contact', 'owner-1');
 
         self::assertStringEndsWith('.jpg', $destination);
@@ -59,7 +60,7 @@ final class ImageUploadServiceTest extends TestCase
     {
         $storage = $this->createStub(FilesystemOperator::class);
 
-        $service = new ImageUploadService($storage);
+        $service = new ImageUploadService($storage, new ImageMetadataStripper());
         $destination = $service->copy('contact/source/original', 'contact', 'owner-1');
 
         self::assertMatchesRegularExpression('#^contact/owner-1/[0-9a-f-]{36}$#', $destination);
@@ -71,7 +72,7 @@ final class ImageUploadServiceTest extends TestCase
         $storage->expects(self::never())->method('fileExists');
         $storage->expects(self::never())->method('delete');
 
-        $service = new ImageUploadService($storage);
+        $service = new ImageUploadService($storage, new ImageMetadataStripper());
         $service->delete(null);
     }
 
@@ -81,7 +82,7 @@ final class ImageUploadServiceTest extends TestCase
         $storage->method('fileExists')->with('contact/owner-1/photo.jpg')->willReturn(true);
         $storage->expects(self::once())->method('delete')->with('contact/owner-1/photo.jpg');
 
-        $service = new ImageUploadService($storage);
+        $service = new ImageUploadService($storage, new ImageMetadataStripper());
         $service->delete('contact/owner-1/photo.jpg');
     }
 
@@ -91,7 +92,7 @@ final class ImageUploadServiceTest extends TestCase
         $storage->method('fileExists')->willReturn(false);
         $storage->expects(self::never())->method('delete');
 
-        $service = new ImageUploadService($storage);
+        $service = new ImageUploadService($storage, new ImageMetadataStripper());
         $service->delete('contact/owner-1/photo.jpg');
     }
 }

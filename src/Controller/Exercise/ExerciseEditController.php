@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: [
@@ -31,6 +32,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
     'nl' => '/bibliotheek/oefening/{id}/bewerken',
     'pl' => '/biblioteka/cwiczenie/{id}/edytuj',
 ], name: 'app_exercise_edit', methods: ['GET', 'POST'])]
+#[IsGranted('ROLE_USER')]
 final class ExerciseEditController extends AbstractController
 {
     public function __construct(

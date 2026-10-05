@@ -75,7 +75,7 @@ final readonly class WorkoutExportCsvWriter
 
         foreach ($workout->workoutExercises as $workoutExercise) {
             foreach (array_values($workoutExercise->exerciseSets->toArray()) as $index => $set) {
-                yield [...$workoutCells, $this->exerciseNameTranslator->translate($workoutExercise->exercise, $locale), (string) ($index + 1), ...$this->setCells($user, $workoutExercise, $set, $format)];
+                yield [...$workoutCells, SpreadsheetSafeText::escape($this->exerciseNameTranslator->translate($workoutExercise->exercise, $locale)), (string) ($index + 1), ...$this->setCells($user, $workoutExercise, $set, $format)];
             }
         }
     }
@@ -88,7 +88,7 @@ final readonly class WorkoutExportCsvWriter
         return [
             $workout->performedAt->format('Y-m-d'),
             $workout->performedAt->format('H:i'),
-            null !== $workout->routine ? $workout->routine->name : $this->translator->trans('workout.list.free_session', [], 'navigation', $locale),
+            null !== $workout->routine ? SpreadsheetSafeText::escape($workout->routine->name) : $this->translator->trans('workout.list.free_session', [], 'navigation', $locale),
             null !== $workout->duration ? (string) $workout->duration : '',
             null !== $workout->mood ? $this->translator->trans('workout.mood.' . $workout->mood->value, [], 'navigation', $locale) : '',
         ];

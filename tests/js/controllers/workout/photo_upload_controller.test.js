@@ -13,6 +13,7 @@ async function buildDom(uploadUrl = '', { deleteUrl = '', hasExistingPhoto = fal
         <div data-controller="workout--photo-upload"
              data-workout--photo-upload-upload-url-value="${uploadUrl}"
              data-workout--photo-upload-delete-url-value="${deleteUrl}"
+             data-workout--photo-upload-upload-csrf-token-value="upload-token"
              data-workout--photo-upload-delete-csrf-token-value="token"
              data-workout--photo-upload-has-existing-photo-value="${hasExistingPhoto}"
              data-workout--photo-upload-max-size-value="5242880"
@@ -300,6 +301,27 @@ describe('workout--photo-upload controller', () => {
         const result = await controller.uploadIfSelected();
 
         expect(result).toEqual({ path: 'workout/tmp/photo.jpg', url: '/media/workout/tmp/photo.jpg' });
+    });
+
+    it('sends the upload CSRF token with the photo', async () => {
+        await buildDom('/seance/123/photo');
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+            ok: true,
+            json: async () => ({ path: 'workout/tmp/photo.jpg', url: '/media/workout/tmp/photo.jpg' }),
+        }));
+
+        setInputFile(jpeg('photo.jpg'));
+        await nextTick();
+
+        const controller = application.getControllerForElementAndIdentifier(
+            document.querySelector('[data-controller="workout--photo-upload"]'),
+            'workout--photo-upload',
+        );
+        await controller.uploadIfSelected();
+
+        expect(global.fetch).toHaveBeenCalledWith('/seance/123/photo', expect.objectContaining({
+            headers: expect.objectContaining({ 'X-CSRF-Token': 'upload-token' }),
+        }));
     });
 
     it('uploadIfSelected returns null when no file was selected', async () => {

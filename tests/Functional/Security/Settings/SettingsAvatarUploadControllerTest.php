@@ -9,7 +9,9 @@ use App\Repository\UserRepository;
 use App\Tests\Functional\Helper\ImageTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 final class SettingsAvatarUploadControllerTest extends WebTestCase
@@ -19,6 +21,8 @@ final class SettingsAvatarUploadControllerTest extends WebTestCase
     private const string USER = 'user-fixture-0@test.com';
 
     private const string URL = '/fr/reglages/avatar';
+
+    private const string SETTINGS_URL = '/fr/reglages';
 
     public function testIsRedirectToLoginIfNotLogged(): void
     {
@@ -33,9 +37,7 @@ final class SettingsAvatarUploadControllerTest extends WebTestCase
         $client = $this->login(self::USER);
         $file = ImageTestHelper::createFakeImage('avatar.jpg', 'image/jpeg');
 
-        $client->request(Request::METHOD_POST, self::URL, [], [
-            'avatar' => $file,
-        ]);
+        $this->upload($client, $file);
 
         $this->assertResponseIsSuccessful();
 
@@ -54,9 +56,7 @@ final class SettingsAvatarUploadControllerTest extends WebTestCase
         $client = $this->login(self::USER);
         $file = ImageTestHelper::createFakeImage('avatar.png', 'image/png');
 
-        $client->request(Request::METHOD_POST, self::URL, [], [
-            'avatar' => $file,
-        ]);
+        $this->upload($client, $file);
 
         $this->assertResponseIsSuccessful();
     }
@@ -65,9 +65,22 @@ final class SettingsAvatarUploadControllerTest extends WebTestCase
     {
         $client = $this->login(self::USER);
 
-        $client->request(Request::METHOD_POST, self::URL);
+        $this->upload($client, null);
 
         self::assertResponseStatusCodeSame(400);
+    }
+
+    public function testUploadIsRefusedWithoutAValidCsrfToken(): void
+    {
+        $client = $this->login(self::USER);
+
+        $client->request(Request::METHOD_POST, self::URL, [], [
+            'avatar' => ImageTestHelper::createFakeImage('avatar.jpg', 'image/jpeg'),
+        ], [
+            'HTTP_X-CSRF-Token' => 'forged',
+        ]);
+
+        self::assertResponseStatusCodeSame(403);
     }
 
     public function testUploadFailsWithInvalidMimeType(): void
@@ -75,9 +88,7 @@ final class SettingsAvatarUploadControllerTest extends WebTestCase
         $client = $this->login(self::USER);
         $file = ImageTestHelper::createFakeImage('document.pdf', 'application/pdf');
 
-        $client->request(Request::METHOD_POST, self::URL, [], [
-            'avatar' => $file,
-        ]);
+        $this->upload($client, $file);
 
         self::assertResponseStatusCodeSame(422);
     }
@@ -87,9 +98,7 @@ final class SettingsAvatarUploadControllerTest extends WebTestCase
         $client = $this->login(self::USER);
         $file = ImageTestHelper::createLargeJpeg();
 
-        $client->request(Request::METHOD_POST, self::URL, [], [
-            'avatar' => $file,
-        ]);
+        $this->upload($client, $file);
 
         self::assertResponseStatusCodeSame(422);
     }
@@ -99,9 +108,7 @@ final class SettingsAvatarUploadControllerTest extends WebTestCase
         $client = $this->login(self::USER);
 
         $firstFile = ImageTestHelper::createFakeImage('first.jpg', 'image/jpeg');
-        $client->request(Request::METHOD_POST, self::URL, [], [
-            'avatar' => $firstFile,
-        ]);
+        $this->upload($client, $firstFile);
         $this->assertResponseIsSuccessful();
 
         /** @var UserRepository $userRepository */
@@ -113,9 +120,7 @@ final class SettingsAvatarUploadControllerTest extends WebTestCase
         $firstPath = $user->avatarPath;
 
         $secondFile = ImageTestHelper::createFakeImage('second.jpg', 'image/jpeg');
-        $client->request(Request::METHOD_POST, self::URL, [], [
-            'avatar' => $secondFile,
-        ]);
+        $this->upload($client, $secondFile);
         $this->assertResponseIsSuccessful();
 
         /** @var EntityManagerInterface $em */
@@ -130,5 +135,21 @@ final class SettingsAvatarUploadControllerTest extends WebTestCase
         ]);
 
         self::assertNotSame($firstPath, $updatedUser->avatarPath);
+    }
+
+    private function upload(KernelBrowser $client, ?UploadedFile $file): void
+    {
+        $token = $this->csrfTokenFromPage(
+            $client,
+            self::SETTINGS_URL,
+            '[data-controller="settings--avatar"]',
+            'data-settings--avatar-upload-csrf-token-value',
+        );
+
+        $client->request(Request::METHOD_POST, self::URL, [], null === $file ? [] : [
+            'avatar' => $file,
+        ], [
+            'HTTP_X-CSRF-Token' => $token,
+        ]);
     }
 }

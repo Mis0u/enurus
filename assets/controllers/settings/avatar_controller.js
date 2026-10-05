@@ -6,6 +6,7 @@ export default class extends Controller {
     static values = {
         uploadUrl: String,
         deleteUrl: String,
+        uploadCsrfToken: String,
         deleteCsrfToken: String,
         maxSize: Number,
         allowedTypes: Array,
@@ -48,7 +49,11 @@ export default class extends Controller {
             const formData = new FormData();
             formData.append('avatar', file);
 
-            const response = await fetch(this.uploadUrlValue, { method: 'POST', body: formData });
+            const response = await fetch(this.uploadUrlValue, {
+                method: 'POST',
+                body: formData,
+                headers: { 'X-CSRF-Token': this.uploadCsrfTokenValue },
+            });
 
             if (!response.ok) {
                 this.#showError(this.tooLargeErrorValue);

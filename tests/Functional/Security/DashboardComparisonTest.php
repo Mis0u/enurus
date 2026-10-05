@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Security;
 
 use App\DataFixtures\UserFixtures;
+use App\Repository\ExerciseRepository;
+use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,6 +24,7 @@ final class DashboardComparisonTest extends WebTestCase
     public function testTheWidgetComparesEachPeriodWithThePreviousOne(): void
     {
         $client = $this->login(self::USER_WITH_WEEKS_OF_HISTORY);
+        $this->persistWorkoutsInBothComparedWeeks();
         $crawler = $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
 
         self::assertSelectorExists(self::WIDGET);
@@ -42,5 +46,25 @@ final class DashboardComparisonTest extends WebTestCase
 
         self::assertSelectorNotExists(self::WIDGET);
         self::assertSelectorTextContains('body', "Encore 1 semaine d'entraînement");
+    }
+
+    /**
+     * Les séances fixture tombent à des dates aléatoires : rien ne garantit qu'il y en ait dans la
+     * semaine en cours ET dans les mêmes jours de la précédente (un lundi, « aujourd'hui vs lundi
+     * dernier »), et le widget n'affiche alors aucun chiffre.
+     */
+    private function persistWorkoutsInBothComparedWeeks(): void
+    {
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        /** @var ExerciseRepository $exerciseRepository */
+        $exerciseRepository = static::getContainer()->get(ExerciseRepository::class);
+        $exercise = $exerciseRepository->find(WorkoutTestHelper::getPublicExerciseId($exerciseRepository))
+            ?? throw new \LogicException('Public exercise not found.');
+        $user = $this->getUserByEmail(self::USER_WITH_WEEKS_OF_HISTORY);
+
+        foreach (['today', '-7 days midnight'] as $performedAt) {
+            WorkoutTestHelper::persistPastWorkout($em, $user, $exercise, $performedAt, [[50.0, 10]]);
+        }
     }
 }

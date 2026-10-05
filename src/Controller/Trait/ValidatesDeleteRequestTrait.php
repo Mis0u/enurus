@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait ValidatesDeleteRequestTrait
 {
+    use ValidatesCsrfHeaderTrait;
+
     private function denyUnlessXmlHttpRequest(Request $request): ?JsonResponse
     {
         if ($request->isXmlHttpRequest()) {
@@ -19,14 +21,5 @@ trait ValidatesDeleteRequestTrait
         return $this->json([
             'error' => 'XHR only',
         ], Response::HTTP_BAD_REQUEST);
-    }
-
-    private function denyUnlessValidCsrfToken(Request $request, string $tokenId): void
-    {
-        $token = $request->headers->get('X-CSRF-Token');
-
-        if (! $this->isCsrfTokenValid($tokenId, $token)) {
-            throw $this->createAccessDeniedException('Invalid CSRF token.');
-        }
     }
 }
