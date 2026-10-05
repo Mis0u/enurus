@@ -129,13 +129,14 @@ contact:
         body: |-
             Salut {nickname} !
 
-            Le tour guidé t'a montré l'essentiel. Une astuce en plus :
+            {invitation}Le tour guidé t'a montré l'essentiel. Une astuce en plus :
 
             🗂️ <a href="{routine_url}">Routines</a> — regroupe les exercices que tu enchaînes souvent (ex. « Push day ») pour les retrouver en un clic quand tu enregistres une séance.
 
             Une question ? Tout est expliqué dans l'<a href="{help_url}">Aide</a>, fonctionnalité par fonctionnalité.
 
             Bon entraînement ! 🔥
+        invitation: "🤝 Grâce à l'invitation de {nickname}, vous êtes maintenant connectés : retrouve son tableau de bord dans <a href=\"{connections_url}\">Connexions</a>."
         subject: "Bienvenue sur {brand} 🎉"
 
 dashboard:
@@ -508,6 +509,13 @@ profile_connection:
         title: "Tableau de bord de {nickname}"
         view_workouts: "Voir ses séances"
     email:
+        invitation_accepted:
+            body: "{nickname} vient de créer son compte sur {brand} grâce à ton lien d'invitation. Vous êtes maintenant connectés : vous pouvez chacun voir le tableau de bord de l'autre."
+            cta: "Voir mes connexions"
+            subject: "{nickname} a accepté ton invitation"
+            title: "Ton invitation a été acceptée"
+            unsubscribe: "Ne plus recevoir ces emails"
+            why: "Tu reçois cet email car quelqu'un s'est inscrit avec ton lien d'invitation."
         request:
             body: "{nickname} aimerait se connecter avec toi sur {brand}. Si tu acceptes, vous pourrez chacun voir le tableau de bord de l'autre."
             cta: "Voir la demande"
@@ -549,9 +557,18 @@ profile_connection:
             empty: "Tu n'as pas encore de connexion."
             title: "Mes connexions"
         intro: "Une fois une demande acceptée, vous voyez chacun le dashboard de l'autre."
+        invitation:
+            copy: "Copier le lien"
+            explanation: "Envoie ce lien à un ami qui n'a pas encore de compte : à son inscription, vous serez automatiquement connectés. Régénérer ton code de partage désactive les liens déjà envoyés."
+            feedback:
+                copied: "Lien copié"
+            share: "Partager"
+            share_text: "Rejoins-moi sur {brand} pour suivre nos séances !"
+            sharing_required_hint: "Active le partage de ton profil ci-dessus pour pouvoir inviter un ami."
+            title: "Inviter un ami"
         new_workout: "Nouvelle séance depuis ta dernière visite"
         notifications:
-            email_on_request: "M'envoyer un email quand je reçois une demande de connexion"
+            email_on_request: "M'envoyer un email quand je reçois une demande de connexion ou qu'un ami invité me rejoint"
             feedback:
                 success: "Préférence mise à jour"
             title: "Notifications"
@@ -607,6 +624,9 @@ registration:
         welcome: Bienvenue sur {brand} ! Ta première séance t'attend
     email_sent_to: "Un email de confirmation a été envoyé à {email}."
     have_an_account: Tu as déjà un compte ?
+    invitation:
+        explanation: "En créant ton compte, vous serez automatiquement connectés : vous verrez chacun le tableau de bord de l'autre. Ton profil sera donc partagé avec tes connexions ; tu pourras couper ce partage à tout moment depuis la page Connexions."
+        title: "Invitation de {nickname}"
     nickname:
         label: Choisis ton alias
         placeholder: Sous quel nom veux-tu briller ?

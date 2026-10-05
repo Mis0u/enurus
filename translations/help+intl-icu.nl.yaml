@@ -12,6 +12,7 @@ section:
         open: "Mijn verbindingen bekijken"
         points:
             control: "Jij kiest wat je verbindingen zien: je trainingen (optioneel) en de blokken van je dashboard. Je kunt een verbinding verwijderen of het delen op elk moment stoppen."
+            invite: "Heeft een vriend nog geen account? Stuur hem je link via ‘Een vriend uitnodigen’: zodra hij zijn registratie bevestigt, zijn jullie verbonden, zonder verzoek om te accepteren."
             principle: "Eenmaal verbonden zien jullie elk het dashboard van de ander, alleen-lezen."
             request: "Voer de code van een vriend in bij ‘Verbinding toevoegen’: hij ontvangt je verzoek (en een e-mail, die hij kan uitzetten) en kan het accepteren of weigeren."
             share: "Zet eerst ‘Mijn profiel delen’ aan: je krijgt een code om aan je vrienden te geven, in de vorm Alias#CODE."

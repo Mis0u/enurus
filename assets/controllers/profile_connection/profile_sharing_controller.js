@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 import { showSuccessToast, showErrorToast } from '../../utils/toast.js';
+import { copyToClipboard } from '../../utils/clipboard.js';
 
 export default class extends Controller {
     static targets = ['code', 'fullCode', 'codeWrapper', 'workoutCheckbox'];
@@ -103,56 +104,11 @@ export default class extends Controller {
     async copy() {
         const text = this.fullCodeTarget.textContent.trim();
 
-        if (await this.#writeToClipboard(text)) {
+        if (await copyToClipboard(text)) {
             showSuccessToast(this.copyMessageValue);
         } else {
             showErrorToast(this.copyErrorMessageValue);
         }
-    }
-
-    // Observé en pratique : navigator.clipboard.writeText() peut résoudre sans lever d'erreur
-    // tout en n'écrivant rien (permission accordée de façon incohérente selon le contexte) —
-    // execCommand('copy') sur un textarea temporaire, synchrone et exécuté dans le même geste
-    // utilisateur que le clic, est essayé en premier car plus fiable ici ; la Clipboard API
-    // moderne ne sert que de repli si execCommand est indisponible.
-    async #writeToClipboard(text) {
-        if (this.#legacyCopy(text)) {
-            return true;
-        }
-
-        if (navigator.clipboard?.writeText) {
-            try {
-                await navigator.clipboard.writeText(text);
-
-                return true;
-            } catch {
-                return false;
-            }
-        }
-
-        return false;
-    }
-
-    #legacyCopy(text) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.focus();
-        textarea.select();
-
-        let succeeded = false;
-
-        try {
-            succeeded = document.execCommand('copy');
-        } catch {
-            succeeded = false;
-        }
-
-        document.body.removeChild(textarea);
-
-        return succeeded;
     }
 
     // Le code, une fois généré, reste affiché même si le partage est ensuite désactivé
@@ -169,6 +125,11 @@ export default class extends Controller {
         if (this.hasCodeWrapperTarget) {
             this.codeWrapperTarget.hidden = false;
         }
+
+        // Le lien d'invitation est construit sur ce code : il doit suivre chaque nouveau code.
+        window.dispatchEvent(new CustomEvent('profile-connection:share-code-changed', {
+            detail: { shareCode },
+        }));
     }
 
     // Le partage des séances est un opt-in secondaire qui dépend du partage de profil : dès que

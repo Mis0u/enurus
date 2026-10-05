@@ -12,6 +12,7 @@ section:
         open: "Ver mis conexiones"
         points:
             control: "Tú eliges lo que ven tus conexiones: tus entrenamientos (opcional) y los bloques de tu panel. Puedes quitar una conexión o dejar de compartir en cualquier momento."
+            invite: "¿Un amigo aún no tiene cuenta? Envíale tu enlace desde « Invitar a un amigo »: en cuanto confirme su registro, estaréis conectados, sin solicitud que aceptar."
             principle: "Una vez conectados, cada uno ve el panel del otro, en modo solo lectura."
             request: "Introduce el código de un amigo en « Añadir una conexión »: recibe tu solicitud (y un email, desactivable) y puede aceptarla o rechazarla."
             share: "Activa primero « Compartir mi perfil »: obtienes un código para dar a tus amigos, con la forma Alias#CÓDIGO."

@@ -14,6 +14,10 @@
             <div class="backdrop-blur-xl bg-white/10 rounded-3xl shadow-2xl border border-white/20 p-8">
                 <h2 class="text-2xl font-bold text-white mb-6">{{ 'registration.create_account'|trans({}, 'navigation') }}</h2>
 
+                {% if inviterNickname %}
+                    {% include 'registration/_invitation_banner.html.twig' with {inviterNickname: inviterNickname} only %}
+                {% endif %}
+
                 {{ form_start(registrationForm) }}
 
                 {{ form_errors(registrationForm.gender) }}

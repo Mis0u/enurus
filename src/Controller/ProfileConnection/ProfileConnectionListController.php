@@ -13,6 +13,7 @@ use App\Service\ProfileSharing\ProfileConnectionOverviewService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -29,6 +30,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted('ROLE_USER')]
 final class ProfileConnectionListController extends AbstractController
 {
+    private const string INVITATION_CODE_PLACEHOLDER = '__CODE__';
+
     public function __construct(
         private readonly ProfileConnectionOverviewService $overviewService,
         private readonly DashboardUnlockService $dashboardUnlockService,
@@ -54,7 +57,24 @@ final class ProfileConnectionListController extends AbstractController
             'nickname' => $user->nickname,
             'sharedWidgets' => $this->buildSharedWidgetRows($user),
             'emailOnConnectionRequest' => $user->emailOnConnectionRequest,
+            ...$this->buildInvitationViewData($user),
         ]);
+    }
+
+    /**
+     * Le lien est envoyé en gabarit : le code de partage peut être régénéré sans recharger la page.
+     *
+     * @return array{canInvite: bool, invitationUrlTemplate: string, invitationCodePlaceholder: string}
+     */
+    private function buildInvitationViewData(User $user): array
+    {
+        return [
+            'canInvite' => $user->isDiscoverable && null !== $user->shareCode,
+            'invitationUrlTemplate' => $this->generateUrl('app_register', [
+                'invitation' => self::INVITATION_CODE_PLACEHOLDER,
+            ], UrlGeneratorInterface::ABSOLUTE_URL),
+            'invitationCodePlaceholder' => self::INVITATION_CODE_PLACEHOLDER,
+        ];
     }
 
     /**

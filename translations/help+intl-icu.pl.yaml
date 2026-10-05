@@ -12,6 +12,7 @@ section:
         open: "Zobacz moje połączenia"
         points:
             control: "To Ty decydujesz, co widzą Twoje połączenia: Twoje treningi (opcjonalnie) i bloki Twojego panelu. W każdej chwili możesz usunąć połączenie lub przestać udostępniać."
+            invite: "Znajomy nie ma jeszcze konta? Wyślij mu swój link z sekcji „Zaproś znajomego”: gdy tylko potwierdzi rejestrację, jesteście połączeni, bez prośby do zaakceptowania."
             principle: "Po połączeniu każde z was widzi panel drugiej osoby, tylko do odczytu."
             request: "Wpisz kod znajomego w „Dodaj połączenie”: otrzyma Twoją prośbę (i e-mail, który może wyłączyć) i może ją zaakceptować lub odrzucić."
             share: "Najpierw włącz „Udostępnij mój profil”: otrzymasz kod do przekazania znajomym, w formacie Alias#KOD."

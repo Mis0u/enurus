@@ -132,6 +132,35 @@ final class ProfileConnectionListControllerTest extends WebTestCase
         });
     }
 
+    public function testInvitationCardOffersALinkCarryingTheShareCode(): void
+    {
+        $client = $this->login(self::ACTOR);
+        $this->makeDiscoverable($this->getUserByEmail(self::ACTOR), 'INVTE3');
+        $this->entityManager()->flush();
+
+        $crawler = $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        $card = $crawler->filter('[data-controller="profile-connection--invitation"]');
+        self::assertSame('INVTE3', $card->attr('data-profile-connection--invitation-share-code-value'));
+        self::assertSame(
+            'http://localhost/fr/inscription?invitation=__CODE__',
+            $card->attr('data-profile-connection--invitation-url-template-value'),
+        );
+        self::assertNull($card->filter('[data-profile-connection--invitation-target="copyButton"]')->attr('disabled'));
+    }
+
+    public function testInvitationCardIsDisabledWhileProfileSharingIsOff(): void
+    {
+        $client = $this->login(self::ACTOR);
+
+        $crawler = $client->request('GET', self::LIST_URL);
+
+        self::assertResponseIsSuccessful();
+        self::assertSame('', $crawler->filter('[data-profile-connection--invitation-target="copyButton"]')->attr('disabled'));
+        self::assertSelectorTextContains('#profile-connection-invitation-help', 'Active le partage de ton profil');
+    }
+
     public function testEachKindOfConnectionIsListedInItsOwnSectionWithItsActions(): void
     {
         $client = $this->login(self::ACTOR);

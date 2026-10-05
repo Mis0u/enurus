@@ -6,6 +6,7 @@ namespace App\Controller\Security;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Service\ProfileSharing\InvitationResolver;
 use App\Service\Security\UserRegistrationService;
 use App\Service\Security\ValidateSecurityService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,6 +33,7 @@ class RegistrationController extends AbstractController
         private readonly TranslatorInterface $translator,
         private readonly ValidateSecurityService $validator,
         private readonly UserRegistrationService $registrationService,
+        private readonly InvitationResolver $invitationResolver,
     ) {
     }
 
@@ -55,6 +57,8 @@ class RegistrationController extends AbstractController
         if (null !== $this->getUser()) {
             return $this->redirectToRoute('app_dashboard');
         }
+        // Le formulaire est posté sur l'URL courante : `?invitation=` reste présent à l'envoi.
+        $inviter = $this->invitationResolver->resolveInviter($request->query->get('invitation'));
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -67,6 +71,7 @@ class RegistrationController extends AbstractController
             }
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
+            $user->invitedBy = $inviter;
             $this->registrationService->registerUser($user, $plainPassword, $request->getLocale());
 
             $request->getSession()->set(self::PENDING_EMAIL_SESSION_KEY, $user->email);
@@ -76,6 +81,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
+            'inviterNickname' => $inviter?->nickname,
         ]);
     }
 

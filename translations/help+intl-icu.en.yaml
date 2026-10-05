@@ -12,6 +12,7 @@ section:
         open: "See my connections"
         points:
             control: "You choose what your connections see: your workouts (optional) and the blocks of your dashboard. You can remove a connection or stop sharing at any time."
+            invite: "A friend doesn't have an account yet? Send them your link from “Invite a friend”: as soon as they confirm their sign-up, you're connected, with no request to accept."
             principle: "Once connected, you can each see the other's dashboard, read-only."
             request: "Enter a friend's code in “Add a connection”: they receive your request (and an email, which they can turn off) and can accept or decline it."
             share: "First turn on “Share my profile”: you get a code to give to your friends, in the form Alias#CODE."

@@ -167,6 +167,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
     }
 
+    /**
+     * Parrain dont le lien d'invitation a servi à l'inscription. Posé dès l'inscription parce que
+     * la confirmation de l'email peut se faire sur un autre appareil (session perdue) ; la connexion
+     * n'est créée qu'à cette confirmation (InvitationConnectionService).
+     */
+    #[ORM\ManyToOne(targetEntity: self::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    public ?User $invitedBy = null {
+        get {
+            return $this->invitedBy;
+        }
+        set(?User $invitedBy) {
+            $this->invitedBy = $invitedBy;
+        }
+    }
+
     #[ORM\Column(length: 180, nullable: false)]
     #[NotBlank]
     #[Email]
@@ -571,11 +587,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
+     * The inviter is left out: it would put another account, password hash included, in this session.
      */
     public function __serialize(): array
     {
         $data = (array) $this;
-        $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
+        $data['password'] = hash('crc32c', $this->password);
+        unset($data['invitedBy']);
 
         return $data;
     }

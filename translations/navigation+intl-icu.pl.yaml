@@ -129,13 +129,14 @@ contact:
         body: |-
             Cześć {nickname}!
 
-            Przewodnik pokazał Ci najważniejsze rzeczy. Jeszcze jedna wskazówka:
+            {invitation}Przewodnik pokazał Ci najważniejsze rzeczy. Jeszcze jedna wskazówka:
 
             🗂️ <a href="{routine_url}">Rutyny</a> — zgrupuj ćwiczenia, które często wykonujesz razem (np. "Push day"), aby dodać je jednym kliknięciem podczas zapisywania treningu.
 
             Masz pytanie? Wszystko jest wyjaśnione na stronie <a href="{help_url}">Pomoc</a>, funkcja po funkcji.
 
             Udanego treningu! 🔥
+        invitation: "🤝 Dzięki zaproszeniu od {nickname} jesteście teraz połączeni: panel tej osoby znajdziesz w zakładce <a href=\"{connections_url}\">Połączenia</a>."
         subject: "Witaj w {brand} 🎉"
 
 dashboard:
@@ -512,6 +513,13 @@ profile_connection:
         title: "Panel użytkownika {nickname}"
         view_workouts: "Zobacz jego/jej treningi"
     email:
+        invitation_accepted:
+            body: "{nickname} właśnie założył(a) konto w {brand} dzięki Twojemu linkowi z zaproszeniem. Jesteście teraz połączeni: każde z was widzi panel drugiej osoby."
+            cta: "Zobacz moje połączenia"
+            subject: "{nickname} przyjmuje Twoje zaproszenie"
+            title: "Twoje zaproszenie zostało przyjęte"
+            unsubscribe: "Nie chcę otrzymywać tych wiadomości"
+            why: "Otrzymujesz tę wiadomość, ponieważ ktoś zarejestrował się z Twojego linku z zaproszeniem."
         request:
             body: "{nickname} chce połączyć się z Tobą w {brand}. Jeśli zaakceptujesz, każde z was będzie mogło zobaczyć panel drugiej osoby."
             cta: "Zobacz prośbę"
@@ -553,9 +561,18 @@ profile_connection:
             empty: "Nie masz jeszcze żadnych połączeń."
             title: "Moje połączenia"
         intro: "Po zaakceptowaniu prośby każdy widzi panel drugiej osoby."
+        invitation:
+            copy: "Kopiuj link"
+            explanation: "Wyślij ten link znajomemu, który nie ma jeszcze konta: po rejestracji zostaniecie automatycznie połączeni. Wygenerowanie nowego kodu udostępniania unieważnia już wysłane linki."
+            feedback:
+                copied: "Link skopiowany"
+            share: "Udostępnij"
+            share_text: "Dołącz do mnie w {brand}, żebyśmy mogli śledzić nasze treningi!"
+            sharing_required_hint: "Włącz powyżej udostępnianie profilu, aby móc zaprosić znajomego."
+            title: "Zaproś znajomego"
         new_workout: "Nowy trening od Twojej ostatniej wizyty"
         notifications:
-            email_on_request: "Wyślij mi e-mail, gdy otrzymam prośbę o połączenie"
+            email_on_request: "Wyślij mi e-mail, gdy otrzymam prośbę o połączenie lub gdy dołączy zaproszony znajomy"
             feedback:
                 success: "Preferencja zaktualizowana"
             title: "Powiadomienia"
@@ -611,6 +628,9 @@ registration:
         welcome: Witaj na {brand}! Twój pierwszy trening na Ciebie czeka
     email_sent_to: "Email potwierdzający został wysłany na adres {email}."
     have_an_account: Masz już konto?
+    invitation:
+        explanation: "Po założeniu konta zostaniecie automatycznie połączeni: każde z was zobaczy panel drugiej osoby. Twój profil będzie więc udostępniony Twoim połączeniom; możesz w każdej chwili wyłączyć udostępnianie na stronie Połączenia."
+        title: "Zaproszenie od {nickname}"
     nickname:
         label: Wybierz swój alias
         placeholder: Pod jakim imieniem chcesz zabłysnąć?

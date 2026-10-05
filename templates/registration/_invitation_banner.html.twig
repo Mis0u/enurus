@@ -1,0 +1,16 @@
+{#
+    Inscription par lien d'invitation : annonce le parrain et ce qui se passera à la confirmation
+    de l'email (connexion acceptée d'office + partage de profil activé, cf. InvitationConnectionService).
+    Variables attendues (via `only`) :
+    - inviterNickname : string
+#}
+<div id="registration-invitation"
+     class="mb-6 rounded-2xl border border-cyan-400/30 bg-cyan-400/10 p-4 text-sm text-slate-200"
+     role="note">
+    <p class="font-semibold text-white">
+        {{ 'registration.invitation.title'|trans({nickname: inviterNickname}, 'navigation') }}
+    </p>
+    <p class="mt-1">
+        {{ 'registration.invitation.explanation'|trans({nickname: inviterNickname}, 'navigation') }}
+    </p>
+</div>

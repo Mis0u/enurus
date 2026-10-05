@@ -12,6 +12,7 @@ section:
         open: "Meine Verbindungen ansehen"
         points:
             control: "Du entscheidest, was deine Verbindungen sehen: deine Trainings (optional) und die Blöcke deines Dashboards. Du kannst eine Verbindung jederzeit entfernen oder das Teilen beenden."
+            invite: "Ein Freund hat noch kein Konto? Schicke ihm deinen Link über „Einen Freund einladen“: Sobald er seine Registrierung bestätigt, seid ihr verbunden, ohne Anfrage zum Annehmen."
             principle: "Sobald ihr verbunden seid, seht ihr jeweils das Dashboard des anderen, nur zum Lesen."
             request: "Gib den Code eines Freundes unter „Verbindung hinzufügen“ ein: Er erhält deine Anfrage (und eine E-Mail, die er abschalten kann) und kann sie annehmen oder ablehnen."
             share: "Aktiviere zuerst „Mein Profil teilen“: Du erhältst einen Code für deine Freunde, in der Form Alias#CODE."
