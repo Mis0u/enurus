@@ -153,6 +153,22 @@ class SecurityControllerTest extends WebTestCase
         );
     }
 
+    public function testRememberMeCookieIsNeverSentByAnotherSite(): void
+    {
+        $cookie = $this->getCookieJar(true);
+
+        self::assertNotNull($cookie);
+        self::assertSame('lax', $cookie->getSameSite());
+    }
+
+    public function testRememberMeCookieTravelsOnlyOverHttpsOnAnHttpsSite(): void
+    {
+        $cookie = $this->getCookieJar(true, overHttps: true);
+
+        self::assertNotNull($cookie);
+        self::assertTrue($cookie->isSecure());
+    }
+
     public function testRememberMeValidityCookie(): void
     {
         /** @var Cookie $cookie */
@@ -219,9 +235,11 @@ class SecurityControllerTest extends WebTestCase
         $this->assertSelectorTextContains('button', 'Créer mon compte', 'Le sélecteur contenant \'Créer mon compte\' est introuvable');
     }
 
-    private function getCredentials(string $username, string $password, bool $rememberMe = false): KernelBrowser
+    private function getCredentials(string $username, string $password, bool $rememberMe = false, bool $overHttps = false): KernelBrowser
     {
-        $client = static::createClient();
+        $client = static::createClient([], $overHttps ? [
+            'HTTPS' => 'on',
+        ] : []);
         $crawler = $client->request(Request::METHOD_GET, '/fr/');
         $buttonCrawlerNode = $crawler->selectButton('Se connecter');
         $form = $buttonCrawlerNode->form();
@@ -251,9 +269,9 @@ class SecurityControllerTest extends WebTestCase
         );
     }
 
-    private function getCookieJar(bool $rememberMe = false): ?Cookie
+    private function getCookieJar(bool $rememberMe = false, bool $overHttps = false): ?Cookie
     {
-        $client = $this->getCredentials('user-fixture-0@test.com', 'pass_1234', $rememberMe);
+        $client = $this->getCredentials('user-fixture-0@test.com', 'pass_1234', $rememberMe, $overHttps);
 
         $this->assertResponseRedirects('/fr/tableau-de-bord');
 
