@@ -13,6 +13,7 @@ readonly class ImageUploadService
 {
     public function __construct(
         private FilesystemOperator $defaultStorage,
+        private ImageMetadataStripper $metadataStripper,
     ) {
     }
 
@@ -22,7 +23,7 @@ readonly class ImageUploadService
         $filename = \sprintf('%s.%s', Uuid::v4()->toRfc4122(), $extension);
         $path = \sprintf('%s/%s/%s', $context, $ownerId, $filename);
 
-        $stream = fopen($file->getPathname(), 'r');
+        $stream = $this->metadataStripper->strip($file->getPathname());
 
         try {
             $this->defaultStorage->writeStream($path, $stream);
