@@ -13,6 +13,7 @@ export default class extends Controller {
     static values = {
         uploadUrl: { type: String, default: '' },
         deleteUrl: { type: String, default: '' },
+        uploadCsrfToken: { type: String, default: '' },
         deleteCsrfToken: { type: String, default: '' },
         hasExistingPhoto: { type: Boolean, default: false },
         maxSize: Number,
@@ -215,7 +216,10 @@ export default class extends Controller {
         return fetch(this.uploadUrlValue, {
             method: 'POST',
             body: formData,
-            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-Token': this.uploadCsrfTokenValue,
+            },
         });
     }
 

@@ -11,6 +11,7 @@ function buildDom() {
         <div data-controller="settings--avatar"
              data-settings--avatar-upload-url-value="/reglages/avatar"
              data-settings--avatar-delete-url-value="/reglages/avatar/supprime"
+             data-settings--avatar-upload-csrf-token-value="upload-token"
              data-settings--avatar-delete-csrf-token-value="token"
              data-settings--avatar-max-size-value="2097152"
              data-settings--avatar-allowed-types-value='["image/jpeg","image/png"]'
@@ -96,6 +97,21 @@ describe('settings--avatar controller', () => {
         expect(listener.mock.calls[0][0].detail).toEqual({ url: '/media/avatars/me.jpg' });
 
         window.removeEventListener('user:avatar-updated', listener);
+    });
+
+    it('sends the upload CSRF token with the file', async () => {
+        vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+            ok: true,
+            json: async () => ({ url: '/media/avatars/me.jpg' }),
+        }));
+
+        setInputFile(jpeg('avatar.jpg'));
+        await nextTick();
+
+        expect(global.fetch).toHaveBeenCalledWith('/reglages/avatar', expect.objectContaining({
+            method: 'POST',
+            headers: { 'X-CSRF-Token': 'upload-token' },
+        }));
     });
 
     it('shows an error when the upload fails', async () => {

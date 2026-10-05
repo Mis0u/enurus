@@ -11,6 +11,7 @@ use App\Tests\Functional\Helper\ImageTestHelper;
 use App\Tests\Functional\Helper\WorkoutTestHelper;
 use App\Tests\Functional\Security\Trait\FunctionalTestTrait;
 use App\Tests\Functional\Security\Trait\SwitchesFeatureSettingTrait;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,6 +69,23 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
         $this->assertNull($this->findUpdatedWorkout($workout->id)->photoPath);
     }
 
+    public function testIsRefusedWithoutAValidCsrfToken(): void
+    {
+        $client = $this->login(self::USER);
+        $workout = $this->getFirstWorkout(self::USER);
+        $this->switchWorkoutPhotoUpload(true);
+
+        $client->request(Request::METHOD_POST, $this->getUploadUrl($workout), [], [
+            'photo' => ImageTestHelper::createFakeImage('photo.jpg', 'image/jpeg'),
+        ], [
+            'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            'HTTP_X-CSRF-Token' => 'forged',
+        ]);
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+        $this->assertNull($this->findUpdatedWorkout($workout->id)->photoPath);
+    }
+
     // -------------------------------------------------------------------------
     // Validation
     // -------------------------------------------------------------------------
@@ -80,6 +98,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
 
         $client->request(Request::METHOD_POST, $this->getUploadUrl($workout), [], [], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            'HTTP_X-CSRF-Token' => $this->photoUploadToken($client),
         ]);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
@@ -95,6 +114,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
             'photo' => ImageTestHelper::createFakeImage('document.pdf', 'application/pdf'),
         ], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            'HTTP_X-CSRF-Token' => $this->photoUploadToken($client),
         ]);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -110,6 +130,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
             'photo' => ImageTestHelper::createLargeJpeg(),
         ], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            'HTTP_X-CSRF-Token' => $this->photoUploadToken($client),
         ]);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -129,6 +150,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
             'photo' => ImageTestHelper::createFakeImage('photo.jpg', 'image/jpeg'),
         ], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            'HTTP_X-CSRF-Token' => $this->photoUploadToken($client),
         ]);
 
         $this->assertResponseIsSuccessful();
@@ -153,6 +175,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
             'photo' => ImageTestHelper::createFakeImage('photo.jpg', 'image/jpeg'),
         ], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            'HTTP_X-CSRF-Token' => $this->photoUploadToken($client),
         ]);
 
         $updated = $this->findUpdatedWorkout($workout->id);
@@ -170,6 +193,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
             'photo' => ImageTestHelper::createFakeImage('first.jpg', 'image/jpeg'),
         ], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            'HTTP_X-CSRF-Token' => $this->photoUploadToken($client),
         ]);
 
         $firstPath = $this->findUpdatedWorkout($workout->id)->photoPath;
@@ -178,6 +202,7 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
             'photo' => ImageTestHelper::createFakeImage('second.jpg', 'image/jpeg'),
         ], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            'HTTP_X-CSRF-Token' => $this->photoUploadToken($client),
         ]);
 
         $secondPath = $this->findUpdatedWorkout($workout->id)->photoPath;
@@ -197,6 +222,20 @@ class WorkoutUploadPhotoControllerTest extends WebTestCase
         $workoutRepository = static::getContainer()->get(WorkoutRepository::class);
 
         return WorkoutTestHelper::getFirstWorkout($userRepository, $workoutRepository, $email);
+    }
+
+    /**
+     * Lu sur la page d'enregistrement de séance (zone photo de la fenêtre « Détails »), seulement
+     * rendue quand l'upload de photo est actif.
+     */
+    private function photoUploadToken(KernelBrowser $client): string
+    {
+        return $this->csrfTokenFromPage(
+            $client,
+            '/fr/enregistre-seance',
+            '[data-controller="workout--photo-upload"]',
+            'data-workout--photo-upload-upload-csrf-token-value',
+        );
     }
 
     private function getUploadUrl(Workout $workout): string

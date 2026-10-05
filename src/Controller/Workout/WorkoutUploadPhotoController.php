@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Workout;
 
 use App\Constraint\ImageConstraints;
+use App\Controller\Trait\ValidatesCsrfHeaderTrait;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Repository\FeatureSettingRepository;
@@ -13,6 +14,7 @@ use App\Service\Entity\WorkoutPhotoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapUploadedFile;
 use Symfony\Component\Routing\Attribute\Route;
@@ -22,6 +24,13 @@ use Symfony\Component\Validator\Constraints\File;
 #[IsGranted('ROLE_USER')]
 final class WorkoutUploadPhotoController extends AbstractController
 {
+    use ValidatesCsrfHeaderTrait;
+
+    /**
+     * Jeton fixe, pas par séance : à la création, la page est rendue avant que la séance existe.
+     */
+    public const string CSRF_TOKEN_ID = 'workout_photo_upload';
+
     public function __construct(
         private readonly WorkoutPhotoService $workoutPhotoService,
         private readonly FeatureSettingRepository $featureSettingRepository,
@@ -49,6 +58,7 @@ final class WorkoutUploadPhotoController extends AbstractController
     #[IsGranted(WorkoutVoter::EDIT, subject: 'workout')]
     public function __invoke(
         Workout $workout,
+        Request $request,
         #[MapUploadedFile(
             constraints: [
                 new File(
@@ -66,6 +76,8 @@ final class WorkoutUploadPhotoController extends AbstractController
         if (! $this->featureSettingRepository->isWorkoutPhotoUploadEnabled()) {
             throw $this->createNotFoundException('Workout photo upload is disabled.');
         }
+
+        $this->denyUnlessValidCsrfToken($request, self::CSRF_TOKEN_ID);
 
         if (null === $photo) {
             return $this->json(

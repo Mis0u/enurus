@@ -9,6 +9,7 @@
     <div class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-7 w-full max-w-lg shadow-[0_20px_60px_rgba(0,0,0,0.5)] max-md:p-5 overflow-y-auto max-h-[90vh]"
          {% if photoUploadEnabled %}
          data-controller="workout--photo-upload"
+         data-workout--photo-upload-upload-csrf-token-value="{{ csrf_token('workout_photo_upload') }}"
          data-workout--photo-upload-accepted-types-value="{{ imageAllowedMimeTypes|json_encode }}"
          data-workout--photo-upload-max-size-value="{{ imageMaxSizeBytes }}"
          {% endif %}>

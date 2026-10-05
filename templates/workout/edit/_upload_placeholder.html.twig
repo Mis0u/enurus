@@ -2,6 +2,7 @@
      data-controller="workout--photo-upload"
      data-workout--photo-upload-upload-url-value="{{ path('workout_upload_photo', {'id': workout.id, '_locale': app.request.locale}) }}"
      data-workout--photo-upload-delete-url-value="{{ path('workout_delete_photo', {'id': workout.id, '_locale': app.request.locale}) }}"
+     data-workout--photo-upload-upload-csrf-token-value="{{ csrf_token('workout_photo_upload') }}"
      data-workout--photo-upload-delete-csrf-token-value="{{ csrf_token('workout_photo_delete_' ~ workout.id) }}"
      data-workout--photo-upload-has-existing-photo-value="{{ workout.photoPath is not null ? 'true' : 'false' }}"
      data-workout--photo-upload-accepted-types-value="{{ imageAllowedMimeTypes|json_encode }}"

@@ -23,6 +23,8 @@ final class SettingsAvatarDeleteControllerTest extends WebTestCase
 
     private const string DELETE_URL = '/fr/reglages/avatar';
 
+    private const string SETTINGS_URL = '/fr/reglages';
+
     public function testIsRedirectToLoginIfNotLogged(): void
     {
         $client = static::createClient();
@@ -54,6 +56,13 @@ final class SettingsAvatarDeleteControllerTest extends WebTestCase
         $file = ImageTestHelper::createFakeImage('avatar.jpg', 'image/jpeg');
         $client->request(Request::METHOD_POST, self::UPLOAD_URL, [], [
             'avatar' => $file,
+        ], [
+            'HTTP_X-CSRF-Token' => $this->csrfTokenFromPage(
+                $client,
+                self::SETTINGS_URL,
+                '[data-controller="settings--avatar"]',
+                'data-settings--avatar-upload-csrf-token-value',
+            ),
         ]);
         $this->assertResponseIsSuccessful();
 
@@ -87,7 +96,7 @@ final class SettingsAvatarDeleteControllerTest extends WebTestCase
     {
         return $this->csrfTokenFromPage(
             $client,
-            '/fr/reglages',
+            self::SETTINGS_URL,
             'div[data-settings--avatar-delete-csrf-token-value]',
             'data-settings--avatar-delete-csrf-token-value',
         );
