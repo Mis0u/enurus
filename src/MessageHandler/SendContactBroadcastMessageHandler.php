@@ -14,6 +14,7 @@ use App\Exception\Translation\TranslationFailedException;
 use App\Message\SendContactBroadcastMessage;
 use App\Repository\ContactBroadcastRepository;
 use App\Repository\UserRepository;
+use App\Service\Contact\ContactMessageBodySanitizerService;
 use App\Service\Contact\CreatesContactThreadTrait;
 use App\Service\Translation\BroadcastTranslationFailureNotifierService;
 use App\Service\Translation\DeepLTranslationService;
@@ -56,6 +57,7 @@ final readonly class SendContactBroadcastMessageHandler
         private ImageUploadService $imageUploadService,
         private DeepLTranslationService $translationService,
         private BroadcastTranslationFailureNotifierService $failureNotifier,
+        private ContactMessageBodySanitizerService $bodySanitizer,
     ) {
     }
 
@@ -141,7 +143,8 @@ final readonly class SendContactBroadcastMessageHandler
                 throw $e;
             }
 
-            $translationsByLocale[$localeValue] = [$translated[0], $translated[1]];
+            // Le corps est affiché en HTML brut : ce que renvoie DeepL est filtré comme l'original.
+            $translationsByLocale[$localeValue] = [$translated[0], $this->bodySanitizer->sanitize($translated[1])];
 
             foreach ($pollOptions as $index => $option) {
                 $option->translatedLabels = [
