@@ -2,7 +2,9 @@
 
 {% block html_lang %}{{ locale }}{% endblock %}
 
-{# Une page d'erreur n'a pas de version dans d'autres langues à signaler aux moteurs de recherche. #}
+{# Une page d'erreur n'a ni URL de référence ni version dans d'autres langues à signaler aux
+   moteurs de recherche. #}
+{% block canonical %}{% endblock %}
 {% block hreflang %}{% endblock %}
 
 {% block body %}

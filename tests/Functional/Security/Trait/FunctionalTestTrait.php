@@ -34,7 +34,7 @@ trait FunctionalTestTrait
         $this->assertResponseRedirects('/fr/connexion');
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h2', 'Connexion', 'Le sélecteur H2 ne contient pas le texte attendu');
+        $this->assertSelectorTextContains('h1', 'Connexion', 'Le sélecteur H1 ne contient pas le texte attendu');
     }
 
     private function getUserByEmail(string $email): User

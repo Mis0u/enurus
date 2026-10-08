@@ -45,6 +45,7 @@ final class RegistrationCheckEmailFlowTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         self::assertStringContainsString($email, $crawler->filter('body')->text());
         self::assertCount(1, $crawler->filter('form[action="/fr/inscription/renvoyer-confirmation"]'));
+        self::assertSame('noindex', $crawler->filter('meta[name="robots"]')->attr('content'));
     }
 
     public function testResendWithoutPendingRegistrationRedirectsToRegister(): void

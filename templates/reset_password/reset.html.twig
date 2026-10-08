@@ -2,7 +2,9 @@
 
 {% form_theme resetForm 'registration/theme/error_theme.html.twig' %}
 
-{% block title %}{{ 'reset_password_request.reset_password'|trans({}, 'navigation') }}{% endblock %}
+{% block title %}{{ 'reset_password_request.reset_password'|trans({}, 'navigation')|format_title }}{% endblock %}
+
+{% block robots %}<meta name="robots" content="noindex">{% endblock %}
 
 {% block body %}
     <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">

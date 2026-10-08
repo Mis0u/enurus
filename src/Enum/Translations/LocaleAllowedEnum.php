@@ -34,4 +34,12 @@ enum LocaleAllowedEnum: string
             default => $this->value,
         };
     }
+
+    /**
+     * Valeur `og:locale` (langue_PAYS) des aperçus de lien, sur le même pays que le drapeau.
+     */
+    public function ogLocale(): string
+    {
+        return $this->value . '_' . strtoupper($this->flagCountryCode());
+    }
 }

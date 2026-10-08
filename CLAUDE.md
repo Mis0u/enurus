@@ -180,17 +180,30 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
 
 ### SEO
 - `<html lang>` suit la locale de la requête (bloc `html_lang` de `base.html.twig`, surchargé par la
-  page d'erreur avec sa locale résolue). Description + Open Graph dans le bloc `seo`
-  (`partials/_common/_seo_meta.html.twig`, texte `seo.description` du domaine `brand`), **jamais dans
-  le bloc `meta`** : des pages le remplacent (ex. `turbo-cache-control` en création de séance).
+  page d'erreur avec sa locale résolue). Description + Open Graph (+ `og:locale`, `twitter:card`) dans
+  le bloc `seo` (`partials/_common/_seo_meta.html.twig`), **jamais dans le bloc `meta`** : des pages le
+  remplacent (ex. `turbo-cache-control` en création de séance). Description par défaut
+  `seo.description` (domaine `brand`) ; une page donne la sienne en définissant le bloc
+  `meta_description` (ex. inscription). Titres : filtre `format_title` (« Connexion | Enurus »).
+- Fonctions Twig de `SeoExtension` : `canonical_url()` (bloc `canonical` : `<link rel="canonical">` +
+  `og:url`, URL de route **sans paramètres de requête** — un lien `?invitation=` ne crée pas de
+  doublon), `locale_alternates()` (bloc `hreflang`), `og_locale()`. Page d'erreur : blocs `canonical` et
+  `hreflang` vidés. Calculs dans `LocaleAlternateUrlGenerator`, partagés avec le sitemap.
+- `hreflang` : 8 langues + `x-default` (racine `/` pour l'accueil, version anglaise ailleurs).
+- **Pages au contenu non traduit** (`LocaleAlternateUrlGenerator::FRENCH_ONLY_ROUTES`, les CGU) :
+  servies dans les 8 langues mais `canonical` vers la version française, aucun `hreflang`, seule la
+  version française au sitemap — sinon 8 pages identiques mal étiquetées pour Google.
+- Bloc `robots` (vide par défaut) = `noindex` sur les pages de compte : connexion, vérification
+  d'email, mot de passe oublié. L'inscription reste indexée.
 - `public/robots.txt` statique (exclut `/admin` et `/*/_components`, pointe vers le sitemap de
   `https://enurus.com` en dur — fichier statique, il ne peut pas lire le domaine).
-- `hreflang` : bloc `hreflang` de `base.html.twig` (fonction Twig `locale_alternates()`), 8 langues +
-  `x-default` (racine `/` pour l'accueil, version anglaise ailleurs) ; vidé par la page d'erreur.
-  Calcul partagé avec le sitemap dans `LocaleAlternateUrlGenerator`.
 - `/sitemap.xml` (`SitemapController`, `src/Controller/Seo/`, **hors préfixe de locale** comme l'admin,
-  cf. `config/routes.yaml`) : liste `SitemapController::PUBLIC_ROUTES` × 8 langues. Nouvelle page
-  publique à indexer = l'ajouter à cette liste ; jamais la connexion.
+  cf. `config/routes.yaml`) : `SitemapController::PUBLIC_ROUTES` × 8 langues (une seule entrée pour
+  une page non traduite). Nouvelle page publique à indexer = l'ajouter à cette liste ; jamais la
+  connexion.
+- En prod, **toutes** les réponses sortent en `Cache-Control: max-age=0, must-revalidate, private`
+  sans cookie (vu le 2026-10-08) : réécrit par l'infra (Cloudflare/Scalingo), pas par le code — le
+  `public, max-age` du sitemap est bien posé en local.
 
 ### Page d'accueil publique
 - `/{_locale}/` = `HomeController` (`app_home`), public, redirige vers le dashboard si connecté ;

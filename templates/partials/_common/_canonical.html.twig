@@ -1,0 +1,8 @@
+{#
+    Paramètres :
+      - url : string — URL de référence de la page (vide : rien n'est rendu).
+#}
+{% if url is not empty %}
+    <link rel="canonical" href="{{ url }}">
+    <meta property="og:url" content="{{ url }}">
+{% endif %}
