@@ -17,14 +17,15 @@ use Symfony\Component\Routing\Attribute\Route;
 final class HomeController extends AbstractController
 {
     #[Route(path: '/', name: 'app_home', methods: [Request::METHOD_GET])]
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         if (null !== $this->getUser()) {
             return $this->redirectToRoute('app_dashboard');
         }
 
         return $this->render('home/index.html.twig', [
-            'locales' => LocaleAllowedEnum::getAllowedLocale(),
+            'locales' => LocaleAllowedEnum::cases(),
+            'currentLocale' => LocaleAllowedEnum::from($request->getLocale()),
         ]);
     }
 }

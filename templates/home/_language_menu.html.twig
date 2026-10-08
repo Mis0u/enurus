@@ -1,25 +1,31 @@
 {#
     Sélecteur de langue sans JS (<details>) : chaque entrée mène à la page d'accueil de cette langue.
+    Drapeaux en SVG (assets/images/flags, flag-icons MIT) plutôt qu'en emoji : Windows et certains
+    Firefox n'affichent pas les emoji drapeaux. Décoratifs (alt vide) : le code de langue suit.
 
     Paramètres :
-      - locales : list<string>
+      - locales : list<LocaleAllowedEnum>
+      - currentLocale : LocaleAllowedEnum
 #}
-<details class="relative">
-    <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer inline-flex items-center gap-1.5 h-11 px-3 rounded-lg border border-slate-700 bg-bg-card text-sm font-medium text-slate-200 hover:border-slate-500 transition-colors">
+<details id="language-menu" class="relative">
+    <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer inline-flex items-center gap-2 h-11 px-3 rounded-lg border border-slate-700 bg-bg-card text-sm font-medium text-slate-200 hover:border-slate-500 transition-colors">
         <span class="sr-only">{{ 'home.header.language'|trans({}, 'home') }}</span>
-        {{ app.request.locale|upper }}
+        <img src="{{ asset('images/flags/' ~ currentLocale.flagCountryCode ~ '.svg') }}" alt="" class="w-5 h-[15px] rounded-sm object-cover">
+        {{ currentLocale.value|upper }}
         <svg class="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
     </summary>
 
-    <ul class="absolute right-0 z-10 mt-2 w-24 py-1 rounded-lg border border-slate-700 bg-bg-card shadow-xl">
+    <ul class="absolute right-0 z-10 mt-2 w-28 py-1 rounded-lg border border-slate-700 bg-bg-card shadow-xl">
         {% for locale in locales %}
+            {% set is_current = locale == currentLocale %}
             <li>
-                <a href="{{ path('app_home', {'_locale': locale}) }}"
-                   lang="{{ locale }}"
-                   hreflang="{{ locale }}"
-                   class="block px-3 py-2 text-sm no-underline hover:bg-bg-card-hover {{ locale == app.request.locale ? 'text-rose-ft font-semibold' : 'text-slate-200' }}"
-                   {% if locale == app.request.locale %}aria-current="page"{% endif %}>
-                    {{ locale|upper }}
+                <a href="{{ path('app_home', {'_locale': locale.value}) }}"
+                   lang="{{ locale.value }}"
+                   hreflang="{{ locale.value }}"
+                   class="flex items-center gap-2.5 px-3 py-2 text-sm no-underline hover:bg-bg-card-hover {{ is_current ? 'text-rose-ft font-semibold' : 'text-slate-200' }}"
+                   {% if is_current %}aria-current="page"{% endif %}>
+                    <img src="{{ asset('images/flags/' ~ locale.flagCountryCode ~ '.svg') }}" alt="" class="w-5 h-[15px] rounded-sm object-cover">
+                    {{ locale.value|upper }}
                 </a>
             </li>
         {% endfor %}
