@@ -1,3 +1,4 @@
+/* stimulusFetch: 'lazy' */
 import { Controller } from '@hotwired/stimulus';
 import Sortable from 'sortablejs';
 import { showSuccessToast } from '../../utils/toast.js';

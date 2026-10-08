@@ -1,3 +1,6 @@
+// Toujours chargé d'emblée, jamais à la demande : il écoute sur window des événements
+// (exercise:selected, routine:exercises-loaded) émis dès la connexion d'autres contrôleurs. Chargé à
+// la demande, il ne serait pas encore branché et la séance en cours ne serait pas restaurée.
 import { Controller } from '@hotwired/stimulus';
 import Sortable from 'sortablejs';
 import { numerate } from './workout/create/number_series.js';

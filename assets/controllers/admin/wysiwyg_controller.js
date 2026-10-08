@@ -1,3 +1,4 @@
+/* stimulusFetch: 'lazy' */
 import { Controller } from '@hotwired/stimulus';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';

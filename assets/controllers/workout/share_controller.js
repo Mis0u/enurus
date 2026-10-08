@@ -1,3 +1,4 @@
+/* stimulusFetch: 'lazy' */
 // assets/controllers/workout/share_controller.js
 //
 // Génère une image récapitulative de la séance (carte hors-écran capturée via html-to-image),
