@@ -10,13 +10,21 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class SitemapControllerTest extends WebTestCase
 {
-    public function testSitemapListsEveryPublicPageInEveryLanguage(): void
+    public function testSitemapListsTranslatedPagesInEveryLanguage(): void
     {
         $sitemap = $this->requestSitemap();
 
-        self::assertCount(24, $sitemap->filterXPath('//s:url'));
-        self::assertSame(1, $this->countLocations($sitemap, 'http://localhost/pl/regulamin'));
+        self::assertCount(17, $sitemap->filterXPath('//s:url'));
         self::assertSame(1, $this->countLocations($sitemap, 'http://localhost/de/'));
+        self::assertSame(1, $this->countLocations($sitemap, 'http://localhost/pl/rejestracja'));
+    }
+
+    public function testSitemapListsTermsOnlyInFrench(): void
+    {
+        $sitemap = $this->requestSitemap();
+
+        self::assertSame(1, $this->countLocations($sitemap, 'http://localhost/fr/cgu'));
+        self::assertSame(0, $this->countLocations($sitemap, 'http://localhost/pl/regulamin'));
     }
 
     public function testSitemapLeavesOutTheLoginPage(): void

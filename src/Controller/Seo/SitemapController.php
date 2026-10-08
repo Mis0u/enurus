@@ -12,7 +12,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Plan du site pour les moteurs de recherche : seules les pages publiques utiles à l'arrivée d'un
- * visiteur (la connexion n'apporte rien hors de son compte), chacune dans ses 8 langues.
+ * visiteur (la connexion n'apporte rien hors de son compte), dans ses 8 langues quand son contenu
+ * est traduit, sinon sa seule version de référence.
  * Hors préfixe de locale (cf. config/routes.yaml) : les moteurs le cherchent à la racine.
  */
 final class SitemapController extends AbstractController
@@ -40,11 +41,18 @@ final class SitemapController extends AbstractController
     }
 
     /**
-     * @return array{locations: array<string, string>, alternates: array<string, string>} une entrée
+     * @return array{locations: array<array-key, string>, alternates: array<string, string>} une entrée
      *     du sitemap par langue (`locations`), chacune listant toutes les versions plus x-default
      */
     private function pageAlternates(string $route): array
     {
+        if (! $this->alternateUrlGenerator->isTranslated($route)) {
+            return [
+                'locations' => [$this->alternateUrlGenerator->canonical($route, [])],
+                'alternates' => [],
+            ];
+        }
+
         $locations = $this->alternateUrlGenerator->alternates($route);
 
         return [

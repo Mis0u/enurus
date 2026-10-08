@@ -2,10 +2,13 @@
     Paramètres :
       - title : string — titre de la page, repris dans l'aperçu de lien.
       - description : string — résumé affiché par les moteurs de recherche et l'aperçu de lien.
+      - ogLocale : string — langue de l'aperçu de lien (ex. fr_FR).
 #}
 <meta name="description" content="{{ description }}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ 'name'|trans({}, 'brand') }}">
+<meta property="og:locale" content="{{ ogLocale }}">
 <meta property="og:title" content="{{ title }}">
 <meta property="og:description" content="{{ description }}">
 <meta property="og:image" content="{{ absolute_url(asset('images/enurus_logo.png')) }}">
+<meta name="twitter:card" content="summary_large_image">
