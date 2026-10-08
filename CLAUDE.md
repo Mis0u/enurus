@@ -202,6 +202,9 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
   `workout--show--muscles`. Ajouter une fonctionnalité = une clé dans la liste de `_features` + son
   visuel + ses textes ×8 langues.
 - Ne promettre dans le texte que ce qui existe (ex. aucun signal de décharge/deload n'est envoyé).
+- Sélecteur de langue avec drapeaux **SVG** (`assets/images/flags/`, copiés de `flag-icons`, MIT,
+  licence à côté), jamais en emoji : Windows et certains Firefox/LibreWolf ne les affichent pas.
+  Pays du drapeau = `LocaleAllowedEnum::flagCountryCode()` (`en` → `gb`).
 
 ### Formulaires
 - FormType Symfony complet pour toute validation non-triviale ou réutilisée (mot de passe, workout).

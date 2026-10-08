@@ -32,6 +32,15 @@ final class HomeControllerTest extends WebTestCase
         self::assertGreaterThan(0, $crawler->filter('a[href="/de/anmelden"]')->count());
     }
 
+    public function testLanguageMenuShowsAFlagForEveryLanguage(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request(Request::METHOD_GET, '/en/');
+
+        self::assertCount(1, $crawler->filter('#language-menu summary img[src*="flags/gb"]'));
+        self::assertCount(8, $crawler->filter('#language-menu li img[src*="flags/"]'));
+    }
+
     public function testVisitorDiscoversEveryFeature(): void
     {
         $client = static::createClient();

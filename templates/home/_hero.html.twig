@@ -21,10 +21,14 @@
             </a>
         </div>
 
-        <ul class="flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-400">
-            <li>{{ 'home.hero.perks.languages'|trans({}, 'home') }}</li>
-            <li>{{ 'home.hero.perks.units'|trans({}, 'home') }}</li>
-            <li>{{ 'home.hero.perks.install'|trans({}, 'home') }}</li>
+        {# Bordure en dégradé rose → cyan, comme le logo : padding de 1px sur un fond dégradé, la
+           pastille intérieure reprend la couleur de fond de la page. #}
+        <ul class="flex flex-wrap gap-2.5 text-sm">
+            {% for perk in ['languages', 'units', 'install'] %}
+                <li class="rounded-full p-px bg-gradient-to-r from-rose-ft to-cyan-ft">
+                    <span class="block px-3.5 py-1.5 rounded-full bg-bg-base text-slate-200">{{ ('home.hero.perks.' ~ perk)|trans({}, 'home') }}</span>
+                </li>
+            {% endfor %}
         </ul>
     </div>
 

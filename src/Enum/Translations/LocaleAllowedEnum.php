@@ -22,4 +22,16 @@ enum LocaleAllowedEnum: string
     {
         return array_column(self::cases(), 'value');
     }
+
+    /**
+     * Pays dont le drapeau représente la langue (fichier assets/images/flags/<code>.svg) : même choix
+     * que les réglages, l'anglais sous le drapeau britannique.
+     */
+    public function flagCountryCode(): string
+    {
+        return match ($this) {
+            self::EN => 'gb',
+            default => $this->value,
+        };
+    }
 }
