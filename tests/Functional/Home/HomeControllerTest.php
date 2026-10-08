@@ -32,6 +32,32 @@ final class HomeControllerTest extends WebTestCase
         self::assertGreaterThan(0, $crawler->filter('a[href="/de/anmelden"]')->count());
     }
 
+    public function testVisitorDiscoversEveryFeature(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request(Request::METHOD_GET, '/fr/');
+
+        self::assertCount(6, $crawler->filter('#features article h3'));
+        self::assertSelectorTextContains('#features', 'Vois les muscles que tu as travaillés');
+    }
+
+    public function testVisitorFindsAnswersToCommonQuestions(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request(Request::METHOD_GET, '/en/');
+
+        self::assertCount(6, $crawler->filter('#faq details summary'));
+        self::assertSelectorTextContains('#faq', 'Is it really free?');
+    }
+
+    public function testVisitorCanSignUpAgainAtTheEndOfThePage(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request(Request::METHOD_GET, '/fr/');
+
+        self::assertCount(2, $crawler->filter('main a[href="/fr/inscription"]'));
+    }
+
     public function testLoggedUserGoesStraightToTheDashboard(): void
     {
         $client = $this->login('user-fixture-11-workout@test.com');

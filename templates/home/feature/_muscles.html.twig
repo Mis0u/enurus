@@ -1,0 +1,16 @@
+<div class="h-full flex items-center justify-center gap-5">
+    <div class="w-[70px] [&_svg]:h-auto!"
+         data-controller="workout--show--muscles"
+         data-workout--show--muscles-primary-value='["long-head-bicep","short-head-bicep"]'
+         data-workout--show--muscles-secondary-value='["wrist-flexors","wrist-extensors"]'>
+        {% include 'SVG_BODY/female/front.html.twig' only %}
+    </div>
+    <div class="flex flex-col gap-2 text-[13px]">
+        <span class="inline-flex items-center gap-1.5 text-rose-300">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-ft"></span>{{ 'home.features.muscles.primary'|trans({}, 'home') }}
+        </span>
+        <span class="inline-flex items-center gap-1.5 text-cyan-300">
+            <span class="w-2.5 h-2.5 rounded-full bg-cyan-ft"></span>{{ 'home.features.muscles.secondary'|trans({}, 'home') }}
+        </span>
+    </div>
+</div>

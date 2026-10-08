@@ -1,0 +1,21 @@
+<section aria-labelledby="levels-title" class="max-w-6xl mx-auto px-4 md:px-6 pb-16 md:pb-28">
+    <h2 id="levels-title" class="font-rajdhani font-bold text-[32px] md:text-[46px] leading-tight text-slate-50 mb-10">
+        {{ 'home.levels.title'|trans({}, 'home') }}
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {% for level in [
+            {key: 'beginner', borderClass: 'border-cyan-ft'},
+            {key: 'experienced', borderClass: 'border-rose-ft'},
+        ] %}
+            <div class="p-7 rounded-2xl bg-bg-card border-t-[3px] {{ level.borderClass }}">
+                <h3 class="font-rajdhani text-[26px] font-bold text-slate-50 mb-3">{{ ('home.levels.' ~ level.key ~ '.title')|trans({}, 'home') }}</h3>
+                <ul class="list-disc pl-5 flex flex-col gap-2 text-slate-300">
+                    {% for item in ['first', 'second', 'third'] %}
+                        <li>{{ ('home.levels.' ~ level.key ~ '.' ~ item)|trans({}, 'home') }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+</section>

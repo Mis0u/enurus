@@ -1,0 +1,22 @@
+{#
+    Une carte par fonctionnalité : visuel fictif (home/feature/_<clé>.html.twig), titre et texte
+    (home.features.<clé>.* dans le domaine `home`).
+#}
+<section id="features" aria-labelledby="features-title" class="max-w-6xl mx-auto px-4 md:px-6 pb-16 md:pb-28">
+    <h2 id="features-title" class="font-rajdhani font-bold text-[32px] md:text-[46px] leading-tight text-slate-50 mb-3">
+        {{ 'home.features.title'|trans({}, 'home') }}
+    </h2>
+    <p class="text-lg text-slate-400 max-w-2xl mb-10">{{ 'home.features.subtitle'|trans({}, 'home') }}</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {% for feature in ['logging', 'muscles', 'progress', 'regularity', 'friends', 'year_in_review'] %}
+            <article class="flex flex-col gap-4 p-6 rounded-2xl border border-slate-800 bg-bg-card">
+                <div class="h-[150px] p-3.5 rounded-xl bg-bg-card-hover overflow-hidden" aria-hidden="true">
+                    {% include 'home/feature/_' ~ feature ~ '.html.twig' only %}
+                </div>
+                <h3 class="font-rajdhani text-2xl font-bold text-slate-50">{{ ('home.features.' ~ feature ~ '.title')|trans({}, 'home') }}</h3>
+                <p class="text-slate-400">{{ ('home.features.' ~ feature ~ '.text')|trans({}, 'home') }}</p>
+            </article>
+        {% endfor %}
+    </div>
+</section>
