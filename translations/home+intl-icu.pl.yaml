@@ -1,0 +1,24 @@
+home:
+    header:
+        language: "Język"
+        login: "Zaloguj się"
+        nav_label: "Konto"
+    hero:
+        badge: "Za darmo i bez reklam"
+        cta_login: "Mam już konto"
+        cta_register: "Załóż konto"
+        perks:
+            install: "Instaluje się na telefonie"
+            languages: "Dostępny w 8 językach"
+            units: "Kilogramy lub funty"
+        subtitle: "Zapisuj treningi, śledź swoje rekordy i sprawdzaj, jakie mięśnie pracowały. Niezależnie od tego, czy dopiero zaczynasz, czy trenujesz od lat."
+        title: "Twój dziennik treningowy,"
+        title_highlight: "zawsze w kieszeni."
+    preview:
+        caption: "Przykładowy trening zapisany w Enurus: trzy ćwiczenia i trenowane mięśnie zaznaczone na sylwetce."
+        exercise_count: "{count, plural, =1 {1 ćwiczenie} few {# ćwiczenia} many {# ćwiczeń} other {# ćwiczenia}}"
+        meta: "Wtorek, 7 października · 58 min"
+        record: "Nowy rekord: {weight} kg"
+        sets: "{sets} × {reps} · {weight} kg"
+        title: "Trening klatki piersiowej"
+    title: "Enurus — twój darmowy dziennik treningowy"

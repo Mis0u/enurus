@@ -82,7 +82,7 @@ class WorkoutCheckDateControllerTest extends WebTestCase
             ]
         );
 
-        $this->assertResponseRedirects('/fr/');
+        $this->assertResponseRedirects('/fr/connexion');
     }
 
     public function testCheckDateReturnsCorrectCount(): void

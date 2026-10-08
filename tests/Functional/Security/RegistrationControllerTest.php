@@ -49,13 +49,13 @@ class RegistrationControllerTest extends WebTestCase
 
     public function testHoneyPotIsRedirectToLoginPageWithoutPersistInDatabase(): void
     {
-        $user = $this->fillField('male', 'bot@test.com', 5, '/fr/', 'Je suis un bot');
+        $user = $this->fillField('male', 'bot@test.com', 5, '/fr/connexion', 'Je suis un bot');
         $this->assertNull($user);
     }
 
     public function testHoneyPotFormSubmitToFastWithoutPersistInDatabase(): void
     {
-        $user = $this->fillField('male', 'bot@test.com', 1, '/fr/');
+        $user = $this->fillField('male', 'bot@test.com', 1, '/fr/connexion');
         $this->assertNull($user);
     }
 

@@ -35,5 +35,5 @@ test('user can request account deletion via the type-to-confirm modal', async ({
 
     // Sur succès, le controller redirige vers app_logout (cf.
     // assets/controllers/settings/account_deletion_controller.js).
-    await expect(page).toHaveURL(/\/en\/$/, { timeout: 15_000 });
+    await expect(page).toHaveURL(/\/en\/login$/, { timeout: 15_000 });
 });

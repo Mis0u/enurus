@@ -1,0 +1,24 @@
+home:
+    header:
+        language: "Idioma"
+        login: "Iniciar sessão"
+        nav_label: "Conta"
+    hero:
+        badge: "Gratuito e sem publicidade"
+        cta_login: "Já tenho conta"
+        cta_register: "Criar a minha conta"
+        perks:
+            install: "Instala-se no teu telemóvel"
+            languages: "Disponível em 8 línguas"
+            units: "Quilos ou libras"
+        subtitle: "Regista os teus treinos, acompanha os teus recordes e vê os músculos que trabalhaste. Quer estejas a começar, quer treines há anos."
+        title: "O teu diário de musculação,"
+        title_highlight: "sempre no teu bolso."
+    preview:
+        caption: "Exemplo de treino registado no Enurus: três exercícios e os músculos trabalhados destacados numa silhueta."
+        exercise_count: "{count, plural, =1 {1 exercício} other {# exercícios}}"
+        meta: "Terça-feira, 7 de outubro · 58 min"
+        record: "Novo recorde: {weight} kg"
+        sets: "{sets} × {reps} · {weight} kg"
+        title: "Treino de peito"
+    title: "Enurus — o teu diário de musculação gratuito"

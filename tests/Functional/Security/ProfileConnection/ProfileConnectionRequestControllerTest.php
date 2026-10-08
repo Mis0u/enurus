@@ -182,7 +182,7 @@ final class ProfileConnectionRequestControllerTest extends WebTestCase
 
         $client->request('POST', self::REQUEST_URL, []);
 
-        self::assertResponseRedirects('/fr/');
+        self::assertResponseRedirects('/fr/connexion');
     }
 
     public function testRequestRouteAnswersNotFoundToAGetRequest(): void

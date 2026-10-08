@@ -1,0 +1,24 @@
+home:
+    header:
+        language: "Language"
+        login: "Sign in"
+        nav_label: "Account"
+    hero:
+        badge: "Free and ad-free"
+        cta_login: "I already have an account"
+        cta_register: "Create my account"
+        perks:
+            install: "Installs on your phone"
+            languages: "Available in 8 languages"
+            units: "Kilograms or pounds"
+        subtitle: "Log your sessions, track your records and see which muscles you trained. Whether you are just starting out or have been training for years."
+        title: "Your workout log,"
+        title_highlight: "always in your pocket."
+    preview:
+        caption: "Example of a session logged on Enurus: three exercises and the trained muscles highlighted on a body outline."
+        exercise_count: "{count, plural, =1 {1 exercise} other {# exercises}}"
+        meta: "Tuesday, October 7 · 58 min"
+        record: "New record: {weight} kg"
+        sets: "{sets} × {reps} · {weight} kg"
+        title: "Chest session"
+    title: "Enurus — your free workout log"

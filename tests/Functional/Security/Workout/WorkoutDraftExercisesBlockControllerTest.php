@@ -32,7 +32,7 @@ class WorkoutDraftExercisesBlockControllerTest extends WebTestCase
 
         $this->postDraft($client, '{"exercises": []}');
 
-        $this->assertResponseRedirects('/fr/');
+        $this->assertResponseRedirects('/fr/connexion');
     }
 
     public function testRejectsANonXhrRequest(): void

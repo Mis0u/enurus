@@ -35,7 +35,7 @@ class RoutineExercisesBlockControllerTest extends WebTestCase
             ]
         );
 
-        $this->assertResponseRedirects('/fr/');
+        $this->assertResponseRedirects('/fr/connexion');
     }
 
     public function testRoutineExercisesBlockReturns400WhenRoutineIdMissing(): void

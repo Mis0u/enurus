@@ -178,6 +178,14 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
 
 ## Patterns transversaux éprouvés
 
+### Page d'accueil publique
+- `/{_locale}/` = `HomeController` (`app_home`), public, redirige vers le dashboard si connecté ;
+  `/` y mène via `LocaleRedirectListener` (langue du navigateur). La connexion (`app_login`) a un
+  chemin traduit (`/login`, `/connexion`, `/anmelden`…) : en test, jamais `/fr/` pour la connexion.
+- Templates `home/*`, domaine de traduction `home`. Exemple de séance du haut de page = données
+  fictives, silhouette coloriée par le contrôleur `workout--show--muscles`.
+- Ne promettre dans le texte que ce qui existe (ex. aucun signal de décharge/deload n'est envoyé).
+
 ### Formulaires
 - FormType Symfony complet pour toute validation non-triviale ou réutilisée (mot de passe, workout).
 - Pas de FormType pour des scalaires uniques auto-save en AJAX (ex. champs du profil réglages) —

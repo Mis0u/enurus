@@ -1,0 +1,24 @@
+home:
+    header:
+        language: "Lingua"
+        login: "Accedi"
+        nav_label: "Account"
+    hero:
+        badge: "Gratuito e senza pubblicità"
+        cta_login: "Ho già un account"
+        cta_register: "Crea il mio account"
+        perks:
+            install: "Si installa sul telefono"
+            languages: "Disponibile in 8 lingue"
+            units: "Chili o libbre"
+        subtitle: "Registra le tue sessioni, segui i tuoi record e vedi quali muscoli hai allenato. Che tu sia agli inizi o ti alleni da anni."
+        title: "Il tuo diario di allenamento,"
+        title_highlight: "sempre in tasca."
+    preview:
+        caption: "Esempio di sessione registrata su Enurus: tre esercizi e i muscoli allenati evidenziati su una sagoma."
+        exercise_count: "{count, plural, =1 {1 esercizio} other {# esercizi}}"
+        meta: "Martedì 7 ottobre · 58 min"
+        record: "Nuovo record: {weight} kg"
+        sets: "{sets} × {reps} · {weight} kg"
+        title: "Sessione pettorali"
+    title: "Enurus — il tuo diario di allenamento gratuito"
