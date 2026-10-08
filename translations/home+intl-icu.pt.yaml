@@ -1,4 +1,59 @@
 home:
+    call_to_action:
+        text: "A tua conta fica pronta num minuto. Gratuito, sem publicidade e sem compromisso."
+        title: "Que tal registares o teu próximo treino?"
+    faq:
+        beginner:
+            answer: "Sim. A biblioteca de exercícios indica os músculos trabalhados e a ajuda acompanha-te desde o primeiro treino."
+            question: "Estou a começar, é para mim?"
+        data:
+            answer: "Continuam a ser teus: podes exportá-los em CSV ou JSON e eliminar a tua conta a qualquer momento. A tua evolução só é visível para os amigos que aceitas."
+            question: "O que acontece aos meus dados?"
+        free:
+            answer: "Sim. Sem subscrição, sem versão paga e sem publicidade."
+            question: "É mesmo gratuito?"
+        languages:
+            answer: "Francês, inglês, italiano, espanhol, português, alemão, neerlandês e polaco."
+            question: "Em que línguas?"
+        mobile:
+            answer: "Sim. O site adapta-se ao teu ecrã e pode ser instalado no ecrã inicial, como uma aplicação."
+            question: "Funciona no telemóvel?"
+        title: "Perguntas frequentes"
+        units:
+            answer: "Os dois. Escolhes a unidade nas definições e podes mudá-la quando quiseres."
+            question: "Quilos ou libras?"
+    features:
+        friends:
+            sessions: "{count, plural, =1 {1 treino este mês} other {# treinos este mês}}"
+            text: "Convida os teus amigos, acompanhem a evolução uns dos outros e comparem-se."
+            title: "Evolui com os teus amigos"
+            you: "Tu"
+        logging:
+            reps: "Repetições"
+            set: "Série"
+            text: "Exercícios, séries, pesos, repetições. Guarda as tuas rotinas para não teres de escrever tudo outra vez."
+            title: "Regista os teus treinos num instante"
+            weight: "Peso"
+            weight_value: "{weight, number} kg"
+        muscles:
+            primary: "Principal"
+            secondary: "Secundário"
+            text: "Cada treino destaca os músculos envolvidos numa silhueta. Percebes num relance o que andas a esquecer."
+            title: "Vê os músculos que trabalhaste"
+        progress:
+            text: "Os teus recordes, o histórico e o gráfico de cada exercício. Sabes sempre que peso pôr na barra."
+            title: "Acompanha a tua evolução"
+        regularity:
+            goal: "Objetivo: {count, plural, =1 {1 treino} other {# treinos}} por semana"
+            text: "Calendário dos teus treinos, objetivo de regularidade e medalhas para desbloquear e manter a motivação."
+            title: "Mantém o ritmo"
+        subtitle: "Tudo o que um caderno de papel não consegue fazer, sem perder a simplicidade."
+        title: "O que podes fazer com o Enurus"
+        year_in_review:
+            label: "O teu ano"
+            sessions: "{count, plural, =1 {treino este ano} other {treinos este ano}}"
+            text: "Todos os anos, em dezembro, um resumo do teu ano de treino para partilhar com os teus amigos."
+            title: "Revive o teu ano"
     header:
         language: "Idioma"
         login: "Iniciar sessão"
@@ -14,6 +69,18 @@ home:
         subtitle: "Regista os teus treinos, acompanha os teus recordes e vê os músculos que trabalhaste. Quer estejas a começar, quer treines há anos."
         title: "O teu diário de musculação,"
         title_highlight: "sempre no teu bolso."
+    levels:
+        beginner:
+            first: "Uma biblioteca de exercícios com os músculos trabalhados por cada um."
+            second: "Rotinas que preparas uma vez e reutilizas."
+            third: "Uma ajuda que te explica cada ecrã, passo a passo."
+            title: "Estás a começar"
+        experienced:
+            first: "Recordes, tonelagem e histórico detalhado por exercício."
+            second: "Um painel que organizas à tua maneira."
+            third: "Os teus dados exportáveis a qualquer momento (CSV ou JSON)."
+            title: "Já treinas há muito tempo"
+        title: "Para todos os níveis"
     preview:
         caption: "Exemplo de treino registado no Enurus: três exercícios e os músculos trabalhados destacados numa silhueta."
         exercise_count: "{count, plural, =1 {1 exercício} other {# exercícios}}"

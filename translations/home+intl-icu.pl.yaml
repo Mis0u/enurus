@@ -1,4 +1,59 @@
 home:
+    call_to_action:
+        text: "Konto jest gotowe w minutę. Za darmo, bez reklam i bez zobowiązań."
+        title: "Zapiszesz swój następny trening?"
+    faq:
+        beginner:
+            answer: "Tak. Biblioteka ćwiczeń pokazuje pracujące mięśnie, a pomoc towarzyszy ci od pierwszego treningu."
+            question: "Dopiero zaczynam, czy to dla mnie?"
+        data:
+            answer: "Należą do ciebie: możesz je wyeksportować do CSV lub JSON i w każdej chwili usunąć konto. Twoje postępy widzą tylko znajomi, których zaakceptujesz."
+            question: "Co dzieje się z moimi danymi?"
+        free:
+            answer: "Tak. Bez abonamentu, bez płatnej wersji i bez reklam."
+            question: "Czy to naprawdę za darmo?"
+        languages:
+            answer: "Francuski, angielski, włoski, hiszpański, portugalski, niemiecki, niderlandzki i polski."
+            question: "W jakich językach?"
+        mobile:
+            answer: "Tak. Strona dopasowuje się do ekranu i można ją zainstalować na ekranie głównym jak aplikację."
+            question: "Czy działa na telefonie?"
+        title: "Najczęstsze pytania"
+        units:
+            answer: "Jedno i drugie. Jednostkę wybierasz w ustawieniach i możesz ją zmienić w każdej chwili."
+            question: "Kilogramy czy funty?"
+    features:
+        friends:
+            sessions: "{count, plural, =1 {1 trening w tym miesiącu} few {# treningi w tym miesiącu} many {# treningów w tym miesiącu} other {# treningu w tym miesiącu}}"
+            text: "Zaproś znajomych, śledźcie nawzajem swoje postępy i porównujcie wyniki."
+            title: "Trenuj ze znajomymi"
+            you: "Ty"
+        logging:
+            reps: "Powtórzenia"
+            set: "Seria"
+            text: "Ćwiczenia, serie, ciężary, powtórzenia. Zapisz swoje plany, żeby nie wpisywać wszystkiego od nowa."
+            title: "Zapisuj treningi w mgnieniu oka"
+            weight: "Ciężar"
+            weight_value: "{weight, number} kg"
+        muscles:
+            primary: "Główne"
+            secondary: "Pomocnicze"
+            text: "Każdy trening zaznacza zaangażowane mięśnie na sylwetce. Od razu widać, co pomijasz."
+            title: "Zobacz, jakie mięśnie pracowały"
+        progress:
+            text: "Rekordy, historia i wykres każdego ćwiczenia. Zawsze wiesz, jaki ciężar założyć na sztangę."
+            title: "Śledź swoje postępy"
+        regularity:
+            goal: "Cel: {count, plural, =1 {1 trening} few {# treningi} many {# treningów} other {# treningu}} w tygodniu"
+            text: "Kalendarz treningów, cel regularności i odznaki do zdobycia, które pomagają utrzymać motywację."
+            title: "Trzymaj rytm"
+        subtitle: "Wszystko, czego nie potrafi papierowy dziennik, bez utraty jego prostoty."
+        title: "Co możesz robić z Enurus"
+        year_in_review:
+            label: "Twój rok"
+            sessions: "{count, plural, =1 {trening w tym roku} few {treningi w tym roku} many {treningów w tym roku} other {treningu w tym roku}}"
+            text: "Co roku w grudniu podsumowanie twojego roku treningowego, którym możesz podzielić się ze znajomymi."
+            title: "Przeżyj swój rok jeszcze raz"
     header:
         language: "Język"
         login: "Zaloguj się"
@@ -14,6 +69,18 @@ home:
         subtitle: "Zapisuj treningi, śledź swoje rekordy i sprawdzaj, jakie mięśnie pracowały. Niezależnie od tego, czy dopiero zaczynasz, czy trenujesz od lat."
         title: "Twój dziennik treningowy,"
         title_highlight: "zawsze w kieszeni."
+    levels:
+        beginner:
+            first: "Biblioteka ćwiczeń z mięśniami, które angażuje każde z nich."
+            second: "Plany treningowe, które przygotowujesz raz i używasz wielokrotnie."
+            third: "Pomoc, która krok po kroku objaśnia każdy ekran."
+            title: "Dopiero zaczynasz"
+        experienced:
+            first: "Rekordy, tonaż i szczegółowa historia każdego ćwiczenia."
+            second: "Pulpit, który układasz po swojemu."
+            third: "Twoje dane do wyeksportowania w każdej chwili (CSV lub JSON)."
+            title: "Trenujesz od dawna"
+        title: "Dla każdego poziomu"
     preview:
         caption: "Przykładowy trening zapisany w Enurus: trzy ćwiczenia i trenowane mięśnie zaznaczone na sylwetce."
         exercise_count: "{count, plural, =1 {1 ćwiczenie} few {# ćwiczenia} many {# ćwiczeń} other {# ćwiczenia}}"

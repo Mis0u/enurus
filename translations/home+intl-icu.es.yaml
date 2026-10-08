@@ -1,4 +1,59 @@
 home:
+    call_to_action:
+        text: "Tu cuenta está lista en un minuto. Gratis, sin publicidad y sin compromiso."
+        title: "¿Te animas a registrar tu próxima sesión?"
+    faq:
+        beginner:
+            answer: "Sí. La biblioteca de ejercicios indica los músculos trabajados y la ayuda te acompaña desde tu primera sesión."
+            question: "Estoy empezando, ¿es para mí?"
+        data:
+            answer: "Siguen siendo tuyos: puedes exportarlos en CSV o JSON y eliminar tu cuenta en cualquier momento. Tu progreso solo lo ven los amigos que aceptas."
+            question: "¿Qué pasa con mis datos?"
+        free:
+            answer: "Sí. Sin suscripción, sin versión de pago y sin publicidad."
+            question: "¿De verdad es gratis?"
+        languages:
+            answer: "Francés, inglés, italiano, español, portugués, alemán, neerlandés y polaco."
+            question: "¿En qué idiomas?"
+        mobile:
+            answer: "Sí. La web se adapta a tu pantalla y puede instalarse en tu pantalla de inicio, como una aplicación."
+            question: "¿Funciona en el móvil?"
+        title: "Preguntas frecuentes"
+        units:
+            answer: "Ambos. Eliges tu unidad en los ajustes y puedes cambiarla cuando quieras."
+            question: "¿Kilos o libras?"
+    features:
+        friends:
+            sessions: "{count, plural, =1 {1 sesión este mes} other {# sesiones este mes}}"
+            text: "Invita a tus amigos, seguid el progreso de los demás y comparaos."
+            title: "Progresa con tus amigos"
+            you: "Tú"
+        logging:
+            reps: "Repeticiones"
+            set: "Serie"
+            text: "Ejercicios, series, pesos, repeticiones. Guarda tus rutinas para no tener que escribirlo todo cada vez."
+            title: "Registra tus sesiones en un momento"
+            weight: "Peso"
+            weight_value: "{weight, number} kg"
+        muscles:
+            primary: "Principal"
+            secondary: "Secundario"
+            text: "Cada sesión resalta los músculos implicados en una silueta. Ves de un vistazo lo que estás descuidando."
+            title: "Mira qué músculos has trabajado"
+        progress:
+            text: "Tus récords, el historial y la gráfica de cada ejercicio. Siempre sabes cuánto peso poner en la barra."
+            title: "Sigue tu progreso"
+        regularity:
+            goal: "Objetivo: {count, plural, =1 {1 sesión} other {# sesiones}} por semana"
+            text: "Calendario de tus sesiones, objetivo de constancia e insignias que desbloquear para no perder la motivación."
+            title: "Mantén el ritmo"
+        subtitle: "Todo lo que un cuaderno de papel no puede hacer, sin perder su sencillez."
+        title: "Lo que puedes hacer con Enurus"
+        year_in_review:
+            label: "Tu año"
+            sessions: "{count, plural, =1 {sesión este año} other {sesiones este año}}"
+            text: "Cada diciembre, un resumen de tu año de entrenamiento para compartir con tus amigos."
+            title: "Revive tu año"
     header:
         language: "Idioma"
         login: "Iniciar sesión"
@@ -14,6 +69,18 @@ home:
         subtitle: "Registra tus sesiones, sigue tus récords y descubre qué músculos has trabajado. Tanto si empiezas como si llevas años entrenando."
         title: "Tu diario de musculación,"
         title_highlight: "siempre en tu bolsillo."
+    levels:
+        beginner:
+            first: "Una biblioteca de ejercicios con los músculos que trabaja cada uno."
+            second: "Rutinas que preparas una vez y reutilizas."
+            third: "Una ayuda que te explica cada pantalla, paso a paso."
+            title: "Estás empezando"
+        experienced:
+            first: "Récords, tonelaje e historial detallado por ejercicio."
+            second: "Un panel que organizas a tu manera."
+            third: "Tus datos exportables en cualquier momento (CSV o JSON)."
+            title: "Llevas tiempo entrenando"
+        title: "Para todos los niveles"
     preview:
         caption: "Ejemplo de sesión registrada en Enurus: tres ejercicios y los músculos trabajados resaltados en una silueta."
         exercise_count: "{count, plural, =1 {1 ejercicio} other {# ejercicios}}"
