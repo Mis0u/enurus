@@ -178,6 +178,13 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
 
 ## Patterns transversaux éprouvés
 
+### SEO
+- `<html lang>` suit la locale de la requête (bloc `html_lang` de `base.html.twig`, surchargé par la
+  page d'erreur avec sa locale résolue). Description + Open Graph dans le bloc `seo`
+  (`partials/_common/_seo_meta.html.twig`, texte `seo.description` du domaine `brand`), **jamais dans
+  le bloc `meta`** : des pages le remplacent (ex. `turbo-cache-control` en création de séance).
+- `public/robots.txt` statique (exclut `/admin` et `/*/_components`).
+
 ### Formulaires
 - FormType Symfony complet pour toute validation non-triviale ou réutilisée (mot de passe, workout).
 - Pas de FormType pour des scalaires uniques auto-save en AJAX (ex. champs du profil réglages) —

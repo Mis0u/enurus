@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{% block html_lang %}{{ app.request.locale }}{% endblock %}">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}{{ 'name'|trans({}, 'brand') }}{% endblock %}</title>
+        {# Séparé du bloc `meta`, que certaines pages remplacent (ex. turbo-cache-control en création
+           de séance) : la description reste présente partout. #}
+        {% block seo %}
+            {% include 'partials/_common/_seo_meta.html.twig' with {
+                title: block('title'),
+                description: 'seo.description'|trans({}, 'brand'),
+            } only %}
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon/favicon.ico') }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon/favicon-32x32.png') }}">
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon/favicon-16x16.png') }}">
