@@ -53,7 +53,7 @@ final class EmailVerificationControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request(Request::METHOD_GET, '/fr/verifier-email?token=whatever&expires=' . (time() + 3600));
 
-        $this->assertResponseRedirects('/fr/');
+        $this->assertResponseRedirects('/fr/connexion');
         $crawler = $client->followRedirect();
         self::assertStringContainsString('invalide', $crawler->filter('body')->text());
     }
@@ -68,7 +68,7 @@ final class EmailVerificationControllerTest extends WebTestCase
             '/fr/verifier-email?id=' . $unknownId . '&token=whatever&expires=' . (time() + 3600)
         );
 
-        $this->assertResponseRedirects('/fr/');
+        $this->assertResponseRedirects('/fr/connexion');
     }
 
     public function testTamperedSignatureRedirectsToCheckEmailWithError(): void
@@ -119,7 +119,7 @@ final class EmailVerificationControllerTest extends WebTestCase
 
         $client->request(Request::METHOD_GET, $signedUrl);
 
-        $this->assertResponseRedirects('/fr/');
+        $this->assertResponseRedirects('/fr/connexion');
 
         $reloadedUser = $userRepository->findOneByEmail($email);
         self::assertNotNull($reloadedUser);

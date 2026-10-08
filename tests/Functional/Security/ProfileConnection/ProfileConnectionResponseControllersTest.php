@@ -182,7 +182,7 @@ final class ProfileConnectionResponseControllersTest extends WebTestCase
 
         $client->request('POST', $this->actionUrl($connection, $action), []);
 
-        self::assertResponseRedirects('/fr/');
+        self::assertResponseRedirects('/fr/connexion');
     }
 
     /**

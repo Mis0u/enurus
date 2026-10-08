@@ -26,7 +26,7 @@ final readonly class LocaleRedirectListener
         }
 
         $locale = $request->getPreferredLanguage(LocaleAllowedEnum::getAllowedLocale());
-        $url = $this->urlGenerator->generate('app_login', [
+        $url = $this->urlGenerator->generate('app_home', [
             '_locale' => $locale,
         ]);
         $event->setResponse(new RedirectResponse($url));

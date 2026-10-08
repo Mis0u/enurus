@@ -31,7 +31,7 @@ trait FunctionalTestTrait
     {
         $client = $client ?? static::createClient();
         $client->request(Request::METHOD_GET, $url);
-        $this->assertResponseRedirects('/fr/');
+        $this->assertResponseRedirects('/fr/connexion');
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h2', 'Connexion', 'Le sélecteur H2 ne contient pas le texte attendu');

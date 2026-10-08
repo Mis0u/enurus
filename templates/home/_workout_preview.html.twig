@@ -1,0 +1,51 @@
+{#
+    Exemple de séance (données fictives) : illustre ce que le visiteur obtiendra, avec la vraie
+    silhouette coloriée par le même contrôleur que la page d'une séance.
+#}
+<figure class="w-full max-w-[460px] p-6 rounded-3xl border border-slate-800 bg-bg-card shadow-2xl shadow-black/40">
+    <figcaption class="sr-only">{{ 'home.preview.caption'|trans({}, 'home') }}</figcaption>
+
+    <div class="flex flex-col gap-5" aria-hidden="true">
+        <div class="flex items-baseline justify-between gap-3">
+            <div>
+                <p class="font-rajdhani text-2xl font-bold text-slate-50">{{ 'home.preview.title'|trans({}, 'home') }}</p>
+                <p class="text-[13px] text-slate-400">{{ 'home.preview.meta'|trans({}, 'home') }}</p>
+            </div>
+            <p class="text-[13px] text-slate-400">{{ 'home.preview.exercise_count'|trans({'count': 3}, 'home') }}</p>
+        </div>
+
+        <div class="flex items-center gap-5">
+            <div class="w-[130px] shrink-0 [&_svg]:h-auto!"
+                 data-controller="workout--show--muscles"
+                 data-workout--show--muscles-primary-value='["upper-pectoralis","mid-lower-pectoralis"]'
+                 data-workout--show--muscles-secondary-value='["anterior-deltoid"]'>
+                {% include 'SVG_BODY/male/front.html.twig' only %}
+            </div>
+
+            <ul class="flex-1 min-w-0 flex flex-col gap-2.5">
+                {% for exercise in [
+                    {name: 'bench_press_bar.name', sets: 4, reps: 8, weight: 85},
+                    {name: 'cable_fly.name', sets: 3, reps: 12, weight: 15},
+                    {name: 'military_press_bar.name', sets: 3, reps: 10, weight: 40},
+                ] %}
+                    <li class="px-3 py-2.5 rounded-xl bg-bg-card-hover">
+                        <p class="text-sm font-semibold text-slate-200">{{ exercise.name|trans({}, 'exercise') }}</p>
+                        <p class="text-[13px] text-slate-400">{{ 'home.preview.sets'|trans({'sets': exercise.sets, 'reps': exercise.reps, 'weight': exercise.weight}, 'home') }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="flex flex-wrap gap-2 text-[13px]">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-ft/15 text-rose-300">
+                <span class="w-2 h-2 rounded-full bg-rose-ft"></span>{{ 'name.chest'|trans({}, 'muscle') }}
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cyan-ft/15 text-cyan-300">
+                <span class="w-2 h-2 rounded-full bg-cyan-ft"></span>{{ 'name.anterior_deltoid'|trans({}, 'muscle') }}
+            </span>
+            <span class="inline-flex items-center px-2.5 py-1 rounded-full bg-amber-ft/15 text-amber-300">
+                {{ 'home.preview.record'|trans({'weight': 85}, 'home') }}
+            </span>
+        </div>
+    </div>
+</figure>

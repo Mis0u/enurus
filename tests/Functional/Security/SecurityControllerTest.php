@@ -18,7 +18,7 @@ class SecurityControllerTest extends WebTestCase
     public function testLoginPageIsAccessible(): void
     {
         $client = static::createClient();
-        $client->request(Request::METHOD_GET, '/fr/');
+        $client->request(Request::METHOD_GET, '/fr/connexion');
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains(
             'title',
@@ -30,7 +30,7 @@ class SecurityControllerTest extends WebTestCase
     public function testLoginFormContainsRequiredFields(): void
     {
         $client = static::createClient();
-        $client->request(Request::METHOD_GET, '/fr/');
+        $client->request(Request::METHOD_GET, '/fr/connexion');
         $this->selectorExists();
     }
 
@@ -38,7 +38,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->getCredentials('toto@test.com', 'Symfony_rocks!');
 
-        $this->assertResponseRedirects('/fr/');
+        $this->assertResponseRedirects('/fr/connexion');
 
         $client->followRedirect();
 
@@ -70,7 +70,7 @@ class SecurityControllerTest extends WebTestCase
         $entityManager = static::getContainer()->get(EntityManagerInterface::class);
         $entityManager->flush();
 
-        $crawler = $client->request(Request::METHOD_GET, '/fr/');
+        $crawler = $client->request(Request::METHOD_GET, '/fr/connexion');
         $buttonCrawlerNode = $crawler->selectButton('Se connecter');
         $form = $buttonCrawlerNode->form();
 
@@ -80,7 +80,7 @@ class SecurityControllerTest extends WebTestCase
             '_remember_me' => false,
         ]);
 
-        $this->assertResponseRedirects('/fr/');
+        $this->assertResponseRedirects('/fr/connexion');
         $client->followRedirect();
 
         $this->assertSelectorTextContains('.error-msg', 'Ton compte a été bloqué.');
@@ -115,7 +115,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $client = $this->login();
 
-        $client->request(Request::METHOD_GET, '/fr/');
+        $client->request(Request::METHOD_GET, '/fr/connexion');
         $this->assertResponseRedirects('/fr/tableau-de-bord');
         $crawler = $client->followRedirect();
         $this->assertResponseIsSuccessful();
@@ -130,7 +130,7 @@ class SecurityControllerTest extends WebTestCase
         $client->request(Request::METHOD_GET, '/fr/tableau-de-bord');
         $this->assertSelectorTextContains('#logout', 'Déconnexion');
         $client->clickLink('Déconnexion');
-        $this->assertResponseRedirects('/fr/');
+        $this->assertResponseRedirects('/fr/connexion');
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
 
@@ -215,7 +215,7 @@ class SecurityControllerTest extends WebTestCase
     public function testClickOnForgotPasswordShouldRedirect(): void
     {
         $client = static::createClient();
-        $client->request(Request::METHOD_GET, '/fr/');
+        $client->request(Request::METHOD_GET, '/fr/connexion');
         $client->clickLink('Mot de passe oublié ?');
         $this->assertRouteSame('app_forgot_password_request');
 
@@ -228,7 +228,7 @@ class SecurityControllerTest extends WebTestCase
     public function testClickOnRegistrationShouldRedirect(): void
     {
         $client = static::createClient();
-        $client->request(Request::METHOD_GET, '/fr/');
+        $client->request(Request::METHOD_GET, '/fr/connexion');
         $client->clickLink('Créer un compte');
         $this->assertRouteSame('app_register');
 
@@ -240,7 +240,7 @@ class SecurityControllerTest extends WebTestCase
         $client = static::createClient([], $overHttps ? [
             'HTTPS' => 'on',
         ] : []);
-        $crawler = $client->request(Request::METHOD_GET, '/fr/');
+        $crawler = $client->request(Request::METHOD_GET, '/fr/connexion');
         $buttonCrawlerNode = $crawler->selectButton('Se connecter');
         $form = $buttonCrawlerNode->form();
 

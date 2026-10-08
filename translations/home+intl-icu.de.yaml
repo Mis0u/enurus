@@ -1,0 +1,24 @@
+home:
+    header:
+        language: "Sprache"
+        login: "Anmelden"
+        nav_label: "Konto"
+    hero:
+        badge: "Kostenlos und werbefrei"
+        cta_login: "Ich habe schon ein Konto"
+        cta_register: "Konto erstellen"
+        perks:
+            install: "Lässt sich auf deinem Handy installieren"
+            languages: "In 8 Sprachen verfügbar"
+            units: "Kilo oder Pfund"
+        subtitle: "Erfasse deine Einheiten, verfolge deine Bestleistungen und sieh, welche Muskeln du trainiert hast. Egal ob du gerade anfängst oder seit Jahren trainierst."
+        title: "Dein Trainingstagebuch,"
+        title_highlight: "immer in deiner Tasche."
+    preview:
+        caption: "Beispiel einer in Enurus erfassten Einheit: drei Übungen und die trainierten Muskeln, hervorgehoben auf einer Silhouette."
+        exercise_count: "{count, plural, =1 {1 Übung} other {# Übungen}}"
+        meta: "Dienstag, 7. Oktober · 58 Min."
+        record: "Neue Bestleistung: {weight} kg"
+        sets: "{sets} × {reps} · {weight} kg"
+        title: "Brust-Einheit"
+    title: "Enurus — dein kostenloses Trainingstagebuch"

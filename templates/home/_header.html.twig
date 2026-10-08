@@ -1,0 +1,17 @@
+{#
+    Paramètres :
+      - locales : list<string> — langues proposées dans le sélecteur.
+#}
+<header class="max-w-6xl mx-auto px-4 md:px-6 py-5 flex flex-wrap items-center justify-between gap-4">
+    <a href="{{ path('app_home') }}" class="-ml-3">
+        <img src="{{ asset('images/enurus_logo_horizontal.png') }}" alt="{{ 'name'|trans({}, 'brand') }}" class="h-14 md:h-20 w-auto">
+    </a>
+
+    <nav aria-label="{{ 'home.header.nav_label'|trans({}, 'home') }}" class="flex items-center gap-3">
+        {% include 'home/_language_menu.html.twig' with {locales: locales} only %}
+
+        <a href="{{ path('app_login') }}" class="inline-flex items-center h-11 px-4 rounded-lg border border-slate-700 text-slate-200 font-medium no-underline hover:border-slate-500 hover:text-white transition-colors">
+            {{ 'home.header.login'|trans({}, 'home') }}
+        </a>
+    </nav>
+</header>

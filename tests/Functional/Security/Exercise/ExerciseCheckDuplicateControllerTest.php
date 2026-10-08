@@ -28,7 +28,7 @@ class ExerciseCheckDuplicateControllerTest extends WebTestCase
             'name' => 'Test',
         ]);
 
-        $this->assertResponseRedirects('/fr/');
+        $this->assertResponseRedirects('/fr/connexion');
     }
 
     public function testResponseIsJson(): void

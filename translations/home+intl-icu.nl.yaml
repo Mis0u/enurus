@@ -1,0 +1,24 @@
+home:
+    header:
+        language: "Taal"
+        login: "Inloggen"
+        nav_label: "Account"
+    hero:
+        badge: "Gratis en zonder advertenties"
+        cta_login: "Ik heb al een account"
+        cta_register: "Account aanmaken"
+        perks:
+            install: "Te installeren op je telefoon"
+            languages: "Beschikbaar in 8 talen"
+            units: "Kilo of pond"
+        subtitle: "Noteer je trainingen, volg je records en zie welke spieren je hebt getraind. Of je nu net begint of al jaren traint."
+        title: "Je trainingslogboek,"
+        title_highlight: "altijd op zak."
+    preview:
+        caption: "Voorbeeld van een training in Enurus: drie oefeningen en de getrainde spieren gemarkeerd op een silhouet."
+        exercise_count: "{count, plural, =1 {1 oefening} other {# oefeningen}}"
+        meta: "Dinsdag 7 oktober · 58 min"
+        record: "Nieuw record: {weight} kg"
+        sets: "{sets} × {reps} · {weight} kg"
+        title: "Borsttraining"
+    title: "Enurus — je gratis trainingslogboek"

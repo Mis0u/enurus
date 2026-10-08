@@ -1,0 +1,24 @@
+home:
+    header:
+        language: "Langue"
+        login: "Se connecter"
+        nav_label: "Compte"
+    hero:
+        badge: "Gratuit et sans publicité"
+        cta_login: "J'ai déjà un compte"
+        cta_register: "Créer mon compte"
+        perks:
+            install: "S'installe sur ton téléphone"
+            languages: "Disponible en 8 langues"
+            units: "Kilos ou livres"
+        subtitle: "Note tes séances, suis tes records et vois les muscles que tu as travaillés. Que tu débutes ou que tu t'entraînes depuis des années."
+        title: "Ton carnet de musculation,"
+        title_highlight: "toujours dans ta poche."
+    preview:
+        caption: "Exemple de séance enregistrée sur Enurus : trois exercices et les muscles travaillés colorés sur une silhouette."
+        exercise_count: "{count, plural, =1 {1 exercice} other {# exercices}}"
+        meta: "Mardi 7 octobre · 58 min"
+        record: "Nouveau record : {weight} kg"
+        sets: "{sets} × {reps} · {weight} kg"
+        title: "Séance pectoraux"
+    title: "Enurus — ton carnet de musculation gratuit"
