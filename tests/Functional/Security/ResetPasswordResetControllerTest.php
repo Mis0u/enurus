@@ -57,6 +57,6 @@ final class ResetPasswordResetControllerTest extends WebTestCase
 
         $client->submit($form);
 
-        $this->assertResponseRedirects('/fr/');
+        $this->assertResponseRedirects('/fr/connexion');
     }
 }

@@ -1,0 +1,91 @@
+home:
+    call_to_action:
+        text: "Je account staat binnen een minuut klaar. Gratis, zonder advertenties en vrijblijvend."
+        title: "Zin om je volgende training te noteren?"
+    faq:
+        beginner:
+            answer: "Ja. De oefeningenbibliotheek toont de getrainde spieren en de hulp begeleidt je vanaf je eerste training."
+            question: "Ik begin net, is het iets voor mij?"
+        data:
+            answer: "Ze blijven van jou: je kunt ze exporteren als CSV of JSON en je account op elk moment verwijderen. Je vooruitgang is alleen zichtbaar voor de vrienden die je accepteert."
+            question: "Wat gebeurt er met mijn gegevens?"
+        free:
+            answer: "Ja. Geen abonnement, geen betaalde versie, geen advertenties."
+            question: "Is het echt gratis?"
+        languages:
+            answer: "Frans, Engels, Italiaans, Spaans, Portugees, Duits, Nederlands en Pools."
+            question: "In welke talen?"
+        mobile:
+            answer: "Ja. De site past zich aan je scherm aan en kan net als een app op je startscherm worden geïnstalleerd."
+            question: "Werkt het op mijn telefoon?"
+        title: "Veelgestelde vragen"
+        units:
+            answer: "Allebei. Je kiest je eenheid in de instellingen en kunt die altijd wijzigen."
+            question: "Kilo of pond?"
+    features:
+        friends:
+            sessions: "{count, plural, =1 {1 training deze maand} other {# trainingen deze maand}}"
+            text: "Nodig je vrienden uit, volg elkaars vooruitgang en vergelijk jullie resultaten."
+            title: "Train samen met vrienden"
+            you: "Jij"
+        logging:
+            reps: "Herhalingen"
+            set: "Set"
+            text: "Oefeningen, sets, gewichten, herhalingen. Bewaar je routines zodat je niet alles opnieuw hoeft in te voeren."
+            title: "Noteer je trainingen in een handomdraai"
+            weight: "Gewicht"
+            weight_value: "{weight, number} kg"
+        muscles:
+            primary: "Primair"
+            secondary: "Secundair"
+            text: "Elke training markeert de gebruikte spieren op een silhouet. Je ziet in één oogopslag wat je overslaat."
+            title: "Zie welke spieren je hebt getraind"
+        progress:
+            text: "Je records, de geschiedenis en de grafiek van elke oefening. Je weet altijd welk gewicht er op de stang moet."
+            title: "Volg je vooruitgang"
+        regularity:
+            goal: "Doel: {count, plural, =1 {1 training} other {# trainingen}} per week"
+            text: "Een kalender van je trainingen, een regelmaatdoel en badges om te ontgrendelen, zodat je gemotiveerd blijft."
+            title: "Houd het ritme vast"
+        subtitle: "Alles wat een papieren logboek niet kan, zonder de eenvoud te verliezen."
+        title: "Wat je met Enurus kunt doen"
+        year_in_review:
+            label: "Jouw jaar"
+            sessions: "{count, plural, =1 {training dit jaar} other {trainingen dit jaar}}"
+            text: "Elke december een overzicht van je trainingsjaar, om te delen met je vrienden."
+            title: "Beleef je jaar opnieuw"
+    header:
+        language: "Taal"
+        login: "Inloggen"
+        nav_label: "Account"
+    hero:
+        badge: "Gratis en zonder advertenties"
+        cta_login: "Ik heb al een account"
+        cta_register: "Account aanmaken"
+        perks:
+            install: "Te installeren op je telefoon"
+            languages: "Beschikbaar in 8 talen"
+            units: "Kilo of pond"
+        subtitle: "Noteer je trainingen, volg je records en zie welke spieren je hebt getraind. Of je nu net begint of al jaren traint."
+        title: "Je trainingslogboek,"
+        title_highlight: "altijd op zak."
+    levels:
+        beginner:
+            first: "Een oefeningenbibliotheek met de spieren die elke oefening traint."
+            second: "Routines die je één keer opstelt en hergebruikt."
+            third: "Een hulp die elk scherm stap voor stap uitlegt."
+            title: "Je begint net"
+        experienced:
+            first: "Records, tonnage en gedetailleerde geschiedenis per oefening."
+            second: "Een dashboard dat je naar wens indeelt."
+            third: "Je gegevens altijd exporteerbaar (CSV of JSON)."
+            title: "Je traint al lang"
+        title: "Voor elk niveau"
+    preview:
+        caption: "Voorbeeld van een training in Enurus: drie oefeningen en de getrainde spieren gemarkeerd op een silhouet."
+        exercise_count: "{count, plural, =1 {1 oefening} other {# oefeningen}}"
+        meta: "Dinsdag 7 oktober · 58 min"
+        record: "Nieuw record: {weight} kg"
+        sets: "{sets} × {reps} · {weight} kg"
+        title: "Borsttraining"
+    title: "Enurus — je gratis trainingslogboek"

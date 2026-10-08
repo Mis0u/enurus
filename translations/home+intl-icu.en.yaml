@@ -1,0 +1,91 @@
+home:
+    call_to_action:
+        text: "Your account is ready in a minute. Free, ad-free, no commitment."
+        title: "Ready to log your next session?"
+    faq:
+        beginner:
+            answer: "Yes. The exercise library shows which muscles each exercise works, and the help guide is there from your very first session."
+            question: "I am a beginner, is it for me?"
+        data:
+            answer: "It stays yours: you can export it as CSV or JSON and delete your account at any time. Your progress is only visible to the friends you accept."
+            question: "What happens to my data?"
+        free:
+            answer: "Yes. No subscription, no paid tier, no ads."
+            question: "Is it really free?"
+        languages:
+            answer: "French, English, Italian, Spanish, Portuguese, German, Dutch and Polish."
+            question: "Which languages?"
+        mobile:
+            answer: "Yes. The site adapts to your screen and can be installed on your home screen, just like an app."
+            question: "Does it work on my phone?"
+        title: "Frequently asked questions"
+        units:
+            answer: "Both. Pick your unit in the settings and switch whenever you like."
+            question: "Kilograms or pounds?"
+    features:
+        friends:
+            sessions: "{count, plural, =1 {1 session this month} other {# sessions this month}}"
+            text: "Invite your friends, follow each other's progress and compare."
+            title: "Train with friends"
+            you: "You"
+        logging:
+            reps: "Reps"
+            set: "Set"
+            text: "Exercises, sets, weights, reps. Save your routines so you never have to type everything again."
+            title: "Log your sessions in no time"
+            weight: "Weight"
+            weight_value: "{weight, number} kg"
+        muscles:
+            primary: "Primary"
+            secondary: "Secondary"
+            text: "Each session highlights the muscles involved on a body outline. Spot at a glance what you have been skipping."
+            title: "See which muscles you trained"
+        progress:
+            text: "Your records, history and chart for every exercise. You always know what weight to load on the bar."
+            title: "Track your progress"
+        regularity:
+            goal: "Goal: {count, plural, =1 {1 session} other {# sessions}} per week"
+            text: "A calendar of your sessions, a consistency goal and badges to unlock to keep you motivated."
+            title: "Keep the pace"
+        subtitle: "Everything a paper log can't do, without losing its simplicity."
+        title: "What you can do with Enurus"
+        year_in_review:
+            label: "Your year"
+            sessions: "{count, plural, =1 {session this year} other {sessions this year}}"
+            text: "Every December, a recap of your training year, ready to share with your friends."
+            title: "Relive your year"
+    header:
+        language: "Language"
+        login: "Sign in"
+        nav_label: "Account"
+    hero:
+        badge: "Free and ad-free"
+        cta_login: "I already have an account"
+        cta_register: "Create my account"
+        perks:
+            install: "Installs on your phone"
+            languages: "Available in 8 languages"
+            units: "Kilograms or pounds"
+        subtitle: "Log your sessions, track your records and see which muscles you trained. Whether you are just starting out or have been training for years."
+        title: "Your workout log,"
+        title_highlight: "always in your pocket."
+    levels:
+        beginner:
+            first: "An exercise library showing the muscles each one targets."
+            second: "Routines you prepare once and reuse."
+            third: "A help guide that walks you through every screen."
+            title: "You are just starting out"
+        experienced:
+            first: "Records, tonnage and detailed history for each exercise."
+            second: "A dashboard you arrange your way."
+            third: "Your data, exportable at any time (CSV or JSON)."
+            title: "You have been training for a while"
+        title: "For every level"
+    preview:
+        caption: "Example of a session logged on Enurus: three exercises and the trained muscles highlighted on a body outline."
+        exercise_count: "{count, plural, =1 {1 exercise} other {# exercises}}"
+        meta: "Tuesday, October 7 · 58 min"
+        record: "New record: {weight} kg"
+        sets: "{sets} × {reps} · {weight} kg"
+        title: "Chest session"
+    title: "Enurus — your free workout log"

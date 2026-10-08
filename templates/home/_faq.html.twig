@@ -1,0 +1,17 @@
+<section id="faq" aria-labelledby="faq-title" class="max-w-3xl mx-auto px-4 md:px-6 pb-16 md:pb-28">
+    <h2 id="faq-title" class="font-rajdhani font-bold text-[32px] md:text-[46px] leading-tight text-slate-50 mb-8">
+        {{ 'home.faq.title'|trans({}, 'home') }}
+    </h2>
+
+    <div class="flex flex-col gap-3">
+        {% for question in ['free', 'beginner', 'mobile', 'units', 'data', 'languages'] %}
+            <details class="group px-5 rounded-xl border border-slate-800 bg-bg-card">
+                <summary class="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-center justify-between gap-4 py-[18px] text-[17px] font-semibold text-slate-100">
+                    {{ ('home.faq.' ~ question ~ '.question')|trans({}, 'home') }}
+                    <svg class="w-5 h-5 shrink-0 text-slate-400 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                </summary>
+                <p class="pb-[18px] text-slate-400">{{ ('home.faq.' ~ question ~ '.answer')|trans({}, 'home') }}</p>
+            </details>
+        {% endfor %}
+    </div>
+</section>

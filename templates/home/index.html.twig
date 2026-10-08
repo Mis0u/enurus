@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'home.title'|trans({}, 'home') }}{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen bg-bg-base text-slate-200 font-dm-sans">
+        {% include 'home/_header.html.twig' with {locales: locales} only %}
+
+        <main>
+            {% include 'home/_hero.html.twig' only %}
+            {% include 'home/_features.html.twig' only %}
+            {% include 'home/_levels.html.twig' only %}
+            {% include 'home/_faq.html.twig' only %}
+            {% include 'home/_call_to_action.html.twig' only %}
+        </main>
+
+        <footer class="px-4 pb-6">
+            {% include 'partials/_common/_footer.html.twig' only %}
+        </footer>
+    </div>
+{% endblock %}

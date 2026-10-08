@@ -15,7 +15,8 @@ final class SecurityHeadersTest extends WebTestCase
      */
     public static function pageProvider(): iterable
     {
-        yield 'login page' => ['/fr/'];
+        yield 'home page' => ['/fr/'];
+        yield 'login page' => ['/fr/connexion'];
         yield 'sign-up page' => ['/fr/inscription'];
         yield 'not found page' => ['/fr/page-qui-nexiste-pas'];
     }

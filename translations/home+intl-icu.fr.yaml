@@ -1,0 +1,91 @@
+home:
+    call_to_action:
+        text: "Ton compte est prêt en une minute. Gratuit, sans publicité, sans engagement."
+        title: "Envie de noter ta prochaine séance ?"
+    faq:
+        beginner:
+            answer: "Oui. La bibliothèque d'exercices indique les muscles travaillés, et l'aide t'accompagne dès ta première séance."
+            question: "Je débute, c'est fait pour moi ?"
+        data:
+            answer: "Elles restent à toi : tu peux les exporter en CSV ou JSON et supprimer ton compte à tout moment. Ta progression n'est visible que par les amis que tu acceptes."
+            question: "Que deviennent mes données ?"
+        free:
+            answer: "Oui. Pas d'abonnement, pas de version payante, pas de publicité."
+            question: "C'est vraiment gratuit ?"
+        languages:
+            answer: "Français, anglais, italien, espagnol, portugais, allemand, néerlandais et polonais."
+            question: "Dans quelles langues ?"
+        mobile:
+            answer: "Oui. Le site s'adapte à ton écran et peut s'installer sur ton écran d'accueil, comme une application."
+            question: "Ça marche sur téléphone ?"
+        title: "Questions fréquentes"
+        units:
+            answer: "Les deux. Tu choisis ton unité dans les réglages et tu peux en changer quand tu veux."
+            question: "Kilos ou livres ?"
+    features:
+        friends:
+            sessions: "{count, plural, =1 {1 séance ce mois-ci} other {# séances ce mois-ci}}"
+            text: "Invite tes amis, suivez la progression les uns des autres et comparez-vous."
+            title: "Progresse entre amis"
+            you: "Toi"
+        logging:
+            reps: "Répétitions"
+            set: "Série"
+            text: "Exercices, séries, poids, répétitions. Enregistre tes routines pour ne pas tout ressaisir à chaque fois."
+            title: "Note tes séances en un rien de temps"
+            weight: "Poids"
+            weight_value: "{weight, number} kg"
+        muscles:
+            primary: "Principal"
+            secondary: "Secondaire"
+            text: "Chaque séance colore les muscles sollicités sur une silhouette. Tu repères d'un coup d'œil ce que tu as oublié."
+            title: "Vois les muscles que tu as travaillés"
+        progress:
+            text: "Tes records, l'historique et la courbe de chaque exercice. Tu sais toujours quel poids mettre sur la barre."
+            title: "Suis ta progression"
+        regularity:
+            goal: "Objectif : {count, plural, =1 {1 séance} other {# séances}} par semaine"
+            text: "Calendrier de tes séances, objectif de régularité et badges à débloquer pour garder la motivation."
+            title: "Garde le rythme"
+        subtitle: "Tout ce qu'un carnet papier ne sait pas faire, sans rien perdre de sa simplicité."
+        title: "Ce que tu peux faire avec Enurus"
+        year_in_review:
+            label: "Ton année"
+            sessions: "{count, plural, =1 {séance cette année} other {séances cette année}}"
+            text: "Chaque mois de décembre, un résumé de ton année d'entraînement, à partager avec tes amis."
+            title: "Revis ton année"
+    header:
+        language: "Langue"
+        login: "Se connecter"
+        nav_label: "Compte"
+    hero:
+        badge: "Gratuit et sans publicité"
+        cta_login: "J'ai déjà un compte"
+        cta_register: "Créer mon compte"
+        perks:
+            install: "S'installe sur ton téléphone"
+            languages: "Disponible en 8 langues"
+            units: "Kilos ou livres"
+        subtitle: "Note tes séances, suis tes records et vois les muscles que tu as travaillés. Que tu débutes ou que tu t'entraînes depuis des années."
+        title: "Ton carnet de musculation,"
+        title_highlight: "toujours dans ta poche."
+    levels:
+        beginner:
+            first: "Une bibliothèque d'exercices avec les muscles ciblés par chacun."
+            second: "Des routines à préparer une fois et à réutiliser."
+            third: "Une aide qui t'explique chaque écran, pas à pas."
+            title: "Tu débutes"
+        experienced:
+            first: "Records, tonnage et historique détaillé par exercice."
+            second: "Un tableau de bord que tu organises à ta façon."
+            third: "Tes données exportables à tout moment (CSV ou JSON)."
+            title: "Tu t'entraînes depuis longtemps"
+        title: "Pour tous les niveaux"
+    preview:
+        caption: "Exemple de séance enregistrée sur Enurus : trois exercices et les muscles travaillés colorés sur une silhouette."
+        exercise_count: "{count, plural, =1 {1 exercice} other {# exercices}}"
+        meta: "Mardi 7 octobre · 58 min"
+        record: "Nouveau record : {weight} kg"
+        sets: "{sets} × {reps} · {weight} kg"
+        title: "Séance pectoraux"
+    title: "Enurus — ton carnet de musculation gratuit"

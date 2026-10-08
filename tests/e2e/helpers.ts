@@ -31,7 +31,7 @@ export async function waitForCsrfControllerReady(page: Page): Promise<void> {
 }
 
 /**
- * Connecte l'utilisateur via le formulaire de login en `/en/` et attend d'atterrir sur son
+ * Connecte l'utilisateur via le formulaire de login en `/en/login` et attend d'atterrir sur son
  * tableau de bord (LoginSuccessListener redirige vers la locale du compte, 'fr' pour toutes les
  * fixtures existantes — cf. login.spec.ts).
  */
@@ -49,7 +49,7 @@ export async function fillDatePicker(page: Page, selector: string, date: string)
 }
 
 export async function loginAs(page: Page, email: string, password = FIXTURE_PASSWORD): Promise<void> {
-    await page.goto('/en/');
+    await page.goto('/en/login');
     await waitForCsrfControllerReady(page);
 
     await page.locator('#username').fill(email);

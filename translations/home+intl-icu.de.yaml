@@ -1,0 +1,91 @@
+home:
+    call_to_action:
+        text: "Dein Konto ist in einer Minute eingerichtet. Kostenlos, werbefrei und unverbindlich."
+        title: "Lust, deine nächste Einheit festzuhalten?"
+    faq:
+        beginner:
+            answer: "Ja. Die Übungsbibliothek zeigt die trainierten Muskeln, und die Hilfe begleitet dich ab deiner ersten Einheit."
+            question: "Ich fange gerade erst an – ist das etwas für mich?"
+        data:
+            answer: "Sie gehören dir: Du kannst sie als CSV oder JSON exportieren und dein Konto jederzeit löschen. Deine Fortschritte sehen nur die Freunde, die du annimmst."
+            question: "Was passiert mit meinen Daten?"
+        free:
+            answer: "Ja. Kein Abo, keine kostenpflichtige Version, keine Werbung."
+            question: "Ist es wirklich kostenlos?"
+        languages:
+            answer: "Französisch, Englisch, Italienisch, Spanisch, Portugiesisch, Deutsch, Niederländisch und Polnisch."
+            question: "In welchen Sprachen?"
+        mobile:
+            answer: "Ja. Die Seite passt sich deinem Bildschirm an und lässt sich wie eine App auf deinem Startbildschirm installieren."
+            question: "Funktioniert es auf dem Handy?"
+        title: "Häufige Fragen"
+        units:
+            answer: "Beides. Du wählst deine Einheit in den Einstellungen und kannst sie jederzeit ändern."
+            question: "Kilo oder Pfund?"
+    features:
+        friends:
+            sessions: "{count, plural, =1 {1 Einheit diesen Monat} other {# Einheiten diesen Monat}}"
+            text: "Lade deine Freunde ein, verfolgt gegenseitig eure Fortschritte und vergleicht euch."
+            title: "Trainiere mit Freunden"
+            you: "Du"
+        logging:
+            reps: "Wiederholungen"
+            set: "Satz"
+            text: "Übungen, Sätze, Gewichte, Wiederholungen. Speichere deine Routinen, damit du nicht jedes Mal alles neu eingeben musst."
+            title: "Erfasse deine Einheiten im Handumdrehen"
+            weight: "Gewicht"
+            weight_value: "{weight, number} kg"
+        muscles:
+            primary: "Primär"
+            secondary: "Sekundär"
+            text: "Jede Einheit hebt die beanspruchten Muskeln auf einer Silhouette hervor. So erkennst du auf einen Blick, was zu kurz kommt."
+            title: "Sieh, welche Muskeln du trainiert hast"
+        progress:
+            text: "Deine Bestleistungen, der Verlauf und die Kurve jeder Übung. Du weißt immer, welches Gewicht auf die Stange gehört."
+            title: "Verfolge deinen Fortschritt"
+        regularity:
+            goal: "Ziel: {count, plural, =1 {1 Einheit} other {# Einheiten}} pro Woche"
+            text: "Ein Kalender deiner Einheiten, ein Regelmäßigkeitsziel und Abzeichen zum Freischalten, damit die Motivation bleibt."
+            title: "Bleib im Rhythmus"
+        subtitle: "Alles, was ein Notizbuch aus Papier nicht kann – ohne seine Einfachheit zu verlieren."
+        title: "Was du mit Enurus machen kannst"
+        year_in_review:
+            label: "Dein Jahr"
+            sessions: "{count, plural, =1 {Einheit dieses Jahr} other {Einheiten dieses Jahr}}"
+            text: "Jeden Dezember ein Rückblick auf dein Trainingsjahr, den du mit deinen Freunden teilen kannst."
+            title: "Erlebe dein Jahr noch einmal"
+    header:
+        language: "Sprache"
+        login: "Anmelden"
+        nav_label: "Konto"
+    hero:
+        badge: "Kostenlos und werbefrei"
+        cta_login: "Ich habe schon ein Konto"
+        cta_register: "Konto erstellen"
+        perks:
+            install: "Lässt sich auf deinem Handy installieren"
+            languages: "In 8 Sprachen verfügbar"
+            units: "Kilo oder Pfund"
+        subtitle: "Erfasse deine Einheiten, verfolge deine Bestleistungen und sieh, welche Muskeln du trainiert hast. Egal ob du gerade anfängst oder seit Jahren trainierst."
+        title: "Dein Trainingstagebuch,"
+        title_highlight: "immer in deiner Tasche."
+    levels:
+        beginner:
+            first: "Eine Übungsbibliothek mit den Muskeln, die jede Übung trainiert."
+            second: "Routinen, die du einmal anlegst und wiederverwendest."
+            third: "Eine Hilfe, die dir jeden Bildschirm Schritt für Schritt erklärt."
+            title: "Du fängst gerade an"
+        experienced:
+            first: "Bestleistungen, Tonnage und detaillierter Verlauf pro Übung."
+            second: "Ein Dashboard, das du nach deinen Wünschen anordnest."
+            third: "Deine Daten jederzeit exportierbar (CSV oder JSON)."
+            title: "Du trainierst schon lange"
+        title: "Für jedes Niveau"
+    preview:
+        caption: "Beispiel einer in Enurus erfassten Einheit: drei Übungen und die trainierten Muskeln, hervorgehoben auf einer Silhouette."
+        exercise_count: "{count, plural, =1 {1 Übung} other {# Übungen}}"
+        meta: "Dienstag, 7. Oktober · 58 Min."
+        record: "Neue Bestleistung: {weight} kg"
+        sets: "{sets} × {reps} · {weight} kg"
+        title: "Brust-Einheit"
+    title: "Enurus — dein kostenloses Trainingstagebuch"

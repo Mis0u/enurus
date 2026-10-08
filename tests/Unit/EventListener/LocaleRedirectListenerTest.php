@@ -13,15 +13,15 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class LocaleRedirectListenerTest extends TestCase
 {
-    public function testRootPathIsRedirectedToLoginUsingThePreferredBrowserLanguage(): void
+    public function testRootPathIsRedirectedToHomeUsingThePreferredBrowserLanguage(): void
     {
         $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
         $urlGenerator->expects(self::once())
             ->method('generate')
-            ->with('app_login', [
+            ->with('app_home', [
                 '_locale' => 'fr',
             ])
-            ->willReturn('/fr/connexion');
+            ->willReturn('/fr/');
 
         $listener = new LocaleRedirectListener($urlGenerator);
         $event = $this->createEvent('/', acceptLanguage: 'fr-FR,fr;q=0.9,en;q=0.8');
@@ -30,7 +30,7 @@ final class LocaleRedirectListenerTest extends TestCase
 
         $response = $event->getResponse();
         self::assertNotNull($response);
-        self::assertSame('/fr/connexion', $response->headers->get('Location'));
+        self::assertSame('/fr/', $response->headers->get('Location'));
     }
 
     public function testNonRootPathIsIgnored(): void

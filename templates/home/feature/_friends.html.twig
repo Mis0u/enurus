@@ -1,0 +1,12 @@
+<ul class="h-full flex flex-col justify-center gap-3 text-[13px]">
+    {% for friend in [
+        {name: 'home.features.friends.you'|trans({}, 'home'), sessions: 12, avatarClass: 'bg-rose-600'},
+        {name: 'Alex', sessions: 10, avatarClass: 'bg-cyan-700'},
+    ] %}
+        <li class="flex items-center gap-2.5">
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white font-bold {{ friend.avatarClass }}">{{ friend.name|first|upper }}</span>
+            <span class="flex-1 text-slate-200">{{ friend.name }}</span>
+            <span class="text-slate-400">{{ 'home.features.friends.sessions'|trans({'count': friend.sessions}, 'home') }}</span>
+        </li>
+    {% endfor %}
+</ul>

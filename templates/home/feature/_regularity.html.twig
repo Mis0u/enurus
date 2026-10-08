@@ -1,0 +1,8 @@
+<div class="h-full flex flex-col justify-center gap-2.5">
+    <div class="grid grid-cols-14 gap-1">
+        {% for trained in [1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1] %}
+            <span class="block aspect-square rounded {{ trained ? 'bg-rose-ft' : 'bg-slate-800' }}"></span>
+        {% endfor %}
+    </div>
+    <p class="text-xs text-slate-400">{{ 'home.features.regularity.goal'|trans({'count': 3}, 'home') }}</p>
+</div>
