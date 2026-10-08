@@ -11,7 +11,7 @@ controllers:
     resource:
         path: ../src/Controller/
         namespace: App\Controller
-        exclude: ../src/Controller/Admin/
+        exclude: ../src/Controller/{Admin,Seo}/
     type: attribute
     prefix: /{_locale}
     requirements:
@@ -25,4 +25,12 @@ admin_dashboard:
     resource:
         path: ../src/Controller/Admin/
         namespace: App\Controller\Admin
+    type: attribute
+
+# Fichiers lus par les moteurs de recherche à la racine du site (ex. /sitemap.xml) : jamais préfixés
+# par la locale.
+seo:
+    resource:
+        path: ../src/Controller/Seo/
+        namespace: App\Controller\Seo
     type: attribute

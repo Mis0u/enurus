@@ -183,7 +183,14 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
   page d'erreur avec sa locale résolue). Description + Open Graph dans le bloc `seo`
   (`partials/_common/_seo_meta.html.twig`, texte `seo.description` du domaine `brand`), **jamais dans
   le bloc `meta`** : des pages le remplacent (ex. `turbo-cache-control` en création de séance).
-- `public/robots.txt` statique (exclut `/admin` et `/*/_components`).
+- `public/robots.txt` statique (exclut `/admin` et `/*/_components`, pointe vers le sitemap de
+  `https://enurus.com` en dur — fichier statique, il ne peut pas lire le domaine).
+- `hreflang` : bloc `hreflang` de `base.html.twig` (fonction Twig `locale_alternates()`), 8 langues +
+  `x-default` (racine `/` pour l'accueil, version anglaise ailleurs) ; vidé par la page d'erreur.
+  Calcul partagé avec le sitemap dans `LocaleAlternateUrlGenerator`.
+- `/sitemap.xml` (`SitemapController`, `src/Controller/Seo/`, **hors préfixe de locale** comme l'admin,
+  cf. `config/routes.yaml`) : liste `SitemapController::PUBLIC_ROUTES` × 8 langues. Nouvelle page
+  publique à indexer = l'ajouter à cette liste ; jamais la connexion.
 
 ### Page d'accueil publique
 - `/{_locale}/` = `HomeController` (`app_home`), public, redirige vers le dashboard si connecté ;

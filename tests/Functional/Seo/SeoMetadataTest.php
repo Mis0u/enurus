@@ -62,6 +62,33 @@ final class SeoMetadataTest extends WebTestCase
         self::assertStringStartsWith('http', (string) $crawler->filter('meta[property="og:image"]')->attr('content'));
     }
 
+    public function testEveryLanguageVersionOfAPageIsAdvertised(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request(Request::METHOD_GET, '/de/registrierung');
+
+        self::assertCount(9, $crawler->filter('link[rel="alternate"][hreflang]'));
+        self::assertSame('http://localhost/fr/inscription', $crawler->filter('link[hreflang="fr"]')->attr('href'));
+        self::assertSame('http://localhost/en/register', $crawler->filter('link[hreflang="x-default"]')->attr('href'));
+    }
+
+    public function testHomePageDefaultVersionLetsTheBrowserLanguageDecide(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request(Request::METHOD_GET, '/it/');
+
+        self::assertSame('http://localhost/', $crawler->filter('link[hreflang="x-default"]')->attr('href'));
+    }
+
+    public function testNotFoundPageAdvertisesNoLanguageVersion(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request(Request::METHOD_GET, '/fr/page-qui-nexiste-pas');
+
+        self::assertResponseStatusCodeSame(404);
+        self::assertCount(0, $crawler->filter('link[rel="alternate"][hreflang]'));
+    }
+
     public function testDescriptionSurvivesAPageThatOverridesTheMetaBlock(): void
     {
         $client = $this->login('user-fixture-11-workout@test.com');

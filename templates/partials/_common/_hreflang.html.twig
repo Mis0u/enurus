@@ -1,0 +1,7 @@
+{#
+    Paramètres :
+      - alternates : array<string, string> — URL absolue indexée par valeur `hreflang` (locales + x-default).
+#}
+{% for hreflang, url in alternates %}
+    <link rel="alternate" hreflang="{{ hreflang }}" href="{{ url }}">
+{% endfor %}
