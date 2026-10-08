@@ -37,8 +37,11 @@
         {% block meta %}{% endblock %}
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+            {# Polices du premier écran (texte courant, titres) préchargées : sans ça, le navigateur
+               ne les découvre qu'après avoir lu fonts.css. #}
+            <link rel="preload" href="{{ asset('fonts/dm-sans-latin-400-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
+            <link rel="preload" href="{{ asset('fonts/rajdhani-latin-700-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
+            <link rel="stylesheet" href="{{ asset('styles/fonts.css') }}">
         {% endblock %}
 
         {% block javascripts %}

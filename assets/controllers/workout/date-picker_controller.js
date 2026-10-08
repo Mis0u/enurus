@@ -1,3 +1,4 @@
+/* stimulusFetch: 'lazy' */
 // assets/controllers/workout/date-picker_controller.js
 //
 // Calendrier stylé (flatpickr) pour la date d'une séance, à la place du calendrier natif du

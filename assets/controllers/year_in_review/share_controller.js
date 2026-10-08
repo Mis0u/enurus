@@ -1,3 +1,4 @@
+/* stimulusFetch: 'lazy' */
 import { Controller } from '@hotwired/stimulus';
 import { captureToBlob, canShareImageFiles, shareImage } from '../../utils/share_image.js';
 import { showErrorToast } from '../../utils/toast.js';

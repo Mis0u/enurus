@@ -1,3 +1,6 @@
+// Toujours chargé d'emblée, jamais à la demande : il écoute sur window `exercise:selected`, émis
+// par workout/draft_controller.js dès sa connexion pour restaurer la séance en cours. Chargé à la
+// demande, il ne serait pas encore branché et la restauration serait perdue.
 import { Controller } from '@hotwired/stimulus';
 import Swal          from 'sweetalert2';
 import Sortable      from 'sortablejs';

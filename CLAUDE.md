@@ -354,6 +354,23 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
   dans le fichier de thème custom (`assets/styles/date-picker.css`), pas de contournement plus propre
   trouvé pour ce cas précis.
 
+### Performance (chargement des pages)
+- Contrôleurs Stimulus **chargés à la demande** (`/* stimulusFetch: 'lazy' */` en 1re ligne, ou
+  `"fetch": "lazy"` dans `assets/controllers.json` pour les paquets UX) dès qu'ils tirent une grosse
+  bibliothèque (Quill, SortableJS, flatpickr, driver.js, html-to-image, Chart.js, Live) ou ne servent
+  qu'à l'admin : sinon toute l'application est chargée sur chaque page, accueil compris.
+- **Exception** : un contrôleur qui écoute sur `window` un événement émis par un autre contrôleur dès
+  sa connexion reste chargé d'emblée (ex. `exercise-controller.js`, `workout/edit/exercise_controller.js`
+  écoutent `exercise:selected` de `workout/draft_controller.js`) — chargé à la demande, il n'est pas
+  encore branché et l'événement est perdu (séance en cours non restaurée, vu en e2e).
+- Polices **hébergées sur le site** (`assets/fonts/`, `assets/styles/fonts.css`, issues de
+  `@fontsource`, OFL), jamais Google Fonts : bloquant, et adresse IP des visiteurs envoyée à Google.
+  Latin + latin-ext (polonais) ; les deux polices du premier écran préchargées dans `base.html.twig`.
+- Logos affichés à l'écran en **WebP** redimensionné au double de leur taille d'affichage
+  (`enurus_logo.webp`, `enurus_logo_horizontal.webp`) ; le PNG reste pour `og:image`, les emails et
+  les images partagées (capture html-to-image). Drapeau espagnol = drapeau civil (sans armoiries,
+  80 Ko → 181 o).
+
 ### CSS / Tailwind v4
 - `!important` = **suffixe** (`hidden!`), pas préfixe (`!hidden` = syntaxe v3 invalide).
 - Toute classe arbitraire avec une **virgule** (`grid-cols-[minmax(0,1fr)_380px]`, certains

@@ -1,3 +1,4 @@
+/* stimulusFetch: 'lazy' */
 // assets/controllers/routine/create_controller.js
 
 import { Controller } from '@hotwired/stimulus';
