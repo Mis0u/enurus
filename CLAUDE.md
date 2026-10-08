@@ -201,9 +201,11 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
   cf. `config/routes.yaml`) : `SitemapController::PUBLIC_ROUTES` × 8 langues (une seule entrée pour
   une page non traduite). Nouvelle page publique à indexer = l'ajouter à cette liste ; jamais la
   connexion.
-- En prod, **toutes** les réponses sortent en `Cache-Control: max-age=0, must-revalidate, private`
-  sans cookie (vu le 2026-10-08) : réécrit par l'infra (Cloudflare/Scalingo), pas par le code — le
-  `public, max-age` du sitemap est bien posé en local.
+- **Sentry rend les réponses privées en prod** : `Sentry\SentryBundle\EventListener\LoginListener` lit
+  l'utilisateur connecté sur `kernel.request` (prod seulement, absent en test), la session est consultée
+  et Symfony pose `Cache-Control: max-age=0, must-revalidate, private` même pour un visiteur anonyme.
+  Toute réponse publique et cacheable (ex. `/sitemap.xml`) doit être sur une route `stateless: true`,
+  que ce listener ignore. Invisible en test : vérifier l'option de route, pas seulement l'en-tête.
 
 ### Page d'accueil publique
 - `/{_locale}/` = `HomeController` (`app_home`), public, redirige vers le dashboard si connecté ;

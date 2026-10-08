@@ -7,6 +7,7 @@ namespace App\Tests\Functional\Seo;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
 
 final class SitemapControllerTest extends WebTestCase
 {
@@ -40,6 +41,27 @@ final class SitemapControllerTest extends WebTestCase
 
         $firstEntry = $sitemap->filterXPath('//s:url')->first();
         self::assertCount(9, $firstEntry->filterXPath('.//xhtml:link'));
+    }
+
+    public function testSitemapCanBeCachedPublicly(): void
+    {
+        $this->requestSitemap();
+
+        self::assertResponseHeaderSame('Cache-Control', 'max-age=86400, public');
+    }
+
+    /**
+     * En prod, Sentry lit l'utilisateur connecté sur chaque requête non `stateless` : la session est
+     * consultée et Symfony rend la réponse privée, ce qui annule le cache public du sitemap. Sentry
+     * n'étant pas actif en test, c'est l'option de route elle-même qui est vérifiée.
+     */
+    public function testSitemapRouteNeverTouchesTheSession(): void
+    {
+        self::bootKernel();
+        /** @var RouterInterface $router */
+        $router = static::getContainer()->get(RouterInterface::class);
+
+        self::assertTrue($router->getRouteCollection()->get('app_sitemap')?->getDefault('_stateless'));
     }
 
     private function requestSitemap(): Crawler

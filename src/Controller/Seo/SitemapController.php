@@ -27,7 +27,12 @@ final class SitemapController extends AbstractController
     ) {
     }
 
-    #[Route(path: '/sitemap.xml', name: 'app_sitemap', methods: [Request::METHOD_GET], format: 'xml')]
+    /**
+     * `stateless` : en prod, Sentry (LoginListener) lit l'utilisateur connecté sur chaque requête qui
+     * ne l'est pas ; la session est alors consultée et Symfony rend la réponse privée, ce qui annulait
+     * le cache public ci-dessous. Le sitemap n'utilise jamais de session.
+     */
+    #[Route(path: '/sitemap.xml', name: 'app_sitemap', methods: [Request::METHOD_GET], format: 'xml', stateless: true)]
     public function __invoke(): Response
     {
         $response = $this->render('seo/sitemap.xml.twig', [
