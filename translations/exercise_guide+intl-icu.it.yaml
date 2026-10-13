@@ -1,0 +1,269 @@
+barbell_curl_standing:
+    intro: "Il curl con bilanciere in piedi è l'esercizio di base per il volume dei bicipiti. Il bilanciere dritto permette di caricare più che con i manubri, a patto di tenere fermo il busto."
+    mistakes:
+        1:
+            text: "Dondolare il busto per sollevare il bilanciere sposta lo sforzo sulla schiena. Riduci il carico e tieni fermo il tronco."
+            title: "Slancio del busto"
+        2:
+            text: "Se i gomiti avanzano, sono le spalle a lavorare. Tienili lungo i fianchi dall'inizio alla fine."
+            title: "Gomiti che avanzano"
+        3:
+            text: "Risalire prima di aver disteso le braccia accorcia il movimento. Scendi fino all'estensione senza perdere la tensione."
+            title: "Discesa incompleta"
+    steps:
+        1: "In piedi, piedi alla larghezza dei fianchi, impugna il bilanciere in supinazione (palmi verso l'alto), mani alla larghezza delle spalle."
+        2: "A braccia tese, porta i gomiti contro i fianchi e contrai gli addominali."
+        3: "Fletti i gomiti per portare il bilanciere verso le spalle, senza muovere gomiti né busto."
+        4: "Contrai i bicipiti in alto, poi scendi lentamente fino a distendere le braccia."
+    variants:
+        dumbbell_curl_standing: "Ogni braccio lavora da solo, utile se un lato è più debole."
+        ez_bar_curl: "Il bilanciere sagomato alleggerisce polsi e gomiti."
+        preacher_curl: "Le braccia appoggiate sulla panca impediscono di barare."
+
+barbell_row:
+    intro: "Il rematore con bilanciere costruisce lo spessore della schiena: gran dorsale, trapezi e parte posteriore delle spalle. È anche un ottimo esercizio per il core, perché la schiena deve restare ferma per tutta la serie."
+    mistakes:
+        1:
+            text: "Una schiena curva sotto carico mette a rischio la zona lombare. Tieni la schiena piatta e il petto in fuori."
+            title: "Schiena curva"
+        2:
+            text: "Raddrizzarsi a ogni ripetizione trasforma il rematore in uno stacco. Mantieni la stessa inclinazione del busto dall'inizio alla fine."
+            title: "Busto che si raddrizza"
+        3:
+            text: "Tirare con le braccia senza stringere le scapole fa lavorare soprattutto i bicipiti. Pensa a portare i gomiti indietro."
+            title: "Tirare con le braccia"
+    steps:
+        1: "In piedi, piedi alla larghezza dei fianchi, impugna il bilanciere in pronazione, mani un po' più larghe delle spalle."
+        2: "Fletti leggermente le ginocchia e inclina il busto in avanti a schiena piatta, fino a circa 45°."
+        3: "A braccia tese, lascia pendere il bilanciere sotto le spalle e contrai gli addominali."
+        4: "Tira il bilanciere verso l'ombelico portando i gomiti indietro e stringendo le scapole."
+        5: "Scendi in modo controllato fino a distendere le braccia, senza muovere il busto."
+    variants:
+        cable_row: "Tensione costante e schiena sostenuta, ideale per chiudere la seduta."
+        dumbbell_row: "Un braccio alla volta, con un appoggio che protegge la zona lombare."
+
+barbell_squat:
+    intro: "Lo squat con bilanciere è il re degli esercizi per le gambe. Lavora quadricipiti e glutei, con l'aiuto di femorali, adduttori e di tutto il core."
+    mistakes:
+        1:
+            text: "Le ginocchia che rientrano sollecitano l'articolazione. Spingile nella direzione dei piedi."
+            title: "Ginocchia che rientrano"
+        2:
+            text: "Sollevare i talloni sposta il peso sull'avampiede e sulle ginocchia. Tieni tutto il piede a terra."
+            title: "Talloni che si sollevano"
+        3:
+            text: "Una schiena che si incurva in basso espone la zona lombare. Scendi solo fin dove riesci a restare stabile."
+            title: "Schiena che si incurva"
+        4:
+            text: "Un mezzo squat permette più carico ma lavora meno i glutei. Scendi almeno fino ad avere le cosce parallele al pavimento."
+            title: "Ampiezza troppo corta"
+    steps:
+        1: "Posiziona il bilanciere sulla parte alta della schiena (trapezi), mani un po' più larghe delle spalle, gomiti sotto il bilanciere."
+        2: "Sgancia il bilanciere, fai due passi indietro e apri i piedi alla larghezza delle spalle, punte leggermente in fuori."
+        3: "Inspira, contrai l'addome e scendi spingendo i fianchi indietro e le ginocchia nella direzione dei piedi."
+        4: "Scendi almeno fino ad avere le cosce parallele al pavimento, con la schiena dritta."
+        5: "Risali spingendo con tutto il piede ed espira in alto."
+    variants:
+        barbell_front_squat: "Bilanciere davanti, busto più dritto: più quadricipiti, meno schiena."
+        hack_squat: "Guidato dalla macchina, per caricare le gambe senza pensare all'equilibrio."
+        leg_press: "Schiena appoggiata, per allenarti pesante senza carico sulla colonna."
+
+bench_press_bar:
+    intro: "La panca piana è l'esercizio di riferimento per la forza della parte superiore del corpo. Lavora soprattutto i pettorali e la parte anteriore delle spalle, con l'aiuto dei tricipiti."
+    mistakes:
+        1:
+            text: "Con le braccia a 90° dal busto, sono le spalle a reggere tutto. Tieni i gomiti a circa 45°."
+            title: "Gomiti troppo aperti"
+        2:
+            text: "Il rimbalzo sul petto ruba lavoro ai pettorali. Tocca leggermente, senza slancio."
+            title: "Bilanciere che rimbalza"
+        3:
+            text: "Il bacino resta sulla panca. Se si stacca, il carico è troppo pesante."
+            title: "Glutei che si staccano"
+        4:
+            text: "Scendere solo a metà permette più carico, ma meno progressi. Porta il bilanciere fino al petto."
+            title: "Ampiezza parziale"
+    steps:
+        1: "Sdraiati sulla panca con gli occhi sotto il bilanciere e i piedi ben appoggiati a terra."
+        2: "Impugna il bilanciere un po' più largo delle spalle, stringi le scapole e inarca leggermente la parte alta della schiena."
+        3: "Sgancia il bilanciere e portalo sopra le spalle, a braccia tese."
+        4: "Scendi in modo controllato fino a toccare la parte bassa del petto, gomiti a circa 45° dal busto."
+        5: "Spingi il bilanciere verso l'alto espirando, fino a tornare a braccia tese."
+    variants:
+        bench_press_dumbbell: "Più ampiezza, e ogni braccio lavora da solo."
+        decline_bench_press_bar: "Mette l'accento sulla parte bassa del petto."
+        incline_bench_press_dumbbell: "Mette l'accento sulla parte alta del petto."
+
+breadcrumb:
+    home: "Home"
+    index: "Esercizi"
+    label: "Percorso di navigazione"
+
+call_to_action:
+    logged_in:
+        dashboard: "Vai al mio cruscotto"
+        history: "Vedi il mio storico"
+        text: "Ritrova le tue sedute, i tuoi record e i tuoi progressi nel tuo spazio."
+        title: "I tuoi progressi"
+    visitor:
+        button: "Crea il mio account gratuito"
+        text: "Annota le tue serie, segui i tuoi record e guarda i muscoli lavorati a ogni seduta. Gratis e senza pubblicità."
+        title: "Segui i tuoi progressi"
+
+deadlift:
+    intro: "Lo stacco da terra sollecita quasi tutto il corpo: zona lombare, glutei e femorali prima di tutto, ma anche quadricipiti, schiena e avambracci. È l'esercizio con cui si solleva di più, e quello in cui la tecnica conta di più."
+    mistakes:
+        1:
+            text: "Sollevare a schiena curva è l'errore più pericoloso. Se non riesci a tenere la schiena piatta, il carico è troppo pesante."
+            title: "Schiena curva"
+        2:
+            text: "Un bilanciere che si allontana dalle gambe tira sulla zona lombare. Fallo scorrere lungo le tibie e poi lungo le cosce."
+            title: "Bilanciere lontano dal corpo"
+        3:
+            text: "Alzare i fianchi prima delle spalle trasforma l'esercizio in uno stacco a gambe tese. Fianchi e spalle salgono insieme."
+            title: "Fianchi che salgono troppo presto"
+        4:
+            text: "Inclinarsi all'indietro in alto schiaccia la zona lombare. Termina semplicemente in piedi, ben dritto."
+            title: "Iperestensione in alto"
+    steps:
+        1: "Mettiti in piedi, piedi alla larghezza dei fianchi, il bilanciere sopra il centro dei piedi."
+        2: "Piegati spingendo i fianchi indietro e impugna il bilanciere appena all'esterno delle gambe."
+        3: "Fletti le ginocchia finché le tibie toccano il bilanciere, petto in fuori e schiena piatta."
+        4: "Contrai l'addome e spingi contro il pavimento per sollevare il bilanciere lungo le gambe, fianchi e spalle insieme."
+        5: "Termina in piedi con i fianchi estesi, poi riporta giù il bilanciere seguendo lo stesso percorso."
+    variants:
+        romanian_deadlift: "Gambe quasi tese, per lavorare femorali e glutei."
+        stiff_leg_deadlift: "Gambe tese, per un allungamento massimo della parte posteriore delle cosce."
+
+dips_chest:
+    intro: "Le dip alle parallele con il busto inclinato in avanti sono uno dei migliori esercizi a corpo libero per il petto. Partecipano anche i tricipiti e la parte anteriore delle spalle."
+    mistakes:
+        1:
+            text: "Scendere troppo allunga molto la parte anteriore della spalla. Fermati quando le braccia sono più o meno parallele al pavimento."
+            title: "Discesa troppo profonda"
+        2:
+            text: "Con il busto verticale lavorano soprattutto i tricipiti. Inclinati in avanti per colpire il petto."
+            title: "Busto troppo dritto"
+        3:
+            text: "Lasciar salire le spalle verso le orecchie le mette in cattiva posizione. Tienile basse e lontane dalle orecchie."
+            title: "Spalle che salgono"
+    steps:
+        1: "Afferra le parallele e sali in appoggio, braccia tese e spalle basse."
+        2: "Inclina il busto in avanti e lascia che i gomiti si aprano leggermente."
+        3: "Scendi flettendo i gomiti finché le braccia sono più o meno parallele al pavimento."
+        4: "Spingi sulle parallele per risalire fino a distendere le braccia."
+    variants:
+        bench_press_bar: "Per caricare pesante e progredire con i dischi."
+        dips_triceps: "Busto dritto, per lavorare la parte posteriore delle braccia."
+        push_up: "Più facile, per imparare il movimento di spinta."
+
+incline_bench_press_dumbbell:
+    intro: "La panca inclinata con manubri lavora la parte alta del petto e la parte anteriore delle spalle. I manubri offrono più ampiezza del bilanciere e obbligano ogni braccio a lavorare da solo."
+    mistakes:
+        1:
+            text: "Oltre i 45° spingono soprattutto le spalle. Resta tra 30 e 45°."
+            title: "Panca troppo inclinata"
+        2:
+            text: "Far sbattere i manubri in alto fa perdere la tensione. Avvicinali senza che si tocchino."
+            title: "Manubri che sbattono"
+        3:
+            text: "Lasciar cadere i manubri in basso sovraccarica le spalle. Controlla la discesa per due o tre secondi."
+            title: "Discesa non controllata"
+    steps:
+        1: "Regola la panca tra 30 e 45° e siediti con un manubrio appoggiato su ogni coscia."
+        2: "Sdraiati portando i manubri all'altezza del petto, piedi ben appoggiati a terra."
+        3: "Stringi le scapole e porta i manubri sopra la parte alta del petto, a braccia tese."
+        4: "Scendi lentamente fino a sentire l'allungamento dei pettorali, gomiti leggermente sotto le spalle."
+        5: "Spingi i manubri verso l'alto avvicinandoli leggermente, poi ricomincia."
+    variants:
+        bench_press_bar: "Panca piana e bilanciere, per caricare di più."
+        dumbbell_fly_incline: "Croci sulla stessa panca, per isolare la parte alta del petto."
+        incline_bench_press_bar: "Con il bilanciere, per caricare di più con la stessa inclinazione."
+
+index:
+    heading: "Esercizi di muscolazione"
+    heading_highlight: "per muscolo"
+    intro: "I muscoli lavorati, l'esecuzione passo dopo passo, gli errori frequenti e le varianti di ogni esercizio. Scegli un muscolo, poi un esercizio."
+    meta_description: "Schede di esercizi di muscolazione divise per muscolo: muscoli lavorati, esecuzione, errori frequenti e varianti."
+    title: "Esercizi di muscolazione per muscolo"
+
+leg_press:
+    intro: "La leg press lavora quadricipiti e glutei senza carico sulla colonna. Permette di spingere pesante in sicurezza, in aggiunta o al posto dello squat."
+    mistakes:
+        1:
+            text: "Bloccare le ginocchia in alto scarica tutto il peso sull'articolazione. Tienile sempre leggermente flesse."
+            title: "Ginocchia bloccate"
+        2:
+            text: "Se la zona lombare si stacca dallo schienale in basso, stai scendendo troppo. Fermati poco prima."
+            title: "Bacino che si stacca"
+        3:
+            text: "Le ginocchia che rientrano sollecitano l'articolazione. Spingile nella direzione dei piedi."
+            title: "Ginocchia che rientrano"
+    steps:
+        1: "Siediti con la schiena e i glutei ben appoggiati allo schienale."
+        2: "Posiziona i piedi al centro della pedana, alla larghezza dei fianchi, punte leggermente in fuori."
+        3: "Spingi la pedana per sbloccarla, poi togli le sicure."
+        4: "Scendi flettendo le ginocchia fino a circa 90°, senza staccare il bacino dallo schienale."
+        5: "Spingi con i talloni per risalire, senza bloccare le ginocchia in alto."
+    variants:
+        barbell_squat: "Il movimento di base, che allena anche equilibrio e core."
+        hack_squat: "Anche qui con la schiena appoggiata, ma in piedi, più vicino allo squat."
+
+military_press_bar:
+    intro: "Il lento avanti con bilanciere è l'esercizio di base per spalle forti. Lavora la parte anteriore e laterale delle spalle, con l'aiuto di tricipiti e trapezi."
+    mistakes:
+        1:
+            text: "Inclinarsi all'indietro trasforma il movimento in una panca inclinata e carica la zona lombare. Contrai glutei e addominali."
+            title: "Schiena troppo inarcata"
+        2:
+            text: "Spingere il bilanciere davanti al viso lo rende più pesante e affatica le spalle. Sale in verticale; la testa arretra per lasciarlo passare."
+            title: "Bilanciere troppo avanti"
+        3:
+            text: "Fermare il bilanciere all'altezza della fronte accorcia il movimento. Riportalo fino alla parte alta del petto."
+            title: "Ampiezza parziale"
+    steps:
+        1: "In piedi, piedi alla larghezza dei fianchi, impugna il bilanciere un po' più largo delle spalle."
+        2: "Appoggia il bilanciere sulla parte alta del petto, gomiti leggermente davanti al bilanciere."
+        3: "Contrai glutei e addominali per tenere il corpo dritto."
+        4: "Spingi il bilanciere in verticale sopra la testa, arretrando leggermente la testa per lasciarlo passare."
+        5: "Termina a braccia tese sopra la testa, poi scendi in modo controllato fino al petto."
+    variants:
+        arnold_press: "Con manubri e rotazione, per lavorare la spalla con più ampiezza."
+        military_press_machine: "Guidato dalla macchina, per concentrarti sulla spinta."
+
+pull_up:
+    intro: "Le trazioni in pronazione (palmi in avanti) sono l'esercizio re per una schiena larga. Lavorano soprattutto il gran dorsale, con l'aiuto di bicipiti, trapezi e parte posteriore delle spalle."
+    mistakes:
+        1:
+            text: "Dondolare le gambe per salire ruba lavoro alla schiena. Tieni il corpo contratto e immobile."
+            title: "Slancio con le gambe"
+        2:
+            text: "Fermarsi prima che il mento superi la sbarra, o risalire senza distendere le braccia, accorcia l'esercizio. Fai tutto il movimento."
+            title: "Ampiezza parziale"
+        3:
+            text: "Tirare solo con le braccia affatica i bicipiti prima della schiena. Inizia ogni ripetizione abbassando le spalle."
+            title: "Spalle rilassate"
+    steps:
+        1: "Afferra la sbarra in pronazione, mani un po' più larghe delle spalle."
+        2: "Appenditi a braccia tese, gambe unite e addominali contratti."
+        3: "Abbassa le spalle e stringi le scapole per avviare il movimento."
+        4: "Tira portando i gomiti verso i fianchi finché il mento supera la sbarra."
+        5: "Scendi lentamente fino a distendere completamente le braccia."
+    variants:
+        chin_up: "Palmi verso di te, più bicipiti e spesso più facile."
+        lat_pulldown: "Alla macchina, per regolare il carico finché le trazioni sono ancora troppo difficili."
+
+show:
+    back_to_index: "Tutti gli esercizi"
+    meta_description: "{exercise}: muscoli lavorati, esecuzione passo dopo passo, errori frequenti e varianti."
+    mistakes_title: "Errori frequenti"
+    muscles:
+        label: "Muscoli lavorati"
+        primary: "{muscle} · principale"
+        primary_legend: "Muscoli principali"
+        secondary: "{muscle} · secondario"
+        secondary_legend: "Muscoli secondari"
+        silhouette: "Silhouette dei muscoli lavorati: in rosa i principali, in ciano i secondari"
+    steps_title: "Esecuzione"
+    title: "{exercise}: esecuzione, muscoli ed errori"
+    variants_title: "Varianti"

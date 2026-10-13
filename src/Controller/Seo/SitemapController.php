@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller\Seo;
 
+use App\Controller\ExerciseGuide\ExerciseGuideIndexController;
+use App\Controller\ExerciseGuide\ExerciseGuideShowController;
+use App\Enum\Translations\LocaleAllowedEnum;
+use App\Service\ExerciseGuide\ExerciseGuide;
+use App\Service\ExerciseGuide\ExerciseGuideCatalog;
+use App\Service\ExerciseGuide\ExerciseGuideSlugger;
 use App\Service\Seo\LocaleAlternateUrlGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,18 +18,20 @@ use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Plan du site pour les moteurs de recherche : seules les pages publiques utiles à l'arrivée d'un
- * visiteur (la connexion n'apporte rien hors de son compte), dans ses 8 langues quand son contenu
- * est traduit, sinon sa seule version de référence.
+ * visiteur (la connexion n'apporte rien hors de son compte), fiches exercices comprises, dans ses 8
+ * langues quand son contenu est traduit, sinon sa seule version de référence.
  * Hors préfixe de locale (cf. config/routes.yaml) : les moteurs le cherchent à la racine.
  */
 final class SitemapController extends AbstractController
 {
-    private const array PUBLIC_ROUTES = ['app_home', 'app_register', 'app_terms'];
+    private const array PUBLIC_ROUTES = ['app_home', 'app_register', 'app_terms', ExerciseGuideIndexController::ROUTE];
 
     private const int CACHE_SECONDS = 86400;
 
     public function __construct(
         private readonly LocaleAlternateUrlGenerator $alternateUrlGenerator,
+        private readonly ExerciseGuideCatalog $exerciseGuideCatalog,
+        private readonly ExerciseGuideSlugger $exerciseGuideSlugger,
     ) {
     }
 
@@ -36,7 +44,10 @@ final class SitemapController extends AbstractController
     public function __invoke(): Response
     {
         $response = $this->render('seo/sitemap.xml.twig', [
-            'pages' => array_map($this->pageAlternates(...), self::PUBLIC_ROUTES),
+            'pages' => [
+                ...array_map(fn (string $route): array => $this->pageAlternates($route), self::PUBLIC_ROUTES),
+                ...array_map($this->exerciseGuideAlternates(...), $this->exerciseGuideCatalog->all()),
+            ],
         ]);
         $response->headers->set('Content-Type', 'application/xml; charset=UTF-8');
         $response->setPublic();
@@ -46,10 +57,12 @@ final class SitemapController extends AbstractController
     }
 
     /**
+     * @param array<string, mixed> $routeParams paramètres de la page dans une de ses langues
+     *
      * @return array{locations: array<array-key, string>, alternates: array<string, string>} une entrée
      *     du sitemap par langue (`locations`), chacune listant toutes les versions plus x-default
      */
-    private function pageAlternates(string $route): array
+    private function pageAlternates(string $route, array $routeParams = []): array
     {
         if (! $this->alternateUrlGenerator->isTranslated($route)) {
             return [
@@ -58,13 +71,28 @@ final class SitemapController extends AbstractController
             ];
         }
 
-        $locations = $this->alternateUrlGenerator->alternates($route);
+        $locations = $this->alternateUrlGenerator->alternates($route, $routeParams);
 
         return [
             'locations' => $locations,
             'alternates' => $locations + [
-                'x-default' => $this->alternateUrlGenerator->defaultAlternate($route),
+                'x-default' => $this->alternateUrlGenerator->defaultAlternate($route, $routeParams),
             ],
         ];
+    }
+
+    /**
+     * Les slugs des autres langues sont déduits de la version anglaise par le générateur.
+     *
+     * @return array{locations: array<array-key, string>, alternates: array<string, string>}
+     */
+    private function exerciseGuideAlternates(ExerciseGuide $guide): array
+    {
+        $locale = LocaleAllowedEnum::EN->value;
+
+        return $this->pageAlternates(ExerciseGuideShowController::ROUTE, [
+            '_locale' => $locale,
+            'slug' => $this->exerciseGuideSlugger->slugFor($guide, $locale),
+        ]);
     }
 }

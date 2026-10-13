@@ -1,0 +1,269 @@
+barbell_curl_standing:
+    intro: "El curl con barra de pie es el ejercicio básico para ganar volumen en los bíceps. La barra recta permite cargar más que con mancuernas, siempre que el torso se mantenga quieto."
+    mistakes:
+        1:
+            text: "Balancear el torso para subir la barra traslada el esfuerzo a la espalda. Baja el peso y mantén el tronco inmóvil."
+            title: "Impulso con el torso"
+        2:
+            text: "Si los codos se adelantan, los hombros toman el relevo. Mantenlos pegados al cuerpo de principio a fin."
+            title: "Codos que se adelantan"
+        3:
+            text: "Volver a subir antes de estirar los brazos acorta el movimiento. Baja hasta la extensión sin perder la tensión."
+            title: "Bajada incompleta"
+    steps:
+        1: "De pie, con los pies a la anchura de las caderas, agarra la barra en supinación (palmas hacia arriba), manos a la anchura de los hombros."
+        2: "Con los brazos estirados, pega los codos a los costados y contrae el abdomen."
+        3: "Flexiona los codos para subir la barra hacia los hombros, sin mover los codos ni el torso."
+        4: "Contrae los bíceps arriba y baja despacio hasta estirar los brazos."
+    variants:
+        dumbbell_curl_standing: "Cada brazo trabaja por separado, útil si un lado es más débil."
+        ez_bar_curl: "La barra Z alivia las muñecas y los codos."
+        preacher_curl: "Los brazos apoyados en el banco impiden hacer trampa."
+
+barbell_row:
+    intro: "El remo con barra construye una espalda gruesa: dorsal ancho, trapecios y parte posterior de los hombros. También es un gran ejercicio de core, ya que la espalda debe mantenerse fija durante toda la serie."
+    mistakes:
+        1:
+            text: "Una espalda redondeada bajo carga pone en riesgo la zona lumbar. Mantén la espalda plana y el pecho fuera."
+            title: "Espalda redondeada"
+        2:
+            text: "Incorporarte en cada repetición convierte el remo en un peso muerto. Mantén la misma inclinación del torso de principio a fin."
+            title: "Torso que se incorpora"
+        3:
+            text: "Tirar con los brazos sin juntar las escápulas trabaja sobre todo los bíceps. Piensa en llevar los codos hacia atrás."
+            title: "Tirar con los brazos"
+    steps:
+        1: "De pie, con los pies a la anchura de las caderas, agarra la barra en pronación, manos algo más abiertas que los hombros."
+        2: "Flexiona ligeramente las rodillas e inclina el torso hacia delante, con la espalda plana, hasta unos 45°."
+        3: "Con los brazos estirados, deja colgar la barra bajo los hombros y contrae el abdomen."
+        4: "Tira de la barra hacia el ombligo llevando los codos hacia atrás y juntando las escápulas."
+        5: "Baja de forma controlada hasta estirar los brazos, sin mover el torso."
+    variants:
+        cable_row: "Tensión constante y espalda apoyada, ideal para terminar la sesión."
+        dumbbell_row: "Un brazo tras otro, con un apoyo que protege la zona lumbar."
+
+barbell_squat:
+    intro: "La sentadilla con barra es la reina de los ejercicios de pierna. Trabaja los cuádriceps y los glúteos, con la ayuda de los isquiotibiales, los aductores y todo el core."
+    mistakes:
+        1:
+            text: "Las rodillas que se van hacia dentro sobrecargan la articulación. Empújalas en la dirección de los pies."
+            title: "Rodillas hacia dentro"
+        2:
+            text: "Levantar los talones lleva el peso a la punta del pie y a las rodillas. Mantén todo el pie en el suelo."
+            title: "Talones que se levantan"
+        3:
+            text: "Una espalda que se redondea abajo expone la zona lumbar. Baja solo hasta donde puedas mantenerte firme."
+            title: "Espalda que se redondea"
+        4:
+            text: "Una media sentadilla permite más carga pero trabaja menos los glúteos. Baja al menos hasta tener los muslos paralelos al suelo."
+            title: "Recorrido demasiado corto"
+    steps:
+        1: "Coloca la barra en la parte alta de la espalda (trapecios), manos algo más abiertas que los hombros, codos bajo la barra."
+        2: "Desengancha la barra, retrocede dos pasos y separa los pies a la anchura de los hombros, puntas ligeramente abiertas."
+        3: "Inspira, contrae el abdomen y baja llevando la cadera hacia atrás y las rodillas en la dirección de los pies."
+        4: "Baja al menos hasta tener los muslos paralelos al suelo, con la espalda recta."
+        5: "Sube empujando con todo el pie y espira arriba."
+    variants:
+        barbell_front_squat: "Barra delante, torso más recto: más cuádriceps, menos espalda."
+        hack_squat: "Guiada por la máquina, para cargar las piernas sin preocuparte del equilibrio."
+        leg_press: "Espalda apoyada, para entrenar pesado sin carga en la columna."
+
+bench_press_bar:
+    intro: "El press de banca es el ejercicio de referencia para la fuerza del tren superior. Trabaja sobre todo el pecho y la parte delantera de los hombros, con la ayuda de los tríceps."
+    mistakes:
+        1:
+            text: "Con los brazos a 90° del torso, los hombros cargan con todo. Mantén los codos a unos 45°."
+            title: "Codos demasiado abiertos"
+        2:
+            text: "El rebote en el pecho le roba trabajo a los pectorales. Toca ligeramente, sin impulso."
+            title: "Barra que rebota"
+        3:
+            text: "La pelvis se queda en el banco. Si se levanta, el peso es demasiado alto."
+            title: "Glúteos que se despegan"
+        4:
+            text: "Bajar solo hasta la mitad permite más carga, pero menos progreso. Baja la barra hasta el pecho."
+            title: "Recorrido parcial"
+    steps:
+        1: "Túmbate en el banco con los ojos bajo la barra y los pies bien apoyados en el suelo."
+        2: "Agarra la barra algo más abierta que los hombros, junta las escápulas y arquea ligeramente la parte alta de la espalda."
+        3: "Desengancha la barra y colócala sobre los hombros, con los brazos estirados."
+        4: "Baja de forma controlada hasta tocar la parte baja del pecho, codos a unos 45° del torso."
+        5: "Empuja la barra hacia arriba espirando, hasta volver a estirar los brazos."
+    variants:
+        bench_press_dumbbell: "Más recorrido, y cada brazo trabaja por separado."
+        decline_bench_press_bar: "Pone el acento en la parte baja del pecho."
+        incline_bench_press_dumbbell: "Pone el acento en la parte alta del pecho."
+
+breadcrumb:
+    home: "Inicio"
+    index: "Ejercicios"
+    label: "Ruta de navegación"
+
+call_to_action:
+    logged_in:
+        dashboard: "Ir a mi panel"
+        history: "Ver mi historial"
+        text: "Encuentra tus sesiones, tus récords y tu progreso en tu espacio."
+        title: "Tu progreso"
+    visitor:
+        button: "Crear mi cuenta gratis"
+        text: "Anota tus series, sigue tus récords y mira los músculos trabajados en cada sesión. Gratis y sin publicidad."
+        title: "Sigue tu progreso"
+
+deadlift:
+    intro: "El peso muerto trabaja casi todo el cuerpo: zona lumbar, glúteos e isquiotibiales en primer lugar, pero también cuádriceps, espalda y antebrazos. Es el ejercicio con el que se levanta más peso, y en el que la técnica importa más."
+    mistakes:
+        1:
+            text: "Levantar con la espalda redondeada es el error más peligroso. Si no consigues mantener la espalda plana, el peso es demasiado alto."
+            title: "Espalda redondeada"
+        2:
+            text: "Una barra que se aleja de las piernas tira de la zona lumbar. Deslízala a lo largo de las tibias y luego de los muslos."
+            title: "Barra lejos del cuerpo"
+        3:
+            text: "Subir la cadera antes que los hombros convierte el ejercicio en un peso muerto con piernas rígidas. Cadera y hombros suben juntos."
+            title: "Cadera que sube demasiado rápido"
+        4:
+            text: "Echarse hacia atrás arriba comprime la zona lumbar. Termina simplemente de pie, bien recto."
+            title: "Hiperextensión arriba"
+    steps:
+        1: "Colócate de pie, pies a la anchura de las caderas, con la barra sobre la mitad de los pies."
+        2: "Inclínate llevando la cadera hacia atrás y agarra la barra justo por fuera de las piernas."
+        3: "Flexiona las rodillas hasta que las tibias toquen la barra, con el pecho fuera y la espalda plana."
+        4: "Contrae el abdomen y empuja el suelo para subir la barra a lo largo de las piernas, cadera y hombros a la vez."
+        5: "Termina de pie con la cadera extendida y vuelve a bajar siguiendo el mismo camino."
+    variants:
+        romanian_deadlift: "Piernas casi estiradas, para trabajar isquiotibiales y glúteos."
+        stiff_leg_deadlift: "Piernas estiradas, para un estiramiento máximo de la parte trasera de los muslos."
+
+dips_chest:
+    intro: "Los fondos en paralelas con el torso inclinado hacia delante son uno de los mejores ejercicios con peso corporal para el pecho. Los tríceps y la parte delantera de los hombros también participan."
+    mistakes:
+        1:
+            text: "Bajar demasiado estira mucho la parte delantera del hombro. Para cuando los brazos estén más o menos paralelos al suelo."
+            title: "Bajada demasiado profunda"
+        2:
+            text: "Con el torso vertical, trabajan sobre todo los tríceps. Inclínate hacia delante para trabajar el pecho."
+            title: "Torso demasiado recto"
+        3:
+            text: "Dejar que los hombros suban hacia las orejas los pone en mala posición. Mantenlos bajos y lejos de las orejas."
+            title: "Hombros que suben"
+    steps:
+        1: "Agarra las paralelas y súbete en apoyo, brazos estirados y hombros bajos."
+        2: "Inclina el torso hacia delante y deja que los codos se abran ligeramente."
+        3: "Baja flexionando los codos hasta que los brazos estén más o menos paralelos al suelo."
+        4: "Empuja las barras para subir hasta estirar los brazos."
+    variants:
+        bench_press_bar: "Para cargar pesado y progresar con discos."
+        dips_triceps: "Torso recto, para trabajar la parte trasera de los brazos."
+        push_up: "Más fácil, para aprender el movimiento de empuje."
+
+incline_bench_press_dumbbell:
+    intro: "El press inclinado con mancuernas trabaja la parte alta del pecho y la parte delantera de los hombros. Las mancuernas ofrecen más recorrido que la barra y obligan a cada brazo a trabajar por separado."
+    mistakes:
+        1:
+            text: "Por encima de 45°, son sobre todo los hombros los que empujan. Quédate entre 30 y 45°."
+            title: "Banco demasiado inclinado"
+        2:
+            text: "Chocar las mancuernas arriba hace perder la tensión. Acércalas sin que se toquen."
+            title: "Mancuernas que chocan"
+        3:
+            text: "Dejar caer las mancuernas abajo sobrecarga los hombros. Controla la bajada durante dos o tres segundos."
+            title: "Bajada sin control"
+    steps:
+        1: "Coloca el banco entre 30 y 45° y siéntate con una mancuerna apoyada en cada muslo."
+        2: "Túmbate llevando las mancuernas a la altura del pecho, con los pies apoyados en el suelo."
+        3: "Junta las escápulas y coloca las mancuernas sobre la parte alta del pecho, brazos estirados."
+        4: "Baja despacio hasta notar el estiramiento del pecho, codos ligeramente por debajo de los hombros."
+        5: "Empuja las mancuernas hacia arriba acercándolas un poco y vuelve a empezar."
+    variants:
+        bench_press_bar: "Banco plano y barra, para cargar más."
+        dumbbell_fly_incline: "Aperturas en el mismo banco, para aislar la parte alta del pecho."
+        incline_bench_press_bar: "Con barra, para cargar más con el mismo ángulo."
+
+index:
+    heading: "Ejercicios de musculación"
+    heading_highlight: "por músculo"
+    intro: "Los músculos trabajados, la ejecución paso a paso, los errores frecuentes y las variantes de cada ejercicio. Elige un músculo y luego un ejercicio."
+    meta_description: "Fichas de ejercicios de musculación clasificadas por músculo: músculos trabajados, ejecución, errores frecuentes y variantes."
+    title: "Ejercicios de musculación por músculo"
+
+leg_press:
+    intro: "La prensa de piernas trabaja los cuádriceps y los glúteos sin carga en la columna. Permite empujar pesado con seguridad, como complemento o en lugar de la sentadilla."
+    mistakes:
+        1:
+            text: "Bloquear las rodillas arriba pone toda la carga en la articulación. Mantenlas siempre ligeramente flexionadas."
+            title: "Rodillas bloqueadas"
+        2:
+            text: "Si la zona lumbar se despega del respaldo abajo, bajas demasiado. Para justo antes."
+            title: "Pelvis que se despega"
+        3:
+            text: "Las rodillas que se van hacia dentro sobrecargan la articulación. Empújalas en la dirección de los pies."
+            title: "Rodillas hacia dentro"
+    steps:
+        1: "Siéntate con la espalda y los glúteos bien apoyados en el respaldo."
+        2: "Coloca los pies en el centro de la plataforma, a la anchura de las caderas, puntas ligeramente abiertas."
+        3: "Empuja la plataforma para desbloquearla y quita los seguros."
+        4: "Baja flexionando las rodillas hasta unos 90°, sin despegar la pelvis del respaldo."
+        5: "Empuja con los talones para subir, sin bloquear las rodillas arriba."
+    variants:
+        barbell_squat: "El movimiento básico, que también trabaja el equilibrio y el core."
+        hack_squat: "También con la espalda apoyada, pero de pie, más cerca de la sentadilla."
+
+military_press_bar:
+    intro: "El press militar es el ejercicio básico para unos hombros fuertes. Trabaja la parte delantera y lateral de los hombros, con la ayuda de los tríceps y los trapecios."
+    mistakes:
+        1:
+            text: "Echarse hacia atrás convierte el movimiento en un press inclinado y carga la zona lumbar. Contrae glúteos y abdomen."
+            title: "Espalda demasiado arqueada"
+        2:
+            text: "Empujar la barra por delante de la cara la hace más pesada y cansa los hombros. Sube en vertical; la cabeza se retira para dejarla pasar."
+            title: "Barra demasiado adelantada"
+        3:
+            text: "Parar la barra a la altura de la frente acorta el movimiento. Bájala hasta la parte alta del pecho."
+            title: "Recorrido parcial"
+    steps:
+        1: "De pie, con los pies a la anchura de las caderas, agarra la barra algo más abierta que los hombros."
+        2: "Apoya la barra en la parte alta del pecho, codos ligeramente por delante de la barra."
+        3: "Contrae glúteos y abdomen para mantener el cuerpo recto."
+        4: "Empuja la barra en vertical por encima de la cabeza, retirando ligeramente la cabeza para dejarla pasar."
+        5: "Termina con los brazos estirados sobre la cabeza y baja de forma controlada hasta el pecho."
+    variants:
+        arnold_press: "Con mancuernas y rotación, para trabajar el hombro con más recorrido."
+        military_press_machine: "Guiado por la máquina, para concentrarte en el empuje."
+
+pull_up:
+    intro: "Las dominadas en pronación (palmas hacia delante) son el ejercicio rey para una espalda ancha. Trabajan sobre todo el dorsal ancho, con la ayuda de los bíceps, los trapecios y la parte posterior de los hombros."
+    mistakes:
+        1:
+            text: "Balancear las piernas para subir le roba trabajo a la espalda. Mantén el cuerpo firme e inmóvil."
+            title: "Impulso con las piernas"
+        2:
+            text: "Parar antes de que la barbilla supere la barra, o volver a subir sin estirar los brazos, acorta el ejercicio. Haz el recorrido completo."
+            title: "Recorrido parcial"
+        3:
+            text: "Tirar solo con los brazos cansa los bíceps antes que la espalda. Empieza cada repetición bajando los hombros."
+            title: "Hombros relajados"
+    steps:
+        1: "Agarra la barra en pronación, manos algo más abiertas que los hombros."
+        2: "Cuélgate con los brazos estirados, piernas juntas y abdomen contraído."
+        3: "Baja los hombros y junta las escápulas para iniciar el movimiento."
+        4: "Tira llevando los codos hacia las caderas hasta que la barbilla supere la barra."
+        5: "Baja despacio hasta estirar los brazos por completo."
+    variants:
+        chin_up: "Palmas hacia ti, más bíceps y a menudo más fácil."
+        lat_pulldown: "En máquina, para ajustar la carga mientras las dominadas sigan siendo demasiado duras."
+
+show:
+    back_to_index: "Todos los ejercicios"
+    meta_description: "{exercise}: músculos trabajados, ejecución paso a paso, errores frecuentes y variantes."
+    mistakes_title: "Errores frecuentes"
+    muscles:
+        label: "Músculos trabajados"
+        primary: "{muscle} · principal"
+        primary_legend: "Músculos principales"
+        secondary: "{muscle} · secundario"
+        secondary_legend: "Músculos secundarios"
+        silhouette: "Silueta de los músculos trabajados: en rosa los principales, en cian los secundarios"
+    steps_title: "Ejecución"
+    title: "{exercise}: ejecución, músculos y errores"
+    variants_title: "Variantes"

@@ -1,0 +1,19 @@
+{#
+    Paramètres :
+      - primaryMuscleKeys : list<string> — clés de traduction (domaine `muscle`)
+      - secondaryMuscleKeys : list<string>
+#}
+<ul aria-label="{{ 'show.muscles.label'|trans({}, 'exercise_guide') }}" class="flex flex-wrap gap-2">
+    {% for muscle_key in primaryMuscleKeys %}
+        <li class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-ft/10 text-rose-300 text-sm font-semibold">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-ft" aria-hidden="true"></span>
+            {{ 'show.muscles.primary'|trans({muscle: muscle_key|trans({}, 'muscle')}, 'exercise_guide') }}
+        </li>
+    {% endfor %}
+    {% for muscle_key in secondaryMuscleKeys %}
+        <li class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-ft/10 text-cyan-300 text-sm font-semibold">
+            <span class="w-2.5 h-2.5 rounded-full bg-cyan-ft" aria-hidden="true"></span>
+            {{ 'show.muscles.secondary'|trans({muscle: muscle_key|trans({}, 'muscle')}, 'exercise_guide') }}
+        </li>
+    {% endfor %}
+</ul>

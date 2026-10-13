@@ -15,7 +15,8 @@ final class SitemapControllerTest extends WebTestCase
     {
         $sitemap = $this->requestSitemap();
 
-        self::assertCount(17, $sitemap->filterXPath('//s:url'));
+        // 8 accueils + 8 inscriptions + CGU française + 8 index des exercices + 10 fiches × 8 langues.
+        self::assertCount(105, $sitemap->filterXPath('//s:url'));
         self::assertSame(1, $this->countLocations($sitemap, 'http://localhost/de/'));
         self::assertSame(1, $this->countLocations($sitemap, 'http://localhost/pl/rejestracja'));
     }
@@ -26,6 +27,15 @@ final class SitemapControllerTest extends WebTestCase
 
         self::assertSame(1, $this->countLocations($sitemap, 'http://localhost/fr/cgu'));
         self::assertSame(0, $this->countLocations($sitemap, 'http://localhost/pl/regulamin'));
+    }
+
+    public function testSitemapListsEachExerciseGuideUnderItsTranslatedAddress(): void
+    {
+        $sitemap = $this->requestSitemap();
+
+        self::assertSame(1, $this->countLocations($sitemap, 'http://localhost/fr/exercices'));
+        self::assertSame(1, $this->countLocations($sitemap, 'http://localhost/fr/exercices/developpe-couche-barre'));
+        self::assertSame(1, $this->countLocations($sitemap, 'http://localhost/de/uebungen/bankdruecken-langhantel'));
     }
 
     public function testSitemapLeavesOutTheLoginPage(): void

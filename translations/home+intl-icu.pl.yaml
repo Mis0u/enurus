@@ -55,6 +55,8 @@ home:
             text: "Co roku w grudniu podsumowanie twojego roku treningowego, którym możesz podzielić się ze znajomymi."
             title: "Przeżyj swój rok jeszcze raz"
     header:
+        dashboard: "Mój panel"
+        exercises: "Ćwiczenia"
         language: "Język"
         login: "Zaloguj się"
         nav_label: "Konto"

@@ -1,5 +1,6 @@
 {#
-    Sélecteur de langue sans JS (<details>) : chaque entrée mène à la page d'accueil de cette langue.
+    Sélecteur de langue sans JS (<details>) : chaque entrée mène à la même page dans cette langue
+    (versions `hreflang`, slug traduit compris pour une fiche exercice).
     Drapeaux en SVG (assets/images/flags, flag-icons MIT) plutôt qu'en emoji : Windows et certains
     Firefox n'affichent pas les emoji drapeaux. Décoratifs (alt vide) : le code de langue suit.
 
@@ -15,11 +16,12 @@
         <svg class="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
     </summary>
 
+    {% set alternates = locale_alternates() %}
     <ul class="absolute right-0 z-10 mt-2 w-28 py-1 rounded-lg border border-slate-700 bg-bg-card shadow-xl">
         {% for locale in locales %}
             {% set is_current = locale == currentLocale %}
             <li>
-                <a href="{{ path('app_home', {'_locale': locale.value}) }}"
+                <a href="{{ alternates[locale.value] ?? path('app_home', {'_locale': locale.value}) }}"
                    lang="{{ locale.value }}"
                    hreflang="{{ locale.value }}"
                    class="flex items-center gap-2.5 px-3 py-2 text-sm no-underline hover:bg-bg-card-hover {{ is_current ? 'text-rose-ft font-semibold' : 'text-slate-200' }}"

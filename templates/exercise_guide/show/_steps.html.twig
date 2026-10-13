@@ -1,0 +1,15 @@
+{#
+    Paramètres :
+      - stepKeys : list<string> — clés de traduction (domaine `exercise_guide`), dans l'ordre
+#}
+<section aria-labelledby="exercise-guide-steps" class="flex flex-col gap-4">
+    <h2 id="exercise-guide-steps" class="font-rajdhani font-bold text-[28px] md:text-[32px] text-slate-50">{{ 'show.steps_title'|trans({}, 'exercise_guide') }}</h2>
+    <ol class="flex flex-col gap-3">
+        {% for step_key in stepKeys %}
+            <li class="flex items-start gap-3.5">
+                <span class="shrink-0 flex items-center justify-center w-8 h-8 rounded-full border border-slate-700 bg-bg-card font-bold text-rose-ft" aria-hidden="true">{{ loop.index }}</span>
+                <span class="pt-1 text-base md:text-[17px] leading-relaxed text-slate-200">{{ step_key|trans({}, 'exercise_guide') }}</span>
+            </li>
+        {% endfor %}
+    </ol>
+</section>

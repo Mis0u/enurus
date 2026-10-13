@@ -1,0 +1,31 @@
+{#
+    Silhouette de l'appli coloriée par le contrôleur workout--show--muscles (rose : principal, cyan :
+    secondaire). Pas de compte, donc pas de genre : silhouette masculine.
+
+    Paramètres :
+      - primarySvgIds : list<string>
+      - secondarySvgIds : list<string>
+#}
+<figure class="flex flex-col items-center gap-4 p-6 rounded-2xl border border-slate-800 bg-bg-card">
+    <div class="flex items-center justify-center gap-4"
+         role="img"
+         aria-label="{{ 'show.muscles.silhouette'|trans({}, 'exercise_guide') }}"
+         data-controller="workout--show--muscles"
+         data-workout--show--muscles-primary-value='{{ primarySvgIds|json_encode }}'
+         data-workout--show--muscles-secondary-value='{{ secondarySvgIds|json_encode }}'>
+        <div class="w-[120px] [&_svg]:h-auto! [&_svg]:max-h-[260px]">
+            {% include 'SVG_BODY/male/front.html.twig' only %}
+        </div>
+        <div class="w-[120px] [&_svg]:h-auto! [&_svg]:max-h-[260px]">
+            {% include 'SVG_BODY/male/back.html.twig' only %}
+        </div>
+    </div>
+    <figcaption class="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-[13px]">
+        <span class="inline-flex items-center gap-1.5 whitespace-nowrap text-rose-300">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-ft" aria-hidden="true"></span>{{ 'show.muscles.primary_legend'|trans({}, 'exercise_guide') }}
+        </span>
+        <span class="inline-flex items-center gap-1.5 whitespace-nowrap text-cyan-300">
+            <span class="w-2.5 h-2.5 rounded-full bg-cyan-ft" aria-hidden="true"></span>{{ 'show.muscles.secondary_legend'|trans({}, 'exercise_guide') }}
+        </span>
+    </figcaption>
+</figure>

@@ -1,0 +1,269 @@
+barbell_curl_standing:
+    intro: "A rosca direta com barra em pé é o exercício base para o volume dos bíceps. A barra reta permite carregar mais do que com halteres, desde que o tronco fique imóvel."
+    mistakes:
+        1:
+            text: "Balançar o tronco para subir a barra passa o esforço para as costas. Baixa a carga e mantém o tronco imóvel."
+            title: "Balanço do tronco"
+        2:
+            text: "Se os cotovelos avançam, são os ombros que trabalham. Mantém-nos junto ao corpo do início ao fim."
+            title: "Cotovelos que avançam"
+        3:
+            text: "Voltar a subir antes de esticar os braços encurta o movimento. Desce até à extensão sem perder a tensão."
+            title: "Descida incompleta"
+    steps:
+        1: "Em pé, pés à largura das ancas, agarra a barra em supinação (palmas para cima), mãos à largura dos ombros."
+        2: "Com os braços esticados, encosta os cotovelos ao corpo e contrai os abdominais."
+        3: "Dobra os cotovelos para levar a barra até aos ombros, sem mexer os cotovelos nem o tronco."
+        4: "Contrai os bíceps em cima e desce devagar até esticar os braços."
+    variants:
+        dumbbell_curl_standing: "Cada braço trabalha sozinho, útil se um lado for mais fraco."
+        ez_bar_curl: "A barra W alivia os pulsos e os cotovelos."
+        preacher_curl: "Os braços apoiados no banco impedem qualquer batota."
+
+barbell_row:
+    intro: "O remo com barra constrói a espessura das costas: grande dorsal, trapézios e parte de trás dos ombros. É também um excelente exercício de core, porque as costas têm de ficar fixas durante toda a série."
+    mistakes:
+        1:
+            text: "Costas arredondadas sob carga põem a lombar em risco. Mantém as costas direitas e o peito para fora."
+            title: "Costas arredondadas"
+        2:
+            text: "Endireitar-te a cada repetição transforma o remo num peso morto. Mantém a mesma inclinação do tronco do início ao fim."
+            title: "Tronco que se endireita"
+        3:
+            text: "Puxar com os braços sem juntar as omoplatas trabalha sobretudo os bíceps. Pensa em levar os cotovelos para trás."
+            title: "Puxar com os braços"
+    steps:
+        1: "Em pé, pés à largura das ancas, agarra a barra em pronação, mãos um pouco mais afastadas do que os ombros."
+        2: "Dobra ligeiramente os joelhos e inclina o tronco para a frente, costas direitas, até cerca de 45°."
+        3: "Com os braços esticados, deixa a barra pendurada por baixo dos ombros e contrai os abdominais."
+        4: "Puxa a barra até ao umbigo, levando os cotovelos para trás e juntando as omoplatas."
+        5: "Desce de forma controlada até esticar os braços, sem mexer o tronco."
+    variants:
+        cable_row: "Tensão constante e costas apoiadas, ideal para terminar o treino."
+        dumbbell_row: "Um braço de cada vez, com um apoio que protege a lombar."
+
+barbell_squat:
+    intro: "O agachamento com barra é o rei dos exercícios de pernas. Trabalha os quadríceps e os glúteos, com a ajuda dos isquiotibiais, dos adutores e de todo o core."
+    mistakes:
+        1:
+            text: "Joelhos que fogem para dentro fragilizam a articulação. Empurra-os na direção dos pés."
+            title: "Joelhos para dentro"
+        2:
+            text: "Levantar os calcanhares passa o peso para a ponta dos pés e para os joelhos. Mantém o pé inteiro no chão."
+            title: "Calcanhares que levantam"
+        3:
+            text: "Costas que arredondam em baixo expõem a lombar. Desce só até onde consegues manter-te firme."
+            title: "Costas que arredondam"
+        4:
+            text: "Um meio agachamento permite mais carga mas trabalha menos os glúteos. Desce pelo menos até as coxas ficarem paralelas ao chão."
+            title: "Amplitude demasiado curta"
+    steps:
+        1: "Coloca a barra na parte de cima das costas (trapézios), mãos um pouco mais afastadas do que os ombros, cotovelos por baixo da barra."
+        2: "Tira a barra do suporte, recua dois passos e afasta os pés à largura dos ombros, pontas ligeiramente para fora."
+        3: "Inspira, contrai o abdómen e desce levando as ancas para trás e os joelhos na direção dos pés."
+        4: "Desce pelo menos até as coxas ficarem paralelas ao chão, com as costas direitas."
+        5: "Sobe empurrando com o pé inteiro e expira em cima."
+    variants:
+        barbell_front_squat: "Barra à frente, tronco mais direito: mais quadríceps, menos costas."
+        hack_squat: "Guiado pela máquina, para carregar as pernas sem te preocupares com o equilíbrio."
+        leg_press: "Costas apoiadas, para treinar pesado sem carga na coluna."
+
+bench_press_bar:
+    intro: "O supino reto é o exercício de referência para a força da parte superior do corpo. Trabalha sobretudo o peito e a parte da frente dos ombros, com a ajuda dos tríceps."
+    mistakes:
+        1:
+            text: "Com os braços a 90° do tronco, são os ombros que aguentam tudo. Mantém os cotovelos a cerca de 45°."
+            title: "Cotovelos demasiado abertos"
+        2:
+            text: "O ressalto no peito rouba trabalho aos peitorais. Toca levemente, sem impulso."
+            title: "Barra que ressalta"
+        3:
+            text: "A bacia fica no banco. Se levantar, a carga é demasiado pesada."
+            title: "Glúteos que levantam"
+        4:
+            text: "Descer só até meio permite mais carga, mas menos progresso. Leva a barra até ao peito."
+            title: "Amplitude parcial"
+    steps:
+        1: "Deita-te no banco com os olhos por baixo da barra e os pés bem assentes no chão."
+        2: "Agarra a barra um pouco mais afastada do que os ombros, junta as omoplatas e arqueia ligeiramente a parte de cima das costas."
+        3: "Tira a barra do suporte e coloca-a por cima dos ombros, braços esticados."
+        4: "Desce de forma controlada até tocar a parte de baixo do peito, cotovelos a cerca de 45° do tronco."
+        5: "Empurra a barra para cima a expirar, até voltares a ter os braços esticados."
+    variants:
+        bench_press_dumbbell: "Mais amplitude, e cada braço trabalha sozinho."
+        decline_bench_press_bar: "Põe a ênfase na parte de baixo do peito."
+        incline_bench_press_dumbbell: "Põe a ênfase na parte de cima do peito."
+
+breadcrumb:
+    home: "Início"
+    index: "Exercícios"
+    label: "Caminho de navegação"
+
+call_to_action:
+    logged_in:
+        dashboard: "Ir para o meu painel"
+        history: "Ver o meu histórico"
+        text: "Encontra os teus treinos, os teus recordes e a tua progressão no teu espaço."
+        title: "A tua progressão"
+    visitor:
+        button: "Criar a minha conta grátis"
+        text: "Regista as tuas séries, acompanha os teus recordes e vê os músculos trabalhados em cada treino. Grátis e sem publicidade."
+        title: "Acompanha a tua progressão"
+
+deadlift:
+    intro: "O peso morto trabalha quase o corpo todo: lombar, glúteos e isquiotibiais em primeiro lugar, mas também quadríceps, costas e antebraços. É o exercício em que se levanta mais peso, e aquele em que a técnica mais conta."
+    mistakes:
+        1:
+            text: "Levantar com as costas arredondadas é o erro mais perigoso. Se não consegues manter as costas direitas, a carga é demasiado pesada."
+            title: "Costas arredondadas"
+        2:
+            text: "Uma barra que se afasta das pernas puxa pela lombar. Fá-la deslizar ao longo das canelas e depois das coxas."
+            title: "Barra longe do corpo"
+        3:
+            text: "Subir as ancas antes dos ombros transforma o exercício num peso morto de pernas rígidas. Ancas e ombros sobem juntos."
+            title: "Ancas que sobem depressa demais"
+        4:
+            text: "Inclinar-te para trás em cima esmaga a lombar. Termina simplesmente em pé, bem direito."
+            title: "Hiperextensão em cima"
+    steps:
+        1: "Fica em pé, pés à largura das ancas, com a barra por cima do meio dos pés."
+        2: "Inclina-te levando as ancas para trás e agarra a barra logo por fora das pernas."
+        3: "Dobra os joelhos até as canelas tocarem na barra, peito para fora e costas direitas."
+        4: "Contrai o abdómen e empurra o chão para subir a barra ao longo das pernas, ancas e ombros ao mesmo tempo."
+        5: "Termina em pé com as ancas estendidas e volta a descer pelo mesmo caminho."
+    variants:
+        romanian_deadlift: "Pernas quase esticadas, para trabalhar isquiotibiais e glúteos."
+        stiff_leg_deadlift: "Pernas esticadas, para um alongamento máximo da parte de trás das coxas."
+
+dips_chest:
+    intro: "Os dips nas paralelas com o tronco inclinado para a frente são um dos melhores exercícios com o peso do corpo para o peito. Os tríceps e a parte da frente dos ombros também participam."
+    mistakes:
+        1:
+            text: "Descer demasiado estica muito a parte da frente do ombro. Para quando os braços estiverem mais ou menos paralelos ao chão."
+            title: "Descida demasiado funda"
+        2:
+            text: "Com o tronco vertical, são sobretudo os tríceps que trabalham. Inclina-te para a frente para visar o peito."
+            title: "Tronco demasiado direito"
+        3:
+            text: "Deixar os ombros subir até às orelhas põe-nos numa má posição. Mantém-nos baixos e afastados das orelhas."
+            title: "Ombros que sobem"
+    steps:
+        1: "Agarra as barras paralelas e sobe em apoio, braços esticados e ombros baixos."
+        2: "Inclina o tronco para a frente e deixa os cotovelos abrirem ligeiramente."
+        3: "Desce dobrando os cotovelos até os braços ficarem mais ou menos paralelos ao chão."
+        4: "Empurra as barras para subir até esticar os braços."
+    variants:
+        bench_press_bar: "Para carregar pesado e progredir com discos."
+        dips_triceps: "Tronco direito, para visar a parte de trás dos braços."
+        push_up: "Mais fácil, para aprender o movimento de empurrar."
+
+incline_bench_press_dumbbell:
+    intro: "O supino inclinado com halteres visa a parte de cima do peito e a parte da frente dos ombros. Os halteres oferecem mais amplitude do que a barra e obrigam cada braço a trabalhar sozinho."
+    mistakes:
+        1:
+            text: "Acima dos 45°, são sobretudo os ombros que empurram. Fica entre 30 e 45°."
+            title: "Banco demasiado inclinado"
+        2:
+            text: "Bater os halteres em cima faz perder a tensão. Aproxima-os sem que se toquem."
+            title: "Halteres que batem"
+        3:
+            text: "Deixar cair os halteres em baixo sobrecarrega os ombros. Controla a descida durante dois a três segundos."
+            title: "Descida sem controlo"
+    steps:
+        1: "Regula o banco entre 30 e 45° e senta-te com um halter apoiado em cada coxa."
+        2: "Deita-te levando os halteres à altura do peito, pés bem assentes no chão."
+        3: "Junta as omoplatas e coloca os halteres por cima da parte de cima do peito, braços esticados."
+        4: "Desce devagar até sentires o alongamento dos peitorais, cotovelos ligeiramente abaixo dos ombros."
+        5: "Empurra os halteres para cima aproximando-os ligeiramente, e recomeça."
+    variants:
+        bench_press_bar: "Banco plano e barra, para carregar mais."
+        dumbbell_fly_incline: "Aberturas no mesmo banco, para isolar a parte de cima do peito."
+        incline_bench_press_bar: "Com barra, para carregar mais no mesmo ângulo."
+
+index:
+    heading: "Exercícios de musculação"
+    heading_highlight: "por músculo"
+    intro: "Os músculos trabalhados, a execução passo a passo, os erros frequentes e as variantes de cada exercício. Escolhe um músculo e depois um exercício."
+    meta_description: "Fichas de exercícios de musculação organizadas por músculo: músculos trabalhados, execução, erros frequentes e variantes."
+    title: "Exercícios de musculação por músculo"
+
+leg_press:
+    intro: "A prensa de pernas trabalha os quadríceps e os glúteos sem carga na coluna. Permite empurrar pesado em segurança, como complemento ou em vez do agachamento."
+    mistakes:
+        1:
+            text: "Bloquear os joelhos em cima põe toda a carga na articulação. Mantém-nos sempre ligeiramente dobrados."
+            title: "Joelhos bloqueados"
+        2:
+            text: "Se a lombar descola do encosto em baixo, estás a descer demasiado. Para um pouco antes."
+            title: "Bacia que descola"
+        3:
+            text: "Joelhos que fogem para dentro fragilizam a articulação. Empurra-os na direção dos pés."
+            title: "Joelhos para dentro"
+    steps:
+        1: "Senta-te com as costas e os glúteos bem encostados ao encosto."
+        2: "Coloca os pés no meio da plataforma, à largura das ancas, pontas ligeiramente para fora."
+        3: "Empurra a plataforma para a desbloquear e tira as travas de segurança."
+        4: "Desce dobrando os joelhos até cerca de 90°, sem descolar a bacia do encosto."
+        5: "Empurra com os calcanhares para subir, sem bloquear os joelhos em cima."
+    variants:
+        barbell_squat: "O movimento base, que também trabalha o equilíbrio e o core."
+        hack_squat: "Também com as costas apoiadas, mas em pé, mais perto do agachamento."
+
+military_press_bar:
+    intro: "A press militar é o exercício base para ombros fortes. Trabalha a parte da frente e o lado dos ombros, com a ajuda dos tríceps e dos trapézios."
+    mistakes:
+        1:
+            text: "Inclinar-te para trás transforma o movimento num supino inclinado e carrega a lombar. Contrai os glúteos e os abdominais."
+            title: "Costas demasiado arqueadas"
+        2:
+            text: "Empurrar a barra à frente da cara torna-a mais pesada e cansa os ombros. Sobe na vertical; a cabeça recua para a deixar passar."
+            title: "Barra demasiado à frente"
+        3:
+            text: "Parar a barra à altura da testa encurta o movimento. Desce-a até à parte de cima do peito."
+            title: "Amplitude parcial"
+    steps:
+        1: "Em pé, pés à largura das ancas, agarra a barra um pouco mais afastada do que os ombros."
+        2: "Coloca a barra na parte de cima do peito, cotovelos ligeiramente à frente da barra."
+        3: "Contrai os glúteos e os abdominais para manter o corpo direito."
+        4: "Empurra a barra na vertical por cima da cabeça, recuando ligeiramente a cabeça para a deixar passar."
+        5: "Termina com os braços esticados por cima da cabeça e desce de forma controlada até ao peito."
+    variants:
+        arnold_press: "Com halteres e rotação, para trabalhar o ombro com mais amplitude."
+        military_press_machine: "Guiada pela máquina, para te concentrares no empurrar."
+
+pull_up:
+    intro: "As elevações em pronação (palmas para a frente) são o exercício rei para umas costas largas. Trabalham sobretudo o grande dorsal, com a ajuda dos bíceps, dos trapézios e da parte de trás dos ombros."
+    mistakes:
+        1:
+            text: "Balançar as pernas para subir rouba trabalho às costas. Mantém o corpo contraído e imóvel."
+            title: "Balanço com as pernas"
+        2:
+            text: "Parar antes de o queixo passar a barra, ou voltar a subir sem esticar os braços, encurta o exercício. Faz o movimento completo."
+            title: "Amplitude parcial"
+        3:
+            text: "Puxar só com os braços cansa os bíceps antes das costas. Começa cada repetição a baixar os ombros."
+            title: "Ombros relaxados"
+    steps:
+        1: "Agarra a barra em pronação, mãos um pouco mais afastadas do que os ombros."
+        2: "Fica pendurado com os braços esticados, pernas juntas e abdominais contraídos."
+        3: "Baixa os ombros e junta as omoplatas para iniciar o movimento."
+        4: "Puxa levando os cotovelos em direção às ancas até o queixo passar a barra."
+        5: "Desce devagar até esticar completamente os braços."
+    variants:
+        chin_up: "Palmas viradas para ti, mais bíceps e muitas vezes mais fácil."
+        lat_pulldown: "Na máquina, para ajustar a carga enquanto as elevações ainda forem difíceis demais."
+
+show:
+    back_to_index: "Todos os exercícios"
+    meta_description: "{exercise}: músculos trabalhados, execução passo a passo, erros frequentes e variantes."
+    mistakes_title: "Erros frequentes"
+    muscles:
+        label: "Músculos trabalhados"
+        primary: "{muscle} · principal"
+        primary_legend: "Músculos principais"
+        secondary: "{muscle} · secundário"
+        secondary_legend: "Músculos secundários"
+        silhouette: "Silhueta dos músculos trabalhados: a rosa os principais, a ciano os secundários"
+    steps_title: "Execução"
+    title: "{exercise}: execução, músculos e erros"
+    variants_title: "Variantes"

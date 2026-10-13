@@ -55,6 +55,8 @@ home:
             text: "Jeden Dezember ein Rückblick auf dein Trainingsjahr, den du mit deinen Freunden teilen kannst."
             title: "Erlebe dein Jahr noch einmal"
     header:
+        dashboard: "Meine Übersicht"
+        exercises: "Übungen"
         language: "Sprache"
         login: "Anmelden"
         nav_label: "Konto"

@@ -1,0 +1,19 @@
+{#
+    Fil d'Ariane des pages exercices publiques.
+
+    Paramètres :
+      - currentNameKey : string|null — nom de l'exercice affiché (domaine `exercise`), null sur l'index.
+#}
+<nav aria-label="{{ 'breadcrumb.label'|trans({}, 'exercise_guide') }}" class="pt-2 pb-6 text-sm text-slate-400">
+    <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+        <li><a href="{{ path('app_home') }}" class="text-slate-400 hover:text-white">{{ 'breadcrumb.home'|trans({}, 'exercise_guide') }}</a></li>
+        <li aria-hidden="true">›</li>
+        {% if currentNameKey is null %}
+            <li aria-current="page" class="text-slate-200">{{ 'breadcrumb.index'|trans({}, 'exercise_guide') }}</li>
+        {% else %}
+            <li><a href="{{ path('app_exercise_guide_index') }}" class="text-slate-400 hover:text-white">{{ 'breadcrumb.index'|trans({}, 'exercise_guide') }}</a></li>
+            <li aria-hidden="true">›</li>
+            <li aria-current="page" class="text-slate-200">{{ currentNameKey|trans({}, 'exercise') }}</li>
+        {% endif %}
+    </ol>
+</nav>

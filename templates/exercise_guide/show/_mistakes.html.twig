@@ -1,0 +1,18 @@
+{#
+    Paramètres :
+      - mistakeKeys : list<array{title: string, text: string}> — clés de traduction (domaine `exercise_guide`)
+#}
+<section aria-labelledby="exercise-guide-mistakes" class="flex flex-col gap-4">
+    <h2 id="exercise-guide-mistakes" class="font-rajdhani font-bold text-[28px] md:text-[32px] text-slate-50">{{ 'show.mistakes_title'|trans({}, 'exercise_guide') }}</h2>
+    <ul class="grid sm:grid-cols-2 gap-3">
+        {% for mistake in mistakeKeys %}
+            <li class="flex flex-col gap-1.5 p-[18px] rounded-2xl border border-slate-800 bg-bg-card">
+                <span class="flex items-center gap-2 font-semibold text-slate-50">
+                    <svg class="w-[18px] h-[18px] shrink-0 text-amber-ft" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg>
+                    {{ mistake.title|trans({}, 'exercise_guide') }}
+                </span>
+                <span class="text-[15px] leading-relaxed text-slate-400">{{ mistake.text|trans({}, 'exercise_guide') }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+</section>

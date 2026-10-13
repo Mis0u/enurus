@@ -1,0 +1,269 @@
+barbell_curl_standing:
+    intro: "Uginanie ramion ze sztangą stojąc to podstawowe ćwiczenie na masę bicepsów. Prosta sztanga pozwala użyć większego ciężaru niż hantle, o ile tułów pozostaje nieruchomy."
+    mistakes:
+        1:
+            text: "Bujanie tułowiem przy podnoszeniu sztangi przenosi wysiłek na plecy. Zmniejsz ciężar i trzymaj tułów nieruchomo."
+            title: "Bujanie tułowiem"
+        2:
+            text: "Gdy łokcie wysuwają się do przodu, pracę przejmują barki. Trzymaj je przy bokach od początku do końca."
+            title: "Łokcie wędrują do przodu"
+        3:
+            text: "Podnoszenie sztangi przed wyprostowaniem rąk skraca ruch. Opuszczaj do pełnego wyprostu, nie tracąc napięcia."
+            title: "Niepełne opuszczanie"
+    steps:
+        1: "Stań ze stopami na szerokość bioder i chwyć sztangę podchwytem (dłonie do góry), dłonie na szerokość barków."
+        2: "Z wyprostowanymi rękami przyciśnij łokcie do boków i napnij brzuch."
+        3: "Zegnij łokcie, by unieść sztangę w stronę barków, nie ruszając łokciami ani tułowiem."
+        4: "Napnij bicepsy na górze, a potem powoli opuść sztangę do wyprostu rąk."
+    variants:
+        dumbbell_curl_standing: "Każda ręka pracuje osobno, przydatne, gdy jedna strona jest słabsza."
+        ez_bar_curl: "Łamana sztanga odciąża nadgarstki i łokcie."
+        preacher_curl: "Ręce oparte na modlitewniku uniemożliwiają oszukiwanie."
+
+barbell_row:
+    intro: "Wiosłowanie sztangą buduje grubość pleców: najszersze grzbietu, czworoboczne i tylną część barków. To także świetne ćwiczenie na mięśnie głębokie, bo plecy muszą pozostać nieruchome przez całą serię."
+    mistakes:
+        1:
+            text: "Okrągłe plecy pod obciążeniem zagrażają odcinkowi lędźwiowemu. Trzymaj plecy proste, a klatkę wypchniętą."
+            title: "Okrągłe plecy"
+        2:
+            text: "Prostowanie się przy każdym powtórzeniu zamienia wiosłowanie w martwy ciąg. Utrzymuj to samo pochylenie tułowia od początku do końca."
+            title: "Prostujący się tułów"
+        3:
+            text: "Ciągnięcie rękami bez ściągania łopatek angażuje głównie bicepsy. Myśl o prowadzeniu łokci do tyłu."
+            title: "Ciągnięcie rękami"
+    steps:
+        1: "Stań ze stopami na szerokość bioder i chwyć sztangę nachwytem, dłonie nieco szerzej niż barki."
+        2: "Lekko ugnij kolana i pochyl tułów do przodu z prostymi plecami, do około 45°."
+        3: "Z wyprostowanymi rękami pozwól sztandze zwisać pod barkami i napnij brzuch."
+        4: "Przyciągnij sztangę do pępka, prowadząc łokcie do tyłu i ściągając łopatki."
+        5: "Opuść ją w kontrolowany sposób do wyprostu rąk, nie ruszając tułowiem."
+    variants:
+        cable_row: "Stałe napięcie i podparte plecy, idealne na koniec treningu."
+        dumbbell_row: "Jedna ręka naraz, z podparciem chroniącym dolną część pleców."
+
+barbell_squat:
+    intro: "Przysiad ze sztangą to król ćwiczeń na nogi. Pracują w nim czworogłowe uda i pośladki, wspierane przez mięśnie dwugłowe uda, przywodziciele i cały korpus."
+    mistakes:
+        1:
+            text: "Kolana uciekające do środka obciążają staw. Wypychaj je w kierunku stóp."
+            title: "Kolana do środka"
+        2:
+            text: "Odrywanie pięt przenosi ciężar na przodostopie i kolana. Trzymaj całą stopę na podłodze."
+            title: "Odrywanie pięt"
+        3:
+            text: "Plecy zaokrąglające się na dole narażają odcinek lędźwiowy. Schodź tylko tak nisko, jak potrafisz utrzymać napięcie."
+            title: "Zaokrąglające się plecy"
+        4:
+            text: "Półprzysiad pozwala na większy ciężar, ale słabiej angażuje pośladki. Schodź co najmniej do ud równoległych do podłogi."
+            title: "Za mały zakres ruchu"
+    steps:
+        1: "Połóż sztangę na górnej części pleców (mięśnie czworoboczne), dłonie nieco szerzej niż barki, łokcie pod sztangą."
+        2: "Zdejmij sztangę ze stojaka, cofnij się o dwa kroki i rozstaw stopy na szerokość barków, palce lekko na zewnątrz."
+        3: "Weź wdech, napnij brzuch i schodź w dół, cofając biodra i prowadząc kolana w kierunku stóp."
+        4: "Zejdź co najmniej do ud równoległych do podłogi, z prostymi plecami."
+        5: "Wstań, odpychając się całą stopą, i zrób wydech na górze."
+    variants:
+        barbell_front_squat: "Sztanga z przodu, tułów bardziej wyprostowany: więcej czworogłowych, mniej pleców."
+        hack_squat: "Prowadzony przez maszynę, by obciążyć nogi bez pilnowania równowagi."
+        leg_press: "Plecy oparte, by trenować ciężko bez obciążania kręgosłupa."
+
+bench_press_bar:
+    intro: "Wyciskanie na ławce to ćwiczenie wzorcowe dla siły górnej części ciała. Angażuje przede wszystkim klatkę piersiową i przednią część barków, przy wsparciu tricepsów."
+    mistakes:
+        1:
+            text: "Gdy ramiona są pod kątem 90° do tułowia, barki przyjmują cały ciężar. Trzymaj łokcie pod kątem około 45°."
+            title: "Łokcie za szeroko"
+        2:
+            text: "Odbijanie sztangi od klatki zabiera pracę mięśniom piersiowym. Dotknij lekko, bez rozpędu."
+            title: "Odbijanie sztangi"
+        3:
+            text: "Miednica zostaje na ławce. Jeśli się odrywa, ciężar jest za duży."
+            title: "Odrywanie pośladków"
+        4:
+            text: "Opuszczanie tylko do połowy pozwala na większy ciężar, ale daje mniejsze postępy. Opuszczaj sztangę do klatki."
+            title: "Niepełny zakres ruchu"
+    steps:
+        1: "Połóż się na ławce, oczy pod sztangą, stopy płasko na podłodze."
+        2: "Chwyć sztangę nieco szerzej niż barki, ściągnij łopatki i lekko wygnij górną część pleców."
+        3: "Zdejmij sztangę ze stojaka i utrzymaj ją nad barkami na wyprostowanych rękach."
+        4: "Opuszczaj ją w kontrolowany sposób, aż dotknie dolnej części klatki, łokcie pod kątem około 45° do tułowia."
+        5: "Wypchnij sztangę w górę na wydechu, aż ręce znów będą wyprostowane."
+    variants:
+        bench_press_dumbbell: "Większy zakres ruchu, a każda ręka pracuje osobno."
+        decline_bench_press_bar: "Kładzie nacisk na dolną część klatki."
+        incline_bench_press_dumbbell: "Kładzie nacisk na górną część klatki."
+
+breadcrumb:
+    home: "Strona główna"
+    index: "Ćwiczenia"
+    label: "Ścieżka nawigacji"
+
+call_to_action:
+    logged_in:
+        dashboard: "Przejdź do mojego panelu"
+        history: "Zobacz moją historię"
+        text: "Znajdziesz tu swoje treningi, rekordy i postępy."
+        title: "Twoje postępy"
+    visitor:
+        button: "Załóż darmowe konto"
+        text: "Zapisuj serie, śledź rekordy i sprawdzaj, jakie mięśnie pracowały na każdym treningu. Za darmo i bez reklam."
+        title: "Śledź swoje postępy"
+
+deadlift:
+    intro: "Martwy ciąg angażuje niemal całe ciało: przede wszystkim dolną część pleców, pośladki i mięśnie dwugłowe uda, ale też czworogłowe, plecy i przedramiona. W żadnym ćwiczeniu nie podniesiesz więcej i w żadnym technika nie liczy się bardziej."
+    mistakes:
+        1:
+            text: "Podnoszenie z okrągłymi plecami to najgroźniejszy błąd. Jeśli nie potrafisz utrzymać prostych pleców, ciężar jest za duży."
+            title: "Okrągłe plecy"
+        2:
+            text: "Sztanga oddalająca się od nóg ciągnie dolną część pleców. Prowadź ją wzdłuż goleni, a potem ud."
+            title: "Sztanga daleko od ciała"
+        3:
+            text: "Unoszenie bioder przed barkami zamienia ćwiczenie w martwy ciąg na prostych nogach. Biodra i barki idą w górę razem."
+            title: "Zbyt szybko unoszone biodra"
+        4:
+            text: "Odchylanie się do tyłu na górze miażdży odcinek lędźwiowy. Po prostu zakończ, stojąc prosto."
+            title: "Przeprost na górze"
+    steps:
+        1: "Stań ze stopami na szerokość bioder, sztanga nad środkiem stóp."
+        2: "Pochyl się, cofając biodra, i chwyć sztangę tuż na zewnątrz nóg."
+        3: "Ugnij kolana, aż golenie dotkną sztangi, klatka wypchnięta, plecy proste."
+        4: "Napnij brzuch i odepchnij się od podłogi, unosząc sztangę wzdłuż nóg, biodra i barki razem."
+        5: "Zakończ w pozycji stojącej z wyprostowanymi biodrami, a potem opuść sztangę tą samą drogą."
+    variants:
+        romanian_deadlift: "Nogi prawie proste, by zaangażować mięśnie dwugłowe uda i pośladki."
+        stiff_leg_deadlift: "Nogi proste, dla maksymalnego rozciągnięcia tylnej części ud."
+
+dips_chest:
+    intro: "Pompki na poręczach z tułowiem pochylonym do przodu to jedno z najlepszych ćwiczeń z masą ciała na klatkę piersiową. Pracują też tricepsy i przednia część barków."
+    mistakes:
+        1:
+            text: "Zbyt głębokie opuszczanie mocno rozciąga przednią część barku. Zatrzymaj się, gdy ramiona są mniej więcej równoległe do podłogi."
+            title: "Za głębokie opuszczanie"
+        2:
+            text: "Przy pionowym tułowiu pracują głównie tricepsy. Pochyl się do przodu, by zaangażować klatkę."
+            title: "Zbyt wyprostowany tułów"
+        3:
+            text: "Barki unoszące się do uszu są w złej pozycji. Trzymaj je nisko, z dala od uszu."
+            title: "Unoszące się barki"
+    steps:
+        1: "Chwyć poręcze i wejdź do podporu, ręce wyprostowane, barki nisko."
+        2: "Pochyl tułów do przodu i pozwól łokciom lekko się rozejść."
+        3: "Opuszczaj się, uginając łokcie, aż ramiona będą mniej więcej równoległe do podłogi."
+        4: "Odepchnij się od poręczy, aż ręce się wyprostują."
+    variants:
+        bench_press_bar: "By trenować ciężko i dokładać talerze."
+        dips_triceps: "Tułów wyprostowany, by zaangażować tył ramion."
+        push_up: "Łatwiejsze, by nauczyć się ruchu wypychania."
+
+incline_bench_press_dumbbell:
+    intro: "Wyciskanie hantli na ławce skośnej celuje w górną część klatki i przednią część barków. Hantle dają większy zakres ruchu niż sztanga i zmuszają każdą rękę do osobnej pracy."
+    mistakes:
+        1:
+            text: "Powyżej 45° wypychają głównie barki. Trzymaj się zakresu 30–45°."
+            title: "Za stromo ustawiona ławka"
+        2:
+            text: "Uderzanie hantlami o siebie na górze zabiera napięcie. Zbliż je, ale tak, by się nie stykały."
+            title: "Stukające hantle"
+        3:
+            text: "Upuszczanie hantli na dole przeciąża barki. Opuszczaj je przez dwie–trzy sekundy."
+            title: "Niekontrolowane opuszczanie"
+    steps:
+        1: "Ustaw ławkę pod kątem 30–45° i usiądź z hantlami opartymi na udach."
+        2: "Połóż się, przenosząc hantle na wysokość klatki, stopy płasko na podłodze."
+        3: "Ściągnij łopatki i utrzymaj hantle nad górną częścią klatki na wyprostowanych rękach."
+        4: "Opuszczaj je powoli, aż poczujesz rozciągnięcie klatki, łokcie lekko poniżej barków."
+        5: "Wypchnij hantle w górę, lekko je do siebie zbliżając, i powtórz."
+    variants:
+        bench_press_bar: "Ławka płaska i sztanga, by użyć większego ciężaru."
+        dumbbell_fly_incline: "Rozpiętki na tej samej ławce, by izolować górną część klatki."
+        incline_bench_press_bar: "Ze sztangą, by użyć większego ciężaru pod tym samym kątem."
+
+index:
+    heading: "Ćwiczenia siłowe"
+    heading_highlight: "według mięśni"
+    intro: "Pracujące mięśnie, wykonanie krok po kroku, częste błędy i warianty każdego ćwiczenia. Wybierz mięsień, a potem ćwiczenie."
+    meta_description: "Opisy ćwiczeń siłowych według mięśni: pracujące mięśnie, wykonanie, częste błędy i warianty."
+    title: "Ćwiczenia siłowe według mięśni"
+
+leg_press:
+    intro: "Wypychanie nogami na suwnicy angażuje czworogłowe uda i pośladki bez obciążania kręgosłupa. Pozwala bezpiecznie pchać duży ciężar, jako uzupełnienie przysiadu lub zamiast niego."
+    mistakes:
+        1:
+            text: "Blokowanie kolan na górze przenosi cały ciężar na staw. Zawsze trzymaj je lekko ugięte."
+            title: "Zablokowane kolana"
+        2:
+            text: "Jeśli dolna część pleców odrywa się od oparcia na dole, schodzisz za nisko. Zatrzymaj się tuż przed tym."
+            title: "Odrywająca się miednica"
+        3:
+            text: "Kolana uciekające do środka obciążają staw. Wypychaj je w kierunku stóp."
+            title: "Kolana do środka"
+    steps:
+        1: "Usiądź, opierając plecy i pośladki o oparcie."
+        2: "Postaw stopy na środku platformy, na szerokość bioder, palce lekko na zewnątrz."
+        3: "Wypchnij platformę, by ją odblokować, i zwolnij zabezpieczenia."
+        4: "Opuszczaj, uginając kolana do około 90°, nie odrywając miednicy od oparcia."
+        5: "Wypchnij platformę piętami, nie blokując kolan na górze."
+    variants:
+        barbell_squat: "Ruch podstawowy, który ćwiczy też równowagę i mięśnie głębokie."
+        hack_squat: "Również z oparciem pleców, ale na stojąco, bliżej przysiadu."
+
+military_press_bar:
+    intro: "Wyciskanie żołnierskie to podstawowe ćwiczenie na mocne barki. Angażuje przednią i boczną część barków, przy wsparciu tricepsów i mięśni czworobocznych."
+    mistakes:
+        1:
+            text: "Odchylanie się do tyłu zamienia ruch w wyciskanie na skosie i obciąża odcinek lędźwiowy. Napnij pośladki i brzuch."
+            title: "Zbyt wygięte plecy"
+        2:
+            text: "Wypychanie sztangi przed twarzą sprawia, że jest cięższa i męczy barki. Idzie pionowo w górę; głowa cofa się, by ją przepuścić."
+            title: "Sztanga za daleko z przodu"
+        3:
+            text: "Zatrzymywanie sztangi na wysokości czoła skraca ruch. Opuszczaj ją do górnej części klatki."
+            title: "Niepełny zakres ruchu"
+    steps:
+        1: "Stań ze stopami na szerokość bioder i chwyć sztangę nieco szerzej niż barki."
+        2: "Oprzyj sztangę na górnej części klatki, łokcie lekko przed sztangą."
+        3: "Napnij pośladki i brzuch, by utrzymać ciało w linii prostej."
+        4: "Wypchnij sztangę pionowo nad głowę, lekko cofając głowę, by ją przepuścić."
+        5: "Zakończ z wyprostowanymi rękami nad głową, a potem opuść sztangę w kontrolowany sposób do klatki."
+    variants:
+        arnold_press: "Z hantlami i rotacją, by pracować barkiem w większym zakresie."
+        military_press_machine: "Prowadzone przez maszynę, by skupić się na wypychaniu."
+
+pull_up:
+    intro: "Podciąganie nachwytem (dłonie od siebie) to król ćwiczeń na szerokie plecy. Angażuje przede wszystkim najszersze grzbietu, przy wsparciu bicepsów, mięśni czworobocznych i tylnej części barków."
+    mistakes:
+        1:
+            text: "Bujanie nogami przy podciąganiu zabiera pracę plecom. Trzymaj ciało napięte i nieruchome."
+            title: "Bujanie nogami"
+        2:
+            text: "Zatrzymanie się, zanim broda minie drążek, albo podciąganie bez wyprostu rąk skraca ćwiczenie. Wykonuj pełny ruch."
+            title: "Niepełny zakres ruchu"
+        3:
+            text: "Ciągnięcie samymi rękami męczy bicepsy szybciej niż plecy. Zaczynaj każde powtórzenie od opuszczenia barków."
+            title: "Rozluźnione barki"
+    steps:
+        1: "Chwyć drążek nachwytem, dłonie nieco szerzej niż barki."
+        2: "Zawiśnij na wyprostowanych rękach, nogi razem, brzuch napięty."
+        3: "Opuść barki i ściągnij łopatki, by rozpocząć ruch."
+        4: "Podciągaj się, prowadząc łokcie w stronę bioder, aż broda minie drążek."
+        5: "Opuszczaj się powoli do pełnego wyprostu rąk."
+    variants:
+        chin_up: "Dłonie do siebie, więcej bicepsów i często łatwiej."
+        lat_pulldown: "Na maszynie, by dobrać ciężar, dopóki podciąganie jest jeszcze za trudne."
+
+show:
+    back_to_index: "Wszystkie ćwiczenia"
+    meta_description: "{exercise}: pracujące mięśnie, wykonanie krok po kroku, częste błędy i warianty."
+    mistakes_title: "Częste błędy"
+    muscles:
+        label: "Pracujące mięśnie"
+        primary: "{muscle} · główny"
+        primary_legend: "Mięśnie główne"
+        secondary: "{muscle} · pomocniczy"
+        secondary_legend: "Mięśnie pomocnicze"
+        silhouette: "Sylwetka pracujących mięśni: główne na różowo, pomocnicze na turkusowo"
+    steps_title: "Wykonanie"
+    title: "{exercise}: wykonanie, mięśnie i błędy"
+    variants_title: "Warianty"
