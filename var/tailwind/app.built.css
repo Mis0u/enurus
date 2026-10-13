@@ -4873,6 +4873,11 @@
       }
     }
   }
+  .aria-disabled\:opacity-70 {
+    &[aria-disabled="true"] {
+      opacity: 70%;
+    }
+  }
   .aria-pressed\:text-rose-ft {
     &[aria-pressed="true"] {
       color: var(--color-rose-ft);

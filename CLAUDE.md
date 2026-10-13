@@ -268,6 +268,13 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
 - **Ne jamais `setMaxResults()` sur une requête avec JOIN sur une collection one-to-many** — le
   LIMIT s'applique aux lignes SQL, pas aux entités → perte silencieuse de données. Utiliser une
   sous-requête DQL corrélée à la place (déjà fait pour le tonnage).
+- **Tout l'historique d'un utilisateur (export CSV/JSON) = lecture par lots**
+  (`WorkoutExportRepository::iterateByUser()` : identifiants d'abord, puis lots de 100 chargés par
+  `IN`, `clear()` après chaque lot), jamais un `getResult()` global : mémoire constante, sinon la
+  limite PHP de Scalingo (196 Mo) saute avec quelques années d'historique. Fichier préparé en entier
+  dans un fichier temporaire (`WorkoutExportFileGenerator`) avant l'envoi : une erreur donne une
+  vraie 500, jamais un fichier coupé. Mesuré sur 1 000 séances / 24 000 séries : ~4,5 s (hydratation
+  Doctrine), ~10 Mo au-dessus du noyau (contre 60-75 Mo en lecture globale).
 - PR (poids max) calculé sur `weight` seul, jamais `weight × reps` — convention musculation.
 - Requêtes PR/reps liées au poids (`ExerciseSetRepository::findMaxWeight...`, `findMaxReps...`)
   filtrent sur `e.measurementType = :weightRepsType` (jamais `!= :timeType`) — depuis l'ajout de

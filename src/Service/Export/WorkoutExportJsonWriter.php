@@ -5,37 +5,56 @@ declare(strict_types=1);
 namespace App\Service\Export;
 
 use App\Entity\ExerciseSet;
+use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
 use App\Enum\Entity\Exercise\MeasurementType;
+use App\Enum\Export\WorkoutExportFormatEnum;
 use App\Service\Exercise\ExerciseNameTranslator;
 
 /**
  * Export JSON des séances : données brutes et structurées (séance → exercices → séries), fidèles au
  * stockage — poids toujours en kg, dates murales sans fuseau (comme `Workout::$performedAt`),
- * valeurs d'énumération non traduites. Pour une autre appli ou un script (portabilité RGPD).
+ * valeurs d'énumération non traduites. Pour une autre appli ou un script (portabilité RGPD), donc
+ * compact : il est lu par un logiciel, pas à l'œil.
+ *
+ * Écrit séance par séance (un `json_encode` par séance, jamais de tout l'historique d'un coup) : la
+ * mémoire reste celle d'une séance. L'enveloppe du document est donc écrite à la main.
  */
-final readonly class WorkoutExportJsonWriter
+final readonly class WorkoutExportJsonWriter implements WorkoutExportWriter
 {
+    private const int JSON_FLAGS = \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES | \JSON_PRESERVE_ZERO_FRACTION | \JSON_THROW_ON_ERROR;
+
     public function __construct(
         private ExerciseNameTranslator $exerciseNameTranslator,
     ) {
     }
 
-    /**
-     * `$locale` : langue des noms d'exercices publics (seule valeur traduite), explicite car écrit
-     * dans une réponse streamée, après le traitement de la requête.
-     *
-     * @param list<Workout> $workouts
-     * @param resource      $stream
-     */
-    public function write(array $workouts, $stream, string $locale): void
+    public function format(): WorkoutExportFormatEnum
     {
-        fwrite($stream, json_encode([
-            'exportedAt' => new \DateTimeImmutable()->format(\DATE_ATOM),
-            'weightUnit' => 'kg',
-            'workouts' => array_map(fn (Workout $workout): array => $this->workoutData($workout, $locale), $workouts),
-        ], \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES | \JSON_PRESERVE_ZERO_FRACTION | \JSON_THROW_ON_ERROR));
+        return WorkoutExportFormatEnum::JSON;
+    }
+
+    /**
+     * Poids toujours en kg : l'unité de `$user` ne sert qu'à l'export CSV. `$locale` : langue des
+     * noms d'exercices publics, seule valeur traduite.
+     */
+    public function write(User $user, iterable $workouts, $stream, string $locale): void
+    {
+        fwrite($stream, \sprintf('{"exportedAt":%s,"weightUnit":"kg","workouts":[', $this->encode(new \DateTimeImmutable()->format(\DATE_ATOM))));
+
+        $separator = '';
+        foreach ($workouts as $workout) {
+            fwrite($stream, $separator . $this->encode($this->workoutData($workout, $locale)));
+            $separator = ',';
+        }
+
+        fwrite($stream, ']}');
+    }
+
+    private function encode(mixed $value): string
+    {
+        return json_encode($value, self::JSON_FLAGS);
     }
 
     /**

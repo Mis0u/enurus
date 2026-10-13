@@ -19,8 +19,7 @@ final readonly class ExerciseNameTranslator
     }
 
     /**
-     * @param string|null $locale langue explicite, quand la requête n'est plus là pour la fournir
-     *                            (contenu d'une réponse streamée, écrit après son traitement)
+     * @param string|null $locale langue explicite (export des données) ; sinon celle de la requête
      */
     public function translate(Exercise $exercise, ?string $locale = null): string
     {
