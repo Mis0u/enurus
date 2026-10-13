@@ -1,0 +1,269 @@
+barbell_curl_standing:
+    intro: "The standing barbell curl is the basic exercise for bigger biceps. A straight bar lets you lift heavier than with dumbbells, as long as your torso stays still."
+    mistakes:
+        1:
+            text: "Swinging your torso to lift the bar shifts the effort to your back. Lower the weight and keep your torso still."
+            title: "Swinging the torso"
+        2:
+            text: "If your elbows drift forward, your shoulders take over. Keep them against your sides from start to finish."
+            title: "Elbows moving forward"
+        3:
+            text: "Curling back up before your arms are straight shortens the movement. Lower all the way down without losing tension."
+            title: "Partial lowering"
+    steps:
+        1: "Stand with feet hip-width apart and grip the bar with palms facing up, hands shoulder-width apart."
+        2: "With arms straight, tuck your elbows against your sides and brace your abs."
+        3: "Bend your elbows to bring the bar up towards your shoulders, without moving your elbows or torso."
+        4: "Squeeze your biceps at the top, then lower slowly until your arms are straight."
+    variants:
+        dumbbell_curl_standing: "Each arm works on its own, useful if one side is weaker."
+        ez_bar_curl: "The angled bar is easier on the wrists and elbows."
+        preacher_curl: "Arms resting on the pad make cheating impossible."
+
+barbell_row:
+    intro: "The barbell row builds a thick back: lats, traps and rear shoulders. It is also a great core exercise, as your back has to stay locked in place for the whole set."
+    mistakes:
+        1:
+            text: "A rounded back under load puts your lower back at risk. Keep your back flat and your chest up."
+            title: "Rounded back"
+        2:
+            text: "Standing up on every rep turns the row into a deadlift. Keep the same torso angle from start to finish."
+            title: "Torso rising"
+        3:
+            text: "Pulling with your arms without squeezing your shoulder blades mostly works the biceps. Think about driving your elbows back."
+            title: "Pulling with the arms"
+    steps:
+        1: "Stand with feet hip-width apart and grip the bar palms down, hands slightly wider than your shoulders."
+        2: "Bend your knees slightly and hinge forward with a flat back, to about 45°."
+        3: "With arms straight, let the bar hang below your shoulders and brace your abs."
+        4: "Pull the bar towards your belly button, driving your elbows back and squeezing your shoulder blades."
+        5: "Lower under control until your arms are straight, without moving your torso."
+    variants:
+        cable_row: "Constant tension and a supported back, ideal to finish a session."
+        dumbbell_row: "One arm at a time, with a support that protects the lower back."
+
+barbell_squat:
+    intro: "The barbell squat is the king of leg exercises. It works the quads and glutes, helped by the hamstrings, adductors and the whole core."
+    mistakes:
+        1:
+            text: "Knees caving inwards put stress on the joint. Push them out in line with your feet."
+            title: "Knees caving in"
+        2:
+            text: "Lifting your heels shifts the weight onto your toes and knees. Keep your whole foot on the floor."
+            title: "Heels lifting"
+        3:
+            text: "A back that rounds at the bottom exposes the lower back. Only go as low as you can while staying braced."
+            title: "Back rounding"
+        4:
+            text: "A half squat lets you lift more but works the glutes less. Aim for at least thighs parallel to the floor."
+            title: "Too short a range"
+    steps:
+        1: "Place the bar on your upper back (traps), hands slightly wider than your shoulders, elbows under the bar."
+        2: "Unrack the bar, step back twice and set your feet shoulder-width apart, toes slightly turned out."
+        3: "Breathe in, brace your core and sit down by pushing your hips back, knees in line with your feet."
+        4: "Go down at least until your thighs are parallel to the floor, keeping your back straight."
+        5: "Stand back up by pushing through your whole foot, and breathe out at the top."
+    variants:
+        barbell_front_squat: "Bar in front, more upright torso: more quads, less back."
+        hack_squat: "Guided by the machine, to load the legs without managing balance."
+        leg_press: "Back supported, to train heavy without loading the spine."
+
+bench_press_bar:
+    intro: "The bench press is the benchmark exercise for upper body strength. It mainly works the chest and front shoulders, helped by the triceps."
+    mistakes:
+        1:
+            text: "With your arms at 90° from your torso, your shoulders take all the load. Keep your elbows at about 45°."
+            title: "Elbows flared out"
+        2:
+            text: "Bouncing the bar off your chest steals work from your pecs. Touch lightly, without momentum."
+            title: "Bouncing the bar"
+        3:
+            text: "Your hips stay on the bench. If they lift, the weight is too heavy."
+            title: "Hips lifting off"
+        4:
+            text: "Going halfway down lets you lift more but brings less progress. Lower the bar to your chest."
+            title: "Partial range"
+    steps:
+        1: "Lie on the bench with your eyes under the bar and your feet flat on the floor."
+        2: "Grip the bar slightly wider than your shoulders, squeeze your shoulder blades and slightly arch your upper back."
+        3: "Unrack the bar and hold it above your shoulders, arms straight."
+        4: "Lower it under control until it touches your lower chest, elbows at about 45° from your torso."
+        5: "Press the bar up as you breathe out, until your arms are straight again."
+    variants:
+        bench_press_dumbbell: "More range of motion, and each arm works on its own."
+        decline_bench_press_bar: "Puts the emphasis on the lower chest."
+        incline_bench_press_dumbbell: "Puts the emphasis on the upper chest."
+
+breadcrumb:
+    home: "Home"
+    index: "Exercises"
+    label: "Breadcrumb"
+
+call_to_action:
+    logged_in:
+        dashboard: "Go to my dashboard"
+        history: "See my history"
+        text: "Find your sessions, records and progress in your space."
+        title: "Your progress"
+    visitor:
+        button: "Create my free account"
+        text: "Log your sets, track your records and see the muscles worked in every session. Free and ad-free."
+        title: "Track your progress"
+
+deadlift:
+    intro: "The deadlift works almost your whole body: lower back, glutes and hamstrings first, but also the quads, back and forearms. It is the exercise where you can lift the most, and the one where technique matters most."
+    mistakes:
+        1:
+            text: "Lifting with a rounded back is the most dangerous mistake. If you cannot keep your back flat, the weight is too heavy."
+            title: "Rounded back"
+        2:
+            text: "A bar drifting away from your legs pulls on your lower back. Slide it along your shins and then your thighs."
+            title: "Bar away from the body"
+        3:
+            text: "Raising your hips before your shoulders turns it into a stiff-leg deadlift. Hips and shoulders rise together."
+            title: "Hips shooting up"
+        4:
+            text: "Leaning back at the top crushes the lower back. Just finish standing tall."
+            title: "Leaning back at the top"
+    steps:
+        1: "Stand with feet hip-width apart, the bar over the middle of your feet."
+        2: "Hinge forward by pushing your hips back and grip the bar just outside your legs."
+        3: "Bend your knees until your shins touch the bar, chest up and back flat."
+        4: "Brace your core and push through the floor to lift the bar along your legs, hips and shoulders together."
+        5: "Finish standing with your hips locked out, then lower the bar along the same path."
+    variants:
+        romanian_deadlift: "Legs almost straight, to target the hamstrings and glutes."
+        stiff_leg_deadlift: "Legs straight, for a maximal stretch of the back of the thighs."
+
+dips_chest:
+    intro: "Parallel bar dips with the torso leaning forward are one of the best bodyweight exercises for the chest. The triceps and front shoulders help too."
+    mistakes:
+        1:
+            text: "Going too low puts a strong stretch on the front of the shoulders. Stop when your upper arms are roughly parallel to the floor."
+            title: "Going too deep"
+        2:
+            text: "With an upright torso, the triceps do most of the work. Lean forward to target the chest."
+            title: "Torso too upright"
+        3:
+            text: "Letting your shoulders rise towards your ears puts them in a bad position. Keep them down and away from your ears."
+            title: "Shoulders shrugging up"
+    steps:
+        1: "Grab the parallel bars and press up into support, arms straight, shoulders down."
+        2: "Lean your torso forward and let your elbows flare out slightly."
+        3: "Lower yourself by bending your elbows until your upper arms are roughly parallel to the floor."
+        4: "Push into the bars to rise until your arms are straight."
+    variants:
+        bench_press_bar: "To train heavy and progress with plates."
+        dips_triceps: "Upright torso, to target the back of the arms."
+        push_up: "Easier, to learn the pushing movement."
+
+incline_bench_press_dumbbell:
+    intro: "The incline dumbbell press targets the upper chest and front shoulders. Dumbbells offer more range of motion than a bar and make each arm work on its own."
+    mistakes:
+        1:
+            text: "Above 45°, your shoulders do most of the pressing. Stay between 30 and 45°."
+            title: "Bench too steep"
+        2:
+            text: "Clanking the dumbbells at the top releases the tension. Bring them close without touching."
+            title: "Dumbbells clanking"
+        3:
+            text: "Dropping the dumbbells at the bottom overloads the shoulders. Take two to three seconds to lower them."
+            title: "Uncontrolled lowering"
+    steps:
+        1: "Set the bench between 30 and 45° and sit down with a dumbbell resting on each thigh."
+        2: "Lie back while bringing the dumbbells to chest level, feet flat on the floor."
+        3: "Squeeze your shoulder blades and hold the dumbbells above your upper chest, arms straight."
+        4: "Lower slowly until you feel a stretch in your chest, elbows slightly below your shoulders."
+        5: "Press the dumbbells up while bringing them slightly together, then repeat."
+    variants:
+        bench_press_bar: "Flat bench and barbell, to lift heavier."
+        dumbbell_fly_incline: "Flyes on the same bench, to isolate the upper chest."
+        incline_bench_press_bar: "With a barbell, to lift heavier at the same angle."
+
+index:
+    heading: "Strength training exercises"
+    heading_highlight: "by muscle"
+    intro: "Muscles worked, step-by-step technique, common mistakes and variations for each exercise. Pick a muscle, then an exercise."
+    meta_description: "Strength training exercise guides sorted by muscle: muscles worked, technique, common mistakes and variations."
+    title: "Strength training exercises by muscle"
+
+leg_press:
+    intro: "The leg press works the quads and glutes without loading the spine. It lets you push heavy safely, alongside or instead of the squat."
+    mistakes:
+        1:
+            text: "Locking your knees at the top puts the whole load on the joint. Always keep them slightly bent."
+            title: "Locked knees"
+        2:
+            text: "If your lower back lifts off the backrest at the bottom, you are going too low. Stop just before."
+            title: "Hips lifting off"
+        3:
+            text: "Knees caving inwards put stress on the joint. Push them out in line with your feet."
+            title: "Knees caving in"
+    steps:
+        1: "Sit down with your back and hips firmly against the backrest."
+        2: "Place your feet in the middle of the platform, hip-width apart, toes slightly turned out."
+        3: "Push the platform to unlock it, then release the safety handles."
+        4: "Lower by bending your knees to about 90°, without lifting your hips off the backrest."
+        5: "Push through your heels to extend, without locking your knees at the top."
+    variants:
+        barbell_squat: "The basic movement, which also trains balance and core strength."
+        hack_squat: "Back supported too, but standing, closer to the squat."
+
+military_press_bar:
+    intro: "The military press is the basic exercise for strong shoulders. It works the front and side of the shoulders, helped by the triceps and traps."
+    mistakes:
+        1:
+            text: "Leaning back turns the lift into an incline press and loads the lower back. Squeeze your glutes and abs."
+            title: "Arching the back"
+        2:
+            text: "Pressing the bar in front of your face makes it heavier and tires the shoulders. It goes straight up; move your head back to let it pass."
+            title: "Bar too far forward"
+        3:
+            text: "Stopping the bar at forehead level shortens the movement. Lower it to your upper chest."
+            title: "Partial range"
+    steps:
+        1: "Stand with feet hip-width apart and grip the bar slightly wider than your shoulders."
+        2: "Rest the bar on your upper chest, elbows slightly in front of the bar."
+        3: "Squeeze your glutes and abs to keep your body straight."
+        4: "Press the bar straight up overhead, moving your head back slightly to let it pass."
+        5: "Finish with arms straight overhead, then lower under control to your chest."
+    variants:
+        arnold_press: "With dumbbells and a rotation, to work the shoulder through a larger range."
+        military_press_machine: "Guided by the machine, to focus on pressing."
+
+pull_up:
+    intro: "Pull-ups with an overhand grip (palms facing away) are the king of exercises for a wide back. They mainly work the lats, helped by the biceps, traps and rear shoulders."
+    mistakes:
+        1:
+            text: "Swinging your legs to get up steals work from your back. Keep your body braced and still."
+            title: "Kipping with the legs"
+        2:
+            text: "Stopping before your chin clears the bar, or pulling again before your arms are straight, shortens the exercise. Go all the way."
+            title: "Partial range"
+        3:
+            text: "Pulling only with your arms tires the biceps before the back. Start each rep by pulling your shoulders down."
+            title: "Relaxed shoulders"
+    steps:
+        1: "Grip the bar overhand, hands slightly wider than your shoulders."
+        2: "Hang with your arms straight, legs together and abs braced."
+        3: "Pull your shoulders down and squeeze your shoulder blades to start the movement."
+        4: "Pull by driving your elbows towards your hips until your chin clears the bar."
+        5: "Lower slowly until your arms are fully straight."
+    variants:
+        chin_up: "Palms facing you, more biceps and often easier."
+        lat_pulldown: "On a machine, to adjust the load while pull-ups are still too hard."
+
+show:
+    back_to_index: "All exercises"
+    meta_description: "{exercise}: muscles worked, step-by-step technique, common mistakes and variations."
+    mistakes_title: "Common mistakes"
+    muscles:
+        label: "Muscles worked"
+        primary: "{muscle} · primary"
+        primary_legend: "Primary muscles"
+        secondary: "{muscle} · secondary"
+        secondary_legend: "Secondary muscles"
+        silhouette: "Silhouette of the muscles worked: primary muscles in pink, secondary in cyan"
+    steps_title: "How to do it"
+    title: "{exercise}: technique, muscles and mistakes"
+    variants_title: "Variations"

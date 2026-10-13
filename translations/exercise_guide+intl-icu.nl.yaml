@@ -1,0 +1,269 @@
+barbell_curl_standing:
+    intro: "De staande barbell curl is de basisoefening voor grotere biceps. Met een rechte stang til je zwaarder dan met dumbbells, zolang je bovenlichaam stil blijft."
+    mistakes:
+        1:
+            text: "Met je bovenlichaam zwaaien om de stang omhoog te krijgen verlegt de inspanning naar je rug. Neem minder gewicht en houd je romp stil."
+            title: "Zwaaien met het bovenlichaam"
+        2:
+            text: "Als je ellebogen naar voren schuiven, nemen je schouders het over. Houd ze van begin tot eind langs je lichaam."
+            title: "Ellebogen schuiven naar voren"
+        3:
+            text: "Weer omhoog gaan voordat je armen gestrekt zijn, maakt de beweging korter. Laat zakken tot je armen gestrekt zijn, zonder de spanning te verliezen."
+            title: "Onvolledig laten zakken"
+    steps:
+        1: "Sta met je voeten op heupbreedte en pak de stang in onderhandse greep (handpalmen naar boven), handen op schouderbreedte."
+        2: "Houd je armen gestrekt, zet je ellebogen tegen je zij en span je buik aan."
+        3: "Buig je ellebogen om de stang naar je schouders te brengen, zonder ellebogen of bovenlichaam te bewegen."
+        4: "Span je biceps bovenaan aan en laat de stang dan langzaam zakken tot je armen gestrekt zijn."
+    variants:
+        dumbbell_curl_standing: "Elke arm werkt apart, handig als één kant zwakker is."
+        ez_bar_curl: "De EZ-stang ontlast je polsen en ellebogen."
+        preacher_curl: "Je armen rusten op het kussen, valsspelen is onmogelijk."
+
+barbell_row:
+    intro: "Barbell rows bouwen een dikke rug: brede rugspier, trapezius en achterkant van de schouders. Het is ook een uitstekende rompoefening, want je rug moet de hele set stil blijven."
+    mistakes:
+        1:
+            text: "Een bolle rug onder belasting brengt je onderrug in gevaar. Houd je rug recht en je borst vooruit."
+            title: "Bolle rug"
+        2:
+            text: "Bij elke herhaling rechtop komen maakt van de row een deadlift. Houd je bovenlichaam van begin tot eind in dezelfde hoek."
+            title: "Bovenlichaam komt omhoog"
+        3:
+            text: "Trekken met je armen zonder je schouderbladen samen te knijpen traint vooral je biceps. Denk eraan je ellebogen naar achteren te brengen."
+            title: "Trekken met de armen"
+    steps:
+        1: "Sta met je voeten op heupbreedte en pak de stang in bovenhandse greep, handen iets breder dan je schouders."
+        2: "Buig je knieën licht en kantel je bovenlichaam met een rechte rug naar voren, tot ongeveer 45°."
+        3: "Laat de stang met gestrekte armen onder je schouders hangen en span je buik aan."
+        4: "Trek de stang naar je navel door je ellebogen naar achteren te brengen en je schouderbladen samen te knijpen."
+        5: "Laat gecontroleerd zakken tot je armen gestrekt zijn, zonder je bovenlichaam te bewegen."
+    variants:
+        cable_row: "Constante spanning en een ondersteunde rug, ideaal om je training af te sluiten."
+        dumbbell_row: "Eén arm tegelijk, met steun die je onderrug beschermt."
+
+barbell_squat:
+    intro: "De barbell squat is de koning van de beenoefeningen. Hij traint je quadriceps en bilspieren, geholpen door je hamstrings, adductoren en je hele romp."
+    mistakes:
+        1:
+            text: "Knieën die naar binnen vallen belasten het gewricht. Duw ze in de richting van je voeten."
+            title: "Knieën vallen naar binnen"
+        2:
+            text: "Je hielen optillen verplaatst het gewicht naar je voorvoet en je knieën. Houd je hele voet op de grond."
+            title: "Hielen komen los"
+        3:
+            text: "Een rug die onderin bol wordt, brengt je onderrug in gevaar. Ga alleen zo diep als je stevig kunt blijven."
+            title: "Rug wordt bol"
+        4:
+            text: "Een halve squat laat meer gewicht toe, maar traint je bilspieren minder. Ga minstens tot je dijen parallel aan de grond zijn."
+            title: "Te kleine bewegingsuitslag"
+    steps:
+        1: "Leg de stang op je bovenrug (trapezius), handen iets breder dan je schouders, ellebogen onder de stang."
+        2: "Haal de stang uit het rek, zet twee stappen achteruit en zet je voeten op schouderbreedte, tenen iets naar buiten."
+        3: "Adem in, span je buik aan en zak door je heupen naar achteren te duwen, knieën in de richting van je voeten."
+        4: "Zak minstens tot je dijen parallel aan de grond zijn, met een rechte rug."
+        5: "Kom omhoog door met je hele voet te duwen en adem bovenaan uit."
+    variants:
+        barbell_front_squat: "Stang voor, bovenlichaam rechter: meer quadriceps, minder rug."
+        hack_squat: "Geleid door de machine, om je benen te belasten zonder op je evenwicht te letten."
+        leg_press: "Rug ondersteund, om zwaar te trainen zonder belasting op je wervelkolom."
+
+bench_press_bar:
+    intro: "Bankdrukken is dé referentieoefening voor kracht in je bovenlichaam. Het traint vooral je borst en de voorkant van je schouders, geholpen door je triceps."
+    mistakes:
+        1:
+            text: "Met je armen op 90° van je bovenlichaam dragen je schouders alles. Houd je ellebogen op ongeveer 45°."
+            title: "Ellebogen te wijd"
+        2:
+            text: "De stang laten stuiteren op je borst neemt werk weg van je borstspieren. Raak je borst licht aan, zonder vaart."
+            title: "Stuiterende stang"
+        3:
+            text: "Je bekken blijft op de bank. Komt het los, dan is het gewicht te zwaar."
+            title: "Billen komen los"
+        4:
+            text: "Halverwege stoppen laat meer gewicht toe, maar levert minder vooruitgang op. Laat de stang tot je borst zakken."
+            title: "Halve beweging"
+    steps:
+        1: "Ga op de bank liggen met je ogen onder de stang en je voeten plat op de grond."
+        2: "Pak de stang iets breder dan je schouders, knijp je schouderbladen samen en maak je bovenrug licht hol."
+        3: "Haal de stang uit het rek en houd hem met gestrekte armen boven je schouders."
+        4: "Laat hem gecontroleerd zakken tot hij je onderste borst raakt, ellebogen op ongeveer 45° van je bovenlichaam."
+        5: "Duw de stang omhoog terwijl je uitademt, tot je armen weer gestrekt zijn."
+    variants:
+        bench_press_dumbbell: "Meer bewegingsuitslag, en elke arm werkt apart."
+        decline_bench_press_bar: "Legt de nadruk op de onderkant van je borst."
+        incline_bench_press_dumbbell: "Legt de nadruk op de bovenkant van je borst."
+
+breadcrumb:
+    home: "Home"
+    index: "Oefeningen"
+    label: "Kruimelpad"
+
+call_to_action:
+    logged_in:
+        dashboard: "Naar mijn overzicht"
+        history: "Mijn geschiedenis bekijken"
+        text: "Vind je trainingen, records en vooruitgang terug in je eigen omgeving."
+        title: "Jouw vooruitgang"
+    visitor:
+        button: "Gratis account aanmaken"
+        text: "Noteer je sets, volg je records en zie bij elke training welke spieren je hebt gebruikt. Gratis en zonder advertenties."
+        title: "Volg je vooruitgang"
+
+deadlift:
+    intro: "De deadlift traint bijna je hele lichaam: eerst je onderrug, bilspieren en hamstrings, maar ook je quadriceps, rug en onderarmen. Bij geen enkele oefening til je zwaarder, en bij geen enkele telt de techniek meer."
+    mistakes:
+        1:
+            text: "Tillen met een bolle rug is de gevaarlijkste fout. Lukt het niet om je rug recht te houden, dan is het gewicht te zwaar."
+            title: "Bolle rug"
+        2:
+            text: "Een stang die van je benen wegdrijft, trekt aan je onderrug. Laat hem langs je schenen en daarna je dijen glijden."
+            title: "Stang te ver van het lichaam"
+        3:
+            text: "Je heupen eerder laten stijgen dan je schouders maakt er een stiff-leg deadlift van. Heupen en schouders komen samen omhoog."
+            title: "Heupen schieten omhoog"
+        4:
+            text: "Bovenaan achterover leunen drukt je onderrug samen. Eindig gewoon rechtop."
+            title: "Overstrekken bovenaan"
+    steps:
+        1: "Sta met je voeten op heupbreedte, de stang boven het midden van je voeten."
+        2: "Buig voorover door je heupen naar achteren te duwen en pak de stang net buiten je benen."
+        3: "Buig je knieën tot je schenen de stang raken, borst vooruit en rug recht."
+        4: "Span je buik aan en duw tegen de grond om de stang langs je benen omhoog te brengen, heupen en schouders tegelijk."
+        5: "Eindig rechtop met gestrekte heupen en laat de stang langs dezelfde weg weer zakken."
+    variants:
+        romanian_deadlift: "Benen bijna gestrekt, voor je hamstrings en bilspieren."
+        stiff_leg_deadlift: "Benen gestrekt, voor een maximale rek van de achterkant van je dijen."
+
+dips_chest:
+    intro: "Dips aan de brug met je bovenlichaam naar voren gekanteld zijn een van de beste lichaamsgewichtoefeningen voor je borst. Je triceps en de voorkant van je schouders werken mee."
+    mistakes:
+        1:
+            text: "Te diep zakken rekt de voorkant van je schouder sterk op. Stop als je bovenarmen ongeveer parallel aan de grond zijn."
+            title: "Te diep zakken"
+        2:
+            text: "Met een rechtop bovenlichaam werken vooral je triceps. Leun naar voren om je borst te raken."
+            title: "Bovenlichaam te rechtop"
+        3:
+            text: "Je schouders naar je oren laten optrekken zet ze in een slechte positie. Houd ze laag en weg van je oren."
+            title: "Opgetrokken schouders"
+    steps:
+        1: "Pak de liggers vast en druk jezelf omhoog in steun, armen gestrekt, schouders laag."
+        2: "Kantel je bovenlichaam naar voren en laat je ellebogen iets naar buiten gaan."
+        3: "Zak door je ellebogen te buigen tot je bovenarmen ongeveer parallel aan de grond zijn."
+        4: "Duw tegen de liggers om omhoog te komen tot je armen gestrekt zijn."
+    variants:
+        bench_press_bar: "Om zwaar te trainen en met schijven op te bouwen."
+        dips_triceps: "Bovenlichaam rechtop, voor de achterkant van je armen."
+        push_up: "Makkelijker, om de duwbeweging te leren."
+
+incline_bench_press_dumbbell:
+    intro: "Schuin bankdrukken met dumbbells richt zich op je bovenste borst en de voorkant van je schouders. Dumbbells geven meer bewegingsuitslag dan een stang en laten elke arm apart werken."
+    mistakes:
+        1:
+            text: "Boven de 45° duwen vooral je schouders. Blijf tussen 30 en 45°."
+            title: "Bank te steil"
+        2:
+            text: "De dumbbells bovenaan tegen elkaar slaan haalt de spanning weg. Breng ze dicht bij elkaar zonder dat ze elkaar raken."
+            title: "Botsende dumbbells"
+        3:
+            text: "De dumbbells onderaan laten vallen overbelast je schouders. Laat ze in twee tot drie seconden zakken."
+            title: "Ongecontroleerd zakken"
+    steps:
+        1: "Zet de bank tussen 30 en 45° en ga zitten met op elke dij een dumbbell."
+        2: "Ga liggen en breng de dumbbells naar borsthoogte, voeten plat op de grond."
+        3: "Knijp je schouderbladen samen en houd de dumbbells met gestrekte armen boven je bovenste borst."
+        4: "Laat langzaam zakken tot je de rek in je borst voelt, ellebogen iets onder je schouders."
+        5: "Duw de dumbbells omhoog en breng ze daarbij iets naar elkaar toe, en herhaal."
+    variants:
+        bench_press_bar: "Vlakke bank en stang, om zwaarder te tillen."
+        dumbbell_fly_incline: "Flyes op dezelfde bank, om je bovenste borst te isoleren."
+        incline_bench_press_bar: "Met een stang, om in dezelfde hoek zwaarder te tillen."
+
+index:
+    heading: "Krachtoefeningen"
+    heading_highlight: "per spier"
+    intro: "De getrainde spieren, de uitvoering stap voor stap, veelgemaakte fouten en varianten van elke oefening. Kies een spier en daarna een oefening."
+    meta_description: "Uitleg van krachtoefeningen per spier: getrainde spieren, uitvoering, veelgemaakte fouten en varianten."
+    title: "Krachtoefeningen per spier"
+
+leg_press:
+    intro: "De beenpers traint je quadriceps en bilspieren zonder belasting op je wervelkolom. Je kunt er veilig zwaar mee duwen, als aanvulling op of in plaats van de squat."
+    mistakes:
+        1:
+            text: "Je knieën bovenaan op slot zetten legt de hele belasting op het gewricht. Houd ze altijd licht gebogen."
+            title: "Knieën op slot"
+        2:
+            text: "Komt je onderrug onderaan los van de rugleuning, dan zak je te diep. Stop net daarvoor."
+            title: "Bekken komt los"
+        3:
+            text: "Knieën die naar binnen vallen belasten het gewricht. Duw ze in de richting van je voeten."
+            title: "Knieën vallen naar binnen"
+    steps:
+        1: "Ga zitten met je rug en billen stevig tegen de rugleuning."
+        2: "Zet je voeten in het midden van het platform, op heupbreedte, tenen iets naar buiten."
+        3: "Duw het platform weg om het te ontgrendelen en haal de beveiligingen weg."
+        4: "Zak door je knieën te buigen tot ongeveer 90°, zonder dat je bekken loskomt van de rugleuning."
+        5: "Duw via je hielen omhoog, zonder je knieën bovenaan op slot te zetten."
+    variants:
+        barbell_squat: "De basisbeweging, die ook je evenwicht en romp traint."
+        hack_squat: "Ook met ondersteunde rug, maar staand, dichter bij de squat."
+
+military_press_bar:
+    intro: "De military press is de basisoefening voor sterke schouders. Hij traint de voor- en zijkant van je schouders, geholpen door je triceps en trapezius."
+    mistakes:
+        1:
+            text: "Achterover leunen maakt er schuin bankdrukken van en belast je onderrug. Span je billen en buik aan."
+            title: "Te holle rug"
+        2:
+            text: "De stang voor je gezicht omhoog duwen maakt hem zwaarder en vermoeit je schouders. Hij gaat recht omhoog; je hoofd wijkt even naar achteren."
+            title: "Stang te ver naar voren"
+        3:
+            text: "De stang op voorhoofdhoogte stoppen maakt de beweging korter. Laat hem zakken tot je bovenste borst."
+            title: "Halve beweging"
+    steps:
+        1: "Sta met je voeten op heupbreedte en pak de stang iets breder dan je schouders."
+        2: "Leg de stang op je bovenste borst, ellebogen iets voor de stang."
+        3: "Span je billen en buik aan om je lichaam recht te houden."
+        4: "Duw de stang recht omhoog boven je hoofd en breng je hoofd iets naar achteren om hem te laten passeren."
+        5: "Eindig met gestrekte armen boven je hoofd en laat de stang gecontroleerd zakken tot je borst."
+    variants:
+        arnold_press: "Met dumbbells en een draaibeweging, voor een grotere bewegingsuitslag van je schouder."
+        military_press_machine: "Geleid door de machine, om je op het duwen te concentreren."
+
+pull_up:
+    intro: "Pull-ups in bovenhandse greep (handpalmen van je af) zijn dé oefening voor een brede rug. Ze trainen vooral je brede rugspier, geholpen door je biceps, trapezius en de achterkant van je schouders."
+    mistakes:
+        1:
+            text: "Met je benen zwaaien om omhoog te komen neemt werk weg van je rug. Houd je lichaam aangespannen en stil."
+            title: "Zwaaien met de benen"
+        2:
+            text: "Stoppen voordat je kin boven de stang is, of weer trekken voordat je armen gestrekt zijn, maakt de oefening korter. Maak de volledige beweging."
+            title: "Halve beweging"
+        3:
+            text: "Alleen met je armen trekken vermoeit je biceps eerder dan je rug. Begin elke herhaling door je schouders omlaag te trekken."
+            title: "Ontspannen schouders"
+    steps:
+        1: "Pak de stang in bovenhandse greep, handen iets breder dan je schouders."
+        2: "Hang met gestrekte armen, benen tegen elkaar en buik aangespannen."
+        3: "Trek je schouders omlaag en knijp je schouderbladen samen om de beweging te starten."
+        4: "Trek jezelf op door je ellebogen naar je heupen te brengen tot je kin boven de stang is."
+        5: "Laat jezelf langzaam zakken tot je armen volledig gestrekt zijn."
+    variants:
+        chin_up: "Handpalmen naar je toe, meer biceps en vaak makkelijker."
+        lat_pulldown: "Aan de machine, om het gewicht aan te passen zolang pull-ups nog te zwaar zijn."
+
+show:
+    back_to_index: "Alle oefeningen"
+    meta_description: "{exercise}: getrainde spieren, uitvoering stap voor stap, veelgemaakte fouten en varianten."
+    mistakes_title: "Veelgemaakte fouten"
+    muscles:
+        label: "Getrainde spieren"
+        primary: "{muscle} · primair"
+        primary_legend: "Primaire spieren"
+        secondary: "{muscle} · secundair"
+        secondary_legend: "Secundaire spieren"
+        silhouette: "Silhouet van de getrainde spieren: primaire spieren in roze, secundaire in cyaan"
+    steps_title: "Uitvoering"
+    title: "{exercise}: uitvoering, spieren en fouten"
+    variants_title: "Varianten"

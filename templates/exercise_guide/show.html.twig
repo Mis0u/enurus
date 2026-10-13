@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% set exercise_name = page.nameKey|trans({}, 'exercise') %}
+
+{% block title %}{{ 'show.title'|trans({exercise: exercise_name}, 'exercise_guide')|format_title }}{% endblock %}
+
+{% block meta_description %}{{ 'show.meta_description'|trans({exercise: exercise_name}, 'exercise_guide') }}{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen bg-bg-base text-slate-200 font-dm-sans">
+        {% include 'home/_header.html.twig' with {locales: locales, currentLocale: currentLocale, isLoggedIn: isLoggedIn} only %}
+
+        <main class="max-w-6xl mx-auto px-4 md:px-6 pb-12 md:pb-20">
+            {% include 'exercise_guide/_breadcrumb.html.twig' with {currentNameKey: page.nameKey} only %}
+
+            <header class="flex flex-col gap-4 pb-8 max-w-3xl">
+                <h1 class="font-rajdhani font-bold text-[40px] md:text-[56px] leading-none text-slate-50">{{ exercise_name }}</h1>
+                <p class="text-lg text-slate-400">{{ page.guide.introKey|trans({}, 'exercise_guide') }}</p>
+                {% include 'exercise_guide/show/_muscle_tags.html.twig' with {primaryMuscleKeys: page.primaryMuscleKeys, secondaryMuscleKeys: page.secondaryMuscleKeys} only %}
+            </header>
+
+            {# Sur mobile, silhouette et inscription remontent juste sous le titre plutôt qu'en bas de page. #}
+            <div class="flex flex-col lg:flex-row lg:items-start gap-10">
+                <article class="flex-1 min-w-0 flex flex-col gap-10">
+                    {% include 'exercise_guide/show/_steps.html.twig' with {stepKeys: page.guide.stepKeys} only %}
+                    {% include 'exercise_guide/show/_mistakes.html.twig' with {mistakeKeys: page.guide.mistakeKeys} only %}
+                    {% if page.variants is not empty %}
+                        {% include 'exercise_guide/show/_variants.html.twig' with {variants: page.variants} only %}
+                    {% endif %}
+                </article>
+
+                <aside class="max-lg:order-first lg:w-[320px] shrink-0 flex flex-col gap-4">
+                    {% include 'exercise_guide/show/_silhouette.html.twig' with {primarySvgIds: page.primarySvgIds, secondarySvgIds: page.secondarySvgIds} only %}
+                    {% include 'exercise_guide/_call_to_action.html.twig' with {isLoggedIn: isLoggedIn, exerciseId: page.exerciseId} only %}
+                    <a href="{{ path('app_exercise_guide_index') }}" class="inline-flex items-center min-h-11 font-semibold text-cyan-300 hover:text-cyan-200">
+                        {{ 'show.back_to_index'|trans({}, 'exercise_guide') }}
+                    </a>
+                </aside>
+            </div>
+        </main>
+
+        <footer class="px-4 pb-6">
+            {% include 'partials/_common/_footer.html.twig' only %}
+        </footer>
+    </div>
+{% endblock %}

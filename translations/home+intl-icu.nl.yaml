@@ -55,6 +55,8 @@ home:
             text: "Elke december een overzicht van je trainingsjaar, om te delen met je vrienden."
             title: "Beleef je jaar opnieuw"
     header:
+        dashboard: "Mijn overzicht"
+        exercises: "Oefeningen"
         language: "Taal"
         login: "Inloggen"
         nav_label: "Account"

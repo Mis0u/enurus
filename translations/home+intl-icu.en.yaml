@@ -55,6 +55,8 @@ home:
             text: "Every December, a recap of your training year, ready to share with your friends."
             title: "Relive your year"
     header:
+        dashboard: "My dashboard"
+        exercises: "Exercises"
         language: "Language"
         login: "Sign in"
         nav_label: "Account"

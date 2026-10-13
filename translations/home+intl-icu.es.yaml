@@ -55,6 +55,8 @@ home:
             text: "Cada diciembre, un resumen de tu año de entrenamiento para compartir con tus amigos."
             title: "Revive tu año"
     header:
+        dashboard: "Mi panel"
+        exercises: "Ejercicios"
         language: "Idioma"
         login: "Iniciar sesión"
         nav_label: "Cuenta"

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Seo;
 
 use App\Enum\Translations\LocaleAllowedEnum;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -21,8 +22,13 @@ final readonly class LocaleAlternateUrlGenerator
      */
     private const array FRENCH_ONLY_ROUTES = ['app_terms'];
 
+    /**
+     * @param iterable<LocalizedRouteParameters> $localizedRouteParameters
+     */
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
+        #[AutowireIterator(LocalizedRouteParameters::class)]
+        private iterable $localizedRouteParameters = [],
     ) {
     }
 
@@ -57,13 +63,7 @@ final readonly class LocaleAlternateUrlGenerator
     {
         $alternates = [];
         foreach (LocaleAllowedEnum::getAllowedLocale() as $locale) {
-            $alternates[$locale] = $this->urlGenerator->generate(
-                $route,
-                [
-                    '_locale' => $locale,
-                ] + $routeParams,
-                UrlGeneratorInterface::ABSOLUTE_URL,
-            );
+            $alternates[$locale] = $this->urlInLocale($route, $routeParams, $locale);
         }
 
         return $alternates;
@@ -81,13 +81,37 @@ final readonly class LocaleAlternateUrlGenerator
             return $this->siteRootUrl();
         }
 
+        return $this->urlInLocale($route, $routeParams, LocaleAllowedEnum::EN->value);
+    }
+
+    /**
+     * @param array<string, mixed> $routeParams
+     */
+    private function urlInLocale(string $route, array $routeParams, string $locale): string
+    {
         return $this->urlGenerator->generate(
             $route,
             [
-                '_locale' => LocaleAllowedEnum::EN->value,
-            ] + $routeParams,
+                '_locale' => $locale,
+            ] + $this->paramsInLocale($route, $routeParams, $locale) + $routeParams,
             UrlGeneratorInterface::ABSOLUTE_URL,
         );
+    }
+
+    /**
+     * @param array<string, mixed> $routeParams
+     *
+     * @return array<string, mixed> paramètres propres à `$locale`, prioritaires sur ceux de la page
+     */
+    private function paramsInLocale(string $route, array $routeParams, string $locale): array
+    {
+        foreach ($this->localizedRouteParameters as $localizedParameters) {
+            if ($localizedParameters->supports($route)) {
+                return $localizedParameters->forLocale($routeParams, $locale);
+            }
+        }
+
+        return [];
     }
 
     /**

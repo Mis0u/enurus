@@ -55,6 +55,8 @@ home:
             text: "Chaque mois de décembre, un résumé de ton année d'entraînement, à partager avec tes amis."
             title: "Revis ton année"
     header:
+        dashboard: "Mon tableau de bord"
+        exercises: "Exercices"
         language: "Langue"
         login: "Se connecter"
         nav_label: "Compte"

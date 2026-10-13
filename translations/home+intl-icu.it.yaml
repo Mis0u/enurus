@@ -55,6 +55,8 @@ home:
             text: "Ogni dicembre, un riepilogo del tuo anno di allenamento da condividere con gli amici."
             title: "Rivivi il tuo anno"
     header:
+        dashboard: "Il mio cruscotto"
+        exercises: "Esercizi"
         language: "Lingua"
         login: "Accedi"
         nav_label: "Account"

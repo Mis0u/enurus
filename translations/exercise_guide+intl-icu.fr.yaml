@@ -1,0 +1,269 @@
+barbell_curl_standing:
+    intro: "Le curl barre debout est l'exercice de base pour le volume des biceps. La barre droite permet de charger plus lourd qu'avec des haltères, à condition de garder le buste immobile."
+    mistakes:
+        1:
+            text: "Balancer le buste pour monter la barre transfère l'effort sur le dos. Baisse la charge et garde le tronc immobile."
+            title: "Élan du buste"
+        2:
+            text: "Si les coudes partent vers l'avant, les épaules prennent le relais. Garde-les le long du corps du début à la fin."
+            title: "Coudes qui avancent"
+        3:
+            text: "Remonter avant d'avoir tendu les bras raccourcit le mouvement. Descends jusqu'à l'extension, sans relâcher la tension."
+            title: "Descente incomplète"
+    steps:
+        1: "Debout, pieds largeur de hanches, saisis la barre en supination (paumes vers le haut), mains largeur d'épaules."
+        2: "Bras tendus, colle les coudes contre les flancs et serre les abdominaux."
+        3: "Fléchis les coudes pour monter la barre vers les épaules, sans bouger les coudes ni le buste."
+        4: "Contracte les biceps en haut, puis redescends lentement jusqu'à tendre les bras."
+    variants:
+        dumbbell_curl_standing: "Chaque bras travaille seul, utile si un côté est plus faible."
+        ez_bar_curl: "La barre coudée soulage les poignets et les coudes."
+        preacher_curl: "Les bras calés sur le pupitre empêchent toute triche."
+
+barbell_row:
+    intro: "Le rowing barre construit l'épaisseur du dos : grand dorsal, trapèzes et arrière des épaules. C'est aussi un excellent exercice de gainage, le dos devant rester fixe pendant toute la série."
+    mistakes:
+        1:
+            text: "Un dos arrondi sous la charge met les lombaires en danger. Garde le dos plat, la poitrine sortie."
+            title: "Dos rond"
+        2:
+            text: "Se redresser à chaque répétition transforme le rowing en soulevé de terre. Le buste reste incliné de la même façon du début à la fin."
+            title: "Buste qui se relève"
+        3:
+            text: "Tirer avec les bras sans serrer les omoplates fait travailler surtout les biceps. Pense à ramener les coudes vers l'arrière."
+            title: "Tirer avec les bras"
+    steps:
+        1: "Debout, pieds largeur de hanches, saisis la barre en pronation, mains un peu plus larges que les épaules."
+        2: "Fléchis légèrement les genoux et penche le buste vers l'avant, dos plat, jusqu'à environ 45°."
+        3: "Bras tendus, laisse pendre la barre sous les épaules et gaine les abdominaux."
+        4: "Tire la barre vers le nombril en ramenant les coudes vers l'arrière et en serrant les omoplates."
+        5: "Redescends sous contrôle jusqu'à tendre les bras, sans bouger le buste."
+    variants:
+        cable_row: "Tension constante et dos soutenu, idéal pour finir la séance."
+        dumbbell_row: "Un bras après l'autre, avec un appui qui protège le bas du dos."
+
+barbell_squat:
+    intro: "Le squat barre est le roi des exercices pour les jambes. Il travaille les quadriceps et les fessiers, avec le soutien des ischio-jambiers, des adducteurs et de toute la sangle abdominale."
+    mistakes:
+        1:
+            text: "Des genoux qui rentrent vers l'intérieur fragilisent l'articulation. Pousse-les dans l'axe des pieds."
+            title: "Genoux qui rentrent"
+        2:
+            text: "Décoller les talons fait basculer le poids sur l'avant du pied et sur les genoux. Garde tout le pied au sol."
+            title: "Talons qui décollent"
+        3:
+            text: "Un dos qui s'arrondit en bas du mouvement expose les lombaires. Descends seulement aussi bas que tu restes gainé."
+            title: "Dos qui s'arrondit"
+        4:
+            text: "Un squat à mi-hauteur permet plus de charge mais travaille moins les fessiers. Vise au moins les cuisses parallèles au sol."
+            title: "Amplitude trop courte"
+    steps:
+        1: "Place la barre sur le haut du dos (trapèzes), mains un peu plus larges que les épaules, coudes sous la barre."
+        2: "Décroche la barre, recule de deux pas et écarte les pieds largeur d'épaules, pointes légèrement ouvertes."
+        3: "Inspire, gaine le ventre et descends en poussant les hanches vers l'arrière et les genoux dans l'axe des pieds."
+        4: "Descends au moins jusqu'à avoir les cuisses parallèles au sol, en gardant le dos droit."
+        5: "Remonte en poussant dans tout le pied, et expire en haut du mouvement."
+    variants:
+        barbell_front_squat: "Barre devant, buste plus droit : plus de quadriceps, moins de dos."
+        hack_squat: "Guidé par la machine, pour charger les jambes sans gérer l'équilibre."
+        leg_press: "Dos calé, pour travailler lourd sans charge sur la colonne."
+
+bench_press_bar:
+    intro: "Le développé couché est l'exercice de référence pour la force du haut du corps. Il travaille surtout les pectoraux et l'avant des épaules, avec l'aide des triceps."
+    mistakes:
+        1:
+            text: "Bras à 90° du buste, les épaules encaissent tout. Garde les coudes à environ 45°."
+            title: "Coudes trop écartés"
+        2:
+            text: "Le rebond sur la poitrine vole le travail des pectoraux. Marque un contact léger, sans élan."
+            title: "Barre qui rebondit"
+        3:
+            text: "Le bassin reste sur le banc. S'il décolle, la charge est trop lourde."
+            title: "Fesses qui décollent"
+        4:
+            text: "Descendre à mi-course permet plus de charge, mais moins de progrès. Va jusqu'à la poitrine."
+            title: "Amplitude partielle"
+    steps:
+        1: "Allonge-toi sur le banc, les yeux sous la barre, les pieds bien à plat au sol."
+        2: "Saisis la barre un peu plus large que les épaules, serre les omoplates et cambre légèrement le haut du dos."
+        3: "Décroche la barre et place-la au-dessus des épaules, bras tendus."
+        4: "Descends sous contrôle jusqu'à toucher le bas des pectoraux, coudes à environ 45° du buste."
+        5: "Pousse la barre vers le haut en expirant, jusqu'à revenir bras tendus."
+    variants:
+        bench_press_dumbbell: "Plus d'amplitude, et chaque bras travaille seul."
+        decline_bench_press_bar: "Met l'accent sur le bas des pectoraux."
+        incline_bench_press_dumbbell: "Met l'accent sur le haut des pectoraux."
+
+breadcrumb:
+    home: "Accueil"
+    index: "Exercices"
+    label: "Fil d'Ariane"
+
+call_to_action:
+    logged_in:
+        dashboard: "Voir mon tableau de bord"
+        history: "Voir mon historique"
+        text: "Retrouve tes séances, tes records et ta progression dans ton espace."
+        title: "Ta progression"
+    visitor:
+        button: "Créer mon compte gratuit"
+        text: "Note tes séries, retrouve tes records et vois les muscles travaillés à chaque séance. Gratuit et sans publicité."
+        title: "Suis ta progression"
+
+deadlift:
+    intro: "Le soulevé de terre sollicite presque tout le corps : lombaires, fessiers et ischio-jambiers en premier, mais aussi les quadriceps, le dos et les avant-bras. C'est l'exercice qui permet de soulever le plus lourd, et celui où la technique compte le plus."
+    mistakes:
+        1:
+            text: "Soulever le dos rond est l'erreur la plus dangereuse. Si tu n'arrives pas à garder le dos plat, la charge est trop lourde."
+            title: "Dos rond"
+        2:
+            text: "Une barre qui s'éloigne des jambes tire sur le bas du dos. Fais-la glisser le long des tibias puis des cuisses."
+            title: "Barre loin du corps"
+        3:
+            text: "Monter les hanches avant les épaules transforme l'exercice en soulevé jambes tendues. Hanches et épaules montent ensemble."
+            title: "Hanches qui montent trop vite"
+        4:
+            text: "Se pencher en arrière en haut du mouvement écrase les lombaires. Termine simplement debout, bien droit."
+            title: "Hyperextension en haut"
+    steps:
+        1: "Place-toi debout, pieds largeur de hanches, la barre au-dessus du milieu des pieds."
+        2: "Penche-toi en poussant les hanches vers l'arrière et saisis la barre juste à l'extérieur des jambes."
+        3: "Fléchis les genoux jusqu'à ce que les tibias touchent la barre, poitrine sortie et dos plat."
+        4: "Gaine le ventre et pousse dans le sol pour monter la barre le long des jambes, hanches et épaules ensemble."
+        5: "Termine debout, hanches tendues, puis redescends en suivant le même chemin."
+    variants:
+        romanian_deadlift: "Jambes presque tendues, pour cibler les ischio-jambiers et les fessiers."
+        stiff_leg_deadlift: "Jambes tendues, étirement maximal de l'arrière des cuisses."
+
+dips_chest:
+    intro: "Les dips aux barres parallèles, buste penché en avant, sont l'un des meilleurs exercices au poids du corps pour les pectoraux. Les triceps et l'avant des épaules participent aussi."
+    mistakes:
+        1:
+            text: "Descendre trop bas étire fortement l'avant des épaules. Arrête-toi quand les bras sont à peu près parallèles au sol."
+            title: "Descente trop profonde"
+        2:
+            text: "Buste vertical, ce sont surtout les triceps qui travaillent. Penche-toi en avant pour viser les pectoraux."
+            title: "Buste trop droit"
+        3:
+            text: "Laisser les épaules monter vers les oreilles les met en mauvaise position. Garde-les basses et loin des oreilles."
+            title: "Épaules qui remontent"
+    steps:
+        1: "Saisis les barres parallèles et monte en appui, bras tendus, épaules basses."
+        2: "Penche le buste vers l'avant et laisse les coudes s'écarter légèrement."
+        3: "Descends en fléchissant les coudes jusqu'à ce que les bras soient à peu près parallèles au sol."
+        4: "Pousse dans les barres pour remonter jusqu'à tendre les bras."
+    variants:
+        bench_press_bar: "Pour charger lourd et progresser avec des disques."
+        dips_triceps: "Buste droit, pour cibler l'arrière des bras."
+        push_up: "Plus facile, pour apprendre le mouvement de poussée."
+
+incline_bench_press_dumbbell:
+    intro: "Le développé incliné aux haltères cible le haut des pectoraux et l'avant des épaules. Les haltères offrent plus d'amplitude que la barre et obligent chaque bras à travailler seul."
+    mistakes:
+        1:
+            text: "Au-delà de 45°, ce sont surtout les épaules qui poussent. Reste entre 30 et 45°."
+            title: "Banc trop incliné"
+        2:
+            text: "Taper les haltères en haut fait perdre la tension. Rapproche-les sans qu'ils se touchent."
+            title: "Haltères qui s'entrechoquent"
+        3:
+            text: "Laisser tomber les haltères en bas sollicite trop les épaules. Contrôle la descente sur deux à trois secondes."
+            title: "Descente non contrôlée"
+    steps:
+        1: "Règle le banc entre 30 et 45° et assieds-toi, un haltère posé sur chaque cuisse."
+        2: "Allonge-toi en ramenant les haltères au niveau de la poitrine, pieds à plat au sol."
+        3: "Serre les omoplates et place les haltères au-dessus du haut de la poitrine, bras tendus."
+        4: "Descends lentement jusqu'à sentir l'étirement des pectoraux, coudes légèrement sous les épaules."
+        5: "Pousse les haltères vers le haut en les rapprochant légèrement, puis recommence."
+    variants:
+        bench_press_bar: "Banc plat et barre, pour charger plus lourd."
+        dumbbell_fly_incline: "Écartés sur le même banc, pour isoler le haut des pectoraux."
+        incline_bench_press_bar: "À la barre, pour charger plus lourd sur le même angle."
+
+index:
+    heading: "Exercices de musculation"
+    heading_highlight: "par muscle"
+    intro: "Les muscles travaillés, l'exécution pas à pas, les erreurs fréquentes et les variantes de chaque exercice. Choisis un muscle, puis un exercice."
+    meta_description: "Fiches d'exercices de musculation classées par muscle : muscles travaillés, exécution, erreurs fréquentes et variantes."
+    title: "Exercices de musculation par muscle"
+
+leg_press:
+    intro: "La presse à cuisses travaille les quadriceps et les fessiers sans charge sur la colonne. Elle permet de pousser lourd en toute sécurité, en complément ou à la place du squat."
+    mistakes:
+        1:
+            text: "Verrouiller les genoux en haut met toute la charge sur l'articulation. Garde-les toujours légèrement fléchis."
+            title: "Genoux verrouillés"
+        2:
+            text: "Si le bas du dos décolle du dossier en bas du mouvement, tu descends trop bas. Arrête-toi juste avant."
+            title: "Bassin qui décolle"
+        3:
+            text: "Des genoux qui rentrent vers l'intérieur fragilisent l'articulation. Pousse-les dans l'axe des pieds."
+            title: "Genoux qui rentrent"
+    steps:
+        1: "Assieds-toi, le dos et les fesses bien calés contre le dossier."
+        2: "Place les pieds au milieu de la plateforme, largeur de hanches, pointes légèrement ouvertes."
+        3: "Pousse la plateforme pour la débloquer, puis retire les sécurités."
+        4: "Descends en fléchissant les genoux jusqu'à environ 90°, sans décoller le bassin du dossier."
+        5: "Pousse dans les talons pour remonter, sans verrouiller les genoux en haut."
+    variants:
+        barbell_squat: "Le mouvement de base, qui fait aussi travailler l'équilibre et le gainage."
+        hack_squat: "Dos calé aussi, mais en position debout, plus proche du squat."
+
+military_press_bar:
+    intro: "Le développé militaire est l'exercice de base pour des épaules fortes. Il travaille l'avant et le côté des épaules, avec l'aide des triceps et des trapèzes."
+    mistakes:
+        1:
+            text: "Se pencher en arrière transforme le mouvement en développé incliné et charge les lombaires. Serre les fessiers et les abdominaux."
+            title: "Dos trop cambré"
+        2:
+            text: "Pousser la barre devant le visage la rend plus lourde et fatigue les épaules. Elle monte à la verticale, la tête recule à son passage."
+            title: "Barre trop en avant"
+        3:
+            text: "Arrêter la barre au niveau du front raccourcit le mouvement. Redescends jusqu'au haut de la poitrine."
+            title: "Amplitude partielle"
+    steps:
+        1: "Debout, pieds largeur de hanches, saisis la barre un peu plus large que les épaules."
+        2: "Place la barre sur le haut de la poitrine, coudes légèrement devant la barre."
+        3: "Serre les fessiers et les abdominaux pour garder le corps bien droit."
+        4: "Pousse la barre à la verticale au-dessus de la tête, en reculant légèrement la tête pour la laisser passer."
+        5: "Termine bras tendus au-dessus de la tête, puis redescends sous contrôle jusqu'à la poitrine."
+    variants:
+        arnold_press: "Aux haltères avec rotation, pour travailler l'épaule sur une plus grande amplitude."
+        military_press_machine: "Guidé par la machine, pour se concentrer sur la poussée."
+
+pull_up:
+    intro: "Les tractions en pronation (paumes vers l'avant) sont l'exercice roi pour la largeur du dos. Elles travaillent surtout le grand dorsal, avec l'aide des biceps, des trapèzes et de l'arrière des épaules."
+    mistakes:
+        1:
+            text: "Balancer les jambes pour monter vole le travail du dos. Garde le corps gainé et immobile."
+            title: "Élan avec les jambes"
+        2:
+            text: "S'arrêter avant que le menton dépasse la barre ou remonter sans tendre les bras raccourcit l'exercice. Va d'un bout à l'autre."
+            title: "Amplitude partielle"
+        3:
+            text: "Tirer seulement avec les bras fatigue les biceps avant le dos. Commence chaque répétition en abaissant les épaules."
+            title: "Épaules relâchées"
+    steps:
+        1: "Saisis la barre en pronation, mains un peu plus larges que les épaules."
+        2: "Suspends-toi bras tendus, jambes serrées et abdominaux gainés."
+        3: "Abaisse les épaules et serre les omoplates pour démarrer le mouvement."
+        4: "Tire en ramenant les coudes vers les hanches jusqu'à ce que le menton dépasse la barre."
+        5: "Redescends lentement jusqu'à tendre complètement les bras."
+    variants:
+        chin_up: "Paumes vers toi, plus de biceps et souvent plus facile."
+        lat_pulldown: "À la machine, pour régler la charge si les tractions sont encore trop dures."
+
+show:
+    back_to_index: "Tous les exercices"
+    meta_description: "{exercise} : muscles travaillés, exécution pas à pas, erreurs fréquentes et variantes."
+    mistakes_title: "Erreurs fréquentes"
+    muscles:
+        label: "Muscles travaillés"
+        primary: "{muscle} · principal"
+        primary_legend: "Muscles principaux"
+        secondary: "{muscle} · secondaire"
+        secondary_legend: "Muscles secondaires"
+        silhouette: "Silhouette des muscles travaillés : en rose les muscles principaux, en cyan les secondaires"
+    steps_title: "Exécution"
+    title: "{exercise} : exécution, muscles et erreurs"
+    variants_title: "Variantes"

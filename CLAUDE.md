@@ -201,6 +201,25 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
   cf. `config/routes.yaml`) : `SitemapController::PUBLIC_ROUTES` × 8 langues (une seule entrée pour
   une page non traduite). Nouvelle page publique à indexer = l'ajouter à cette liste ; jamais la
   connexion.
+- **Paramètres de route différents selon la langue** (slug traduit) : implémenter
+  `LocalizedRouteParameters` (tag auto) ; `LocaleAlternateUrlGenerator` l'applique au `hreflang`,
+  au `x-default`, au sitemap et au sélecteur de langue public (`home/_language_menu`, qui suit
+  `locale_alternates()`).
+
+### Fiches exercices publiques (`/{_locale}/exercices`, chemin traduit)
+- Pages publiques pour le SEO, hors bibliothèque privée : index par muscle principal
+  (`ExerciseGuideIndexController`) et fiche par exercice (`ExerciseGuideShowController`), lien
+  « Exercices » dans l'en-tête public (`home/_header`, aussi utilisé par l'accueil).
+- **Structure** dans `ExerciseGuideCatalog` (étapes, erreurs, variantes), **textes** dans le domaine
+  `exercise_guide` sous la clé de l'exercice (`bench_press_bar.steps.1`…), ×8 langues. Un exercice
+  absent du catalogue n'a pas de page (404, absent du sitemap) : on publie par lots, jamais de page
+  vide. `ExerciseGuideTranslationsTest` vérifie chaque clé déclarée dans les 8 langues **et rien de
+  plus**, et l'unicité des slugs.
+- **Slug = nom traduit passé au slugger** (`ExerciseGuideSlugger`, aucune traduction en plus) :
+  renommer un exercice public change l'adresse de sa fiche. Un slug d'une autre langue = 404.
+- Variante liée seulement si elle a sa propre fiche, sinon nom simple. Connecté : « Voir mon
+  historique » (`app_exercise_history`) au lieu de l'inscription. Silhouette masculine (pas de genre
+  sans compte), coloriée par `workout--show--muscles`.
 - **Sentry rend les réponses privées en prod** : `Sentry\SentryBundle\EventListener\LoginListener` lit
   l'utilisateur connecté sur `kernel.request` (prod seulement, absent en test), la session est consultée
   et Symfony pose `Cache-Control: max-age=0, must-revalidate, private` même pour un visiteur anonyme.

@@ -1,0 +1,269 @@
+barbell_curl_standing:
+    intro: "Der stehende Langhantel-Curl ist die Grundübung für mehr Bizepsvolumen. Mit der geraden Stange bewegst du mehr Gewicht als mit Kurzhanteln, solange der Oberkörper ruhig bleibt."
+    mistakes:
+        1:
+            text: "Wenn du mit dem Oberkörper Schwung holst, arbeitet der Rücken statt des Bizeps. Nimm weniger Gewicht und halte den Rumpf ruhig."
+            title: "Schwung aus dem Oberkörper"
+        2:
+            text: "Wandern die Ellenbogen nach vorne, übernehmen die Schultern. Halte sie von Anfang bis Ende seitlich am Körper."
+            title: "Ellenbogen wandern nach vorne"
+        3:
+            text: "Wer wieder hochzieht, bevor die Arme gestreckt sind, verkürzt die Bewegung. Senke die Stange bis zur Streckung, ohne die Spannung zu verlieren."
+            title: "Unvollständiges Absenken"
+    steps:
+        1: "Stell dich hüftbreit hin und greif die Stange im Untergriff (Handflächen nach oben), Hände schulterbreit."
+        2: "Lass die Arme gestreckt, leg die Ellenbogen seitlich an den Körper und spann den Bauch an."
+        3: "Beuge die Ellenbogen und führe die Stange zu den Schultern, ohne Ellenbogen oder Oberkörper zu bewegen."
+        4: "Spann den Bizeps oben an und senke die Stange dann langsam, bis die Arme gestreckt sind."
+    variants:
+        dumbbell_curl_standing: "Jeder Arm arbeitet für sich, praktisch bei einer schwächeren Seite."
+        ez_bar_curl: "Die SZ-Stange schont Handgelenke und Ellenbogen."
+        preacher_curl: "Die Arme liegen auf dem Pult, Mogeln ist unmöglich."
+
+barbell_row:
+    intro: "Langhantelrudern baut einen dichten Rücken auf: Latissimus, Trapez und hintere Schulter. Es ist auch eine hervorragende Rumpfübung, denn der Rücken muss den ganzen Satz über stabil bleiben."
+    mistakes:
+        1:
+            text: "Ein runder Rücken unter Last gefährdet die Lendenwirbelsäule. Halte den Rücken gerade und die Brust raus."
+            title: "Runder Rücken"
+        2:
+            text: "Richtest du dich bei jeder Wiederholung auf, wird aus dem Rudern Kreuzheben. Halte die Oberkörperneigung von Anfang bis Ende."
+            title: "Oberkörper richtet sich auf"
+        3:
+            text: "Ziehst du nur mit den Armen, ohne die Schulterblätter zusammenzuziehen, arbeitet vor allem der Bizeps. Denk daran, die Ellenbogen nach hinten zu führen."
+            title: "Nur mit den Armen ziehen"
+    steps:
+        1: "Stell dich hüftbreit hin und greif die Stange im Obergriff, Hände etwas weiter als schulterbreit."
+        2: "Beuge die Knie leicht und neige den Oberkörper mit geradem Rücken auf etwa 45° nach vorne."
+        3: "Lass die Stange mit gestreckten Armen unter den Schultern hängen und spann den Bauch an."
+        4: "Zieh die Stange zum Bauchnabel, führe die Ellenbogen nach hinten und zieh die Schulterblätter zusammen."
+        5: "Senke die Stange kontrolliert, bis die Arme gestreckt sind, ohne den Oberkörper zu bewegen."
+    variants:
+        cable_row: "Konstante Spannung und gestützter Rücken, ideal zum Abschluss des Trainings."
+        dumbbell_row: "Ein Arm nach dem anderen, mit einer Stütze, die den unteren Rücken schützt."
+
+barbell_squat:
+    intro: "Die Kniebeuge mit Langhantel ist die Königin der Beinübungen. Sie trainiert Quadrizeps und Gesäß, unterstützt von Beinbeugern, Adduktoren und der gesamten Rumpfmuskulatur."
+    mistakes:
+        1:
+            text: "Knie, die nach innen fallen, belasten das Gelenk. Drück sie in Richtung der Fußspitzen."
+            title: "Knie fallen nach innen"
+        2:
+            text: "Heben die Fersen ab, verlagert sich das Gewicht auf Vorfuß und Knie. Lass den ganzen Fuß am Boden."
+            title: "Fersen heben ab"
+        3:
+            text: "Ein Rücken, der unten rund wird, gefährdet die Lendenwirbelsäule. Geh nur so tief, wie du stabil bleibst."
+            title: "Rücken wird rund"
+        4:
+            text: "Eine halbe Kniebeuge erlaubt mehr Gewicht, trainiert das Gesäß aber weniger. Geh mindestens bis die Oberschenkel parallel zum Boden sind."
+            title: "Zu geringe Bewegungstiefe"
+    steps:
+        1: "Leg die Stange auf den oberen Rücken (Trapez), Hände etwas weiter als schulterbreit, Ellenbogen unter der Stange."
+        2: "Heb die Stange aus, geh zwei Schritte zurück und stell die Füße schulterbreit, Fußspitzen leicht nach außen."
+        3: "Atme ein, spann den Bauch an und geh nach unten, indem du die Hüfte nach hinten schiebst, Knie in Richtung der Füße."
+        4: "Geh mindestens so tief, dass die Oberschenkel parallel zum Boden sind, mit geradem Rücken."
+        5: "Drück dich über den ganzen Fuß nach oben und atme oben aus."
+    variants:
+        barbell_front_squat: "Stange vorne, Oberkörper aufrechter: mehr Quadrizeps, weniger Rücken."
+        hack_squat: "Von der Maschine geführt, um die Beine zu belasten, ohne auf das Gleichgewicht zu achten."
+        leg_press: "Rücken angelehnt, für schweres Training ohne Last auf der Wirbelsäule."
+
+bench_press_bar:
+    intro: "Bankdrücken ist die Referenzübung für Kraft im Oberkörper. Es trainiert vor allem Brust und vordere Schulter, unterstützt vom Trizeps."
+    mistakes:
+        1:
+            text: "Sind die Arme im 90°-Winkel zum Oberkörper, tragen die Schultern die ganze Last. Halte die Ellenbogen bei etwa 45°."
+            title: "Ellenbogen zu weit abgespreizt"
+        2:
+            text: "Lässt du die Stange von der Brust abfedern, nimmst du der Brust die Arbeit ab. Berühre sie leicht, ohne Schwung."
+            title: "Stange federt ab"
+        3:
+            text: "Das Becken bleibt auf der Bank. Hebt es ab, ist das Gewicht zu schwer."
+            title: "Gesäß hebt ab"
+        4:
+            text: "Nur bis zur Hälfte abzusenken erlaubt mehr Gewicht, bringt aber weniger Fortschritt. Senke die Stange bis zur Brust."
+            title: "Halbe Bewegung"
+    steps:
+        1: "Leg dich auf die Bank, die Augen unter der Stange, die Füße flach auf dem Boden."
+        2: "Greif die Stange etwas weiter als schulterbreit, zieh die Schulterblätter zusammen und mach im oberen Rücken ein leichtes Hohlkreuz."
+        3: "Heb die Stange aus und halte sie mit gestreckten Armen über den Schultern."
+        4: "Senke sie kontrolliert, bis sie die untere Brust berührt, Ellenbogen etwa 45° vom Oberkörper."
+        5: "Drück die Stange beim Ausatmen nach oben, bis die Arme wieder gestreckt sind."
+    variants:
+        bench_press_dumbbell: "Mehr Bewegungsumfang, und jeder Arm arbeitet für sich."
+        decline_bench_press_bar: "Betont die untere Brust."
+        incline_bench_press_dumbbell: "Betont die obere Brust."
+
+breadcrumb:
+    home: "Startseite"
+    index: "Übungen"
+    label: "Brotkrümelnavigation"
+
+call_to_action:
+    logged_in:
+        dashboard: "Zu meiner Übersicht"
+        history: "Meinen Verlauf ansehen"
+        text: "Finde deine Einheiten, Rekorde und Fortschritte in deinem Bereich."
+        title: "Dein Fortschritt"
+    visitor:
+        button: "Kostenloses Konto erstellen"
+        text: "Notiere deine Sätze, verfolge deine Rekorde und sieh bei jeder Einheit die trainierten Muskeln. Kostenlos und werbefrei."
+        title: "Verfolge deinen Fortschritt"
+
+deadlift:
+    intro: "Kreuzheben beansprucht fast den ganzen Körper: zuerst unteren Rücken, Gesäß und Beinbeuger, aber auch Quadrizeps, Rücken und Unterarme. Bei keiner Übung bewegst du mehr Gewicht, und bei keiner zählt die Technik mehr."
+    mistakes:
+        1:
+            text: "Mit rundem Rücken zu heben ist der gefährlichste Fehler. Schaffst du es nicht, den Rücken gerade zu halten, ist das Gewicht zu schwer."
+            title: "Runder Rücken"
+        2:
+            text: "Entfernt sich die Stange von den Beinen, zieht sie am unteren Rücken. Führe sie an den Schienbeinen und dann an den Oberschenkeln entlang."
+            title: "Stange zu weit vom Körper"
+        3:
+            text: "Steigt die Hüfte vor den Schultern, wird daraus Kreuzheben mit gestreckten Beinen. Hüfte und Schultern steigen gemeinsam."
+            title: "Hüfte schießt nach oben"
+        4:
+            text: "Sich oben nach hinten zu lehnen staucht die Lendenwirbelsäule. Steh am Ende einfach aufrecht."
+            title: "Überstrecken am Ende"
+    steps:
+        1: "Stell dich hüftbreit hin, die Stange über der Fußmitte."
+        2: "Beuge dich vor, indem du die Hüfte nach hinten schiebst, und greif die Stange direkt außerhalb der Beine."
+        3: "Beuge die Knie, bis die Schienbeine die Stange berühren, Brust raus und Rücken gerade."
+        4: "Spann den Bauch an und drück dich vom Boden weg, um die Stange an den Beinen entlang zu heben, Hüfte und Schultern gemeinsam."
+        5: "Steh am Ende mit gestreckter Hüfte aufrecht und senke die Stange auf demselben Weg wieder ab."
+    variants:
+        romanian_deadlift: "Beine fast gestreckt, für Beinbeuger und Gesäß."
+        stiff_leg_deadlift: "Beine gestreckt, für maximale Dehnung der Oberschenkelrückseite."
+
+dips_chest:
+    intro: "Dips am Barren mit nach vorne geneigtem Oberkörper gehören zu den besten Körpergewichtsübungen für die Brust. Trizeps und vordere Schulter arbeiten mit."
+    mistakes:
+        1:
+            text: "Zu tiefes Absenken dehnt die vordere Schulter stark. Stopp, wenn die Oberarme etwa parallel zum Boden sind."
+            title: "Zu tief absenken"
+        2:
+            text: "Mit aufrechtem Oberkörper arbeitet vor allem der Trizeps. Lehn dich nach vorne, um die Brust zu treffen."
+            title: "Oberkörper zu aufrecht"
+        3:
+            text: "Ziehen die Schultern zu den Ohren hoch, sind sie in einer schlechten Position. Halte sie tief und weg von den Ohren."
+            title: "Hochgezogene Schultern"
+    steps:
+        1: "Greif die Barrenholme und drück dich in den Stütz, Arme gestreckt, Schultern tief."
+        2: "Neige den Oberkörper nach vorne und lass die Ellenbogen leicht nach außen gehen."
+        3: "Senke dich durch Beugen der Ellenbogen, bis die Oberarme etwa parallel zum Boden sind."
+        4: "Drück dich von den Holmen nach oben, bis die Arme gestreckt sind."
+    variants:
+        bench_press_bar: "Um schwer zu trainieren und mit Scheiben zu steigern."
+        dips_triceps: "Oberkörper aufrecht, für die Rückseite der Arme."
+        push_up: "Leichter, um die Drückbewegung zu lernen."
+
+incline_bench_press_dumbbell:
+    intro: "Schrägbankdrücken mit Kurzhanteln zielt auf die obere Brust und die vordere Schulter. Kurzhanteln bieten mehr Bewegungsumfang als die Langhantel und lassen jeden Arm für sich arbeiten."
+    mistakes:
+        1:
+            text: "Über 45° drücken vor allem die Schultern. Bleib zwischen 30 und 45°."
+            title: "Bank zu steil"
+        2:
+            text: "Schlagen die Hanteln oben zusammen, geht die Spannung verloren. Führe sie zusammen, ohne dass sie sich berühren."
+            title: "Hanteln schlagen zusammen"
+        3:
+            text: "Lässt du die Hanteln unten fallen, werden die Schultern überlastet. Senke sie über zwei bis drei Sekunden ab."
+            title: "Unkontrolliertes Absenken"
+    steps:
+        1: "Stell die Bank auf 30 bis 45° ein und setz dich, je eine Kurzhantel auf einem Oberschenkel."
+        2: "Leg dich zurück und bring die Hanteln auf Brusthöhe, Füße flach auf dem Boden."
+        3: "Zieh die Schulterblätter zusammen und halte die Hanteln mit gestreckten Armen über der oberen Brust."
+        4: "Senke sie langsam, bis du die Dehnung in der Brust spürst, Ellenbogen leicht unter Schulterhöhe."
+        5: "Drück die Hanteln nach oben und führe sie dabei leicht zusammen, dann wiederholen."
+    variants:
+        bench_press_bar: "Flachbank und Langhantel, um mehr Gewicht zu bewegen."
+        dumbbell_fly_incline: "Fliegende auf derselben Bank, um die obere Brust zu isolieren."
+        incline_bench_press_bar: "Mit der Langhantel, um im selben Winkel mehr Gewicht zu bewegen."
+
+index:
+    heading: "Kraftübungen"
+    heading_highlight: "nach Muskel"
+    intro: "Trainierte Muskeln, Ausführung Schritt für Schritt, häufige Fehler und Varianten jeder Übung. Wähle einen Muskel, dann eine Übung."
+    meta_description: "Anleitungen für Kraftübungen nach Muskel sortiert: trainierte Muskeln, Ausführung, häufige Fehler und Varianten."
+    title: "Kraftübungen nach Muskel"
+
+leg_press:
+    intro: "Die Beinpresse trainiert Quadrizeps und Gesäß ohne Last auf der Wirbelsäule. Mit ihr drückst du sicher schwere Gewichte, als Ergänzung oder anstelle der Kniebeuge."
+    mistakes:
+        1:
+            text: "Durchgestreckte Knie oben legen die ganze Last auf das Gelenk. Lass sie immer leicht gebeugt."
+            title: "Durchgestreckte Knie"
+        2:
+            text: "Löst sich der untere Rücken unten von der Lehne, gehst du zu tief. Stopp kurz davor."
+            title: "Becken hebt ab"
+        3:
+            text: "Knie, die nach innen fallen, belasten das Gelenk. Drück sie in Richtung der Fußspitzen."
+            title: "Knie fallen nach innen"
+    steps:
+        1: "Setz dich hin, Rücken und Gesäß fest an der Lehne."
+        2: "Stell die Füße hüftbreit in die Mitte der Plattform, Fußspitzen leicht nach außen."
+        3: "Drück die Plattform weg, um sie zu entriegeln, und löse dann die Sicherungen."
+        4: "Senke sie durch Beugen der Knie bis etwa 90°, ohne dass das Becken von der Lehne abhebt."
+        5: "Drück dich über die Fersen nach oben, ohne die Knie oben durchzustrecken."
+    variants:
+        barbell_squat: "Die Grundbewegung, die auch Gleichgewicht und Rumpf trainiert."
+        hack_squat: "Auch mit angelehntem Rücken, aber im Stehen, näher an der Kniebeuge."
+
+military_press_bar:
+    intro: "Das Schulterdrücken mit der Langhantel ist die Grundübung für starke Schultern. Es trainiert vordere und seitliche Schulter, unterstützt von Trizeps und Trapez."
+    mistakes:
+        1:
+            text: "Lehnst du dich nach hinten, wird daraus Schrägbankdrücken und der untere Rücken wird belastet. Spann Gesäß und Bauch an."
+            title: "Zu starkes Hohlkreuz"
+        2:
+            text: "Drückst du die Stange vor dem Gesicht, wird sie schwerer und ermüdet die Schultern. Sie steigt senkrecht, der Kopf weicht kurz nach hinten aus."
+            title: "Stange zu weit vorne"
+        3:
+            text: "Stoppst du die Stange auf Stirnhöhe, verkürzt sich die Bewegung. Senke sie bis zur oberen Brust."
+            title: "Halbe Bewegung"
+    steps:
+        1: "Stell dich hüftbreit hin und greif die Stange etwas weiter als schulterbreit."
+        2: "Leg die Stange auf die obere Brust, Ellenbogen leicht vor der Stange."
+        3: "Spann Gesäß und Bauch an, um den Körper gerade zu halten."
+        4: "Drück die Stange senkrecht über den Kopf und nimm den Kopf leicht zurück, um sie vorbeizulassen."
+        5: "Ende mit gestreckten Armen über dem Kopf und senke die Stange dann kontrolliert zur Brust."
+    variants:
+        arnold_press: "Mit Kurzhanteln und Drehung, für einen größeren Bewegungsumfang der Schulter."
+        military_press_machine: "Von der Maschine geführt, um dich aufs Drücken zu konzentrieren."
+
+pull_up:
+    intro: "Klimmzüge im Obergriff (Handflächen nach vorne) sind die Königsübung für einen breiten Rücken. Sie trainieren vor allem den Latissimus, unterstützt von Bizeps, Trapez und hinterer Schulter."
+    mistakes:
+        1:
+            text: "Schwung aus den Beinen nimmt dem Rücken die Arbeit ab. Halte den Körper angespannt und ruhig."
+            title: "Schwung aus den Beinen"
+        2:
+            text: "Wer stoppt, bevor das Kinn über der Stange ist, oder wieder zieht, bevor die Arme gestreckt sind, verkürzt die Übung. Geh den ganzen Weg."
+            title: "Halbe Bewegung"
+        3:
+            text: "Ziehst du nur mit den Armen, ermüdet der Bizeps vor dem Rücken. Beginne jede Wiederholung, indem du die Schultern nach unten ziehst."
+            title: "Lockere Schultern"
+    steps:
+        1: "Greif die Stange im Obergriff, Hände etwas weiter als schulterbreit."
+        2: "Häng dich mit gestreckten Armen hin, Beine geschlossen, Bauch angespannt."
+        3: "Zieh die Schultern nach unten und die Schulterblätter zusammen, um die Bewegung zu starten."
+        4: "Zieh dich hoch, indem du die Ellenbogen Richtung Hüfte führst, bis das Kinn über der Stange ist."
+        5: "Senke dich langsam ab, bis die Arme ganz gestreckt sind."
+    variants:
+        chin_up: "Handflächen zu dir, mehr Bizeps und oft leichter."
+        lat_pulldown: "An der Maschine, um das Gewicht anzupassen, solange Klimmzüge noch zu schwer sind."
+
+show:
+    back_to_index: "Alle Übungen"
+    meta_description: "{exercise}: trainierte Muskeln, Ausführung Schritt für Schritt, häufige Fehler und Varianten."
+    mistakes_title: "Häufige Fehler"
+    muscles:
+        label: "Trainierte Muskeln"
+        primary: "{muscle} · primär"
+        primary_legend: "Primäre Muskeln"
+        secondary: "{muscle} · sekundär"
+        secondary_legend: "Sekundäre Muskeln"
+        silhouette: "Silhouette der trainierten Muskeln: primäre Muskeln in Pink, sekundäre in Cyan"
+    steps_title: "Ausführung"
+    title: "{exercise}: Ausführung, Muskeln und Fehler"
+    variants_title: "Varianten"

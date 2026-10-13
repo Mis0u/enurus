@@ -37,6 +37,31 @@ class ExerciseRepository extends ServiceEntityRepository
     }
 
     /**
+     * Exercices publics des fiches exercices, avec leurs muscles (silhouette, regroupement par
+     * muscle) chargés en une requête.
+     *
+     * @param list<string> $names noms en base, qui sont des clés de traduction (`bench_press_bar.name`)
+     *
+     * @return list<Exercise>
+     */
+    public function findPublicWithMusclesByNames(array $names): array
+    {
+        /** @var list<Exercise> */
+        return $this->createQueryBuilder('e')
+            ->addSelect('em', 'mg')
+            ->leftJoin('e.exerciseMuscles', 'em')
+            ->leftJoin('em.muscleGroup', 'mg')
+            ->where('e.isPublic = :public')
+            ->andWhere('e.archived = :archived')
+            ->andWhere('e.name IN (:names)')
+            ->setParameter('public', true)
+            ->setParameter('archived', false)
+            ->setParameter('names', $names)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Returns all custom exercises created by a specific user (archived excluded — cf.
      * ExerciseDeletionService).
      *
