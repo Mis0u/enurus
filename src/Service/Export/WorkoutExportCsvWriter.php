@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
 use App\Enum\Entity\Exercise\MeasurementType;
+use App\Enum\Export\WorkoutExportFormatEnum;
 use App\Service\Exercise\ExerciseNameTranslator;
 use App\Service\Utils\WeightConverterService;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -19,7 +20,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * « , » et point décimal en anglais, « ; » et virgule décimale pour les autres langues du site.
  * Les notes (texte libre, multi-lignes) et les photos ne sont que dans l'export JSON / l'appli.
  */
-final readonly class WorkoutExportCsvWriter
+final readonly class WorkoutExportCsvWriter implements WorkoutExportWriter
 {
     // Sans BOM, Excel lit un CSV UTF-8 comme du Latin-1 : les accents s'affichent mal.
     private const string UTF8_BOM = "\u{FEFF}";
@@ -35,14 +36,15 @@ final readonly class WorkoutExportCsvWriter
     ) {
     }
 
+    public function format(): WorkoutExportFormatEnum
+    {
+        return WorkoutExportFormatEnum::CSV;
+    }
+
     /**
-     * `$locale` explicite : écrit dans une réponse streamée, après le traitement de la requête dont
-     * la langue n'est alors plus active.
-     *
-     * @param list<Workout> $workouts
-     * @param resource      $stream
+     * `$locale` : langue des en-têtes, des libellés et du format des nombres.
      */
-    public function write(User $user, array $workouts, $stream, string $locale): void
+    public function write(User $user, iterable $workouts, $stream, string $locale): void
     {
         $format = new CsvNumberFormat($locale);
         fwrite($stream, self::UTF8_BOM);

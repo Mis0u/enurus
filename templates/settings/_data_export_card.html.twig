@@ -10,13 +10,16 @@
         {{ 'settings.data_export.explanation'|trans({}, 'navigation') }}
     </p>
 
-    <ul class="grid md:grid-cols-2 gap-3">
+    <ul class="grid md:grid-cols-2 gap-3"
+        data-controller="settings--data-export"
+        data-settings--data-export-error-message-value="{{ 'settings.feedback.error'|trans({}, 'navigation') }}">
         {% for format in ['csv', 'json'] %}
             <li>
                 <a href="{{ path('app_settings_data_export', {format: format}) }}"
                    download
+                   data-action="settings--data-export#download"
                    aria-describedby="data-export-{{ format }}-hint"
-                   class="flex items-center gap-2.5 min-h-11 px-4 py-3 rounded-xl border border-white/[0.07] bg-white/[0.03] text-sm font-semibold text-[#f0f4ff] no-underline transition-ft hover:bg-white/[0.06] hover:border-white/[0.14] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-ft">
+                   class="flex items-center gap-2.5 min-h-11 px-4 py-3 rounded-xl border border-white/[0.07] bg-white/[0.03] text-sm font-semibold text-[#f0f4ff] no-underline transition-ft hover:bg-white/[0.06] hover:border-white/[0.14] aria-disabled:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-ft">
                     <span class="text-rose-ft" aria-hidden="true">{% include 'partials/_svg/_download.html.twig' with {width: 4.5, height: 4.5} only %}</span>
                     {{ ('settings.data_export.' ~ format ~ '_button')|trans({}, 'navigation') }}
                 </a>

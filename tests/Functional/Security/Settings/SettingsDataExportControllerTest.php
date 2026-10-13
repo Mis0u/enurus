@@ -89,6 +89,25 @@ final class SettingsDataExportControllerTest extends WebTestCase
         self::assertArrayHasKey('weightKg', $firstSet);
     }
 
+    /**
+     * Fichier préparé en entier avant l'envoi : sa taille est annoncée, le navigateur repère
+     * alors un téléchargement coupé au lieu de garder un fichier incomplet.
+     */
+    public function testTheFileSizeIsAnnouncedBeforeSending(): void
+    {
+        $client = $this->login(self::USER_KG);
+        $json = $this->download($client, 'json');
+
+        self::assertResponseHeaderSame('Content-Length', (string) \strlen($json));
+    }
+
+    public function testTheJsonExportIsCompact(): void
+    {
+        $client = $this->login(self::USER_KG);
+
+        self::assertStringNotContainsString("\n", $this->download($client, 'json'));
+    }
+
     public function testAnUnknownFormatIsNotFound(): void
     {
         $client = $this->login(self::USER_KG);
@@ -107,7 +126,7 @@ final class SettingsDataExportControllerTest extends WebTestCase
         $client->request(Request::METHOD_GET, '/fr/reglages/export/' . $format);
         self::assertResponseIsSuccessful();
 
-        // Le client de test capture lui-même le contenu d'une StreamedResponse.
+        // Le client de test capture lui-même le contenu d'une BinaryFileResponse.
         return $client->getInternalResponse()->getContent();
     }
 
