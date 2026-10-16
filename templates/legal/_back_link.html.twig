@@ -1,0 +1,10 @@
+{#
+    Paramètres :
+      - backUrl : string — page précédente du site, ou la connexion par défaut (ReturnUrlResolver).
+#}
+<a id="terms-back-link" href="{{ backUrl }}" class="inline-flex items-center min-h-11 mb-4 text-sm text-slate-400 hover:text-white transition-colors group">
+    <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+    </svg>
+    {{ 'word.back'|trans({}, 'common') }}
+</a>
