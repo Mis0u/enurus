@@ -41,7 +41,8 @@ final class DashboardController extends AbstractDashboardController
 
     public function configureDashboard(): Dashboard
     {
-        $logoUrl = $this->assetPackages->getUrl('images/enurus_logo_horizontal.png');
+        // Symbole seul : le nom en blanc du logo horizontal disparaîtrait sur le thème clair d'EasyAdmin.
+        $logoUrl = $this->assetPackages->getUrl('images/logo.png');
 
         return Dashboard::new()
             ->setTitle(sprintf(
