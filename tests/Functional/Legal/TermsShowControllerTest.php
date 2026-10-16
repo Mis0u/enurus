@@ -36,4 +36,23 @@ final class TermsShowControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
         self::assertSelectorExists('.text-amber-300');
     }
+
+    public function testBackLinkReturnsToThePreviousPageOfTheSite(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request(Request::METHOD_GET, '/fr/cgu', server: [
+            'HTTP_REFERER' => 'http://localhost/fr/inscription',
+        ]);
+
+        self::assertSame('http://localhost/fr/inscription', $crawler->filter('#terms-back-link')->attr('href'));
+        self::assertSelectorTextContains('#terms-back-link', 'Retour');
+    }
+
+    public function testBackLinkFallsBackToLoginWithoutPreviousPage(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request(Request::METHOD_GET, '/en/terms');
+
+        self::assertSame('/en/login', $crawler->filter('#terms-back-link')->attr('href'));
+    }
 }
