@@ -29,7 +29,9 @@ final readonly class GedmoExtensionsEventSubscriber implements EventSubscriberIn
 
     public function configureBlameableListener(RequestEvent $event): void
     {
-        if (! $event->isMainRequest()) {
+        // Une route stateless (ex. sitemap) n'a pas d'utilisateur connecté : lire le token ouvrirait
+        // la session, ce que Symfony refuse sur ce type de requête.
+        if (! $event->isMainRequest() || $event->getRequest()->attributes->getBoolean('_stateless')) {
             return;
         }
 
