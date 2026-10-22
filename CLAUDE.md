@@ -143,9 +143,10 @@ régénérer le token via `CsrfTokenManagerInterface::getToken()` hors requête
 (`SessionNotFoundException`) — le lire depuis le DOM déjà rendu via `Crawler`
 (`FunctionalTestTrait::csrfTokenFromPage()`).
 
-**Trace de compte supprimé** : `AccountDeletionService::purgeExpired()` enregistre un hash
-SHA-256 de l'email (jamais l'email en clair) dans `DeletedAccountTrace`, à la suppression
-effective du compte (pas à la demande). Purgé 6 mois après cette suppression effective par
+**Trace de compte supprimé** : `AccountDeletionService::purgeExpired()` enregistre l'email et
+son hash SHA-256 dans `DeletedAccountTrace`, à la suppression effective du compte (pas à la
+demande). L'email sert uniquement à l'admin (« Comptes supprimés », qui n'affiche plus le hash) ;
+la détection de réinscription compare le hash (les traces d'avant 2026-10-22 n'ont pas d'email). Purgé 6 mois après cette suppression effective par
 `app:deleted-account-trace:purge` (`DeletedAccountTracePurgeCommand`) — délibérément plus long que
 la rétention du compte lui-même (30 jours), pour une fenêtre de détection de réinscription
 réaliste. À la confirmation d'email (pas à l'inscription, cf. ci-dessous),

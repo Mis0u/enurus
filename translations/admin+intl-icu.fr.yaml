@@ -75,7 +75,7 @@ admin:
     deleted_account_trace:
         field:
             deleted_at: "Supprimé le"
-            email_hash: "Hash email"
+            email: Email
         label:
             plural: "Comptes supprimés"
             singular: "Compte supprimé"
