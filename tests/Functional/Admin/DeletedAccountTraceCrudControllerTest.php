@@ -18,7 +18,7 @@ final class DeletedAccountTraceCrudControllerTest extends WebTestCase
 
     private const string ADMIN = 'admin-fixture@test.com';
 
-    public function testIndexListsTraceHashWithoutLeakingEmail(): void
+    public function testIndexListsDeletedEmail(): void
     {
         $client = $this->login(self::ADMIN);
 
@@ -27,6 +27,7 @@ final class DeletedAccountTraceCrudControllerTest extends WebTestCase
 
         $trace = new DeletedAccountTrace();
         $trace->emailHash = hash('sha256', 'trace-test@test.com');
+        $trace->email = 'trace-test@test.com';
         $trace->deletedAt = new \DateTimeImmutable();
         $entityManager->persist($trace);
         $entityManager->flush();
@@ -38,8 +39,8 @@ final class DeletedAccountTraceCrudControllerTest extends WebTestCase
         $client->request(Request::METHOD_GET, $indexUrl);
 
         self::assertResponseIsSuccessful();
-        self::assertSelectorTextContains('body', $trace->emailHash);
-        self::assertSelectorTextNotContains('body', 'trace-test@test.com');
+        self::assertSelectorTextContains('body', 'trace-test@test.com');
+        self::assertSelectorTextNotContains('body', $trace->emailHash);
 
         $entityManager->remove($trace);
         $entityManager->flush();

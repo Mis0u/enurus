@@ -17,8 +17,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Lecture seule — visibilité sur les comptes supprimés en attente de purge (6 mois, cf.
- * DeletedAccountTracePurgeCommand) et les réinscriptions détectées, sans exposer d'email en clair
- * (seul un hash SHA-256 est stocké, cf. AccountDeletionService).
+ * DeletedAccountTracePurgeCommand). Le hash, qui ne sert qu'à détecter les réinscriptions, n'est
+ * pas affiché.
  *
  * @extends AbstractCrudController<DeletedAccountTrace>
  */
@@ -49,7 +49,7 @@ final class DeletedAccountTraceCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('emailHash', $this->trans('admin.deleted_account_trace.field.email_hash'));
+        yield TextField::new('email', $this->trans('admin.deleted_account_trace.field.email'));
         yield DateTimeField::new('deletedAt', $this->trans('admin.deleted_account_trace.field.deleted_at'));
     }
 

@@ -12,9 +12,9 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 /**
- * Trace minimale (hash SHA-256 de l'email + date) laissée par un compte purgé — sert à détecter
- * une réinscription avec le même email et à en notifier l'admin (TODO #21). Jamais l'email en
- * clair : seul un hash est conservé, retenu 30 jours puis purgé (DeletedAccountTracePurgeCommand).
+ * Trace laissée par un compte purgé (email, son hash SHA-256 et la date), retenue 6 mois puis
+ * purgée (DeletedAccountTracePurgeCommand). Le hash sert à détecter une réinscription avec le même
+ * email et à en notifier l'admin ; l'email, à savoir quel compte a été supprimé.
  */
 #[ORM\Entity(repositoryClass: DeletedAccountTraceRepository::class)]
 class DeletedAccountTrace
@@ -36,6 +36,19 @@ class DeletedAccountTrace
         }
         set(string $emailHash) {
             $this->emailHash = $emailHash;
+        }
+    }
+
+    /**
+     * Null pour les traces enregistrées avant que l'email ne soit conservé (seul le hash l'était).
+     */
+    #[ORM\Column(type: Types::STRING, length: 180, nullable: true)]
+    public ?string $email = null {
+        get {
+            return $this->email;
+        }
+        set(?string $email) {
+            $this->email = $email;
         }
     }
 

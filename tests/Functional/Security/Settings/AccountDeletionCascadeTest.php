@@ -8,6 +8,7 @@ use App\Entity\Exercise;
 use App\Entity\Routine;
 use App\Entity\User;
 use App\Entity\Workout;
+use App\Repository\DeletedAccountTraceRepository;
 use App\Repository\ExerciseRepository;
 use App\Repository\RoutineRepository;
 use App\Repository\UserRepository;
@@ -88,5 +89,34 @@ final class AccountDeletionCascadeTest extends KernelTestCase
         self::assertNull($workoutRepository->find($workoutId));
 
         self::assertNotNull($exerciseRepository->find($publicExerciseId), "L'exercice public ne doit jamais être supprimé");
+    }
+
+    public function testPurgedAccountLeavesTraceWithItsEmail(): void
+    {
+        self::bootKernel();
+
+        /** @var EntityManagerInterface $em */
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+
+        $user = new User();
+        $user->email = 'trace-email@test.com';
+        $user->password = 'hashed';
+        $user->nickname = 'TraceEmail';
+        $user->lastLogin = new \DateTimeImmutable();
+        $user->deletionRequestedAt = new \DateTimeImmutable('-35 days');
+        $em->persist($user);
+        $em->flush();
+        $em->clear();
+
+        /** @var AccountDeletionService $accountDeletionService */
+        $accountDeletionService = static::getContainer()->get(AccountDeletionService::class);
+        $accountDeletionService->purgeExpired();
+
+        /** @var DeletedAccountTraceRepository $traceRepository */
+        $traceRepository = static::getContainer()->get(DeletedAccountTraceRepository::class);
+        $trace = $traceRepository->findByEmailHash(hash('sha256', 'trace-email@test.com'));
+
+        self::assertNotNull($trace);
+        self::assertSame('trace-email@test.com', $trace->email);
     }
 }

@@ -21,7 +21,7 @@ readonly class AccountDeletionService
     private const int RETENTION_DAYS = 30;
 
     /**
-     * Durée de conservation du hash d'email dans DeletedAccountTrace, à compter de la suppression
+     * Durée de conservation de DeletedAccountTrace (email et son hash), à compter de la suppression
      * effective du compte (pas de la demande) — délibérément plus longue que la rétention du
      * compte lui-même, pour couvrir une fenêtre de détection de réinscription réaliste.
      */
@@ -153,6 +153,7 @@ readonly class AccountDeletionService
     {
         $trace = new DeletedAccountTrace();
         $trace->emailHash = hash('sha256', mb_strtolower(trim($user->email)));
+        $trace->email = $user->email;
         $trace->deletedAt = now();
 
         $this->entityManager->persist($trace);
