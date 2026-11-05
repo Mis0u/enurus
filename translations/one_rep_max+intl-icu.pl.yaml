@@ -1,0 +1,64 @@
+call_to_action:
+    dashboard: "Mój panel"
+    register: "Załóż konto"
+    text: "Zapisuj treningi w Enurus i śledź swoje postępy, ćwiczenie po ćwiczeniu."
+    title: "Śledź swoją siłę trening po treningu"
+
+eyebrow: "Darmowe narzędzie"
+
+faq:
+    bodyweight:
+        answer: "Twoje rzeczywiste obciążenie to część masy ciała plus ewentualne dodatkowe obciążenie. Przy podciąganiu podnosisz około 92 % swojej masy: przy 78 kg i 10 kg obciążenia to około 82 kg. Wpisz to rzeczywiste obciążenie do kalkulatora."
+        question: "A podciąganie lub dipy?"
+    formula:
+        answer: "Wzorem Epleya, najczęściej stosowanym:"
+        example: "Przykład: 80 kg podniesione 6 razy dają szacowany 1RM równy 96 kg."
+        expression: "1RM = ciężar × (1 + powtórzenia ÷ 30)"
+        question: "Jak się go oblicza?"
+    max_reps:
+        answer: "Im dłuższa seria, tym większą rolę gra wytrzymałość i tym mniej dokładne jest oszacowanie. Powyżej 10 powtórzeń traktuj wynik jako rząd wielkości."
+        question: "Dlaczego maksymalnie 12 powtórzeń?"
+    testing:
+        answer: "Nie trzeba: oszacowanie wystarczy, by dobrać obciążenia, bez ryzyka próby maksymalnej. Jeśli chcesz go sprawdzić, dobrze się rozgrzej i poproś kogoś o asekurację."
+        question: "Czy trzeba testować prawdziwy 1RM?"
+    title: "Wszystko o 1RM"
+    what:
+        answer: "1RM (one-rep max) to największy ciężar, jaki możesz podnieść jeden raz z poprawną techniką. To punkt odniesienia do doboru obciążeń: na przykład trening na 80 % swojego 1RM."
+        question: "Czym jest 1RM?"
+
+form:
+    reps: "Powtórzenia"
+    reps_hint: "Od 1 do 12"
+    title: "Twoja seria"
+    unit: "Jednostka"
+    weight: "Podniesiony ciężar"
+
+guides:
+    title: "Poprawna technika głównych ćwiczeń"
+
+heading: "Kalkulator 1RM"
+
+intro: "Oszacuj maksymalny ciężar, jaki podniesiesz w jednym powtórzeniu, na podstawie serii, którą naprawdę wykonałeś. Dostaniesz też swoje obciążenia treningowe od 60 do 100 %."
+
+meta_description: "Darmowy kalkulator 1RM: oszacuj swój ciężar maksymalny na jedno powtórzenie na podstawie serii i poznaj obciążenia treningowe od 60 do 100 %, w kg lub lbs."
+
+perks:
+    no_max_test: "Bez próby maksymalnej"
+    plates: "Obciążenia zaokrąglone do najbliższego talerza"
+    units: "W kilogramach lub funtach"
+
+result:
+    formula: "Wzór Epleya · oszacowanie, nie pomiar"
+    invalid: "Wpisz ciężar i liczbę powtórzeń od 1 do 12."
+    label: "Twój szacowany 1RM"
+    warning: "Powyżej 10 powtórzeń oszacowanie jest mniej dokładne: traktuj je jako rząd wielkości."
+
+table:
+    intro: "Obliczone na podstawie szacowanego 1RM, zaokrąglone do najbliższego talerza."
+    load: "Ciężar"
+    note: "Możliwe powtórzenia: orientacyjne, z tego samego wzoru."
+    percent: "% 1RM"
+    reps: "Możliwe powtórzenia"
+    title: "Twoje obciążenia treningowe"
+
+title: "Kalkulator 1RM"

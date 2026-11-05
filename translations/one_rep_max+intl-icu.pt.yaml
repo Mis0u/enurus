@@ -1,0 +1,64 @@
+call_to_action:
+    dashboard: "O meu painel"
+    register: "Criar a minha conta"
+    text: "Regista os teus treinos no Enurus e acompanha a tua evolução, exercício a exercício."
+    title: "Acompanha a tua força treino após treino"
+
+eyebrow: "Ferramenta gratuita"
+
+faq:
+    bodyweight:
+        answer: "A tua carga real é uma parte do teu peso corporal mais o lastro. Nas elevações levantas cerca de 92 % do teu peso: com 78 kg e 10 kg de lastro, a carga real é de cerca de 82 kg. Introduz essa carga real na calculadora."
+        question: "E para elevações ou fundos?"
+    formula:
+        answer: "Com a fórmula de Epley, a mais utilizada:"
+        example: "Exemplo: 80 kg levantados 6 vezes dão um 1RM estimado de 96 kg."
+        expression: "1RM = peso × (1 + repetições ÷ 30)"
+        question: "Como é calculado?"
+    max_reps:
+        answer: "Quanto mais longa a série, mais a resistência entra em jogo e menos fiável é a estimativa. Acima de 10 repetições, considera o resultado uma ordem de grandeza."
+        question: "Porquê 12 repetições no máximo?"
+    testing:
+        answer: "Não é preciso: a estimativa chega para ajustar as tuas séries, sem o risco de uma tentativa máxima. Se quiseres testar, aquece bem e pede a alguém que te ajude."
+        question: "Deve-se testar o verdadeiro 1RM?"
+    title: "Tudo sobre o 1RM"
+    what:
+        answer: "O 1RM (one-rep max) é a carga mais pesada que consegues levantar uma única vez, com boa técnica. É a referência para ajustar as tuas séries: treinar a 80 % do teu 1RM, por exemplo."
+        question: "O que é o 1RM?"
+
+form:
+    reps: "Repetições"
+    reps_hint: "De 1 a 12"
+    title: "A tua série"
+    unit: "Unidade"
+    weight: "Peso levantado"
+
+guides:
+    title: "Executar bem os grandes exercícios"
+
+heading: "Calculadora de 1RM"
+
+intro: "Estima a carga máxima que consegues levantar numa repetição, a partir de uma série que fizeste mesmo. Obténs também as tuas cargas de treino, de 60 a 100 %."
+
+meta_description: "Calculadora de 1RM gratuita: estima a tua carga máxima numa repetição a partir de uma série e obtém as tuas cargas de treino de 60 a 100 %, em kg ou lbs."
+
+perks:
+    no_max_test: "Sem testar a carga máxima"
+    plates: "Cargas arredondadas ao disco mais próximo"
+    units: "Em quilos ou em libras"
+
+result:
+    formula: "Fórmula de Epley · uma estimativa, não uma medição"
+    invalid: "Introduz um peso e um número de repetições entre 1 e 12."
+    label: "O teu 1RM estimado"
+    warning: "Acima de 10 repetições a estimativa é menos fiável: considera-a uma ordem de grandeza."
+
+table:
+    intro: "Calculadas a partir do teu 1RM estimado, arredondadas ao disco mais próximo."
+    load: "Carga"
+    note: "Repetições possíveis: indicativas, da mesma fórmula."
+    percent: "% do 1RM"
+    reps: "Repetições possíveis"
+    title: "As tuas cargas de treino"
+
+title: "Calculadora de 1RM"

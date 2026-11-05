@@ -1,0 +1,64 @@
+call_to_action:
+    dashboard: "Mein Dashboard"
+    register: "Konto erstellen"
+    text: "Trage deine Trainings in Enurus ein und verfolge deinen Fortschritt, Übung für Übung."
+    title: "Verfolge deine Kraft von Training zu Training"
+
+eyebrow: "Kostenloses Tool"
+
+faq:
+    bodyweight:
+        answer: "Deine echte Last ist ein Teil deines Körpergewichts plus Zusatzgewicht. Bei Klimmzügen hebst du etwa 92 % deines Gewichts: bei 78 kg mit 10 kg Zusatzgewicht sind das rund 82 kg. Gib diese echte Last in den Rechner ein."
+        question: "Und bei Klimmzügen oder Dips?"
+    formula:
+        answer: "Mit der Epley-Formel, der gebräuchlichsten:"
+        example: "Beispiel: 80 kg, 6 Mal gehoben, ergeben ein geschätztes 1RM von 96 kg."
+        expression: "1RM = Gewicht × (1 + Wiederholungen ÷ 30)"
+        question: "Wie wird es berechnet?"
+    max_reps:
+        answer: "Je länger der Satz, desto mehr spielt die Ausdauer mit und desto ungenauer wird die Schätzung. Ab 10 Wiederholungen ist das Ergebnis nur ein Richtwert."
+        question: "Warum höchstens 12 Wiederholungen?"
+    testing:
+        answer: "Nicht nötig: Die Schätzung reicht, um deine Sätze zu dosieren, ohne das Risiko eines Maximalversuchs. Wenn du es testen willst, wärm dich gut auf und lass dich sichern."
+        question: "Sollte man sein echtes 1RM testen?"
+    title: "Alles über das 1RM"
+    what:
+        answer: "Das 1RM (One-Rep-Max) ist die schwerste Last, die du mit sauberer Technik ein einziges Mal heben kannst. Es ist die Referenz, um deine Sätze zu dosieren: etwa mit 80 % deines 1RM trainieren."
+        question: "Was ist das 1RM?"
+
+form:
+    reps: "Wiederholungen"
+    reps_hint: "Von 1 bis 12"
+    title: "Dein Satz"
+    unit: "Einheit"
+    weight: "Gehobenes Gewicht"
+
+guides:
+    title: "Die Grundübungen richtig ausführen"
+
+heading: "1RM-Rechner"
+
+intro: "Schätze die maximale Last, die du für eine Wiederholung heben kannst, anhand eines Satzes, den du wirklich gemacht hast. Dazu bekommst du deine Trainingslasten von 60 bis 100 %."
+
+meta_description: "Kostenloser 1RM-Rechner: Schätze dein Maximalgewicht für eine Wiederholung anhand eines Satzes und erhalte deine Trainingslasten von 60 bis 100 %, in kg oder lbs."
+
+perks:
+    no_max_test: "Ohne Maximalversuch"
+    plates: "Lasten auf die nächste Scheibe gerundet"
+    units: "In Kilo oder Pfund"
+
+result:
+    formula: "Epley-Formel · eine Schätzung, keine Messung"
+    invalid: "Gib ein Gewicht und eine Wiederholungszahl zwischen 1 und 12 ein."
+    label: "Dein geschätztes 1RM"
+    warning: "Ab 10 Wiederholungen wird die Schätzung ungenauer: Nimm sie als Richtwert."
+
+table:
+    intro: "Berechnet aus deinem geschätzten 1RM, auf die nächste Scheibe gerundet."
+    load: "Last"
+    note: "Mögliche Wiederholungen: Richtwerte aus derselben Formel."
+    percent: "% des 1RM"
+    reps: "Mögliche Wiederholungen"
+    title: "Deine Trainingslasten"
+
+title: "1RM-Rechner"

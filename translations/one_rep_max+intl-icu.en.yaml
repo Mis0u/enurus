@@ -1,0 +1,64 @@
+call_to_action:
+    dashboard: "My dashboard"
+    register: "Create my account"
+    text: "Log your workouts on Enurus and follow your progress, exercise by exercise."
+    title: "Track your strength workout after workout"
+
+eyebrow: "Free tool"
+
+faq:
+    bodyweight:
+        answer: "Your real load is part of your bodyweight plus any extra weight. On pull-ups you lift about 92 % of your bodyweight: at 78 kg with 10 kg added, the real load is about 82 kg. Enter that real load in the calculator."
+        question: "What about pull-ups or dips?"
+    formula:
+        answer: "With the Epley formula, the most widely used one:"
+        example: "Example: 80 kg lifted 6 times gives an estimated 1RM of 96 kg."
+        expression: "1RM = weight × (1 + reps ÷ 30)"
+        question: "How is it calculated?"
+    max_reps:
+        answer: "The longer the set, the more endurance comes into play and the less reliable the estimate. Beyond 10 reps, treat the result as a ballpark figure."
+        question: "Why 12 reps at most?"
+    testing:
+        answer: "No need: the estimate is enough to set your training loads, without the risk of a max attempt. If you do want to test it, warm up well and have a spotter."
+        question: "Should you test your true 1RM?"
+    title: "All about the 1RM"
+    what:
+        answer: "Your 1RM (one-rep max) is the heaviest load you can lift once, with proper form. It is the reference for setting your training loads: working at 80 % of your 1RM, for example."
+        question: "What is the 1RM?"
+
+form:
+    reps: "Reps"
+    reps_hint: "From 1 to 12"
+    title: "Your set"
+    unit: "Unit"
+    weight: "Weight lifted"
+
+guides:
+    title: "Perform the main lifts well"
+
+heading: "One-rep max calculator"
+
+intro: "Estimate the heaviest load you can lift for one rep, from a set you actually did. You also get your training loads, from 60 to 100 %."
+
+meta_description: "Free one-rep max calculator: estimate your 1RM from a single set and get your training loads from 60 to 100 %, in kg or lbs."
+
+perks:
+    no_max_test: "No max attempt needed"
+    plates: "Loads rounded to the nearest plate"
+    units: "In kilos or pounds"
+
+result:
+    formula: "Epley formula · an estimate, not a measurement"
+    invalid: "Enter a weight and a number of reps between 1 and 12."
+    label: "Your estimated 1RM"
+    warning: "Beyond 10 reps the estimate gets less reliable: treat it as a ballpark figure."
+
+table:
+    intro: "Based on your estimated 1RM, rounded to the nearest plate."
+    load: "Load"
+    note: "Possible reps: a guide only, from the same formula."
+    percent: "% of 1RM"
+    reps: "Possible reps"
+    title: "Your training loads"
+
+title: "One-rep max calculator"

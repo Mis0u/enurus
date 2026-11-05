@@ -1,0 +1,64 @@
+call_to_action:
+    dashboard: "Mijn dashboard"
+    register: "Account aanmaken"
+    text: "Noteer je trainingen in Enurus en volg je vooruitgang, oefening per oefening."
+    title: "Volg je kracht van training tot training"
+
+eyebrow: "Gratis tool"
+
+faq:
+    bodyweight:
+        answer: "Je echte belasting is een deel van je lichaamsgewicht plus extra gewicht. Bij optrekken til je ongeveer 92 % van je gewicht: bij 78 kg met 10 kg extra is de echte belasting ongeveer 82 kg. Vul die echte belasting in de calculator in."
+        question: "En bij optrekken of dips?"
+    formula:
+        answer: "Met de formule van Epley, de meest gebruikte:"
+        example: "Voorbeeld: 80 kg die je 6 keer tilt, geven een geschatte 1RM van 96 kg."
+        expression: "1RM = gewicht × (1 + herhalingen ÷ 30)"
+        question: "Hoe wordt het berekend?"
+    max_reps:
+        answer: "Hoe langer de set, hoe meer uithoudingsvermogen meespeelt en hoe minder betrouwbaar de schatting. Boven de 10 herhalingen is het resultaat een grootteorde."
+        question: "Waarom maximaal 12 herhalingen?"
+    testing:
+        answer: "Niet nodig: de schatting volstaat om je sets te doseren, zonder het risico van een maximale poging. Wil je het toch testen, warm dan goed op en laat iemand je assisteren."
+        question: "Moet je je echte 1RM testen?"
+    title: "Alles over de 1RM"
+    what:
+        answer: "De 1RM (one-rep max) is het zwaarste gewicht dat je met goede techniek één keer kunt tillen. Het is de referentie om je sets te doseren: trainen op 80 % van je 1RM, bijvoorbeeld."
+        question: "Wat is de 1RM?"
+
+form:
+    reps: "Herhalingen"
+    reps_hint: "Van 1 tot 12"
+    title: "Jouw set"
+    unit: "Eenheid"
+    weight: "Getild gewicht"
+
+guides:
+    title: "De basisoefeningen goed uitvoeren"
+
+heading: "1RM-calculator"
+
+intro: "Schat het maximale gewicht dat je voor één herhaling kunt tillen, op basis van een set die je echt hebt gedaan. Je krijgt ook je trainingsgewichten, van 60 tot 100 %."
+
+meta_description: "Gratis 1RM-calculator: schat je maximale gewicht voor één herhaling op basis van een set en krijg je trainingsgewichten van 60 tot 100 %, in kg of lbs."
+
+perks:
+    no_max_test: "Zonder maximale poging"
+    plates: "Gewichten afgerond op de dichtstbijzijnde schijf"
+    units: "In kilo of pond"
+
+result:
+    formula: "Formule van Epley · een schatting, geen meting"
+    invalid: "Vul een gewicht en een aantal herhalingen tussen 1 en 12 in."
+    label: "Jouw geschatte 1RM"
+    warning: "Boven de 10 herhalingen wordt de schatting minder betrouwbaar: zie het als een grootteorde."
+
+table:
+    intro: "Berekend op je geschatte 1RM, afgerond op de dichtstbijzijnde schijf."
+    load: "Gewicht"
+    note: "Mogelijke herhalingen: indicatief, uit dezelfde formule."
+    percent: "% van de 1RM"
+    reps: "Mogelijke herhalingen"
+    title: "Jouw trainingsgewichten"
+
+title: "1RM-calculator"

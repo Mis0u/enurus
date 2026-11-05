@@ -1,0 +1,15 @@
+<section aria-labelledby="one-rep-max-faq" class="flex flex-col gap-5">
+    <h2 id="one-rep-max-faq" class="font-rajdhani font-bold text-3xl text-slate-50">{{ 'faq.title'|trans({}, 'one_rep_max') }}</h2>
+    <div class="flex flex-wrap gap-4">
+        {% for question in ['what', 'formula', 'max_reps', 'bodyweight', 'testing'] %}
+            <article class="flex-[1_1_320px] min-w-0 p-5.5 rounded-2xl border border-white/[0.07] bg-bg-card">
+                <h3 class="mb-2.5 font-rajdhani font-bold text-xl text-slate-50">{{ ('faq.' ~ question ~ '.question')|trans({}, 'one_rep_max') }}</h3>
+                <p class="text-[15px] leading-relaxed text-slate-300">{{ ('faq.' ~ question ~ '.answer')|trans({}, 'one_rep_max') }}</p>
+                {% if question == 'formula' %}
+                    <p class="my-3 px-3.5 py-2.5 rounded-lg bg-bg-base font-rajdhani font-bold text-lg text-slate-50">{{ 'faq.formula.expression'|trans({}, 'one_rep_max') }}</p>
+                    <p class="text-[15px] leading-relaxed text-slate-300">{{ 'faq.formula.example'|trans({}, 'one_rep_max') }}</p>
+                {% endif %}
+            </article>
+        {% endfor %}
+    </div>
+</section>

@@ -1,0 +1,21 @@
+{#
+    Paramètres :
+      - isLoggedIn : bool — un membre retourne à son tableau de bord au lieu de s'inscrire.
+#}
+<section id="one-rep-max-cta" aria-labelledby="one-rep-max-cta-title" class="rounded-[20px] p-px bg-gradient-to-r from-rose-ft to-cyan-ft">
+    <div class="flex flex-wrap items-center justify-between gap-6 p-6 md:p-10 rounded-[19px] bg-bg-card">
+        <div class="flex-[1_1_420px] min-w-0 flex flex-col gap-2.5">
+            <h2 id="one-rep-max-cta-title" class="font-rajdhani font-bold text-3xl text-slate-50">{{ 'call_to_action.title'|trans({}, 'one_rep_max') }}</h2>
+            <p class="text-base leading-relaxed text-slate-300">{{ 'call_to_action.text'|trans({}, 'one_rep_max') }}</p>
+        </div>
+        {% if isLoggedIn %}
+            <a href="{{ path('app_dashboard') }}" class="inline-flex items-center justify-center h-13 px-7 rounded-xl bg-cyan-700 hover:bg-cyan-800 text-white font-semibold whitespace-nowrap no-underline transition-colors max-sm:w-full">
+                {{ 'call_to_action.dashboard'|trans({}, 'one_rep_max') }}
+            </a>
+        {% else %}
+            <a href="{{ path('app_register') }}" class="inline-flex items-center justify-center h-13 px-7 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold whitespace-nowrap no-underline transition-colors max-sm:w-full">
+                {{ 'call_to_action.register'|trans({}, 'one_rep_max') }}
+            </a>
+        {% endif %}
+    </div>
+</section>

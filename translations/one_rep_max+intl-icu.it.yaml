@@ -1,0 +1,64 @@
+call_to_action:
+    dashboard: "La mia dashboard"
+    register: "Crea il mio account"
+    text: "Registra i tuoi allenamenti su Enurus e segui i tuoi progressi, esercizio per esercizio."
+    title: "Segui la tua forza allenamento dopo allenamento"
+
+eyebrow: "Strumento gratuito"
+
+faq:
+    bodyweight:
+        answer: "Il tuo carico reale è una parte del tuo peso corporeo più l'eventuale zavorra. Nelle trazioni sollevi circa il 92 % del tuo peso: a 78 kg con 10 kg di zavorra, il carico reale è di circa 82 kg. Inserisci questo carico reale nel calcolatore."
+        question: "E per trazioni o dip?"
+    formula:
+        answer: "Con la formula di Epley, la più usata:"
+        example: "Esempio: 80 kg sollevati 6 volte danno un 1RM stimato di 96 kg."
+        expression: "1RM = peso × (1 + ripetizioni ÷ 30)"
+        question: "Come si calcola?"
+    max_reps:
+        answer: "Più la serie è lunga, più entra in gioco la resistenza e meno la stima è affidabile. Oltre le 10 ripetizioni, considera il risultato un ordine di grandezza."
+        question: "Perché al massimo 12 ripetizioni?"
+    testing:
+        answer: "Non serve: la stima basta per dosare le tue serie, senza il rischio di una prova massimale. Se vuoi comunque testarlo, scaldati bene e fatti assistere da un compagno."
+        question: "Bisogna testare il proprio vero 1RM?"
+    title: "Tutto sull'1RM"
+    what:
+        answer: "L'1RM (one-rep max) è il carico più pesante che puoi sollevare una sola volta, con una tecnica corretta. È il riferimento per dosare le tue serie: lavorare all'80 % del proprio 1RM, per esempio."
+        question: "Che cos'è l'1RM?"
+
+form:
+    reps: "Ripetizioni"
+    reps_hint: "Da 1 a 12"
+    title: "La tua serie"
+    unit: "Unità"
+    weight: "Peso sollevato"
+
+guides:
+    title: "Eseguire bene i grandi esercizi"
+
+heading: "Calcolatore 1RM"
+
+intro: "Stima il carico massimo che puoi sollevare per una ripetizione, partendo da una serie che hai fatto davvero. Ottieni anche i tuoi carichi di allenamento, dal 60 al 100 %."
+
+meta_description: "Calcolatore 1RM gratuito: stima il tuo carico massimale su una ripetizione partendo da una serie e ottieni i tuoi carichi di allenamento dal 60 al 100 %, in kg o lbs."
+
+perks:
+    no_max_test: "Senza provare il carico massimale"
+    plates: "Carichi arrotondati al disco più vicino"
+    units: "In chili o in libbre"
+
+result:
+    formula: "Formula di Epley · una stima, non una misura"
+    invalid: "Inserisci un peso e un numero di ripetizioni tra 1 e 12."
+    label: "Il tuo 1RM stimato"
+    warning: "Oltre le 10 ripetizioni la stima è meno affidabile: considerala un ordine di grandezza."
+
+table:
+    intro: "Calcolati sul tuo 1RM stimato, arrotondati al disco più vicino."
+    load: "Carico"
+    note: "Ripetizioni possibili: indicative, dalla stessa formula."
+    percent: "% dell'1RM"
+    reps: "Ripetizioni possibili"
+    title: "I tuoi carichi di allenamento"
+
+title: "Calcolatore 1RM"
