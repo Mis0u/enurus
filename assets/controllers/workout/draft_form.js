@@ -23,7 +23,7 @@ export function restoreDraftFields(root, draft) {
 function readRoutineId(root) {
     const isRoutineSession = !root.querySelector('#routine-selector')?.classList.contains('hidden');
 
-    return isRoutineSession ? (root.querySelector('#workout-routine')?.value ?? '') : '';
+    return isRoutineSession ? (root.querySelector('#workout_routine')?.value ?? '') : '';
 }
 
 // Une carte bloquée (exercice au poids de corps sans poids renseigné) n'a que des champs
@@ -73,7 +73,7 @@ function restoreValue(input, value) {
 // Valeur posée sans événement `change` : le chargement des exercices de la routine
 // (routine-loader_controller.js) écraserait ceux du brouillon.
 function restoreRoutine(root, routineId) {
-    const select = root.querySelector('#workout-routine');
+    const select = root.querySelector('#workout_routine');
     const routineExists = select && [...select.options].some((option) => option.value === routineId);
 
     if (!routineId || !routineExists) {
