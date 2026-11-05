@@ -7,6 +7,7 @@
       poids a déjà été renseigné sur au moins une séance (lest optionnel).
     - unitLabel : string
     - measurementType : string ('weight_reps'|'time'|'distance')
+    - oneRepMax : OneRepMaxEstimate|null — 1RM estimé, affiché sous le record actuel.
 #}
 <section class="mb-7">
     <h2 class="font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4] mb-3">
@@ -29,6 +30,9 @@
                 <div class="text-[11px] text-[#64748b] mt-0.5">
                     {{ overview.recordDate|format_date('medium', locale=app.request.locale) }}
                 </div>
+            {% endif %}
+            {% if oneRepMax is not null %}
+                {% include 'exercise/history/_one_rep_max.html.twig' with {oneRepMax: oneRepMax, unitLabel: unitLabel} only %}
             {% endif %}
         </div>
 

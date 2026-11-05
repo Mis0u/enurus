@@ -16,6 +16,7 @@ use App\Service\Goal\GoalCardFormatter;
 use App\Service\Goal\GoalProgress;
 use App\Service\Goal\GoalProgressResolver;
 use App\Service\Goal\GoalStateResolver;
+use App\Service\OneRepMax\ExerciseOneRepMaxEstimator;
 use App\Service\Utils\WeightConverterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -50,6 +51,7 @@ final class ExerciseHistoryController extends AbstractController
         GoalStateResolver $goalStateResolver,
         GoalCardFormatter $goalCardFormatter,
         WeightConverterService $weightConverterService,
+        ExerciseOneRepMaxEstimator $oneRepMaxEstimator,
     ): Response {
         $this->denyAccessUnlessGranted(ExerciseVoter::VIEW, $exercise);
 
@@ -92,6 +94,7 @@ final class ExerciseHistoryController extends AbstractController
             'goalFieldName' => self::goalFieldName($exercise->measurementType),
             'goalHistoryCards' => $goalHistoryCards,
             'bodyweightGoalBlocked' => $bodyweightGoalBlocked,
+            'oneRepMax' => $oneRepMaxEstimator->estimate($user, $exercise),
             ...$data,
         ]);
     }

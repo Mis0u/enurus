@@ -383,6 +383,9 @@ exercise:
             current_record: Huidig record
             last_practiced: Laatst uitgevoerd
             max_weight: Maximaal gewicht
+            one_rep_max:
+                label: "Geschatte 1RM"
+                source: "op basis van {weight} {unit} × {reps} · {date}"
             progression: Voortgang
             title: Overzicht
             total_sessions: Totaal aantal sessies

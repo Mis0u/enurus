@@ -383,6 +383,9 @@ exercise:
             current_record: Recorde atual
             last_practiced: Última vez praticado
             max_weight: Peso máximo
+            one_rep_max:
+                label: "1RM estimado"
+                source: "a partir de {weight} {unit} × {reps} · {date}"
             progression: Progressão
             title: Resumo
             total_sessions: Sessões totais
