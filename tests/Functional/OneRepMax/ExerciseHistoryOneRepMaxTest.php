@@ -50,6 +50,18 @@ final class ExerciseHistoryOneRepMaxTest extends WebTestCase
         self::assertCount(1, $crawler->filter(self::ONE_REP_MAX . ' a[href="/fr/reglages#fieldBodyweight"]'));
     }
 
+    public function testATimedExerciseExplainsWhyItHasNoOneRepMax(): void
+    {
+        $client = $this->login(self::USER);
+        $exercise = $this->loggedExercise(MeasurementType::WEIGHT_REPS, bodyweight: false);
+        $exercise->measurementType = MeasurementType::TIME;
+        $this->entityManager()->flush();
+
+        $client->request(Request::METHOD_GET, $this->historyUrl($exercise));
+
+        self::assertSelectorTextContains(self::ONE_REP_MAX, 'se mesure en temps');
+    }
+
     public function testAnExerciseWithoutHistoryShowsNoEstimate(): void
     {
         $client = $this->login(self::USER);

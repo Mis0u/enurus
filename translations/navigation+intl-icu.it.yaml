@@ -389,6 +389,7 @@ exercise:
                     text: "Il tuo carico reale include una parte del tuo peso corporeo: inseriscilo per stimare il tuo 1RM."
                 includes_bodyweight: "peso corporeo incluso"
                 label: "1RM stimato"
+                not_applicable: "Nessun 1RM per questo esercizio: l'1RM misura un carico su una ripetizione, e questo esercizio si misura {type, select, time {in tempo} other {in distanza}}."
                 source: "da {weight} {unit} × {reps} · {date}"
             progression: Progressione
             title: Panoramica

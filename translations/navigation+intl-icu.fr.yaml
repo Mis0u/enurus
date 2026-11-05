@@ -389,6 +389,7 @@ exercise:
                     text: "Ta vraie charge comprend une partie de ton poids de corps : renseigne-le pour estimer ton 1RM."
                 includes_bodyweight: "poids de corps compris"
                 label: "1RM estimé"
+                not_applicable: "Pas de 1RM pour cet exercice : le 1RM mesure une charge sur une répétition, et cet exercice se mesure {type, select, time {en temps} other {en distance}}."
                 source: "d'après {weight} {unit} × {reps} · {date}"
             progression: Progression
             title: Aperçu

@@ -36,6 +36,8 @@
                 {% include 'exercise/history/_one_rep_max_bodyweight_missing.html.twig' only %}
             {% elseif oneRepMax is not null %}
                 {% include 'exercise/history/_one_rep_max.html.twig' with {oneRepMax: oneRepMax, unitLabel: unitLabel} only %}
+            {% elseif measurementType != 'weight_reps' %}
+                {% include 'exercise/history/_one_rep_max_not_applicable.html.twig' with {measurementType: measurementType} only %}
             {% endif %}
         </div>
 

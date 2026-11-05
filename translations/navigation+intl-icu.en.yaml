@@ -389,6 +389,7 @@ exercise:
                     text: "Your real load includes part of your bodyweight: add it to estimate your 1RM."
                 includes_bodyweight: "bodyweight included"
                 label: "Estimated 1RM"
+                not_applicable: "No 1RM for this exercise: the 1RM measures a load over one rep, and this exercise is measured {type, select, time {in time} other {in distance}}."
                 source: "from {weight} {unit} × {reps} · {date}"
             progression: Progression
             title: Overview
