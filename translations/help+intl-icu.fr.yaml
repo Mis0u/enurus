@@ -43,6 +43,7 @@ section:
             create: "« Créer un exercice » : donne-lui un nom, ses muscles principaux et secondaires, et sa façon de le mesurer (poids et répétitions, durée ou distance)."
             goals: "Sur cette même page, fixe-toi un objectif (par exemple 100 kg × 5) : sa progression s'affiche sur ton tableau de bord."
             history: "L'icône graphique d'un exercice ouvre son historique : courbe de progression, séances passées et records."
+            one_rep_max: "Sous le record, l'historique affiche ton 1RM estimé : la charge que tu pourrais soulever une seule fois, calculée avec la formule d'Epley sur ta meilleure série de 12 répétitions au plus. Pour les tractions ou les dips, ton poids de corps est compris."
         title: "Bibliothèque et exercices"
     messaging:
         intro: "Une question, un bug, une idée ? Je te réponds directement."

@@ -9,6 +9,7 @@ use App\Entity\ExerciseSet;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
+use App\Enum\Entity\Exercise\MeasurementType;
 use App\Repository\ExerciseRepository;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
@@ -42,8 +43,15 @@ final class WorkoutTestHelper
 
     public static function getPublicExerciseId(ExerciseRepository $exerciseRepository): string
     {
+        // Tri explicite : sans lui, PostgreSQL rend les lignes dans leur ordre physique, qui change
+        // d'un chargement des fixtures à l'autre. Un exercice au poids de corps tiré au hasard
+        // faisait rejeter la séance (comptes de test sans poids de corps) : tests instables.
         $exercise = $exerciseRepository->findOneBy([
             'isPublic' => true,
+            'measurementType' => MeasurementType::WEIGHT_REPS,
+            'bodyweightPercent' => null,
+        ], [
+            'name' => 'ASC',
         ]);
 
         if (! $exercise instanceof Exercise) {

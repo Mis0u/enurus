@@ -106,6 +106,15 @@ final class HelpControllerTest extends WebTestCase
         self::assertCount(1, $crawler->filter('details#library a[href="/fr/bibliotheque"]'));
     }
 
+    public function testTheLibrarySectionExplainsTheEstimatedOneRepMax(): void
+    {
+        $client = $this->login(self::USER);
+
+        $client->request(Request::METHOD_GET, self::HELP_URL);
+
+        self::assertSelectorTextContains('details#library', '1RM estimé');
+    }
+
     public function testHelpIsReachableFromTheNavigation(): void
     {
         $client = $this->login(self::USER);

@@ -16,6 +16,7 @@ use App\Service\Goal\GoalCardFormatter;
 use App\Service\Goal\GoalProgress;
 use App\Service\Goal\GoalProgressResolver;
 use App\Service\Goal\GoalStateResolver;
+use App\Service\OneRepMax\ExerciseOneRepMaxEstimator;
 use App\Service\Utils\WeightConverterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -50,6 +51,7 @@ final class ExerciseHistoryController extends AbstractController
         GoalStateResolver $goalStateResolver,
         GoalCardFormatter $goalCardFormatter,
         WeightConverterService $weightConverterService,
+        ExerciseOneRepMaxEstimator $oneRepMaxEstimator,
     ): Response {
         $this->denyAccessUnlessGranted(ExerciseVoter::VIEW, $exercise);
 
@@ -67,7 +69,7 @@ final class ExerciseHistoryController extends AbstractController
             $limit,
         );
 
-        $bodyweightGoalBlocked = null !== $exercise->bodyweightPercent && null === $user->bodyweightKg;
+        $bodyweightMissing = null !== $exercise->bodyweightPercent && null === $user->bodyweightKg;
 
         $existingGoals = $exerciseGoalRepository->findAllByOwnerAndExercise($user, $exercise);
         $goal = $goalStateResolver->findActiveGoal($user, $existingGoals);
@@ -91,7 +93,8 @@ final class ExerciseHistoryController extends AbstractController
             'goalForm' => $goalForm,
             'goalFieldName' => self::goalFieldName($exercise->measurementType),
             'goalHistoryCards' => $goalHistoryCards,
-            'bodyweightGoalBlocked' => $bodyweightGoalBlocked,
+            'bodyweightMissing' => $bodyweightMissing,
+            'oneRepMax' => $oneRepMaxEstimator->estimate($user, $exercise),
             ...$data,
         ]);
     }

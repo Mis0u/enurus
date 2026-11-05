@@ -383,6 +383,15 @@ exercise:
             current_record: Record actuel
             last_practiced: Dernière fois pratiqué
             max_weight: Tonnage maximal
+            one_rep_max:
+                bodyweight_missing:
+                    cta: "Renseigner mon poids de corps"
+                    text: "Ta vraie charge comprend une partie de ton poids de corps : renseigne-le pour estimer ton 1RM."
+                help: "Comment est calculé le 1RM estimé ?"
+                includes_bodyweight: "poids de corps compris"
+                label: "1RM estimé"
+                not_applicable: "Pas de 1RM pour cet exercice : le 1RM mesure une charge sur une répétition, et cet exercice se mesure {type, select, time {en temps} other {en distance}}."
+                source: "d'après {weight} {unit} × {reps} · {date}"
             progression: Progression
             title: Aperçu
             total_sessions: Séances totales

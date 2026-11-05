@@ -11,6 +11,7 @@ use App\Entity\ExerciseSet;
 use App\Entity\User;
 use App\Entity\Workout;
 use App\Entity\WorkoutExercise;
+use App\Enum\Entity\Exercise\MeasurementType;
 use App\Repository\ExerciseGoalRepository;
 use App\Repository\ExerciseRepository;
 use App\Repository\UserRepository;
@@ -351,6 +352,10 @@ final class ExerciseGoalSaveControllerTest extends WebTestCase
         $repository = static::getContainer()->get(ExerciseRepository::class);
         $exercise = $repository->findOneBy([
             'isPublic' => true,
+            'measurementType' => MeasurementType::WEIGHT_REPS,
+            'bodyweightPercent' => null,
+        ], [
+            'name' => 'ASC',
         ]);
         self::assertNotNull($exercise);
 
