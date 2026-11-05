@@ -60,6 +60,7 @@ home:
         language: "Taal"
         login: "Inloggen"
         nav_label: "Account"
+        one_rep_max: "1RM-calculator"
     hero:
         badge: "Gratis en zonder advertenties"
         cta_login: "Ik heb al een account"

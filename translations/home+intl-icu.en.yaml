@@ -60,6 +60,7 @@ home:
         language: "Language"
         login: "Sign in"
         nav_label: "Account"
+        one_rep_max: "1RM calculator"
     hero:
         badge: "Free and ad-free"
         cta_login: "I already have an account"

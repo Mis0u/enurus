@@ -32,6 +32,14 @@ final class HomeControllerTest extends WebTestCase
         self::assertGreaterThan(0, $crawler->filter('a[href="/de/anmelden"]')->count());
     }
 
+    public function testVisitorFindsTheOneRepMaxCalculatorFromTheHeader(): void
+    {
+        $client = static::createClient();
+        $client->request(Request::METHOD_GET, '/fr/');
+
+        self::assertSelectorTextSame('header nav a[href="/fr/calculateur-1rm"]', 'Calculateur 1RM');
+    }
+
     public function testLanguageMenuShowsAFlagForEveryLanguage(): void
     {
         $client = static::createClient();
