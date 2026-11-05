@@ -33,6 +33,16 @@ final class ExerciseHistoryOneRepMaxTest extends WebTestCase
         self::assertSelectorTextContains(self::ONE_REP_MAX, '×');
     }
 
+    public function testTheEstimateLinksToItsExplanationInTheHelp(): void
+    {
+        $client = $this->login(self::USER);
+        $exercise = $this->loggedExercise(MeasurementType::WEIGHT_REPS, bodyweight: false);
+
+        $crawler = $client->request(Request::METHOD_GET, $this->historyUrl($exercise));
+
+        self::assertCount(1, $crawler->filter(self::ONE_REP_MAX . ' a[href="/fr/aide#library"]'));
+    }
+
     /**
      * Les comptes des fixtures n'ont pas de poids de corps : l'exercice passé au poids de corps
      * ne peut plus être estimé sur sa charge réelle.

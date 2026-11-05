@@ -387,6 +387,7 @@ exercise:
                 bodyweight_missing:
                     cta: "Körpergewicht eintragen"
                     text: "Deine echte Last enthält einen Teil deines Körpergewichts: Trag es ein, um dein 1RM zu schätzen."
+                help: "Wie wird das geschätzte 1RM berechnet?"
                 includes_bodyweight: "inkl. Körpergewicht"
                 label: "Geschätztes 1RM"
                 not_applicable: "Kein 1RM für diese Übung: Das 1RM misst eine Last für eine Wiederholung, diese Übung wird {type, select, time {in Zeit} other {in Strecke}} gemessen."

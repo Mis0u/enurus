@@ -43,6 +43,7 @@ section:
             create: "« Crea un esercizio »: dagli un nome, i muscoli principali e secondari e il modo in cui misurarlo (peso e ripetizioni, durata o distanza)."
             goals: "Sulla stessa pagina, fissa un obiettivo (per esempio 100 kg × 5): i suoi progressi appaiono sulla tua dashboard."
             history: "L'icona del grafico di un esercizio apre il suo storico: curva dei progressi, allenamenti passati e record."
+            one_rep_max: "Sotto il record, la cronologia mostra il tuo 1RM stimato: il carico che potresti sollevare una sola volta, calcolato con la formula di Epley sulla tua serie migliore di al massimo 12 ripetizioni. Per trazioni o dip, il tuo peso corporeo è incluso."
         title: "Libreria ed esercizi"
     messaging:
         intro: "Una domanda, un bug, un'idea? Ti rispondo direttamente."

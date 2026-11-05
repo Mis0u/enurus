@@ -43,6 +43,7 @@ section:
             create: "„Utwórz ćwiczenie”: nadaj mu nazwę, mięśnie główne i dodatkowe oraz sposób pomiaru (ciężar i powtórzenia, czas lub dystans)."
             goals: "Na tej samej stronie wyznacz sobie cel (na przykład 100 kg × 5): jego postęp pojawi się na Twoim panelu."
             history: "Ikona wykresu przy ćwiczeniu otwiera jego historię: krzywą postępów, wcześniejsze treningi i rekordy."
+            one_rep_max: "Pod rekordem historia pokazuje Twój szacowany 1RM: ciężar, jaki można podnieść jeden raz, obliczony wzorem Epleya na podstawie najlepszej serii z maksymalnie 12 powtórzeniami. Przy podciąganiu lub dipach masa ciała jest wliczona."
         title: "Biblioteka i ćwiczenia"
     messaging:
         intro: "Pytanie, błąd, pomysł? Odpowiadam Ci bezpośrednio."

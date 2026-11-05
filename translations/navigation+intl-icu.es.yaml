@@ -387,6 +387,7 @@ exercise:
                 bodyweight_missing:
                     cta: "Indicar mi peso corporal"
                     text: "Tu carga real incluye una parte de tu peso corporal: indícalo para estimar tu 1RM."
+                help: "¿Cómo se calcula el 1RM estimado?"
                 includes_bodyweight: "peso corporal incluido"
                 label: "1RM estimado"
                 not_applicable: "Sin 1RM para este ejercicio: el 1RM mide una carga en una repetición, y este ejercicio se mide {type, select, time {en tiempo} other {en distancia}}."

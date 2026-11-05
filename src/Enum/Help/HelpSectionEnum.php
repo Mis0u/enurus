@@ -33,7 +33,7 @@ enum HelpSectionEnum: string
             self::GETTING_STARTED => ['log', 'fill', 'come_back'],
             self::WORKOUT_LOG => ['date', 'routine', 'exercises', 'sets', 'prefill', 'details', 'draft', 'missing_exercise', 'records'],
             self::WORKOUTS => ['list', 'detail', 'calendar', 'regularity_goal', 'deload'],
-            self::LIBRARY => ['browse', 'create', 'bodyweight', 'history', 'goals', 'archive'],
+            self::LIBRARY => ['browse', 'create', 'bodyweight', 'history', 'one_rep_max', 'goals', 'archive'],
             self::ROUTINES => ['what', 'use', 'order'],
             self::DASHBOARD => ['progressive', 'blocks', 'customize'],
             self::BADGES => ['families', 'legend', 'where'],

@@ -387,6 +387,7 @@ exercise:
                 bodyweight_missing:
                     cta: "Mijn lichaamsgewicht invullen"
                     text: "Je echte belasting bevat een deel van je lichaamsgewicht: vul het in om je 1RM te schatten."
+                help: "Hoe wordt de geschatte 1RM berekend?"
                 includes_bodyweight: "lichaamsgewicht inbegrepen"
                 label: "Geschatte 1RM"
                 not_applicable: "Geen 1RM voor deze oefening: de 1RM meet een gewicht voor één herhaling, en deze oefening wordt gemeten {type, select, time {in tijd} other {in afstand}}."

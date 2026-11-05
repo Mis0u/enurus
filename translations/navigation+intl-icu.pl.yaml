@@ -387,6 +387,7 @@ exercise:
                 bodyweight_missing:
                     cta: "Podaj masę ciała"
                     text: "Twoje rzeczywiste obciążenie obejmuje część masy ciała: podaj ją, aby oszacować 1RM."
+                help: "Jak obliczany jest szacowany 1RM?"
                 includes_bodyweight: "z masą ciała"
                 label: "Szacowany 1RM"
                 not_applicable: "Brak 1RM dla tego ćwiczenia: 1RM mierzy ciężar na jedno powtórzenie, a to ćwiczenie mierzy się {type, select, time {czasem} other {dystansem}}."

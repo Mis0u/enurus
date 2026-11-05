@@ -43,6 +43,7 @@ section:
             create: "“Create an exercise”: give it a name, its primary and secondary muscles, and how it is measured (weight and reps, time or distance)."
             goals: "On that same page, set yourself a goal (for example 100 kg × 5): its progress shows on your dashboard."
             history: "An exercise's chart icon opens its history: progress curve, past workouts and records."
+            one_rep_max: "Below the record, the history shows your estimated 1RM: the load you could lift once, calculated with the Epley formula from your best set of 12 reps or fewer. For pull-ups or dips, your bodyweight is included."
         title: "Library and exercises"
     messaging:
         intro: "A question, a bug, an idea? I answer you directly."
