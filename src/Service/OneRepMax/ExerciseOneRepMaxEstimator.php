@@ -13,7 +13,9 @@ use App\Service\Utils\WeightConverterService;
 
 /**
  * 1RM estimé affiché dans l'historique d'un exercice : le meilleur de toutes ses séries, jamais
- * stocké, recalculé à chaque affichage depuis les séries (en kg en base).
+ * stocké, recalculé à chaque affichage depuis les séries (en kg en base). Au poids de corps, il
+ * porte sur la charge réelle (lest + part du poids de corps figée sur chaque série), comme le
+ * record affiché juste au-dessus.
  */
 final readonly class ExerciseOneRepMaxEstimator
 {
@@ -26,11 +28,12 @@ final readonly class ExerciseOneRepMaxEstimator
 
     public function estimate(User $user, Exercise $exercise): ?OneRepMaxEstimate
     {
-        if (! $this->appliesTo($exercise)) {
+        if (! $this->appliesTo($user, $exercise)) {
             return null;
         }
 
-        $best = $this->bestSet($this->exerciseSetRepository->findSessionHistoryForExerciseAndUser($user, $exercise));
+        $rawSets = $this->exerciseSetRepository->findSessionHistoryForExerciseAndUser($user, $exercise);
+        $best = $this->bestSet($this->usableSets($rawSets, $exercise));
         if (null === $best) {
             return null;
         }
@@ -40,15 +43,39 @@ final readonly class ExerciseOneRepMaxEstimator
             weight: $this->weightConverter->convertToLbs($best['weight'], $user->unitOfMeasure),
             reps: $best['reps'],
             performedAt: $best['performedAt'],
+            includesBodyweight: $this->isBodyweight($exercise),
         );
     }
 
     /**
-     * Au poids de corps, la charge saisie n'est qu'un lest : l'estimer seule serait faux.
+     * Sans le poids de l'utilisateur, l'historique l'invite à le renseigner plutôt que d'estimer.
      */
-    private function appliesTo(Exercise $exercise): bool
+    private function appliesTo(User $user, Exercise $exercise): bool
     {
-        return MeasurementType::WEIGHT_REPS === $exercise->measurementType && null === $exercise->bodyweightPercent;
+        return MeasurementType::WEIGHT_REPS === $exercise->measurementType
+            && (! $this->isBodyweight($exercise) || null !== $user->bodyweightKg);
+    }
+
+    private function isBodyweight(Exercise $exercise): bool
+    {
+        return null !== $exercise->bodyweightPercent;
+    }
+
+    /**
+     * Une série au poids de corps enregistrée avant que ce poids soit figé sur chaque série n'en
+     * porte que le lest : l'estimer sous-évaluerait le 1RM.
+     *
+     * @param array<int, array{performedAt: \DateTimeImmutable, weight: float, addedWeight: float, reps: int}> $rawSets
+     *
+     * @return array<int, array{performedAt: \DateTimeImmutable, weight: float, addedWeight: float, reps: int}>
+     */
+    private function usableSets(array $rawSets, Exercise $exercise): array
+    {
+        if (! $this->isBodyweight($exercise)) {
+            return $rawSets;
+        }
+
+        return array_filter($rawSets, static fn (array $set): bool => $set['weight'] > $set['addedWeight']);
     }
 
     /**

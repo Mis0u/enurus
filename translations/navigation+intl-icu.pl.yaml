@@ -384,6 +384,10 @@ exercise:
             last_practiced: Ostatnio wykonane
             max_weight: Maksymalna waga
             one_rep_max:
+                bodyweight_missing:
+                    cta: "Podaj masę ciała"
+                    text: "Twoje rzeczywiste obciążenie obejmuje część masy ciała: podaj ją, aby oszacować 1RM."
+                includes_bodyweight: "z masą ciała"
                 label: "Szacowany 1RM"
                 source: "na podstawie {weight} {unit} × {reps} · {date}"
             progression: Postęp

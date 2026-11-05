@@ -9,8 +9,11 @@
     <div class="text-[11px] font-semibold uppercase tracking-[0.5px] text-slate-400 mb-1">
         {{ 'exercise.history.overview.one_rep_max.label'|trans({}, 'navigation') }}
     </div>
-    <div class="font-rajdhani text-[22px] font-bold text-cyan-400">
-        {{ oneRepMax.value|number_format(1, ',', ' ') }} {{ unitLabel }}
+    <div class="flex flex-wrap items-baseline gap-x-2">
+        <span class="font-rajdhani text-[22px] font-bold text-cyan-400">{{ oneRepMax.value|number_format(1, ',', ' ') }} {{ unitLabel }}</span>
+        {% if oneRepMax.includesBodyweight %}
+            <span class="text-xs text-slate-300">{{ 'exercise.history.overview.one_rep_max.includes_bodyweight'|trans({}, 'navigation') }}</span>
+        {% endif %}
     </div>
     <div class="text-[11px] text-slate-400 mt-0.5">
         {{ 'exercise.history.overview.one_rep_max.source'|trans({

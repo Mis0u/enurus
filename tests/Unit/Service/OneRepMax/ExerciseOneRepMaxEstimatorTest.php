@@ -61,6 +61,50 @@ final class ExerciseOneRepMaxEstimatorTest extends TestCase
         self::assertEqualsWithDelta(176.4, $estimate->weight, 0.1);
     }
 
+    public function testABodyweightExerciseIsEstimatedOnItsRealLoad(): void
+    {
+        // Tractions à 78 kg (92 % soulevés) + 10 kg de lest : 81,76 kg réels × 6.
+        $estimate = $this->estimator([
+            $this->rawSet(weight: 81.76, reps: 6, addedWeight: 10.0),
+        ])->estimate($this->user(UnitOfMeasureEnum::KG, bodyweightKg: 78.0), $this->bodyweightExercise());
+
+        self::assertNotNull($estimate);
+        self::assertEqualsWithDelta(98.1, $estimate->value, 0.05);
+        self::assertTrue($estimate->includesBodyweight);
+    }
+
+    public function testALoadedExerciseDoesNotIncludeBodyweight(): void
+    {
+        $estimate = $this->estimator([
+            $this->rawSet(weight: 80.0, reps: 6),
+        ])->estimate($this->user(UnitOfMeasureEnum::KG), $this->exercise());
+
+        self::assertNotNull($estimate);
+        self::assertFalse($estimate->includesBodyweight);
+    }
+
+    /**
+     * Série enregistrée avant que le poids de corps soit figé sur chaque série : seul le lest y
+     * figure, l'estimer sous-évaluerait le 1RM.
+     */
+    public function testABodyweightSetWithoutItsBodyweightIsLeftOut(): void
+    {
+        $estimate = $this->estimator([
+            $this->rawSet(weight: 20.0, reps: 5, addedWeight: 20.0),
+        ])->estimate($this->user(UnitOfMeasureEnum::KG, bodyweightKg: 78.0), $this->bodyweightExercise());
+
+        self::assertNull($estimate);
+    }
+
+    public function testABodyweightExerciseHasNoEstimateWithoutTheUserBodyweight(): void
+    {
+        $estimate = $this->estimator([
+            $this->rawSet(weight: 81.76, reps: 6, addedWeight: 10.0),
+        ])->estimate($this->user(UnitOfMeasureEnum::KG), $this->bodyweightExercise());
+
+        self::assertNull($estimate);
+    }
+
     public function testATimedExerciseHasNoEstimate(): void
     {
         $exercise = $this->exercise();
@@ -92,13 +136,13 @@ final class ExerciseOneRepMaxEstimatorTest extends TestCase
     /**
      * @return array{workoutId: string, performedAt: \DateTimeImmutable, weight: float, addedWeight: float, reps: int, duration: ?int, distance: ?int}
      */
-    private function rawSet(float $weight, int $reps, string $performedAt = '2026-10-01'): array
+    private function rawSet(float $weight, int $reps, string $performedAt = '2026-10-01', ?float $addedWeight = null): array
     {
         return [
             'workoutId' => 'workout-' . $performedAt,
             'performedAt' => new \DateTimeImmutable($performedAt),
             'weight' => $weight,
-            'addedWeight' => $weight,
+            'addedWeight' => $addedWeight ?? $weight,
             'reps' => $reps,
             'duration' => null,
             'distance' => null,
@@ -114,10 +158,19 @@ final class ExerciseOneRepMaxEstimatorTest extends TestCase
         return $exercise;
     }
 
-    private function user(UnitOfMeasureEnum $unit): User
+    private function bodyweightExercise(): Exercise
+    {
+        $exercise = $this->exercise();
+        $exercise->bodyweightPercent = 92.0;
+
+        return $exercise;
+    }
+
+    private function user(UnitOfMeasureEnum $unit, ?float $bodyweightKg = null): User
     {
         $user = new User();
         $user->unitOfMeasure = $unit;
+        $user->bodyweightKg = $bodyweightKg;
 
         return $user;
     }

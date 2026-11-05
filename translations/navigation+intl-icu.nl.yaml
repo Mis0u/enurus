@@ -384,6 +384,10 @@ exercise:
             last_practiced: Laatst uitgevoerd
             max_weight: Maximaal gewicht
             one_rep_max:
+                bodyweight_missing:
+                    cta: "Mijn lichaamsgewicht invullen"
+                    text: "Je echte belasting bevat een deel van je lichaamsgewicht: vul het in om je 1RM te schatten."
+                includes_bodyweight: "lichaamsgewicht inbegrepen"
                 label: "Geschatte 1RM"
                 source: "op basis van {weight} {unit} × {reps} · {date}"
             progression: Voortgang

@@ -33,6 +33,23 @@ final class ExerciseHistoryOneRepMaxTest extends WebTestCase
         self::assertSelectorTextContains(self::ONE_REP_MAX, '×');
     }
 
+    /**
+     * Les comptes des fixtures n'ont pas de poids de corps : l'exercice passé au poids de corps
+     * ne peut plus être estimé sur sa charge réelle.
+     */
+    public function testABodyweightExerciseAsksForTheUserBodyweight(): void
+    {
+        $client = $this->login(self::USER);
+        $exercise = $this->loggedExercise(MeasurementType::WEIGHT_REPS, bodyweight: false);
+        $exercise->bodyweightPercent = 92.0;
+        $this->entityManager()->flush();
+
+        $crawler = $client->request(Request::METHOD_GET, $this->historyUrl($exercise));
+
+        self::assertSelectorTextContains(self::ONE_REP_MAX, 'poids de corps');
+        self::assertCount(1, $crawler->filter(self::ONE_REP_MAX . ' a[href="/fr/reglages#fieldBodyweight"]'));
+    }
+
     public function testAnExerciseWithoutHistoryShowsNoEstimate(): void
     {
         $client = $this->login(self::USER);

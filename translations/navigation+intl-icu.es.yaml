@@ -384,6 +384,10 @@ exercise:
             last_practiced: Última práctica
             max_weight: Peso máximo
             one_rep_max:
+                bodyweight_missing:
+                    cta: "Indicar mi peso corporal"
+                    text: "Tu carga real incluye una parte de tu peso corporal: indícalo para estimar tu 1RM."
+                includes_bodyweight: "peso corporal incluido"
                 label: "1RM estimado"
                 source: "a partir de {weight} {unit} × {reps} · {date}"
             progression: Progresión

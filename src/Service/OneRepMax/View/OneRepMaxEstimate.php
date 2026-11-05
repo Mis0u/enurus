@@ -6,6 +6,7 @@ namespace App\Service\OneRepMax\View;
 
 /**
  * Meilleur 1RM estimé d'un exercice et la série dont il vient, dans l'unité de l'utilisateur.
+ * `includesBodyweight` : charge réelle d'un exercice au poids de corps (lest + part du poids).
  */
 final readonly class OneRepMaxEstimate
 {
@@ -14,6 +15,7 @@ final readonly class OneRepMaxEstimate
         public float $weight,
         public int $reps,
         public \DateTimeImmutable $performedAt,
+        public bool $includesBodyweight,
     ) {
     }
 }

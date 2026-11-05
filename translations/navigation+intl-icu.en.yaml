@@ -384,6 +384,10 @@ exercise:
             last_practiced: Last practiced
             max_weight: Max weight
             one_rep_max:
+                bodyweight_missing:
+                    cta: "Add my bodyweight"
+                    text: "Your real load includes part of your bodyweight: add it to estimate your 1RM."
+                includes_bodyweight: "bodyweight included"
                 label: "Estimated 1RM"
                 source: "from {weight} {unit} × {reps} · {date}"
             progression: Progression
