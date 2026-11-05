@@ -26,7 +26,7 @@ function buildForm({ cards = '', routineVisible = false } = {}) {
             <input id="workout_duration" value="75">
             <button type="button" data-session-type-target="routine"></button>
             <div id="routine-selector" class="${routineVisible ? '' : 'hidden'}">
-                <select id="workout-routine">
+                <select id="workout_routine">
                     <option value=""></option>
                     <option value="routine-1" selected>Push</option>
                 </select>
@@ -95,7 +95,7 @@ describe('workout draft form', () => {
 
     it('switches to the routine session type when the draft has a routine', () => {
         const root = buildForm();
-        root.querySelector('#workout-routine').value = '';
+        root.querySelector('#workout_routine').value = '';
         const routineButton = root.querySelector('[data-session-type-target="routine"]');
         const click = vi.fn();
         routineButton.addEventListener('click', click);
@@ -103,12 +103,12 @@ describe('workout draft form', () => {
         restoreDraftFields(root, { date: '', duration: '', routineId: 'routine-1' });
 
         expect(click).toHaveBeenCalled();
-        expect(root.querySelector('#workout-routine').value).toBe('routine-1');
+        expect(root.querySelector('#workout_routine').value).toBe('routine-1');
     });
 
     it('ignores a routine that no longer exists', () => {
         const root = buildForm();
-        root.querySelector('#workout-routine').value = '';
+        root.querySelector('#workout_routine').value = '';
         const click = vi.fn();
         root.querySelector('[data-session-type-target="routine"]').addEventListener('click', click);
 

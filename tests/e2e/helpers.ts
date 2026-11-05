@@ -19,6 +19,8 @@ export const FIXTURE_USERS = {
     // UserFixtures::USER_WIDGET_ORDER — 1 séance, réservé à `dashboard-widget-order.spec.ts` : il
     // réorganise ses widgets, ce qui changerait la mise en page lue par les autres specs mobiles.
     widgetOrder: { email: 'user-fixture-widget-order@test.com', nickname: 'user-widget-order' },
+    // UserFixtures::USER_ROUTINE_OWNER — seul compte avec une routine (« Push Day »).
+    routineOwner: { email: 'user-fixture-routine-owner@test.com', nickname: 'user-routine-owner' },
 };
 
 // Le controller Stimulus csrf-protection est chargé en lazy (import dynamique fetché sur le

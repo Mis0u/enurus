@@ -100,3 +100,20 @@ test('an exercise created on the way is added to the restored workout', async ({
     await expect(setInput(page, 0, 0)).toHaveValue('42.5');
     await expect(setInput(page, 1, 1)).toHaveValue('12');
 });
+
+test('the routine of the workout in progress is restored after a reload', async ({ page }) => {
+    // Rien n'est enregistré : sûr sur le compte `routineOwner`.
+    await loginAs(page, FIXTURE_USERS.routineOwner.email);
+    await page.goto('/en/log-workout');
+    await page.waitForLoadState('networkidle');
+
+    await page.locator('[data-session-type-target="routine"]').click();
+    await page.locator('#workout_routine').selectOption({ label: 'Push Day' });
+    await expect(page.locator('[data-exercise-index]')).toHaveCount(1);
+    await setInput(page, 0, 0).fill('40');
+    await page.reload();
+
+    await expect(banner(page)).toBeVisible();
+    await expect(page.locator('#routine-selector')).toBeVisible();
+    await expect(page.locator('#workout_routine option:checked')).toHaveText('Push Day');
+});

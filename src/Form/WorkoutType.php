@@ -219,7 +219,6 @@ final class WorkoutType extends AbstractType
             'placeholder' => $this->translator->trans('workout.routine.select', [], 'navigation'),
             'query_builder' => fn (RoutineRepository $repository): QueryBuilder => $this->routinesForCurrentUserQueryBuilder($repository),
             'attr' => [
-                'id' => 'workout-routine',
                 'data-action' => 'change->workout--routine-loader#onChange',
                 'data-workout--routine-loader-target' => 'select',
             ],
