@@ -118,6 +118,26 @@ final class ExerciseGuidePagesTest extends WebTestCase
         self::assertCount(1, $crawler->filter('header a[href="/fr/tableau-de-bord"]'));
     }
 
+    public function testAWeightedLiftSuggestsTheOneRepMaxCalculator(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request(Request::METHOD_GET, self::BENCH_PRESS_FR);
+
+        self::assertCount(1, $crawler->filter('main a[href="/fr/calculateur-1rm"]'));
+    }
+
+    /**
+     * Au poids de corps, la charge saisie n'est qu'un lest : le calculateur ne s'applique pas tel quel.
+     */
+    public function testABodyweightExerciseDoesNotSuggestTheCalculator(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request(Request::METHOD_GET, '/fr/exercices/tractions-pronation');
+
+        self::assertResponseIsSuccessful();
+        self::assertCount(0, $crawler->filter('main a[href="/fr/calculateur-1rm"]'));
+    }
+
     public function testTheHomePageLinksToTheExercises(): void
     {
         $client = static::createClient();

@@ -24,6 +24,9 @@
                 <article class="flex-1 min-w-0 flex flex-col gap-10">
                     {% include 'exercise_guide/show/_steps.html.twig' with {stepKeys: page.guide.stepKeys} only %}
                     {% include 'exercise_guide/show/_mistakes.html.twig' with {mistakeKeys: page.guide.mistakeKeys} only %}
+                    {% if page.suggestsOneRepMaxCalculator %}
+                        {% include 'exercise_guide/show/_one_rep_max_link.html.twig' only %}
+                    {% endif %}
                     {% if page.variants is not empty %}
                         {% include 'exercise_guide/show/_variants.html.twig' with {variants: page.variants} only %}
                     {% endif %}

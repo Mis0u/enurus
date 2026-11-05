@@ -17,6 +17,7 @@ final readonly class ExerciseGuidePage
      * @param list<string>            $primarySvgIds       zones de la silhouette coloriées en muscle principal
      * @param list<string>            $secondarySvgIds
      * @param list<ExerciseGuideLink> $variants
+     * @param bool                    $suggestsOneRepMaxCalculator exercice soulevé avec une charge, sans poids de corps
      */
     public function __construct(
         public ExerciseGuide $guide,
@@ -27,6 +28,7 @@ final readonly class ExerciseGuidePage
         public array $primarySvgIds,
         public array $secondarySvgIds,
         public array $variants,
+        public bool $suggestsOneRepMaxCalculator,
     ) {
     }
 }

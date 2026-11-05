@@ -264,6 +264,10 @@ show:
         secondary: "{muscle} · secundário"
         secondary_legend: "Músculos secundários"
         silhouette: "Silhueta dos músculos trabalhados: a rosa os principais, a ciano os secundários"
+    one_rep_max:
+        button: "Calcular o meu 1RM"
+        text: "Estima o teu 1RM neste exercício e obtém as tuas cargas de treino, de 60 a 100 %."
+        title: "Que carga para as tuas séries?"
     steps_title: "Execução"
     title: "{exercise}: execução, músculos e erros"
     variants_title: "Variantes"

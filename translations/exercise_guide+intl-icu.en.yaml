@@ -264,6 +264,10 @@ show:
         secondary: "{muscle} · secondary"
         secondary_legend: "Secondary muscles"
         silhouette: "Silhouette of the muscles worked: primary muscles in pink, secondary in cyan"
+    one_rep_max:
+        button: "Calculate my 1RM"
+        text: "Estimate your 1RM on this exercise and get your training loads, from 60 to 100 %."
+        title: "What load for your sets?"
     steps_title: "How to do it"
     title: "{exercise}: technique, muscles and mistakes"
     variants_title: "Variations"

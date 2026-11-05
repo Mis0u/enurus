@@ -7,6 +7,7 @@ namespace App\Service\ExerciseGuide;
 use App\Entity\Exercise;
 use App\Entity\ExerciseMuscle;
 use App\Enum\Entity\ExerciceMuscle\MuscleTypeEnum;
+use App\Enum\Entity\Exercise\MeasurementType;
 use App\Repository\ExerciseRepository;
 use App\Service\ExerciseGuide\View\ExerciseGuideLink;
 use App\Service\ExerciseGuide\View\ExerciseGuidePage;
@@ -46,7 +47,16 @@ final readonly class ExerciseGuidePageBuilder
             primarySvgIds: $this->svgIds($primaryMuscles),
             secondarySvgIds: $this->svgIds($secondaryMuscles),
             variants: $this->variants($guide, $exercisesByName, $locale),
+            suggestsOneRepMaxCalculator: $this->suitsOneRepMaxCalculator($exercise),
         );
+    }
+
+    /**
+     * Au poids de corps, la charge saisie n'est qu'un lest : le calculateur ne s'applique pas tel quel.
+     */
+    private function suitsOneRepMaxCalculator(Exercise $exercise): bool
+    {
+        return MeasurementType::WEIGHT_REPS === $exercise->measurementType && null === $exercise->bodyweightPercent;
     }
 
     /**

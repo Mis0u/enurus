@@ -264,6 +264,10 @@ show:
         secondary: "{muscle} · pomocniczy"
         secondary_legend: "Mięśnie pomocnicze"
         silhouette: "Sylwetka pracujących mięśni: główne na różowo, pomocnicze na turkusowo"
+    one_rep_max:
+        button: "Oblicz mój 1RM"
+        text: "Oszacuj swój 1RM w tym ćwiczeniu i poznaj obciążenia treningowe od 60 do 100 %."
+        title: "Jaki ciężar do twoich serii?"
     steps_title: "Wykonanie"
     title: "{exercise}: wykonanie, mięśnie i błędy"
     variants_title: "Warianty"

@@ -8,23 +8,23 @@ eyebrow: "Outil gratuit"
 
 faq:
     bodyweight:
-        answer: "Ta vraie charge, c'est une partie de ton poids de corps plus ton lest. Aux tractions, tu soulèves environ 92 % de ton poids : à 78 kg avec 10 kg de lest, la charge réelle est d'environ 82 kg. Saisis cette charge réelle dans le calculateur."
-        question: "Et pour les tractions ou les dips ?"
+        answer: "Ta vraie charge, c'est une partie de ton poids de corps plus ton lest. Aux tractions, tu soulèves environ 92 % de ton poids : à 78 kg avec 10 kg de lest, la charge réelle est d'environ 82 kg. Saisis cette charge réelle dans le calculateur."
+        question: "Et pour les tractions ou les dips ?"
     formula:
-        answer: "Avec la formule d'Epley, la plus utilisée :"
-        example: "Exemple : 80 kg soulevés 6 fois donnent un 1RM estimé de 96 kg."
+        answer: "Avec la formule d'Epley, la plus utilisée :"
+        example: "Exemple : 80 kg soulevés 6 fois donnent un 1RM estimé de 96 kg."
         expression: "1RM = poids × (1 + répétitions ÷ 30)"
-        question: "Comment est-il calculé ?"
+        question: "Comment est-il calculé ?"
     max_reps:
         answer: "Plus la série est longue, plus l'endurance entre en jeu et moins l'estimation est fiable. Au-delà de 10 répétitions, prends le résultat comme un ordre de grandeur."
-        question: "Pourquoi 12 répétitions au maximum ?"
+        question: "Pourquoi 12 répétitions au maximum ?"
     testing:
-        answer: "Pas besoin : l'estimation suffit pour doser tes séries, sans le risque d'un essai maximal. Si tu tiens à le tester, échauffe-toi bien et fais-toi assurer par un pareur."
-        question: "Faut-il tester son vrai 1RM ?"
+        answer: "Pas besoin : l'estimation suffit pour doser tes séries, sans le risque d'un essai maximal. Si tu tiens à le tester, échauffe-toi bien et fais-toi assurer par un pareur."
+        question: "Faut-il tester son vrai 1RM ?"
     title: "Tout savoir sur le 1RM"
     what:
-        answer: "Le 1RM (one-rep max) est la charge la plus lourde que tu peux soulever une seule fois, avec une technique correcte. C'est la référence pour doser tes séries : travailler à 80 % de son 1RM, par exemple."
-        question: "Qu'est-ce que le 1RM ?"
+        answer: "Le 1RM (one-rep max) est la charge la plus lourde que tu peux soulever une seule fois, avec une technique correcte. C'est la référence pour doser tes séries : travailler à 80 % de son 1RM, par exemple."
+        question: "Qu'est-ce que le 1RM ?"
 
 form:
     reps: "Répétitions"
@@ -38,9 +38,9 @@ guides:
 
 heading: "Calculateur de 1RM"
 
-intro: "Estime la charge maximale que tu peux soulever sur une répétition, à partir d'une série que tu as vraiment faite. Tu obtiens aussi tes charges d'entraînement, de 60 à 100 %."
+intro: "Estime la charge maximale que tu peux soulever sur une répétition, à partir d'une série que tu as vraiment faite. Tu obtiens aussi tes charges d'entraînement, de 60 à 100 %."
 
-meta_description: "Calculateur de 1RM gratuit : estime ta charge maximale sur une répétition à partir d'une série, et obtiens tes charges d'entraînement de 60 à 100 %, en kg ou en lbs."
+meta_description: "Calculateur de 1RM gratuit : estime ta charge maximale sur une répétition à partir d'une série, et obtiens tes charges d'entraînement de 60 à 100 %, en kg ou en lbs."
 
 perks:
     no_max_test: "Sans tester de charge maximale"
@@ -51,12 +51,12 @@ result:
     formula: "Formule d'Epley · une estimation, pas une mesure"
     invalid: "Saisis un poids et un nombre de répétitions entre 1 et 12."
     label: "Ton 1RM estimé"
-    warning: "Au-delà de 10 répétitions, l'estimation devient moins fiable : prends-la comme un ordre de grandeur."
+    warning: "Au-delà de 10 répétitions, l'estimation devient moins fiable : prends-la comme un ordre de grandeur."
 
 table:
     intro: "Calculées sur ton 1RM estimé, arrondies au disque le plus proche."
     load: "Charge"
-    note: "Répétitions possibles : indicatives, déduites de la même formule."
+    note: "Répétitions possibles : indicatives, déduites de la même formule."
     percent: "% du 1RM"
     reps: "Répétitions possibles"
     title: "Tes charges d'entraînement"
