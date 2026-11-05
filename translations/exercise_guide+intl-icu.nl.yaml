@@ -264,6 +264,10 @@ show:
         secondary: "{muscle} · secundair"
         secondary_legend: "Secundaire spieren"
         silhouette: "Silhouet van de getrainde spieren: primaire spieren in roze, secundaire in cyaan"
+    one_rep_max:
+        button: "Mijn 1RM berekenen"
+        text: "Schat je 1RM bij deze oefening en krijg je trainingsgewichten, van 60 tot 100 %."
+        title: "Welk gewicht voor je sets?"
     steps_title: "Uitvoering"
     title: "{exercise}: uitvoering, spieren en fouten"
     variants_title: "Varianten"

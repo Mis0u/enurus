@@ -60,6 +60,7 @@ home:
         language: "Lingua"
         login: "Accedi"
         nav_label: "Account"
+        one_rep_max: "Calcolatore 1RM"
     hero:
         badge: "Gratuito e senza pubblicità"
         cta_login: "Ho già un account"

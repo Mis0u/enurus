@@ -60,6 +60,7 @@ home:
         language: "Sprache"
         login: "Anmelden"
         nav_label: "Konto"
+        one_rep_max: "1RM-Rechner"
     hero:
         badge: "Kostenlos und werbefrei"
         cta_login: "Ich habe schon ein Konto"

@@ -264,6 +264,10 @@ show:
         secondary: "{muscle} · secondaire"
         secondary_legend: "Muscles secondaires"
         silhouette: "Silhouette des muscles travaillés : en rose les muscles principaux, en cyan les secondaires"
+    one_rep_max:
+        button: "Calculer mon 1RM"
+        text: "Estime ton 1RM sur cet exercice et obtiens tes charges d'entraînement, de 60 à 100 %."
+        title: "Quelle charge pour tes séries ?"
     steps_title: "Exécution"
     title: "{exercise} : exécution, muscles et erreurs"
     variants_title: "Variantes"

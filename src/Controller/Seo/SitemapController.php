@@ -6,6 +6,7 @@ namespace App\Controller\Seo;
 
 use App\Controller\ExerciseGuide\ExerciseGuideIndexController;
 use App\Controller\ExerciseGuide\ExerciseGuideShowController;
+use App\Controller\OneRepMax\OneRepMaxCalculatorController;
 use App\Enum\Translations\LocaleAllowedEnum;
 use App\Service\ExerciseGuide\ExerciseGuide;
 use App\Service\ExerciseGuide\ExerciseGuideCatalog;
@@ -24,7 +25,7 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 final class SitemapController extends AbstractController
 {
-    private const array PUBLIC_ROUTES = ['app_home', 'app_register', 'app_terms', ExerciseGuideIndexController::ROUTE];
+    private const array PUBLIC_ROUTES = ['app_home', 'app_register', 'app_terms', ExerciseGuideIndexController::ROUTE, OneRepMaxCalculatorController::ROUTE];
 
     private const int CACHE_SECONDS = 86400;
 

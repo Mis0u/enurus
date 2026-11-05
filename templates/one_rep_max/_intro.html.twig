@@ -1,0 +1,13 @@
+<div class="flex-[1_1_380px] min-w-0 md:pt-3">
+    <p class="mb-3 text-xs font-bold uppercase tracking-[1.5px] text-cyan-400">{{ 'eyebrow'|trans({}, 'one_rep_max') }}</p>
+    <h1 class="mb-4 font-rajdhani font-bold text-[40px] md:text-[56px] leading-none text-slate-50">{{ 'heading'|trans({}, 'one_rep_max') }}</h1>
+    <p class="mb-6 text-lg leading-relaxed text-slate-300">{{ 'intro'|trans({}, 'one_rep_max') }}</p>
+    <ul class="flex flex-col gap-3">
+        {% for perk in ['no_max_test', 'plates', 'units'] %}
+            <li class="flex items-center gap-2.5 text-[15px] text-slate-200">
+                <svg class="w-5 h-5 shrink-0 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>
+                {{ ('perks.' ~ perk)|trans({}, 'one_rep_max') }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>

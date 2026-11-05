@@ -1,0 +1,28 @@
+{# Lignes remplies par one_rep_max/calculator_controller.js depuis le gabarit `loadRow`. #}
+<section aria-labelledby="one-rep-max-loads" class="flex flex-col gap-4">
+    <div>
+        <h2 id="one-rep-max-loads" class="mb-1.5 font-rajdhani font-bold text-3xl text-slate-50">{{ 'table.title'|trans({}, 'one_rep_max') }}</h2>
+        <p class="text-[15px] text-slate-400">{{ 'table.intro'|trans({}, 'one_rep_max') }}</p>
+    </div>
+    <div class="overflow-x-auto rounded-2xl border border-white/[0.07] bg-bg-card">
+        <table class="w-full border-collapse text-[15px]">
+            <thead>
+                <tr class="border-b border-white/[0.07] text-xs font-bold uppercase tracking-[0.5px] text-slate-400">
+                    <th scope="col" class="px-5 py-3.5 text-left">{{ 'table.percent'|trans({}, 'one_rep_max') }}</th>
+                    <th scope="col" class="px-5 py-3.5 text-right">{{ 'table.load'|trans({}, 'one_rep_max') }}</th>
+                    <th scope="col" class="px-5 py-3.5 text-right">{{ 'table.reps'|trans({}, 'one_rep_max') }}</th>
+                </tr>
+            </thead>
+            <tbody data-one-rep-max--calculator-target="loads"></tbody>
+        </table>
+    </div>
+    <p class="text-[13px] text-slate-400">{{ 'table.note'|trans({}, 'one_rep_max') }}</p>
+
+    <template data-one-rep-max--calculator-target="loadRow">
+        <tr class="border-b border-white/[0.05] last:border-b-0">
+            <td data-cell="percent" class="px-5 py-3 whitespace-nowrap font-medium text-slate-200"></td>
+            <td data-cell="load" class="px-5 py-3 text-right whitespace-nowrap font-rajdhani font-bold text-[19px] text-slate-50"></td>
+            <td data-cell="reps" class="px-5 py-3 text-right text-slate-400"></td>
+        </tr>
+    </template>
+</section>

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'title'|trans({}, 'one_rep_max')|format_title }}{% endblock %}
+
+{% block meta_description %}{{ 'meta_description'|trans({}, 'one_rep_max') }}{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen bg-bg-base text-slate-200 font-dm-sans">
+        {% include 'home/_header.html.twig' with {locales: locales, currentLocale: currentLocale, isLoggedIn: isLoggedIn} only %}
+
+        <main class="max-w-6xl mx-auto px-4 md:px-6 pt-4 pb-12 md:pb-20 flex flex-col gap-14 md:gap-16"
+              data-controller="one-rep-max--calculator"
+              data-one-rep-max--calculator-unit-value="{{ unit.value }}">
+            <section class="flex flex-wrap items-start gap-10">
+                {% include 'one_rep_max/_intro.html.twig' only %}
+                {% include 'one_rep_max/_calculator.html.twig' with {unit: unit, units: units, exampleWeight: exampleWeight, exampleReps: exampleReps} only %}
+            </section>
+            {% include 'one_rep_max/_loads.html.twig' only %}
+            {% include 'one_rep_max/_faq.html.twig' only %}
+            {% include 'one_rep_max/_guides.html.twig' with {guideLinks: guideLinks} only %}
+            {% include 'one_rep_max/_call_to_action.html.twig' with {isLoggedIn: isLoggedIn} only %}
+        </main>
+
+        <footer class="px-4 pb-6">
+            {% include 'partials/_common/_footer.html.twig' only %}
+        </footer>
+    </div>
+{% endblock %}
