@@ -725,9 +725,12 @@ routine:
         subtitle: Configura il tuo allenamento tipo
         title: Crea una routine
     delete:
+        archive_confirm_button: "Archivia"
+        archive_confirm_text: "{name} è usata in {count, plural, one {# allenamento} other {# allenamenti}}: verrà archiviata perché conservino il suo nome. Potrai ripristinarla dalla scheda « Archiviate »."
+        archive_confirm_title: "Archivia la routine"
         cancel_button: Annulla
         confirm_button: Elimina
-        confirm_text: "{gender, select, female {Sei sicura} other {Sei sicuro}} di voler eliminare {name}? Questa azione è irreversibile. Gli allenamenti che usano questa routine diventeranno sessioni libere."
+        confirm_text: "{gender, select, female {Sei sicura} other {Sei sicuro}} di voler eliminare {name}? Questa azione è irreversibile."
         confirm_title: Elimina la routine
         error_text: Si è verificato un errore durante l'eliminazione.
     edit:
@@ -740,8 +743,10 @@ routine:
         name_required: Il nome della routine è obbligatorio.
         no_exercise: Devi selezionare almeno un esercizio.
     flash:
+        archived: "La routine \"{name}\" è stata archiviata, i suoi allenamenti conservano il suo nome."
         created: La routine "{name}" è stata creata con successo.
-        deleted: La rutina "{name}" ha sido eliminada con éxito.
+        deleted: La routine "{name}" è stata eliminata con successo.
+        restored: "La routine \"{name}\" è stata ripristinata."
         updated: La routine "{name}" è stata modificata con successo.
     form:
         description_label: Aggiungi una descrizione
@@ -784,7 +789,23 @@ routine:
                 one   {e # altro esercizio…}
                 other {e # altri esercizi…}
             }
+        tabs:
+            active: "Attive"
+            archived: "Archiviate ({count})"
         title: Le mie routine
+        workout_count: >-
+            {count, plural,
+                =0    {Nessun allenamento}
+                one   {# allenamento}
+                other {# allenamenti}
+            }
+    restore:
+        cancel_button: "Annulla"
+        confirm_button: "Ripristina"
+        confirm_text: "{name} tornerà in « Le mie routine » e potrai di nuovo sceglierla per i tuoi allenamenti."
+        confirm_title: "Ripristina la routine"
+        error_text: "Si è verificato un errore durante il ripristino."
+        name_conflict: "Hai già una routine attiva chiamata {name}. Rinominala, poi riprova."
     show:
         bodyweight_warning: Imposta il tuo peso corporeo nelle impostazioni per usare tutti gli esercizi di questa routine.
         empty_usage: Questa routine non è ancora stata utilizzata in un allenamento.
@@ -1015,6 +1036,7 @@ workout:
         exercises: "{count, plural, =1 {esercizio} other {esercizi}}"
         filter:
             all_sessions: Tutti gli allenamenti
+            archived_routines: "Archiviate"
             clear: Cancella data
             month: Questo mese
             muscle_label: Filtra per muscolo

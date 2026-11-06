@@ -725,9 +725,12 @@ routine:
         subtitle: Richte dein Standard-Training ein
         title: Routine erstellen
     delete:
+        archive_confirm_button: "Archivieren"
+        archive_confirm_text: "{name} wird in {count, plural, one {# Training} other {# Trainings}} verwendet: Sie wird archiviert, damit diese ihren Namen behalten. Du kannst sie im Tab „Archiviert“ wiederherstellen."
+        archive_confirm_title: "Routine archivieren"
         cancel_button: Abbrechen
         confirm_button: Löschen
-        confirm_text: Bist du sicher, dass du {name} löschen möchtest? Diese Aktion ist unwiderruflich. Trainingseinheiten, die diese Routine verwenden, werden zu freien Einheiten.
+        confirm_text: Bist du sicher, dass du {name} löschen möchtest? Diese Aktion ist unwiderruflich.
         confirm_title: Routine löschen
         error_text: Beim Löschen ist ein Fehler aufgetreten.
     edit:
@@ -740,8 +743,10 @@ routine:
         name_required: Der Routinename ist erforderlich.
         no_exercise: Du musst mindestens eine Übung auswählen.
     flash:
+        archived: "Die Routine \"{name}\" wurde archiviert, ihre Trainings behalten ihren Namen."
         created: Die Routine "{name}" wurde erfolgreich erstellt.
         deleted: Die Routine "{name}" wurde erfolgreich gelöscht.
+        restored: "Die Routine \"{name}\" wurde wiederhergestellt."
         updated: Die Routine "{name}" wurde erfolgreich geändert.
     form:
         description_label: Beschreibung hinzufügen
@@ -784,7 +789,23 @@ routine:
                 one   {und # weitere Übung…}
                 other {und # weitere Übungen…}
             }
+        tabs:
+            active: "Aktiv"
+            archived: "Archiviert ({count})"
         title: Meine Routinen
+        workout_count: >-
+            {count, plural,
+                =0    {Keine Trainings}
+                one   {# Training}
+                other {# Trainings}
+            }
+    restore:
+        cancel_button: "Abbrechen"
+        confirm_button: "Wiederherstellen"
+        confirm_text: "{name} erscheint wieder unter „Meine Routinen“ und kann erneut für deine Trainings gewählt werden."
+        confirm_title: "Routine wiederherstellen"
+        error_text: "Beim Wiederherstellen ist ein Fehler aufgetreten."
+        name_conflict: "Du hast bereits eine aktive Routine namens {name}. Benenne sie um und versuche es erneut."
     show:
         bodyweight_warning: Gib dein Körpergewicht in den Einstellungen an, um alle Übungen dieser Routine zu nutzen.
         empty_usage: Diese Routine wurde noch in keinem Training verwendet.
@@ -1015,6 +1036,7 @@ workout:
         exercises: "{count, plural, =1 {Übung} other {Übungen}}"
         filter:
             all_sessions: Alle Trainings
+            archived_routines: "Archiviert"
             clear: Datum löschen
             month: Dieser Monat
             muscle_label: Nach Muskel filtern

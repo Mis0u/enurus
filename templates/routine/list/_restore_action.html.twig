@@ -1,0 +1,26 @@
+{#
+templates/routine/list/_restore_action.html.twig
+
+Paramètres :
+  - routine : Routine
+#}
+<div
+    data-controller="routine--restore"
+    data-routine--restore-url-value="{{ path('app_routine_restore', {id: routine.id}) }}"
+    data-routine--restore-csrf-token-value="{{ csrf_token('routine_restore_' ~ routine.id) }}"
+    data-routine--restore-confirm-title-value="{{ 'routine.restore.confirm_title'|trans({}, 'navigation') }}"
+    data-routine--restore-confirm-text-value="{{ 'routine.restore.confirm_text'|trans({name: routine.name}, 'navigation') }}"
+    data-routine--restore-confirm-button-value="{{ 'routine.restore.confirm_button'|trans({}, 'navigation') }}"
+    data-routine--restore-cancel-button-value="{{ 'routine.restore.cancel_button'|trans({}, 'navigation') }}"
+    data-routine--restore-error-text-value="{{ 'routine.restore.error_text'|trans({}, 'navigation') }}"
+    data-routine--restore-name-conflict-text-value="{{ 'routine.restore.name_conflict'|trans({name: routine.name}, 'navigation') }}"
+>
+    <button
+        type="button"
+        class="px-3 py-1.5 max-md:min-h-11 rounded-lg border border-white/[0.07] bg-white/[0.03] text-[12px] font-semibold text-[#f0f4ff] cursor-pointer transition-all duration-200 hover:bg-[rgba(6,182,212,0.15)] hover:border-[rgba(6,182,212,0.4)] hover:text-[#06b6d4]"
+        aria-label="{{ 'routine.restore.confirm_button'|trans({}, 'navigation') }} {{ routine.name }}"
+        data-action="click->routine--restore#confirmRestore"
+    >
+        {{ 'routine.restore.confirm_button'|trans({}, 'navigation') }}
+    </button>
+</div>

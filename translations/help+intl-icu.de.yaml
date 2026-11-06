@@ -56,6 +56,7 @@ section:
         intro: "Eine Routine ist eine Liste von Übungen, die du oft machst, zum Beispiel „Push Day“."
         open: "Meine Routinen ansehen"
         points:
+            archive: "Wenn du eine bereits verwendete Routine löschst, wird sie archiviert: Ihre Trainings behalten ihren Namen. Du kannst sie im Tab „Archiviert“ unter „Meine Routinen“ wiederherstellen."
             order: "Ordne ihre Übungen per Ziehen neu an."
             use: "Wähle beim Erfassen eines Trainings deine Routine: Alle ihre Übungen werden auf einmal hinzugefügt, in der richtigen Reihenfolge."
             what: "Erstelle sie einmal unter „Meine Routinen“ und füge deine Übungen hinzu."

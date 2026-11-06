@@ -56,6 +56,7 @@ section:
         intro: "Een routine is een lijst oefeningen die je vaak doet, bijvoorbeeld ‘Push day’."
         open: "Mijn routines bekijken"
         points:
+            archive: "Een al gebruikte routine verwijderen archiveert haar: haar trainingen behouden haar naam. Je kunt haar herstellen via het tabblad ‘Gearchiveerd’ in ‘Mijn routines’."
             order: "Zet de oefeningen in een andere volgorde door ze te verslepen."
             use: "Kies bij het registreren van een training je routine: al haar oefeningen worden in één keer toegevoegd, in volgorde."
             what: "Maak haar één keer aan via ‘Mijn routines’ en voeg je oefeningen toe."

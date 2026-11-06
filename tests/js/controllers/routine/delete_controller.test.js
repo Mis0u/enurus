@@ -53,4 +53,15 @@ describe('routine--delete controller', () => {
         expect(counter.textContent).toBe('Eén routine');
         expect(counter.dataset.routineCount).toBe('1');
     });
+
+    it('keeps the card until the page reloads when the routine is archived', async () => {
+        const { sendDeleteRequest } = await import('../../../../assets/utils/delete_confirmation.js');
+        sendDeleteRequest.mockResolvedValueOnce({ ok: true, data: { success: true, archived: true, message: 'Gearchiveerd' } });
+
+        document.querySelector('#r1 button').click();
+        await nextTick();
+
+        expect(document.querySelector('#r1')).not.toBeNull();
+        expect(document.querySelector('[data-routine-count]').dataset.routineCount).toBe('2');
+    });
 });

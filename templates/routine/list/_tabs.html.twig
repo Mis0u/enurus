@@ -1,0 +1,25 @@
+{#
+templates/routine/list/_tabs.html.twig
+
+Rendu uniquement s'il existe au moins une routine archivée, cf. routine/list/index.html.twig.
+
+Paramètres :
+  - showArchived  : bool
+  - archivedCount : int
+#}
+<div class="flex gap-1 bg-white/[0.04] rounded-lg p-0.75 mb-5 w-fit">
+    <a
+        href="{{ path('app_routine_list') }}"
+        class="px-4 py-2 max-md:min-h-11 rounded-md text-[13px] font-rajdhani font-bold flex items-center transition-all duration-250 {{ showArchived ? 'text-[#4a5568] hover:bg-white/[0.06] hover:text-[#f0f4ff]' : 'bg-rose-ft text-white' }}"
+        {{ showArchived ? '' : 'aria-current="page"' }}
+    >
+        {{ 'routine.list.tabs.active'|trans({}, 'navigation') }}
+    </a>
+    <a
+        href="{{ path('app_routine_list', {view: 'archived'}) }}"
+        class="px-4 py-2 max-md:min-h-11 rounded-md text-[13px] font-rajdhani font-bold flex items-center transition-all duration-250 {{ showArchived ? 'bg-rose-ft text-white' : 'text-[#4a5568] hover:bg-white/[0.06] hover:text-[#f0f4ff]' }}"
+        {{ showArchived ? 'aria-current="page"' : '' }}
+    >
+        {{ 'routine.list.tabs.archived'|trans({count: archivedCount}, 'navigation') }}
+    </a>
+</div>

@@ -4,6 +4,8 @@ import { Controller } from '@hotwired/stimulus';
 import { confirmDeletion, sendDeleteRequest, showDeleteError } from '../../utils/delete_confirmation.js';
 import { showSuccessToast } from '../../utils/toast.js';
 
+const RELOAD_DELAY_MS = 1200;
+
 export default class extends Controller {
     static values = {
         url:           String,
@@ -34,7 +36,19 @@ export default class extends Controller {
         }
 
         showSuccessToast(data.message);
+
+        if (data.archived) {
+            this.#reloadPage();
+            return;
+        }
+
         this.#removeCard();
+    }
+
+    // Une routine archivée fait apparaître l'onglet « Archivées » ou change son compteur : les deux
+    // sont rendus par le serveur.
+    #reloadPage() {
+        setTimeout(() => window.location.reload(), RELOAD_DELAY_MS);
     }
 
     /**
@@ -48,7 +62,7 @@ export default class extends Controller {
         card?.remove();
         const remainingCards = grid?.querySelectorAll('.routine-card').length ?? 0;
         if (remainingCards === 0) {
-            setTimeout(() => window.location.reload(), 1200);
+            this.#reloadPage();
             return;
         }
         this.#decrementCounter();

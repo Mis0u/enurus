@@ -56,6 +56,7 @@ section:
         intro: "Una rutina es una lista de ejercicios que haces a menudo, por ejemplo « Push day »."
         open: "Ver mis rutinas"
         points:
+            archive: "Eliminar una rutina ya usada la archiva: sus sesiones conservan su nombre. Puedes restaurarla desde la pestaña « Archivadas » de « Mis rutinas »."
             order: "Reordena sus ejercicios arrastrándolos."
             use: "Al registrar un entrenamiento, elige tu rutina: todos sus ejercicios se añaden de una vez, en orden."
             what: "Créala una vez desde « Mis rutinas », añadiendo tus ejercicios."

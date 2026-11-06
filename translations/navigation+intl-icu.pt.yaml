@@ -725,9 +725,12 @@ routine:
         subtitle: Configura o teu treino tipo
         title: Criar uma rotina
     delete:
+        archive_confirm_button: "Arquivar"
+        archive_confirm_text: "{name} é usada em {count, plural, one {# treino} other {# treinos}}: será arquivada para que mantenham o seu nome. Poderás restaurá-la no separador « Arquivadas »."
+        archive_confirm_title: "Arquivar a rotina"
         cancel_button: Cancelar
         confirm_button: Eliminar
-        confirm_text: Tens a certeza de que queres eliminar {name}? Esta ação é irreversível. Os treinos que usam esta rotina passarão a ser sessões livres.
+        confirm_text: Tens a certeza de que queres eliminar {name}? Esta ação é irreversível.
         confirm_title: Eliminar a rotina
         error_text: Ocorreu um erro durante a eliminação.
     edit:
@@ -740,8 +743,10 @@ routine:
         name_required: O nome da rotina é obrigatório.
         no_exercise: Deves selecionar pelo menos um exercício.
     flash:
+        archived: "A rotina \"{name}\" foi arquivada, os seus treinos mantêm o seu nome."
         created: A rotina "{name}" foi criada com sucesso.
         deleted: A rotina "{name}" foi eliminada com sucesso.
+        restored: "A rotina \"{name}\" foi restaurada."
         updated: A rotina "{name}" foi modificada com sucesso.
     form:
         description_label: Adicionar uma descrição
@@ -784,7 +789,23 @@ routine:
                 one   {e mais # exercício…}
                 other {e mais # exercícios…}
             }
+        tabs:
+            active: "Ativas"
+            archived: "Arquivadas ({count})"
         title: As minhas rotinas
+        workout_count: >-
+            {count, plural,
+                =0    {Nenhum treino}
+                one   {# treino}
+                other {# treinos}
+            }
+    restore:
+        cancel_button: "Cancelar"
+        confirm_button: "Restaurar"
+        confirm_text: "{name} voltará a « As minhas rotinas » e poderás escolhê-la de novo para os teus treinos."
+        confirm_title: "Restaurar a rotina"
+        error_text: "Ocorreu um erro durante o restauro."
+        name_conflict: "Já tens uma rotina ativa chamada {name}. Muda-lhe o nome e tenta de novo."
     show:
         bodyweight_warning: Indica o teu peso corporal nas definições para usares todos os exercícios desta rotina.
         empty_usage: Esta rotina ainda não foi utilizada num treino.
@@ -1015,6 +1036,7 @@ workout:
         exercises: "{count, plural, =1 {exercício} other {exercícios}}"
         filter:
             all_sessions: Todos os treinos
+            archived_routines: "Arquivadas"
             clear: Limpar data
             month: Este mês
             muscle_label: Filtrar por músculo

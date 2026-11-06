@@ -30,6 +30,7 @@ final class RoutineRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('r')
             ->select('1')
             ->where('r.owner = :user')
+            ->andWhere('r.archived = false')
             ->andWhere('LOWER(r.name) = LOWER(:name)')
             ->setParameter('user', $user)
             ->setParameter('name', $name)
@@ -43,12 +44,22 @@ final class RoutineRepository extends ServiceEntityRepository
         return null !== $qb->getQuery()->getOneOrNullResult();
     }
 
-    public function findByOwnerOrderedByDate(User $user): QueryBuilder
+    public function findActiveByOwnerOrderedByDate(User $user): QueryBuilder
     {
-        return $this->createQueryBuilder('r')
-            ->where('r.owner = :user')
-            ->setParameter('user', $user)
-            ->orderBy('r.createdAt', 'DESC');
+        return $this->byOwnerOrderedByDate($user, false);
+    }
+
+    public function findArchivedByOwnerOrderedByDate(User $user): QueryBuilder
+    {
+        return $this->byOwnerOrderedByDate($user, true);
+    }
+
+    public function countArchivedByOwner(User $user): int
+    {
+        return $this->count([
+            'owner' => $user,
+            'archived' => true,
+        ]);
     }
 
     /**
@@ -67,5 +78,15 @@ final class RoutineRepository extends ServiceEntityRepository
         ;
 
         return array_column($rows, 'name');
+    }
+
+    private function byOwnerOrderedByDate(User $user, bool $archived): QueryBuilder
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.owner = :user')
+            ->andWhere('r.archived = :archived')
+            ->setParameter('user', $user)
+            ->setParameter('archived', $archived)
+            ->orderBy('r.createdAt', 'DESC');
     }
 }

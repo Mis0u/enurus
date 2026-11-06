@@ -108,6 +108,14 @@ Règles :
   entre pages.
 - Exercices publics (`isPublic = true`, `owner = null`) : jamais affectés par la cascade de
   suppression de compte utilisateur.
+- **Routine utilisée = archivée, jamais supprimée** (`RoutineDeletionService`, même règle que
+  `ExerciseDeletionService`) : ses séances gardent leur nom, l'historique n'est pas modifié. Une
+  routine sans séance est réellement supprimée, et `onDelete: SET NULL` reste en filet (admin).
+  Archivée : absente de « Mes routines » et du choix en création de séance, détail/édition en 404,
+  visible dans l'onglet « Archivées » (présent seulement s'il en existe une, `?view=archived`) et le
+  groupe du filtre de « Mes séances ». Son nom est libre (`UniqueEntity` inclut `archived`,
+  `existsByNameForUser()` ne regarde que les actives) ; désarchiver est donc refusé (409) si une
+  routine active porte ce nom (`RoutineRestoreService`), jamais de renommage automatique.
 
 ---
 

@@ -729,9 +729,12 @@ routine:
         subtitle: Skonfiguruj swój typowy trening
         title: Utwórz rutynę
     delete:
+        archive_confirm_button: "Zarchiwizuj"
+        archive_confirm_text: "{name} jest używana w {count, plural, one {# treningu} few {# treningach} many {# treningach} other {# treningach}}: zostanie zarchiwizowana, aby zachowały jej nazwę. Możesz ją przywrócić w zakładce „Zarchiwizowane”."
+        archive_confirm_title: "Zarchiwizuj rutynę"
         cancel_button: Anuluj
         confirm_button: Usuń
-        confirm_text: Czy na pewno chcesz usunąć {name}? Tej akcji nie można cofnąć. Treningi korzystające z tej rutyny staną się sesjami dowolnymi.
+        confirm_text: Czy na pewno chcesz usunąć {name}? Tej akcji nie można cofnąć.
         confirm_title: Usuń rutynę
         error_text: Wystąpił błąd podczas usuwania.
     edit:
@@ -744,8 +747,10 @@ routine:
         name_required: Nazwa rutyny jest wymagana.
         no_exercise: Musisz wybrać przynajmniej jedno ćwiczenie.
     flash:
+        archived: "Rutyna \"{name}\" została zarchiwizowana, jej treningi zachowują jej nazwę."
         created: Rutyna "{name}" została utworzona pomyślnie.
         deleted: Rutyna "{name}" została usunięta pomyślnie.
+        restored: "Rutyna \"{name}\" została przywrócona."
         updated: Rutyna "{name}" została zmieniona pomyślnie.
     form:
         description_label: Dodaj opis
@@ -794,7 +799,25 @@ routine:
                 many  {i # innych ćwiczeń…}
                 other {i # innych ćwiczeń…}
             }
+        tabs:
+            active: "Aktywne"
+            archived: "Zarchiwizowane ({count})"
         title: Moje programy
+        workout_count: >-
+            {count, plural,
+                =0    {Brak treningów}
+                one   {# trening}
+                few   {# treningi}
+                many  {# treningów}
+                other {# treningów}
+            }
+    restore:
+        cancel_button: "Anuluj"
+        confirm_button: "Przywróć"
+        confirm_text: "{name} wróci do „Moje programy” i znów będzie można ją wybrać do treningów."
+        confirm_title: "Przywróć rutynę"
+        error_text: "Wystąpił błąd podczas przywracania."
+        name_conflict: "Masz już aktywną rutynę o nazwie {name}. Zmień jej nazwę i spróbuj ponownie."
     show:
         bodyweight_warning: Podaj swoją masę ciała w ustawieniach, aby korzystać ze wszystkich ćwiczeń w tym planie.
         empty_usage: Ten program nie był jeszcze użyty w żadnym treningu.
@@ -1027,6 +1050,7 @@ workout:
         exercises: "{count, plural, =1 {ćwiczenie} few {ćwiczenia} many {ćwiczeń} other {ćwiczeń}}"
         filter:
             all_sessions: Wszystkie treningi
+            archived_routines: "Zarchiwizowane"
             clear: Wyczyść datę
             month: Ten miesiąc
             muscle_label: Filtruj według mięśnia

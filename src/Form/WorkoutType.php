@@ -232,6 +232,7 @@ final class WorkoutType extends AbstractType
 
         return $repository->createQueryBuilder('r')
             ->where('r.owner = :user')
+            ->andWhere('r.archived = false')
             ->setParameter('user', $user)
             ->orderBy('r.name', 'ASC');
     }

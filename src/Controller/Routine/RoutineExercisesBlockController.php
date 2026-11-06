@@ -45,7 +45,7 @@ final class RoutineExercisesBlockController extends AbstractController
 
         $routine = $this->routineRepository->find($routineId);
 
-        if (null === $routine) {
+        if (null === $routine || $routine->archived) {
             return new Response('', Response::HTTP_NOT_FOUND);
         }
 

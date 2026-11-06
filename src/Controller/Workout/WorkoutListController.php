@@ -74,9 +74,12 @@ class WorkoutListController extends AbstractController
         }
 
         /** @var array<Routine> $routines */
-        $routines = $routineRepository->findByOwnerOrderedByDate($user)->getQuery()->getResult();
+        $routines = $routineRepository->findActiveByOwnerOrderedByDate($user)->getQuery()->getResult();
 
-        $filters = $this->resolveFilters($request, $routines);
+        /** @var array<Routine> $archivedRoutines */
+        $archivedRoutines = $routineRepository->findArchivedByOwnerOrderedByDate($user)->getQuery()->getResult();
+
+        $filters = $this->resolveFilters($request, [...$routines, ...$archivedRoutines]);
         $filterType = in_array($filters['type'] ?? null, ['week', 'month'], true) ? $filters['type'] : null;
         $filterDate = $request->query->get('date');
         // Dérivé du filtre résolu (pas de la valeur brute de la query string) : une routine
@@ -113,6 +116,7 @@ class WorkoutListController extends AbstractController
             'filterType' => $filterType,
             'filterDate' => $filterDate,
             'routines' => $routines,
+            'archivedRoutines' => $archivedRoutines,
             'filterRoutine' => $filterRoutine,
             'muscleGroups' => $muscleGroups,
             'filterMuscles' => $filterMuscles,

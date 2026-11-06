@@ -41,12 +41,12 @@ export async function confirmDeletion(options) {
  * Envoie une requête mutative avec le header XHR attendu par les controllers back-end protégés par
  * `ValidatesDeleteRequestTrait`, et le header CSRF si un token est fourni. N'échoue jamais
  * silencieusement côté appelant : une erreur réseau ou une réponse HTTP non-ok retourne simplement
- * `{ ok: false }`.
+ * `{ ok: false }`, avec le `status` si le serveur a répondu.
  *
  * @param {string} url
  * @param {string} method
  * @param {string} [csrfToken]
- * @returns {Promise<{ok: boolean, data?: any}>}
+ * @returns {Promise<{ok: boolean, status?: number, data?: any}>}
  */
 export async function sendActionRequest(url, method, csrfToken) {
     const headers = { 'X-Requested-With': 'XMLHttpRequest' };
@@ -59,7 +59,7 @@ export async function sendActionRequest(url, method, csrfToken) {
         const response = await fetch(url, { method, headers });
 
         if (!response.ok) {
-            return { ok: false };
+            return { ok: false, status: response.status };
         }
 
         const data = await response.json();
