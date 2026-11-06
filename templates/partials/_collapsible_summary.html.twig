@@ -5,13 +5,21 @@
     - title   : string (déjà traduit)
     - titleId : string — id du <h2>, référencé par l'`aria-labelledby` de la carte
     - variant : 'settings'|'connection' — style du titre propre à chaque page
+    - iconTemplate : string|null — optionnel, chemin du partial SVG affiché dans le carré d'icône
 #}
 {% set title_classes = {
     settings: "font-['Rajdhani'] text-lg font-bold text-[#f0f4ff]",
     connection: 'font-rajdhani text-[15px] font-semibold tracking-[0.5px] uppercase text-[#8b9bb4]',
 } %}
 <summary class="flex items-center justify-between gap-3 max-md:min-h-11 cursor-pointer list-none select-none rounded-lg [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose-ft">
-    <h2 id="{{ titleId }}" class="{{ title_classes[variant] }}">{{ title }}</h2>
+    <h2 id="{{ titleId }}" class="flex items-center gap-2.5 {{ title_classes[variant] }}">
+        {% if iconTemplate|default(null) %}
+            <span class="w-8.5 h-8.5 rounded-lg bg-[rgba(244,63,94,0.15)] border border-[rgba(244,63,94,0.3)] flex items-center justify-center shrink-0 text-[#f43f5e]" aria-hidden="true">
+                {% include iconTemplate with {'width': 4.5, 'height': 4.5} only %}
+            </span>
+        {% endif %}
+        {{ title }}
+    </h2>
     <span class="shrink-0 text-[#8b9bb4] transition-transform duration-200 group-open/collapsible:rotate-180" aria-hidden="true">
         {% include 'partials/_svg/_down_arrow.html.twig' only %}
     </span>

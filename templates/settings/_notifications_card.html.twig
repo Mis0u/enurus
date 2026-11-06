@@ -11,9 +11,14 @@
          data-email-notification-toggle-url-value="{{ path('app_settings_admin_message_email_update') }}"
          data-email-notification-toggle-csrf-token-value="{{ csrf_token(constant('App\\Controller\\Settings\\SettingsAdminMessageEmailController::CSRF_TOKEN_ID')) }}"
          data-email-notification-toggle-success-message-value="{{ 'settings.feedback.success'|trans({}, 'navigation') }}">
-    <h2 id="notifications-title" class="font-['Rajdhani'] text-lg font-bold text-[#f0f4ff] mb-2">
-        {{ 'settings.notifications.title'|trans({}, 'navigation') }}
-    </h2>
+    <div class="flex items-center gap-2.5 mb-2">
+        <div class="w-8.5 h-8.5 rounded-lg bg-[rgba(244,63,94,0.15)] border border-[rgba(244,63,94,0.3)] flex items-center justify-center shrink-0">
+            {% include 'partials/_svg/_bell.html.twig' with {'width': 4.5, 'height': 4.5, 'extraClass': 'text-[#f43f5e]', 'ariaHidden': true} only %}
+        </div>
+        <h2 id="notifications-title" class="font-['Rajdhani'] text-lg font-bold text-[#f0f4ff]">
+            {{ 'settings.notifications.title'|trans({}, 'navigation') }}
+        </h2>
+    </div>
     <p class="text-sm text-[#8b9bb4] mb-4 leading-relaxed">
         {{ 'settings.notifications.explanation'|trans({brand: 'name'|trans({}, 'brand')}, 'navigation') }}
     </p>
