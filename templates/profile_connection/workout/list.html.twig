@@ -2,7 +2,7 @@
     Liste des séances d'une connexion, en lecture seule.
     Controller : ProfileConnectionWorkoutListController (GET /{_locale}/connexions/{id}/seances)
     Variables : connection, subject, pagination, tonnageMap, musclesMap, hiddenCountMap,
-    filterType, filterDate, routines, filterRoutine, muscleGroups, filterMuscles,
+    filterType, filterDate, routines, archivedRoutines, filterRoutine, muscleGroups, filterMuscles,
     filterMusclesParam, limitAllowed, exerciseCountMap, hasPrMap, hasRepsRecordMap, badgesMap — mêmes
     données que `workout/list/index.html.twig`, calculées pour `subject`.
 #}
@@ -32,6 +32,7 @@
             'filterType': filterType,
             'filterDate': filterDate,
             'routines': routines,
+            'archivedRoutines': archivedRoutines,
             'filterRoutine': filterRoutine,
             'muscleGroups': muscleGroups,
             'filterMuscles': filterMuscles,

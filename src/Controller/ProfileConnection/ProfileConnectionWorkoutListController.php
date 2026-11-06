@@ -68,9 +68,12 @@ final class ProfileConnectionWorkoutListController extends AbstractController
         $this->visitRecorder->record($connection, $viewer);
 
         /** @var array<Routine> $routines */
-        $routines = $this->routineRepository->findByOwnerOrderedByDate($subject)->getQuery()->getResult();
+        $routines = $this->routineRepository->findActiveByOwnerOrderedByDate($subject)->getQuery()->getResult();
 
-        $filters = $this->resolveFilters($request, $routines);
+        /** @var array<Routine> $archivedRoutines */
+        $archivedRoutines = $this->routineRepository->findArchivedByOwnerOrderedByDate($subject)->getQuery()->getResult();
+
+        $filters = $this->resolveFilters($request, [...$routines, ...$archivedRoutines]);
         $filterType = in_array($filters['type'] ?? null, ['week', 'month'], true) ? $filters['type'] : null;
         $filterDate = $request->query->get('date');
         $filterRoutine = match (true) {
@@ -101,6 +104,7 @@ final class ProfileConnectionWorkoutListController extends AbstractController
             'filterType' => $filterType,
             'filterDate' => $filterDate,
             'routines' => $routines,
+            'archivedRoutines' => $archivedRoutines,
             'filterRoutine' => $filterRoutine,
             'muscleGroups' => $muscleGroups,
             'filterMuscles' => $filterMuscles,

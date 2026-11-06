@@ -725,9 +725,12 @@ routine:
         subtitle: Set up your go-to workout
         title: Create a routine
     delete:
+        archive_confirm_button: "Archive"
+        archive_confirm_text: "{name} is used by {count, plural, one {# workout} other {# workouts}}: it will be archived so they keep its name. You can restore it from the “Archived” tab."
+        archive_confirm_title: "Archive routine"
         cancel_button: Cancel
         confirm_button: Delete
-        confirm_text: Are you sure you want to delete {name}? This action is irreversible. Workouts using this routine will become free sessions.
+        confirm_text: Are you sure you want to delete {name}? This action is irreversible.
         confirm_title: Delete routine
         error_text: An error occurred while deleting.
     edit:
@@ -740,8 +743,10 @@ routine:
         name_required: The routine name is required.
         no_exercise: You must select at least one exercise.
     flash:
+        archived: "The routine \"{name}\" has been archived, its workouts keep its name."
         created: The routine "{name}" has been created successfully.
         deleted: The routine "{name}" has been deleted successfully.
+        restored: "The routine \"{name}\" has been restored."
         updated: The routine "{name}" has been updated successfully.
     form:
         description_label: Add a description
@@ -784,7 +789,23 @@ routine:
                 one   {and # more exercise…}
                 other {and # more exercises…}
             }
+        tabs:
+            active: "Active"
+            archived: "Archived ({count})"
         title: My routines
+        workout_count: >-
+            {count, plural,
+                =0    {No workouts}
+                one   {# workout}
+                other {# workouts}
+            }
+    restore:
+        cancel_button: "Cancel"
+        confirm_button: "Restore"
+        confirm_text: "{name} will return to “My routines” and can be picked for your workouts again."
+        confirm_title: "Restore routine"
+        error_text: "An error occurred while restoring."
+        name_conflict: "You already have an active routine named {name}. Rename it, then try again."
     show:
         bodyweight_warning: Set your bodyweight in settings to use all the exercises in this routine.
         empty_usage: This routine hasn't been used in a session yet.
@@ -1015,6 +1036,7 @@ workout:
         exercises: "{count, plural, =1 {exercise} other {exercises}}"
         filter:
             all_sessions: All sessions
+            archived_routines: "Archived"
             clear: Clear date
             month: This month
             muscle_label: Filter by muscle

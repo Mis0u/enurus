@@ -57,6 +57,10 @@ final class RoutineEditController extends AbstractController
     {
         $this->denyAccessUnlessGranted(RoutineVoter::EDIT, $routine);
 
+        if ($routine->archived) {
+            throw $this->createNotFoundException();
+        }
+
         $form = $this->createForm(RoutineType::class, $routine);
 
         $form->handleRequest($request);

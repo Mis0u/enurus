@@ -725,9 +725,12 @@ routine:
         subtitle: Configura tu entrenamiento tipo
         title: Crear una rutina
     delete:
+        archive_confirm_button: "Archivar"
+        archive_confirm_text: "{name} se usa en {count, plural, one {# sesión} other {# sesiones}}: se archivará para que conserven su nombre. Podrás restaurarla desde la pestaña « Archivadas »."
+        archive_confirm_title: "Archivar la rutina"
         cancel_button: Cancelar
         confirm_button: Eliminar
-        confirm_text: "¿{gender, select, female {Estás segura} other {Estás seguro}} de que quieres eliminar {name}? Esta acción es irreversible. Las sesiones que usan esta rutina pasarán a ser sesiones libres."
+        confirm_text: "¿{gender, select, female {Estás segura} other {Estás seguro}} de que quieres eliminar {name}? Esta acción es irreversible."
         confirm_title: Eliminar la rutina
         error_text: Se produjo un error durante la eliminación.
     edit:
@@ -740,8 +743,10 @@ routine:
         name_required: El nombre de la rutina es obligatorio.
         no_exercise: Debes seleccionar al menos un ejercicio.
     flash:
+        archived: "La rutina \"{name}\" ha sido archivada, sus sesiones conservan su nombre."
         created: La rutina "{name}" ha sido creada con éxito.
         deleted: La rutina "{name}" ha sido eliminada con éxito.
+        restored: "La rutina \"{name}\" ha sido restaurada."
         updated: La rutina "{name}" ha sido modificada con éxito.
     form:
         description_label: Añadir una descripción
@@ -784,7 +789,23 @@ routine:
                 one   {y # ejercicio más…}
                 other {y # ejercicios más…}
             }
+        tabs:
+            active: "Activas"
+            archived: "Archivadas ({count})"
         title: Mis rutinas
+        workout_count: >-
+            {count, plural,
+                =0    {Ninguna sesión}
+                one   {# sesión}
+                other {# sesiones}
+            }
+    restore:
+        cancel_button: "Cancelar"
+        confirm_button: "Restaurar"
+        confirm_text: "{name} volverá a « Mis rutinas » y podrás elegirla de nuevo para tus sesiones."
+        confirm_title: "Restaurar la rutina"
+        error_text: "Se produjo un error durante la restauración."
+        name_conflict: "Ya tienes una rutina activa llamada {name}. Cámbiale el nombre e inténtalo de nuevo."
     show:
         bodyweight_warning: Indica tu peso corporal en los ajustes para usar todos los ejercicios de esta rutina.
         empty_usage: Esta rutina aún no se ha utilizado en ningún entrenamiento.
@@ -1015,6 +1036,7 @@ workout:
         exercises: "{count, plural, =1 {ejercicio} other {ejercicios}}"
         filter:
             all_sessions: Todos los entrenamientos
+            archived_routines: "Archivadas"
             clear: Borrar fecha
             month: Este mes
             muscle_label: Filtrar por músculo

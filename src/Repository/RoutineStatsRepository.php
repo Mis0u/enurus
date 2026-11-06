@@ -72,6 +72,40 @@ class RoutineStatsRepository
         }, $rows));
     }
 
+    public function isUsed(Routine $routine): bool
+    {
+        return [] !== $this->countWorkoutsByRoutine([$routine]);
+    }
+
+    /**
+     * Une seule requête pour toute une page de routines. Une routine sans séance est absente du
+     * résultat.
+     *
+     * @param array<Routine> $routines
+     * @return array<string, int> nombre de séances indexé par identifiant de routine
+     */
+    public function countWorkoutsByRoutine(array $routines): array
+    {
+        if ([] === $routines) {
+            return [];
+        }
+
+        /** @var array<int, array{routineId: string, workoutCount: int|string}> $rows */
+        $rows = $this->workoutRepository->createQueryBuilder('w')
+            ->select('IDENTITY(w.routine) AS routineId', 'COUNT(w.id) AS workoutCount')
+            ->andWhere('w.routine IN (:routines)')
+            ->setParameter('routines', array_map(static fn (Routine $routine): string => (string) $routine->id, $routines))
+            ->groupBy('w.routine')
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column(
+            array_map(static fn (array $row): array => [$row['routineId'], (int) $row['workoutCount']], $rows),
+            1,
+            0,
+        );
+    }
+
     private function routineWorkoutsQueryBuilder(Routine $routine, User $user): QueryBuilder
     {
         return $this->workoutRepository->createQueryBuilder('w')

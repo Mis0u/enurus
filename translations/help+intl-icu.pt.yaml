@@ -56,6 +56,7 @@ section:
         intro: "Uma rotina é uma lista de exercícios que fazes com frequência, por exemplo « Push day »."
         open: "Ver as minhas rotinas"
         points:
+            archive: "Eliminar uma rotina já usada arquiva-a: os seus treinos mantêm o seu nome. Podes restaurá-la no separador « Arquivadas » de « As minhas rotinas »."
             order: "Reordena os seus exercícios arrastando-os."
             use: "Ao registares um treino, escolhe a tua rotina: todos os seus exercícios são adicionados de uma vez, pela ordem."
             what: "Cria-a uma vez em « As minhas rotinas », adicionando os teus exercícios."

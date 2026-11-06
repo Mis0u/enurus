@@ -7,6 +7,7 @@ namespace App\Controller\Routine;
 use App\Entity\Routine;
 use App\Entity\User;
 use App\Repository\RoutineRepository;
+use App\Repository\RoutineStatsRepository;
 use App\Service\Translation\CountLabelsBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -33,8 +34,11 @@ final class RoutineListController extends AbstractController
 
     private const array DISPLAY_LIMIT_ALLOWED = [10, 25, 50];
 
+    private const string ARCHIVED_VIEW = 'archived';
+
     public function __construct(
         private readonly RoutineRepository $routineRepository,
+        private readonly RoutineStatsRepository $routineStatsRepository,
         private readonly CountLabelsBuilder $countLabelsBuilder,
     ) {
     }
@@ -47,9 +51,15 @@ final class RoutineListController extends AbstractController
         $limit = $request->query->getInt('limit', self::DISPLAY_LIMIT_BY_DEFAULT);
         $limit = in_array($limit, self::DISPLAY_LIMIT_ALLOWED, true) ? $limit : self::DISPLAY_LIMIT_BY_DEFAULT;
 
+        $archivedCount = $this->routineRepository->countArchivedByOwner($user);
+        // Sans routine archivée, l'onglet n'existe pas : `?view=archived` retombe sur les actives.
+        $showArchived = self::ARCHIVED_VIEW === $request->query->get('view') && 0 < $archivedCount;
+
         /** @var PaginationInterface<int, Routine> $pagination */
         $pagination = $paginator->paginate(
-            $this->routineRepository->findByOwnerOrderedByDate($user),
+            $showArchived
+                ? $this->routineRepository->findArchivedByOwnerOrderedByDate($user)
+                : $this->routineRepository->findActiveByOwnerOrderedByDate($user),
             $request->query->getInt('page', 1),
             $limit
         );
@@ -60,6 +70,9 @@ final class RoutineListController extends AbstractController
             'countLabels' => $this->countLabelsBuilder->build('routine.list.count', 'navigation', $pagination->getTotalItemCount()),
             'limitAllowed' => self::DISPLAY_LIMIT_ALLOWED,
             'bodyweightWarnings' => $this->bodyweightWarnings($pagination, $user),
+            'workoutCounts' => $this->routineStatsRepository->countWorkoutsByRoutine([...$pagination]),
+            'archivedCount' => $archivedCount,
+            'showArchived' => $showArchived,
         ]);
     }
 

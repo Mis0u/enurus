@@ -56,6 +56,7 @@ section:
         intro: "Une routine est une liste d'exercices que tu fais souvent, par exemple « Push day »."
         open: "Voir mes routines"
         points:
+            archive: "Supprimer une routine déjà utilisée l'archive : ses séances gardent son nom. Tu peux la désarchiver depuis l'onglet « Archivées » de « Mes routines »."
             order: "Réorganise ses exercices en les faisant glisser."
             use: "En enregistrant une séance, choisis ta routine : tous ses exercices sont ajoutés d'un coup, dans l'ordre."
             what: "Crée-la une fois depuis « Mes routines », en y ajoutant tes exercices."

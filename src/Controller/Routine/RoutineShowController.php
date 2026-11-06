@@ -33,6 +33,10 @@ final class RoutineShowController extends AbstractController
     {
         $this->denyAccessUnlessGranted(RoutineVoter::VIEW, $routine);
 
+        if ($routine->archived) {
+            throw $this->createNotFoundException();
+        }
+
         /** @var User $user */
         $user = $this->getUser();
 

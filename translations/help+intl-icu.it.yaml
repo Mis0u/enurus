@@ -56,6 +56,7 @@ section:
         intro: "Una routine è un elenco di esercizi che fai spesso, per esempio « Push day »."
         open: "Vedi le mie routine"
         points:
+            archive: "Eliminare una routine già usata la archivia: i suoi allenamenti conservano il suo nome. Puoi ripristinarla dalla scheda « Archiviate » di « Le mie routine »."
             order: "Riordina i suoi esercizi trascinandoli."
             use: "Quando registri un allenamento, scegli la tua routine: tutti i suoi esercizi vengono aggiunti in un colpo, nell'ordine."
             what: "Creala una volta da « Le mie routine », aggiungendo i tuoi esercizi."

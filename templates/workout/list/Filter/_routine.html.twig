@@ -1,4 +1,4 @@
-{# Params: routines, filterRoutine — rendu uniquement si routines n'est pas vide, cf. _filters.html.twig #}
+{# Params: routines, archivedRoutines, filterRoutine — rendu uniquement si l'une des deux listes n'est pas vide, cf. _filters.html.twig #}
 <select
     data-action="change->workout--list--workout-filters#onRoutineChange"
     class="bg-white/[0.04] border border-white/[0.07] rounded-lg px-3 py-1.5 max-md:min-h-11 text-[12px] text-[#f0f4ff] font-['DM_Sans'] outline-none cursor-pointer"
@@ -9,4 +9,11 @@
     {% for routine in routines %}
         <option value="{{ routine.id }}" {{ filterRoutine == routine.id ~ '' ? 'selected' : '' }}>{{ routine.name }}</option>
     {% endfor %}
+    {% if archivedRoutines is not empty %}
+        <optgroup label="{{ 'workout.list.filter.archived_routines'|trans({}, 'navigation') }}">
+            {% for routine in archivedRoutines %}
+                <option value="{{ routine.id }}" {{ filterRoutine == routine.id ~ '' ? 'selected' : '' }}>{{ routine.name }}</option>
+            {% endfor %}
+        </optgroup>
+    {% endif %}
 </select>

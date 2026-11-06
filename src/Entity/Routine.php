@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RoutineRepository::class)]
 #[UniqueEntity(
-    fields: ['name', 'owner'],
+    fields: ['name', 'owner', 'archived'],
     message: 'routine.name_exists',
     errorPath: 'name',
 )]
@@ -65,6 +65,21 @@ class Routine
         }
         set(?string $description) {
             $this->description = null !== $description ? trim($description) : null;
+        }
+    }
+
+    /**
+     * Une routine archivée n'apparaît plus dans « Mes routines » ni au choix d'une routine pour une
+     * nouvelle séance, mais ses séances gardent leur nom et leur lien. Son nom est libre : une
+     * routine active peut le reprendre.
+     */
+    #[ORM\Column]
+    public bool $archived = false {
+        get {
+            return $this->archived;
+        }
+        set(bool $archived) {
+            $this->archived = $archived;
         }
     }
 

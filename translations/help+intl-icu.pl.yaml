@@ -56,6 +56,7 @@ section:
         intro: "Program to lista ćwiczeń, które często wykonujesz, na przykład „Push day”."
         open: "Zobacz moje programy"
         points:
+            archive: "Usunięcie programu, który był już używany, archiwizuje go: jego treningi zachowują jego nazwę. Możesz go przywrócić w zakładce „Zarchiwizowane” w „Moje programy”."
             order: "Zmieniaj kolejność ćwiczeń, przeciągając je."
             use: "Zapisując trening, wybierz swój program: wszystkie jego ćwiczenia zostaną dodane naraz, po kolei."
             what: "Utwórz go raz w „Moje programy”, dodając swoje ćwiczenia."

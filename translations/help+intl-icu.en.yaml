@@ -56,6 +56,7 @@ section:
         intro: "A routine is a list of exercises you do often, for example “Push day”."
         open: "See my routines"
         points:
+            archive: "Deleting a routine you have already used archives it: its workouts keep its name. You can restore it from the “Archived” tab in “My routines”."
             order: "Reorder its exercises by dragging them."
             use: "When logging a workout, pick your routine: all its exercises are added at once, in order."
             what: "Create it once from “My routines”, adding your exercises to it."

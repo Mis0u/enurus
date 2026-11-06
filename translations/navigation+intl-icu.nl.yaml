@@ -725,9 +725,12 @@ routine:
         subtitle: Stel je standaard training in
         title: Routine aanmaken
     delete:
+        archive_confirm_button: "Archiveren"
+        archive_confirm_text: "{name} wordt gebruikt in {count, plural, one {# training} other {# trainingen}}: ze wordt gearchiveerd zodat die haar naam behouden. Je kunt haar herstellen via het tabblad ‘Gearchiveerd’."
+        archive_confirm_title: "Routine archiveren"
         cancel_button: Annuleren
         confirm_button: Verwijderen
-        confirm_text: Weet je zeker dat je {name} wilt verwijderen? Deze actie is onomkeerbaar. Trainingen die deze routine gebruiken, worden vrije sessies.
+        confirm_text: Weet je zeker dat je {name} wilt verwijderen? Deze actie is onomkeerbaar.
         confirm_title: Routine verwijderen
         error_text: Er is een fout opgetreden bij het verwijderen.
     edit:
@@ -740,8 +743,10 @@ routine:
         name_required: De naam van de routine is verplicht.
         no_exercise: Je moet minstens één oefening selecteren.
     flash:
+        archived: "De routine \"{name}\" is gearchiveerd, haar trainingen behouden haar naam."
         created: De routine "{name}" is succesvol aangemaakt.
         deleted: De routine "{name}" is succesvol verwijderd.
+        restored: "De routine \"{name}\" is hersteld."
         updated: De routine "{name}" is succesvol gewijzigd.
     form:
         description_label: Beschrijving toevoegen
@@ -784,7 +789,23 @@ routine:
                 one   {en # andere oefening…}
                 other {en # andere oefeningen…}
             }
+        tabs:
+            active: "Actief"
+            archived: "Gearchiveerd ({count})"
         title: Mijn routines
+        workout_count: >-
+            {count, plural,
+                =0    {Geen trainingen}
+                one   {# training}
+                other {# trainingen}
+            }
+    restore:
+        cancel_button: "Annuleren"
+        confirm_button: "Herstellen"
+        confirm_text: "{name} komt terug in ‘Mijn routines’ en kun je weer kiezen voor je trainingen."
+        confirm_title: "Routine herstellen"
+        error_text: "Er is een fout opgetreden bij het herstellen."
+        name_conflict: "Je hebt al een actieve routine met de naam {name}. Geef die een andere naam en probeer het opnieuw."
     show:
         bodyweight_warning: Vul je lichaamsgewicht in bij de instellingen om alle oefeningen van deze routine te gebruiken.
         empty_usage: Deze routine is nog niet gebruikt in een training.
@@ -1015,6 +1036,7 @@ workout:
         exercises: "{count, plural, =1 {oefening} other {oefeningen}}"
         filter:
             all_sessions: Alle trainingen
+            archived_routines: "Gearchiveerd"
             clear: Datum wissen
             month: Deze maand
             muscle_label: Filteren op spier

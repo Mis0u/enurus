@@ -4146,6 +4146,13 @@
       }
     }
   }
+  .hover\:border-\[rgba\(6\,182\,212\,0\.4\)\] {
+    &:hover {
+      @media (hover: hover) {
+        border-color: rgba(6,182,212,0.4);
+      }
+    }
+  }
   .hover\:border-\[rgba\(244\,63\,94\,0\.3\)\] {
     &:hover {
       @media (hover: hover) {
@@ -4278,6 +4285,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: #151f30;
+      }
+    }
+  }
+  .hover\:bg-\[rgba\(6\,182\,212\,0\.15\)\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: rgba(6,182,212,0.15);
       }
     }
   }

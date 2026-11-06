@@ -20,8 +20,8 @@
         {% endif %}
     </div>
 
-    {% if routines is not empty %}
-        {% include 'workout/list/Filter/_routine.html.twig' with {'routines': routines, 'filterRoutine': filterRoutine} only %}
+    {% if routines is not empty or archivedRoutines is not empty %}
+        {% include 'workout/list/Filter/_routine.html.twig' with {'routines': routines, 'archivedRoutines': archivedRoutines, 'filterRoutine': filterRoutine} only %}
     {% endif %}
 
     {# Compteur : fin de ligne sur desktop, posé à droite de « Filtrer par muscle » sur mobile

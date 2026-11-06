@@ -7,7 +7,7 @@ namespace App\Controller\Routine;
 use App\Controller\Trait\ValidatesDeleteRequestTrait;
 use App\Entity\Routine;
 use App\Security\Voter\RoutineVoter;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\Entity\RoutineDeletionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +31,7 @@ final class RoutineDeleteController extends AbstractController
     use ValidatesDeleteRequestTrait;
 
     public function __construct(
-        private readonly EntityManagerInterface $em,
+        private readonly RoutineDeletionService $routineDeletionService,
         private readonly TranslatorInterface $translator,
     ) {
     }
@@ -50,12 +50,12 @@ final class RoutineDeleteController extends AbstractController
 
         $this->denyUnlessValidCsrfToken($request, 'routine_delete_' . $routine->id->toRfc4122());
 
-        $this->em->remove($routine);
-        $this->em->flush();
+        $archived = $this->routineDeletionService->delete($routine);
 
         return $this->json([
             'success' => true,
-            'message' => $this->translator->trans('routine.flash.deleted', [
+            'archived' => $archived,
+            'message' => $this->translator->trans($archived ? 'routine.flash.archived' : 'routine.flash.deleted', [
                 '{name}' => $routine->name,
             ], 'navigation'),
         ]);

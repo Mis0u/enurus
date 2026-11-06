@@ -725,9 +725,12 @@ routine:
         subtitle: Configure ta séance type
         title: Créer une routine
     delete:
+        archive_confirm_button: "Archiver"
+        archive_confirm_text: "{name} est utilisée par {count, plural, one {# séance} other {# séances}} : elle sera archivée pour que ces séances gardent son nom. Tu pourras la désarchiver depuis l'onglet « Archivées »."
+        archive_confirm_title: "Archiver la routine"
         cancel_button: Annuler
         confirm_button: Supprimer
-        confirm_text: "{gender, select, female {Es-tu sûre} other {Es-tu sûr}} de vouloir supprimer {name} ? Cette action est irréversible. Les séances utilisant cette routine deviendront des séances libres."
+        confirm_text: "{gender, select, female {Es-tu sûre} other {Es-tu sûr}} de vouloir supprimer {name} ? Cette action est irréversible."
         confirm_title: Supprimer la routine
         error_text: Une erreur est survenue lors de la suppression.
     edit:
@@ -740,8 +743,10 @@ routine:
         name_required: Le nom de la routine est obligatoire.
         no_exercise: Tu dois sélectionner au moins un exercice.
     flash:
+        archived: "La routine \"{name}\" a été archivée, ses séances gardent son nom."
         created: La routine "{name}" a été créée avec succès.
-        deleted: La routine "{name}" a été supprimé avec succès.
+        deleted: La routine "{name}" a été supprimée avec succès.
+        restored: "La routine \"{name}\" a été désarchivée."
         updated: La routine "{name}" a été modifiée avec succès.
     form:
         description_label: Ajouter une description
@@ -784,7 +789,23 @@ routine:
                 one   {et # autre exercice…}
                 other {et # autres exercices…}
             }
+        tabs:
+            active: "Actives"
+            archived: "Archivées ({count})"
         title: Mes routines
+        workout_count: >-
+            {count, plural,
+                =0    {Aucune séance}
+                one   {# séance}
+                other {# séances}
+            }
+    restore:
+        cancel_button: "Annuler"
+        confirm_button: "Désarchiver"
+        confirm_text: "{name} reviendra dans « Mes routines » et pourra de nouveau être choisie pour tes séances."
+        confirm_title: "Désarchiver la routine"
+        error_text: "Une erreur est survenue lors du désarchivage."
+        name_conflict: "Tu as déjà une routine active nommée {name}. Renomme-la, puis réessaie."
     show:
         bodyweight_warning: Renseigne ton poids corporel dans les réglages pour utiliser tous les exercices de cette routine.
         empty_usage: Cette routine n'a pas encore été utilisée dans une séance.
@@ -1015,6 +1036,7 @@ workout:
         exercises: "{count, plural, =1 {exercice} other {exercices}}"
         filter:
             all_sessions: Toutes les séances
+            archived_routines: "Archivées"
             clear: Effacer la date
             month: Ce mois
             muscle_label: Filtrer par muscle
