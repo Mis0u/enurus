@@ -478,6 +478,13 @@ messagerie:
         confirm_title: Usuń rozmowę
         error_text: "Wystąpił błąd podczas usuwania. Spróbuj ponownie."
         success: Rozmowa została usunięta z twoich wiadomości.
+    email:
+        body: "{brand} wysłał(a) Ci wiadomość. Otwórz swoje wiadomości, aby ją przeczytać."
+        cta: "Zobacz moją wiadomość"
+        subject: "Masz nową wiadomość w {brand}"
+        title: "Masz nową wiadomość"
+        unsubscribe: "Nie chcę otrzymywać tych e-maili"
+        why: "Otrzymujesz tę wiadomość, ponieważ masz włączone powiadomienia o wiadomościach."
     empty:
         text: "Ta przestrzeń pozwala ci otrzymywać moje odpowiedzi na twoje wiadomości kontaktowe, a także okazjonalne komunikaty o aktualizacjach strony — nigdy wiadomości od innych użytkowników, nigdy spamu."
         title: Witaj w swoich wiadomościach
@@ -927,6 +934,11 @@ settings:
         label: Język
     nickname:
         label: Alias
+    notifications:
+        admin_message_hint: "Ogłoszenia, ankiety i wiadomości od administratora."
+        admin_message_label: "Powiadamiaj mnie o nowej wiadomości"
+        explanation: "Wybierz, jakie e-maile otrzymujesz od {brand}."
+        title: "Powiadomienia"
     password:
         current_password: Aktualne hasło
         current_password_invalid: Aktualne hasło jest nieprawidłowe

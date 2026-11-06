@@ -51,6 +51,7 @@ final class SettingsIndexController extends AbstractController
 
         return $this->render('settings/index.html.twig', [
             'user' => $user,
+            'showNotifications' => ! $this->isGranted('ROLE_ADMIN'),
             'nicknameMinLength' => User::NICKNAME_MIN_LENGTH,
             'nicknameMaxLength' => User::NICKNAME_MAX_LENGTH,
             'avatarMaxSizeBytes' => ImageConstraints::MAX_SIZE_BYTES,

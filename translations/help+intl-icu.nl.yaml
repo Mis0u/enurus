@@ -51,6 +51,7 @@ section:
         points:
             answer: "Het antwoord komt binnen in je Berichten: een stip wijst op nieuwe berichten."
             contact: "Schrijf me via ‘Contact’ en kies een categorie. Je kunt een screenshot bijvoegen."
+            email: "Een e-mail meldt je elk nieuw bericht, zonder de inhoud te tonen. Je kunt dit uitzetten via Instellingen › Meldingen."
         title: "Contact en berichten"
     routines:
         intro: "Een routine is een lijst oefeningen die je vaak doet, bijvoorbeeld ‘Push day’."

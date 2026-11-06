@@ -30,6 +30,7 @@ final readonly class ContactThreadComposeService
         private ContactMessageBodySanitizerService $contactMessageBodySanitizerService,
         private UserRepository $userRepository,
         private MessageBusInterface $messageBus,
+        private AdminMessageEmailNotifier $emailNotifier,
     ) {
     }
 
@@ -52,6 +53,8 @@ final readonly class ContactThreadComposeService
 
         $this->entityManager->persist($thread);
         $this->entityManager->flush();
+
+        $this->emailNotifier->notify($thread);
 
         return $thread;
     }

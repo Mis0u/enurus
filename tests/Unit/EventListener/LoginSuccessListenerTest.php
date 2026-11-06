@@ -6,6 +6,7 @@ namespace App\Tests\Unit\EventListener;
 
 use App\Entity\User;
 use App\EventListener\LoginSuccessListener;
+use App\Service\Contact\ContactThreadLoginTarget;
 use App\Service\Entity\AccountDeletionService;
 use App\Service\Entity\UserService;
 use PHPUnit\Framework\TestCase;
@@ -31,7 +32,7 @@ final class LoginSuccessListenerTest extends TestCase
         $urlGenerator = $this->createStub(UrlGeneratorInterface::class);
         $urlGenerator->method('generate')->willReturn('/fr/tableau-de-bord');
 
-        $listener = new LoginSuccessListener($urlGenerator, $userService, $accountDeletionService);
+        $listener = new LoginSuccessListener($urlGenerator, $userService, $accountDeletionService, $this->createStub(ContactThreadLoginTarget::class));
         $listener->onLoginSuccessEvent($this->createEvent($user));
 
         self::assertGreaterThan(new \DateTimeImmutable('-10 seconds'), $user->lastLogin);
@@ -53,6 +54,7 @@ final class LoginSuccessListenerTest extends TestCase
             $urlGenerator,
             $this->createStub(UserService::class),
             $this->createStub(AccountDeletionService::class),
+            $this->createStub(ContactThreadLoginTarget::class),
         );
 
         // La requête est en anglais, mais la locale enregistrée sur le compte doit primer

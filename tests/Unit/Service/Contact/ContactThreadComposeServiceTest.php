@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Service\Contact;
 
 use App\Entity\ContactBroadcast;
+use App\Entity\ContactThread;
 use App\Entity\User;
 use App\Enum\Contact\ContactBroadcastTargetEnum;
 use App\Enum\Contact\ContactCategoryEnum;
 use App\Enum\Contact\ContactThreadStatusEnum;
 use App\Message\SendContactBroadcastMessage;
 use App\Repository\UserRepository;
+use App\Service\Contact\AdminMessageEmailNotifier;
 use App\Service\Contact\ContactMessageBodySanitizerService;
 use App\Service\Contact\ContactThreadComposeService;
 use App\Service\Utils\ImageUploadService;
@@ -215,6 +217,7 @@ final class ContactThreadComposeServiceTest extends TestCase
             new ContactMessageBodySanitizerService(),
             $userRepository,
             $messageBus,
+            $this->createStub(AdminMessageEmailNotifier::class),
         );
 
         $service->composeToAudience(
@@ -228,10 +231,24 @@ final class ContactThreadComposeServiceTest extends TestCase
         );
     }
 
+    public function testComposeToSingleUserEmailsTheRecipient(): void
+    {
+        $emailNotifier = $this->createMock(AdminMessageEmailNotifier::class);
+        $emailNotifier->expects(self::once())->method('notify')->with(self::isInstanceOf(ContactThread::class));
+
+        $this->service(
+            $this->createStub(EntityManagerInterface::class),
+            $this->createStub(UserRepository::class),
+            $this->createStub(MessageBusInterface::class),
+            $emailNotifier,
+        )->composeToSingleUser($this->createUser(), $this->createUser(), ContactCategoryEnum::BUG, 'Sujet', 'Corps', null);
+    }
+
     private function service(
         EntityManagerInterface $em,
         UserRepository $userRepository,
         MessageBusInterface $messageBus,
+        ?AdminMessageEmailNotifier $emailNotifier = null,
     ): ContactThreadComposeService {
         return new ContactThreadComposeService(
             $em,
@@ -239,6 +256,7 @@ final class ContactThreadComposeServiceTest extends TestCase
             new ContactMessageBodySanitizerService(),
             $userRepository,
             $messageBus,
+            $emailNotifier ?? $this->createStub(AdminMessageEmailNotifier::class),
         );
     }
 

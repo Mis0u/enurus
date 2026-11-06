@@ -474,6 +474,13 @@ messagerie:
         confirm_title: Unterhaltung löschen
         error_text: "Beim Löschen ist ein Fehler aufgetreten. Bitte versuche es erneut."
         success: Die Unterhaltung wurde aus deinen Nachrichten gelöscht.
+    email:
+        body: "{brand} hat dir eine Nachricht geschickt. Öffne dein Postfach, um sie zu lesen."
+        cta: "Meine Nachricht ansehen"
+        subject: "Du hast eine neue Nachricht auf {brand}"
+        title: "Du hast eine neue Nachricht"
+        unsubscribe: "Diese E-Mails nicht mehr erhalten"
+        why: "Du erhältst diese E-Mail, weil deine Benachrichtigungen für Nachrichten aktiviert sind."
     empty:
         text: "In diesem Bereich erhältst du meine Antworten auf deine Kontaktnachrichten sowie gelegentliche Mitteilungen zu Website-Updates — nie Nachrichten von anderen Mitgliedern, nie Spam."
         title: Willkommen in deinen Nachrichten
@@ -915,6 +922,11 @@ settings:
         label: Sprache
     nickname:
         label: Alias
+    notifications:
+        admin_message_hint: "Ankündigungen, Umfragen und Nachrichten vom Admin."
+        admin_message_label: "Mich über neue Nachrichten informieren"
+        explanation: "Wähle aus, welche E-Mails du von {brand} erhältst."
+        title: "Benachrichtigungen"
     password:
         current_password: Aktuelles Passwort
         current_password_invalid: Das aktuelle Passwort ist nicht korrekt

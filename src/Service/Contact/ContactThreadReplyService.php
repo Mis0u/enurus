@@ -21,6 +21,7 @@ final readonly class ContactThreadReplyService
         private ImageUploadService $imageUploadService,
         private ContactMessageBodySanitizerService $contactMessageBodySanitizerService,
         private ContactThreadAdminNotifierService $adminNotifier,
+        private AdminMessageEmailNotifier $emailNotifier,
     ) {
     }
 
@@ -49,6 +50,8 @@ final readonly class ContactThreadReplyService
 
         if (! $fromAdmin) {
             $this->adminNotifier->notifyNewMessage($thread, $message);
+        } elseif ($thread->owner !== $author) {
+            $this->emailNotifier->notify($thread);
         }
 
         return $message;

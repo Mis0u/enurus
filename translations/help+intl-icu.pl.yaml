@@ -51,6 +51,7 @@ section:
         points:
             answer: "Odpowiedź trafia do Twoich Wiadomości: kropka oznacza nowe wiadomości."
             contact: "Napisz do mnie przez „Kontakt”, wybierając kategorię. Możesz dołączyć zrzut ekranu."
+            email: "E-mail informuje Cię o każdej nowej wiadomości, nie ujawniając jej treści. Możesz to wyłączyć w Ustawienia › Powiadomienia."
         title: "Kontakt i wiadomości"
     routines:
         intro: "Program to lista ćwiczeń, które często wykonujesz, na przykład „Push day”."

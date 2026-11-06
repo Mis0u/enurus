@@ -442,6 +442,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Email annonçant un nouveau message de l'admin : diffusion, sondage, message direct ou réponse
+     * dans un fil. Actif par défaut ; se coupe depuis les Réglages.
+     */
+    #[ORM\Column(options: [
+        'default' => true,
+    ])]
+    public bool $emailOnAdminMessage = true {
+        get {
+            return $this->emailOnAdminMessage;
+        }
+        set(bool $emailOnAdminMessage) {
+            $this->emailOnAdminMessage = $emailOnAdminMessage;
+        }
+    }
+
+    /**
      * Tour guidé du dashboard, joué une seule fois : marqué vu dès son premier affichage (pas à sa
      * fin), pour qu'un utilisateur qui se reconnecte sans avoir enregistré de séance ne le revoie
      * pas. Relançable à la demande depuis la page Aide, sans toucher ce flag.

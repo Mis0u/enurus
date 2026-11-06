@@ -26,6 +26,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\RawMessage;
 
 final class ContactBroadcastCrudControllerTest extends WebTestCase
 {
@@ -484,6 +486,47 @@ final class ContactBroadcastCrudControllerTest extends WebTestCase
             $this->deleteTestUser('broadcast-fail-fr@test.com');
             $this->deleteTestUser('broadcast-fail-de@test.com');
         }
+    }
+
+    public function testBroadcastEmailsOnlyTheRecipientsWhoAcceptIt(): void
+    {
+        $client = $this->login(self::ADMIN);
+        $accepting = $this->createTestUser('broadcast-email-on@test.com', 'fr');
+        $optedOut = $this->createTestUser('broadcast-email-off@test.com', 'fr');
+        $accepting->isVerified = true;
+        $optedOut->isVerified = true;
+        $optedOut->emailOnAdminMessage = false;
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $entityManager->flush();
+
+        $client->request(Request::METHOD_GET, $this->composeUrl());
+        $form = $client->getCrawler()->selectButton('Envoyer')->form([
+            'contact_broadcast_compose_form[target]' => 'fr',
+            'contact_broadcast_compose_form[subject]' => 'Annonce avec email',
+            'contact_broadcast_compose_form[body]' => 'Contenu jamais repris dans le mail.',
+        ]);
+        $client->request($form->getMethod(), $form->getUri(), $form->getPhpValues(), $form->getPhpFiles());
+
+        $this->processPendingBroadcast('Annonce avec email');
+
+        $recipients = array_map(
+            static fn (RawMessage $message): string => $message instanceof Email ? $message->getTo()[0]->getAddress() : '',
+            self::getMailerMessages(),
+        );
+
+        self::assertContains($accepting->email, $recipients);
+        self::assertNotContains($optedOut->email, $recipients);
+
+        $email = self::getMailerMessages()[array_search($accepting->email, $recipients, true)];
+        self::assertEmailHtmlBodyContains($email, '/fr/messagerie/');
+        self::assertEmailHtmlBodyContains($email, '/fr/reglages#notifications');
+        self::assertEmailHtmlBodyNotContains($email, 'Annonce avec email');
+        self::assertEmailHtmlBodyNotContains($email, 'Contenu jamais repris');
+
+        $this->deleteTestUser('broadcast-email-on@test.com');
+        $this->deleteTestUser('broadcast-email-off@test.com');
     }
 
     public function testComposeVoteRequiresAtLeastTwoOptions(): void

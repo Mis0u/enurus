@@ -1,0 +1,32 @@
+{#
+    Réglages › Notifications — cible du lien de désinscription de l'email de message (ancre
+    #notifications), donc jamais repliée. Enregistré à la volée.
+    Variables attendues (via `only`) :
+    - emailOnAdminMessage : bool
+#}
+<section id="notifications"
+         class="bg-[#0f1928] border border-white/[0.07] rounded-2xl p-6 scroll-mt-4"
+         aria-labelledby="notifications-title"
+         data-controller="email-notification-toggle"
+         data-email-notification-toggle-url-value="{{ path('app_settings_admin_message_email_update') }}"
+         data-email-notification-toggle-csrf-token-value="{{ csrf_token(constant('App\\Controller\\Settings\\SettingsAdminMessageEmailController::CSRF_TOKEN_ID')) }}"
+         data-email-notification-toggle-success-message-value="{{ 'settings.feedback.success'|trans({}, 'navigation') }}">
+    <h2 id="notifications-title" class="font-['Rajdhani'] text-lg font-bold text-[#f0f4ff] mb-2">
+        {{ 'settings.notifications.title'|trans({}, 'navigation') }}
+    </h2>
+    <p class="text-sm text-[#8b9bb4] mb-4 leading-relaxed">
+        {{ 'settings.notifications.explanation'|trans({brand: 'name'|trans({}, 'brand')}, 'navigation') }}
+    </p>
+
+    <label class="relative flex items-center justify-between gap-3 max-md:min-h-11 cursor-pointer">
+        <span class="flex flex-col gap-0.5">
+            <span class="text-sm text-[#f0f4ff]">{{ 'settings.notifications.admin_message_label'|trans({}, 'navigation') }}</span>
+            <span class="text-[12.5px] text-[#8b9bb4]">{{ 'settings.notifications.admin_message_hint'|trans({}, 'navigation') }}</span>
+        </span>
+        <input type="checkbox"
+               class="peer sr-only"
+               {% if emailOnAdminMessage %}checked{% endif %}
+               data-action="change->email-notification-toggle#toggle">
+        <span class="shrink-0 w-9 h-5 rounded-full bg-white/10 relative transition-colors peer-checked:bg-rose-ft peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-rose-ft after:content-[''] after:absolute after:left-0.5 after:top-0.5 after:w-4 after:h-4 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"></span>
+    </label>
+</section>

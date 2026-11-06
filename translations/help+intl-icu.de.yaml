@@ -51,6 +51,7 @@ section:
         points:
             answer: "Die Antwort kommt in deinen Nachrichten an: Ein Punkt weist auf neue Nachrichten hin."
             contact: "Schreib mir über „Kontakt“ und wähle eine Kategorie. Du kannst einen Screenshot anhängen."
+            email: "Eine E-Mail informiert dich über jede neue Nachricht, ohne ihren Inhalt zu verraten. Du kannst sie unter Einstellungen › Benachrichtigungen deaktivieren."
         title: "Kontakt und Nachrichten"
     routines:
         intro: "Eine Routine ist eine Liste von Übungen, die du oft machst, zum Beispiel „Push Day“."

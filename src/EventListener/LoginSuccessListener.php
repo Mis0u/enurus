@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EventListener;
 
 use App\Entity\User;
+use App\Service\Contact\ContactThreadLoginTarget;
 use App\Service\Entity\AccountDeletionService;
 use App\Service\Entity\UserService;
 use function Symfony\Component\Clock\now;
@@ -19,6 +20,7 @@ final readonly class LoginSuccessListener
         private UrlGeneratorInterface $urlGenerator,
         private UserService $userService,
         private AccountDeletionService $accountDeletionService,
+        private ContactThreadLoginTarget $contactThreadLoginTarget,
     ) {
     }
 
@@ -41,9 +43,10 @@ final readonly class LoginSuccessListener
 
     private function redirectTo(LoginSuccessEvent $event, User $user): void
     {
-        $url = $this->urlGenerator->generate('app_dashboard', [
-            '_locale' => $user->locale,
-        ]);
+        $url = $this->contactThreadLoginTarget->resolve($event->getResponse())
+            ?? $this->urlGenerator->generate('app_dashboard', [
+                '_locale' => $user->locale,
+            ]);
 
         $event->setResponse(new RedirectResponse($url));
     }

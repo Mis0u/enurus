@@ -474,6 +474,13 @@ messagerie:
         confirm_title: Gesprek verwijderen
         error_text: "Er is een fout opgetreden bij het verwijderen. Probeer het opnieuw."
         success: Het gesprek is verwijderd uit je berichten.
+    email:
+        body: "{brand} heeft je een bericht gestuurd. Open je berichten om het te lezen."
+        cta: "Mijn bericht bekijken"
+        subject: "Je hebt een nieuw bericht op {brand}"
+        title: "Je hebt een nieuw bericht"
+        unsubscribe: "Deze e-mails niet meer ontvangen"
+        why: "Je ontvangt deze e-mail omdat je berichtmeldingen aan staan."
     empty:
         text: "In deze ruimte ontvang je mijn antwoorden op je contactberichten, evenals af en toe mededelingen over site-updates — nooit berichten van andere leden, nooit spam."
         title: Welkom in je berichten
@@ -915,6 +922,11 @@ settings:
         label: Taal
     nickname:
         label: Alias
+    notifications:
+        admin_message_hint: "Aankondigingen, peilingen en berichten van de beheerder."
+        admin_message_label: "Laat me weten als er een nieuw bericht is"
+        explanation: "Kies welke e-mails je van {brand} ontvangt."
+        title: "Meldingen"
     password:
         current_password: Huidig wachtwoord
         current_password_invalid: Het huidige wachtwoord is niet correct

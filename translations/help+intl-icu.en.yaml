@@ -51,6 +51,7 @@ section:
         points:
             answer: "The answer arrives in your Messages: a dot flags new messages."
             contact: "Write to me from “Contact”, choosing a category. You can attach a screenshot."
+            email: "An email tells you about each new message, without revealing its content. You can turn it off in Settings › Notifications."
         title: "Contact and messages"
     routines:
         intro: "A routine is a list of exercises you do often, for example “Push day”."

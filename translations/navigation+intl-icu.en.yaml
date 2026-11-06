@@ -474,6 +474,13 @@ messagerie:
         confirm_title: Delete conversation
         error_text: "An error occurred while deleting. Please try again."
         success: The conversation has been deleted from your messages.
+    email:
+        body: "{brand} sent you a message. Open your inbox to read it."
+        cta: "See my message"
+        subject: "You have a new message on {brand}"
+        title: "You have a new message"
+        unsubscribe: "Stop receiving these emails"
+        why: "You are receiving this email because your message notifications are on."
     empty:
         text: "This space lets you receive my replies to your contact messages, as well as occasional site update announcements — never messages from other members, never spam."
         title: Welcome to your messages
@@ -915,6 +922,11 @@ settings:
         label: Language
     nickname:
         label: Alias
+    notifications:
+        admin_message_hint: "Announcements, polls and messages from the admin."
+        admin_message_label: "Let me know about new messages"
+        explanation: "Choose which emails you receive from {brand}."
+        title: "Notifications"
     password:
         current_password: Current password
         current_password_invalid: The current password is incorrect

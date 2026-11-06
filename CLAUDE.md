@@ -249,6 +249,19 @@ via `UserFixtures::createUser()` : toujours `isVerified = true` (jamais concern�
   licence à côté), jamais en emoji : Windows et certains Firefox/LibreWolf ne les affichent pas.
   Pays du drapeau = `LocaleAllowedEnum::flagCountryCode()` (`en` → `gb`).
 
+### Email de nouveau message
+- `AdminMessageEmailNotifier` : un seul email, sans sujet ni contenu du message, pour une diffusion, un
+  sondage, un message direct ou une réponse de l'admin (pas une réponse dans son propre fil, ni le fil
+  de bienvenue). Coupé par `User::$emailOnAdminMessage` (Réglages › Notifications, actif par défaut).
+  Rien pour un compte non vérifié, bloqué ou en suppression, ni pour un admin (carte absente, route
+  en 404). Il ne laisse remonter **aucune** exception :
+  dans `SendContactBroadcastMessageHandler`, un retry Messenger après le flush recréerait tous les fils.
+- `LoginSuccessListener` mène au tableau de bord, sauf si la page demandée était un fil
+  (`ContactThreadLoginTarget`, lien de l'email). Symfony a retiré la page de la session quand
+  `LoginSuccessEvent` est émis : elle se lit dans la redirection de `$event->getResponse()`.
+- Transport `async` limité à 5 messages/seconde (`rate_limiter: messenger_async`) : Resend refuse au-delà
+  de 10 requêtes/seconde par équipe, et 3 retries rapprochés enverraient les emails dans la file `failed`.
+
 ### Formulaires
 - FormType Symfony complet pour toute validation non-triviale ou réutilisée (mot de passe, workout).
 - Pas de FormType pour des scalaires uniques auto-save en AJAX (ex. champs du profil réglages) —
@@ -582,6 +595,8 @@ email + bandeau → partage mobile). Règles actées :
 - `#` dans une valeur YAML démarre un commentaire → **toujours quoter** (`"..."`) toute valeur
   contenant `#`. À vérifier systématiquement dans les 8 fichiers de langue.
 - Format ICU partout (`{name}`), sauf `validators.xx.yaml` qui garde `{{ limit }}`.
+- Apostrophe juste avant une variable ICU (`d'{brand}`) : elle désactive la variable, qui s'affiche
+  telle quelle. Toujours la doubler (`d''{brand}`).
 - Polonais : 4 formes de pluriel requises (`=1`, `few`, `many`, `other`).
 - Clés alphabétiquement triées.
 
