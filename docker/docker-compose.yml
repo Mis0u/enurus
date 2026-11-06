@@ -1,6 +1,6 @@
 services:
     db:
-        image: postgres:16-alpine
+        image: postgres:17-alpine
         env_file:
             - ./.env
         environment:
@@ -14,10 +14,10 @@ services:
         ports:
             - "${POSTGRES_PORT}:5432"
         volumes:
-            - db_data:/var/lib/postgresql/data
+            - db_data_pg17:/var/lib/postgresql/data
 
     db_test:
-        image: postgres:16-alpine
+        image: postgres:17-alpine
         environment:
             POSTGRES_DB: enurus
             POSTGRES_USER: enurus
@@ -32,4 +32,5 @@ services:
             - /var/lib/postgresql/data
 
 volumes:
-    db_data:
+    # Un volume par version majeure : PostgreSQL refuse de démarrer sur les données d'une autre.
+    db_data_pg17:
