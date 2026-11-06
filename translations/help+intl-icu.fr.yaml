@@ -51,6 +51,7 @@ section:
         points:
             answer: "La réponse arrive dans ta Messagerie : un point te signale les nouveaux messages."
             contact: "Écris-moi depuis « Contact », en choisissant une catégorie. Tu peux joindre une capture d'écran."
+            email: "Un email te prévient de chaque nouveau message, sans en dévoiler le contenu. Tu peux le couper dans Réglages › Notifications."
         title: "Contact et messagerie"
     routines:
         intro: "Une routine est une liste d'exercices que tu fais souvent, par exemple « Push day »."

@@ -20,6 +20,14 @@ framework:
             policy: 'sliding_window'
             limit: 10
             interval: '15 minutes'
+        # Débit du worker sur le transport `async` : Resend refuse au-delà de 10 requêtes/seconde,
+        # et une diffusion met d'un coup un email par destinataire dans la file.
+        messenger_async:
+            policy: 'token_bucket'
+            limit: 5
+            rate:
+                interval: '1 second'
+                amount: 5
         profile_connection_request:
             policy: 'sliding_window'
             limit: 5

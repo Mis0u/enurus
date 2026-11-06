@@ -474,6 +474,13 @@ messagerie:
         confirm_title: Eliminar a conversa
         error_text: "Ocorreu um erro ao eliminar. Tenta novamente."
         success: A conversa foi eliminada das tuas mensagens.
+    email:
+        body: "O {brand} enviou-te uma mensagem. Abre as tuas mensagens para a descobrir."
+        cta: "Ver a minha mensagem"
+        subject: "Tens uma nova mensagem no {brand}"
+        title: "Tens uma nova mensagem"
+        unsubscribe: "Deixar de receber estes emails"
+        why: "Recebes este email porque as tuas notificações de mensagens estão ativas."
     empty:
         text: "Este espaço permite-te receber as minhas respostas às tuas mensagens de contacto, bem como eventuais comunicações pontuais sobre atualizações do site — nunca mensagens de outros membros, nunca spam."
         title: Bem-vindo às tuas mensagens
@@ -915,6 +922,11 @@ settings:
         label: Língua
     nickname:
         label: Alias
+    notifications:
+        admin_message_hint: "Anúncios, sondagens e mensagens do administrador."
+        admin_message_label: "Avisar-me de uma nova mensagem"
+        explanation: "Escolhe os emails que recebes do {brand}."
+        title: "Notificações"
     password:
         current_password: Palavra-passe atual
         current_password_invalid: A palavra-passe atual não está correta

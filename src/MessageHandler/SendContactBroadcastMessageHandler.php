@@ -14,6 +14,7 @@ use App\Exception\Translation\TranslationFailedException;
 use App\Message\SendContactBroadcastMessage;
 use App\Repository\ContactBroadcastRepository;
 use App\Repository\UserRepository;
+use App\Service\Contact\AdminMessageEmailNotifier;
 use App\Service\Contact\ContactMessageBodySanitizerService;
 use App\Service\Contact\CreatesContactThreadTrait;
 use App\Service\Translation\BroadcastTranslationFailureNotifierService;
@@ -58,6 +59,7 @@ final readonly class SendContactBroadcastMessageHandler
         private DeepLTranslationService $translationService,
         private BroadcastTranslationFailureNotifierService $failureNotifier,
         private ContactMessageBodySanitizerService $bodySanitizer,
+        private AdminMessageEmailNotifier $emailNotifier,
     ) {
     }
 
@@ -78,6 +80,7 @@ final readonly class SendContactBroadcastMessageHandler
         $recipients = $this->userRepository->findAllForBroadcast($admin->id, $broadcast->locale?->value);
 
         $translationsByLocale = $this->buildTranslationsByLocale($broadcast, $recipients);
+        $threads = [];
 
         foreach ($recipients as $recipient) {
             [$subject, $body] = $translationsByLocale[$recipient->locale] ?? [$broadcast->subject, $broadcast->body];
@@ -99,12 +102,19 @@ final readonly class SendContactBroadcastMessageHandler
             $thread->status = ContactThreadStatusEnum::ANSWERED_BY_ADMIN;
 
             $this->entityManager->persist($thread);
+            $threads[] = $thread;
         }
 
         $this->entityManager->flush();
 
         if (null !== $message->sourceImagePath) {
             $this->imageUploadService->delete($message->sourceImagePath);
+        }
+
+        // Une fois les fils enregistrés, et jamais d'exception ici : un retry Messenger recréerait
+        // tous les fils.
+        foreach ($threads as $thread) {
+            $this->emailNotifier->notify($thread);
         }
     }
 

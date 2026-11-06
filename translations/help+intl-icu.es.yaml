@@ -51,6 +51,7 @@ section:
         points:
             answer: "La respuesta llega a tus Mensajes: un punto señala los mensajes nuevos."
             contact: "Escríbeme desde « Contacto », eligiendo una categoría. Puedes adjuntar una captura de pantalla."
+            email: "Un correo te avisa de cada nuevo mensaje, sin revelar su contenido. Puedes desactivarlo en Ajustes › Notificaciones."
         title: "Contacto y mensajes"
     routines:
         intro: "Una rutina es una lista de ejercicios que haces a menudo, por ejemplo « Push day »."

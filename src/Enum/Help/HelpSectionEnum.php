@@ -39,7 +39,7 @@ enum HelpSectionEnum: string
             self::BADGES => ['families', 'legend', 'where'],
             self::YEAR_IN_REVIEW => ['what', 'where', 'frozen', 'email'],
             self::CONNECTIONS => ['principle', 'share', 'request', 'invite', 'control'],
-            self::MESSAGING => ['contact', 'answer'],
+            self::MESSAGING => ['contact', 'answer', 'email'],
             self::SETTINGS => ['profile', 'unit', 'bodyweight', 'export', 'account'],
         };
     }

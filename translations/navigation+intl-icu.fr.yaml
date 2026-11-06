@@ -474,6 +474,13 @@ messagerie:
         confirm_title: Supprimer le fil de discussion
         error_text: "Une erreur est survenue lors de la suppression. Réessaie."
         success: Le fil de discussion a été supprimé de ta messagerie.
+    email:
+        body: "{brand} t'a envoyé un message. Ouvre ta messagerie pour le découvrir."
+        cta: "Voir mon message"
+        subject: "Tu as un nouveau message sur {brand}"
+        title: "Tu as un nouveau message"
+        unsubscribe: "Ne plus recevoir ces emails"
+        why: "Tu reçois cet email car tes notifications de messagerie sont activées."
     empty:
         text: "Cet espace te permet de recevoir mes réponses à tes messages de contact, ainsi que d'éventuelles communications ponctuelles liées à des mises à jour du site — jamais de messages d'autres membres, jamais de spam."
         title: Bienvenue dans ta messagerie
@@ -915,6 +922,11 @@ settings:
         label: Langue
     nickname:
         label: Alias
+    notifications:
+        admin_message_hint: "Diffusions, sondages et messages de l'admin."
+        admin_message_label: "Me prévenir d'un nouveau message"
+        explanation: "Choisis les emails que tu reçois de la part d''{brand}."
+        title: "Notifications"
     password:
         current_password: Mot de passe actuel
         current_password_invalid: Le mot de passe actuel n'est pas correct

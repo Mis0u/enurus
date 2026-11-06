@@ -9,6 +9,7 @@ use App\Entity\ContactThreadMessage;
 use App\Entity\User;
 use App\Enum\Contact\ContactCategoryEnum;
 use App\Enum\Contact\ContactThreadStatusEnum;
+use App\Service\Contact\AdminMessageEmailNotifier;
 use App\Service\Contact\ContactMessageBodySanitizerService;
 use App\Service\Contact\ContactThreadAdminNotifierService;
 use App\Service\Contact\ContactThreadReplyService;
@@ -91,13 +92,51 @@ final class ContactThreadReplyServiceTest extends TestCase
         self::assertCount(2, $thread->messages);
     }
 
-    private function service(ImageUploadService $imageUploadService, ?ContactThreadAdminNotifierService $adminNotifier = null): ContactThreadReplyService
+    public function testAdminReplyEmailsTheThreadOwner(): void
     {
+        $owner = $this->createUser();
+        $thread = $this->createThread($owner);
+
+        $emailNotifier = $this->createMock(AdminMessageEmailNotifier::class);
+        $emailNotifier->expects(self::once())->method('notify')->with($thread);
+
+        $this->service($this->createStub(ImageUploadService::class), emailNotifier: $emailNotifier)
+            ->reply($this->createUser(), $thread, '<p>Réponse</p>', null, fromAdmin: true);
+    }
+
+    public function testUserReplyEmailsNobody(): void
+    {
+        $owner = $this->createUser();
+
+        $emailNotifier = $this->createMock(AdminMessageEmailNotifier::class);
+        $emailNotifier->expects(self::never())->method('notify');
+
+        $this->service($this->createStub(ImageUploadService::class), emailNotifier: $emailNotifier)
+            ->reply($owner, $this->createThread($owner), 'Réponse', null, fromAdmin: false);
+    }
+
+    public function testAdminReplyInTheirOwnThreadEmailsNobody(): void
+    {
+        $admin = $this->createUser();
+
+        $emailNotifier = $this->createMock(AdminMessageEmailNotifier::class);
+        $emailNotifier->expects(self::never())->method('notify');
+
+        $this->service($this->createStub(ImageUploadService::class), emailNotifier: $emailNotifier)
+            ->reply($admin, $this->createThread($admin), '<p>Réponse</p>', null, fromAdmin: true);
+    }
+
+    private function service(
+        ImageUploadService $imageUploadService,
+        ?ContactThreadAdminNotifierService $adminNotifier = null,
+        ?AdminMessageEmailNotifier $emailNotifier = null,
+    ): ContactThreadReplyService {
         return new ContactThreadReplyService(
             $this->createStub(EntityManagerInterface::class),
             $imageUploadService,
             new ContactMessageBodySanitizerService(),
             $adminNotifier ?? $this->createStub(ContactThreadAdminNotifierService::class),
+            $emailNotifier ?? $this->createStub(AdminMessageEmailNotifier::class),
         );
     }
 

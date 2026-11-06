@@ -474,6 +474,13 @@ messagerie:
         confirm_title: Elimina la conversazione
         error_text: "Si è verificato un errore durante l'eliminazione. Riprova."
         success: La conversazione è stata eliminata dalla tua messaggistica.
+    email:
+        body: "{brand} ti ha inviato un messaggio. Apri la tua messaggistica per scoprirlo."
+        cta: "Vedi il mio messaggio"
+        subject: "Hai un nuovo messaggio su {brand}"
+        title: "Hai un nuovo messaggio"
+        unsubscribe: "Non ricevere più queste email"
+        why: "Ricevi questa email perché le notifiche dei messaggi sono attive."
     empty:
         text: "Questo spazio ti permette di ricevere le mie risposte ai tuoi messaggi di contatto, oltre a eventuali comunicazioni occasionali sugli aggiornamenti del sito — mai messaggi da altri membri, mai spam."
         title: Benvenuto nella tua messaggistica
@@ -915,6 +922,11 @@ settings:
         label: Lingua
     nickname:
         label: Alias
+    notifications:
+        admin_message_hint: "Annunci, sondaggi e messaggi dell'admin."
+        admin_message_label: "Avvisami di un nuovo messaggio"
+        explanation: "Scegli quali email ricevere da {brand}."
+        title: "Notifiche"
     password:
         current_password: Password attuale
         current_password_invalid: La password attuale non è corretta
