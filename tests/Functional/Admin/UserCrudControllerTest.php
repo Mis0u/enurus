@@ -572,6 +572,68 @@ final class UserCrudControllerTest extends WebTestCase
         $this->deleteTestUser($user);
     }
 
+    /**
+     * Support : savoir si une diffusion ou une réponse de l'admin arrivera aussi par email, et si
+     * les autres emails ont été coupés, sans requêter la base à la main.
+     */
+    public function testDetailShowsEmailPreferences(): void
+    {
+        $client = $this->login(self::ADMIN);
+        $user = $this->createTestUser('user-crud-email-preferences@test.com');
+        $user->emailOnAdminMessage = false;
+        $user->emailOnConnectionRequest = false;
+        $this->flush();
+
+        $crawler = $client->request(Request::METHOD_GET, $this->actionUrl($client, $user, 'detail'));
+
+        self::assertResponseIsSuccessful();
+        self::assertSame('No', $this->fieldValueByLabel($crawler, 'Email des messages de l\'admin'));
+        self::assertSame('No', $this->fieldValueByLabel($crawler, 'Email des demandes de connexion'));
+        self::assertSame('Yes', $this->fieldValueByLabel($crawler, 'Email du résumé annuel'));
+
+        $this->deleteTestUser($user);
+    }
+
+    /**
+     * Lecture seule dans la liste : un interrupteur Ajax permettrait à l'admin de réactiver un
+     * email que l'utilisateur a coupé.
+     */
+    public function testIndexShowsAdminMessageEmailPreferenceWithoutSwitch(): void
+    {
+        $client = $this->login(self::ADMIN);
+
+        $crawler = $client->request(Request::METHOD_GET, $this->indexUrl());
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists('table.datagrid td[data-column="emailOnAdminMessage"]');
+        self::assertCount(0, $crawler->filter('td[data-column="emailOnAdminMessage"] input'));
+    }
+
+    public function testAdminMessageEmailFilterListsUsersWhoTurnedItOff(): void
+    {
+        $client = $this->login(self::ADMIN);
+        $user = $this->createTestUser('user-crud-filter-admin-message-email@test.com');
+        $user->emailOnAdminMessage = false;
+        $this->flush();
+
+        /** @var AdminUrlGenerator $adminUrlGenerator */
+        $adminUrlGenerator = static::getContainer()->get(AdminUrlGenerator::class);
+        $url = $adminUrlGenerator
+            ->setController(UserCrudController::class)
+            ->setAction('index')
+            ->set('filters[emailOnAdminMessage]', '0')
+            ->generateUrl()
+        ;
+
+        $client->request(Request::METHOD_GET, $url);
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorTextContains('table.datagrid', 'user-crud-filter-admin-message-email@test.com');
+        self::assertSelectorTextNotContains('table.datagrid', 'user-fixture-0@test.com');
+
+        $this->deleteTestUser($user);
+    }
+
     private function indexUrl(): string
     {
         /** @var AdminUrlGenerator $adminUrlGenerator */
