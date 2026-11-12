@@ -210,6 +210,7 @@ final class UserCrudController extends AbstractCrudController
             ->renderAsSwitch(false)
             ->onlyOnDetail()
         ;
+        yield from $this->emailPreferenceFields();
         /**
          * Détail uniquement, à but de modération — même pattern que `WorkoutCrudController::$photoPath`
          * (`_photo.html.twig`) : un avatar signalé inapproprié doit rester visible depuis l'admin
@@ -262,6 +263,7 @@ final class UserCrudController extends AbstractCrudController
             ->add(ChoiceFilter::new('gender', $this->trans('admin.user.field.gender'))->setChoices($this->enumChoices(GenderEnum::cases())))
             ->add(ChoiceFilter::new('unitOfMeasure', $this->trans('admin.user.field.unit_of_measure'))->setChoices($this->enumChoices(UnitOfMeasureEnum::cases())))
             ->add(BooleanFilter::new('isVerified', $this->trans('admin.user.field.is_verified')))
+            ->add(BooleanFilter::new('emailOnAdminMessage', $this->trans('admin.user.field.email_on_admin_message')))
             ->add(DayFilter::new('createdAt', $this->trans('admin.user.field.created_at')))
             ->add(DayFilter::new('lastLogin', $this->trans('admin.user.field.last_login')))
             ->add(
@@ -547,6 +549,30 @@ final class UserCrudController extends AbstractCrudController
             'user' => $user,
             'form' => $form,
         ]);
+    }
+
+    /**
+     * Lecture seule, à but de support : ces choix appartiennent à l'utilisateur (Réglages, page
+     * Connexions, Mes résumés). Un switch Ajax laisserait l'admin réactiver un email coupé, d'où
+     * `renderAsSwitch(false)`. L'email des messages de l'admin est aussi en liste : c'est lui qui
+     * dit si une diffusion ou une réponse arrivera par email.
+     *
+     * @return iterable<BooleanField>
+     */
+    private function emailPreferenceFields(): iterable
+    {
+        yield BooleanField::new('emailOnAdminMessage', $this->trans('admin.user.field.email_on_admin_message'))
+            ->renderAsSwitch(false)
+            ->hideOnForm()
+        ;
+        yield BooleanField::new('emailOnConnectionRequest', $this->trans('admin.user.field.email_on_connection_request'))
+            ->renderAsSwitch(false)
+            ->onlyOnDetail()
+        ;
+        yield BooleanField::new('emailOnYearInReview', $this->trans('admin.user.field.email_on_year_in_review'))
+            ->renderAsSwitch(false)
+            ->onlyOnDetail()
+        ;
     }
 
     /**

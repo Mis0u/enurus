@@ -217,6 +217,9 @@ admin:
             contact_restriction_duration: "Durée de la restriction d'origine"
             created_at: "Inscrit le"
             deletion_requested_at: "Suppression demandée le"
+            email_on_admin_message: "Email des messages de l'admin"
+            email_on_connection_request: "Email des demandes de connexion"
+            email_on_year_in_review: "Email du résumé annuel"
             gender: Genre
             is_discoverable: "Partage son profil"
             is_verified: "Email vérifié"
